@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Black rounded square with white "AI" in monospace. Deliberate
+       black/white scheme (rather than matching the sidebar's green logo)
+       for maximum contrast at favicon scale — the high-contrast pair
+       stays legible at 16x16 in both light and dark browser tab bars. -->
+  <rect width="64" height="64" rx="12" fill="#000000"/>
+  <text x="32" y="43"
+        font-family="ui-monospace, 'SF Mono', Monaco, Menlo, 'Courier New', monospace"
+        font-size="26" font-weight="700"
+        text-anchor="middle" fill="#ffffff"
+        letter-spacing="1.4">AI</text>
+</svg>

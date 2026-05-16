@@ -1,0 +1,225 @@
+{
+  "_metadata": {
+    "description": "Longitudinal trend data tracking how AI usage patterns on Claude.ai have evolved across three waves of the Anthropic Economic Index.",
+    "_classifierCaveat": "The classification model used to categorize conversations changed between waves: V2 used Sonnet 3.7, V3 used Sonnet 4, V4 used Sonnet 4.5 (V1 classifier not specified). V3 footnote 4 (Appel et al. p. 11) reports a robustness check: rerunning V3 data with Sonnet 3.7 yielded 45% automation vs. 49% with Sonnet 4. The sources characterize classifier effects as 'modest' but real. Cross-wave comparisons should note this caveat. See also Economic Primitives footnote 7, p. 18.",
+    "_v2ExclusionNote": "V2 (February–March 2025) data exists and is referenced in Appel et al. p. 7. This file excludes V2 because: (1) V2 was not published as a standalone public report — its data points are reported retrospectively within the V3 report; (2) collaboration mode and task category figures for V2 are not disaggregated in the V3 text, only referenced for temporal context; (3) the V1→V3→V4 series is sufficient for the dashboard trend visualizations. If V2-specific data points become available, they can be added as a fourth wave entry.",
+    "validationLog": [
+      "VALIDATION PASS 1 (April 27, 2026): JSON-forward verification of all data points against source text layers and reference-quotes.md. Three errors fixed: (1) collaborationMode V1 source attribution corrected from 'Handa et al. p. 3' to 'Economic Primitives p. 9' — values 56/41 are V4's retrospective of V1 data, not Handa et al.'s 57/43; (2) V4 metadata sampleSize and dataCollection updated per Economic Primitives footnote 1, p. 17 (1M conversations, Nov 13–20 2025); (3) V1 ~3% unclassified note grounded with source citation (Economic Primitives footnote 6, p. 18). Two documentation flags resolved: cross-file V1 discrepancy note added to collaborationMode; V1 directive share updated to 0.278 for cross-file consistency with augmentation-automation.json. Two manual verifications completed: enterprise adoption rates (3.7%, 9.7%) confirmed against Figure 3.1 image; Table 1 page reference corrected to p. 10. Feedback Loop wordCloudThemes sourcing note added. 25+ data points verified correct.",
+      "VALIDATION PASS 2 (April 27, 2026): Source-first verification — extracted all trend-relevant data from V1, V3, and V4 source documents independently, then diffed against JSON. Four omissions resolved: (1) V3 and V4 augmentation/automation percentages filled (V3: 47/49 derived from V4 deltas and confirmed by V3 footnote 4; V4: 52/45 explicit from Economic Primitives p. 5); (2) two declining task categories added to v1ToV3 (Business/Financial 6→3%, Management 5→3%, from V3 p. 7); (3) V4 rebound driver added (task iteration increase, product changes — Economic Primitives pp. 5, 9–10); (4) classifier model caveat added to metadata (Sonnet 3.7→4→4.5 across waves, with robustness check from V3 footnote 4). Two documentation flags resolved: V2 exclusion rationale added to metadata; driversNoted expanded to capture both competing interpretations from V3 p. 10 (model capabilities vs. learning-by-doing). Zero mischaracterizations found.",
+      "VALIDATION PASS 3 (April 27, 2026): Final reconciliation — comprehensive structural, computational, and cross-reference audit. 142 automated checks passed (0 failed): 96 internal (58 structural completeness, 19 computational verification, 19 internal consistency), 14 cross-file (vs. augmentation-automation.json and geographic-adoption.json — V1 discrepancy documented, directive share consistent at 27.8%, pattern definitions match, enterprise adoption rates match), 32 prior fix confirmations (all pass 1 and pass 2 fixes verified in place). Percentage sums verified: V1=97% (3% unclassified), V3=96% (4% unclassified, source says 3.9%), V4=97% (3% unclassified). V3→V4 deltas confirmed: +5pp aug, –4pp auto. All changePP values recomputed and confirmed. Dominant mode consistent with values for all three waves. Monotonic trends verified (V1→V3 aug declined, V3→V4 aug rebounded; directive rose then fell but V4 still > V1). File is production-ready."
+    ],
+    "waves": [
+      {
+        "label": "V1",
+        "source": "Handa et al. 'Which Economic Tasks Are Performed with AI?' February 2025.",
+        "dataCollection": "December 16–23, 2024 and January 2025",
+        "sampleSize": "4 million+ Claude.ai Free and Pro conversations",
+        "sampleNote": "Multiple 7-day snapshots; see Appendix E of source for exact windows per analysis."
+      },
+      {
+        "label": "V3",
+        "source": "Appel, McCrory, and Tamkin. 'Anthropic Economic Index Report: Uneven Geographic and Enterprise AI Adoption.' September 2025.",
+        "dataCollection": "August 4–11, 2025",
+        "sampleSize": "1 million Claude.ai Free and Pro conversations"
+      },
+      {
+        "label": "V4",
+        "source": "Anthropic. 'Anthropic Economic Index Report: Economic Primitives.' 2025.",
+        "dataCollection": "November 13–20, 2025",
+        "sampleSize": "1 million Claude.ai Free, Pro, and Max conversations",
+        "sampleNote": "Footnote 1, p. 17. Also includes 1M 1P API transcripts analyzed separately."
+      }
+    ]
+  },
+
+  "collaborationMode": {
+    "_source": "V1: Economic Primitives, p. 9 (V4 retrospective of V1 data — Handa et al. reports 57/43; see _v1DiscrepancyNote); V3: Appel et al., p. 9; V4: Economic Primitives, pp. 9–10",
+    "description": "How users engage with Claude — automation (task delegation) vs. augmentation (collaborative interaction) — tracked over three waves.",
+    "_v1DiscrepancyNote": "V1 augmentation/automation values differ across files. Handa et al. (the primary V1 study) reports 57% augmentation / 43% automation (pp. 3, 9; Figure 7; sum = 100%). Economic Primitives (V4) retrospectively reports the same V1 period as 56% / 41% (p. 9; sum = 97%, remainder unclassified). This file uses V4's retrospective figures for trend chart consistency across waves — all three data points come from the same classification pipeline as reported in Economic Primitives. augmentation-automation.json uses the Handa et al. 57/43 figures for the V1 pattern breakdown. If both views are displayed simultaneously in the dashboard, a tooltip should note the discrepancy and its source.",
+    "timeSeries": [
+      {
+        "wave": "V1",
+        "period": "Jan 2025",
+        "augmentation": 0.56,
+        "automation": 0.41,
+        "dominant": "augmentation",
+        "note": "Remaining ~3% unclassified — interaction modes are not mutually exhaustive (Economic Primitives, footnote 6, p. 18). The unclassified share fell from 3.9% (V3) to 3.0% (V4) per footnote 2, p. 17; V1-specific unclassified share is inferred from 56+41=97% but not stated independently in any source."
+      },
+      {
+        "wave": "V3",
+        "period": "Aug 2025",
+        "augmentation": 0.47,
+        "automation": 0.49,
+        "dominant": "automation",
+        "note": "First time automation exceeded augmentation. Percentages derived from V4 deltas: V4 reports augmentation 'jumped 5pp to 52%' (→ V3 ≈ 47%) and automation 'fell 4pp to 45%' (→ V3 ≈ 49%). Cross-check: V3 footnote 4 (p. 11) states 49% automation with Sonnet 4 classifier. Remaining ~4% unclassified (3.9% per V4 footnote 2, p. 17).",
+        "_derivation": "Derived from Economic Primitives p. 5 deltas, not stated directly in V3 text. Confirmed by V3 footnote 4."
+      },
+      {
+        "wave": "V4",
+        "period": "Nov 2025",
+        "augmentation": 0.52,
+        "automation": 0.45,
+        "dominant": "augmentation",
+        "note": "Augmentation once again more prevalent. The automation share was still elevated compared to V1, suggesting the underlying trend is toward greater automation even as the August spike overstated how quickly it was materializing. Remaining 3% unclassified (V4 footnote 2, p. 17).",
+        "reboundDriver": "The rise in augmented use was driven mainly by users iterating with Claude to complete tasks ('task iteration') rather than asking Claude to explain concepts ('learning') (Economic Primitives, pp. 9–10). Product changes during this period — file creation capabilities, persistent memory, and Skills for workflow customization — may have shifted usage toward more collaborative, human-in-the-loop interactions (Economic Primitives, p. 5)."
+      }
+    ],
+    "interpretation": "The trajectory is not linear. Users shifted sharply toward automation between January and August 2025, then partially reverted by November. The underlying trend favors greater automation, but the August spike was a temporary overshoot."
+  },
+
+  "directiveInteractions": {
+    "_source": "V1: Handa et al., Figure 7 (27.8% precise value from augmentation-automation.json); V3: Appel et al., p. 9; V4: Economic Primitives, p. 9",
+    "description": "Share of conversations classified as 'directive' — users give Claude a task and it completes it with minimal back-and-forth. This is the purest form of automation.",
+    "timeSeries": [
+      { "wave": "V1", "period": "Jan 2025", "directiveShare": 0.278, "_note": "Source narrative text rounds to 27%; 27.8% is the precise value from Handa et al. Figure 7, consistent with augmentation-automation.json." },
+      { "wave": "V3", "period": "Aug 2025", "directiveShare": 0.39 },
+      { "wave": "V4", "period": "Nov 2025", "directiveShare": 0.32 }
+    ],
+    "v1ToV3Change": {
+      "changePP": 11.2,
+      "changePPRounded": 12,
+      "description": "Directive conversations jumped from ~28% to 39%. Source narrative text (V3 p. 9, V4 p. 9) rounds V1 to 27% and reports a 12pp increase; the precise calculation using 27.8% yields 11.2pp.",
+      "driversNoted": {
+        "interpretation1": {
+          "label": "Improving model capabilities",
+          "description": "As models improve at anticipating user needs and producing high-quality outputs on first attempts, users may need fewer follow-up refinements. More advanced models expand the set of automatable tasks.",
+          "laborImplication": "Workers performing automatable tasks face greater displacement risk."
+        },
+        "interpretation2": {
+          "label": "Learning-by-doing",
+          "description": "The jump in directive usage could signal growing user confidence in delegating complete tasks to AI — a form of learning-by-doing built through repeated interaction.",
+          "laborImplication": "Workers most able to adapt to AI-powered workflows see greater demand and higher wages; those with lower ability to adapt face disruption."
+        },
+        "_source": "Appel et al. (V3), p. 10. Both interpretations are presented as analytically distinct with different labor market implications."
+      }
+    },
+    "v3ToV4Change": {
+      "changePP": -7,
+      "description": "Fell 7 percentage points from 39% to 32% as augmentation became dominant again.",
+      "interpretation": "The underlying trend is still toward greater automation, but the August spike overstated the pace."
+    },
+    "usedIn": ["Component 2C (D4 gap trace)", "Module 1 (data narrative)", "Module 2 (dashboard trend visualization)"]
+  },
+
+  "taskCategoryShifts": {
+    "v1ToV3": {
+      "_source": "Appel et al. (V3), pp. 3, 7",
+      "period": "Late 2024 → August 2025",
+      "shifts": [
+        {
+          "category": "Coding",
+          "v1Share": null,
+          "v3Share": 0.36,
+          "trend": "Continues to dominate total sample",
+          "withinCodingShifts": {
+            "programCreation": { "v1": 0.041, "v3": 0.086, "changePP": 4.5 },
+            "debugging": { "v1": 0.161, "v3": 0.133, "changePP": -2.8 },
+            "netShift": "7.4pp shift toward creation over fixing code",
+            "interpretation": "Models may have become increasingly reliable, so users spend less time fixing problems and more time creating things in a single interaction."
+          }
+        },
+        {
+          "category": "Education",
+          "v1Share": 0.093,
+          "v3Share": 0.124,
+          "changePP": 3.1,
+          "trend": "Surged"
+        },
+        {
+          "category": "Science",
+          "v1Share": 0.063,
+          "v3Share": 0.072,
+          "changePP": 0.9,
+          "trend": "Rising"
+        },
+        {
+          "category": "Business and Financial Operations",
+          "v1Share": 0.06,
+          "v3Share": 0.03,
+          "changePP": -3.0,
+          "trend": "Fell",
+          "_note": "Rounded figures from V3 p. 7; precise values not given on p. 3."
+        },
+        {
+          "category": "Management",
+          "v1Share": 0.05,
+          "v3Share": 0.03,
+          "changePP": -2.0,
+          "trend": "Dropped",
+          "_note": "Rounded figures from V3 p. 7; precise values not given on p. 3."
+        }
+      ]
+    },
+    "v1ToV4": {
+      "_source": "Economic Primitives (V4), p. 8",
+      "period": "January 2025 → November 2025",
+      "shifts": [
+        {
+          "category": "Educational Instruction and Library",
+          "v1Share": 0.09,
+          "v4Share": 0.15,
+          "changePP": 6.0,
+          "trend": "Risen steadily since first report"
+        },
+        {
+          "category": "Arts, Design, Entertainment, Sports, and Media",
+          "trend": "Increased Aug → Nov 2025, reversing a steady decline across earlier reports. Driven by copyediting and writing/refinement of fictional pieces."
+        },
+        {
+          "category": "Life, Physical, and Social Science",
+          "trend": "Dropped for both Claude.ai and API customers between Aug and Nov 2025."
+        },
+        {
+          "category": "Office and Administrative Support (API only)",
+          "trend": "Rose 3pp to 13% in November 2025. Suggests businesses increasingly automating routine back-office workflows (email, document processing, CRM, scheduling)."
+        }
+      ]
+    }
+  },
+
+  "enterpriseAdoptionTrend": {
+    "_source": "Appel et al. (V3), p. 32; Census Bureau Business Trends and Outlook Survey",
+    "description": "AI adoption among US firms tracked over time.",
+    "timeSeries": [
+      { "period": "Fall 2023",       "adoptionRate": 0.037 },
+      { "period": "Early August 2025","adoptionRate": 0.097 }
+    ],
+    "trend": "More than doubled in approximately two years. Despite rapid growth, the vast majority of firms still do not report using AI in their production processes.",
+    "note": "This data is also present in geographic-adoption.json. Included here for completeness of the longitudinal trend picture. Values (3.7% and 9.7%) confirmed via visual inspection of Figure 3.1 (Validation Pass 1)."
+  },
+
+  "collaborationPatternDefinitions": {
+    "_source": "Handa et al. (V1), Table 1, p. 10; confirmed in V3 (p. 9) and V4 (footnote 5, p. 18)",
+    "description": "The five interaction types used consistently across all three waves, grouped into automation and augmentation.",
+    "automation": [
+      {
+        "pattern": "Directive",
+        "definition": "Users give Claude a task and it completes it with minimal back-and-forth.",
+        "wordCloudThemes": ["create", "develop", "draft"]
+      },
+      {
+        "pattern": "Feedback Loop",
+        "definition": "Users automate tasks and provide feedback (typically error states) to Claude as needed.",
+        "wordCloudThemes": ["debug", "fix", "error"],
+        "_wordCloudNote": "Inferred from descriptive text (Handa et al. p. 10: 'related to coding and debugging, where the user repeatedly relayed the error'). V4 Figure 1.5 word clouds cover Directive, Task Iteration, and Learning only — Feedback Loop and Validation are not included."
+      }
+    ],
+    "augmentation": [
+      {
+        "pattern": "Learning",
+        "definition": "Users ask Claude for information or explanations about various topics.",
+        "wordCloudThemes": ["help", "explain", "provide"]
+      },
+      {
+        "pattern": "Task Iteration",
+        "definition": "Users iterate on tasks collaboratively with Claude.",
+        "wordCloudThemes": ["edit", "rewrite", "revise"]
+      },
+      {
+        "pattern": "Validation",
+        "definition": "Users ask Claude for feedback on their work."
+      }
+    ],
+    "note": "The rise in directive share (V1→V3) came primarily at the expense of Task Iteration and Learning interactions."
+  }
+}

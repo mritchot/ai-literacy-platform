@@ -1,0 +1,519 @@
+{
+  "_metadata": {
+    "file": "productivity-gains.json",
+    "description": "Productivity gain estimates from real-world Claude conversations for the Live Data Dashboard (Component 4A). Contains occupation-level time/cost/savings data, the distribution of time savings across tasks, specific task examples, and economy-wide productivity implications. Structured for Practice Activity P4 (Dashboard Exploration: Productivity Distributions).",
+    "primary_source": {
+      "title": "Estimating AI Productivity Gains from Claude Conversations",
+      "authors": "Tamkin, A. & McCrory, P.",
+      "publisher": "Anthropic",
+      "date": "2025-11-05",
+      "sample": "100,000 Claude.ai conversations (Free, Pro, and Max tiers)",
+      "wage_data": "Occupational Employment and Wage Statistics (OEWS) May 2024, U.S. Bureau of Labor Statistics",
+      "task_taxonomy": "O*NET Database, U.S. Department of Labor",
+      "citation_key": "tamkin_mccrory_2025"
+    },
+    "last_validated": "2026-04-27",
+    "critical_caveats": [
+      "Time savings estimates do NOT account for additional time humans spend refining Claude's outputs outside the chat window, iterating across multiple sessions, or validating accuracy. Actual real-world productivity gains are likely lower than these estimates.",
+      "Past randomized controlled trials have found smaller time savings: 56%, 40%, 26%, 14%, and even negative time savings across different applications (p. 13). These differences may reflect earlier model generations or the additional refinement time not captured in transcript analysis.",
+      "The 1.8% annual productivity figure assumes universal adoption of current-generation AI across the entire US economy over 10 years — it is an extrapolation exercise, not a prediction.",
+      "Claude's time estimates show a compression bias: overestimating short tasks and underestimating long ones. Actual variation in task lengths may be larger than reported (p. 8, 10)."
+    ],
+    "cross_document_note": "The body text on p. 12 states 'the median conversation experienced an estimated 84% time savings.' The Figure 6 caption on p. 13 states 'the overall median savings is 81%.' These measure slightly different things (conversation-level median vs. task-level median). Per cross-document review (process journal, Week of April 23, 2026), 81% from the Figure 6 caption is the canonical figure used across all portfolio deliverables."
+  },
+  "aggregate_metrics": {
+    "median_time_savings_pct": 81,
+    "median_time_savings_source": "Figure 6 caption, p. 13",
+    "average_time_reduction_pct": 80,
+    "average_time_reduction_source": "Overview, p. 2 — 'Claude speeds up individual tasks by about 80%'",
+    "median_task_cost_usd": 54,
+    "median_task_cost_source": "p. 10 — 'Claude handles work that would cost a median of $54 in professional labor'",
+    "average_task_duration_without_ai_hours": 1.4,
+    "average_task_duration_source": "p. 3",
+    "implied_annual_productivity_growth_pct": 1.8,
+    "implied_annual_productivity_growth_source": "pp. 3, 15",
+    "implied_annual_tfp_growth_pct": 1.08,
+    "implied_annual_tfp_source": "p. 15 — assumes labor share of 0.6",
+    "baseline_productivity_growth_pct": {
+      "since_1947": 2.1,
+      "since_2019": 1.8,
+      "source": "p. 15"
+    }
+  },
+  "occupation_table": {
+    "description": "Claude's estimates by SOC major group. Time without AI is the estimated hours a human professional would need. Average wage is from OEWS May 2024. Task cost is computed by multiplying median task time by hourly wage, weighted by task prevalence. Time savings are computed as 1 - time_with_ai / time_without_ai.",
+    "source_page": "p. 11",
+    "source_table": "Table on p. 11 (unnumbered)",
+    "categories": [
+      {
+        "occupation": "Management",
+        "time_without_ai_hours": 2.0,
+        "avg_wage_per_hour": 68,
+        "avg_task_cost_usd": 133,
+        "time_savings_pct": 85.1,
+        "representative_tasks": [
+          "Draft strategic plans, board updates, and executive summaries",
+          "Prepare budget proposals and performance reviews",
+          "Compose internal memos and cross-team communications"
+        ]
+      },
+      {
+        "occupation": "Business and Financial Operations",
+        "time_without_ai_hours": 1.5,
+        "avg_wage_per_hour": 45,
+        "avg_task_cost_usd": 69,
+        "time_savings_pct": 83.5,
+        "representative_tasks": [
+          "Prepare financial analyses, forecasts, and investment summaries",
+          "Draft audit reports, compliance documentation, and risk assessments",
+          "Compile market research briefings and competitor analyses"
+        ]
+      },
+      {
+        "occupation": "Computer and Mathematical",
+        "time_without_ai_hours": 1.5,
+        "avg_wage_per_hour": 56,
+        "avg_task_cost_usd": 82,
+        "time_savings_pct": 80.2,
+        "representative_tasks": [
+          "Write, debug, and refactor source code",
+          "Draft technical documentation, API references, and design specs",
+          "Translate requirements into implementation plans and statistical reports"
+        ]
+      },
+      {
+        "occupation": "Architecture and Engineering",
+        "time_without_ai_hours": 1.3,
+        "avg_wage_per_hour": 50,
+        "avg_task_cost_usd": 64,
+        "time_savings_pct": 77.7,
+        "representative_tasks": [
+          "Prepare technical specifications and project requirement documents",
+          "Draft engineering reports, feasibility studies, and design rationales",
+          "Document calculations, materials lists, and compliance memos"
+        ]
+      },
+      {
+        "occupation": "Life, Physical, and Social Science",
+        "time_without_ai_hours": 1.5,
+        "avg_wage_per_hour": 43,
+        "avg_task_cost_usd": 63,
+        "time_savings_pct": 82.8,
+        "representative_tasks": [
+          "Draft literature reviews and research summaries",
+          "Prepare grant proposals and funding applications",
+          "Compile bibliographies and reference lists for publications"
+        ]
+      },
+      {
+        "occupation": "Community and Social Service",
+        "time_without_ai_hours": 1.1,
+        "avg_wage_per_hour": 30,
+        "avg_task_cost_usd": 33,
+        "time_savings_pct": 80.8,
+        "representative_tasks": [
+          "Write case notes and client intake assessments",
+          "Draft referral letters and care-coordination documentation",
+          "Prepare program reports and outcome summaries"
+        ]
+      },
+      {
+        "occupation": "Legal",
+        "time_without_ai_hours": 1.8,
+        "avg_wage_per_hour": 66,
+        "avg_task_cost_usd": 119,
+        "time_savings_pct": 80.7,
+        "representative_tasks": [
+          "Draft contracts, agreements, and standard legal documents",
+          "Research case law and summarize relevant precedents",
+          "Prepare briefs, memos, and legal correspondence"
+        ]
+      },
+      {
+        "occupation": "Education, Training, and Library",
+        "time_without_ai_hours": 1.7,
+        "avg_wage_per_hour": 32,
+        "avg_task_cost_usd": 52,
+        "time_savings_pct": 84.5,
+        "representative_tasks": [
+          "Develop curricula, lesson plans, and learning objectives",
+          "Draft course materials, assignments, and rubrics",
+          "Compile bibliographies and reading lists for assignments"
+        ]
+      },
+      {
+        "occupation": "Arts, Design, Entertainment, Sports, and Media",
+        "time_without_ai_hours": 1.6,
+        "avg_wage_per_hour": 37,
+        "avg_task_cost_usd": 58,
+        "time_savings_pct": 78.6,
+        "representative_tasks": [
+          "Draft articles, press releases, and editorial copy",
+          "Write scripts, treatments, and creative briefs",
+          "Compose social-media content and project pitches"
+        ]
+      },
+      {
+        "occupation": "Healthcare Practitioners and Technical",
+        "time_without_ai_hours": 0.9,
+        "avg_wage_per_hour": 51,
+        "avg_task_cost_usd": 43,
+        "time_savings_pct": 74.8,
+        "representative_tasks": [
+          "Draft patient summaries and discharge documentation",
+          "Write referral letters and care-coordination communications",
+          "Summarize medical literature for clinical decision support"
+        ]
+      },
+      {
+        "occupation": "Healthcare Support",
+        "time_without_ai_hours": 0.6,
+        "avg_wage_per_hour": 19,
+        "avg_task_cost_usd": 10,
+        "time_savings_pct": 75.9,
+        "representative_tasks": [
+          "Prepare patient intake summaries and appointment communications",
+          "Document insurance verification and prior-authorization notes",
+          "Compose routine correspondence and patient education handouts"
+        ]
+      },
+      {
+        "occupation": "Protective Service",
+        "time_without_ai_hours": 0.3,
+        "avg_wage_per_hour": 29,
+        "avg_task_cost_usd": 9,
+        "time_savings_pct": 77.7,
+        "representative_tasks": [
+          "Draft incident reports and case narratives",
+          "Prepare shift briefings and after-action summaries",
+          "Write training materials and procedural documents"
+        ]
+      },
+      {
+        "occupation": "Food Preparation and Serving Related",
+        "time_without_ai_hours": 0.5,
+        "avg_wage_per_hour": 17,
+        "avg_task_cost_usd": 8,
+        "time_savings_pct": 75.4,
+        "representative_tasks": [
+          "Draft menus, recipe documentation, and ingredient lists",
+          "Prepare standard-operating-procedure and food-safety documents",
+          "Compose customer communications and event proposals"
+        ]
+      },
+      {
+        "occupation": "Building and Grounds Cleaning and Maintenance",
+        "time_without_ai_hours": 0.6,
+        "avg_wage_per_hour": 19,
+        "avg_task_cost_usd": 11,
+        "time_savings_pct": 75.8,
+        "representative_tasks": [
+          "Draft work orders, maintenance schedules, and inspection logs",
+          "Prepare safety memos and procedure documents",
+          "Compose vendor communications and supply requests"
+        ]
+      },
+      {
+        "occupation": "Personal Care and Service",
+        "time_without_ai_hours": 0.5,
+        "avg_wage_per_hour": 19,
+        "avg_task_cost_usd": 10,
+        "time_savings_pct": 61.0,
+        "representative_tasks": [
+          "Draft client notes and appointment summaries",
+          "Compose marketing copy and customer correspondence",
+          "Write service descriptions and training materials"
+        ]
+      },
+      {
+        "occupation": "Sales and Related",
+        "time_without_ai_hours": 0.6,
+        "avg_wage_per_hour": 26,
+        "avg_task_cost_usd": 15,
+        "time_savings_pct": 66.2,
+        "representative_tasks": [
+          "Draft sales proposals, pitch decks, and product collateral",
+          "Compose follow-up emails and customer communications",
+          "Prepare competitive comparisons and account briefings"
+        ]
+      },
+      {
+        "occupation": "Office and Administrative Support",
+        "time_without_ai_hours": 0.7,
+        "avg_wage_per_hour": 24,
+        "avg_task_cost_usd": 16,
+        "time_savings_pct": 67.8,
+        "representative_tasks": [
+          "Compose meeting notes, routine correspondence, and reports",
+          "Prepare invoices, memos, and scheduling communications",
+          "Compile data into summary spreadsheets and briefings"
+        ]
+      },
+      {
+        "occupation": "Farming, Fishing, and Forestry",
+        "time_without_ai_hours": 0.5,
+        "avg_wage_per_hour": 20,
+        "avg_task_cost_usd": 10,
+        "time_savings_pct": 83.3,
+        "representative_tasks": [
+          "Draft compliance reports and inspection documentation",
+          "Prepare grant applications and operational plans",
+          "Compose buyer communications and contract documents"
+        ]
+      },
+      {
+        "occupation": "Construction and Extraction",
+        "time_without_ai_hours": 1.1,
+        "avg_wage_per_hour": 31,
+        "avg_task_cost_usd": 35,
+        "time_savings_pct": 86.7,
+        "representative_tasks": [
+          "Prepare project bids, cost estimates, and material takeoffs",
+          "Draft scheduling documents, RFIs, and change orders",
+          "Write inspection reports, permits, and compliance correspondence"
+        ]
+      },
+      {
+        "occupation": "Installation, Maintenance, and Repair",
+        "time_without_ai_hours": 0.5,
+        "avg_wage_per_hour": 30,
+        "avg_task_cost_usd": 13,
+        "time_savings_pct": 65.7,
+        "representative_tasks": [
+          "Draft work tickets, service reports, and diagnostic notes",
+          "Prepare maintenance logs and customer quotes",
+          "Compose equipment manuals and troubleshooting guides"
+        ]
+      },
+      {
+        "occupation": "Production",
+        "time_without_ai_hours": 0.9,
+        "avg_wage_per_hour": 24,
+        "avg_task_cost_usd": 22,
+        "time_savings_pct": 79.7,
+        "representative_tasks": [
+          "Draft production reports, quality logs, and shift summaries",
+          "Prepare standard operating procedures and process documentation",
+          "Compose batch records and compliance documentation"
+        ]
+      },
+      {
+        "occupation": "Transportation and Material Moving",
+        "time_without_ai_hours": 0.3,
+        "avg_wage_per_hour": 23,
+        "avg_task_cost_usd": 7,
+        "time_savings_pct": 79.4,
+        "representative_tasks": [
+          "Draft dispatch notes, routing instructions, and delivery confirmations",
+          "Prepare logistics summaries and manifest documents",
+          "Compose driver communications and safety briefings"
+        ]
+      }
+    ]
+  },
+  "time_savings_distribution": {
+    "description": "Distribution of time savings across O*NET tasks. The density plot shows an uneven distribution concentrated in the 50–95% range with a peak between 80–90%. This distribution is the key data for P4 — it shows learners that AI productivity gains are not uniform.",
+    "source_page": "p. 13",
+    "source_figure": "Figure 6",
+    "median_pct": 81,
+    "range_description": "Most tasks fall between 50% and 95% time savings",
+    "peak_range": "80–90%",
+    "annotated_examples": [
+      {
+        "task": "Checking diagnostic images",
+        "time_savings_pct": 20,
+        "position": "low_end",
+        "explanation": "Already a task that can be done quickly by experts without AI assistance"
+      },
+      {
+        "task": "Troubleshooting office equipment",
+        "time_savings_pct": 56,
+        "position": "below_median",
+        "explanation": "Hardware-related tasks see lower time savings"
+      },
+      {
+        "task": "Writing or updating computer programs",
+        "time_savings_pct": 78,
+        "position": "near_median",
+        "explanation": "Software development tasks cluster near the median range"
+      },
+      {
+        "task": "Compiling information from reports",
+        "time_savings_pct": 95,
+        "position": "high_end",
+        "explanation": "AI systems can read, extract, and cite information much more quickly than people"
+      }
+    ],
+    "rct_comparison": {
+      "description": "Past randomized controlled trials have found smaller time savings than Claude's self-estimates, suggesting the additional refinement work not captured in transcript analysis substantially reduces net productivity gains.",
+      "source_page": "p. 13",
+      "rct_findings": [
+        56,
+        40,
+        26,
+        14
+      ],
+      "note": "One RCT found negative time savings. These studies examined earlier model generations."
+    }
+  },
+  "example_tasks": {
+    "description": "Nine specific task examples from Figure 4 showing the range of time, cost, and savings across occupations. These concrete examples help learners anchor abstract productivity data to recognizable workplace tasks.",
+    "source_page": "p. 9",
+    "source_figure": "Figure 4",
+    "tasks": [
+      {
+        "occupation": "Vocational Education Teachers, Postsecondary",
+        "task": "Develop curricula and plan course content and methods of instruction",
+        "time_without_ai_hours": 4.5,
+        "hourly_wage": 33,
+        "task_cost_usd": 149,
+        "time_savings_pct": 96
+      },
+      {
+        "occupation": "Library Science Teachers, Postsecondary",
+        "task": "Compile bibliographies of specialized materials for outside reading assignments",
+        "time_without_ai_hours": 2.5,
+        "hourly_wage": 41,
+        "task_cost_usd": 101,
+        "time_savings_pct": 93
+      },
+      {
+        "occupation": "Office Clerks",
+        "task": "Troubleshoot problems involving office equipment, such as computer hardware and software",
+        "time_without_ai_hours": 0.3,
+        "hourly_wage": 22,
+        "task_cost_usd": 7,
+        "time_savings_pct": 56
+      },
+      {
+        "occupation": "Social Science Research Assistants",
+        "task": "Prepare tables, graphs, fact sheets, and written reports summarizing research results",
+        "time_without_ai_hours": 2.8,
+        "hourly_wage": 31,
+        "task_cost_usd": 84,
+        "time_savings_pct": 91
+      },
+      {
+        "occupation": "Executive Secretaries and Executive Administration",
+        "task": "Prepare invoices, reports, memos, letters, financial statements, and other documents",
+        "time_without_ai_hours": 1.2,
+        "hourly_wage": 37,
+        "task_cost_usd": 46,
+        "time_savings_pct": 87
+      },
+      {
+        "occupation": "Agricultural Science Teachers, Postsecondary",
+        "task": "Advise students on academic and vocational curricula and on career issues",
+        "time_without_ai_hours": 1.6,
+        "hourly_wage": 47,
+        "task_cost_usd": 76,
+        "time_savings_pct": 83
+      },
+      {
+        "occupation": "Financial Analysts",
+        "task": "Interpret data on price, yield, stability, future investment-risk trends, economic influences, and other factors affecting investment programs",
+        "time_without_ai_hours": 0.8,
+        "hourly_wage": 58,
+        "task_cost_usd": 43,
+        "time_savings_pct": 80
+      },
+      {
+        "occupation": "Educational, Guidance, School, and Vocational Counselors",
+        "task": "Provide students with information on topics such as college degree programs and admission requirements, financial aid opportunities, trade and technical schools",
+        "time_without_ai_hours": 0.4,
+        "hourly_wage": 34,
+        "task_cost_usd": 14,
+        "time_savings_pct": 75
+      },
+      {
+        "occupation": "Secretaries and Administrative Assistants",
+        "task": "Compose, type, and distribute meeting notes, routine correspondence, or reports",
+        "time_without_ai_hours": 0.3,
+        "hourly_wage": 23,
+        "task_cost_usd": 7,
+        "time_savings_pct": 61
+      }
+    ]
+  },
+  "economy_wide_impact": {
+    "description": "Extrapolation of task-level productivity gains to economy-wide impact using Hulten's theorem. Assumes universal adoption of current-generation AI across the US economy over 10 years.",
+    "source_page": "pp. 14–17",
+    "methodology": "Hulten's theorem — weighted average of task-level productivity gains, following Acemoglu (2024) baseline approach. Each task weighted by (i) fraction of occupation's time spent on that task and (ii) occupation's share of total US wage bill.",
+    "implied_annual_labor_productivity_growth_pct": 1.8,
+    "implied_annual_tfp_growth_pct": 1.08,
+    "labor_share_assumption": 0.6,
+    "adoption_timeline_years": 10,
+    "top_contributing_occupations": [
+      {
+        "occupation": "Software Developers",
+        "contribution_to_total_pct": 19,
+        "source_page": "p. 17"
+      },
+      {
+        "occupation": "General and Operations Managers",
+        "contribution_to_total_pct": 6,
+        "source_page": "p. 17"
+      },
+      {
+        "occupation": "Market Research Analysts and Marketing Specialists",
+        "contribution_to_total_pct": 5,
+        "source_page": "p. 17"
+      },
+      {
+        "occupation": "Customer Service Representatives",
+        "contribution_to_total_pct": 4,
+        "source_page": "p. 17"
+      },
+      {
+        "occupation": "Secondary School Teachers",
+        "contribution_to_total_pct": 3,
+        "source_page": "p. 17"
+      }
+    ],
+    "low_contributing_sectors": "Restaurants, healthcare delivery, construction, and retail contribute much less — mostly because few of their tasks appear in the conversation data.",
+    "bottleneck_concept": {
+      "description": "As AI accelerates some tasks, the remaining tasks where AI provides less speedup become a larger share of the occupation's work. These 'bottleneck tasks' may constrain overall productivity gains.",
+      "source_page": "pp. 3, 17",
+      "examples": [
+        {
+          "occupation": "Home Inspectors",
+          "ai_accelerated": "Report preparation",
+          "bottleneck": "Physical property inspection and travel"
+        },
+        {
+          "occupation": "Software Developers",
+          "ai_accelerated": "Development, testing, documentation, data manipulation",
+          "bottleneck": "Coordinating system installation, supervising other engineers"
+        },
+        {
+          "occupation": "Teachers",
+          "ai_accelerated": "Lesson and activity planning",
+          "bottleneck": "Sponsoring extracurricular clubs"
+        }
+      ]
+    }
+  },
+  "validation_summary": {
+    "description": "Summary of the validation methodology and key findings. Relevant to the dashboard as context for how confident learners should be in the productivity estimates.",
+    "source_pages": "pp. 6–8",
+    "self_consistency": {
+      "method": "Multiple prompt variations tested on 1,800 consented conversations",
+      "log_correlation_range": "r = 0.89–0.93",
+      "interpretation": "Estimates are stable across prompt phrasing"
+    },
+    "external_benchmarking": {
+      "method": "Tested against JIRA tickets for open-source repositories with developer estimates and tracked completion times (1,000 tasks)",
+      "developer_accuracy": {
+        "spearman_rho": 0.50,
+        "pearson_r_log": 0.67
+      },
+      "claude_accuracy": {
+        "model": "Claude Sonnet 4.5",
+        "spearman_rho": 0.44,
+        "pearson_r_log": 0.46
+      },
+      "interpretation": "Claude's estimates have similar directional correlation to developer self-estimates, though Claude significantly overestimates short tasks and underestimates long ones."
+    },
+    "compression_bias": "Claude's time estimates are more compressed than reality — predicting comparatively long times for shorter tasks and vice versa. This means actual differences in task lengths may be larger than reported."
+  }
+}
