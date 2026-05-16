@@ -82,8 +82,6 @@ export default function ThankYou(): JSX.Element {
   const onBlogClick = () => track({ type: 'blog_link_clicked' });
   const onLinkedInClick = () => track({ type: 'linkedin_link_clicked' });
   const onXClick = () => track({ type: 'x_link_clicked' });
-  const onGitHubClick = () => track({ type: 'github_profile_link_clicked' });
-  const onRepoClick = () => track({ type: 'source_code_link_clicked' });
   const onWriteupClick = () => track({ type: 'writeup_link_clicked' });
   const onEmailClick = () => track({ type: 'email_link_clicked' });
 
@@ -102,14 +100,13 @@ export default function ThankYou(): JSX.Element {
         onBlogClick={onBlogClick}
         onLinkedInClick={onLinkedInClick}
         onXClick={onXClick}
-        onGitHubClick={onGitHubClick}
       />
 
       <EmailInvitation onClick={onEmailClick} />
 
       <ClosingLine />
 
-      <DiligenceStatement onRepoClick={onRepoClick} />
+      <DiligenceStatement />
     </div>
   );
 }
@@ -133,7 +130,7 @@ export default function ThankYou(): JSX.Element {
 // to in-page anchors, so for now the link drops the reader on the
 // page and they scroll to reach the section.
 
-function DiligenceStatement({ onRepoClick }: { onRepoClick: () => void }): JSX.Element {
+function DiligenceStatement(): JSX.Element {
   // Strip the leading H1 from the markdown — the JSX heading below
   // provides one in the page's typography. The regex matches `# Title`
   // followed by any trailing blank lines.
@@ -172,7 +169,6 @@ function DiligenceStatement({ onRepoClick }: { onRepoClick: () => void }): JSX.E
           href={REPO_URL}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={onRepoClick}
           className="font-medium text-secondary no-underline hover:text-ink hover:underline"
         >
           github.com/mritchot/ai-literacy-platform
@@ -338,12 +334,10 @@ function BlogCard({
   onBlogClick,
   onLinkedInClick,
   onXClick,
-  onGitHubClick,
 }: {
   onBlogClick: () => void;
   onLinkedInClick: () => void;
   onXClick: () => void;
-  onGitHubClick: () => void;
 }): JSX.Element {
   return (
     <section
@@ -431,7 +425,6 @@ function BlogCard({
           href={GITHUB_URL}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={onGitHubClick}
           className="font-medium text-secondary no-underline hover:text-ink hover:underline"
         >
           GitHub
