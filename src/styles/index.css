@@ -149,6 +149,12 @@
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Defensive: horizontal scrolling is never intended UX on this
+       platform. If a component intrinsically overflows the viewport
+       (chart, wide table, long mono string, etc.), clip it rather than
+       letting the whole page scroll right on mobile. Vertical scroll is
+       unaffected — `overflow-x` only constrains the horizontal axis. */
+    overflow-x: hidden;
   }
 
   *,
