@@ -336,19 +336,25 @@ function SummaryBar({
       emphasized: completedSections > 0,
     },
   ];
+  // Responsive layout:
+  //   • Mobile (< 768 CSS px, e.g. iPhone 13 Pro at 390 px): 2×2 grid.
+  //     The original single-row layout intrinsically needed ~640 px and
+  //     overflowed the viewport, which also caused page-wide horizontal
+  //     scrolling. Dividers hide on mobile — they're only meaningful as
+  //     separators between items in a single row.
+  //   • Tablet/desktop (≥ 768 px): the original single flex row with
+  //     vertical dividers between items.
   return (
     <section
       aria-label="Program summary"
-      className="flex items-center rounded-xl border border-border bg-[rgb(var(--white))]"
-      style={{ padding: '18px 28px' }}
+      className="grid grid-cols-2 gap-y-3.5 rounded-xl border border-border bg-[rgb(var(--white))] p-4 sm:flex sm:items-center sm:gap-y-0 sm:px-7 sm:py-[18px]"
     >
       {items.map((it, i) => (
-        <div key={it.label} className="flex flex-1 items-center">
+        <div key={it.label} className="flex items-center sm:flex-1">
           <div className="flex flex-1 items-baseline gap-2.5">
             <span
-              className="font-display"
+              className="font-display text-[22px] sm:text-[28px]"
               style={{
-                fontSize: 28,
                 lineHeight: 1,
                 color: it.emphasized ? 'rgb(var(--action))' : 'rgb(var(--ink))',
               }}
@@ -357,7 +363,7 @@ function SummaryBar({
               {it.n}
             </span>
             <span
-              className="font-mono text-[11px] font-semibold uppercase text-tertiary"
+              className="font-mono text-[10px] font-semibold uppercase text-tertiary sm:text-[11px]"
               style={{ letterSpacing: '0.12em' }}
             >
               {it.label}
@@ -366,7 +372,9 @@ function SummaryBar({
               {it.n} {it.label}
             </span>
           </div>
-          {i < items.length - 1 && <div className="mx-4 h-7 w-px bg-border-light" />}
+          {i < items.length - 1 && (
+            <div className="mx-4 hidden h-7 w-px bg-border-light sm:block" />
+          )}
         </div>
       ))}
     </section>
