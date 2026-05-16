@@ -39,6 +39,16 @@ const BLOG_URL = 'https://ritchot.me/';
 // than buttons — they're discovery affordances, not primary CTAs.
 const LINKEDIN_URL = 'https://www.linkedin.com/in/mritchot/';
 const X_URL = 'https://x.com/MichaelRitchot';
+const GITHUB_URL = 'https://github.com/mritchot';
+
+// Repo URL for the platform itself. Surfaced as a small footer link
+// inside the DiligenceStatement card — the diligence statement says
+// "here's how I built it," so "here's the source if you want to
+// verify" sits in exactly the right context. Not in DILIGENCE.md
+// itself (the canonical doc stays narrative-only); rendered in JSX so
+// the in-app card can carry the in-app context without bloating the
+// markdown source of truth.
+const REPO_URL = 'https://github.com/mritchot/ai-literacy-platform';
 
 // Long-form write-up about the creation of this course — the
 // research, design choices, and build behind it. Currently empty;
@@ -72,6 +82,8 @@ export default function ThankYou(): JSX.Element {
   const onBlogClick = () => track({ type: 'blog_link_clicked' });
   const onLinkedInClick = () => track({ type: 'linkedin_link_clicked' });
   const onXClick = () => track({ type: 'x_link_clicked' });
+  const onGitHubClick = () => track({ type: 'github_profile_link_clicked' });
+  const onRepoClick = () => track({ type: 'source_code_link_clicked' });
   const onWriteupClick = () => track({ type: 'writeup_link_clicked' });
   const onEmailClick = () => track({ type: 'email_link_clicked' });
 
@@ -90,13 +102,14 @@ export default function ThankYou(): JSX.Element {
         onBlogClick={onBlogClick}
         onLinkedInClick={onLinkedInClick}
         onXClick={onXClick}
+        onGitHubClick={onGitHubClick}
       />
 
       <EmailInvitation onClick={onEmailClick} />
 
       <ClosingLine />
 
-      <DiligenceStatement />
+      <DiligenceStatement onRepoClick={onRepoClick} />
     </div>
   );
 }
@@ -120,7 +133,7 @@ export default function ThankYou(): JSX.Element {
 // to in-page anchors, so for now the link drops the reader on the
 // page and they scroll to reach the section.
 
-function DiligenceStatement(): JSX.Element {
+function DiligenceStatement({ onRepoClick }: { onRepoClick: () => void }): JSX.Element {
   // Strip the leading H1 from the markdown — the JSX heading below
   // provides one in the page's typography. The regex matches `# Title`
   // followed by any trailing blank lines.
@@ -145,6 +158,25 @@ function DiligenceStatement(): JSX.Element {
       </h2>
       <div className="font-sans text-body text-body" style={{ lineHeight: 1.65 }}>
         {renderMarkdownLite(body)}
+      </div>
+      {/* Source-code footer — in-app addition that doesn't live in
+          DILIGENCE.md. Gives the diligence statement the equivalent
+          of an "audit trail" footnote: read the disclosure, then verify
+          against the source if you want. Divider + caption-sized link
+          to keep the visual weight quiet relative to the statement
+          body, and visually echoes the BlogCard's "Find me elsewhere"
+          treatment elsewhere on the page. */}
+      <div className="mt-6 border-t border-border-light pt-4 font-sans text-caption text-tertiary" style={{ lineHeight: 1.5 }}>
+        Source code:{' '}
+        <a
+          href={REPO_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onRepoClick}
+          className="font-medium text-secondary no-underline hover:text-ink hover:underline"
+        >
+          github.com/mritchot/ai-literacy-platform
+        </a>
       </div>
     </section>
   );
@@ -306,10 +338,12 @@ function BlogCard({
   onBlogClick,
   onLinkedInClick,
   onXClick,
+  onGitHubClick,
 }: {
   onBlogClick: () => void;
   onLinkedInClick: () => void;
   onXClick: () => void;
+  onGitHubClick: () => void;
 }): JSX.Element {
   return (
     <section
@@ -389,6 +423,18 @@ function BlogCard({
           className="font-medium text-secondary no-underline hover:text-ink hover:underline"
         >
           X
+        </a>
+        <span aria-hidden="true" className="text-subtle">
+          ·
+        </span>
+        <a
+          href={GITHUB_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onGitHubClick}
+          className="font-medium text-secondary no-underline hover:text-ink hover:underline"
+        >
+          GitHub
         </a>
       </div>
     </section>
