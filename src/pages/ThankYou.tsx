@@ -82,8 +82,6 @@ export default function ThankYou(): JSX.Element {
     <div className="mx-auto max-w-reading px-4 py-14 sm:px-8 lg:px-16 lg:py-16">
       <OriginStory />
 
-      <DiligenceStatement />
-
       {showWriteup && <WriteupBlock onClick={onWriteupClick} />}
 
       {showTipSection && <TipCard onClick={onTipClick} />}
@@ -97,6 +95,8 @@ export default function ThankYou(): JSX.Element {
       <EmailInvitation onClick={onEmailClick} />
 
       <ClosingLine />
+
+      <DiligenceStatement />
     </div>
   );
 }
@@ -106,17 +106,19 @@ export default function ThankYou(): JSX.Element {
 // Course-level AI diligence statement — the meta-disclosure about
 // what AI did and didn't do in building this course. Eats the course's
 // own dog food: the course teaches diligence statements as a practice,
-// and this is one for the course itself. Placed right after the origin
-// story so the "about this course" content (creator voice + AI
-// disclosure) sits together, before the CTA flow begins.
+// and this is one for the course itself.
 //
-// Card chrome with the DILIGENCE accent border visually frames it as a
-// discrete document rather than continuation of the origin story's
-// prose. The `id="diligence-statement"` anchor target is referenced by
-// the landing-page footer link so a future in-page jump could land on
-// the section directly (HashRouter currently doesn't auto-scroll to
-// in-page anchors, so for now the link drops the reader on the page
-// and the section is high enough that minimal scrolling is needed).
+// Placed at the very bottom of the page, beneath the closing line, so
+// the warm first-person content (origin story → CTAs → sign-off) flows
+// uninterrupted and the formal disclosure sits as an appendix the
+// reader meets only after the personal voice has done its work. Card
+// chrome with the DILIGENCE accent border frames it as a discrete
+// document rather than continuation of the page's prose.
+//
+// The `id="diligence-statement"` anchor target is referenced by the
+// landing-page footer link; HashRouter currently doesn't auto-scroll
+// to in-page anchors, so for now the link drops the reader on the
+// page and they scroll to reach the section.
 
 function DiligenceStatement(): JSX.Element {
   // Strip the leading H1 from the markdown — the JSX heading below
