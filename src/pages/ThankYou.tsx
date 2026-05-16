@@ -15,6 +15,15 @@
 
 import { useEffect, useRef } from 'react';
 import { useAnalytics } from '../contexts/AnalyticsContext';
+import { renderMarkdownLite } from '../modules/module4/render-markdown-lite';
+
+// The full diligence-statement prose lives in DILIGENCE.md at the repo
+// root (rendered on GitHub for public visibility) and is loaded here via
+// Vite's `?raw` import so the markdown file is the single source of
+// truth — edits to DILIGENCE.md propagate to this page on the next
+// build. The leading `# AI Diligence Statement` H1 is stripped before
+// rendering since the section provides its own JSX heading.
+import DILIGENCE_MARKDOWN from '../../DILIGENCE.md?raw';
 
 // Stripe Payment Link — set this to the live URL once the Stripe
 // account is configured. While the constant is empty, the tip section
@@ -73,6 +82,8 @@ export default function ThankYou(): JSX.Element {
     <div className="mx-auto max-w-reading px-4 py-14 sm:px-8 lg:px-16 lg:py-16">
       <OriginStory />
 
+      <DiligenceStatement />
+
       {showWriteup && <WriteupBlock onClick={onWriteupClick} />}
 
       {showTipSection && <TipCard onClick={onTipClick} />}
@@ -87,6 +98,53 @@ export default function ThankYou(): JSX.Element {
 
       <ClosingLine />
     </div>
+  );
+}
+
+// ─── Diligence statement ──────────────────────────────────────────
+//
+// Course-level AI diligence statement — the meta-disclosure about
+// what AI did and didn't do in building this course. Eats the course's
+// own dog food: the course teaches diligence statements as a practice,
+// and this is one for the course itself. Placed right after the origin
+// story so the "about this course" content (creator voice + AI
+// disclosure) sits together, before the CTA flow begins.
+//
+// Card chrome with the DILIGENCE accent border visually frames it as a
+// discrete document rather than continuation of the origin story's
+// prose. The `id="diligence-statement"` anchor target is referenced by
+// the landing-page footer link so a future in-page jump could land on
+// the section directly (HashRouter currently doesn't auto-scroll to
+// in-page anchors, so for now the link drops the reader on the page
+// and the section is high enough that minimal scrolling is needed).
+
+function DiligenceStatement(): JSX.Element {
+  // Strip the leading H1 from the markdown — the JSX heading below
+  // provides one in the page's typography. The regex matches `# Title`
+  // followed by any trailing blank lines.
+  const body = DILIGENCE_MARKDOWN.replace(/^#\s+.+\n+/, '');
+  return (
+    <section
+      aria-label="AI Diligence Statement"
+      id="diligence-statement"
+      className="mt-10 rounded-lg"
+      style={{
+        background: 'rgb(var(--white))',
+        border: '1px solid rgb(var(--border))',
+        borderTop: `3px solid ${DILIGENCE}`,
+        padding: '24px 26px',
+      }}
+    >
+      <h2
+        className="m-0 mb-5 font-sans text-h3 font-semibold text-ink"
+        style={{ letterSpacing: '-0.005em' }}
+      >
+        AI Diligence Statement
+      </h2>
+      <div className="font-sans text-body text-body" style={{ lineHeight: 1.65 }}>
+        {renderMarkdownLite(body)}
+      </div>
+    </section>
   );
 }
 

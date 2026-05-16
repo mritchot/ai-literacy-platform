@@ -438,6 +438,16 @@ function AttributionFooter(): JSX.Element {
         </a>
         .
       </p>
+      <p className="m-0">
+        Built with AI assistance. See the{' '}
+        <a
+          href="#/thank-you"
+          className="text-tertiary underline hover:text-secondary"
+        >
+          AI Diligence Statement
+        </a>
+        .
+      </p>
     </div>
   );
 }
