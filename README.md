@@ -104,7 +104,8 @@ Content traces to specific findings from:
 - Anthropic Interviewer (2025) — professional attitudes and stigma
 - WEF Future of Jobs Report (2025) — skill demand projections
 - Hardman — transfer research and practice-based methods
-- Karpathy — technical foundations for Module 3
+
+This is the v1 minimum-viable corpus. Additional research will be added in future iterations of the course.
 
 ## License
 
