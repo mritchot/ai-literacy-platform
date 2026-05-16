@@ -1,0 +1,955 @@
+{
+  "_metadata": {
+    "source": "Anthropic Economic Index: Uneven Geographic and Enterprise AI Adoption (Appel, McCrory & Tamkin, September 15, 2025)",
+    "dataset": "https://huggingface.co/datasets/Anthropic/EconomicIndex",
+    "license": "MIT",
+    "sample": "1 million Claude.ai Free and Pro conversations, August 4\u201311, 2025",
+    "minimumObservations": 200,
+    "regressionStats": {
+      "beta": 0.69,
+      "rSquared": 0.709,
+      "pValue": "<0.001",
+      "description": "Power law: AUI ~ GDP^0.69"
+    }
+  },
+  "countries": [
+    {
+      "country": "Israel",
+      "iso3": "ISR",
+      "aui": 7.0,
+      "gdpPerWorkingAgeCap": 90237,
+      "tier": "Leading",
+      "usageCount": 10941
+    },
+    {
+      "country": "Singapore",
+      "iso3": "SGP",
+      "aui": 4.57,
+      "gdpPerWorkingAgeCap": 121453,
+      "tier": "Leading",
+      "usageCount": 5375
+    },
+    {
+      "country": "Australia",
+      "iso3": "AUS",
+      "aui": 4.1,
+      "gdpPerWorkingAgeCap": 102513,
+      "tier": "Leading",
+      "usageCount": 18753
+    },
+    {
+      "country": "New Zealand",
+      "iso3": "NZL",
+      "aui": 4.05,
+      "gdpPerWorkingAgeCap": 74634,
+      "tier": "Leading",
+      "usageCount": 3647
+    },
+    {
+      "country": "South Korea",
+      "iso3": "KOR",
+      "aui": 3.73,
+      "gdpPerWorkingAgeCap": 51496,
+      "tier": "Leading",
+      "usageCount": 35285
+    },
+    {
+      "country": "United States",
+      "iso3": "USA",
+      "aui": 3.62,
+      "gdpPerWorkingAgeCap": 132532,
+      "tier": "Leading",
+      "usageCount": 208200
+    },
+    {
+      "country": "Estonia",
+      "iso3": "EST",
+      "aui": 3.11,
+      "gdpPerWorkingAgeCap": 49410,
+      "tier": "Leading",
+      "usageCount": 701
+    },
+    {
+      "country": "Canada",
+      "iso3": "CAN",
+      "aui": 2.91,
+      "gdpPerWorkingAgeCap": 83397,
+      "tier": "Leading",
+      "usageCount": 20426
+    },
+    {
+      "country": "Malta",
+      "iso3": "MLT",
+      "aui": 2.83,
+      "gdpPerWorkingAgeCap": 63417,
+      "tier": "Leading",
+      "usageCount": 283
+    },
+    {
+      "country": "Switzerland",
+      "iso3": "CHE",
+      "aui": 2.81,
+      "gdpPerWorkingAgeCap": 159448,
+      "tier": "Leading",
+      "usageCount": 4311
+    },
+    {
+      "country": "Luxembourg",
+      "iso3": "LUX",
+      "aui": 2.74,
+      "gdpPerWorkingAgeCap": 199974,
+      "tier": "Leading",
+      "usageCount": 333
+    },
+    {
+      "country": "United Kingdom",
+      "iso3": "GBR",
+      "aui": 2.67,
+      "gdpPerWorkingAgeCap": 83153,
+      "tier": "Leading",
+      "usageCount": 30474
+    },
+    {
+      "country": "The Netherlands",
+      "iso3": "NLD",
+      "aui": 2.56,
+      "gdpPerWorkingAgeCap": 105769,
+      "tier": "Leading",
+      "usageCount": 7752
+    },
+    {
+      "country": "Cyprus",
+      "iso3": "CYP",
+      "aui": 2.39,
+      "gdpPerWorkingAgeCap": 38405,
+      "tier": "Leading",
+      "usageCount": 587
+    },
+    {
+      "country": "Denmark",
+      "iso3": "DNK",
+      "aui": 2.31,
+      "gdpPerWorkingAgeCap": 113264,
+      "tier": "Leading",
+      "usageCount": 2282
+    },
+    {
+      "country": "Taiwan",
+      "iso3": "TWN",
+      "aui": 2.29,
+      "gdpPerWorkingAgeCap": 48391,
+      "tier": "Leading",
+      "usageCount": 9680
+    },
+    {
+      "country": "Ireland",
+      "iso3": "IRL",
+      "aui": 2.26,
+      "gdpPerWorkingAgeCap": 163661,
+      "tier": "Leading",
+      "usageCount": 2077
+    },
+    {
+      "country": "Norway",
+      "iso3": "NOR",
+      "aui": 2.26,
+      "gdpPerWorkingAgeCap": 133500,
+      "tier": "Leading",
+      "usageCount": 2136
+    },
+    {
+      "country": "Sweden",
+      "iso3": "SWE",
+      "aui": 2.2,
+      "gdpPerWorkingAgeCap": 92702,
+      "tier": "Leading",
+      "usageCount": 3775
+    },
+    {
+      "country": "Georgia",
+      "iso3": "GEO",
+      "aui": 2.19,
+      "gdpPerWorkingAgeCap": 14463,
+      "tier": "Leading",
+      "usageCount": 1335
+    },
+    {
+      "country": "Lithuania",
+      "iso3": "LTU",
+      "aui": 2.13,
+      "gdpPerWorkingAgeCap": 45109,
+      "tier": "Leading",
+      "usageCount": 1045
+    },
+    {
+      "country": "Montenegro",
+      "iso3": "MNE",
+      "aui": 2.13,
+      "gdpPerWorkingAgeCap": 20082,
+      "tier": "Leading",
+      "usageCount": 222
+    },
+    {
+      "country": "Latvia",
+      "iso3": "LVA",
+      "aui": 2.11,
+      "gdpPerWorkingAgeCap": 37169,
+      "tier": "Leading",
+      "usageCount": 645
+    },
+    {
+      "country": "Portugal",
+      "iso3": "PRT",
+      "aui": 2.01,
+      "gdpPerWorkingAgeCap": 46014,
+      "tier": "Leading",
+      "usageCount": 3521
+    },
+    {
+      "country": "France",
+      "iso3": "FRA",
+      "aui": 1.94,
+      "gdpPerWorkingAgeCap": 75226,
+      "tier": "Leading",
+      "usageCount": 21314
+    },
+    {
+      "country": "Finland",
+      "iso3": "FIN",
+      "aui": 1.89,
+      "gdpPerWorkingAgeCap": 86239,
+      "tier": "Leading",
+      "usageCount": 1708
+    },
+    {
+      "country": "Belgium",
+      "iso3": "BEL",
+      "aui": 1.86,
+      "gdpPerWorkingAgeCap": 88246,
+      "tier": "Leading",
+      "usageCount": 3659
+    },
+    {
+      "country": "Japan",
+      "iso3": "JPN",
+      "aui": 1.86,
+      "gdpPerWorkingAgeCap": 55247,
+      "tier": "Leading",
+      "usageCount": 35298
+    },
+    {
+      "country": "Germany",
+      "iso3": "DEU",
+      "aui": 1.84,
+      "gdpPerWorkingAgeCap": 88694,
+      "tier": "Leading",
+      "usageCount": 25143
+    },
+    {
+      "country": "Czechia",
+      "iso3": "CZE",
+      "aui": 1.71,
+      "gdpPerWorkingAgeCap": 49715,
+      "tier": "Upper Middle",
+      "usageCount": 3097
+    },
+    {
+      "country": "Austria",
+      "iso3": "AUT",
+      "aui": 1.67,
+      "gdpPerWorkingAgeCap": 87151,
+      "tier": "Upper Middle",
+      "usageCount": 2600
+    },
+    {
+      "country": "Slovenia",
+      "iso3": "SVN",
+      "aui": 1.65,
+      "gdpPerWorkingAgeCap": 53657,
+      "tier": "Upper Middle",
+      "usageCount": 583
+    },
+    {
+      "country": "Poland",
+      "iso3": "POL",
+      "aui": 1.61,
+      "gdpPerWorkingAgeCap": 38209,
+      "tier": "Upper Middle",
+      "usageCount": 9972
+    },
+    {
+      "country": "Armenia",
+      "iso3": "ARM",
+      "aui": 1.54,
+      "gdpPerWorkingAgeCap": 12551,
+      "tier": "Upper Middle",
+      "usageCount": 818
+    },
+    {
+      "country": "Italy",
+      "iso3": "ITA",
+      "aui": 1.47,
+      "gdpPerWorkingAgeCap": 63346,
+      "tier": "Upper Middle",
+      "usageCount": 14383
+    },
+    {
+      "country": "Bulgaria",
+      "iso3": "BGR",
+      "aui": 1.46,
+      "gdpPerWorkingAgeCap": 27428,
+      "tier": "Upper Middle",
+      "usageCount": 1558
+    },
+    {
+      "country": "Croatia",
+      "iso3": "HRV",
+      "aui": 1.42,
+      "gdpPerWorkingAgeCap": 38045,
+      "tier": "Upper Middle",
+      "usageCount": 900
+    },
+    {
+      "country": "Serbia",
+      "iso3": "SRB",
+      "aui": 1.42,
+      "gdpPerWorkingAgeCap": 21463,
+      "tier": "Upper Middle",
+      "usageCount": 1539
+    },
+    {
+      "country": "Mauritius",
+      "iso3": "MUS",
+      "aui": 1.33,
+      "gdpPerWorkingAgeCap": 16566,
+      "tier": "Upper Middle",
+      "usageCount": 312
+    },
+    {
+      "country": "Costa Rica",
+      "iso3": "CRI",
+      "aui": 1.31,
+      "gdpPerWorkingAgeCap": 26952,
+      "tier": "Upper Middle",
+      "usageCount": 1211
+    },
+    {
+      "country": "Uruguay",
+      "iso3": "URY",
+      "aui": 1.31,
+      "gdpPerWorkingAgeCap": 36408,
+      "tier": "Upper Middle",
+      "usageCount": 762
+    },
+    {
+      "country": "United Arab Emirates",
+      "iso3": "ARE",
+      "aui": 1.29,
+      "gdpPerWorkingAgeCap": 60127,
+      "tier": "Upper Middle",
+      "usageCount": 3011
+    },
+    {
+      "country": "Greece",
+      "iso3": "GRC",
+      "aui": 1.28,
+      "gdpPerWorkingAgeCap": 39377,
+      "tier": "Upper Middle",
+      "usageCount": 2188
+    },
+    {
+      "country": "Spain",
+      "iso3": "ESP",
+      "aui": 1.26,
+      "gdpPerWorkingAgeCap": 53519,
+      "tier": "Upper Middle",
+      "usageCount": 10582
+    },
+    {
+      "country": "Moldova",
+      "iso3": "MDA",
+      "aui": 1.24,
+      "gdpPerWorkingAgeCap": 11854,
+      "tier": "Upper Middle",
+      "usageCount": 493
+    },
+    {
+      "country": "Chile",
+      "iso3": "CHL",
+      "aui": 1.16,
+      "gdpPerWorkingAgeCap": 24249,
+      "tier": "Upper Middle",
+      "usageCount": 4115
+    },
+    {
+      "country": "North Macedonia",
+      "iso3": "MKD",
+      "aui": 1.08,
+      "gdpPerWorkingAgeCap": 14284,
+      "tier": "Upper Middle",
+      "usageCount": 330
+    },
+    {
+      "country": "Romania",
+      "iso3": "ROU",
+      "aui": 1.04,
+      "gdpPerWorkingAgeCap": 31328,
+      "tier": "Upper Middle",
+      "usageCount": 3327
+    },
+    {
+      "country": "Sri Lanka",
+      "iso3": "LKA",
+      "aui": 1.01,
+      "gdpPerWorkingAgeCap": 6856,
+      "tier": "Upper Middle",
+      "usageCount": 3795
+    },
+    {
+      "country": "Slovakia",
+      "iso3": "SVK",
+      "aui": 0.97,
+      "gdpPerWorkingAgeCap": 39478,
+      "tier": "Upper Middle",
+      "usageCount": 903
+    },
+    {
+      "country": "Ecuador",
+      "iso3": "ECU",
+      "aui": 0.96,
+      "gdpPerWorkingAgeCap": 9988,
+      "tier": "Upper Middle",
+      "usageCount": 3042
+    },
+    {
+      "country": "Hungary",
+      "iso3": "HUN",
+      "aui": 0.95,
+      "gdpPerWorkingAgeCap": 36107,
+      "tier": "Upper Middle",
+      "usageCount": 1524
+    },
+    {
+      "country": "Thailand",
+      "iso3": "THA",
+      "aui": 0.94,
+      "gdpPerWorkingAgeCap": 10510,
+      "tier": "Upper Middle",
+      "usageCount": 12219
+    },
+    {
+      "country": "Brazil",
+      "iso3": "BRA",
+      "aui": 0.93,
+      "gdpPerWorkingAgeCap": 14783,
+      "tier": "Upper Middle",
+      "usageCount": 35482
+    },
+    {
+      "country": "Ukraine",
+      "iso3": "UKR",
+      "aui": 0.92,
+      "gdpPerWorkingAgeCap": 7490,
+      "tier": "Upper Middle",
+      "usageCount": 6122
+    },
+    {
+      "country": "Panama",
+      "iso3": "PAN",
+      "aui": 0.91,
+      "gdpPerWorkingAgeCap": 29534,
+      "tier": "Upper Middle",
+      "usageCount": 703
+    },
+    {
+      "country": "Tunisia",
+      "iso3": "TUN",
+      "aui": 0.89,
+      "gdpPerWorkingAgeCap": 6506,
+      "tier": "Upper Middle",
+      "usageCount": 1886
+    },
+    {
+      "country": "Peru",
+      "iso3": "PER",
+      "aui": 0.85,
+      "gdpPerWorkingAgeCap": 12646,
+      "tier": "Lower Middle",
+      "usageCount": 5060
+    },
+    {
+      "country": "Puerto Rico",
+      "iso3": "PRI",
+      "aui": 0.83,
+      "gdpPerWorkingAgeCap": 59333,
+      "tier": "Lower Middle",
+      "usageCount": 444
+    },
+    {
+      "country": "Colombia",
+      "iso3": "COL",
+      "aui": 0.82,
+      "gdpPerWorkingAgeCap": 11314,
+      "tier": "Lower Middle",
+      "usageCount": 7948
+    },
+    {
+      "country": "Albania",
+      "iso3": "ALB",
+      "aui": 0.79,
+      "gdpPerWorkingAgeCap": 15160,
+      "tier": "Lower Middle",
+      "usageCount": 370
+    },
+    {
+      "country": "Argentina",
+      "iso3": "ARG",
+      "aui": 0.78,
+      "gdpPerWorkingAgeCap": 20966,
+      "tier": "Lower Middle",
+      "usageCount": 6168
+    },
+    {
+      "country": "Qatar",
+      "iso3": "QAT",
+      "aui": 0.77,
+      "gdpPerWorkingAgeCap": 93077,
+      "tier": "Lower Middle",
+      "usageCount": 476
+    },
+    {
+      "country": "Malaysia",
+      "iso3": "MYS",
+      "aui": 0.75,
+      "gdpPerWorkingAgeCap": 16745,
+      "tier": "Lower Middle",
+      "usageCount": 4881
+    },
+    {
+      "country": "Morocco",
+      "iso3": "MAR",
+      "aui": 0.74,
+      "gdpPerWorkingAgeCap": 6160,
+      "tier": "Lower Middle",
+      "usageCount": 4845
+    },
+    {
+      "country": "Lebanon",
+      "iso3": "LBN",
+      "aui": 0.72,
+      "gdpPerWorkingAgeCap": 7650,
+      "tier": "Lower Middle",
+      "usageCount": 698
+    },
+    {
+      "country": "Bahrain",
+      "iso3": "BHR",
+      "aui": 0.71,
+      "gdpPerWorkingAgeCap": 38162,
+      "tier": "Lower Middle",
+      "usageCount": 228
+    },
+    {
+      "country": "Turkey",
+      "iso3": "TUR",
+      "aui": 0.68,
+      "gdpPerWorkingAgeCap": 22651,
+      "tier": "Lower Middle",
+      "usageCount": 10402
+    },
+    {
+      "country": "Bosnia and Herzegovina",
+      "iso3": "BIH",
+      "aui": 0.67,
+      "gdpPerWorkingAgeCap": 14058,
+      "tier": "Lower Middle",
+      "usageCount": 360
+    },
+    {
+      "country": "Vietnam",
+      "iso3": "VNM",
+      "aui": 0.6,
+      "gdpPerWorkingAgeCap": 6718,
+      "tier": "Lower Middle",
+      "usageCount": 10651
+    },
+    {
+      "country": "Dominican Republic",
+      "iso3": "DOM",
+      "aui": 0.58,
+      "gdpPerWorkingAgeCap": 16638,
+      "tier": "Lower Middle",
+      "usageCount": 1131
+    },
+    {
+      "country": "Paraguay",
+      "iso3": "PRY",
+      "aui": 0.58,
+      "gdpPerWorkingAgeCap": 9786,
+      "tier": "Lower Middle",
+      "usageCount": 677
+    },
+    {
+      "country": "Jamaica",
+      "iso3": "JAM",
+      "aui": 0.57,
+      "gdpPerWorkingAgeCap": 9671,
+      "tier": "Lower Middle",
+      "usageCount": 310
+    },
+    {
+      "country": "Bolivia",
+      "iso3": "BOL",
+      "aui": 0.48,
+      "gdpPerWorkingAgeCap": 6039,
+      "tier": "Lower Middle",
+      "usageCount": 1012
+    },
+    {
+      "country": "Jordan",
+      "iso3": "JOR",
+      "aui": 0.46,
+      "gdpPerWorkingAgeCap": 7136,
+      "tier": "Lower Middle",
+      "usageCount": 893
+    },
+    {
+      "country": "Kenya",
+      "iso3": "KEN",
+      "aui": 0.46,
+      "gdpPerWorkingAgeCap": 3559,
+      "tier": "Lower Middle",
+      "usageCount": 4065
+    },
+    {
+      "country": "South Africa",
+      "iso3": "ZAF",
+      "aui": 0.46,
+      "gdpPerWorkingAgeCap": 9273,
+      "tier": "Lower Middle",
+      "usageCount": 5152
+    },
+    {
+      "country": "Philippines",
+      "iso3": "PHL",
+      "aui": 0.45,
+      "gdpPerWorkingAgeCap": 5980,
+      "tier": "Lower Middle",
+      "usageCount": 9075
+    },
+    {
+      "country": "Nepal",
+      "iso3": "NPL",
+      "aui": 0.42,
+      "gdpPerWorkingAgeCap": 2250,
+      "tier": "Lower Middle",
+      "usageCount": 2123
+    },
+    {
+      "country": "Kazakhstan",
+      "iso3": "KAZ",
+      "aui": 0.41,
+      "gdpPerWorkingAgeCap": 22317,
+      "tier": "Lower Middle",
+      "usageCount": 1371
+    },
+    {
+      "country": "Saudi Arabia",
+      "iso3": "SAU",
+      "aui": 0.41,
+      "gdpPerWorkingAgeCap": 41986,
+      "tier": "Lower Middle",
+      "usageCount": 2794
+    },
+    {
+      "country": "Mexico",
+      "iso3": "MEX",
+      "aui": 0.4,
+      "gdpPerWorkingAgeCap": 21055,
+      "tier": "Lower Middle",
+      "usageCount": 9172
+    },
+    {
+      "country": "El Salvador",
+      "iso3": "SLV",
+      "aui": 0.4,
+      "gdpPerWorkingAgeCap": 8316,
+      "tier": "Lower Middle",
+      "usageCount": 443
+    },
+    {
+      "country": "Iraq",
+      "iso3": "IRQ",
+      "aui": 0.39,
+      "gdpPerWorkingAgeCap": 10044,
+      "tier": "Lower Middle",
+      "usageCount": 2840
+    },
+    {
+      "country": "Palestinian Territory",
+      "iso3": "PSE",
+      "aui": 0.38,
+      "gdpPerWorkingAgeCap": 0,
+      "tier": "Lower Middle",
+      "usageCount": 307
+    },
+    {
+      "country": "Guatemala",
+      "iso3": "GTM",
+      "aui": 0.37,
+      "gdpPerWorkingAgeCap": 9621,
+      "tier": "Lower Middle",
+      "usageCount": 1116
+    },
+    {
+      "country": "Indonesia",
+      "iso3": "IDN",
+      "aui": 0.36,
+      "gdpPerWorkingAgeCap": 7231,
+      "tier": "Emerging",
+      "usageCount": 18030
+    },
+    {
+      "country": "Ghana",
+      "iso3": "GHA",
+      "aui": 0.35,
+      "gdpPerWorkingAgeCap": 3978,
+      "tier": "Emerging",
+      "usageCount": 1892
+    },
+    {
+      "country": "Kuwait",
+      "iso3": "KWT",
+      "aui": 0.34,
+      "gdpPerWorkingAgeCap": 40521,
+      "tier": "Emerging",
+      "usageCount": 344
+    },
+    {
+      "country": "Oman",
+      "iso3": "OMN",
+      "aui": 0.3,
+      "gdpPerWorkingAgeCap": 27875,
+      "tier": "Emerging",
+      "usageCount": 297
+    },
+    {
+      "country": "Rwanda",
+      "iso3": "RWA",
+      "aui": 0.3,
+      "gdpPerWorkingAgeCap": 1703,
+      "tier": "Emerging",
+      "usageCount": 653
+    },
+    {
+      "country": "Laos",
+      "iso3": "LAO",
+      "aui": 0.29,
+      "gdpPerWorkingAgeCap": 3138,
+      "tier": "Emerging",
+      "usageCount": 381
+    },
+    {
+      "country": "Senegal",
+      "iso3": "SEN",
+      "aui": 0.29,
+      "gdpPerWorkingAgeCap": 3055,
+      "tier": "Emerging",
+      "usageCount": 828
+    },
+    {
+      "country": "Egypt",
+      "iso3": "EGY",
+      "aui": 0.28,
+      "gdpPerWorkingAgeCap": 5227,
+      "tier": "Emerging",
+      "usageCount": 5376
+    },
+    {
+      "country": "India",
+      "iso3": "IND",
+      "aui": 0.27,
+      "gdpPerWorkingAgeCap": 3949,
+      "tier": "Emerging",
+      "usageCount": 68964
+    },
+    {
+      "country": "Azerbaijan",
+      "iso3": "AZE",
+      "aui": 0.26,
+      "gdpPerWorkingAgeCap": 10460,
+      "tier": "Emerging",
+      "usageCount": 484
+    },
+    {
+      "country": "Benin",
+      "iso3": "BEN",
+      "aui": 0.25,
+      "gdpPerWorkingAgeCap": 2655,
+      "tier": "Emerging",
+      "usageCount": 527
+    },
+    {
+      "country": "Algeria",
+      "iso3": "DZA",
+      "aui": 0.25,
+      "gdpPerWorkingAgeCap": 8970,
+      "tier": "Emerging",
+      "usageCount": 1958
+    },
+    {
+      "country": "Cambodia",
+      "iso3": "KHM",
+      "aui": 0.25,
+      "gdpPerWorkingAgeCap": 4190,
+      "tier": "Emerging",
+      "usageCount": 733
+    },
+    {
+      "country": "Honduras",
+      "iso3": "HND",
+      "aui": 0.24,
+      "gdpPerWorkingAgeCap": 5256,
+      "tier": "Emerging",
+      "usageCount": 433
+    },
+    {
+      "country": "Kyrgyzstan",
+      "iso3": "KGZ",
+      "aui": 0.24,
+      "gdpPerWorkingAgeCap": 3906,
+      "tier": "Emerging",
+      "usageCount": 276
+    },
+    {
+      "country": "Pakistan",
+      "iso3": "PAK",
+      "aui": 0.24,
+      "gdpPerWorkingAgeCap": 2515,
+      "tier": "Emerging",
+      "usageCount": 9264
+    },
+    {
+      "country": "Cameroon",
+      "iso3": "CMR",
+      "aui": 0.22,
+      "gdpPerWorkingAgeCap": 3250,
+      "tier": "Emerging",
+      "usageCount": 937
+    },
+    {
+      "country": "Ivory Coast",
+      "iso3": "CIV",
+      "aui": 0.2,
+      "gdpPerWorkingAgeCap": 4825,
+      "tier": "Emerging",
+      "usageCount": 939
+    },
+    {
+      "country": "Nigeria",
+      "iso3": "NGA",
+      "aui": 0.2,
+      "gdpPerWorkingAgeCap": 1442,
+      "tier": "Emerging",
+      "usageCount": 6855
+    },
+    {
+      "country": "Zimbabwe",
+      "iso3": "ZWE",
+      "aui": 0.15,
+      "gdpPerWorkingAgeCap": 3814,
+      "tier": "Emerging",
+      "usageCount": 370
+    },
+    {
+      "country": "Madagascar",
+      "iso3": "MDG",
+      "aui": 0.12,
+      "gdpPerWorkingAgeCap": 950,
+      "tier": "Emerging",
+      "usageCount": 583
+    },
+    {
+      "country": "Bangladesh",
+      "iso3": "BGD",
+      "aui": 0.11,
+      "gdpPerWorkingAgeCap": 3967,
+      "tier": "Emerging",
+      "usageCount": 3318
+    },
+    {
+      "country": "Zambia",
+      "iso3": "ZMB",
+      "aui": 0.11,
+      "gdpPerWorkingAgeCap": 2182,
+      "tier": "Emerging",
+      "usageCount": 359
+    },
+    {
+      "country": "Mozambique",
+      "iso3": "MOZ",
+      "aui": 0.1,
+      "gdpPerWorkingAgeCap": 1201,
+      "tier": "Emerging",
+      "usageCount": 453
+    },
+    {
+      "country": "Uganda",
+      "iso3": "UGA",
+      "aui": 0.09,
+      "gdpPerWorkingAgeCap": 2080,
+      "tier": "Emerging",
+      "usageCount": 608
+    },
+    {
+      "country": "Burkina Faso",
+      "iso3": "BFA",
+      "aui": 0.08,
+      "gdpPerWorkingAgeCap": 1833,
+      "tier": "Emerging",
+      "usageCount": 273
+    },
+    {
+      "country": "Uzbekistan",
+      "iso3": "UZB",
+      "aui": 0.08,
+      "gdpPerWorkingAgeCap": 5016,
+      "tier": "Emerging",
+      "usageCount": 479
+    },
+    {
+      "country": "Angola",
+      "iso3": "AGO",
+      "aui": 0.05,
+      "gdpPerWorkingAgeCap": 5797,
+      "tier": "Emerging",
+      "usageCount": 238
+    },
+    {
+      "country": "Tanzania",
+      "iso3": "TZA",
+      "aui": 0.04,
+      "gdpPerWorkingAgeCap": 2149,
+      "tier": "Emerging",
+      "usageCount": 405
+    }
+  ],
+  "tierRanges": {
+    "Emerging": {
+      "min": 0.04,
+      "max": 0.36
+    },
+    "Lower Middle": {
+      "min": 0.37,
+      "max": 0.85
+    },
+    "Upper Middle": {
+      "min": 0.89,
+      "max": 1.71
+    },
+    "Leading": {
+      "min": 1.84,
+      "max": 7.0
+    }
+  }
+}

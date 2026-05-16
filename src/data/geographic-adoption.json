@@ -1,0 +1,333 @@
+{
+  "_metadata": {
+    "source": "Appel, McCrory, and Tamkin. 'Anthropic Economic Index Report: Uneven Geographic and Enterprise AI Adoption.' Anthropic, September 15, 2025.",
+    "dataCollection": "Privacy-preserving analysis of 1 million Claude.ai Free and Pro conversations from August 4–11, 2025, randomly sampled. API data from 1P API customers analyzed separately.",
+    "measure": "Anthropic AI Usage Index (AUI) = share of Claude usage / share of working-age population (ages 15–64). AUI > 1 indicates higher usage than expected; AUI < 1 indicates lower usage.",
+    "minimumObservations": {
+      "countries": 200,
+      "usStates": 100
+    },
+    "notes": [
+      "Excludes conversations flagged as potential trust and safety violations.",
+      "Excludes conversations originating from VPN, anycast, or hosting services.",
+      "Unit of observation is a conversation, not a user."
+    ]
+  },
+
+  "countryAUI": {
+    "_source": "Figure 2.2, p. 14; narrative text pp. 14–16",
+    "top20": [
+      { "rank": 1,  "country": "Israel",          "iso3": "ISR", "aui": 7.00, "sampleSize": "10.9k" },
+      { "rank": 2,  "country": "Singapore",        "iso3": "SGP", "aui": 4.57, "sampleSize": "5.4k" },
+      { "rank": 3,  "country": "Australia",         "iso3": "AUS", "aui": 4.10, "sampleSize": "18.8k" },
+      { "rank": 4,  "country": "New Zealand",       "iso3": "NZL", "aui": 4.05, "sampleSize": "3.6k" },
+      { "rank": 5,  "country": "South Korea",       "iso3": "KOR", "aui": 3.73, "sampleSize": "35.3k" },
+      { "rank": 6,  "country": "United States",     "iso3": "USA", "aui": 3.62, "sampleSize": "208.2k" },
+      { "rank": 7,  "country": "Estonia",           "iso3": "EST", "aui": 3.11, "sampleSize": "701" },
+      { "rank": 8,  "country": "Canada",            "iso3": "CAN", "aui": 2.91, "sampleSize": "20.4k" },
+      { "rank": 9,  "country": "Malta",             "iso3": "MLT", "aui": 2.83, "sampleSize": "283" },
+      { "rank": 10, "country": "Switzerland",       "iso3": "CHE", "aui": 2.81, "sampleSize": "4.3k" },
+      { "rank": 11, "country": "Luxembourg",        "iso3": "LUX", "aui": 2.74, "sampleSize": "333" },
+      { "rank": 12, "country": "United Kingdom",    "iso3": "GBR", "aui": 2.67, "sampleSize": "30.5k" },
+      { "rank": 13, "country": "The Netherlands",   "iso3": "NLD", "aui": 2.56, "sampleSize": "7.8k" },
+      { "rank": 14, "country": "Cyprus",            "iso3": "CYP", "aui": 2.39, "sampleSize": "587" },
+      { "rank": 15, "country": "Denmark",           "iso3": "DNK", "aui": 2.31, "sampleSize": "2.3k" },
+      { "rank": 16, "country": "Taiwan",            "iso3": "TWN", "aui": 2.29, "sampleSize": "9.7k" },
+      { "rank": 17, "country": "Norway",            "iso3": "NOR", "aui": 2.26, "sampleSize": "2.1k" },
+      { "rank": 18, "country": "Ireland",           "iso3": "IRL", "aui": 2.26, "sampleSize": "2.1k" },
+      { "rank": 19, "country": "Sweden",            "iso3": "SWE", "aui": 2.20, "sampleSize": "3.6k" },
+      { "rank": 20, "country": "Georgia",           "iso3": "GEO", "aui": 2.19, "sampleSize": "1.3k" }
+    ],
+    "majorEconomies": {
+      "_source": "Narrative text, p. 16",
+      "countries": [
+        { "country": "France",   "iso3": "FRA", "aui": 1.94 },
+        { "country": "Japan",    "iso3": "JPN", "aui": 1.86 },
+        { "country": "Germany",  "iso3": "DEU", "aui": 1.84 }
+      ]
+    },
+    "lowAdoption": {
+      "_source": "Narrative text, pp. 3, 16",
+      "countries": [
+        { "country": "Bolivia",    "iso3": "BOL", "aui": 0.48 },
+        { "country": "Indonesia",  "iso3": "IDN", "aui": 0.36 },
+        { "country": "India",      "iso3": "IND", "aui": 0.27 },
+        { "country": "Nigeria",    "iso3": "NGA", "aui": 0.20 }
+      ]
+    }
+  },
+
+  "adoptionTiers": {
+    "_source": "Table 2.1, p. 15; Figure 2.3, p. 15",
+    "tiers": [
+      {
+        "tier": "Leading",
+        "label": "Top 25%",
+        "auiRange": { "min": 1.84, "max": 7.00 },
+        "countryCount": 37,
+        "examples": ["Israel", "Monaco", "Singapore", "Australia", "New Zealand"]
+      },
+      {
+        "tier": "Upper Middle",
+        "label": "50–75%",
+        "auiRange": { "min": 0.89, "max": 1.71 },
+        "countryCount": 35,
+        "examples": ["Czechia", "Austria", "Slovenia", "Poland", "Armenia"]
+      },
+      {
+        "tier": "Lower Middle",
+        "label": "25–50%",
+        "auiRange": { "min": 0.37, "max": 0.85 },
+        "countryCount": 39,
+        "examples": ["Peru", "Seychelles", "Colombia", "Albania", "Argentina"]
+      },
+      {
+        "tier": "Emerging",
+        "label": "Bottom 25%",
+        "auiRange": { "min": 0.01, "max": 0.36 },
+        "countryCount": 53,
+        "examples": ["Indonesia", "Ghana", "Kuwait", "Mongolia", "Rwanda"]
+      },
+      {
+        "tier": "Minimal",
+        "label": "No observed usage in sample",
+        "auiRange": { "min": 0.00, "max": 0.00 },
+        "countryCount": 25,
+        "examples": ["Aruba", "Tonga", "Nauru", "Samoa", "Palau"]
+      }
+    ]
+  },
+
+  "usStateAUI": {
+    "_source": "Figure 2.5, p. 19; narrative text p. 18",
+    "totalUSUsageShare": 0.216,
+    "totalUSUsageShareNote": "US dominates total usage at 21.6% of all Claude.ai conversations.",
+    "rawUsageLeaders": {
+      "_source": "Narrative text, p. 18",
+      "states": [
+        { "state": "California", "rawUsageShare": 0.253 },
+        { "state": "New York",   "rawUsageShare": 0.093 },
+        { "state": "Texas",      "rawUsageShare": 0.067 },
+        { "state": "Virginia",   "rawUsageShare": 0.040 }
+      ]
+    },
+    "top20": [
+      { "rank": 1,  "state": "District of Columbia", "aui": 3.82, "sampleSize": "1.8k" },
+      { "rank": 2,  "state": "Utah",                 "aui": 3.78, "sampleSize": "8.3k" },
+      { "rank": 3,  "state": "California",            "aui": 2.13, "sampleSize": "52.6k" },
+      { "rank": 4,  "state": "New York",              "aui": 1.58, "sampleSize": "19.3k" },
+      { "rank": 5,  "state": "Virginia",              "aui": 1.57, "sampleSize": "8.4k" },
+      { "rank": 6,  "state": "Washington",            "aui": 1.51, "sampleSize": "7.5k" },
+      { "rank": 7,  "state": "Massachusetts",         "aui": 1.42, "sampleSize": "6.4k" },
+      { "rank": 8,  "state": "Colorado",              "aui": 1.30, "sampleSize": "4.9k" },
+      { "rank": 9,  "state": "Vermont",               "aui": 1.10, "sampleSize": "430" },
+      { "rank": 10, "state": "Nevada",                "aui": 1.08, "sampleSize": "2.2k" },
+      { "rank": 11, "state": "Oregon",                "aui": 1.02, "sampleSize": "2.7k" },
+      { "rank": 12, "state": "Missouri",              "aui": 0.99, "sampleSize": "3.7k" },
+      { "rank": 13, "state": "Maryland",              "aui": 0.98, "sampleSize": "3.8k" },
+      { "rank": 14, "state": "Illinois",              "aui": 0.88, "sampleSize": "6.9k" },
+      { "rank": 15, "state": "Connecticut",           "aui": 0.87, "sampleSize": "2.0k" },
+      { "rank": 16, "state": "New Hampshire",         "aui": 0.85, "sampleSize": "736" },
+      { "rank": 17, "state": "New Jersey",            "aui": 0.85, "sampleSize": "4.9k" },
+      { "rank": 18, "state": "Hawaii",                "aui": 0.84, "sampleSize": "685" },
+      { "rank": 19, "state": "Georgia",               "aui": 0.80, "sampleSize": "5.6k" },
+      { "rank": 20, "state": "Minnesota",             "aui": 0.77, "sampleSize": "2.7k" }
+    ],
+    "stateTiers": {
+      "_source": "Table 2.2, p. 20",
+      "tiers": [
+        {
+          "tier": "Leading",
+          "label": "Top 25%",
+          "auiRange": { "min": 0.98, "max": 3.82 },
+          "stateCount": 13,
+          "examples": ["District of Columbia", "Utah", "California", "New York", "Virginia"]
+        },
+        {
+          "tier": "Upper Middle",
+          "label": "50–75%",
+          "auiRange": { "min": 0.71, "max": 0.88 },
+          "stateCount": 12,
+          "examples": ["Illinois", "Connecticut", "New Hampshire", "New Jersey", "Hawaii"]
+        },
+        {
+          "tier": "Lower Middle",
+          "label": "25–50%",
+          "auiRange": { "min": 0.43, "max": 0.70 },
+          "stateCount": 13,
+          "examples": ["Arizona", "Florida", "Pennsylvania", "Tennessee", "New Mexico"]
+        },
+        {
+          "tier": "Emerging",
+          "label": "Bottom 25%",
+          "auiRange": { "min": 0.21, "max": 0.42 },
+          "stateCount": 13,
+          "examples": ["South Carolina", "Alabama", "Wyoming", "North Dakota", "Iowa"]
+        }
+      ]
+    }
+  },
+
+  "gdpCorrelation": {
+    "_source": "Narrative text, pp. 16, 19",
+    "global": {
+      "elasticity": 0.7,
+      "description": "A 1% increase in GDP per capita is associated with a 0.7% increase in Claude usage per capita across countries."
+    },
+    "usStates": {
+      "elasticity": 1.8,
+      "description": "A 1% increase in state GDP per capita is associated with a 1.8% increase in the AI Usage Index across US states.",
+      "varianceExplained": "less than half",
+      "varianceNote": "Income differences explain less than half the variation in cross-state adoption rates. At the global level, the source identifies several potential contributing factors beyond income: digital infrastructure, economic structure, regulatory environment, awareness and access, and trust and comfort (pp. 17–18)."
+    }
+  },
+
+  "useCaseDiversification": {
+    "_source": "Figure 2.7, p. 22; narrative text pp. 3, 12, 21, 23",
+    "pattern": "Higher per capita Claude usage is associated with more diverse task usage. Lower adoption countries concentrate overwhelmingly on coding tasks.",
+    "codingConcentration": {
+      "_source": "Narrative text, pp. 3, 12",
+      "india": "over half of all usage",
+      "globalAverage": "roughly a third (36%)"
+    },
+    "diversifyingCategories": {
+      "_note": "The geographic pattern (Figure 2.7, pp. 21–22) shows these categories growing as AUI increases across countries. The specific percentages below are Chapter 1 temporal trends (p. 3, V1→V3 sample change) that contextualize the geographic pattern.",
+      "withTemporalData": [
+        "Education (rising from 9.3% to 12.4% globally — Chapter 1 temporal trend, p. 3)",
+        "Science (rising from 6.3% to 7.2% globally — Chapter 1 temporal trend, p. 3)"
+      ],
+      "geographicOnly": [
+        "Business operations",
+        "Office and administrative uses",
+        "Arts and creative tasks"
+      ]
+    },
+    "countrySpecialization": {
+      "_source": "Figure 2.8, p. 23",
+      "examples": [
+        {
+          "country": "United States",
+          "tier": "Leading",
+          "overrepresented": ["Household management", "Job search", "Medical guidance"]
+        },
+        {
+          "country": "Brazil",
+          "tier": "Upper Middle",
+          "overrepresented": ["Translation", "Legal services"]
+        },
+        {
+          "country": "Vietnam",
+          "tier": "Lower Middle",
+          "overrepresented": ["Software development", "Education"]
+        },
+        {
+          "country": "India",
+          "tier": "Emerging",
+          "overrepresented": ["Software development (almost exclusively)"]
+        }
+      ]
+    }
+  },
+
+  "collaborationPatterns": {
+    "_source": "Figure 2.11, p. 27; narrative text pp. 12, 26–28",
+    "pattern": "As Claude usage per capita increases, countries shift from automation-focused to augmentation-focused usage, even when controlling for task mix.",
+    "interpretation": "Mature markets tend to use AI more collaboratively, while emerging markets are more likely to delegate complete tasks to it — possibly reflecting differences in how AI is deployed by economies at different stages of structural transformation.",
+    "methodNote": "Relationship holds after controlling for differences in task composition across countries (partial regression analysis on residuals).",
+    "regressionStats": {
+      "_source": "Figure 2.11 annotation, p. 27",
+      "beta": -3.112,
+      "rSquared": 0.394,
+      "pValue": "<0.001",
+      "note": "Partial regression controlling for task mix. β represents the change in automation share residual per unit increase in AUI residual."
+    }
+  },
+
+  "enterpriseAdoption": {
+    "_source": "Chapter 3, pp. 30–35",
+    "censusData": {
+      "_source": "Figure 3.1, p. 32; Census Bureau Business Trends and Outlook Survey",
+      "adoptionRate": {
+        "fall2023": 0.037,
+        "earlyAugust2025": 0.097,
+        "description": "AI adoption among US firms more than doubled in two years, from 3.7% to 9.7%. Despite rapid growth, the vast majority of firms do not report using AI."
+      },
+      "sectorVariation": "One in four businesses in the Information sector reported using AI — roughly ten times the rate for Accommodation and Food Services."
+    },
+    "apiVsConsumer": {
+      "_source": "Narrative text, pp. 5, 30–33",
+      "patterns": [
+        "Businesses use Claude in more specialized ways than individual users.",
+        "Enterprise usage concentrates in tasks suited for programmatic access (coding, administrative tasks).",
+        "Businesses use Claude less for educational or creative tasks.",
+        "Enterprise usage is automation-dominant at both the transcript and task level (see automationDetail).",
+        "Nearly half of all API traffic maps to computer and mathematical tasks — 8+ percentage points higher than Claude.ai consumer usage."
+      ],
+      "automationDetail": {
+        "_source": "Narrative text, pp. 5, 36; Figure 3.5, p. 37",
+        "transcriptLevel": {
+          "apiAutomation": 77,
+          "apiAugmentation": 12,
+          "claudeAiSplit": "nearly even",
+          "_note": "Percentage of API transcripts showing automation vs. augmentation patterns. Remaining ~11% unclassified."
+        },
+        "taskLevel": {
+          "apiAutomationDominant": 97,
+          "claudeAiAutomationDominant": 47,
+          "_note": "Percentage of O*NET tasks that show automation-dominant patterns. A stronger claim than the transcript-level figure: nearly all tasks performed through the API are automation-dominant, compared to fewer than half on Claude.ai (Figure 3.5)."
+        }
+      },
+      "topAPIUseCases": {
+        "_source": "Figure 3.2, p. 33",
+        "_note": "Cluster names and percentages are exact values from Figure 3.2 (bottom-up taxonomy of 1P API transcripts by usage share).",
+        "categories": [
+          { "rank": 1, "category": "Resolve software development technical issues and workflow problems", "share": 6.1 },
+          { "rank": 2, "category": "Debug and develop web application frontend code and components", "share": 6.0 },
+          { "rank": 3, "category": "Develop and manage professional business software and service systems", "share": 5.2 },
+          { "rank": 4, "category": "Develop, configure and evaluate AI systems across domains", "share": 5.2 },
+          { "rank": 5, "category": "Software development troubleshooting and optimization assistance", "share": 4.9 },
+          { "rank": 6, "category": "Create professional marketing, business, and journalistic content", "share": 4.7 },
+          { "rank": 7, "category": "Develop and troubleshoot data extraction and analytics systems", "share": 4.4 },
+          { "rank": 8, "category": "Develop data extraction and conversion tools for multiple sources", "share": 2.9 },
+          { "rank": 9, "category": "Develop and debug automated software testing infrastructure", "share": 2.5 },
+          { "rank": 10, "category": "Web security assessment and digital communications protection", "share": 2.3 },
+          { "rank": 11, "category": "Develop financial software and trading analysis tools", "share": 2.3 },
+          { "rank": 12, "category": "Develop and troubleshoot software authentication and access control systems", "share": 1.9 },
+          { "rank": 13, "category": "Process and evaluate professional business and recruitment data", "share": 1.9 },
+          { "rank": 14, "category": "Design and develop web interface UI/UX elements", "share": 1.8 },
+          { "rank": 15, "category": "Implement and troubleshoot software database and search functionality", "share": 1.8 }
+        ]
+      },
+      "categoryShifts": {
+        "_source": "Narrative text, p. 33",
+        "_note": "Direct comparisons showing how task category shares differ between Claude.ai consumer usage and 1P API enterprise usage.",
+        "shifts": [
+          { "category": "Education and library tasks", "claudeAiShare": 12.3, "apiShare": 3.6 },
+          { "category": "Arts and entertainment", "claudeAiShare": 8.2, "apiShare": 5.2 }
+        ]
+      }
+    },
+    "contextBottleneck": {
+      "_source": "Narrative text, pp. 5, 30–31",
+      "finding": "API customers that use Claude for complex tasks tend to provide Claude with lengthy inputs. Access to appropriate contextual information is needed for sophisticated deployment.",
+      "implication": "This could represent a barrier to broader enterprise deployment for some important tasks that rely on dispersed context not already centralized or digitized. Correcting for this bottleneck may require firms to restructure their organization, invest in new data infrastructure, and centralize information for effective model deployment.",
+      "institutionalInertia": "Institutional inertia, alongside fixed costs of adoption, suggests that early enterprise AI use is likely to be concentrated among specialized tasks where deployment is easy, capabilities are robust, and the economic benefits from adoption are high."
+    }
+  },
+
+  "keyComparisonPairs": {
+    "_note": "Pre-computed comparison sets for use in Module 1 interactive data narratives and Module 2 dashboard.",
+    "singaporeComparisons": {
+      "singapore": 4.57,
+      "canada": 2.91,
+      "unitedStates": 3.62,
+      "indonesia": 0.36,
+      "india": 0.27,
+      "nigeria": 0.20,
+      "ratioSingaporeToIndonesia": 12.69,
+      "ratioSingaporeToIndia": 16.93,
+      "ratioSingaporeToNigeria": 22.85
+    },
+    "portfolioNarrative": "For an organization operating teams across Singapore (4.57), Jakarta (0.36), and Mumbai (0.27), this is not merely a market-level observation — it is an internal capability gap."
+  }
+}

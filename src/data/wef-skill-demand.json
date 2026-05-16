@@ -1,0 +1,237 @@
+{
+  "_metadata": {
+    "source": "World Economic Forum. 'The Future of Jobs Report 2025.' January 2025.",
+    "surveyBase": "Future of Jobs Survey 2024, covering 1,000+ employers across 55 economies and 22 sectors.",
+    "projectionPeriod": "2025–2030",
+    "dataSource": "International Labour Organization, ILOSTAT; World Economic Forum Global Skills Taxonomy."
+  },
+
+  "technologyTrends": {
+    "_source": "Figure 1.2, p. 11",
+    "description": "Share of employers surveyed that identify the stated technology trend as likely to drive business transformation.",
+    "trends": [
+      { "rank": 1, "trend": "AI and information processing technologies", "share": 0.86 },
+      { "rank": 2, "trend": "Robots and autonomous systems",              "share": 0.58 },
+      { "rank": 3, "trend": "Energy generation, storage and distribution", "share": 0.41 },
+      { "rank": 4, "trend": "New materials and composites",                "share": 0.30 },
+      { "rank": 5, "trend": "Semiconductors and computing technologies",   "share": 0.20 },
+      { "rank": 6, "trend": "Sensing, laser and optical technologies",     "share": 0.18 },
+      { "rank": 7, "trend": "Quantum and encryption",                      "share": 0.12 },
+      { "rank": 8, "trend": "Biotechnology and gene technologies",         "share": 0.11 },
+      { "rank": 9, "trend": "Satellites and space technologies",           "share": 0.09 }
+    ],
+    "keyFinding": "AI and information processing technologies are expected to have the biggest impact, with 86% of respondents expecting these technologies to transform their business by 2030."
+  },
+
+  "skillsOutlook": {
+    "skillsOnTheRise": {
+      "_source": "Figure 3.4, pp. 36–37",
+      "description": "Skills ranked by net increase — the difference between the share of employers that consider a skill to be increasing vs. decreasing in use, 2025–2030.",
+      "skills": [
+        { "rank": 1,  "skill": "AI and big data",                           "netIncrease": 87 },
+        { "rank": 2,  "skill": "Networks and cybersecurity",                 "netIncrease": 70 },
+        { "rank": 3,  "skill": "Technological literacy",                     "netIncrease": 68 },
+        { "rank": 4,  "skill": "Creative thinking",                         "netIncrease": 66 },
+        { "rank": 5,  "skill": "Resilience, flexibility and agility",       "netIncrease": 66 },
+        { "rank": 6,  "skill": "Curiosity and lifelong learning",           "netIncrease": 61 },
+        { "rank": 7,  "skill": "Leadership and social influence",           "netIncrease": 58 },
+        { "rank": 8,  "skill": "Talent management",                         "netIncrease": 58 },
+        { "rank": 9,  "skill": "Analytical thinking",                       "netIncrease": 55 },
+        { "rank": 10, "skill": "Environmental stewardship",                 "netIncrease": 53 },
+        { "rank": 11, "skill": "Systems thinking",                          "netIncrease": 51 },
+        { "rank": 12, "skill": "Motivation and self-awareness",             "netIncrease": 47 },
+        { "rank": 13, "skill": "Empathy and active listening",              "netIncrease": 46 },
+        { "rank": 14, "skill": "Design and user experience",                "netIncrease": 45 },
+        { "rank": 15, "skill": "Service orientation and customer service",  "netIncrease": 41 },
+        { "rank": 16, "skill": "Teaching and mentoring",                    "netIncrease": 30 },
+        { "rank": 17, "skill": "Programming",                               "netIncrease": 27 },
+        { "rank": 18, "skill": "Marketing and media",                       "netIncrease": 25 },
+        { "rank": 19, "skill": "Resource management and operations",        "netIncrease": 24 },
+        { "rank": 20, "skill": "Quality control",                           "netIncrease": 20 },
+        { "rank": 21, "skill": "Global citizenship",                        "netIncrease": 19 },
+        { "rank": 22, "skill": "Multi-lingualism",                          "netIncrease": 16 },
+        { "rank": 23, "skill": "Sensory-processing abilities",              "netIncrease": 13 },
+        { "rank": 24, "skill": "Dependability and attention to detail",     "netIncrease": 12 },
+        { "rank": 25, "skill": "Reading, writing and mathematics",          "netIncrease": -4 },
+        { "rank": 26, "skill": "Manual dexterity, endurance and precision", "netIncrease": -24 }
+      ]
+    },
+    "coreSkills2025": {
+      "_source": "Figure 3.3, p. 35",
+      "_note": "Only top 5 of 26 skills included. Figure 3.3 contains all 26 with share percentages. If a comparison visualization pairs core skills against skillsOnTheRise (26 items), the full set should be extracted here.",
+      "description": "Share of employers who consider the stated skills to be core skills for their workforce in 2025.",
+      "topFive": [
+        { "rank": 1, "skill": "Analytical thinking",               "share": 0.69 },
+        { "rank": 2, "skill": "Resilience, flexibility and agility","share": 0.67 },
+        { "rank": 3, "skill": "Leadership and social influence",    "share": 0.61 },
+        { "rank": 4, "skill": "Creative thinking",                 "share": 0.57 },
+        { "rank": 5, "skill": "Motivation and self-awareness",     "share": 0.52 }
+      ],
+      "note": "Analytical thinking remains the most sought-after core skill, with seven out of 10 companies considering it essential."
+    },
+    "skillInstability": {
+      "_source": "Narrative text, p. 6",
+      "current": 0.39,
+      "prior2023": 0.44,
+      "prior2020": 0.57,
+      "description": "On average, workers can expect that 39% of their existing skill sets will be transformed or become outdated over the 2025–2030 period, down from 44% in 2023 and 57% in 2020."
+    }
+  },
+
+  "jobOutlook": {
+    "globalEmploymentChange": {
+      "_source": "Figure 2.1, p. 18",
+      "jobsCreated": 170000000,
+      "jobsDisplaced": 92000000,
+      "netGrowth": 78000000,
+      "churnRate": 0.22,
+      "totalFormalJobs": 1200000000,
+      "netGrowthRate": 0.07,
+      "description": "170 million jobs projected to be created, 92 million displaced, constituting 22% structural churn of the 1.2 billion formal jobs in the dataset, amounting to a net 7% increase."
+    },
+    "fastestGrowingRoles": {
+      "_source": "Figure 2.2, p. 19",
+      "_note": "Net growth percentages are chart-only data in the source (bar chart without labeled values). Manual extraction from the visual would be needed to populate netGrowthPct fields.",
+      "roles": [
+        { "rank": 1,  "role": "Big Data Specialists" },
+        { "rank": 2,  "role": "FinTech Engineers" },
+        { "rank": 3,  "role": "AI and Machine Learning Specialists" },
+        { "rank": 4,  "role": "Software and Applications Developers" },
+        { "rank": 5,  "role": "Security Management Specialists" },
+        { "rank": 6,  "role": "Data Warehousing Specialists" },
+        { "rank": 7,  "role": "Autonomous and Electric Vehicle Specialists" },
+        { "rank": 8,  "role": "UI and UX Designers" },
+        { "rank": 9,  "role": "Light Truck or Delivery Services Drivers" },
+        { "rank": 10, "role": "Internet of Things Specialists" },
+        { "rank": 11, "role": "Data Analysts and Scientists" },
+        { "rank": 12, "role": "Environmental Engineers" },
+        { "rank": 13, "role": "Information Security Analysts" },
+        { "rank": 14, "role": "DevOps Engineer" },
+        { "rank": 15, "role": "Renewable Energy Engineers" }
+      ]
+    },
+    "fastestDecliningRoles": {
+      "_source": "Figure 2.2, p. 19",
+      "_note": "Net decline percentages are chart-only data in the source. See fastestGrowingRoles._note.",
+      "roles": [
+        { "rank": 1,  "role": "Data Entry Clerks" },
+        { "rank": 2,  "role": "Bank Tellers and Related Clerks" },
+        { "rank": 3,  "role": "Material-Recording and Stock-Keeping Clerks" },
+        { "rank": 4,  "role": "Door-To-Door Sales Workers, News and Street Vendors, and Related Workers" },
+        { "rank": 5,  "role": "Administrative Assistants and Executive Secretaries" },
+        { "rank": 6,  "role": "Legal Secretaries" },
+        { "rank": 7,  "role": "Printing and Related Trades Workers" },
+        { "rank": 8,  "role": "Legal Officials" },
+        { "rank": 9,  "role": "Postal Service Clerks" },
+        { "rank": 10, "role": "Telemarketers" },
+        { "rank": 11, "role": "Accounting, Bookkeeping and Payroll Clerks" },
+        { "rank": 12, "role": "Transportation Attendants and Conductors" },
+        { "rank": 13, "role": "Cashiers and Ticket Clerks" },
+        { "rank": 14, "role": "Graphic Designers" },
+        { "rank": 15, "role": "Claims Adjusters, Examiners, and Investigators" }
+      ]
+    },
+    "largestAbsoluteDecline": {
+      "_source": "Narrative text, p. 6",
+      "category": "Clerical and Secretarial Workers",
+      "examples": ["Cashiers and Ticket Clerks", "Administrative Assistants and Executive Secretaries"]
+    }
+  },
+
+  "transformationBarriers": {
+    "_source": "Figure 4.1, p. 49",
+    "description": "Share of employers surveyed expecting the stated barrier will hinder their organizational transformation, 2025–2030.",
+    "barriers": [
+      { "rank": 1, "barrier": "Skills gaps in the labour market",                "share": 0.63 },
+      { "rank": 2, "barrier": "Organizational culture and resistance to change", "share": 0.46 },
+      { "rank": 3, "barrier": "Outdated or inflexible regulatory framework",     "share": 0.39 },
+      { "rank": 4, "barrier": "Inability to attract talent to the industry",     "share": 0.37 },
+      { "rank": 5, "barrier": "Lack of adequate data and technical infrastructure","share": 0.32 },
+      { "rank": 6, "barrier": "Inability to attract talent to my firm",          "share": 0.27 },
+      { "rank": 7, "barrier": "Shortage of investment capital",                  "share": 0.26 },
+      { "rank": 8, "barrier": "Insufficient understanding of opportunities",     "share": 0.25 }
+    ],
+    "keyFindings": [
+      "Skills gaps rank first in 52 out of 55 economies and 19 out of 22 sectors.",
+      "This is more pronounced than the 2023 edition, where skills gaps were backed by 60% of executives."
+    ]
+  },
+
+  "workforceStrategies": {
+    "generalStrategies": {
+      "_source": "Narrative text, p. 6; also p. 52",
+      "description": "Share of employers surveyed planning to implement the stated workforce strategy in response to macrotrends, 2025–2030.",
+      "strategies": [
+        { "rank": 1, "strategy": "Upskilling existing workforce",                        "share": 0.85 },
+        { "rank": 2, "strategy": "Hiring staff with new skills",                          "share": 0.70 },
+        { "rank": 3, "strategy": "Transitioning staff from declining to growing roles",   "share": 0.50 },
+        { "rank": 4, "strategy": "Reducing staff as their skills become less relevant",   "share": 0.40 }
+      ]
+    },
+    "aiSpecificStrategies": {
+      "_source": "Figure 4.14, p. 63",
+      "description": "Share of employers planning to implement the stated strategy in response to AI's increasing capability and prevalence.",
+      "strategies": [
+        { "rank": 1, "strategy": "Reskilling and upskilling existing workforce to better work alongside AI", "share": 0.77 },
+        { "rank": 2, "strategy": "Hiring new people with skills to design AI tools and enhancements",        "share": 0.69 },
+        { "rank": 3, "strategy": "Hiring new people with skills to better work alongside AI",                "share": 0.62 },
+        { "rank": 4, "strategy": "Re-orienting organization to target new business opportunities created by AI", "share": 0.49 },
+        { "rank": 5, "strategy": "Transitioning people from jobs that AI will cause to decline",             "share": 0.47 },
+        { "rank": 6, "strategy": "Downsizing workforce where AI can replicate people's work",                "share": 0.41 },
+        { "rank": 7, "strategy": "Organization has low exposure to AI",                                       "share": 0.12 }
+      ],
+      "keyFinding": "Reskilling and upskilling the existing workforce is the top AI-specific workforce strategy, planned by 77% of employers across 45 of 55 economies."
+    },
+    "trainingNeeds": {
+      "_source": "Narrative text, p. 6",
+      "needTrainingBy2030": 0.59,
+      "upskilledInCurrentRole": 0.29,
+      "upskilledAndRedeployed": 0.19,
+      "unlikelyToUpskill": 0.11,
+      "description": "If the world's workforce was made up of 100 people, 59 would need training by 2030. Of these, 29 could be upskilled in their current roles, 19 redeployed, and 11 would be unlikely to receive the needed reskilling."
+    }
+  },
+
+  "humanMachineFrontier": {
+    "_source": "Narrative text and Figure 2.7, pp. 25–26",
+    "taskDistribution": {
+      "current": {
+        "humanAlone": 0.47,
+        "combination": 0.30,
+        "technologyAlone": 0.22
+      },
+      "projected2030": {
+        "humanAlone": 0.33,
+        "combination": 0.33,
+        "technologyAlone": 0.34
+      }
+    },
+    "description": "The proportional share of tasks performed solely by humans is expected to decline from 47% to 33% by 2030, while technology-performed tasks rise from 22% to 34%."
+  },
+
+  "sectorHighlights": {
+    "_source": "Multiple pages; see individual citations",
+    "aiSkillDemandByIndustry": {
+      "_source": "Figure 3.5, pp. 39–40",
+      "topIndustries": [
+        { "rank": 1, "industry": "Automotive and aerospace",           "share": 1.00 },
+        { "rank": 2, "industry": "Telecommunications",                 "share": 1.00 },
+        { "rank": 3, "industry": "Professional services",              "share": 0.98 },
+        { "rank": 4, "industry": "Information and technology services", "share": 0.97 },
+        { "rank": 5, "industry": "Insurance and pensions management",  "share": 0.97 },
+        { "rank": 6, "industry": "Financial services and capital markets", "share": 0.95 },
+        { "rank": 7, "industry": "Supply chain and transportation",    "share": 0.94 },
+        { "rank": 8, "industry": "Medical and healthcare services",    "share": 0.92 },
+        { "rank": 9, "industry": "Energy technology and utilities",    "share": 0.90 },
+        { "rank": 10,"industry": "Government and public sector",       "share": 0.90 }
+      ],
+      "note": "Share of employers reporting increasing need for AI and big data skills by 2030, by industry."
+    }
+  },
+
+  "investmentContext": {
+    "_source": "Narrative text, p. 11",
+    "finding": "Since the release of ChatGPT in November 2022, investment flows into AI have increased nearly eightfold.",
+    "genAIAdoption": "GenAI considerably reduces barriers to usage and the need for specialized technical knowledge through natural language processing."
+  }
+}

@@ -1,0 +1,433 @@
+{
+  "_metadata": {
+    "file": "augmentation-automation.json",
+    "description": "Augmentation vs. automation behavioral data for the Live Data Dashboard (Component 4A). Contains the aggregate behavioral split, five-pattern collaboration taxonomy, occupation-level usage shares, depth of AI usage across occupations, job zone analysis, and the self-report vs. behavioral comparison. Structured for Practice Activity P3 (Dashboard Exploration: Augmentation vs. Automation).",
+    "primary_source": {
+      "title": "Which Economic Tasks are Performed with AI? Evidence from Millions of Claude Conversations",
+      "authors": "Handa, K., Tamkin, A., McCain, M., Huang, S., Durmus, E., et al.",
+      "publisher": "Anthropic",
+      "date": "2025-02",
+      "data_period": "December 2024 – January 2025",
+      "sample": "1 million Claude.ai Free and Pro conversations per primary analysis; 4 million+ across all analyses in the paper",
+      "dataset_url": "https://huggingface.co/datasets/Anthropic/EconomicIndex/",
+      "citation_key": "handa_et_al_2025"
+    },
+    "supplementary_sources": [
+      {
+        "title": "Introducing Anthropic Interviewer: What 1,250 Professionals Told Us About Working with AI",
+        "publisher": "Anthropic",
+        "date": "2025-12",
+        "citation_key": "anthropic_interviewer_2025",
+        "used_for": "Self-reported augmentation/automation split for behavioral comparison in P3"
+      },
+      {
+        "title": "Anthropic Economic Index Report: Economic Primitives",
+        "publisher": "Anthropic",
+        "date": "2026",
+        "data_period": "November 2025",
+        "citation_key": "economic_primitives_v4",
+        "used_for": "Updated occupation usage shares by platform (Claude.ai vs. API), temporal trend context"
+      }
+    ],
+    "last_validated": "2026-04-27",
+    "notes": [
+      "Per-occupation augmentation/automation splits are NOT available in the source data. Handa et al. provides only the aggregate 57/43 split and states that 'this ratio varies across occupations' without giving per-occupation ratios. The dashboard should present occupation-level data as usage shares, not per-occupation aug/auto splits.",
+      "The Anthropic Interviewer paper reports a slightly different behavioral split (47% augmentation / 49% automation) described as 'our latest analysis.' This differs from Handa et al.'s 57/43 because it uses a different dataset and time period. Handa et al. is the standalone citable empirical study. See process journal discrepancy note.",
+      "Occupation usage share percentages from Figure 3 are read from chart values. Minor reading imprecision is possible for mid-range bars. The top categories (Computer and Mathematical at 37.2%, Arts/Design at 10.3%) are labeled explicitly in the figure.",
+      "CROSS-FILE V1 CONSISTENCY: This file uses 57% augmentation from Handa et al. (the primary citable study). adoption-trends.json uses 56% from Economic Primitives' retrospective reporting of the same V1 dataset. Decision: keep 57% here for the pattern breakdown; the trend chart uses Economic Primitives' retrospective figures. Dashboard should note this in a tooltip if both views are visible simultaneously.",
+      "VALIDATION PASS 1 (April 27, 2026): All data points verified against source documents. One fix applied: Personal Care and Service overrepresentation_ratio corrected from 0.3 to 0.2 (0.5/2.0 = 0.25, rounds to 0.2). Four approximate platform_comparison occupation pairs (Life/Physical/Social Science, Business/Financial, Management, Architecture/Engineering) read from Figure 1.2 small multiples confirmed as verified.",
+      "VALIDATION PASS 2 (April 27, 2026): Source-first verification — extracted all data from source documents independently, then diffed against JSON. Two fixes applied: (1) Validation typical_tasks removed unsupported 'code review' (source p. 10 mentions only language translations); (2) occupation_usage_shares data_note corrected source reference from 'footnote 20, p. 20' to 'Appendix B.7, p. 21' for the 23% non-work finding.",
+      "VALIDATION PASS 3 (April 27, 2026): Final reconciliation — comprehensive structural, computational, and cross-reference audit. All checks passed: 8/8 sections present, all percentage sums verified (collaboration patterns 100.0%, aggregate split 100%, self-report 100%, platform splits 100%, job zone conv. 100.01% matching source rounding), all 22 overrepresentation ratios recomputed correctly, all 5 job zone representation ratios verified, monotonic occupation depth confirmed, internal cross-references consistent, all three prior fixes confirmed in place. File is production-ready."
+    ]
+  },
+
+  "aggregate_split": {
+    "augmentation_pct": 57,
+    "automation_pct": 43,
+    "source_page": "pp. 3, 9, 14",
+    "source_figure": "Figure 7",
+    "definition": {
+      "augmentation": "AI enhances human capabilities through collaboration — the user actively participates in shaping, evaluating, or iterating on the output.",
+      "automation": "AI directly executes tasks with minimal human involvement — the user delegates and accepts output with limited interaction."
+    },
+    "caveat": "Users may edit and adjust responses outside the chat window, suggesting the true proportion of augmentative conversations may be even higher."
+  },
+
+  "collaboration_patterns": {
+    "source_page": "p. 10",
+    "source_figure": "Figure 7",
+    "source_table": "Table 1",
+    "categories": [
+      {
+        "pattern": "Task Iteration",
+        "category": "augmentation",
+        "pct": 31.3,
+        "definition": "Collaborative refinement process — the user and AI iterate on a task together.",
+        "example": "Let's draft a marketing strategy for our new product. ... Good start, but can we add some concrete metrics?",
+        "typical_tasks": "Front-end development, landing pages, professional communication, resumes and cover letters"
+      },
+      {
+        "pattern": "Learning",
+        "category": "augmentation",
+        "pct": 23.3,
+        "definition": "Knowledge acquisition and understanding — the user asks the AI for information or explanations.",
+        "example": "Can you explain how neural networks work?",
+        "typical_tasks": "General education topics, health advice, embedded systems, subject-specific learning"
+      },
+      {
+        "pattern": "Validation",
+        "category": "augmentation",
+        "pct": 2.8,
+        "definition": "Work verification and improvement — the user asks the AI to check their work and suggest improvements.",
+        "example": "I've written this SQL query to find duplicate customer records. Can you check if my logic is correct and suggest any improvements?",
+        "typical_tasks": "Language translations"
+      },
+      {
+        "pattern": "Directive",
+        "category": "automation",
+        "pct": 27.8,
+        "definition": "Complete task delegation with minimal interaction — the user gives a task and the AI completes it.",
+        "example": "Format this technical documentation in Markdown.",
+        "typical_tasks": "Writing and content generation, business email drafting, schoolwork-related tasks"
+      },
+      {
+        "pattern": "Feedback Loop",
+        "category": "automation",
+        "pct": 14.8,
+        "definition": "Task completion guided by environmental feedback — the user repeatedly relays error states back to the AI.",
+        "example": "Here's my Python script for data analysis – it's giving an IndexError. Can you help fix it? ... Now I'm getting a different error...",
+        "typical_tasks": "Coding and debugging"
+      }
+    ]
+  },
+
+  "self_report_comparison": {
+    "description": "The behavioral data from Handa et al. diverges from how professionals self-report their AI usage patterns. This comparison is the core insight for Practice Activity P3.",
+    "behavioral": {
+      "augmentation_pct": 57,
+      "automation_pct": 43,
+      "source": "handa_et_al_2025",
+      "source_page": "p. 3",
+      "method": "Automated classification of 1M Claude.ai conversations using Clio"
+    },
+    "self_reported": {
+      "augmentation_pct": 65,
+      "automation_pct": 35,
+      "source": "anthropic_interviewer_2025",
+      "method": "Survey of 1,250 professionals"
+    },
+    "gap_analysis": {
+      "augmentation_gap_pp": -8,
+      "automation_gap_pp": 8,
+      "interpretation": "Professionals overestimate their augmentative use by 8 percentage points. Behavioral data shows more automation than self-reports suggest — users believe they are collaborating when behavioral patterns indicate they are delegating."
+    }
+  },
+
+  "occupation_usage_shares": {
+    "description": "Distribution of Claude.ai conversations across O*NET occupation categories, compared to U.S. workforce distribution. Shows where AI usage is concentrated relative to the labor market.",
+    "source_page": "p. 6",
+    "source_figure": "Figure 3",
+    "data_note": "Values for Computer and Mathematical (37.2%) and Arts/Design (10.3%) are labeled in the original figure. Other values are read from the chart and may have minor imprecision (±0.2pp). Category percentages are expressed as shares of all conversations ('all queries') and sum to approximately 93%. The original analysis found that non-work conversations comprise 23% of the dataset (Appendix B.7, p. 21). The sum exceeding the expected ~77% occupational share likely reflects conversations classified into multiple occupation categories and chart reading imprecision.",
+    "categories": [
+      {
+        "occupation": "Computer and Mathematical",
+        "claude_pct": 37.2,
+        "us_workforce_pct": 3.4,
+        "overrepresentation_ratio": 10.9
+      },
+      {
+        "occupation": "Arts, Design, Entertainment, Sports, and Media",
+        "claude_pct": 10.3,
+        "us_workforce_pct": 1.4,
+        "overrepresentation_ratio": 7.4
+      },
+      {
+        "occupation": "Life, Physical, and Social Science",
+        "claude_pct": 6.4,
+        "us_workforce_pct": 0.9,
+        "overrepresentation_ratio": 7.1
+      },
+      {
+        "occupation": "Education, Instruction, and Library",
+        "claude_pct": 5.8,
+        "us_workforce_pct": 9.3,
+        "overrepresentation_ratio": 0.6
+      },
+      {
+        "occupation": "Office and Administrative Support",
+        "claude_pct": 7.9,
+        "us_workforce_pct": 12.2,
+        "overrepresentation_ratio": 0.6
+      },
+      {
+        "occupation": "Business and Financial Operations",
+        "claude_pct": 5.9,
+        "us_workforce_pct": 6.6,
+        "overrepresentation_ratio": 0.9
+      },
+      {
+        "occupation": "General Management",
+        "claude_pct": 4.5,
+        "us_workforce_pct": 6.9,
+        "overrepresentation_ratio": 0.7
+      },
+      {
+        "occupation": "Architecture and Engineering",
+        "claude_pct": 1.7,
+        "us_workforce_pct": 4.5,
+        "overrepresentation_ratio": 0.4
+      },
+      {
+        "occupation": "Healthcare Practitioners and Technical",
+        "claude_pct": 2.6,
+        "us_workforce_pct": 6.1,
+        "overrepresentation_ratio": 0.4
+      },
+      {
+        "occupation": "Community and Social Service",
+        "claude_pct": 1.6,
+        "us_workforce_pct": 2.1,
+        "overrepresentation_ratio": 0.8
+      },
+      {
+        "occupation": "Sales and Related",
+        "claude_pct": 2.3,
+        "us_workforce_pct": 6.8,
+        "overrepresentation_ratio": 0.3
+      },
+      {
+        "occupation": "Legal",
+        "claude_pct": 0.9,
+        "us_workforce_pct": 0.8,
+        "overrepresentation_ratio": 1.1
+      },
+      {
+        "occupation": "Production",
+        "claude_pct": 2.9,
+        "us_workforce_pct": 5.8,
+        "overrepresentation_ratio": 0.5
+      },
+      {
+        "occupation": "Installation, Maintenance, and Repair",
+        "claude_pct": 0.7,
+        "us_workforce_pct": 3.9,
+        "overrepresentation_ratio": 0.2
+      },
+      {
+        "occupation": "Construction and Extraction",
+        "claude_pct": 0.4,
+        "us_workforce_pct": 4.1,
+        "overrepresentation_ratio": 0.1
+      },
+      {
+        "occupation": "Protective Service",
+        "claude_pct": 0.4,
+        "us_workforce_pct": 2.3,
+        "overrepresentation_ratio": 0.2
+      },
+      {
+        "occupation": "Food Preparation and Serving Related",
+        "claude_pct": 0.5,
+        "us_workforce_pct": 8.7,
+        "overrepresentation_ratio": 0.1
+      },
+      {
+        "occupation": "Personal Care and Service",
+        "claude_pct": 0.5,
+        "us_workforce_pct": 2.0,
+        "overrepresentation_ratio": 0.2
+      },
+      {
+        "occupation": "Healthcare Support",
+        "claude_pct": 0.3,
+        "us_workforce_pct": 4.7,
+        "overrepresentation_ratio": 0.1
+      },
+      {
+        "occupation": "Building and Grounds Cleaning and Maintenance",
+        "claude_pct": 0.1,
+        "us_workforce_pct": 2.9,
+        "overrepresentation_ratio": 0.0
+      },
+      {
+        "occupation": "Transportation and Material Moving",
+        "claude_pct": 0.3,
+        "us_workforce_pct": 9.1,
+        "overrepresentation_ratio": 0.0
+      },
+      {
+        "occupation": "Farming, Fishing, and Forestry",
+        "claude_pct": 0.1,
+        "us_workforce_pct": 0.3,
+        "overrepresentation_ratio": 0.3
+      }
+    ]
+  },
+
+  "occupation_depth": {
+    "description": "Cumulative distribution of how deeply AI has penetrated occupations — what fraction of each occupation's tasks show AI usage. Shows that AI integration is selective within most occupations, not comprehensive.",
+    "source_page": "p. 7",
+    "source_figure": "Figure 4",
+    "thresholds": [
+      {
+        "min_task_fraction": 0.10,
+        "occupations_pct": 57,
+        "source_note": "Approximate, read from curve. Explicitly stated as '~57% of occupations using AI for at least 10% of their tasks' on p. 13."
+      },
+      {
+        "min_task_fraction": 0.25,
+        "occupations_pct": 36,
+        "source_note": "Labeled on Figure 4. Example: Physical Therapists (25% of tasks).",
+        "example_occupation": "Physical Therapists",
+        "example_tasks_with_ai": "Research and patient education",
+        "example_tasks_without_ai": "Hands-on treatment, home care instruction"
+      },
+      {
+        "min_task_fraction": 0.50,
+        "occupations_pct": 11,
+        "source_note": "Labeled on Figure 4. Example: Marketing Managers (50% of tasks).",
+        "example_occupation": "Marketing Managers",
+        "example_tasks_with_ai": "Market research analysis, strategy development",
+        "example_tasks_without_ai": "Product specification consultation, trade show coordination"
+      },
+      {
+        "min_task_fraction": 0.75,
+        "occupations_pct": 4,
+        "source_note": "Labeled on Figure 4. Example: Foreign Language and Literature Teachers (75% of tasks).",
+        "example_occupation": "Foreign Language and Literature Teachers",
+        "example_tasks_with_ai": "Collaborating on teaching issues, planning course content",
+        "example_tasks_without_ai": "Writing grant proposals, maintaining student records"
+      }
+    ],
+    "insight": "Rather than completely automating entire job roles, present-day AI appears to be primarily used for specific tasks within occupations."
+  },
+
+  "job_zone_analysis": {
+    "description": "AI usage by occupational preparation level (O*NET Job Zones). Shows that AI usage peaks in occupations requiring a bachelor's degree, not at the extremes.",
+    "source_page": "pp. 9, 20, 24",
+    "source_table": "Table 2 (p. 24); example occupations named on p. 20",
+    "zones": [
+      {
+        "zone": 1,
+        "label": "Little or No Preparation Needed",
+        "example_occupations": "Dishwashers, baristas, agricultural equipment operators",
+        "conversation_pct": 0.23,
+        "baseline_pct": 0.57,
+        "representation_ratio": 0.40
+      },
+      {
+        "zone": 2,
+        "label": "Some Preparation Needed",
+        "example_occupations": "Customer service representatives, security guards, tellers",
+        "conversation_pct": 9.40,
+        "baseline_pct": 12.06,
+        "representation_ratio": 0.78
+      },
+      {
+        "zone": 3,
+        "label": "Medium Preparation Needed",
+        "example_occupations": "Electricians, medical assistants, barbers",
+        "conversation_pct": 16.50,
+        "baseline_pct": 17.63,
+        "representation_ratio": 0.94
+      },
+      {
+        "zone": 4,
+        "label": "Considerable Preparation Needed",
+        "example_occupations": "Real estate brokers, sales managers, database administrators",
+        "conversation_pct": 54.45,
+        "baseline_pct": 36.33,
+        "representation_ratio": 1.50
+      },
+      {
+        "zone": 5,
+        "label": "Extensive Preparation Needed",
+        "example_occupations": "Pharmacists, lawyers, biologists",
+        "conversation_pct": 19.43,
+        "baseline_pct": 33.41,
+        "representation_ratio": 0.58
+      }
+    ],
+    "insight": "AI usage is highest in occupations requiring substantial but not elite-level specialization. Both low-preparation and highly specialized roles show lower usage, likely due to physical task requirements and regulatory barriers."
+  },
+
+  "platform_comparison": {
+    "description": "Comparison of occupation usage distributions between Claude.ai (consumer) and 1P API (enterprise) traffic. From Economic Primitives V4, November 2025 data.",
+    "source": "economic_primitives_v4",
+    "source_pages": {
+      "narrative": "p. 26 (directive comparison), p. 27 (occupation category comparisons)",
+      "figures": "Figure 1.2, p. 8 (usage by SOC over time); Figure 1.3, p. 10 (collaboration mode over time)"
+    },
+    "data_period": "November 2025",
+    "categories": [
+      {
+        "occupation": "Computer and Mathematical",
+        "claude_ai_pct": 36,
+        "api_pct": 52,
+        "verification": "Narrative text, p. 27"
+      },
+      {
+        "occupation": "Education, Instruction, and Library",
+        "claude_ai_pct": 16,
+        "api_pct": 4,
+        "verification": "Narrative text, p. 27"
+      },
+      {
+        "occupation": "Arts, Design, Entertainment, Sports, and Media",
+        "claude_ai_pct": 11,
+        "api_pct": 6,
+        "verification": "Narrative text, p. 27"
+      },
+      {
+        "occupation": "Office and Administrative Support",
+        "claude_ai_pct": 8,
+        "api_pct": 15,
+        "verification": "Narrative text, p. 27"
+      },
+      {
+        "occupation": "Life, Physical, and Social Science",
+        "claude_ai_pct": 6,
+        "api_pct": 4,
+        "verification": "Approximate, read from Figure 1.2 small multiples, p. 8"
+      },
+      {
+        "occupation": "Business and Financial Operations",
+        "claude_ai_pct": 3,
+        "api_pct": 3,
+        "verification": "Approximate, read from Figure 1.2 small multiples, p. 8"
+      },
+      {
+        "occupation": "Management",
+        "claude_ai_pct": 3,
+        "api_pct": 3,
+        "verification": "Approximate, read from Figure 1.2 small multiples, p. 8"
+      },
+      {
+        "occupation": "Architecture and Engineering",
+        "claude_ai_pct": 2,
+        "api_pct": 1.2,
+        "verification": "Approximate, read from Figure 1.2 small multiples, p. 8"
+      }
+    ],
+    "aggregate_split_by_platform": {
+      "claude_ai": {
+        "augmentation_pct": 52,
+        "automation_pct": 45,
+        "unclassified_pct": 3,
+        "data_period": "November 2025",
+        "directive_pct": 32,
+        "verification": "Figure 1.3, p. 10 (augmentation/automation); narrative text, p. 26 (directive)"
+      },
+      "api": {
+        "automation_dominant": true,
+        "automation_pct": 75,
+        "augmentation_pct": 14,
+        "unclassified_pct": 11,
+        "directive_pct": 64,
+        "note": "API usage is overwhelmingly directive — 64% of interactions classified as directive, 75% as automation overall. Reflects programmatic, single-turn task delegation. Claude.ai directive share is 32% by comparison.",
+        "verification": "Figure 1.3, p. 10 (automation/augmentation); narrative text, p. 26 (directive 64% vs. 32%)"
+      }
+    },
+    "insight": "API deployments concentrate on tasks amenable to systematic automation, while Claude.ai serves a broader range of use cases including learning, creative work, and personal assistance."
+  }
+}
