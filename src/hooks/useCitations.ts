@@ -1,6 +1,7 @@
 // useCitations — platform-wide show/hide toggle for inline citation
-// chips. When hidden, every `<Citation>` renders nothing; when visible
-// (the default), citations keep their full interactive behavior.
+// chips. When hidden (the default), every `<Citation>` renders nothing;
+// when visible, citations keep their full interactive behavior. The
+// learner opts in via the sidebar toggle when they want to see sources.
 //
 // Design note — why a module-level store rather than per-instance
 // `useState` (the useTheme pattern):
@@ -15,7 +16,7 @@
 //   threading: components just call the hook and stay in sync.
 //
 // Persistence: localStorage key 'citation-visibility'. Default
-// 'visible' when no stored value exists. A module-level `storage`
+// 'hidden' when no stored value exists. A module-level `storage`
 // listener keeps the state consistent if the preference is changed in
 // another tab.
 
@@ -26,13 +27,13 @@ type CitationVisibility = 'visible' | 'hidden';
 const STORAGE_KEY = 'citation-visibility';
 
 // Read the persisted preference. Anything other than the explicit
-// 'hidden' string (including a missing key or a localStorage failure)
-// resolves to 'visible' — citations are on by default.
+// 'visible' string (including a missing key or a localStorage failure)
+// resolves to 'hidden' — citations are off by default.
 function read(): CitationVisibility {
   try {
-    return window.localStorage.getItem(STORAGE_KEY) === 'hidden' ? 'hidden' : 'visible';
+    return window.localStorage.getItem(STORAGE_KEY) === 'visible' ? 'visible' : 'hidden';
   } catch {
-    return 'visible';
+    return 'hidden';
   }
 }
 
