@@ -8,6 +8,7 @@
 import { useMemo, useState } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { TOKEN_HEX } from '../../utils/chart-config';
+import { useViewport } from '../../hooks/useViewport';
 
 interface OccupationRow {
   occupation: string;
@@ -199,10 +200,19 @@ function DumbbellChart({
   rows: OccupationRow[];
   domainMax: number;
 }): JSX.Element {
-  // Track measurements
-  const ROW_HEIGHT = 26;
-  const LABEL_WIDTH = 230;
-  const VALUE_WIDTH = 110;
+  // Track measurements. The label + value columns are viewport-responsive
+  // because the desktop widths (230 + 110 = 340 px) leave essentially no
+  // room for the dumbbell track itself on a 358-px-wide mobile viewport.
+  // Mobile uses tighter columns (140 + 92 = 232 px) so the track has
+  // ~126 px to render the dots and connecting line — visible if compact.
+  // The container's `overflow-hidden` always prevented this from causing
+  // page-level horizontal scroll; this fix is about readability, not
+  // overflow safety.
+  const viewport = useViewport();
+  const isMobile = viewport === 'mobile';
+  const ROW_HEIGHT = isMobile ? 30 : 26;
+  const LABEL_WIDTH = isMobile ? 140 : 230;
+  const VALUE_WIDTH = isMobile ? 92 : 110;
   const AXIS_HEIGHT = 28;
   const DOT_SIZE = 10;
 
