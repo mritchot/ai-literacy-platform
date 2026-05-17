@@ -357,9 +357,23 @@ function VerificationItemCard({
   const isSubmitted = Boolean(submitted);
   const feedback = submitted ? item.feedback[submitted] : null;
   const ref = useRef<HTMLDivElement>(null);
+  // Scroll-to-feedback after submission, mirroring the KnowledgeCheck +
+  // InterpretationCheck pattern. Previously this effect scrolled the
+  // WHOLE CARD to the viewport top when it mounted as unsubmitted —
+  // which meant after submitting item N, item N+1 (newly visible)
+  // scrolled itself to the top and jumped past item N's freshly-
+  // revealed feedback. Now we scroll the just-submitted card's
+  // feedback into view instead. `didJustSubmitRef` distinguishes a
+  // fresh submit (scroll wanted) from a re-mount with stored state
+  // from a previous session (no scroll — would yank the page).
+  const feedbackRef = useRef<HTMLDivElement>(null);
+  const didJustSubmitRef = useRef(false);
 
   useEffect(() => {
-    if (!isSubmitted) ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (isSubmitted && didJustSubmitRef.current && feedbackRef.current) {
+      didJustSubmitRef.current = false;
+      feedbackRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
   }, [isSubmitted]);
 
   const options: { id: VerificationAnswer; label: string }[] = [
@@ -438,7 +452,11 @@ function VerificationItemCard({
         <div className="mt-4 flex justify-end">
           <button
             type="button"
-            onClick={() => selected && onSubmit(selected)}
+            onClick={() => {
+              if (!selected) return;
+              didJustSubmitRef.current = true;
+              onSubmit(selected);
+            }}
             disabled={!selected}
             aria-disabled={!selected}
             className="rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
@@ -450,6 +468,7 @@ function VerificationItemCard({
 
       {isSubmitted && feedback && (
         <div
+          ref={feedbackRef}
           aria-live="polite"
           className="mt-4 rounded-md"
           style={{
