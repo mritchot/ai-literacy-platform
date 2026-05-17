@@ -181,7 +181,11 @@ function ModuleGrid({
 }): JSX.Element {
   return (
     <section aria-labelledby="modules-heading" className="mb-10">
-      <div className="mb-5 flex items-baseline justify-between">
+      {/* Stack on mobile, side-by-side on sm: — see KnowledgeCheck.tsx
+          metadata-header comment for the rationale. The right-side
+          subtitle ("Take in order · each self-contained") was wrapping
+          mid-content with a dangling bullet on mobile. */}
+      <div className="mb-5 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
         <h2 id="modules-heading" className="m-0">
           <Overline style={{ fontSize: 11 }}>The four modules</Overline>
         </h2>
@@ -227,7 +231,12 @@ function ModuleCard({ module, locked }: { module: ModuleMeta; locked: boolean })
         padding: '24px 26px 22px',
       }}
     >
-      <div className="mb-3.5 flex items-baseline justify-between">
+      {/* Stack on mobile, side-by-side on sm: — same pattern as the
+          modules-grid header above. The multi-segment left side
+          (`{seq} — {label}`) competing with the duration on the right
+          left both wrapping mid-content with dangling separators on
+          mobile module cards. */}
+      <div className="mb-3.5 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
         <div
           className="font-mono text-[11px] font-bold uppercase"
           style={{ letterSpacing: '0.14em' }}
