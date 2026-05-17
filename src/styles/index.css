@@ -139,6 +139,19 @@
     height: 100%;
     margin: 0;
     padding: 0;
+    /* Defensive: horizontal scrolling is never intended UX on this
+       platform. We use `overflow-x: clip` (not `hidden`) on both `html`
+       and `body` — `hidden` clips visually but still creates a scroll
+       context, which on iOS Safari left the page horizontally pannable
+       via rubber-band even when no specific element was past viewport
+       and no element had measurable internal overflow. `clip` is
+       stricter: it clips content AND prevents the formation of any
+       scroll context entirely, so iOS has nothing to rubber-band
+       against. Safari 16+ supports `clip`; falls back to `hidden` in
+       older browsers (which is what we had before). Vertical scroll is
+       unaffected — `overflow-x` only constrains the horizontal axis. */
+    overflow-x: hidden; /* fallback for pre-Safari-16 */
+    overflow-x: clip;
   }
 
   body {
@@ -149,12 +162,18 @@
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Defensive: horizontal scrolling is never intended UX on this
-       platform. If a component intrinsically overflows the viewport
-       (chart, wide table, long mono string, etc.), clip it rather than
-       letting the whole page scroll right on mobile. Vertical scroll is
-       unaffected — `overflow-x` only constrains the horizontal axis. */
-    overflow-x: hidden;
+    /* Last-resort fix for the iOS Safari horizontal rubber-band scroll:
+       `overflow-x: hidden/clip` on html+body wasn't enough — iOS still
+       reported document.scrollWidth > clientWidth even with no DOM
+       element actually past viewport, and allowed horizontal pan
+       against that latent scroll area. `touch-action: pan-y
+       pinch-zoom` tells iOS to interpret touch gestures as vertical
+       pan or pinch-zoom only, refusing to treat horizontal swipes as
+       scroll input at the gesture-recognition layer. Bypasses the
+       overflow question entirely. The platform has no horizontal-pan
+       UX (no carousels, swipe-to-dismiss, etc.) so the restriction
+       doesn't break any intended interaction. */
+    touch-action: pan-y pinch-zoom;
   }
 
   *,
@@ -182,7 +201,18 @@
 }
 
 @layer utilities {
-  /* Visually hidden but available to screen readers */
+  /* Visually hidden but available to screen readers.
+     `clip-path: inset(50%)` is the critical iOS-Safari fix: the legacy
+     `clip` property is deprecated and iOS doesn't fully honor it for
+     scrollWidth calculations, so a sr-only legend with `white-space:
+     nowrap` content like "Choose the response that best fits the data."
+     was contributing ~326px of unwrapped text width to the document's
+     scrollable area despite the visual being clipped to 1px. That made
+     pages with 2-3 of these (e.g. M1 S3 with 3 interpretation checks)
+     horizontally pannable on mobile. `clip-path: inset(50%)` is honored
+     as a layout-affecting clip and removes the overflow contribution.
+     `word-wrap: normal` is a belt-and-suspenders measure preventing
+     long words from breaking the clip in some browsers. */
   .sr-only {
     position: absolute;
     width: 1px;
@@ -191,7 +221,9 @@
     margin: -1px;
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
     white-space: nowrap;
+    word-wrap: normal;
     border: 0;
   }
 
