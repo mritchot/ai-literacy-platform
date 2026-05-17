@@ -8,6 +8,7 @@
 // pillar from Module 3.
 
 import type { ReactNode } from 'react';
+import { useViewport } from '../../../hooks/useViewport';
 
 // ─────────────────────────────────────────────────────────────────────
 // Brand colors — kept inline (not via CSS var) because these are the
@@ -210,6 +211,16 @@ export function R5CapabilityBoundary(): JSX.Element {
 // ─────────────────────────────────────────────────────────────────────
 
 function ReliableSection(): JSX.Element {
+  // Mobile stacks each row's three columns vertically so the text can
+  // breathe inside the 358-px-wide reference drawer. The desktop 3-col
+  // grid was forcing the Notes column to ~93 px wide on mobile, which
+  // truncated the actionable text. On mobile the column headers
+  // ("Task type / Why it works / Notes") are dropped; each row becomes
+  // a small card with the task name as a heading and labeled fields
+  // for Why and Notes beneath.
+  const viewport = useViewport();
+  const isMobile = viewport === 'mobile';
+
   return (
     <section
       aria-label="Where AI is reliable"
@@ -240,32 +251,36 @@ function ReliableSection(): JSX.Element {
         </p>
       </header>
 
-      {/* Header row */}
-      <div
-        className="grid"
-        style={{
-          gridTemplateColumns: '160px 1fr 1fr',
-          gap: 12,
-          padding: '8px 16px',
-          background: 'rgb(var(--surface))',
-          borderTop: '1px solid rgb(var(--border-light))',
-          borderBottom: '1px solid rgb(var(--border-light))',
-        }}
-      >
-        <ColHeader label="Task type" />
-        <ColHeader label="Why it works" />
-        <ColHeader label="Notes" />
-      </div>
-
-      {RELIABLE_ROWS.map((row, i) => (
+      {!isMobile && (
+        /* Desktop column headers (mobile drops them — see comment above) */
         <div
-          key={row.task}
           className="grid"
           style={{
             gridTemplateColumns: '160px 1fr 1fr',
             gap: 12,
+            padding: '8px 16px',
+            background: 'rgb(var(--surface))',
+            borderTop: '1px solid rgb(var(--border-light))',
+            borderBottom: '1px solid rgb(var(--border-light))',
+          }}
+        >
+          <ColHeader label="Task type" />
+          <ColHeader label="Why it works" />
+          <ColHeader label="Notes" />
+        </div>
+      )}
+
+      {RELIABLE_ROWS.map((row, i) => (
+        <div
+          key={row.task}
+          className={isMobile ? '' : 'grid'}
+          style={{
+            ...(isMobile
+              ? {}
+              : { gridTemplateColumns: '160px 1fr 1fr', gap: 12 }),
             padding: '12px 16px',
             background: i % 2 === 0 ? 'rgb(var(--delegation-light))' : 'transparent',
+            borderTop: isMobile && i === 0 ? '1px solid rgb(var(--border-light))' : undefined,
             borderBottom:
               i === RELIABLE_ROWS.length - 1
                 ? 'none'
@@ -277,25 +292,61 @@ function ReliableSection(): JSX.Element {
             style={{
               color: 'rgb(var(--delegation-text))',
               lineHeight: 1.35,
+              marginBottom: isMobile ? 8 : 0,
             }}
           >
             {row.task}
           </div>
-          <div
-            className="font-sans text-[12px]"
-            style={{ color: 'rgb(var(--ink))', lineHeight: 1.5 }}
-          >
-            {row.why}
-          </div>
-          <div
-            className="font-sans text-[12px]"
-            style={{ color: 'rgb(var(--ink))', lineHeight: 1.5 }}
-          >
-            {row.notes}
-          </div>
+          {isMobile ? (
+            <>
+              <MobileFieldLabel label="Why it works" color={DELEGATION} />
+              <div
+                className="font-sans text-[12px]"
+                style={{ color: 'rgb(var(--ink))', lineHeight: 1.5, marginBottom: 8 }}
+              >
+                {row.why}
+              </div>
+              <MobileFieldLabel label="Notes" color={DELEGATION} />
+              <div
+                className="font-sans text-[12px]"
+                style={{ color: 'rgb(var(--ink))', lineHeight: 1.5 }}
+              >
+                {row.notes}
+              </div>
+            </>
+          ) : (
+            <>
+              <div
+                className="font-sans text-[12px]"
+                style={{ color: 'rgb(var(--ink))', lineHeight: 1.5 }}
+              >
+                {row.why}
+              </div>
+              <div
+                className="font-sans text-[12px]"
+                style={{ color: 'rgb(var(--ink))', lineHeight: 1.5 }}
+              >
+                {row.notes}
+              </div>
+            </>
+          )}
         </div>
       ))}
     </section>
+  );
+}
+
+// Small mono-uppercase field label used in mobile-stacked rows. Lets
+// the reader distinguish "Why it works" from "Notes" / "Instead..."
+// without the desktop column headers being present.
+function MobileFieldLabel({ label, color }: { label: string; color: string }): JSX.Element {
+  return (
+    <div
+      className="font-mono text-[10px] font-semibold uppercase"
+      style={{ color, letterSpacing: '0.1em', marginBottom: 3 }}
+    >
+      {label}
+    </div>
   );
 }
 
@@ -375,6 +426,10 @@ function FailsCategoryBlock({
   cat: FailsCategory;
   isLast: boolean;
 }): JSX.Element {
+  // Same mobile pattern as ReliableSection — see the comment there.
+  const viewport = useViewport();
+  const isMobile = viewport === 'mobile';
+
   return (
     <div
       style={{
@@ -420,33 +475,38 @@ function FailsCategoryBlock({
         {cat.body}
       </p>
 
-      {/* Column headers */}
-      <div
-        className="grid"
-        style={{
-          gridTemplateColumns: '180px 1fr 1fr',
-          gap: 12,
-          padding: '8px 16px',
-          background: 'rgb(var(--surface))',
-          borderTop: '1px solid rgb(var(--border-light))',
-          borderBottom: '1px solid rgb(var(--border-light))',
-        }}
-      >
-        <ColHeader label="Fails at..." />
-        <ColHeader label="Why" />
-        <ColHeader label="Instead..." />
-      </div>
+      {!isMobile && (
+        /* Desktop column headers (mobile drops them in favor of
+           per-row field labels) */
+        <div
+          className="grid"
+          style={{
+            gridTemplateColumns: '180px 1fr 1fr',
+            gap: 12,
+            padding: '8px 16px',
+            background: 'rgb(var(--surface))',
+            borderTop: '1px solid rgb(var(--border-light))',
+            borderBottom: '1px solid rgb(var(--border-light))',
+          }}
+        >
+          <ColHeader label="Fails at..." />
+          <ColHeader label="Why" />
+          <ColHeader label="Instead..." />
+        </div>
+      )}
 
       {/* Rows */}
       {cat.rows.map((row, i) => (
         <div
           key={row.failsAt}
-          className="grid"
+          className={isMobile ? '' : 'grid'}
           style={{
-            gridTemplateColumns: '180px 1fr 1fr',
-            gap: 12,
+            ...(isMobile
+              ? {}
+              : { gridTemplateColumns: '180px 1fr 1fr', gap: 12 }),
             padding: '12px 16px',
             background: i % 2 === 0 ? 'rgb(var(--discernment-light))' : 'transparent',
+            borderTop: isMobile && i === 0 ? '1px solid rgb(var(--border-light))' : undefined,
             borderBottom:
               i === cat.rows.length - 1
                 ? 'none'
@@ -458,24 +518,48 @@ function FailsCategoryBlock({
             style={{
               color: 'rgb(var(--discernment-text))',
               lineHeight: 1.35,
+              marginBottom: isMobile ? 8 : 0,
             }}
           >
             {row.failsAt}
           </div>
-          <div
-            className="font-sans text-[12px]"
-            style={{ color: 'rgb(var(--ink))', lineHeight: 1.5 }}
-          >
-            {row.why}
-          </div>
-          {/* Instead column rendered BOLD per spec — these are the
-              actionable takeaways. */}
-          <div
-            className="font-sans text-[12px] font-semibold"
-            style={{ color: 'rgb(var(--ink))', lineHeight: 1.5 }}
-          >
-            {row.instead}
-          </div>
+          {isMobile ? (
+            <>
+              <MobileFieldLabel label="Why" color={DISCERNMENT} />
+              <div
+                className="font-sans text-[12px]"
+                style={{ color: 'rgb(var(--ink))', lineHeight: 1.5, marginBottom: 8 }}
+              >
+                {row.why}
+              </div>
+              <MobileFieldLabel label="Instead" color={DISCERNMENT} />
+              {/* Instead column rendered BOLD per spec — these are
+                  the actionable takeaways. */}
+              <div
+                className="font-sans text-[12px] font-semibold"
+                style={{ color: 'rgb(var(--ink))', lineHeight: 1.5 }}
+              >
+                {row.instead}
+              </div>
+            </>
+          ) : (
+            <>
+              <div
+                className="font-sans text-[12px]"
+                style={{ color: 'rgb(var(--ink))', lineHeight: 1.5 }}
+              >
+                {row.why}
+              </div>
+              {/* Instead column rendered BOLD per spec — these are
+                  the actionable takeaways. */}
+              <div
+                className="font-sans text-[12px] font-semibold"
+                style={{ color: 'rgb(var(--ink))', lineHeight: 1.5 }}
+              >
+                {row.instead}
+              </div>
+            </>
+          )}
         </div>
       ))}
     </div>

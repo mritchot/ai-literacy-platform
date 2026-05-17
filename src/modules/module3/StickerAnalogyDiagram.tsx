@@ -26,6 +26,7 @@
 // No interactivity. Static visual, ~280px tall.
 
 import { TokenChip } from './TokenChip';
+import { useViewport } from '../../hooks/useViewport';
 
 // Sample slice of cl100k_base vocabulary — every entry is a real token.
 // Mix of common whole-word tokens (with leading spaces, as they'd appear
@@ -153,55 +154,88 @@ function ExampleRow({
   tokens: string[];
   label: string;
 }): JSX.Element {
+  // Mobile stacks the row vertically (source word → ↓ → token chips)
+  // because the desktop 3-column grid (minmax(0, auto) auto minmax(0, 1fr))
+  // forces the tokens column into a narrow ~190 px strip on a 358 px
+  // viewport, which made the chips wrap to 2 rows below an already-
+  // awkward horizontal arrow. Vertical stacking lets the chips have
+  // the full row width to wrap naturally.
+  const viewport = useViewport();
+  const isMobile = viewport === 'mobile';
+
+  // Same source-text box used in both layouts — surface/border
+  // treatment matches the "What you type" input box inside
+  // TokenComparisonDiagram's ComparisonPanel so the two diagrams
+  // visually rhyme.
+  const sourceBox = (
+    <div
+      className="rounded-md font-sans text-body text-ink"
+      style={{
+        background: 'rgb(var(--surface-warm))',
+        border: '1px solid rgb(var(--border-light))',
+        padding: '6px 12px',
+        justifySelf: 'start',
+        whiteSpace: 'nowrap',
+      }}
+    >
+      {text}
+    </div>
+  );
+
+  // Token list — same in both layouts; reuses TokenChip so the chips
+  // look identical to those in TokenComparisonDiagram below.
+  const tokenList = (
+    <ol
+      aria-label={`${tokens.length} tokens for "${text}"`}
+      className="m-0 flex flex-wrap items-center p-0"
+      style={{ listStyle: 'none' }}
+    >
+      {tokens.map((t, i) => (
+        <TokenChip key={`${label}-${i}`} text={t} index={i} />
+      ))}
+    </ol>
+  );
+
   return (
     <>
       <div className="mb-2 font-sans text-body-sm font-semibold text-secondary">{label}</div>
-      <div
-        className="grid items-center"
-        style={{
-          gridTemplateColumns: 'minmax(0, auto) auto minmax(0, 1fr)',
-          gap: 12,
-        }}
-      >
-        {/* Left — what you type. Same surface/border treatment as the
-            "What you type" input box inside TokenComparisonDiagram's
-            ComparisonPanel, so the two diagrams visually rhyme. */}
+      {isMobile ? (
+        <div className="flex flex-col items-start gap-2">
+          {sourceBox}
+          {/* Arrow points DOWN on mobile (vertical flow). Indented to
+              align loosely with the source box / token chips' left
+              edge so the visual rhythm reads top-to-bottom. */}
+          <div
+            aria-hidden="true"
+            className="font-mono text-tertiary"
+            style={{ fontSize: 20, lineHeight: 1, marginLeft: 14 }}
+          >
+            ↓
+          </div>
+          {tokenList}
+        </div>
+      ) : (
         <div
-          className="rounded-md font-sans text-body text-ink"
+          className="grid items-center"
           style={{
-            background: 'rgb(var(--surface-warm))',
-            border: '1px solid rgb(var(--border-light))',
-            padding: '6px 12px',
-            justifySelf: 'start',
-            whiteSpace: 'nowrap',
+            gridTemplateColumns: 'minmax(0, auto) auto minmax(0, 1fr)',
+            gap: 12,
           }}
         >
-          {text}
+          {sourceBox}
+          {/* Arrow connector — simple Unicode glyph, aria-hidden because
+              the grid layout itself conveys the relationship and the
+              row label above already names the transformation. */}
+          <div
+            aria-hidden="true"
+            className="font-mono text-tertiary"
+            style={{ fontSize: 20, lineHeight: 1 }}
+          >
+            →
+          </div>
+          {tokenList}
         </div>
-
-        {/* Arrow connector — simple Unicode glyph, aria-hidden because
-            the grid layout itself conveys the relationship and the row
-            label above already names the transformation. */}
-        <div
-          aria-hidden="true"
-          className="font-mono text-tertiary"
-          style={{ fontSize: 20, lineHeight: 1 }}
-        >
-          →
-        </div>
-
-        {/* Right — the token chips. Reuses TokenChip so the chips look
-            identical to those in TokenComparisonDiagram below. */}
-        <ol
-          aria-label={`${tokens.length} tokens for "${text}"`}
-          className="m-0 flex flex-wrap items-center p-0"
-          style={{ listStyle: 'none' }}
-        >
-          {tokens.map((t, i) => (
-            <TokenChip key={`${label}-${i}`} text={t} index={i} />
-          ))}
-        </ol>
-      </div>
+      )}
     </>
   );
 }
