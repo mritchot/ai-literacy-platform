@@ -44,6 +44,8 @@ export function AugAutoViewA({
 }: AugAutoViewAProps): JSX.Element {
   const { track } = useAnalytics();
   const [sortKey, setSortKey] = useState<SortKey>('overrepresentation_ratio');
+  const viewport = useViewport();
+  const isMobile = viewport === 'mobile';
 
   const sorted = useMemo(
     () => [...categories].sort((a, b) => b[sortKey] - a[sortKey]),
@@ -103,36 +105,52 @@ export function AugAutoViewA({
 
       <DumbbellLegend />
 
+      {/* On desktop the figure is `role="img"` with an aria-label
+          description, and the sr-only table below provides the data
+          alternative for screen readers (the dumbbell is a pure CSS
+          visual with no text content). On mobile we drop `role="img"`
+          so AT traverses into the figure and reads the card text
+          directly — the card content (occupation + AI use + workforce
+          + ratio) IS the accessible representation. The sr-only table
+          below is also skipped on mobile because (a) it duplicates the
+          card content and (b) HTML tables ignore explicit `height: 1px`
+          (table layout rules win over CSS height), so a 22-row table
+          renders at ~2700 px of natural layout height even with
+          overflow:hidden, which was inflating document.scrollHeight to
+          ~5467 px (over 6× the visible content height) and giving the
+          page a lot of phantom empty scroll past the section nav. */}
       <figure
         className="m-0"
         aria-label={ariaLabel}
-        role="img"
+        role={isMobile ? undefined : 'img'}
       >
         <DumbbellChart rows={sorted} domainMax={domainMax} />
       </figure>
 
-      {/* Visually-hidden table for screen readers (4A spec §10.1) */}
-      <table className="sr-only">
-        <caption>AI conversation share vs. U.S. workforce share by occupation</caption>
-        <thead>
-          <tr>
-            <th scope="col">Occupation</th>
-            <th scope="col">AI share (%)</th>
-            <th scope="col">Workforce share (%)</th>
-            <th scope="col">Overrepresentation ratio</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sorted.map((c) => (
-            <tr key={c.occupation}>
-              <td>{c.occupation}</td>
-              <td>{c.claude_pct}</td>
-              <td>{c.us_workforce_pct}</td>
-              <td>{c.overrepresentation_ratio}</td>
+      {!isMobile && (
+        /* Visually-hidden table for screen readers (4A spec §10.1) */
+        <table className="sr-only">
+          <caption>AI conversation share vs. U.S. workforce share by occupation</caption>
+          <thead>
+            <tr>
+              <th scope="col">Occupation</th>
+              <th scope="col">AI share (%)</th>
+              <th scope="col">Workforce share (%)</th>
+              <th scope="col">Overrepresentation ratio</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {sorted.map((c) => (
+              <tr key={c.occupation}>
+                <td>{c.occupation}</td>
+                <td>{c.claude_pct}</td>
+                <td>{c.us_workforce_pct}</td>
+                <td>{c.overrepresentation_ratio}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
 
       <aside
         role="note"
