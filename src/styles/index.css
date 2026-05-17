@@ -198,6 +198,65 @@
       animation-duration: 0ms !important;
     }
   }
+
+  /* Custom range-slider styling. Native iOS Safari renders sliders with
+     a ~3 px track and tiny thumb that's hard to see and harder to
+     touch — the M3 S5 NextTokenDemo temperature slider was reported as
+     "next to not observable" on mobile. Bumping the track to 6 px and
+     the thumb to 22 px (with a white border + subtle shadow so it
+     stands clearly off the track) makes the control visible and
+     comfortably tappable while preserving the `accent-color` token
+     that drives the fill color in modern browsers. Applied globally —
+     the platform only has one slider (the temperature control), and
+     consistent control styling is the right default if more get
+     added. */
+  input[type='range'] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 24px;
+    background: transparent;
+    cursor: pointer;
+  }
+  input[type='range']::-webkit-slider-runnable-track {
+    height: 6px;
+    background: rgb(var(--border-light));
+    border-radius: 3px;
+  }
+  input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    background: rgb(var(--action));
+    border: 2px solid rgb(var(--white));
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    /* Recenter the thumb vertically on the 6 px track:
+       margin-top = (track-height - thumb-height) / 2 = (6 - 22) / 2. */
+    margin-top: -8px;
+  }
+  input[type='range']::-moz-range-track {
+    height: 6px;
+    background: rgb(var(--border-light));
+    border-radius: 3px;
+  }
+  input[type='range']::-moz-range-thumb {
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    background: rgb(var(--action));
+    border: 2px solid rgb(var(--white));
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+  input[type='range']:focus-visible {
+    outline: none;
+  }
+  input[type='range']:focus-visible::-webkit-slider-thumb {
+    box-shadow:
+      0 0 0 3px rgb(var(--action) / 0.25),
+      0 1px 3px rgba(0, 0, 0, 0.15);
+  }
 }
 
 @layer utilities {

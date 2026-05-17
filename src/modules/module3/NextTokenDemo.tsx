@@ -13,6 +13,7 @@ import { R5Trigger } from '../../components/reference/R5Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
 import { TOKEN_HEX } from '../../utils/chart-config';
 import { TokenChip } from './TokenChip';
+import { useViewport } from '../../hooks/useViewport';
 import {
   STEMS,
   STEM_3_OUTPUTS,
@@ -42,6 +43,8 @@ export function NextTokenDemo(): JSX.Element {
   const { markEngaged, markTabViewed, state } = useLearnerProgress();
   const [activeStem, setActiveStem] = useState<1 | 2 | 3>(1);
   const [temperature, setTemperature] = useState<number>(0.7);
+  const viewport = useViewport();
+  const isMobile = viewport === 'mobile';
   const [generated, setGenerated] = useState<Record<number, string[]>>({});
   const [stem3Generated, setStem3Generated] = useState<boolean>(false);
 
@@ -143,10 +146,18 @@ export function NextTokenDemo(): JSX.Element {
         prediction step, then observe what changes when you adjust the temperature.
       </p>
 
+      {/* Stem tab list. Mobile uses a 3-column grid with short labels
+          ("Stem 1") so all three sit in a single row with equal width
+          and read as a proper tab control. The full-label flex-wrap
+          layout left each tab on its own row on mobile because
+          "Stem 1 · Pattern completion" / "Stem 3 · Variability
+          demonstration" wouldn't fit horizontally, producing a stacked-
+          links look that read as nav rather than a tab switcher.
+          Desktop keeps the full labels in the original wrapping flex. */}
       <div
         role="tablist"
         aria-label="Stems"
-        className="mb-5 flex flex-wrap"
+        className="mb-5 grid grid-cols-3 sm:flex sm:flex-wrap"
         style={{ borderBottom: '1px solid rgb(var(--border-light))' }}
       >
         {([1, 2, 3] as const).map((id, i) => {
@@ -162,9 +173,9 @@ export function NextTokenDemo(): JSX.Element {
               tabIndex={active ? 0 : -1}
               onClick={() => setActiveStem(id)}
               onKeyDown={(e) => onTabKey(e, i + 1)}
-              className="font-sans text-[13px] transition-colors duration-150"
+              className="font-sans text-[13px] transition-colors duration-150 sm:text-left text-center"
               style={{
-                padding: '12px 18px',
+                padding: isMobile ? '12px 8px' : '12px 18px',
                 background: active ? 'rgb(var(--white))' : 'transparent',
                 color: active ? 'rgb(var(--ink))' : 'rgb(var(--secondary))',
                 fontWeight: active ? 600 : 500,
@@ -175,7 +186,7 @@ export function NextTokenDemo(): JSX.Element {
                 cursor: 'pointer',
               }}
             >
-              Stem {id} · {STEMS[id - 1]?.label}
+              {isMobile ? `Stem ${id}` : `Stem ${id} · ${STEMS[id - 1]?.label}`}
             </button>
           );
         })}
@@ -353,6 +364,17 @@ function ProbabilityPanel({
   residualPct: number;
   residualLabel: string;
 }): JSX.Element {
+  // Mobile drops the ProbabilityBar column entirely — the desktop
+  // grid is `170px 60px 1fr` which leaves only ~30-40 px for the bar
+  // on a 358 px viewport, so the bars rendered as near-invisible
+  // stubs that didn't communicate the temperature redistribution.
+  // Mobile uses a 2-column layout (token name + right-aligned
+  // percentage) and relies on the numeric values alone to show the
+  // probability distribution. The bars stay on desktop where there's
+  // enough horizontal room for them to read as a meaningful chart.
+  const viewport = useViewport();
+  const isMobile = viewport === 'mobile';
+  const gridTemplate = isMobile ? '1fr auto' : '170px 60px 1fr';
   return (
     <section
       aria-label="Probability panel"
@@ -377,7 +399,7 @@ function ProbabilityPanel({
               key={c.token}
               aria-label={`Token ${visualToken(c.token)}, probability ${pct.toFixed(1)} percent`}
               className="grid items-center gap-3"
-              style={{ gridTemplateColumns: '170px 60px 1fr' }}
+              style={{ gridTemplateColumns: gridTemplate }}
             >
               <span
                 className="font-mono text-[13px] text-ink"
@@ -388,20 +410,20 @@ function ProbabilityPanel({
               <span className="font-mono text-[12px] text-secondary" style={{ textAlign: 'right' }}>
                 {pct.toFixed(1)}%
               </span>
-              <ProbabilityBar pct={pct} />
+              {!isMobile && <ProbabilityBar pct={pct} />}
             </li>
           );
         })}
         {residualPct > 0 && (
           <li
             className="grid items-center gap-3 pt-1"
-            style={{ gridTemplateColumns: '170px 60px 1fr', color: 'rgb(var(--muted))' }}
+            style={{ gridTemplateColumns: gridTemplate, color: 'rgb(var(--muted))' }}
           >
             <span className="font-mono text-[12px] italic">{residualLabel}</span>
             <span className="font-mono text-[12px]" style={{ textAlign: 'right' }}>
               {residualPct.toFixed(1)}%
             </span>
-            <span aria-hidden="true" />
+            {!isMobile && <span aria-hidden="true" />}
           </li>
         )}
       </ul>
