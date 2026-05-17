@@ -4,6 +4,7 @@
 // extension patterns rendered with a lighter visual weight.
 
 import { Overline } from '../../components/shared/Overline';
+import { useViewport } from '../../hooks/useViewport';
 
 interface PairRow {
   failure: string;
@@ -56,6 +57,15 @@ const EXTENSION_PAIRS: PairRow[] = [
 ];
 
 export function DiagnosticPairTable(): JSX.Element {
+  // Mobile renders each row as a stacked card (failure heading,
+  // property-pair chips, fix). The 4-column desktop table had to
+  // horizontally-scroll on mobile to fit and required the learner to
+  // pan the table to read fixes — awkward UX that broke the natural
+  // top-to-bottom reading flow of the rest of the section. Cards
+  // preserve the same data (failure / pair / fix) but give each row
+  // the full row width so all three pieces are visible at once.
+  const viewport = useViewport();
+  const isMobile = viewport === 'mobile';
   return (
     <figure
       className="m-0 rounded-lg"
@@ -74,48 +84,151 @@ export function DiagnosticPairTable(): JSX.Element {
         </p>
       </div>
 
-      <div className="overflow-x-auto">
-        <table
-          className="w-full border-collapse font-sans text-body-sm"
-          role="table"
-        >
-          <caption className="sr-only">
-            Diagnostic pair reference: failure signature, the two properties that produced it, and
-            the targeted fix.
-          </caption>
-          <thead style={{ background: 'rgb(var(--surface-warm))' }}>
-            <tr>
-              <Th>Failure you see</Th>
-              <Th>Property 1</Th>
-              <Th>Property 2</Th>
-              <Th>The fix</Th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td colSpan={4} style={cellHeaderStyle}>
-                <span className="font-mono text-overline font-bold uppercase text-tertiary" style={{ letterSpacing: '0.1em' }}>
-                  Core pairs
-                </span>
-              </td>
-            </tr>
-            {CORE_PAIRS.map((row, i) => (
-              <PairRowEl key={`core-${i}`} row={row} variant="core" />
-            ))}
-            <tr>
-              <td colSpan={4} style={cellHeaderStyle}>
-                <span className="font-mono text-overline font-bold uppercase text-tertiary" style={{ letterSpacing: '0.1em' }}>
-                  Other common patterns
-                </span>
-              </td>
-            </tr>
-            {EXTENSION_PAIRS.map((row, i) => (
-              <PairRowEl key={`ext-${i}`} row={row} variant="extension" />
-            ))}
-          </tbody>
-        </table>
-      </div>
+      {isMobile ? (
+        <MobilePairList />
+      ) : (
+        <div className="overflow-x-auto">
+          <table
+            className="w-full border-collapse font-sans text-body-sm"
+            role="table"
+          >
+            <caption className="sr-only">
+              Diagnostic pair reference: failure signature, the two properties that produced it, and
+              the targeted fix.
+            </caption>
+            <thead style={{ background: 'rgb(var(--surface-warm))' }}>
+              <tr>
+                <Th>Failure you see</Th>
+                <Th>Property 1</Th>
+                <Th>Property 2</Th>
+                <Th>The fix</Th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colSpan={4} style={cellHeaderStyle}>
+                  <span className="font-mono text-overline font-bold uppercase text-tertiary" style={{ letterSpacing: '0.1em' }}>
+                    Core pairs
+                  </span>
+                </td>
+              </tr>
+              {CORE_PAIRS.map((row, i) => (
+                <PairRowEl key={`core-${i}`} row={row} variant="core" />
+              ))}
+              <tr>
+                <td colSpan={4} style={cellHeaderStyle}>
+                  <span className="font-mono text-overline font-bold uppercase text-tertiary" style={{ letterSpacing: '0.1em' }}>
+                    Other common patterns
+                  </span>
+                </td>
+              </tr>
+              {EXTENSION_PAIRS.map((row, i) => (
+                <PairRowEl key={`ext-${i}`} row={row} variant="extension" />
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </figure>
+  );
+}
+
+// Mobile-only rendering of the diagnostic-pair data as stacked cards.
+// Two row groups (core + extension) with their existing headers; each
+// row card shows the failure as the headline, the property pair as
+// small chips, and the fix as body text below.
+function MobilePairList(): JSX.Element {
+  return (
+    <div style={{ padding: '14px 16px' }}>
+      <GroupHeader label="Core pairs" />
+      <div className="mt-2 space-y-2.5">
+        {CORE_PAIRS.map((row, i) => (
+          <MobilePairCard key={`core-${i}`} row={row} variant="core" />
+        ))}
+      </div>
+      <div className="mt-5">
+        <GroupHeader label="Other common patterns" />
+      </div>
+      <div className="mt-2 space-y-2.5">
+        {EXTENSION_PAIRS.map((row, i) => (
+          <MobilePairCard key={`ext-${i}`} row={row} variant="extension" />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function GroupHeader({ label }: { label: string }): JSX.Element {
+  return (
+    <div
+      className="font-mono text-overline font-bold uppercase text-tertiary"
+      style={{ letterSpacing: '0.1em' }}
+    >
+      {label}
+    </div>
+  );
+}
+
+function MobilePairCard({
+  row,
+  variant,
+}: {
+  row: PairRow;
+  variant: 'core' | 'extension';
+}): JSX.Element {
+  const dim = variant === 'extension';
+  return (
+    <div
+      className="rounded-md"
+      style={{
+        background: dim ? 'rgb(var(--surface))' : 'rgb(var(--white))',
+        border: '1px solid rgb(var(--border-light))',
+        padding: '12px 14px',
+      }}
+    >
+      <div
+        className="mb-3 font-sans text-body-sm font-semibold"
+        style={{
+          color: dim ? 'rgb(var(--secondary))' : 'rgb(var(--ink))',
+          lineHeight: 1.4,
+        }}
+      >
+        {row.failure}
+      </div>
+      {/* Pair rendered as inline text instead of chips on mobile. Two
+          attempts at chips didn't work: inline `PAIR · chip1 · × ·
+          chip2` left chip2 wrapping alone with an orphaned × on the
+          previous line, and promoting PAIR to its own row still
+          didn't fit the widest pair ("Next-token prediction" +
+          "Knowledge (sparse)" sum to ~344 px of chip width vs
+          ~298 px of card content). Text with a small "PAIR" label
+          prefix wraps cleanly if needed and reads more like
+          continuous prose, which fits the card's overall reading
+          flow anyway. */}
+      <div
+        className="mb-3 font-sans text-body-sm"
+        style={{ color: dim ? 'rgb(var(--secondary))' : 'rgb(var(--body))', lineHeight: 1.5 }}
+      >
+        <span
+          className="font-mono text-[10px] font-semibold uppercase text-tertiary"
+          style={{ letterSpacing: '0.08em', marginRight: 6 }}
+        >
+          Pair
+        </span>
+        <span className="text-ink">{row.property1}</span>
+        <span className="mx-1.5 text-tertiary">×</span>
+        <span className="text-ink">{row.property2}</span>
+      </div>
+      <div className="font-sans text-body-sm" style={{ color: dim ? 'rgb(var(--secondary))' : 'rgb(var(--body))', lineHeight: 1.5 }}>
+        <span
+          className="font-mono text-[10px] font-semibold uppercase text-tertiary"
+          style={{ letterSpacing: '0.08em', marginRight: 6 }}
+        >
+          Fix
+        </span>
+        {row.fix}
+      </div>
+    </div>
   );
 }
 
