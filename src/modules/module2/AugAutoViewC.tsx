@@ -25,6 +25,7 @@ import {
   TOOLTIP_LABEL_STYLE,
   TOOLTIP_STYLE,
 } from '../../utils/chart-config';
+import { useViewport } from '../../hooks/useViewport';
 
 interface AugAutoViewCProps {
   selfReportAug: number;
@@ -53,6 +54,8 @@ export function AugAutoViewC({
   const { track } = useAnalytics();
   const { getReflection } = useLearnerProgress();
   const [methodOpen, setMethodOpen] = useState(false);
+  const viewport = useViewport();
+  const isMobile = viewport === 'mobile';
 
   const reflection1Text = getReflection(2, 3, 'p3_reflection_1');
 
@@ -80,42 +83,54 @@ export function AugAutoViewC({
       </p>
 
       <div aria-label={ariaLabel}>
-        <div style={{ width: '100%', height: 280 }}>
-          <ResponsiveContainer>
-            <BarChart data={data} margin={{ top: 16, right: 24, bottom: 8, left: 24 }} barCategoryGap="22%">
-              <CartesianGrid stroke="rgb(var(--border-light))" strokeDasharray="2 2" vertical={false} />
-              <XAxis
-                dataKey="label"
-                tick={AXIS_TICK_STYLE}
-                axisLine={{ stroke: 'rgb(var(--border-light))' }}
-                tickLine={false}
-              />
-              <YAxis
-                domain={[0, 80]}
-                tickFormatter={(v) => `${v}%`}
-                tick={AXIS_TICK_STYLE}
-                stroke="rgb(var(--border-light))"
-              />
-              <Tooltip
-                contentStyle={TOOLTIP_STYLE}
-                itemStyle={TOOLTIP_ITEM_STYLE}
-                labelStyle={TOOLTIP_LABEL_STYLE}
-                cursor={{ fill: 'rgba(0,0,0,0.04)' }}
-                formatter={(value: number, name) => [`${value}%`, name === 'augmentation' ? 'Augmentation' : 'Automation']}
-              />
-              <Bar dataKey="augmentation" isAnimationActive={false} radius={[3, 3, 0, 0]}>
-                {data.map((d, i) => (
-                  <Cell key={`aug-${i}`} fill={d.fill} />
-                ))}
-              </Bar>
-              <Bar dataKey="automation" isAnimationActive={false} radius={[3, 3, 0, 0]}>
-                {data.map((d, i) => (
-                  <Cell key={`auto-${i}`} fill={d.fill} fillOpacity={0.4} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+        {isMobile ? (
+          // Mobile: the desktop grouped bar (3 sources × 2 measures =
+          // 6 bars in ~358 px) forced each bar to ~32 px wide with
+          // category labels truncated under the X axis. Each source
+          // now renders as a card with both percentages stacked as
+          // full-width bars — easier to compare aug vs auto within a
+          // source and easier to compare augmentation across sources
+          // (the chart's primary insight: self-reported is the
+          // outlier, behavioral baselines agree directionally).
+          <MobileSelfReportList rows={data} />
+        ) : (
+          <div style={{ width: '100%', height: 280 }}>
+            <ResponsiveContainer>
+              <BarChart data={data} margin={{ top: 16, right: 24, bottom: 8, left: 24 }} barCategoryGap="22%">
+                <CartesianGrid stroke="rgb(var(--border-light))" strokeDasharray="2 2" vertical={false} />
+                <XAxis
+                  dataKey="label"
+                  tick={AXIS_TICK_STYLE}
+                  axisLine={{ stroke: 'rgb(var(--border-light))' }}
+                  tickLine={false}
+                />
+                <YAxis
+                  domain={[0, 80]}
+                  tickFormatter={(v) => `${v}%`}
+                  tick={AXIS_TICK_STYLE}
+                  stroke="rgb(var(--border-light))"
+                />
+                <Tooltip
+                  contentStyle={TOOLTIP_STYLE}
+                  itemStyle={TOOLTIP_ITEM_STYLE}
+                  labelStyle={TOOLTIP_LABEL_STYLE}
+                  cursor={{ fill: 'rgba(0,0,0,0.04)' }}
+                  formatter={(value: number, name) => [`${value}%`, name === 'augmentation' ? 'Augmentation' : 'Automation']}
+                />
+                <Bar dataKey="augmentation" isAnimationActive={false} radius={[3, 3, 0, 0]}>
+                  {data.map((d, i) => (
+                    <Cell key={`aug-${i}`} fill={d.fill} />
+                  ))}
+                </Bar>
+                <Bar dataKey="automation" isAnimationActive={false} radius={[3, 3, 0, 0]}>
+                  {data.map((d, i) => (
+                    <Cell key={`auto-${i}`} fill={d.fill} fillOpacity={0.4} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        )}
       </div>
 
       <div className="flex flex-wrap gap-x-5 gap-y-1.5 font-mono text-[11px] text-tertiary">
@@ -234,5 +249,94 @@ function ReflectionRecallCard({ text }: { text: string }): JSX.Element {
         </div>
       )}
     </article>
+  );
+}
+
+// Mobile rendering of the self-report-vs-behavioral grouped bar. Each
+// data source (self-reported / behavioral V1 / behavioral V2) gets a
+// card with augmentation + automation stacked as full-width bars,
+// normalized to the same 80% domain the desktop chart uses so cards
+// remain visually comparable. The source's fill color tints the
+// augmentation bar; automation uses the same hue at reduced opacity,
+// mirroring the desktop chart's cell treatment.
+function MobileSelfReportList({ rows }: { rows: SeriesRow[] }): JSX.Element {
+  const DOMAIN = 80;
+  return (
+    <div className="space-y-3">
+      {rows.map((row) => {
+        const augWidth = (row.augmentation / DOMAIN) * 100;
+        const autoWidth = (row.automation / DOMAIN) * 100;
+        return (
+          <div
+            key={row.label}
+            className="rounded-md"
+            style={{
+              background: 'rgb(var(--white))',
+              border: '1px solid rgb(var(--border))',
+              padding: '12px 14px',
+            }}
+          >
+            <div
+              className="mb-3 font-sans text-body-sm font-semibold text-ink"
+              style={{ lineHeight: 1.35 }}
+            >
+              {row.label}
+            </div>
+
+            <div className="mb-2">
+              <div className="mb-1 flex items-baseline justify-between gap-3">
+                <span
+                  className="font-mono text-[10px] font-semibold uppercase text-tertiary"
+                  style={{ letterSpacing: '0.08em' }}
+                >
+                  Augmentation
+                </span>
+                <span
+                  className="font-mono text-caption font-semibold"
+                  style={{ color: row.fill, letterSpacing: '0.02em' }}
+                >
+                  {row.augmentation}%
+                </span>
+              </div>
+              <div
+                className="h-2 w-full overflow-hidden rounded-full"
+                style={{ background: 'rgb(var(--border-light))' }}
+              >
+                <div
+                  className="h-full rounded-full"
+                  style={{ width: `${augWidth}%`, background: row.fill }}
+                />
+              </div>
+            </div>
+
+            <div>
+              <div className="mb-1 flex items-baseline justify-between gap-3">
+                <span
+                  className="font-mono text-[10px] font-semibold uppercase text-tertiary"
+                  style={{ letterSpacing: '0.08em' }}
+                >
+                  Automation
+                </span>
+                <span
+                  className="font-mono text-caption font-semibold text-secondary"
+                  style={{ letterSpacing: '0.02em' }}
+                >
+                  {row.automation}%
+                </span>
+              </div>
+              <div
+                className="h-2 w-full overflow-hidden rounded-full"
+                style={{ background: 'rgb(var(--border-light))' }}
+              >
+                <div
+                  className="h-full rounded-full"
+                  style={{ width: `${autoWidth}%`, background: row.fill, opacity: 0.4 }}
+                />
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
   );
 }
