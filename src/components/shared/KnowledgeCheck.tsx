@@ -3,7 +3,7 @@
 // response, partial, misidentifies, etc.). Stem may include arbitrary JSX
 // for the KC-2.2 inline data table case.
 
-import { useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { Icon } from './Icon';
@@ -66,6 +66,17 @@ export function KnowledgeCheck({
   const [submitted, setSubmitted] = useState<boolean>(Boolean(stored));
   const [showAll, setShowAll] = useState<boolean>(false);
 
+  // Ref to the post-submit feedback callout. After submission we scroll
+  // it into view so the learner isn't left at their pre-submit scroll
+  // position wondering where the result went — particularly important
+  // on mobile where the feedback can appear well below the fold once
+  // the option button itself has expanded with its feedback border.
+  const feedbackRef = useRef<HTMLDivElement | null>(null);
+  // Distinguish "just submitted in this session" from "submitted in a
+  // prior session and re-mounted with stored state." We only want the
+  // auto-scroll for the former — re-mounts shouldn't yank the page.
+  const didJustSubmitRef = useRef(false);
+
   const submit = () => {
     if (!selected || submitted) return;
     const option = item.options.find((o) => o.id === selected);
@@ -81,9 +92,21 @@ export function KnowledgeCheck({
       sectionId,
       payload: { optionId: option.id, isPreferred: option.isPreferred },
     });
+    didJustSubmitRef.current = true;
     setSubmitted(true);
     onSubmitted?.();
   };
+
+  // Scroll the freshly-rendered feedback into view after submission.
+  // Runs after React commits the new DOM (so `feedbackRef.current` is
+  // attached). `block: 'nearest'` is non-disruptive — only scrolls if
+  // the feedback isn't already fully visible.
+  useEffect(() => {
+    if (submitted && didJustSubmitRef.current && feedbackRef.current) {
+      didJustSubmitRef.current = false;
+      feedbackRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [submitted]);
 
   const selectedOption = item.options.find((o) => o.id === selected);
   const preferredOption = item.options.find((o) => o.isPreferred);
@@ -163,24 +186,36 @@ export function KnowledgeCheck({
                       boxSizing: 'border-box',
                     }}
                   />
-                  <span className="flex-1 font-sans text-[14.5px] leading-[1.5] text-ink">
-                    {opt.text}
-                  </span>
-                  {opt.isPreferred && submitted && (
-                    <span
-                      title="Recommended answer"
-                      className="flex-shrink-0 rounded-full font-mono text-[9.5px] font-bold uppercase"
-                      style={{
-                        color: 'rgb(var(--action))',
-                        border: '1px solid rgb(var(--action))',
-                        padding: '3px 8px',
-                        letterSpacing: '0.1em',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      ★ Recommended
+                  {/* Text + recommended badge layout switches by
+                      viewport. On mobile the inner container is
+                      `flex-col` so the badge drops onto its own line
+                      below the option text (right-aligned), giving the
+                      text full row width instead of competing with the
+                      badge for the limited mobile width (which would
+                      otherwise compress the text into a narrow column
+                      and visually orphan the badge). On `sm:` (≥768 px)
+                      it's `flex-row` with the badge inline to the
+                      right, matching the original desktop layout. */}
+                  <div className="flex flex-1 flex-col gap-2 sm:flex-row sm:items-start sm:gap-3">
+                    <span className="font-sans text-[14.5px] leading-[1.5] text-ink sm:flex-1">
+                      {opt.text}
                     </span>
-                  )}
+                    {opt.isPreferred && submitted && (
+                      <span
+                        title="Recommended answer"
+                        className="self-end flex-shrink-0 rounded-full font-mono text-[9.5px] font-bold uppercase sm:self-auto"
+                        style={{
+                          color: 'rgb(var(--action))',
+                          border: '1px solid rgb(var(--action))',
+                          padding: '3px 8px',
+                          letterSpacing: '0.1em',
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        ★ Recommended
+                      </span>
+                    )}
+                  </div>
                 </button>
               </li>
             );
@@ -204,6 +239,7 @@ export function KnowledgeCheck({
 
       {submitted && selectedOption && (
         <div
+          ref={feedbackRef}
           aria-live="polite"
           className="mt-4 rounded-md"
           style={{

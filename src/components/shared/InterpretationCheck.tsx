@@ -6,7 +6,7 @@
 // exposes a "See all responses" expandable, and fires `onSubmit` so the
 // parent (DataNarrative) can lift the scroll-block on the next story.
 
-import { forwardRef, useState, type ReactNode } from 'react';
+import { forwardRef, useEffect, useRef, useState, type ReactNode } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { Icon } from './Icon';
@@ -63,6 +63,13 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
     const [submitted, setSubmitted] = useState<boolean>(Boolean(stored));
     const [showAll, setShowAll] = useState<boolean>(false);
 
+    // After submission, scroll the feedback callout into view so the
+    // learner sees the result rather than being left at their pre-submit
+    // scroll position. See KnowledgeCheck.tsx for the same pattern +
+    // rationale; the IC has the same submit-then-reveal-feedback flow.
+    const feedbackRef = useRef<HTMLDivElement | null>(null);
+    const didJustSubmitRef = useRef(false);
+
     const submit = () => {
       if (!selected || submitted) return;
       const option = item.options.find((o) => o.id === selected);
@@ -78,9 +85,17 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
         sectionId,
         payload: { optionId: option.id, isPreferred: option.isPreferred },
       });
+      didJustSubmitRef.current = true;
       setSubmitted(true);
       onSubmitted?.(option.id);
     };
+
+    useEffect(() => {
+      if (submitted && didJustSubmitRef.current && feedbackRef.current) {
+        didJustSubmitRef.current = false;
+        feedbackRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }, [submitted]);
 
     const selectedOption = item.options.find((o) => o.id === selected);
     const preferredOption = item.options.find((o) => o.isPreferred);
@@ -181,6 +196,7 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
 
         {submitted && selectedOption && (
           <div
+            ref={feedbackRef}
             aria-live="polite"
             className="mt-4 rounded-md transition-opacity duration-200"
             style={{
