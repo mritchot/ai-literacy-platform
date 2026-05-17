@@ -385,8 +385,14 @@ function VerificationItemCard({
         <span className="font-semibold">Summary claim:</span> “{item.claim}”
       </p>
 
-      <fieldset disabled={isSubmitted} className="m-0 border-0 p-0">
-        <legend className="sr-only">Does the summary accurately reflect the source?</legend>
+      {/* Accessibility label on the fieldset as aria-label rather than
+          in a sr-only legend (see InterpretationCheck.tsx for full
+          rationale on the iOS overflow pattern). */}
+      <fieldset
+        disabled={isSubmitted}
+        className="m-0 border-0 p-0"
+        aria-label="Does the summary accurately reflect the source?"
+      >
         <ul className="m-0 list-none space-y-2 p-0">
           {options.map((opt) => {
             const isSelected = selected === opt.id;

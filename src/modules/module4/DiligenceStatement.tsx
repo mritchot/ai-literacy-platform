@@ -183,8 +183,13 @@ export function DiligenceStatement(): JSX.Element {
           Document your AI practices
         </h3>
 
-        <fieldset className="m-0 mb-4 border-0 p-0">
-          <legend className="sr-only">Diligence Statement Sections</legend>
+        {/* Accessibility label on the fieldset as aria-label rather
+            than in a sr-only legend (see InterpretationCheck.tsx for
+            full rationale on the iOS overflow pattern). */}
+        <fieldset
+          className="m-0 mb-4 border-0 p-0"
+          aria-label="Diligence Statement Sections"
+        >
           <ul
             className="m-0 grid list-none gap-3 p-0 sm:grid-cols-2"
             style={{ gridAutoRows: '1fr' }}

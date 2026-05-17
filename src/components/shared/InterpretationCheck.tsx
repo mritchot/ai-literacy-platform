@@ -103,8 +103,23 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
           {item.stem}
         </div>
 
-        <fieldset disabled={submitted} className="m-0 border-0 p-0">
-          <legend className="sr-only">Choose the response that best fits the data.</legend>
+        {/* Accessibility label is on the fieldset itself rather than in
+            a `<legend className="sr-only">` child. The sr-only legend
+            pattern (position:absolute + white-space:nowrap + width:1px
+            + overflow:hidden) leaked ~326 px of unwrapped content width
+            into iOS Safari's document.scrollWidth despite the visual
+            being clipped — three of these on a single section (M1 S3's
+            three interpretation checks) was enough to make the page
+            rubber-band scrollable horizontally on mobile. Moving the
+            label to aria-label on the parent fieldset removes the DOM
+            node entirely with no accessibility loss; the fieldset's
+            implicit role is "group" and aria-label is supported on
+            groups. */}
+        <fieldset
+          disabled={submitted}
+          className="m-0 border-0 p-0"
+          aria-label="Choose the response that best fits the data."
+        >
           <ul className="m-0 list-none space-y-2 p-0">
             {item.options.map((opt) => {
               const isSelected = selected === opt.id;
