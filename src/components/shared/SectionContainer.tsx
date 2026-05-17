@@ -21,6 +21,7 @@ import { useEffect, useRef } from 'react';
 import { getModule, MODULES, type ModuleMeta } from '../../data/program';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { usePlatformMode } from '../../hooks/usePlatformMode';
+import { useViewport } from '../../hooks/useViewport';
 import { Icon } from './Icon';
 import { Overline } from './Overline';
 
@@ -59,6 +60,17 @@ export function SectionContainer({
   // allow free navigation.
   const { mode } = usePlatformMode();
   const navigate = useNavigate();
+  // Viewport drives the section-nav labels: on mobile we render just the
+  // verb ("Previous" / "Back" / "Next" / "Continue" / "Return") with
+  // the trailing section/module name hidden, because the full label
+  // ("Previous · {sectionTitle}") was the dominant in-flow contributor
+  // to mobile horizontal overflow via its `white-space: nowrap` content
+  // inside a `.truncate` span. Wrapped in a min-w-0 flex parent, the
+  // span's box gets constrained to ~149 px but the nowrap content's
+  // unwrapped width was ~189 px, and iOS Safari counts that overflow
+  // into document.scrollWidth despite `overflow: hidden`.
+  const viewport = useViewport();
+  const isMobile = viewport === 'mobile';
 
   // Refs for the scroll sentinel and the section heading (focus target on
   // navigation). Sentinel is positioned 10% above the bottom of the section
@@ -270,7 +282,7 @@ export function SectionContainer({
           >
             <Icon name="arrowLeft" size={14} />
             <span className="truncate">
-              Previous · {prevSection.title}
+              {isMobile ? 'Previous' : `Previous · ${prevSection.title}`}
             </span>
           </Link>
         ) : (
@@ -279,19 +291,23 @@ export function SectionContainer({
             className="flex min-w-0 flex-1 items-center gap-2 font-sans text-[13.5px] font-semibold text-tertiary no-underline hover:text-secondary"
           >
             <Icon name="arrowLeft" size={14} />
-            <span className="truncate">Back to program home</span>
+            <span className="truncate">{isMobile ? 'Back' : 'Back to program home'}</span>
           </Link>
         )}
         {nextSection && (
           <ContinueButton
-            label={`Next · ${nextSection.title}`}
+            label={isMobile ? 'Next' : `Next · ${nextSection.title}`}
             disabled={!canAdvance}
             onClick={handleAdvance(`/module/${module.id}/section/${nextSection.id}`)}
           />
         )}
         {!nextSection && nextModule && nextModuleFirstSection && (
           <ContinueButton
-            label={`Continue to Module ${nextModule.id} · ${nextModule.title}`}
+            label={
+              isMobile
+                ? `Continue to Module ${nextModule.id}`
+                : `Continue to Module ${nextModule.id} · ${nextModule.title}`
+            }
             disabled={!canAdvance}
             onClick={handleAdvance(
               `/module/${nextModule.id}/section/${nextModuleFirstSection.id}`,
@@ -300,7 +316,7 @@ export function SectionContainer({
         )}
         {!nextSection && !nextModule && (
           <ContinueButton
-            label="Return to program overview"
+            label={isMobile ? 'Return' : 'Return to program overview'}
             disabled={!canAdvance}
             onClick={handleAdvance('/')}
           />
