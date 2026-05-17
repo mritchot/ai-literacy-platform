@@ -123,7 +123,14 @@ export function KnowledgeCheck({
         padding: '22px 24px 20px',
       }}
     >
-      <div className="mb-3 flex items-baseline justify-between gap-3">
+      {/* On mobile the two Overlines stack onto their own lines so each
+          can use the full row width — the original justify-between
+          flex split forced each Overline to fit in roughly half the
+          viewport, which wrapped both mid-content with dangling bullet
+          separators ("...· TIER 1" / "· RECALL" on the left; "ITEM 1
+          OF 4 ·" / "OBJ. 1.1" on the right). At sm: and above the
+          original side-by-side layout is restored. */}
+      <div className="mb-3 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
         {/* `--info` (blue-family feedback token) keeps the slate-blue
             tier intent while flipping correctly for dark mode — the
             previous hardcoded #4A5A66 stayed dark and went near-
