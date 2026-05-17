@@ -39,6 +39,7 @@ import {
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { AXIS_TICK_STYLE } from '../../utils/chart-config';
 import { useChartTokens } from '../../hooks/useChartTokens';
+import { useViewport } from '../../hooks/useViewport';
 import type { GeoCountry } from './GeographicAdoptionChart';
 
 // Notable countries that get inline ISO-3 labels rendered next to their
@@ -110,6 +111,8 @@ export function GDPCorrelationScatter({
   const { track } = useAnalytics();
   const figureRef = useRef<HTMLElement | null>(null);
   const seenRef = useRef(false);
+  const viewport = useViewport();
+  const isMobile = viewport === 'mobile';
 
   const tierColor: Record<TierName, string> = {
     Leading: tokens.tierLeading,
@@ -178,6 +181,22 @@ export function GDPCorrelationScatter({
     for (const p of points) groups[p.tier].push(p);
     return { seriesByTier: groups, residualSE: se, allPoints: points, intercept: computedIntercept };
   }, [countries]);
+
+  // Mobile-only outlier ranking: the 5 countries adopting fastest
+  // relative to what income alone would predict (positive residual,
+  // above the regression line), and the 5 adopting slowest (negative
+  // residual, below the line). Shown beneath the scatter on mobile as a
+  // second, scannable presentation of the same data — the scatter shows
+  // the overall pattern, the list names the most notable departures
+  // from it.
+  const { fasterOutliers, slowerOutliers } = useMemo(() => {
+    if (!isMobile) return { fasterOutliers: [], slowerOutliers: [] };
+    const sortedAsc = [...allPoints].sort((a, b) => b.pctVsPredicted - a.pctVsPredicted);
+    return {
+      fasterOutliers: sortedAsc.slice(0, 5),
+      slowerOutliers: sortedAsc.slice(-5).reverse(),
+    };
+  }, [allPoints, isMobile]);
 
   // Track first view (fires once per mount).
   useEffect(() => {
@@ -313,6 +332,18 @@ export function GDPCorrelationScatter({
         Does income explain adoption?
       </div>
 
+      {/* Mobile-only annotation block. Replaces the desktop overlay
+          entirely on mobile — we skip the scatter figure on mobile
+          because scatter plots don't translate well to narrow screens
+          (cramped points, overlapping country labels, axis crops). The
+          callout below names the regression takeaway and the outlier
+          list below the figure (also mobile-only) names the standout
+          countries — together they convey the chart's full story in a
+          format that actually reads on a 390 px viewport. Desktop still
+          gets the full scatter. */}
+      {isMobile && <ScatterAnnotation />}
+
+      {!isMobile && (
       <figure
         ref={(el) => {
           figureRef.current = el;
@@ -329,53 +360,56 @@ export function GDPCorrelationScatter({
         {/* Top-left annotation block — plain-language summary above the
             statistical notation. The plain-language line is the primary
             takeaway; the β/R²/p line is provenance for readers who want
-            to verify against the source paper. */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: 'absolute',
-            top: 16,
-            left: 28,
-            zIndex: 2,
-            padding: '8px 12px',
-            background: 'rgb(var(--white) / 0.92)',
-            border: '1px solid rgb(var(--border-light))',
-            borderRadius: 6,
-            backdropFilter: 'blur(4px)',
-            WebkitBackdropFilter: 'blur(4px)',
-            maxWidth: 320,
-          }}
-        >
+            to verify against the source paper. Desktop-only: on mobile
+            this same content renders above the figure (see above). */}
+        {!isMobile && (
           <div
-            className="font-sans text-body-sm text-ink"
-            style={{ lineHeight: 1.4, marginBottom: 4 }}
-          >
-            Income explains about 70% of adoption variation.
-            <br />
-            The remaining 30% comes from other factors.
-          </div>
-          <div
-            className="font-mono text-caption text-muted"
-            style={{ letterSpacing: '0.02em' }}
-          >
-            (β = {BETA.toFixed(3)}, R² = {R_SQUARED.toFixed(3)}, p &lt; 0.001)
-          </div>
-          <div
-            className="font-sans text-caption italic"
+            aria-hidden="true"
             style={{
-              color: 'rgb(var(--tertiary))',
-              lineHeight: 1.4,
-              marginTop: 8,
-              maxWidth: 300,
+              position: 'absolute',
+              top: 16,
+              left: 28,
+              zIndex: 2,
+              padding: '8px 12px',
+              background: 'rgb(var(--white) / 0.92)',
+              border: '1px solid rgb(var(--border-light))',
+              borderRadius: 6,
+              backdropFilter: 'blur(4px)',
+              WebkitBackdropFilter: 'blur(4px)',
+              maxWidth: 320,
             }}
           >
-            Countries above the dashed line are adopting AI faster than their income alone would
-            predict. Countries below it are adopting slower. The distance from the line shows how
-            much other factors matter.
+            <div
+              className="font-sans text-body-sm text-ink"
+              style={{ lineHeight: 1.4, marginBottom: 4 }}
+            >
+              Income explains about 70% of adoption variation.
+              <br />
+              The remaining 30% comes from other factors.
+            </div>
+            <div
+              className="font-mono text-caption text-muted"
+              style={{ letterSpacing: '0.02em' }}
+            >
+              (β = {BETA.toFixed(3)}, R² = {R_SQUARED.toFixed(3)}, p &lt; 0.001)
+            </div>
+            <div
+              className="font-sans text-caption italic"
+              style={{
+                color: 'rgb(var(--tertiary))',
+                lineHeight: 1.4,
+                marginTop: 8,
+                maxWidth: 300,
+              }}
+            >
+              Countries above the dashed line are adopting AI faster than their income alone would
+              predict. Countries below it are adopting slower. The distance from the line shows how
+              much other factors matter.
+            </div>
           </div>
-        </div>
+        )}
 
-        <div style={{ width: '100%', height: 460 }}>
+        <div style={{ width: '100%', height: isMobile ? 600 : 460 }}>
           <ResponsiveContainer>
             <ScatterChart margin={{ top: 16, right: 24, bottom: 48, left: 36 }}>
               <CartesianGrid stroke="rgb(var(--border-light))" strokeDasharray="2 3" />
@@ -387,17 +421,26 @@ export function GDPCorrelationScatter({
                 tick={AXIS_TICK_STYLE}
                 stroke="rgb(var(--border-light))"
                 tickFormatter={(v: number) => v.toFixed(0)}
-                label={{
-                  value: 'Income per working-age person (log scale)',
-                  position: 'insideBottom',
-                  offset: -16,
-                  style: {
-                    fontFamily: '"DM Sans", system-ui, sans-serif',
-                    fontSize: 11.5,
-                    fontWeight: 500,
-                    fill: tokens.secondary,
-                  },
-                }}
+                // On mobile the long axis-label text was being clipped at
+                // the right edge of the narrow chart ("...log sca"); the
+                // caption below the figure already names the axes, so we
+                // drop the in-chart label on mobile to avoid the cropped
+                // look. Desktop keeps the inline label.
+                label={
+                  isMobile
+                    ? undefined
+                    : {
+                        value: 'Income per working-age person (log scale)',
+                        position: 'insideBottom',
+                        offset: -16,
+                        style: {
+                          fontFamily: '"DM Sans", system-ui, sans-serif',
+                          fontSize: 11.5,
+                          fontWeight: 500,
+                          fill: tokens.secondary,
+                        },
+                      }
+                }
               />
               <YAxis
                 type="number"
@@ -407,19 +450,23 @@ export function GDPCorrelationScatter({
                 tick={AXIS_TICK_STYLE}
                 stroke="rgb(var(--border-light))"
                 tickFormatter={(v: number) => v.toFixed(0)}
-                label={{
-                  value: 'AI adoption rate (log scale)',
-                  angle: -90,
-                  position: 'insideLeft',
-                  offset: 4,
-                  style: {
-                    fontFamily: '"DM Sans", system-ui, sans-serif',
-                    fontSize: 11.5,
-                    fontWeight: 500,
-                    fill: tokens.secondary,
-                    textAnchor: 'middle',
-                  },
-                }}
+                label={
+                  isMobile
+                    ? undefined
+                    : {
+                        value: 'AI adoption rate (log scale)',
+                        angle: -90,
+                        position: 'insideLeft',
+                        offset: 4,
+                        style: {
+                          fontFamily: '"DM Sans", system-ui, sans-serif',
+                          fontSize: 11.5,
+                          fontWeight: 500,
+                          fill: tokens.secondary,
+                          textAnchor: 'middle',
+                        },
+                      }
+                }
               />
               <Tooltip
                 cursor={{ stroke: 'rgb(var(--border))', strokeDasharray: '3 3' }}
@@ -662,12 +709,130 @@ export function GDPCorrelationScatter({
           </tbody>
         </table>
       </figure>
+      )}
+
+      {/* Mobile-only outlier list. The scatter is omitted on mobile (see
+          comment above the figure); this list — top 5 adopting faster
+          than income predicts, top 5 adopting slower — is the primary
+          way mobile readers identify the standout countries. Reads as a
+          ranked pair of departures from the regression rather than a
+          chart. */}
+      {isMobile && (
+        <ScatterOutlierList faster={fasterOutliers} slower={slowerOutliers} />
+      )}
 
       <p className="m-0 mt-2 font-mono text-caption text-muted" style={{ letterSpacing: '0.02em' }}>
         Income and AI Usage Index by country. Axes are log-transformed. Source: Appel, McCrory
         &amp; Tamkin, Sep 2025, Figure 2.4, p. 17; Anthropic Economic Index open dataset (MIT
         license).
       </p>
+    </div>
+  );
+}
+
+// Mobile-only annotation block — replaces the desktop overlay entirely
+// on mobile (the scatter figure is skipped on mobile). Drops the third
+// italic paragraph from the desktop version: that text referenced "the
+// dashed line" and "above / below" positioning in the scatter, which
+// don't exist on mobile. The outlier list immediately below this
+// annotation makes the same point concretely (named countries adopting
+// faster or slower than income predicts), so the explanatory glue isn't
+// needed.
+function ScatterAnnotation(): JSX.Element {
+  return (
+    <div
+      className="mb-3 rounded-md"
+      style={{
+        background: 'rgb(var(--white))',
+        border: '1px solid rgb(var(--border-light))',
+        padding: '12px 14px',
+      }}
+    >
+      <div
+        className="font-sans text-body-sm text-ink"
+        style={{ lineHeight: 1.4, marginBottom: 4 }}
+      >
+        Income explains about 70% of adoption variation. The remaining 30% comes from other
+        factors — see the outlier list below for the countries that depart most from what income
+        alone would predict.
+      </div>
+      <div
+        className="font-mono text-caption text-muted"
+        style={{ letterSpacing: '0.02em' }}
+      >
+        (β = {BETA.toFixed(3)}, R² = {R_SQUARED.toFixed(3)}, p &lt; 0.001)
+      </div>
+    </div>
+  );
+}
+
+// Mobile-only outlier list rendered below the scatter. Top 5 faster
+// (above the regression line) and top 5 slower (below). Positive
+// residuals use the action color; negative residuals use secondary so
+// the direction reads at a glance.
+function ScatterOutlierList({
+  faster,
+  slower,
+}: {
+  faster: ScatterPoint[];
+  slower: ScatterPoint[];
+}): JSX.Element {
+  return (
+    <div
+      className="mt-4 rounded-md"
+      style={{
+        background: 'rgb(var(--white))',
+        border: '1px solid rgb(var(--border))',
+        padding: '14px 16px',
+      }}
+    >
+      <div className="mb-3 font-sans text-body-sm font-semibold text-ink">
+        Notable outliers
+      </div>
+
+      <div className="mb-4">
+        <div
+          className="mb-2 font-mono text-caption font-semibold text-secondary"
+          style={{ letterSpacing: '0.08em', textTransform: 'uppercase' }}
+        >
+          Adopting faster than income predicts
+        </div>
+        <ul className="m-0 list-none space-y-1.5 p-0">
+          {faster.map((p) => (
+            <li key={p.iso3} className="flex items-baseline justify-between gap-3">
+              <span className="font-sans text-body-sm text-ink">{p.country}</span>
+              <span
+                className="font-mono text-caption font-semibold text-action"
+                style={{ letterSpacing: '0.02em' }}
+              >
+                +{Math.round(p.pctVsPredicted)}%
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <div
+          className="mb-2 font-mono text-caption font-semibold text-secondary"
+          style={{ letterSpacing: '0.08em', textTransform: 'uppercase' }}
+        >
+          Adopting slower than income predicts
+        </div>
+        <ul className="m-0 list-none space-y-1.5 p-0">
+          {slower.map((p) => (
+            <li key={p.iso3} className="flex items-baseline justify-between gap-3">
+              <span className="font-sans text-body-sm text-ink">{p.country}</span>
+              <span
+                className="font-mono text-caption font-semibold text-secondary"
+                style={{ letterSpacing: '0.02em' }}
+              >
+                {Math.round(p.pctVsPredicted)}%
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

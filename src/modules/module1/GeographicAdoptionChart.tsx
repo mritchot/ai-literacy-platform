@@ -31,6 +31,7 @@ import {
   TOOLTIP_STYLE,
 } from '../../utils/chart-config';
 import { useChartTokens } from '../../hooks/useChartTokens';
+import { useViewport } from '../../hooks/useViewport';
 
 // ─── Types ────────────────────────────────────────────────────────────
 
@@ -367,6 +368,57 @@ function TierLegend({
 
 // ─── Bar chart figure (shared between Top 14 and All) ────────────────
 
+// Mobile-only vertical-list rendering of country AUI data. Each row
+// shows the country name + AUI value on one line and a full-width
+// progress bar below, tier-colored to match the desktop chart. Bar
+// widths are normalized to the max value across the visible rows so
+// the relative spread between leading and emerging countries stays
+// visually meaningful.
+function MobileGeoList({
+  rows,
+  tierColor,
+}: {
+  rows: GeoCountry[];
+  tierColor: Record<TierName, string>;
+}): JSX.Element {
+  const maxValue = Math.max(...rows.map((r) => r.aui));
+  return (
+    <div className="space-y-2.5" aria-hidden="true">
+      {rows.map((row) => {
+        const widthPct = (row.aui / maxValue) * 100;
+        const color = tierColor[row.tier as TierName] ?? tierColor.Emerging;
+        return (
+          <div key={row.iso3}>
+            <div className="mb-1 flex items-baseline justify-between gap-3">
+              <span
+                className="font-sans text-body-sm text-ink"
+                style={{ lineHeight: 1.35 }}
+              >
+                {row.country}
+              </span>
+              <span
+                className="font-mono text-caption font-semibold text-secondary"
+                style={{ letterSpacing: '0.02em' }}
+              >
+                {row.aui.toFixed(2)}
+              </span>
+            </div>
+            <div
+              className="h-2 w-full overflow-hidden rounded-full"
+              style={{ background: 'rgb(var(--border-light))' }}
+            >
+              <div
+                className="h-full rounded-full transition-all duration-300"
+                style={{ width: `${widthPct}%`, background: color }}
+              />
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function BarChartFigure({
   rows,
   tierColor,
@@ -378,6 +430,8 @@ function BarChartFigure({
   maxHeight: number | null;
   ariaLabel: string;
 }): JSX.Element {
+  const viewport = useViewport();
+
   if (rows.length === 0) {
     return (
       <figure
@@ -399,6 +453,35 @@ function BarChartFigure({
 
   const chartHeightPx = rows.length * ROW_PX + CHART_VPAD;
   const isScrollable = maxHeight !== null && chartHeightPx > maxHeight;
+
+  // Mobile branch — vertical-list layout instead of Recharts horizontal
+  // bars. The Recharts layout reserves a fixed 150px YAxis column for
+  // country names, leaving only ~208px of bar width on a 390px viewport
+  // (compressed and hard to read). The vertical list uses full row width
+  // per country: name + AUI value on one line, full-width bar below.
+  // Tier coloring is preserved.
+  if (viewport === 'mobile') {
+    return (
+      <figure
+        className="m-0 rounded-md"
+        aria-label={ariaLabel}
+        style={{
+          background: 'rgb(var(--white))',
+          border: '1px solid rgb(var(--border))',
+          padding: '14px 12px',
+        }}
+      >
+        <div
+          style={{
+            maxHeight: isScrollable ? maxHeight : undefined,
+            overflowY: isScrollable ? 'auto' : 'visible',
+          }}
+        >
+          <MobileGeoList rows={rows} tierColor={tierColor} />
+        </div>
+      </figure>
+    );
+  }
 
   return (
     <>
