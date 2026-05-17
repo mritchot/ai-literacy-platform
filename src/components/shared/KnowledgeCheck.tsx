@@ -120,8 +120,16 @@ export function KnowledgeCheck({
         {item.stem}
       </div>
 
-      <fieldset disabled={submitted} className="m-0 border-0 p-0">
-        <legend className="sr-only">Choose the response that best applies the module framework.</legend>
+      {/* Accessibility label is on the fieldset as aria-label rather
+          than in a <legend className="sr-only"> child — see
+          InterpretationCheck.tsx for the full rationale (the sr-only
+          legend pattern leaked into iOS document.scrollWidth and made
+          pages with multiple checks horizontally pannable on mobile). */}
+      <fieldset
+        disabled={submitted}
+        className="m-0 border-0 p-0"
+        aria-label="Choose the response that best applies the module framework."
+      >
         <ul className="m-0 list-none space-y-2 p-0">
           {item.options.map((opt) => {
             const isSelected = selected === opt.id;

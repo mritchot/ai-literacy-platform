@@ -470,8 +470,15 @@ function VerificationCard({
         “{element.highlightedText}”
       </p>
 
-      <fieldset disabled={submitted || !unlocked} className="m-0 border-0 p-0">
-        <legend className="sr-only">{`Classify Element ${index}`}</legend>
+      {/* Accessibility label on the fieldset as aria-label rather than
+          in a sr-only legend (see InterpretationCheck.tsx for full
+          rationale on the iOS overflow pattern). The inner radiogroup
+          keeps its own aria-label too — different scope. */}
+      <fieldset
+        disabled={submitted || !unlocked}
+        className="m-0 border-0 p-0"
+        aria-label={`Classify Element ${index}`}
+      >
         <div
           role="radiogroup"
           aria-label={`Classify Element ${index}`}

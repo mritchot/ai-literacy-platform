@@ -597,8 +597,14 @@ function Turn3({
           writes their refinement targeting the Turn 2 gap, then submits
           to reveal the worked-example refinement, Draft 3, and the
           comparison field. */}
-      <fieldset disabled={refinementSubmitted} className="m-0 border-0 p-0">
-        <legend className="sr-only">Write a refinement for Draft 3</legend>
+      {/* Accessibility label on the fieldset as aria-label rather than
+          in a sr-only legend (see InterpretationCheck.tsx for full
+          rationale on the iOS overflow pattern). */}
+      <fieldset
+        disabled={refinementSubmitted}
+        className="m-0 border-0 p-0"
+        aria-label="Write a refinement for Draft 3"
+      >
         <p className="m-0 mb-2 font-sans text-body-sm text-body">
           {P11_TURN3_REFINEMENT_PROMPT}
         </p>
