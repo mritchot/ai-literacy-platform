@@ -200,19 +200,24 @@ function DumbbellChart({
   rows: OccupationRow[];
   domainMax: number;
 }): JSX.Element {
-  // Track measurements. The label + value columns are viewport-responsive
-  // because the desktop widths (230 + 110 = 340 px) leave essentially no
-  // room for the dumbbell track itself on a 358-px-wide mobile viewport.
-  // Mobile uses tighter columns (140 + 92 = 232 px) so the track has
-  // ~126 px to render the dots and connecting line — visible if compact.
-  // The container's `overflow-hidden` always prevented this from causing
-  // page-level horizontal scroll; this fix is about readability, not
-  // overflow safety.
   const viewport = useViewport();
-  const isMobile = viewport === 'mobile';
-  const ROW_HEIGHT = isMobile ? 30 : 26;
-  const LABEL_WIDTH = isMobile ? 140 : 230;
-  const VALUE_WIDTH = isMobile ? 92 : 110;
+
+  // Mobile gets a completely different layout: one vertical card per
+  // occupation with stacked "AI use" and "Workforce" progress bars,
+  // because the desktop dumbbell (which needs ~230 px for labels and
+  // ~110 px for values) left only ~125 px of track on a 390 px
+  // viewport — the dots ended up nearly on top of each other and the
+  // whole chart became visually useless. The card layout preserves
+  // every data point per row (Claude %, workforce %, ratio) and keeps
+  // the visual gap-between-bars that the dumbbell was meant to show.
+  if (viewport === 'mobile') {
+    return <MobileOccupationList rows={rows} domainMax={domainMax} />;
+  }
+
+  // Desktop dumbbell track measurements.
+  const ROW_HEIGHT = 26;
+  const LABEL_WIDTH = 230;
+  const VALUE_WIDTH = 110;
   const AXIS_HEIGHT = 28;
   const DOT_SIZE = 10;
 
@@ -377,6 +382,113 @@ function DumbbellChart({
           );
         })}
       </ul>
+    </div>
+  );
+}
+
+// Mobile-only rendering of the occupation data. Each occupation gets a
+// card with the full row width: name on top, then two horizontal
+// progress bars showing Claude % (action green) and U.S. workforce %
+// (tertiary gray) normalized to the same `domainMax` so cards are
+// visually comparable to each other. A caption beneath summarizes the
+// over/underrepresentation ratio in the same language the desktop
+// tooltip uses ("X.X× overrepresented" / "X.X× underrepresented").
+function MobileOccupationList({
+  rows,
+  domainMax,
+}: {
+  rows: OccupationRow[];
+  domainMax: number;
+}): JSX.Element {
+  return (
+    <div className="space-y-2.5">
+      {rows.map((row) => {
+        const claudeBarPct = (row.claude_pct / domainMax) * 100;
+        const workforceBarPct = (row.us_workforce_pct / domainMax) * 100;
+        const isOver = row.overrepresentation_ratio >= 1;
+        const ratio = row.overrepresentation_ratio.toFixed(
+          row.overrepresentation_ratio >= 10 ? 1 : 2,
+        );
+        return (
+          <div
+            key={row.occupation}
+            className="rounded-md"
+            style={{
+              background: 'rgb(var(--white))',
+              border: '1px solid rgb(var(--border))',
+              padding: '12px 14px',
+            }}
+          >
+            <div
+              className="mb-3 font-sans text-body-sm font-semibold text-ink"
+              style={{ lineHeight: 1.35 }}
+            >
+              {row.occupation}
+            </div>
+
+            {/* Claude (AI use) bar */}
+            <div className="mb-2">
+              <div className="mb-1 flex items-baseline justify-between gap-3">
+                <span
+                  className="font-mono text-[10px] font-semibold uppercase text-tertiary"
+                  style={{ letterSpacing: '0.08em' }}
+                >
+                  AI use
+                </span>
+                <span
+                  className="font-mono text-caption font-semibold"
+                  style={{ color: CLAUDE_FILL, letterSpacing: '0.02em' }}
+                >
+                  {row.claude_pct}%
+                </span>
+              </div>
+              <div
+                className="h-2 w-full overflow-hidden rounded-full"
+                style={{ background: 'rgb(var(--border-light))' }}
+              >
+                <div
+                  className="h-full rounded-full"
+                  style={{ width: `${claudeBarPct}%`, background: CLAUDE_FILL }}
+                />
+              </div>
+            </div>
+
+            {/* Workforce bar */}
+            <div className="mb-2">
+              <div className="mb-1 flex items-baseline justify-between gap-3">
+                <span
+                  className="font-mono text-[10px] font-semibold uppercase text-tertiary"
+                  style={{ letterSpacing: '0.08em' }}
+                >
+                  Workforce
+                </span>
+                <span
+                  className="font-mono text-caption font-semibold text-secondary"
+                  style={{ letterSpacing: '0.02em' }}
+                >
+                  {row.us_workforce_pct}%
+                </span>
+              </div>
+              <div
+                className="h-2 w-full overflow-hidden rounded-full"
+                style={{ background: 'rgb(var(--border-light))' }}
+              >
+                <div
+                  className="h-full rounded-full"
+                  style={{ width: `${workforceBarPct}%`, background: WORKFORCE_FILL }}
+                />
+              </div>
+            </div>
+
+            <div
+              className="font-mono text-caption text-tertiary"
+              style={{ letterSpacing: '0.02em' }}
+            >
+              {ratio}× {isOver ? 'overrepresented' : 'underrepresented'}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

@@ -24,6 +24,7 @@ import {
   TOOLTIP_STYLE,
 } from '../../utils/chart-config';
 import { Icon } from '../../components/shared/Icon';
+import { useViewport } from '../../hooks/useViewport';
 
 interface CollaborationCategory {
   pattern: string;
@@ -55,6 +56,8 @@ export function AugAutoViewB({
   const { track } = useAnalytics();
   const [expanded, setExpanded] = useState<string | null>(null);
   const [zonesOpen, setZonesOpen] = useState<boolean>(true);
+  const viewport = useViewport();
+  const isMobile = viewport === 'mobile';
 
   const meta = useMemo(
     () => [
@@ -282,47 +285,56 @@ export function AugAutoViewB({
         </button>
         {zonesOpen && (
           <div style={{ padding: '16px 18px' }}>
-            <div style={{ width: '100%', height: 5 * 28 + 40 }}>
-              <ResponsiveContainer>
-                <BarChart layout="vertical" data={jobZones} margin={{ top: 8, right: 32, bottom: 8, left: 8 }}>
-                  <XAxis
-                    type="number"
-                    domain={[0, 'auto']}
-                    tickFormatter={(v) => `${v}×`}
-                    tick={AXIS_TICK_STYLE}
-                    stroke="rgb(var(--border-light))"
-                  />
-                  <YAxis
-                    type="category"
-                    dataKey="label"
-                    tick={{ ...AXIS_TICK_STYLE, fontSize: 11 }}
-                    width={170}
-                    interval={0}
-                    stroke="rgb(var(--border-light))"
-                  />
-                  <Tooltip
-                    contentStyle={TOOLTIP_STYLE}
-                    itemStyle={TOOLTIP_ITEM_STYLE}
-                    labelStyle={TOOLTIP_LABEL_STYLE}
-                    cursor={{ fill: 'rgba(0,0,0,0.04)' }}
-                    formatter={(value: number) => [`${value}× representation`, 'Ratio']}
-                    labelFormatter={(label, payload) => {
-                      const p = payload[0]?.payload as JobZone | undefined;
-                      return p ? `Zone ${p.zone} · ${p.example_occupations}` : String(label);
-                    }}
-                  />
-                  <Bar dataKey="representation_ratio" radius={[0, 3, 3, 0]} isAnimationActive={false}>
-                    {jobZones.map((z) => (
-                      <Cell
-                        key={z.zone}
-                        fill={z.zone === 4 ? TOKEN_HEX.action : TOKEN_HEX.secondary}
-                        fillOpacity={z.zone === 4 ? 1 : 0.6}
-                      />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+            {isMobile ? (
+              // Mobile: the Recharts vertical-layout bar reserved 170 px
+              // for zone labels ("Job Zone 1: Little/no preparation"
+              // etc.) and left ~188 px for the bars themselves — too
+              // cramped to compare ratios at a glance. Render each zone
+              // as a horizontal-card row instead.
+              <MobileJobZoneList zones={jobZones} />
+            ) : (
+              <div style={{ width: '100%', height: 5 * 28 + 40 }}>
+                <ResponsiveContainer>
+                  <BarChart layout="vertical" data={jobZones} margin={{ top: 8, right: 32, bottom: 8, left: 8 }}>
+                    <XAxis
+                      type="number"
+                      domain={[0, 'auto']}
+                      tickFormatter={(v) => `${v}×`}
+                      tick={AXIS_TICK_STYLE}
+                      stroke="rgb(var(--border-light))"
+                    />
+                    <YAxis
+                      type="category"
+                      dataKey="label"
+                      tick={{ ...AXIS_TICK_STYLE, fontSize: 11 }}
+                      width={170}
+                      interval={0}
+                      stroke="rgb(var(--border-light))"
+                    />
+                    <Tooltip
+                      contentStyle={TOOLTIP_STYLE}
+                      itemStyle={TOOLTIP_ITEM_STYLE}
+                      labelStyle={TOOLTIP_LABEL_STYLE}
+                      cursor={{ fill: 'rgba(0,0,0,0.04)' }}
+                      formatter={(value: number) => [`${value}× representation`, 'Ratio']}
+                      labelFormatter={(label, payload) => {
+                        const p = payload[0]?.payload as JobZone | undefined;
+                        return p ? `Zone ${p.zone} · ${p.example_occupations}` : String(label);
+                      }}
+                    />
+                    <Bar dataKey="representation_ratio" radius={[0, 3, 3, 0]} isAnimationActive={false}>
+                      {jobZones.map((z) => (
+                        <Cell
+                          key={z.zone}
+                          fill={z.zone === 4 ? TOKEN_HEX.action : TOKEN_HEX.secondary}
+                          fillOpacity={z.zone === 4 ? 1 : 0.6}
+                        />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            )}
             <p className="m-0 mt-3 font-sans text-body-sm text-body">{jobZoneInsight}</p>
           </div>
         )}
@@ -392,6 +404,55 @@ function SelectionMarker({
           borderTop: `7px solid ${color}`,
         }}
       />
+    </div>
+  );
+}
+
+// Mobile rendering of the job-zones representation-ratio chart. Each
+// zone gets a row with the full zone label (no truncation) on top and
+// a full-width progress bar below, normalized to the max ratio across
+// the visible zones so cards stay visually comparable. Zone 4 (the
+// "highlight" zone in the desktop chart) keeps the action color at
+// full opacity; other zones use the muted secondary tone.
+function MobileJobZoneList({ zones }: { zones: JobZone[] }): JSX.Element {
+  const maxRatio = Math.max(...zones.map((z) => z.representation_ratio));
+  return (
+    <div className="space-y-2.5">
+      {zones.map((z) => {
+        const widthPct = (z.representation_ratio / maxRatio) * 100;
+        const isHighlight = z.zone === 4;
+        return (
+          <div key={z.zone}>
+            <div className="mb-1 flex items-baseline justify-between gap-3">
+              <span
+                className="font-sans text-body-sm text-ink"
+                style={{ lineHeight: 1.35 }}
+              >
+                {z.label}
+              </span>
+              <span
+                className="font-mono text-caption font-semibold text-secondary"
+                style={{ letterSpacing: '0.02em' }}
+              >
+                {z.representation_ratio}×
+              </span>
+            </div>
+            <div
+              className="h-2 w-full overflow-hidden rounded-full"
+              style={{ background: 'rgb(var(--border-light))' }}
+            >
+              <div
+                className="h-full rounded-full"
+                style={{
+                  width: `${widthPct}%`,
+                  background: isHighlight ? TOKEN_HEX.action : TOKEN_HEX.secondary,
+                  opacity: isHighlight ? 1 : 0.7,
+                }}
+              />
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
