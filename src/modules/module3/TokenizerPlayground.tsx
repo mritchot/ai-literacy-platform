@@ -91,14 +91,17 @@ export function TokenizerPlayground(): JSX.Element {
         <R5Trigger variant="tab" label="Capability Boundaries" />
       </ReferenceTabRail>
 
+      {/* Padding switches by breakpoint. Mobile uses tighter 18/16 so
+          the narrow viewport leaves more horizontal room for the
+          round-indicator pills and the token chips inside the rounds.
+          sm: restores the original 24/26 for desktop reading comfort. */}
       <section
         aria-label="Tokenizer playground"
-        className="rounded-xl"
+        className="rounded-xl py-[18px] px-4 sm:py-6 sm:px-[26px]"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
-          padding: '24px 26px',
-      }}
+        }}
     >
       <Overline className="mb-2">Practice activity — P5</Overline>
       <h3
@@ -180,7 +183,13 @@ function RoundIndicator({
     { id: 'free' as StageId, label: 'Free' },
   ];
   return (
-    <div role="group" aria-label="Round indicator" className="flex flex-wrap items-center gap-2">
+    // Mobile gets a 3-column grid so the 5 pills land in a clean 3+2
+    // layout instead of the flex-wrap default of 2+3 with each row a
+    // different width. Pills lose their varying intrinsic width (each
+    // grid cell is equal share) which makes the row visually
+    // consistent. sm:flex restores the original auto-width wrapping
+    // flex on desktop where horizontal space is plentiful.
+    <div role="group" aria-label="Round indicator" className="grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:items-center">
       {items.map((item) => {
         const completed = item.id !== 'free' && results[item.id as number];
         const isCurrent = stage === item.id;
