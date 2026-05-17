@@ -215,9 +215,12 @@ function RangeTrack({
           conversations" (vs. the circles on Row 2, which are
           point estimates from individual RCTs), but it's sized to
           match the circles so neither row's marker dominates the
-          other. The label sits inline to the right of the diamond,
+          other. The label sits inline to the LEFT of the diamond,
           vertically centered with the marker, so it doesn't add
-          chart height or compete with adjacent rows. */}
+          chart height or compete with adjacent rows. (Previously
+          sat to the right; that ran into awkward positioning at
+          high median values where the trailing text crowded the
+          chart's right edge on both desktop and mobile.) */}
       {medianMarker && (
         <>
           <div
@@ -233,6 +236,10 @@ function RangeTrack({
               border: '1.5px solid rgb(var(--white))',
             }}
           />
+          {/* `translate(calc(-100% - 8px), -50%)` anchors the
+              label's right edge 8 px to the left of the diamond's
+              center. Effectively the inverse of `marginLeft: 8`
+              from when the label was on the right. */}
           <span
             aria-hidden="true"
             className="font-mono text-caption"
@@ -240,8 +247,7 @@ function RangeTrack({
               position: 'absolute',
               left: `${medianMarker.value}%`,
               top: '50%',
-              transform: 'translateY(-50%)',
-              marginLeft: 8,
+              transform: 'translate(calc(-100% - 8px), -50%)',
               color: `rgb(var(${colorVar}))`,
               fontWeight: 600,
               letterSpacing: '0.02em',
