@@ -123,6 +123,7 @@ function SidebarHeader({
           <Link
             to="/"
             aria-label="AI Literacy program — home"
+            onClick={onCloseMobile}
             className="flex h-9 w-9 items-center justify-center rounded-md bg-action font-mono text-[13px] font-bold tracking-wider text-[rgb(var(--white))]"
           >
             AI
@@ -130,7 +131,13 @@ function SidebarHeader({
         </div>
       ) : (
         <div className="flex items-start justify-between gap-3">
-          <Link to="/" className="block no-underline">
+          {/* Landing-page link. Carries onCloseMobile alongside every
+              other navigable element in the sidebar so tapping the
+              program title on mobile auto-closes the tray on the way to
+              the landing page, matching the behavior of module/section
+              taps. (onCloseMobile is undefined on desktop, in which case
+              React skips the onClick entirely — no-op.) */}
+          <Link to="/" onClick={onCloseMobile} className="block no-underline">
             <Overline className="mb-2" style={{ fontSize: 10 }}>
               Program
             </Overline>
