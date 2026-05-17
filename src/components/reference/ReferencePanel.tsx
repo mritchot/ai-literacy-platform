@@ -28,6 +28,13 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 import { Icon } from '../shared/Icon';
 import { Overline } from '../shared/Overline';
+import { useViewport } from '../../hooks/useViewport';
+
+// TopBar height on mobile (matches `height: 56` in TopBar.tsx). The
+// reference drawer's top edge is offset by this on mobile so its
+// header (title + close button) sits cleanly below the TopBar rather
+// than being obscured by it.
+const MOBILE_TOPBAR_HEIGHT = 56;
 
 interface ReferencePanelProps {
   isOpen: boolean;
@@ -58,6 +65,8 @@ export function ReferencePanel({
   const closeBtnRef = useRef<HTMLButtonElement | null>(null);
   const drawerRef = useRef<HTMLDivElement | null>(null);
   const titleId = `ref-panel-${id}-title`;
+  const viewport = useViewport();
+  const isMobile = viewport === 'mobile';
 
   // On open, capture focus origin and move focus to the close button so
   // a keyboard user lands in a predictable place. Restore focus on close.
@@ -140,11 +149,21 @@ export function ReferencePanel({
         style={{ background: 'rgba(0, 0, 0, 0.32)', cursor: 'default' }}
       />
 
-      {/* Drawer */}
+      {/* Drawer. On mobile the drawer top is offset below the fixed
+          TopBar (which is 56 px tall and sits at z-50) so the drawer
+          header — including the close button — clears the TopBar and
+          stays tappable. Without this offset the drawer started at
+          y=0 and the TopBar visually obscured the entire header,
+          leaving mobile users with no way to read the title or close
+          the panel. Height correspondingly shrinks by 56 px so the
+          drawer fits the remaining viewport. Desktop keeps the
+          original full-height layout (no TopBar overlap there). */}
       <aside
         ref={drawerRef}
-        className="absolute right-0 top-0 flex h-full flex-col rounded-l-xl"
+        className="absolute right-0 flex flex-col"
         style={{
+          top: isMobile ? MOBILE_TOPBAR_HEIGHT : 0,
+          height: isMobile ? `calc(100% - ${MOBILE_TOPBAR_HEIGHT}px)` : '100%',
           width: 'min(560px, 100vw)',
           background: 'rgb(var(--white))',
           borderLeft: '1px solid rgb(var(--border))',
@@ -201,11 +220,17 @@ export function ReferencePanel({
             background: 'rgb(var(--surface-warm))',
           }}
         >
+          {/* Helper text differs by viewport: desktop lists Esc and
+              click-outside as alternatives to the Close button; mobile
+              has no Esc key and the drawer covers the full viewport
+              width (no clickable backdrop area visible), so the close
+              button at the top of the drawer is the only dismissal
+              mechanism worth surfacing. */}
           <span
             className="font-mono text-[11px] text-tertiary"
             style={{ letterSpacing: '0.02em' }}
           >
-            Esc · click outside · or use Close to dismiss
+            {isMobile ? 'Tap × at top to close' : 'Esc · click outside · or use Close to dismiss'}
           </span>
           <a
             href={pdfPath}
