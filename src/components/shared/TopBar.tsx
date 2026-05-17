@@ -22,6 +22,17 @@ function currentModuleLabel(pathname: string): { seq: string; label: string } | 
   return mod ? { seq: mod.seq, label: mod.label.toUpperCase() } : null;
 }
 
+// Extract the section number from a /module/X/section/Y route, or null
+// for the module landing page (/module/X with no section). Used to
+// append a small "· S3" cue to the TopBar so mobile learners can see
+// which section they're on without opening the sidebar tray.
+function currentSectionId(pathname: string): number | null {
+  const m = pathname.match(/^\/module\/\d+\/section\/(\d+)/);
+  if (!m) return null;
+  const id = Number.parseInt(m[1] ?? '', 10);
+  return Number.isFinite(id) ? id : null;
+}
+
 export function TopBar({
   themePreference,
   onOpenMenu,
@@ -29,6 +40,7 @@ export function TopBar({
 }: TopBarProps): JSX.Element {
   const location = useLocation();
   const current = currentModuleLabel(location.pathname);
+  const currentSection = currentSectionId(location.pathname);
   const themeMeta = themeToggleMeta(themePreference);
 
   return (
@@ -56,6 +68,14 @@ export function TopBar({
               —
             </span>
             <span className="truncate">{current.label}</span>
+            {currentSection !== null && (
+              <>
+                <span className="font-medium" style={{ color: 'rgb(var(--muted))' }}>
+                  ·
+                </span>
+                <span>S{currentSection}</span>
+              </>
+            )}
           </>
         ) : (
           <span className="font-sans text-[14px] font-bold normal-case tracking-normal">

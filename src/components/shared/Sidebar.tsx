@@ -327,6 +327,13 @@ function SectionRow({
   locked: boolean;
   onCloseMobile?: () => void;
 }): JSX.Element {
+  // `isViewing` (current URL match) is distinct from `s.state === 'current'`
+  // (the next-to-complete section per the learner's linear progress). The
+  // two can disagree — a learner can navigate back to review S2 while their
+  // progress-current section is S5. We want the navigation cue ("you are
+  // here") to reflect what's actually on screen, not where progress sits.
+  const location = useLocation();
+  const isViewing = location.pathname === `/module/${moduleId}/section/${s.id}`;
   const stateSuffix =
     s.state === 'done'
       ? ' (complete)'
@@ -378,14 +385,36 @@ function SectionRow({
     <Link
       to={`/module/${moduleId}/section/${s.id}`}
       onClick={onCloseMobile}
-      aria-current={s.state === 'current' ? 'step' : undefined}
+      // `aria-current="page"` is the correct ARIA semantic for "the
+      // navigation link representing the page that is currently
+      // displayed." Was previously set to "step" based on progress
+      // state — that was semantically wrong (step is for process
+      // wizards) and tracked the wrong concept (progression, not
+      // viewing).
+      aria-current={isViewing ? 'page' : undefined}
       aria-label={`Module ${moduleId}, Section ${s.id}: ${s.title}${stateSuffix}`}
       className="flex items-start gap-2.5 rounded-[6px] no-underline transition-colors duration-150 hover:bg-surface"
       style={{
         padding: '6px 10px',
         marginBottom: 1,
-        backgroundColor: s.state === 'current' ? 'rgb(var(--white))' : 'transparent',
-        fontWeight: s.state === 'current' ? 500 : 400,
+        // Three independent states layered onto a single row:
+        //   • isViewing (URL match): green inset border + surface tint —
+        //     mirrors the module-level "you are here" treatment so the
+        //     visual language is consistent between modules and their
+        //     section sub-list.
+        //   • s.state === 'current' but NOT viewing: white background +
+        //     medium weight — the existing "this is your next step in
+        //     linear progression" treatment, unchanged.
+        //   • Otherwise: transparent + normal weight.
+        // When the viewed section is also the progress-current section,
+        // the viewing treatment wins (it's the more specific signal).
+        backgroundColor: isViewing
+          ? 'rgb(var(--surface))'
+          : s.state === 'current'
+            ? 'rgb(var(--white))'
+            : 'transparent',
+        boxShadow: isViewing ? 'inset 3px 0 0 rgb(var(--action))' : 'none',
+        fontWeight: isViewing || s.state === 'current' ? 500 : 400,
       }}
     >
       <SectionIndicator state={s.state} />
