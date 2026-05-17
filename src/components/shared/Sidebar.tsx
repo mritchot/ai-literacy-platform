@@ -3,6 +3,7 @@
 // the active module. Collapsed state shows sequence-letter chips only.
 
 import { Link, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { type ModuleMeta } from '../../data/program';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useResolvedModules } from '../../contexts/LearnerProgressContext';
@@ -46,6 +47,26 @@ export function Sidebar({
   // and admin modes nothing is locked (free navigation).
   const { mode } = usePlatformMode();
   const gating = computeGating(modules, mode);
+
+  // Section-list expansion in the full (non-collapsed) sidebar. One
+  // module open at a time. Auto-syncs to the URL so the module
+  // containing the page the learner is viewing is always expanded by
+  // default — they don't lose sight of where they are when arriving at
+  // a section directly. Clicking the module title button toggles its
+  // own expansion without navigating; clicking a section inside the
+  // expanded list still navigates as before. The collapsed (icon-only)
+  // sidebar variant keeps the original "click navigates" behavior
+  // because there's no expansion UI in that compact mode.
+  const urlModuleId = (() => {
+    const m = location.pathname.match(/^\/module\/(\d+)/);
+    return m ? Number(m[1]) : null;
+  })();
+  const [expandedModuleId, setExpandedModuleId] = useState<number | null>(urlModuleId);
+  useEffect(() => {
+    if (urlModuleId !== null) setExpandedModuleId(urlModuleId);
+  }, [urlModuleId]);
+  const toggleExpand = (moduleId: number) =>
+    setExpandedModuleId((current) => (current === moduleId ? null : moduleId));
   const sidebarStyle = {
     width: collapsed ? 64 : 280,
     backgroundColor: 'rgb(var(--sidebar-bg))',
@@ -85,6 +106,8 @@ export function Sidebar({
               module={m}
               collapsed={collapsed}
               active={isActiveModule(location.pathname, m.id)}
+              expanded={expandedModuleId === m.id}
+              onToggleExpand={() => toggleExpand(m.id)}
               gating={gating}
               onCloseMobile={onCloseMobile}
             />
@@ -170,6 +193,12 @@ interface ModuleItemProps {
   module: ModuleMeta;
   collapsed: boolean;
   active: boolean;
+  /** True when the section sub-list should be visible (full sidebar
+   *  only). Independent of `active` (URL match) so the user can
+   *  expand any module to peek at its sections without navigating. */
+  expanded: boolean;
+  /** Toggle handler for the full-sidebar module button. */
+  onToggleExpand: () => void;
   gating: ModuleGating;
   onCloseMobile?: () => void;
 }
@@ -178,6 +207,8 @@ function ModuleItem({
   module,
   collapsed,
   active,
+  expanded,
+  onToggleExpand,
   gating,
   onCloseMobile,
 }: ModuleItemProps): JSX.Element {
@@ -215,20 +246,34 @@ function ModuleItem({
     );
   }
 
+  // Full-sidebar variant uses a button that toggles section-list
+  // expansion instead of a link that navigates. The previous behavior
+  // (navigating to /module/N on click) silently sent the learner to
+  // section 1 even when they just wanted to peek at the section list.
+  // Locked modules render as a disabled button (still no navigation,
+  // no expansion).
+  const sectionListId = `module-${module.id}-sections`;
   return (
     <li style={{ marginBottom: active ? 8 : 14 }}>
-      <ConditionalLink
-        to={linkTo}
+      <button
+        type="button"
+        onClick={() => {
+          if (locked) return;
+          onToggleExpand();
+        }}
         disabled={locked}
-        onNavigate={onCloseMobile}
+        aria-expanded={!locked && expanded}
+        aria-controls={sectionListId}
         className={[
-          'group flex w-full items-start gap-2.5 rounded-md transition-colors duration-150',
+          'group flex w-full items-start gap-2.5 rounded-md text-left transition-colors duration-150',
           active ? 'bg-[rgb(var(--white))]' : 'hover:bg-surface',
-          locked ? 'cursor-not-allowed opacity-60' : '',
+          locked ? 'cursor-not-allowed opacity-60' : 'cursor-pointer',
         ].join(' ')}
         style={{
           padding: '10px 12px',
           boxShadow: active ? 'inset 3px 0 0 rgb(var(--action))' : 'none',
+          border: 'none',
+          background: active ? 'rgb(var(--white))' : 'transparent',
         }}
       >
         <span
@@ -284,10 +329,11 @@ function ModuleItem({
             </span>
           </div>
         </div>
-      </ConditionalLink>
+      </button>
 
-      {active && module.sections.length > 0 && (
+      {expanded && module.sections.length > 0 && (
         <ul
+          id={sectionListId}
           className="m-0 list-none p-0"
           style={{
             marginTop: 8,
