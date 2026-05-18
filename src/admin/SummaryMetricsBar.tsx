@@ -35,6 +35,13 @@ interface Metrics {
   kc: { preferred: number; attempted: number; pct: number | null };
   time: { ms: number | null; formatted: string };
   engagement: { done: number; total: number; pct: number };
+  assessment: {
+    preScore: number | null; // null if pre not complete
+    postScore: number | null; // null if post not complete
+    preTotal: number; // always 10 by instrument design
+    postTotal: number; // always 10 by instrument design
+    delta: number | null; // postScore - preScore, null if either incomplete
+  };
 }
 
 function computeMetrics(progress: LearnerProgressState, events: AnalyticsEvent[]): Metrics {
@@ -68,6 +75,22 @@ function computeMetrics(progress: LearnerProgressState, events: AnalyticsEvent[]
     if (OPTIONAL_INTERACTION_EVENTS.has(e.type)) seen.add(e.type);
   }
 
+  // Assessment scores — defensive access via optional chaining since
+  // `progress.assessments` could be undefined in edge cases (very old
+  // localStorage from before the assessments migration was added).
+  const preResponses = Object.values(progress.assessments?.pre?.responses ?? {});
+  const postResponses = Object.values(progress.assessments?.post?.responses ?? {});
+  const preComplete = progress.assessments?.pre?.completedAt != null;
+  const postComplete = progress.assessments?.post?.completedAt != null;
+  const preScore = preComplete
+    ? preResponses.filter((r) => r.isCorrect).length
+    : null;
+  const postScore = postComplete
+    ? postResponses.filter((r) => r.isCorrect).length
+    : null;
+  const delta =
+    preScore != null && postScore != null ? postScore - preScore : null;
+
   return {
     completion: {
       done,
@@ -84,6 +107,13 @@ function computeMetrics(progress: LearnerProgressState, events: AnalyticsEvent[]
       done: seen.size,
       total: TOTAL_OPTIONAL,
       pct: seen.size / TOTAL_OPTIONAL,
+    },
+    assessment: {
+      preScore,
+      postScore,
+      preTotal: 10,
+      postTotal: 10,
+      delta,
     },
   };
 }
@@ -143,7 +173,65 @@ export function SummaryMetricsBar({ progress, events }: SummaryMetricsBarProps):
         progress={m.engagement.pct}
         progressColor="rgb(var(--action))"
       />
+      <AssessmentCard a={m.assessment} />
     </section>
+  );
+}
+
+/**
+ * Assessment summary card. Three display states:
+ *   • Neither complete  → "—"      with "No assessments taken"
+ *   • Pre complete only → "6 / 10" with "Pre-assessment · Post not started"
+ *   • Both complete     → "6 → 9"  with "+3 growth · 10 items each"
+ *
+ * Progress bar only renders in the "both complete" state and tracks the
+ * post score against 10 items. Delta framing stays positive: "+N growth"
+ * for improvement, "Solid baseline" for no change. (Negative deltas are
+ * structurally possible but rare in practice; we still surface them
+ * neutrally as "−N change" rather than as failure framing.)
+ */
+function AssessmentCard({ a }: { a: Metrics['assessment'] }): JSX.Element {
+  const preDone = a.preScore != null;
+  const postDone = a.postScore != null;
+
+  if (!preDone && !postDone) {
+    return (
+      <MetricCard
+        label="Assessment"
+        value="—"
+        detail="No assessments taken"
+        progress={null}
+      />
+    );
+  }
+
+  if (preDone && !postDone) {
+    return (
+      <MetricCard
+        label="Assessment"
+        value={`${a.preScore} / ${a.preTotal}`}
+        detail="Pre-assessment · Post not started"
+        progress={null}
+      />
+    );
+  }
+
+  // Both complete — show the arrow comparison and the delta.
+  const value = `${a.preScore} → ${a.postScore}`;
+  const delta = a.delta ?? 0;
+  let detail: string;
+  if (delta > 0) detail = `+${delta} growth · 10 items each`;
+  else if (delta < 0) detail = `${delta} change · 10 items each`;
+  else detail = 'Solid baseline · 10 items each';
+
+  return (
+    <MetricCard
+      label="Assessment"
+      value={value}
+      detail={detail}
+      progress={(a.postScore ?? 0) / a.postTotal}
+      progressColor="rgb(var(--action))"
+    />
   );
 }
 
