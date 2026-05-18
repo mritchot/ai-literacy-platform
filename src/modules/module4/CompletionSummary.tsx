@@ -186,7 +186,13 @@ export function CompletionSummary(): JSX.Element {
           The PDF auto-fits long responses; very long ones may truncate. Full versions stay on this page.
         </p>
       </div>
-      <div className="grid gap-4 lg:grid-cols-2" style={{ gridAutoRows: '1fr' }}>
+      {/* Same fix pattern as the M4 S8 ExemplarComparison grid:
+          explicit `grid-cols-1` for mobile so the single column
+          doesn't auto-size to the widest cell's min-content (which
+          for any of the four cards could include an unbreakable
+          user-typed string from a P4/P9/P11/P12 saved artifact).
+          `lg:grid-cols-2` restores the 2x2 layout at desktop. */}
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2" style={{ gridAutoRows: '1fr' }}>
         <DelegationCard task1={task1} task2={task2} />
         <DescriptionCard
           product={p9Product}
