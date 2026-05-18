@@ -16,6 +16,7 @@ import {
 } from '../contexts/LearnerProgressContext';
 import { usePlatformMode } from '../hooks/usePlatformMode';
 import { Overline } from '../components/shared/Overline';
+import { AssessmentResponseAnalysis } from './AssessmentResponseAnalysis';
 import { DataSourceToggle, type DataSource } from './DataSourceToggle';
 import { DEMO_EVENTS, DEMO_PROGRESS } from './demo-data';
 import { EventTimeline } from './EventTimeline';
@@ -134,6 +135,17 @@ export default function AdminDashboard(): JSX.Element {
         <div className="space-y-10">
           <section aria-label="Summary">
             <SummaryMetricsBar progress={data.progress} events={data.events} />
+          </section>
+
+          {/* Assessment Response Analysis is the program-level
+              measurement surface — placed above Module Completion and
+              KC Response Analysis so admins see the pre→post growth
+              picture before drilling into module-level details. */}
+          <section>
+            <Overline className="mb-3" style={{ fontSize: 11 }}>
+              Assessment Response Analysis
+            </Overline>
+            <AssessmentResponseAnalysis progress={data.progress} />
           </section>
 
           <section>

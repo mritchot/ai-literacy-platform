@@ -17,13 +17,21 @@ type EventCategory =
   | 'interpretation_check'
   | 'reflection'
   | 'completion'
-  | 'practice_activity';
+  | 'practice_activity'
+  | 'assessment';
 
 // 4D §10.6 categorization. Order matters — first match wins. The "completion"
 // pattern would otherwise be claimed by "navigation" since `module_*_complete`
 // starts with `module_`, so we list completion *before* navigation. (Spec
 // shows completion at priority 5, but practical first-match-wins requires it
 // before navigation here.)
+//
+// `assessment` is matched LAST among named categories (before the
+// `practice_activity` catch-all) so its broad `/assessment/` pattern
+// doesn't poach narrower events that contain the substring. In
+// practice the assessment events all start with `pre_assessment_*`,
+// `post_assessment_*`, or `assessment_item_*` — none collide with
+// the patterns above.
 function categorize(eventType: string): EventCategory {
   if (/^module_\d+_complete$/.test(eventType)) return 'completion';
   if (/^module_\d+_start$/.test(eventType)) return 'navigation';
@@ -31,6 +39,7 @@ function categorize(eventType: string): EventCategory {
   if (/^kc_/.test(eventType)) return 'knowledge_check';
   if (/^ic_\d+_\d+_submitted$/.test(eventType)) return 'interpretation_check';
   if (/_reflection_|_reasoning_/.test(eventType)) return 'reflection';
+  if (/assessment/.test(eventType)) return 'assessment';
   return 'practice_activity';
 }
 
@@ -41,22 +50,26 @@ interface Filters {
   module: ModuleFilter;
   kcsOnly: boolean;
   reflectionsOnly: boolean;
+  assessmentsOnly: boolean;
 }
 
 function applyFilters(events: AnalyticsEvent[], f: Filters): AnalyticsEvent[] {
   return events.filter((e) => {
     if (f.module !== 0 && e.moduleId !== f.module) return false;
-    if (f.kcsOnly || f.reflectionsOnly) {
+    const anyCatFilter = f.kcsOnly || f.reflectionsOnly || f.assessmentsOnly;
+    if (anyCatFilter) {
       const cat = categorize(e.type);
       const inKC = cat === 'knowledge_check' || cat === 'interpretation_check';
       const inReflection = cat === 'reflection';
-      if (f.kcsOnly && f.reflectionsOnly) {
-        if (!inKC && !inReflection) return false;
-      } else if (f.kcsOnly) {
-        if (!inKC) return false;
-      } else if (f.reflectionsOnly) {
-        if (!inReflection) return false;
-      }
+      const inAssessment = cat === 'assessment';
+      // Treat the three category filters as an OR union — if multiple
+      // pills are active, surface anything matching any of them. This
+      // matches the existing kcsOnly + reflectionsOnly union behavior.
+      const matches =
+        (f.kcsOnly && inKC) ||
+        (f.reflectionsOnly && inReflection) ||
+        (f.assessmentsOnly && inAssessment);
+      if (!matches) return false;
     }
     return true;
   });
@@ -80,6 +93,7 @@ export function EventTimeline({ events }: EventTimelineProps): JSX.Element {
     module: 0,
     kcsOnly: false,
     reflectionsOnly: false,
+    assessmentsOnly: false,
   });
   const [visibleCount, setVisibleCount] = useState<number>(PAGE_SIZE);
 
@@ -102,6 +116,10 @@ export function EventTimeline({ events }: EventTimelineProps): JSX.Element {
   };
   const toggleReflections = () => {
     setFilters((f) => ({ ...f, reflectionsOnly: !f.reflectionsOnly }));
+    setVisibleCount(PAGE_SIZE);
+  };
+  const toggleAssessments = () => {
+    setFilters((f) => ({ ...f, assessmentsOnly: !f.assessmentsOnly }));
     setVisibleCount(PAGE_SIZE);
   };
 
@@ -151,6 +169,13 @@ export function EventTimeline({ events }: EventTimelineProps): JSX.Element {
           onClick={toggleReflections}
         >
           Reflections only
+        </FilterPill>
+        <FilterPill
+          role="checkbox"
+          active={filters.assessmentsOnly}
+          onClick={toggleAssessments}
+        >
+          Assessments
         </FilterPill>
       </div>
 

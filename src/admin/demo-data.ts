@@ -300,8 +300,76 @@ const M3_EVENTS: Ev[] = [
   // No M3 KC submission, no module_3_complete — learner hasn't reached S8+.
 ];
 
-// Combine and sort chronologically.
+// ── Pre-assessment events ──────────────────────────────────────────────
+// The demo learner took the pre-assessment ~15 minutes before starting
+// Module 1, so these events sit BEFORE the M1 block on the timeline.
+// Negative `at()` offsets compute timestamps before the T0 anchor.
+//
+// Item answers MUST stay consistent with the responses in
+// DEMO_PROGRESS.assessments.pre.responses above (same selectedOptionId
+// + isCorrect per item). The construct/block payload on each item
+// comes from the canonical mapping in src/data/pre-assessment.ts.
+//
+// Cadence: 60 seconds between item answers (10 items × 60s = 10 min),
+// flanked by started at T0-15m and completed at T0-4m. All within the
+// 15-minute window before M1 starts. Note: the in-state response
+// timestamps in DEMO_PROGRESS use `Date.now() - 14d` because they
+// were authored before this event block existed; the event timestamps
+// here use the T0 anchor for chronological consistency with the
+// surrounding M1/M2/M3 events.
+const PRE_ASSESSMENT_EVENTS: Ev[] = [
+  ev(at(-15, 0), 'pre_assessment_started', undefined, undefined, {
+    itemCount: 10,
+  }),
+  ev(at(-14, 0), 'assessment_item_answered', undefined, undefined, {
+    kind: 'pre', itemId: 'PRE-1', construct: 'augmentation-automation', block: 'usage',
+    selectedOptionId: 'B', isCorrect: true,
+  }),
+  ev(at(-13, 0), 'assessment_item_answered', undefined, undefined, {
+    kind: 'pre', itemId: 'PRE-2', construct: 'productivity-verification', block: 'usage',
+    selectedOptionId: 'A', isCorrect: false,
+  }),
+  ev(at(-12, 0), 'assessment_item_answered', undefined, undefined, {
+    kind: 'pre', itemId: 'PRE-3', construct: 'fluent-fabrication', block: 'failure',
+    selectedOptionId: 'A', isCorrect: true,
+  }),
+  ev(at(-11, 0), 'assessment_item_answered', undefined, undefined, {
+    kind: 'pre', itemId: 'PRE-4', construct: 'boundary-task', block: 'failure',
+    selectedOptionId: 'D', isCorrect: false,
+  }),
+  ev(at(-10, 0), 'assessment_item_answered', undefined, undefined, {
+    kind: 'pre', itemId: 'PRE-5', construct: 'context-window', block: 'failure',
+    selectedOptionId: 'B', isCorrect: true,
+  }),
+  ev(at(-9, 0), 'assessment_item_answered', undefined, undefined, {
+    kind: 'pre', itemId: 'PRE-6', construct: 'prediction-retrieval', block: 'mechanics',
+    selectedOptionId: 'C', isCorrect: false,
+  }),
+  ev(at(-8, 0), 'assessment_item_answered', undefined, undefined, {
+    kind: 'pre', itemId: 'PRE-7', construct: 'tokenization', block: 'mechanics',
+    selectedOptionId: 'D', isCorrect: true,
+  }),
+  ev(at(-7, 0), 'assessment_item_answered', undefined, undefined, {
+    kind: 'pre', itemId: 'PRE-8', construct: 'capability-diagnosis', block: 'mechanics',
+    selectedOptionId: 'C', isCorrect: true,
+  }),
+  ev(at(-6, 0), 'assessment_item_answered', undefined, undefined, {
+    kind: 'pre', itemId: 'PRE-9', construct: 'verification-priority', block: 'evaluation',
+    selectedOptionId: 'A', isCorrect: true,
+  }),
+  ev(at(-5, 0), 'assessment_item_answered', undefined, undefined, {
+    kind: 'pre', itemId: 'PRE-10', construct: 'structured-prompting', block: 'evaluation',
+    selectedOptionId: 'B', isCorrect: false,
+  }),
+  ev(at(-4, 0), 'pre_assessment_completed', undefined, undefined, {
+    itemCount: 10,
+  }),
+];
+
+// Combine and sort chronologically. Pre-assessment block goes first
+// (negative offsets sort before the T0-anchored module blocks).
 export const DEMO_EVENTS: AnalyticsEvent[] = [
+  ...PRE_ASSESSMENT_EVENTS,
   ...m1.events,
   ...M1_EVENTS,
   ...m2.events,
