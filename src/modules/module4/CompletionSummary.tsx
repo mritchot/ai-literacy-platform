@@ -623,7 +623,15 @@ function MilestoneTable({
             key={row.days}
             className="grid items-start gap-4"
             style={{
-              gridTemplateColumns: '90px 1fr',
+              // `minmax(0, 1fr)` instead of `1fr` — the bare `1fr` lets
+              // the column grow to fit its content's min-content, which
+              // includes unbreakable user-typed strings from the
+              // P12/P9 artifact quotes embedded in the connection
+              // text. That pushed both the connection line AND the
+              // target line past the viewport on mobile. The `minmax`
+              // caps the column at the available track width
+              // regardless of content.
+              gridTemplateColumns: '90px minmax(0, 1fr)',
               paddingTop: i === 0 ? 0 : 12,
               borderTop:
                 i === 0 ? 'none' : '1px solid rgb(var(--border-light))',
@@ -641,15 +649,18 @@ function MilestoneTable({
             >
               {row.days}
             </span>
-            <div>
+            <div className="min-w-0">
               <p
                 className="m-0 mb-1 font-sans text-body-sm text-ink"
                 style={{ lineHeight: 1.5 }}
               >
                 {row.target}
               </p>
+              {/* `break-words` on the connection paragraph so
+                  unbreakable user-typed strings ("Hdjsjshava…") wrap
+                  at any character rather than overflowing the cell. */}
               <p
-                className="m-0 font-sans text-body-sm text-secondary"
+                className="m-0 break-words font-sans text-body-sm text-secondary"
                 style={{ lineHeight: 1.5 }}
               >
                 {row.connection}
