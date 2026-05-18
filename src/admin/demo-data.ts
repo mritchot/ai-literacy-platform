@@ -131,6 +131,33 @@ export const DEMO_PROGRESS: LearnerProgressState = {
   viewedTabs: VIEWED_TABS,
   engagedFlags: ENGAGED_FLAGS,
   activeTimeMs: ACTIVE_TIME_MS,
+  // The demo learner is mid-program (M3 S7), so the pre-assessment is
+  // complete and the post-assessment hasn't been started yet. Demo
+  // responses for the pre-assessment are seeded with 6/10 correct so
+  // the eventual post-assessment comparison shows visible growth.
+  assessments: {
+    pre: {
+      startedAt: Date.now() - 14 * 24 * 60 * 60_000,
+      completedAt: Date.now() - 14 * 24 * 60 * 60_000 + 8 * 60_000,
+      responses: {
+        'PRE-1':  { itemId: 'PRE-1',  selectedOptionId: 'B', isCorrect: true,  timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
+        'PRE-2':  { itemId: 'PRE-2',  selectedOptionId: 'A', isCorrect: false, timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
+        'PRE-3':  { itemId: 'PRE-3',  selectedOptionId: 'A', isCorrect: true,  timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
+        'PRE-4':  { itemId: 'PRE-4',  selectedOptionId: 'D', isCorrect: false, timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
+        'PRE-5':  { itemId: 'PRE-5',  selectedOptionId: 'B', isCorrect: true,  timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
+        'PRE-6':  { itemId: 'PRE-6',  selectedOptionId: 'C', isCorrect: false, timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
+        'PRE-7':  { itemId: 'PRE-7',  selectedOptionId: 'D', isCorrect: true,  timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
+        'PRE-8':  { itemId: 'PRE-8',  selectedOptionId: 'C', isCorrect: true,  timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
+        'PRE-9':  { itemId: 'PRE-9',  selectedOptionId: 'A', isCorrect: true,  timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
+        'PRE-10': { itemId: 'PRE-10', selectedOptionId: 'B', isCorrect: false, timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
+      },
+    },
+    post: {
+      startedAt: null,
+      completedAt: null,
+      responses: {},
+    },
+  },
 };
 
 // ── Analytics events ────────────────────────────────────────────────────

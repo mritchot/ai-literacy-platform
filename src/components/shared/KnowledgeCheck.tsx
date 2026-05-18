@@ -170,15 +170,30 @@ export function KnowledgeCheck({
                   type="button"
                   onClick={() => !submitted && setSelected(opt.id)}
                   aria-pressed={isSelected}
-                  className="flex w-full items-start gap-3 rounded-md text-left transition-all duration-150"
+                  className="flex w-full items-start gap-3 rounded-md text-left transition-colors duration-150"
                   style={{
                     background: isSelected ? 'rgb(var(--surface))' : 'rgb(var(--white))',
-                    border: isFeedbackBorder
-                      ? `2px solid ${TONE_BORDER[opt.feedbackTone]}`
+                    // Border width and padding stay constant across states.
+                    // Selected / feedback emphasis comes from a color change
+                    // + an inset box-shadow that visually doubles the border
+                    // to ~2px without affecting layout. The earlier 1px↔2px
+                    // border + 16px↔15px padding swap was math-correct at
+                    // start and end states but sub-pixel rounding during
+                    // the transition caused the option text to wobble by a
+                    // pixel on click.
+                    border: `1px solid ${
+                      isFeedbackBorder
+                        ? TONE_BORDER[opt.feedbackTone]
+                        : isSelected
+                          ? TIER1
+                          : 'rgb(var(--border))'
+                    }`,
+                    padding: '12px 16px',
+                    boxShadow: isFeedbackBorder
+                      ? `inset 0 0 0 1px ${TONE_BORDER[opt.feedbackTone]}`
                       : isSelected
-                        ? `2px solid ${TIER1}`
-                        : '1px solid rgb(var(--border))',
-                    padding: isSelected || isFeedbackBorder ? '11px 15px' : '12px 16px',
+                        ? `inset 0 0 0 1px ${TIER1}`
+                        : 'none',
                     cursor: submitted ? 'default' : 'pointer',
                   }}
                 >

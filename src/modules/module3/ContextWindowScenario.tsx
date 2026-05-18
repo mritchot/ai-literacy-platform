@@ -419,10 +419,21 @@ function VerificationItemCard({
                   className="flex w-full items-start gap-3 rounded-md text-left"
                   style={{
                     background: 'rgb(var(--white))',
-                    border: isSelected ? '2px solid rgb(var(--ink))' : '1px solid rgb(var(--border))',
-                    padding: isSelected ? '11px 15px' : '12px 16px',
+                    // Border width and padding stay constant across states.
+                    // Selected emphasis comes from a color change + an inset
+                    // box-shadow that visually doubles the border to ~2px
+                    // without affecting layout. See AssessmentItem for the
+                    // rationale — the earlier 1px↔2px border + padding swap
+                    // caused sub-pixel content shifts during the transition.
+                    border: `1px solid ${
+                      isSelected ? 'rgb(var(--ink))' : 'rgb(var(--border))'
+                    }`,
+                    padding: '12px 16px',
+                    boxShadow: isSelected
+                      ? 'inset 0 0 0 1px rgb(var(--ink))'
+                      : 'none',
                     cursor: isSubmitted ? 'default' : 'pointer',
-                    transition: 'all 150ms',
+                    transition: 'background-color 150ms, border-color 150ms, box-shadow 150ms',
                   }}
                 >
                   <span

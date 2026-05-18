@@ -27,6 +27,44 @@ export interface KnowledgeCheckResult {
   timestamp: number;
 }
 
+// ─── Pre / Post Assessment state ───────────────────────────────────
+//
+// The platform administers two parallel assessments — a pre-assessment
+// (gates Module 1 in learner mode; no feedback shown) and a
+// post-assessment (gates M4 S10 in learner mode; comparative results
+// shown). Each assessment has 10 items, joined by `constructKey`.
+// Responses live on this context (single source of learner state) so
+// the M4 S10 AssessmentGrowth view can read both sides without a
+// second store. See `src/data/pre-assessment.ts` and
+// `src/data/post-assessment.ts` for the items themselves.
+
+export type AssessmentKind = 'pre' | 'post';
+
+export interface AssessmentResponse {
+  /** Item id, e.g. "PRE-1" or "POST-1". */
+  itemId: string;
+  /** Option id the learner selected. */
+  selectedOptionId: 'A' | 'B' | 'C' | 'D';
+  /** Whether that option was the correct one. Stored on response (not
+   *  re-derived) so the comparative results view can render without
+   *  re-importing the item bank. */
+  isCorrect: boolean;
+  /** ms timestamp of submission. */
+  timestamp: number;
+}
+
+export interface AssessmentRecord {
+  /** ms timestamp when the learner started this assessment (intro page
+   *  "Begin" click). null until started. */
+  startedAt: number | null;
+  /** ms timestamp when the learner submitted item 10. null until
+   *  completed. The completion gate uses `completedAt != null`. */
+  completedAt: number | null;
+  /** Responses keyed by item id. A learner can re-enter mid-assessment;
+   *  responses are persisted as they go. */
+  responses: Record<string, AssessmentResponse>;
+}
+
 export interface LearnerProgressState {
   current: SectionPosition | null;
   // 4E §11.1: section completion is split into two bits. `scrolled` is set by
@@ -53,7 +91,22 @@ export interface LearnerProgressState {
   // `${moduleId}.${sectionId}`. Read by the admin dashboard as the
   // honest replacement for the old `max(ts) - min(ts)` session-span.
   activeTimeMs: Record<string, number>;
+  // Pre / Post assessment lifecycle + per-item responses. The
+  // assessments object always has both keys; each side defaults to
+  // `{ startedAt: null, completedAt: null, responses: {} }` for fresh
+  // state. Migration in `state` below tops up the field when persisted
+  // progress predates this addition.
+  assessments: {
+    pre: AssessmentRecord;
+    post: AssessmentRecord;
+  };
 }
+
+const EMPTY_ASSESSMENT: AssessmentRecord = {
+  startedAt: null,
+  completedAt: null,
+  responses: {},
+};
 
 const INITIAL: LearnerProgressState = {
   current: null,
@@ -65,6 +118,10 @@ const INITIAL: LearnerProgressState = {
   viewedTabs: {},
   engagedFlags: {},
   activeTimeMs: {},
+  assessments: {
+    pre: { ...EMPTY_ASSESSMENT },
+    post: { ...EMPTY_ASSESSMENT },
+  },
 };
 
 // ─── Active-time tracker config ─────────────────────────────────────
@@ -117,6 +174,24 @@ interface LearnerProgressValue {
   getReflection: (moduleId: number, sectionId: number, promptId: string) => string;
   getViewedTabCount: (moduleId: number, sectionId: number) => number;
   isEngaged: (moduleId: number, sectionId: number, flagId: string) => boolean;
+  // ── Assessment lifecycle ─────────────────────────────────────────
+  /** Mark the assessment as started. Idempotent — re-entering an
+   *  in-progress assessment does not reset `startedAt`. */
+  startAssessment: (kind: AssessmentKind) => void;
+  /** Persist a single item response. Safe to call repeatedly for the
+   *  same item id (last write wins — used when the learner revisits an
+   *  item mid-assessment, though the standard UI is forward-only). */
+  recordAssessmentResponse: (kind: AssessmentKind, response: AssessmentResponse) => void;
+  /** Mark the assessment as completed. Idempotent — once set,
+   *  `completedAt` is not overwritten. */
+  completeAssessment: (kind: AssessmentKind) => void;
+  /** Convenience accessor: true once `completedAt` is set. */
+  isAssessmentComplete: (kind: AssessmentKind) => boolean;
+  /** All persisted responses for an assessment, keyed by item id. */
+  getAssessmentResponses: (kind: AssessmentKind) => Record<string, AssessmentResponse>;
+  /** Lifecycle record (started/completed timestamps + responses) for
+   *  an assessment. Used by the comparative results view. */
+  getAssessmentRecord: (kind: AssessmentKind) => AssessmentRecord;
 }
 
 const LearnerProgressContext = createContext<LearnerProgressValue | null>(null);
@@ -141,6 +216,25 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
       ...legacyCompleted,
       ...(rawState.interactionCompleteSections ?? {}),
     };
+    // Assessments migration: persisted state from before this field
+    // existed has `rawState.assessments === undefined`. Top up with the
+    // INITIAL shape so consumers can always destructure `pre` / `post`
+    // without a null guard. When the field exists but one side is
+    // missing (defensive — shouldn't happen, but cheap to guard
+    // against), fall back to EMPTY_ASSESSMENT for that side.
+    const rawAssessments = rawState.assessments;
+    const assessmentsMerged: LearnerProgressState['assessments'] = {
+      pre: {
+        ...EMPTY_ASSESSMENT,
+        ...(rawAssessments?.pre ?? {}),
+        responses: { ...(rawAssessments?.pre?.responses ?? {}) },
+      },
+      post: {
+        ...EMPTY_ASSESSMENT,
+        ...(rawAssessments?.post ?? {}),
+        responses: { ...(rawAssessments?.post?.responses ?? {}) },
+      },
+    };
     return {
       ...INITIAL,
       ...rawState,
@@ -152,6 +246,7 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
       viewedTabs: { ...INITIAL.viewedTabs, ...(rawState.viewedTabs ?? {}) },
       engagedFlags: { ...INITIAL.engagedFlags, ...(rawState.engagedFlags ?? {}) },
       activeTimeMs: { ...INITIAL.activeTimeMs, ...(rawState.activeTimeMs ?? {}) },
+      assessments: assessmentsMerged,
     };
   }, [rawState]);
 
@@ -263,6 +358,64 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
     [setState],
   );
 
+  // ── Assessment setters ──────────────────────────────────────────
+  //
+  // All three setters use the same defensive pattern: spread the
+  // previous assessments map, then spread the per-kind record. They're
+  // idempotent — start/complete don't overwrite an existing timestamp,
+  // and responses just upsert by item id. This means re-fires from
+  // double-renders (StrictMode, route remounts) don't corrupt state.
+
+  const startAssessment = useCallback(
+    (kind: AssessmentKind) =>
+      setState((prev) => {
+        const cur = prev.assessments?.[kind] ?? EMPTY_ASSESSMENT;
+        if (cur.startedAt !== null) return prev;
+        return {
+          ...prev,
+          assessments: {
+            ...(prev.assessments ?? INITIAL.assessments),
+            [kind]: { ...cur, startedAt: Date.now() },
+          },
+        };
+      }),
+    [setState],
+  );
+
+  const recordAssessmentResponse = useCallback(
+    (kind: AssessmentKind, response: AssessmentResponse) =>
+      setState((prev) => {
+        const cur = prev.assessments?.[kind] ?? EMPTY_ASSESSMENT;
+        return {
+          ...prev,
+          assessments: {
+            ...(prev.assessments ?? INITIAL.assessments),
+            [kind]: {
+              ...cur,
+              responses: { ...cur.responses, [response.itemId]: response },
+            },
+          },
+        };
+      }),
+    [setState],
+  );
+
+  const completeAssessment = useCallback(
+    (kind: AssessmentKind) =>
+      setState((prev) => {
+        const cur = prev.assessments?.[kind] ?? EMPTY_ASSESSMENT;
+        if (cur.completedAt !== null) return prev;
+        return {
+          ...prev,
+          assessments: {
+            ...(prev.assessments ?? INITIAL.assessments),
+            [kind]: { ...cur, completedAt: Date.now() },
+          },
+        };
+      }),
+    [setState],
+  );
+
   // ── Active-time tracker ─────────────────────────────────────────
   //
   // Heartbeats every HEARTBEAT_MS while: (a) `state.current` points at
@@ -350,6 +503,15 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
       },
       isEngaged: (moduleId, sectionId, flagId) =>
         Boolean(state.engagedFlags[k(moduleId, sectionId, flagId)]),
+      startAssessment,
+      recordAssessmentResponse,
+      completeAssessment,
+      isAssessmentComplete: (kind) =>
+        Boolean(state.assessments?.[kind]?.completedAt),
+      getAssessmentResponses: (kind) =>
+        state.assessments?.[kind]?.responses ?? {},
+      getAssessmentRecord: (kind) =>
+        state.assessments?.[kind] ?? EMPTY_ASSESSMENT,
     }),
     [
       state,
@@ -361,6 +523,9 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
       markTabViewed,
       markEngaged,
       addActiveTime,
+      startAssessment,
+      recordAssessmentResponse,
+      completeAssessment,
     ],
   );
 

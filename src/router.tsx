@@ -14,6 +14,12 @@ const Module3 = lazy(() => import('./modules/module3'));
 const Module4 = lazy(() => import('./modules/module4'));
 const AdminDashboard = lazy(() => import('./admin'));
 const ThankYou = lazy(() => import('./pages/ThankYou'));
+// Pre/Post assessment routes are lazy-loaded — their payload (10
+// items × 4 options × consequence feedback + the comparative results
+// view) only enters the bundle when the learner reaches the
+// assessment flow.
+const PreAssessment = lazy(() => import('./pages/PreAssessmentPage'));
+const PostAssessment = lazy(() => import('./pages/PostAssessmentPage'));
 
 // Suspense fallback for lazy routes. Note: the production build inlines
 // every lazy chunk via vite-plugin-singlefile, so this effectively never
@@ -72,6 +78,8 @@ const routes: RouteObject[] = [
       { path: 'module/4/section/:sectionId', element: lazyRoute(Module4) },
       { path: 'admin', element: <AdminRoute /> },
       { path: 'thank-you', element: lazyRoute(ThankYou) },
+      { path: 'pre-assessment', element: lazyRoute(PreAssessment) },
+      { path: 'post-assessment', element: lazyRoute(PostAssessment) },
       { path: '*', element: <Navigate to="/" replace /> },
     ],
   },

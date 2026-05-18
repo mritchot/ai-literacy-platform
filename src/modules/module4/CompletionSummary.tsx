@@ -16,14 +16,23 @@
 // dedicated `completedModules` field in the context state).
 
 import { useEffect, useMemo, useRef } from 'react';
+import { AssessmentGrowth } from '../../components/assessment/AssessmentGrowth';
 import { R7Trigger } from '../../components/reference/R7Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
 import { Icon } from '../../components/shared/Icon';
+import { KCReview } from '../../components/shared/KCReview';
 import { Overline } from '../../components/shared/Overline';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { POST_ASSESSMENT_ITEMS } from '../../data/post-assessment';
+import { PRE_ASSESSMENT_ITEMS } from '../../data/pre-assessment';
 import { MODULES } from '../../data/program';
-import { generateCompletionPDF, type CompletionProfileData } from './generate-completion-pdf';
+import {
+  generateCompletionPDF,
+  type AssessmentBlockResult,
+  type AssessmentGrowthData,
+  type CompletionProfileData,
+} from './generate-completion-pdf';
 
 // 4D competency hex colors — matched to the on-screen accent treatment
 // used throughout the platform (R1 Quick Reference, KC tone borders).
@@ -136,6 +145,51 @@ export function CompletionSummary(): JSX.Element {
   // timestamps, so KCs are the primary signal.
   const completionDate = useMemo(() => formatCompletionDate(state), []);
 
+  // Pre/post assessment growth — aggregate per-block correct counts
+  // from the recorded responses. Returns undefined when either side
+  // is missing (portfolio reviewers without an assessment history,
+  // or a learner who somehow reached this page without both
+  // assessments) so the PDF can fall back to the standalone KC card.
+  const growth = useMemo<AssessmentGrowthData | undefined>(() => {
+    const preResponses = state.assessments?.pre?.responses ?? {};
+    const postResponses = state.assessments?.post?.responses ?? {};
+    if (
+      !state.assessments?.pre?.completedAt ||
+      !state.assessments?.post?.completedAt
+    ) {
+      return undefined;
+    }
+    // Aggregate by block. The block field on each item comes from the
+    // instrument data files, so the four canonical buckets are
+    // populated directly from the items themselves.
+    const blockOrder: Array<{
+      key: 'usage' | 'failure' | 'mechanics' | 'evaluation';
+      name: AssessmentBlockResult['name'];
+      items: AssessmentBlockResult['items'];
+    }> = [
+      { key: 'usage', name: 'Usage patterns', items: 2 },
+      { key: 'failure', name: 'Failure modes', items: 3 },
+      { key: 'mechanics', name: 'Mechanics', items: 3 },
+      { key: 'evaluation', name: 'Evaluation', items: 2 },
+    ];
+    const blocks = blockOrder.map(({ key, name, items }) => {
+      const preItems = PRE_ASSESSMENT_ITEMS.filter((it) => it.block === key);
+      const postItems = POST_ASSESSMENT_ITEMS.filter((it) => it.block === key);
+      const pre = preItems.reduce(
+        (acc, it) => (preResponses[it.id]?.isCorrect ? acc + 1 : acc),
+        0,
+      );
+      const post = postItems.reduce(
+        (acc, it) => (postResponses[it.id]?.isCorrect ? acc + 1 : acc),
+        0,
+      );
+      return { name, items, pre, post } satisfies AssessmentBlockResult;
+    }) as AssessmentGrowthData['blocks'];
+    const preTotal = blocks.reduce((acc, b) => acc + b.pre, 0);
+    const postTotal = blocks.reduce((acc, b) => acc + b.post, 0);
+    return { preTotal, postTotal, blocks };
+  }, [state.assessments]);
+
   const pdfData: CompletionProfileData = {
     completionDate,
     task1,
@@ -149,6 +203,7 @@ export function CompletionSummary(): JSX.Element {
     p12Statement,
     kcCorrect,
     kcTotal,
+    growth,
   };
 
   // PDF generation is async because the DM font TTFs need to be
@@ -170,22 +225,30 @@ export function CompletionSummary(): JSX.Element {
       <ReferenceTabRail>
         <R7Trigger variant="tab" label="Policy Starter" />
       </ReferenceTabRail>
+      {/* ProfileHeader leads the page — it's the document title block
+          (program name, completion date, Download PDF action). Putting
+          it first gives the page a proper cover-page → content reading
+          order. Previously this sat between AssessmentGrowth and the
+          competency cards, which created two competing titles on the
+          page and read like an interleaved cover sheet.
+          Caveat caption is rewritten to make sense at the top of the
+          page (it now references the on-screen content "below"
+          instead of being adjacent to it). */}
       <div>
         <ProfileHeader completionDate={completionDate} onDownload={onDownloadPDF} />
-        {/* Fit caveat — sits directly under the header so it stays
-            adjacent to the Download button without disturbing the
-            header's title/button alignment. The PDF is a fixed-rect
-            2×2 landscape grid (R8 spec); long fields auto-shrink
-            (down to 7pt) before truncation kicks in. The note keeps
-            the learner from thinking the PDF lost data when their
-            P12 statement runs past the fit budget. */}
         <p
           className="m-0 font-sans text-caption text-tertiary"
           style={{ textAlign: 'right', marginTop: 6, paddingRight: 4, lineHeight: 1.45 }}
         >
-          The PDF auto-fits long responses; very long ones may truncate. Full versions stay on this page.
+          Note: long responses may truncate in the PDF. The on-screen version below shows everything in full.
         </p>
       </div>
+      {/* Assessment Growth — pre→post comparative view. Sits above the
+          competency cards so the learner sees the program-level
+          measurement before the per-competency artifacts. Renders its
+          own placeholder when either assessment is missing (portfolio
+          review case). */}
+      <AssessmentGrowth />
       {/* Same fix pattern as the M4 S8 ExemplarComparison grid:
           explicit `grid-cols-1` for mobile so the single column
           doesn't auto-size to the widest cell's min-content (which
@@ -207,6 +270,12 @@ export function CompletionSummary(): JSX.Element {
         <DiligenceCard statement={p12Statement} />
       </div>
       <KCSummaryBar kcCorrect={kcCorrect} kcTotal={kcTotal} />
+      {/* Knowledge check review — collapsed-by-default expandable
+          section. Mirrors the pre/post AssessmentResults pattern so KCs
+          get the same response-transparency treatment as assessment
+          items. The KCSummaryBar above remains the at-a-glance
+          single-number; KCReview is the deeper drill-down path. */}
+      <KCReview />
       <MilestoneTable task1={task1} p12Statement={p12Statement} />
       <p
         className="m-0 font-sans text-body-sm text-secondary"
