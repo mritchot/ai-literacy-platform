@@ -54,6 +54,7 @@ export function SectionContainer({
     markScrolled,
     setCurrentSection,
     isSectionComplete,
+    isAssessmentComplete,
   } = useLearnerProgress();
   // Platform mode gates the Next button: learner mode requires the
   // section to be complete before advancing; portfolio + admin modes
@@ -172,6 +173,18 @@ export function SectionContainer({
   const totalSections = module.sections.length;
   const prevSection = sectionId > 1 ? module.sections[sectionId - 2] : null;
   const nextSection = sectionId < totalSections ? module.sections[sectionId] : null;
+
+  // M4 S9 ("Program closing") → M4 S10 ("Your competency profile") is
+  // the spot where the post-assessment intercepts the standard flow.
+  // When the post-assessment isn't complete in learner mode, route the
+  // Next button to `/post-assessment` instead of to S10 directly, and
+  // adjust the label so the learner knows what's next. Portfolio +
+  // admin modes skip this redirect (they get free navigation).
+  const postAssessmentRedirect =
+    module.id === 4 &&
+    sectionId === 9 &&
+    mode === 'learner' &&
+    !isAssessmentComplete('post');
 
   // When the learner reaches the last section of a module, surface a link
   // to the first section of the next unlocked module so the cross-module
@@ -294,11 +307,18 @@ export function SectionContainer({
             <span className="truncate">{isMobile ? 'Back' : 'Back to program home'}</span>
           </Link>
         )}
-        {nextSection && (
+        {nextSection && !postAssessmentRedirect && (
           <ContinueButton
             label={isMobile ? 'Next' : `Next · ${nextSection.title}`}
             disabled={!canAdvance}
             onClick={handleAdvance(`/module/${module.id}/section/${nextSection.id}`)}
+          />
+        )}
+        {nextSection && postAssessmentRedirect && (
+          <ContinueButton
+            label={isMobile ? 'Post-assessment' : 'Continue to the post-assessment'}
+            disabled={!canAdvance}
+            onClick={handleAdvance('/post-assessment')}
           />
         )}
         {!nextSection && nextModule && nextModuleFirstSection && (

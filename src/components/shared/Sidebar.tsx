@@ -6,7 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { type ModuleMeta } from '../../data/program';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
-import { useResolvedModules } from '../../contexts/LearnerProgressContext';
+import { useLearnerProgress, useResolvedModules } from '../../contexts/LearnerProgressContext';
 import { useCitations } from '../../hooks/useCitations';
 import { usePlatformMode } from '../../hooks/usePlatformMode';
 import { themeToggleMeta, type ThemePreference } from '../../hooks/useTheme';
@@ -44,9 +44,15 @@ export function Sidebar({
   const modules = useResolvedModules();
   // Sequential-progression lock state. In learner mode, modules and
   // sections lock until their prerequisites are complete; in portfolio
-  // and admin modes nothing is locked (free navigation).
+  // and admin modes nothing is locked (free navigation). The pre-/
+  // post-assessment flags gate Module 1 and M4 S10 respectively in
+  // learner mode.
   const { mode } = usePlatformMode();
-  const gating = computeGating(modules, mode);
+  const { isAssessmentComplete } = useLearnerProgress();
+  const gating = computeGating(modules, mode, {
+    preComplete: isAssessmentComplete('pre'),
+    postComplete: isAssessmentComplete('post'),
+  });
 
   // Section-list expansion in the full (non-collapsed) sidebar. One
   // module open at a time. Auto-syncs to the URL so the module

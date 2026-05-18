@@ -11,7 +11,7 @@ import {
   type CompetencyKey,
   type ModuleMeta,
 } from '../../data/program';
-import { useResolvedModules } from '../../contexts/LearnerProgressContext';
+import { useLearnerProgress, useResolvedModules } from '../../contexts/LearnerProgressContext';
 import { usePlatformMode } from '../../hooks/usePlatformMode';
 import { computeGating, type ModuleGating } from '../../utils/module-gating';
 import { CompetencyDot } from './CompetencyDot';
@@ -30,30 +30,46 @@ export function LandingPage(): JSX.Element {
   const modules = useResolvedModules();
   // Sequential-progression gating for the module cards. In learner mode
   // a module locks until the previous one is fully complete; in
-  // portfolio + admin modes nothing locks.
+  // portfolio + admin modes nothing locks. Module 1 also waits on the
+  // pre-assessment, and M4 S10 on the post-assessment.
   const { mode } = usePlatformMode();
-  const gating = computeGating(modules, mode);
+  const { isAssessmentComplete } = useLearnerProgress();
+  const preComplete = isAssessmentComplete('pre');
+  const postComplete = isAssessmentComplete('post');
+  const gating = computeGating(modules, mode, {
+    preComplete,
+    postComplete,
+  });
   const totalSections = modules.reduce((acc, m) => acc + m.sections.length, 0);
   const completedSections = modules.reduce(
     (acc, m) => acc + m.sections.filter((s) => s.state === 'done').length,
     0,
   );
   const hasStarted = completedSections > 0;
+  // Pre-assessment status in learner mode controls the hero CTA: if the
+  // learner hasn't completed the pre-assessment, the primary action
+  // routes them to the assessment instead of into Module 1. Portfolio
+  // and admin modes always show the normal Begin/Resume button.
+  const preCtaActive = mode === 'learner' && !preComplete;
   // Resume target: first non-done section in the first module that still has
   // outstanding work, otherwise the first unlocked module's first section.
   const resumeTarget = (() => {
     for (const m of modules) {
-      if (m.locked) continue;
+      if (gating.isModuleLocked(m.id)) continue;
       const next = m.sections.find((s) => s.state !== 'done');
       if (next) return { moduleId: m.id, sectionId: next.id };
     }
-    const first = modules.find((m) => !m.locked);
+    const first = modules.find((m) => !gating.isModuleLocked(m.id));
     return first ? { moduleId: first.id, sectionId: first.sections[0]?.id ?? 1 } : null;
   })();
 
   return (
     <div className="mx-auto max-w-[1160px] px-4 py-14 sm:px-8 lg:px-16 lg:py-14">
-      <Hero hasStarted={hasStarted} resumeTarget={resumeTarget} />
+      <Hero
+        hasStarted={hasStarted}
+        resumeTarget={resumeTarget}
+        preCtaActive={preCtaActive}
+      />
       <CompetencyLegend />
       <ModuleGrid modules={modules} gating={gating} />
       <SummaryBar completedSections={completedSections} totalSections={totalSections} />
@@ -66,9 +82,14 @@ export function LandingPage(): JSX.Element {
 function Hero({
   hasStarted,
   resumeTarget,
+  preCtaActive,
 }: {
   hasStarted: boolean;
   resumeTarget: { moduleId: number; sectionId: number } | null;
+  /** When true, the primary CTA routes to `/pre-assessment` instead
+   *  of the standard resume target. The pre-assessment gates Module 1
+   *  in learner mode, so it has to be the visible first step. */
+  preCtaActive: boolean;
 }): JSX.Element {
   return (
     <section aria-labelledby="program-title" className="mb-14">
@@ -87,15 +108,26 @@ function Hero({
       </p>
 
       <div className="flex flex-wrap items-center gap-6">
-        {resumeTarget && (
+        {preCtaActive ? (
           <Link
-            to={`/module/${resumeTarget.moduleId}/section/${resumeTarget.sectionId}`}
+            to="/pre-assessment"
             className="inline-flex items-center gap-2.5 rounded-md bg-action px-5 py-3 font-sans text-[14px] font-semibold text-[rgb(var(--white))] no-underline transition-colors duration-150 hover:bg-action-hover"
             style={{ border: '1.5px solid rgb(var(--action))' }}
           >
-            {hasStarted ? 'Resume program' : 'Begin program'}
+            Begin with the pre-assessment
             <Icon name="arrowRight" size={15} />
           </Link>
+        ) : (
+          resumeTarget && (
+            <Link
+              to={`/module/${resumeTarget.moduleId}/section/${resumeTarget.sectionId}`}
+              className="inline-flex items-center gap-2.5 rounded-md bg-action px-5 py-3 font-sans text-[14px] font-semibold text-[rgb(var(--white))] no-underline transition-colors duration-150 hover:bg-action-hover"
+              style={{ border: '1.5px solid rgb(var(--action))' }}
+            >
+              {hasStarted ? 'Resume program' : 'Begin program'}
+              <Icon name="arrowRight" size={15} />
+            </Link>
+          )
         )}
         {/* Secondary text link to the standalone creator page. Sits
             adjacent to the primary CTA in the same flex row so it's
