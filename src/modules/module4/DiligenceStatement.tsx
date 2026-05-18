@@ -304,9 +304,21 @@ export function DiligenceStatement(): JSX.Element {
 }
 
 function ExemplarComparison({ statement }: { statement: string }): JSX.Element {
+  // Two compounding fixes:
+  //   • Explicit `grid-cols-1` for mobile (was missing — the grid
+  //     defaulted to auto column sizing, which sized the single column
+  //     to the widest cell's min-content. When the learner typed an
+  //     unbreakable test string, the column grew past viewport and the
+  //     exemplar cell inherited that same width.)
+  //   • `break-words` on the user-statement display so unbreakable
+  //     strings ("Hdjsjshavaahajdorjebag…") wrap at any character
+  //     rather than extending past the card. Same protection on the
+  //     exemplar render as belt-and-suspenders (it's prose with spaces,
+  //     so it shouldn't need it — but harmless if the source ever
+  //     contains long unbroken tokens).
   return (
     <div
-      className="grid gap-4 lg:grid-cols-2"
+      className="grid grid-cols-1 gap-4 lg:grid-cols-2"
       style={{ gridAutoRows: '1fr' }}
     >
       <article
@@ -321,7 +333,7 @@ function ExemplarComparison({ statement }: { statement: string }): JSX.Element {
         }}
       >
         <h4 className="m-0 mb-3 font-sans text-h4 font-semibold text-ink">Your statement</h4>
-        <div className="whitespace-pre-wrap font-sans text-body-sm leading-relaxed text-body">
+        <div className="whitespace-pre-wrap break-words font-sans text-body-sm leading-relaxed text-body">
           {statement || <em className="text-muted">No statement saved.</em>}
         </div>
       </article>
@@ -337,7 +349,7 @@ function ExemplarComparison({ statement }: { statement: string }): JSX.Element {
         }}
       >
         <h4 className="m-0 mb-3 font-sans text-h4 font-semibold text-ink">Exemplar statement</h4>
-        <div className="font-sans text-body-sm leading-relaxed text-body">
+        <div className="break-words font-sans text-body-sm leading-relaxed text-body">
           {renderMarkdownLite(P12_EXEMPLAR)}
         </div>
       </article>
