@@ -203,41 +203,38 @@ function OriginStory(): JSX.Element {
       </h1>
 
       <p className="m-0">
-        This course started as part of my M.Ed. in Education Technology &amp; Instructional
+        This course started as part of my M.Ed. in Education Technology and Instructional
         Design, where I designed a curriculum that taught AI through its mechanics
         (tokenization, next-token prediction, context windows), not just its outputs. I was
-        teaching high school students at an international school in Macao, but I built the
-        course with adult professionals in mind too. At the time, none of the major AI labs had
-        published their own literacy programs, and there wasn't established research on how to
-        teach this well. I was venturing into territory nobody had really mapped yet — both
-        what to teach about AI, and how to teach it. People were using these tools every day
-        without understanding why they fail in the ways they do.
+        teaching high school students at an international school in Macao at the time, though I
+        built it with working professionals in mind too — the reasons these tools fail don't
+        change much between a teenager's history essay and a manager's quarterly report. None of
+        the major labs had published a literacy program yet, and the research on how to teach
+        this well barely existed. So I was guessing, partly: what to teach about AI, and how to
+        teach it. People were using these tools every day without understanding why they break.
       </p>
 
       <p className="m-0">
-        The version live here is a ground-up rebuild of that original work. The field has
-        matured since — there's more research now, more curriculum work from the labs, more
-        attempts at this problem from educators and practitioners. This course is my
-        implementation: drawing on what's available now while keeping the choices I think still
-        matter: teaching the mechanics, grounding practice in transfer research and evaluation
-        methodology, and treating learning design and technical implementation as one craft
-        rather than two. The platform itself — the code you're reading this on — is a custom
-        build. Everything in the program, from the data visualizations to the verification
-        triage exercise to the diligence statement builder, was designed and coded as a single
-        coherent system.
+        The version live here is a ground-up rebuild. The field has matured since (there's more
+        research now, and the labs have begun to publish their own programs), so this course is
+        my read on it: teach the mechanics as the base, ground the practice in transfer research
+        and evaluation methodology, and treat learning design and technical implementation as
+        one job rather than two. The platform itself, the code you're reading this on, is a
+        custom build — every piece of it, from the data visualizations to the verification
+        triage exercise to the diligence statement builder, designed and coded as one system. I
+        think that integration matters more than any single feature.
       </p>
 
       <p className="m-0">
-        I made this course free because I believe foundational AI literacy should be accessible
-        to everyone, not locked behind a paywall or a corporate training budget. The competencies
-        in this program (knowing what to delegate, how to specify it, how to evaluate what comes
-        back, and how to document your process) are baseline professional skills now. They
-        shouldn't cost money to learn.
+        I made this course free because foundational AI literacy shouldn't sit behind a paywall.
+        The competencies here (the mechanics behind how LLMs fundamentally work, knowing what to
+        delegate, how to specify it, how to evaluate what comes back, and how to document the
+        process) are baseline professional skills now. They shouldn't cost money to learn.
       </p>
 
       <p className="m-0">
-        If any of this resonates — now or after you've worked through the course — the options
-        below are how to support the work and stay connected.
+        If any of this resonates, now or after you've worked through the course, the options
+        below are how to support the work and stay in touch.
       </p>
     </div>
   );
@@ -473,8 +470,8 @@ function ClosingLine(): JSX.Element {
       className="m-0 mt-10 font-sans text-body-sm text-secondary"
       style={{ textAlign: 'center', lineHeight: 1.6 }}
     >
-      It meant something to build this. Thanks for being here, whether you've taken the course
-      already or are still deciding whether to.
+      It meant something to build this. Thanks for being here — whether you've finished the
+      course or are still deciding whether to start.
     </p>
   );
 }
