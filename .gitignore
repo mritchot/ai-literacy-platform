@@ -25,3 +25,11 @@ dist-ssr
 # and internal content drafts. All of it is local-only; nothing here ships
 # in dist/ or affects what users see.
 course-info/
+
+# Cognitive offload files — local-only project management and AI context.
+# Not part of the codebase or deployed bundle.
+CLAUDE.md
+MEMORY.md
+ARCHIVE.md
+TODO.md
+TODOARCHIVE.md
