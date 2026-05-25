@@ -43,8 +43,8 @@ export function AssessmentCompletion({
           className="m-0 font-sans text-body-sm text-secondary"
           style={{ lineHeight: 1.55 }}
         >
-          Module 1 begins by surfacing the gap behind the questions you just answered:
-          what people do with AI at work versus how they describe doing it.
+          Module 1 begins with why AI literacy matters now &mdash; the shift that makes these
+          questions relevant to your daily work.
         </p>
       </div>
 

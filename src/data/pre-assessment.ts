@@ -8,7 +8,7 @@
 // learning gains.
 //
 // Source: course-info/content/04_phase-04/06b_pre-assessment-instrument.md
-// Answer key distribution: A=3, B=2, C=2, D=3.
+// Answer key distribution: A=2, B=3, C=2, D=3.
 
 export type AssessmentBlock = 'usage' | 'failure' | 'mechanics' | 'evaluation';
 
@@ -51,14 +51,14 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
     block: 'usage',
     objectiveRefs: ['2.1', '2.4'],
     stem:
-      'A marketing director tells you: "My team collaborates with AI constantly. We go back and forth with it, refining drafts together until the content is right." Based on what large-scale behavioral studies have found about how professionals actually use AI tools, which of the following is most likely true about this team\'s workflow?',
+      'Based on large-scale behavioral research, which of the following best describes how professionals currently work with AI tools?',
     scenarioSummary:
-      'A marketing director claims her team collaborates iteratively with AI; research on what professionals actually do suggests something different.',
+      'How professionals actually use AI tools vs. how they describe using them.',
     options: [
       {
         id: 'A',
         text:
-          'The team is working with AI exactly as described. Most professionals who use AI regularly engage in iterative, multi-turn collaboration, and behavioral research confirms that self-reported usage patterns reliably reflect actual interaction styles.',
+          'Most professionals who use AI regularly engage in iterative, multi-turn collaboration — going back and forth with the tool, refining outputs together until the result meets their standards. Self-reported usage patterns reliably reflect these actual interaction styles.',
         isCorrect: false,
         feedbackText:
           'Behavioral data tells a different story. While professionals frequently describe their AI use as collaborative, observed interaction patterns show a trend toward single-turn, directive usage: one request, one response, no iteration. The gap between how professionals describe their AI workflow and how they actually interact with these tools is one of the most consistent findings in adoption research.',
@@ -66,7 +66,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'B',
         text:
-          'The team likely uses AI in more directive, single-turn interactions than they realize (typing a request, receiving output, using it with minimal iteration), but describes the process as collaboration because that framing feels more professional.',
+          'Most professionals interact with AI in directive, single-turn exchanges — typing a request, receiving output, and using it with minimal iteration — even when they describe their usage as iterative collaboration.',
         isCorrect: true,
         feedbackText:
           'Large-scale behavioral studies show that directive, single-turn interactions have increased over time, even as professionals describe their usage as iterative collaboration. This matters because single-turn usage produces output that hasn\'t been refined through human judgment. That raises the risk of unverified or low-quality deliverables. Without awareness of this pattern, teams can\'t assess whether their actual workflow matches their intended quality standard.',
@@ -74,7 +74,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'C',
         text:
-          'The team is unusual. Most professionals avoid using AI for complex creative tasks like content drafting and instead limit their usage to routine administrative work such as data formatting, scheduling, and email sorting.',
+          'Most professionals limit AI usage to routine administrative tasks such as data formatting, scheduling, and email sorting, and avoid using it for complex creative or analytical work.',
         isCorrect: false,
         feedbackText:
           'AI usage for complex tasks like drafting and analysis is widespread and growing. It extends well beyond routine administrative work.',
@@ -82,7 +82,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'D',
         text:
-          'The team is probably overstating how often they use AI. Behavioral data shows that most professionals who describe themselves as frequent AI users actually engage with these tools far less consistently than their self-reports suggest.',
+          'Most professionals who describe themselves as frequent AI users actually engage with these tools far less consistently than their self-reports suggest — the gap is in usage frequency, not interaction style.',
         isCorrect: false,
         feedbackText:
           'The issue is misidentifying interaction quality, not exaggerating frequency. Professionals genuinely use AI frequently; the gap is in how they characterize the nature of that interaction.',
@@ -238,10 +238,10 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'A',
         text:
-          'The AI tool recognized that eight clauses was a reasonable number for a contract of this length and stopped listing additional items to avoid overwhelming the user with an excessively long response.',
+          'The AI tool applied editorial judgment: it identified that eight clauses represented the most significant liability limitations in the contract and excluded the remaining three because they were narrower in scope or appeared as sub-clauses within broader provisions.',
         isCorrect: false,
         feedbackText:
-          'AI models don\'t apply editorial judgment about "reasonable" list length. The model isn\'t deciding to cap its output at eight items. It\'s failing to identify content that exists in the input. The omission is an attention limitation, not a formatting choice.',
+          'AI models don\'t apply legal materiality judgments to decide what to include or exclude. The model has no basis for assessing the relative significance of individual clauses. It generates output based on pattern matching against the input text, not domain-specific prioritization. Framing the omission as intentional editorial judgment masks a genuine capability limitation.',
       },
       {
         id: 'B',
@@ -262,10 +262,10 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'D',
         text:
-          'The AI tool encountered a technical input limit and silently truncated the document before processing it. The final ten pages were never received by the model, which is why those clauses were missing from the output.',
+          'The AI tool hit a hard input limit and silently dropped the final portion of the document before processing it. The last ten pages were never received by the model, which is why those clauses don\'t appear in the output — this is a common failure with long documents that exceed the tool\'s maximum capacity.',
         isCorrect: false,
         feedbackText:
-          'While hard truncation can occur with very long inputs, modern AI tools typically indicate when input exceeds their limit. The more common and harder-to-detect failure is the attention degradation described in option B: the full text is received, but the model doesn\'t process all of it with equal fidelity. Silent truncation is the obvious failure; attention degradation is the subtle one.',
+          'Silent truncation can occur with very long inputs, and some older tools do fail this way. But modern AI tools typically indicate when input exceeds their limit, and a 40-page contract is within the capacity of most current models. The more common and harder-to-detect failure is attention degradation: the full text is received, but the model doesn\'t process all parts with equal fidelity. Silent truncation is the obvious failure mode to guard against; attention degradation is the subtle one that catches experienced users off guard.',
       },
     ],
   },
@@ -321,7 +321,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
     block: 'mechanics',
     objectiveRefs: ['3.1'],
     stem:
-      'A software developer asks an AI tool to reverse the word "strawberry" and receives the response "yrrebwarts," which is correct. She then asks it to count the number of R\'s in "strawberry" and it responds "2." The actual count is 3. The reversal task succeeded but the counting task failed, even though both involve the same word. What best explains this inconsistency?',
+      'A software developer asks an AI chatbot to reverse the word "strawberry" and receives the response "yrrebwarts," which is correct. She then asks it to count the number of R\'s in "strawberry" and it responds "2." The actual count is 3. The reversal task succeeded but the counting task failed, even though both involve the same word. What best explains this inconsistency?',
     scenarioSummary:
       'An AI reverses "strawberry" correctly but miscounts the R\'s. Same word, two different outcomes.',
     options: [
@@ -355,7 +355,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'The model processes text as chunks called tokens rather than as individual characters. Some tasks can be solved through pattern recognition at the token level, but tasks requiring precise character-by-character analysis depend on how the word was split into tokens, which the model doesn\'t control or see.',
         isCorrect: true,
         feedbackText:
-          'AI models convert text into tokens (sub-word chunks) before processing it. "Strawberry" might be split into tokens like "straw" + "berry" or "str" + "aw" + "berry," depending on the tokenizer. The model never "sees" individual letters the way a human reader does. Some tasks (like reversal) can be solved through learned patterns at the token level, but precise character-level operations (counting specific letters, identifying character positions) require the model to reason about units smaller than its tokens. When the tokenization splits an R across a token boundary, the model may not register it. This is a systematic limitation, not a random error: it affects any task that requires character-level precision.',
+          'AI models convert text into tokens (sub-word chunks) before processing it. "Strawberry" might be split into tokens like "straw" + "berry" or "str" + "aw" + "berry," depending on the tokenizer. The model never "sees" individual letters the way a human reader does. Some tasks (like reversal) can be solved through learned patterns at the token level, but precise character-level operations (counting specific letters, identifying character positions) require the model to reason about units smaller than its tokens. When the tokenization splits an R across a token boundary, the model may not register it. This is a systematic limitation, not a random error: it affects any task that requires character-level precision. Some AI tools can route character-level tasks to a built-in program that processes letters directly — when that happens, the task succeeds reliably. The failure described here occurs when the AI handles the task conversationally, generating an answer rather than running an operation.',
       },
     ],
   },
@@ -366,7 +366,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
     block: 'mechanics',
     objectiveRefs: ['3.4'],
     stem:
-      'A consultant uses an AI tool for three tasks in one afternoon. In Task A, the tool produces a policy brief that includes a fabricated regulatory citation. In Task B, the tool miscalculates the percentage change between two quarterly revenue figures. In Task C, the tool summarizes a 50-page strategy document but omits key recommendations from the final section. A colleague says: "AI just makes random mistakes sometimes. You can\'t predict when it\'ll fail." Based on what is known about how these models work, which response is most accurate?',
+      'A consultant uses a general-purpose AI chatbot for three tasks in one afternoon. In Task A, the tool produces a policy brief that includes a fabricated regulatory citation. In Task B, the tool miscalculates the percentage change between two quarterly revenue figures. In Task C, the tool summarizes a 50-page strategy document but omits key recommendations from the final section. A colleague says: "AI just makes random mistakes sometimes. You can\'t predict when it\'ll fail." Based on what is known about how these models work, which response is most accurate?',
     scenarioSummary:
       'A consultant sees three different AI failures in one afternoon: fabricated citation, math error, omitted document section. Is this random?',
     options: [
@@ -422,26 +422,26 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'A',
         text:
+          'Claim 1, because it describes the general scope of the Act, and getting the foundational framing wrong would undermine every downstream recommendation in the policy update.',
+        isCorrect: false,
+        feedbackText:
+          'The general scope description (Claim 1) is worth verifying, but it uses broad, hedged language ("specific provisions varying by salary threshold") that is less likely to be precisely wrong in a consequential way. General framing errors are lower-stakes than specific legislative claims because they\'re less likely to drive concrete policy decisions.',
+      },
+      {
+        id: 'B',
+        text:
           'Claim 2, because it describes a specific legislative change with concrete policy implications, and if the amendment\'s scope or timing is fabricated or inaccurate, the resulting internal policy could expose the organization to compliance risk.',
         isCorrect: true,
         feedbackText:
           'Claim 2 makes a specific assertion about legislative change: that coverage was expanded to all employees regardless of salary. If this is fabricated or inaccurately scoped (wrong amendment, wrong scope, wrong timing), the internal policy update could direct the organization to apply protections it isn\'t required to apply, or worse, fail to apply protections it is required to apply. The verification priority hierarchy puts claims with direct compliance or legal consequences above general framing, operational details, and resource references.',
       },
       {
-        id: 'B',
+        id: 'C',
         text:
           'Claim 3, because it refers to a specific, verifiable external resource that either exists or doesn\'t, and directing leadership to a non-existent government publication would damage the HR team\'s credibility.',
         isCorrect: false,
         feedbackText:
           'Verifying that an external resource exists (Claim 3) is good practice, but a broken link or missing webpage is a credibility issue, not a compliance risk. The leadership team can check the MOM website themselves. The higher-priority verification target is the claim that would cause the organization to act on incorrect legal obligations.',
-      },
-      {
-        id: 'C',
-        text:
-          'Claim 1, because it describes the general scope of the Act, and getting the foundational framing wrong would undermine every downstream recommendation in the policy update.',
-        isCorrect: false,
-        feedbackText:
-          'The general scope description (Claim 1) is worth verifying, but it uses broad, hedged language ("specific provisions varying by salary threshold") that is less likely to be precisely wrong in a consequential way. General framing errors are lower-stakes than specific legislative claims because they\'re less likely to drive concrete policy decisions.',
       },
       {
         id: 'D',

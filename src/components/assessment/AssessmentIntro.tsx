@@ -95,11 +95,11 @@ function PreFraming({ itemCount }: { itemCount: number }): JSX.Element {
         <li>
           <strong className="text-ink">No feedback during the assessment.</strong> Your responses
           are saved as you go, but the answers are held until the end of the program. The goal
-          here is to measure what you walk in with, not to teach.
+          here is to measure what you walk in with.
         </li>
         <li>
           <strong className="text-ink">Answer from intuition.</strong> If you&rsquo;re not sure,
-          pick the option that feels closest. Guessing patterns are part of the baseline.
+          pick the option that feels closest.
         </li>
         <li>
           <strong className="text-ink">About {Math.max(5, Math.ceil(itemCount * 0.75))}&ndash;
@@ -117,7 +117,7 @@ function PreFraming({ itemCount }: { itemCount: number }): JSX.Element {
         }}
       >
         After you finish Module 4, you&rsquo;ll take a parallel post-assessment and see your
-        responses side by side. That comparison is where the growth becomes visible.
+        responses side by side.
       </p>
     </div>
   );
