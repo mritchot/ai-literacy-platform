@@ -8,7 +8,7 @@
 // `components/assessment/AssessmentResults.tsx`.
 //
 // Source: course-info/content/04_phase-04/06b_post-assessment-instrument.md
-// Answer key distribution: A=3, B=2, C=2, D=3.
+// Answer key distribution: A=3, B=3, C=2, D=2.
 
 import type { AssessmentBlock, AssessmentItem, AssessmentOption } from './pre-assessment';
 
@@ -417,10 +417,10 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'B',
         text:
-          'Claim 4, because the evaluation methodology section is what reviewers scrutinize most closely, and any inaccuracy in the evaluation plan would signal the applicant lacks the methodological rigor to execute the proposed initiative.',
-        isCorrect: false,
+          'Claim 2, because it cites a specific government report with a precise statistic. If the report doesn\'t exist or the 34% figure is fabricated, the grant application contains a falsified citation that could disqualify the proposal and damage the organization\'s credibility with the funder.',
+        isCorrect: true,
         feedbackText:
-          'The evaluation methodology in Claim 4 describes the coordinator\'s own planned activities (pre/post assessments, surveys, quarterly reports). These are *intentions*, not factual claims about external sources. They should be reviewed for feasibility, but they don\'t carry the same fabrication risk as an AI-generated citation to a specific government report.',
+          'Claim 2 cites a specific government report ("U.S. Department of Labor\'s 2024 Workforce Innovation Report") with a precise statistic (34% turnover reduction). This is exactly the type of claim AI models fabricate fluently: a plausible-sounding report title, a credible government source, and a specific percentage that would be impressive if real. If the report doesn\'t exist or the statistic is fabricated, the grant application contains a falsified citation. In a grant review context, a falsified citation can disqualify the proposal and damage the organization\'s credibility with the funder. The consequences are immediate and disproportionate to the other claims.',
       },
       {
         id: 'C',
@@ -433,10 +433,10 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'D',
         text:
-          'Claim 2, because it cites a specific government report with a precise statistic. If the report doesn\'t exist or the 34% figure is fabricated, the grant application contains a falsified citation that could disqualify the proposal and damage the organization\'s credibility with the funder.',
-        isCorrect: true,
+          'Claim 4, because the evaluation methodology section is what reviewers scrutinize most closely, and any inaccuracy in the evaluation plan would signal the applicant lacks the methodological rigor to execute the proposed initiative.',
+        isCorrect: false,
         feedbackText:
-          'Claim 2 cites a specific government report ("U.S. Department of Labor\'s 2024 Workforce Innovation Report") with a precise statistic (34% turnover reduction). This is exactly the type of claim AI models fabricate fluently: a plausible-sounding report title, a credible government source, and a specific percentage that would be impressive if real. If the report doesn\'t exist or the statistic is fabricated, the grant application contains a falsified citation. In a grant review context, a falsified citation can disqualify the proposal and damage the organization\'s credibility with the funder. The consequences are immediate and disproportionate to the other claims.',
+          'The evaluation methodology in Claim 4 describes the coordinator\'s own planned activities (pre/post assessments, surveys, quarterly reports). These are *intentions*, not factual claims about external sources. They should be reviewed for feasibility, but they don\'t carry the same fabrication risk as an AI-generated citation to a specific government report.',
       },
     ],
   },
