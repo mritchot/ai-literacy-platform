@@ -250,11 +250,6 @@ function Section4({ module }: ModuleProp): JSX.Element {
           gains, and avoid the professional cost of visibility.
         </p>
         <p className="m-0">
-          The result isn’t resistance to AI — most of these professionals are active users who
-          see clear value. The problem is that their usage stays invisible, and the
-          organizational cost of that invisibility is substantial.
-        </p>
-        <p className="m-0">
           When a significant share of your workforce uses AI in isolation, four things happen
           simultaneously. First, peer learning stops. The colleague who discovered an effective
           way to use AI for financial analysis doesn’t share it, because sharing means disclosing.
