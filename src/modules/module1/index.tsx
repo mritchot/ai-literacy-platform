@@ -200,7 +200,7 @@ function Section3({ module }: ModuleProp): JSX.Element {
       <p className="m-0 mb-6 font-sans text-body text-body">
         Below are three sequential stories. Each one combines a few paragraphs of context, a data
         visualization, and one interpretation check. Submit each interpretation check before
-        moving on — the next story dims until you do, so the prompt stays where you left it.
+        moving on — the next story dims until you do.
       </p>
       <DataNarrative
         skills={wefSkillDemand.skillsOutlook.skillsOnTheRise.skills}
