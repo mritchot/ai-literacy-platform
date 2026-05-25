@@ -428,7 +428,7 @@ function Footer(): JSX.Element {
       className="mt-12 flex items-center justify-between border-t border-border-light pt-6 font-mono text-[11px] font-medium text-muted"
       style={{ letterSpacing: '0.02em' }}
     >
-      <div>AI Literacy · v0.9 · portfolio edition</div>
+      <div>AI Literacy · v1.0 · portfolio edition</div>
       <div>Last updated · May 2026</div>
     </footer>
   );
