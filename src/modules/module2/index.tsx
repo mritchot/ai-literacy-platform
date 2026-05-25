@@ -119,11 +119,11 @@ function Section1({ module }: ModuleProp): JSX.Element {
           judgment and the tool's output.
         </p>
         <p className="m-0">
-          <strong className="font-semibold text-ink">That mental picture is almost certainly wrong.</strong>
+          <strong className="font-semibold text-ink">That mental picture is almost certainly incomplete.</strong>
         </p>
         <p className="m-0">
-          Not fabricated. Wrong in the way that self-assessments of any complex behavior tend to be
-          wrong. Research on driving ability, investment performance, and communication skills
+          Incomplete in the way that self-assessments of any complex behavior tend to be
+          incomplete. Research on driving ability, investment performance, and communication skills
           consistently shows the same pattern: people overestimate their competence in areas where
           they have partial experience and limited feedback. AI usage is no exception. When
           researchers compared how 1,250 professionals described their AI practices against
@@ -231,9 +231,13 @@ function Section2({ module }: ModuleProp): JSX.Element {
             ids={['handa-2025', 'appel-mccrory-tamkin-2025']}
             pageKey="directive-share-28"
           />
-          . You'll see the full trend data in a later section; for now, the point is that how
+          . The chart below shows how quickly that share has moved. The point is that how
           people use AI is evolving rapidly, and any snapshot is exactly that: a snapshot.
         </p>
+      </div>
+
+      <div className="my-8">
+        <DirectiveTrendSparkline series={adoptionTrends.directiveInteractions.timeSeries} />
       </div>
     </SectionContainer>
   );
@@ -270,6 +274,13 @@ function Section3({ module }: ModuleProp): JSX.Element {
         what the conversation data shows, and asks a follow-up reflection that closes the loop.
         Move between tabs in whatever order makes sense; the prompts in the second and third tabs
         are where this section asks for your time.
+      </p>
+      <p className="m-0 mb-6 font-sans text-body-sm text-secondary" style={{ lineHeight: 1.55 }}>
+        One important caveat: this dataset comes from a single AI platform whose user base
+        skews toward technical and professional roles. Actual automation rates across the broader
+        population of AI tools are likely higher than what appears here. The patterns are
+        directionally reliable, but the specific percentages reflect a particular user
+        population, not the full workforce.
       </p>
       <AugAutoDashboard
         occupationCategories={augmentationAutomation.occupation_usage_shares.categories}
@@ -380,6 +391,14 @@ function Section5({ module }: ModuleProp): JSX.Element {
       sectionLabel="Section 5 · P4 Interactive"
       width="interactive"
     >
+      <p className="m-0 mb-4 font-sans text-body text-body">
+        The previous section introduced two ways of measuring productivity: in-conversation
+        time savings and net time savings after verification. The gap between them is where
+        human judgment lives. This dashboard lets you explore that gap across occupations and
+        tasks; what the data doesn’t capture is equally important: the time spent
+        independently verifying output, reworking errors, and catching fabricated details that
+        looked correct on first read.
+      </p>
       <p className="m-0 mb-6 font-sans text-body text-body">
         Two tabs, then a structured action commitment. <em>By Occupation</em> covers all 22
         occupation categories; sort the table to find where the time savings, hourly wages, and
@@ -419,9 +438,10 @@ function Section6({ module }: ModuleProp): JSX.Element {
 
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
-          You've now explored two datasets that most professionals never see side by side: how
-          people use AI and what happens when they do. The behavioral data shows a workforce that
-          overestimates how collaboratively it works with AI. The productivity data shows enormous
+          In the previous section, you identified tasks where AI could add value and tasks where
+          the output warrants closer review. Those two choices reflect a tension you’ve seen
+          throughout this module: the behavioral data shows a workforce that
+          overestimates how collaboratively it works with AI, and the productivity data shows
           time savings that shrink substantially once you account for the verification work that
           follows. These two findings converge on the same problem.
         </p>
@@ -564,7 +584,7 @@ function Section8({ module }: ModuleProp): JSX.Element {
             ids={['handa-2025', 'anthropic-interviewer-2025']}
             pageKey="self-vs-behavioral"
           />
-          . This is not a moral failing. It is a calibration problem, and calibration problems
+          . It is a calibration problem, and calibration problems
           are fixable.
         </p>
         <p className="m-0">
@@ -587,7 +607,7 @@ function Section8({ module }: ModuleProp): JSX.Element {
           does an AI-generated financial summary look correct even when the numbers are invented?
         </p>
         <p className="m-0">
-          The answers are mechanical, not mysterious. Language models generate output through a
+          The answers are mechanical. Language models generate output through a
           specific process (probability-based prediction, not information retrieval), and that
           process has specific, documentable failure modes. Understanding those mechanics is what
           converts the behavioral awareness you built in this module into the evaluative judgment
