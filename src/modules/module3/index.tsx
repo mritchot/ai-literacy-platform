@@ -217,9 +217,7 @@ function Section2({ module }: ModuleProp): JSX.Element {
           or code interpreters; when they do, the calculation is exact. But the model must
           first recognize that a calculation is needed and choose to use the tool. When it
           doesn't (when it generates the answer directly from token prediction), the errors
-          return. The same applies to character-level tasks like counting letters: a model
-          that runs code to count gets the right answer, but one that attempts to count from
-          its token representation often does not.
+          return.
         </p>
         <h3 className="m-0 mt-2 font-sans text-h3 font-semibold text-ink">
           Second, non-English text fragments more aggressively.
@@ -240,7 +238,9 @@ function Section2({ module }: ModuleProp): JSX.Element {
           “strawberry” might be a single token or two tokens depending on the model. Counting
           characters within a token requires the model to have learned, during training, exactly
           which letters are packed inside that token ID. It sometimes gets this right. It often
-          does not.
+          does not. Routing the same question to a code tool that steps through the characters
+          one by one returns the correct count every time; the failure isn’t in the question,
+          it’s in which pathway handles it.
         </p>
         <p className="m-0">
           Tokenization is invisible in normal use. No commercial AI tool shows you the token

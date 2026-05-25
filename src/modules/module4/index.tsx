@@ -155,12 +155,18 @@ function Section2({ module }: ModuleProp): JSX.Element {
       sectionLabel="Section 2 · P8 Interactive"
       width="interactive"
     >
-      <p className="m-0 mb-6 font-sans text-body text-body">
+      <p className="m-0 mb-4 font-sans text-body text-body">
         The first judgment in any AI-assisted work cycle is scope: which parts of a task belong
         with AI, which require your expertise, and which sit in between, benefiting from AI
         assistance but requiring your active direction. Most workplace tasks are not single
-        activities; they are bundles of sub-tasks with different reliability profiles. Decompose
-        the briefing below, and see what happens when components are miscategorized.
+        activities; they are bundles of sub-tasks with different reliability profiles.
+      </p>
+      <p className="m-0 mb-6 font-sans text-body text-body">
+        One thing to watch for as you work through the exercise below: your choices interact.
+        How you categorize one component can change the right answer for another. A step you
+        might fully delegate on its own could be safe to delegate precisely because a later
+        step involves human verification. Decompose the briefing below, and see what happens
+        when components are miscategorized.
       </p>
       <TaskDecomposition />
     </SectionContainer>
