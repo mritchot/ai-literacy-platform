@@ -11,7 +11,6 @@
 import { useEffect, useRef } from 'react';
 import type { AssessmentItem as AssessmentItemData } from '../../data/pre-assessment';
 import { renderMarkdownLite } from '../../modules/module4/render-markdown-lite';
-import { Overline } from '../shared/Overline';
 
 const ASSESSMENT_ACCENT = '#5E7080'; // matches the discernment color family
 
@@ -52,12 +51,6 @@ export function AssessmentItem({
         minWidth: 0,
       }}
     >
-      <div className="mb-3 flex flex-wrap items-baseline gap-2">
-        <Overline style={{ color: ASSESSMENT_ACCENT }}>
-          {item.construct}
-        </Overline>
-      </div>
-
       <h2
         id={`item-${item.id}-stem`}
         ref={stemRef}
