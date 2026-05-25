@@ -43,7 +43,7 @@ export function AssessmentCompletion({
           className="m-0 font-sans text-body-sm text-secondary"
           style={{ lineHeight: 1.55 }}
         >
-          Module 1 begins with why AI literacy matters now &mdash; the shift that makes these
+          Module 1 begins with why AI literacy matters now: the shift that makes these
           questions relevant to your daily work.
         </p>
       </div>

@@ -58,7 +58,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'A',
         text:
-          'Most professionals who use AI regularly engage in iterative, multi-turn collaboration — going back and forth with the tool, refining outputs together until the result meets their standards. Self-reported usage patterns reliably reflect these actual interaction styles.',
+          'Most professionals who use AI regularly engage in iterative, multi-turn collaboration: going back and forth with the tool, refining outputs together until the result meets their standards. Self-reported usage patterns reliably reflect these actual interaction styles.',
         isCorrect: false,
         feedbackText:
           'Behavioral data tells a different story. While professionals frequently describe their AI use as collaborative, observed interaction patterns show a trend toward single-turn, directive usage: one request, one response, no iteration. The gap between how professionals describe their AI workflow and how they actually interact with these tools is one of the most consistent findings in adoption research.',
@@ -66,7 +66,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'B',
         text:
-          'Most professionals interact with AI in directive, single-turn exchanges — typing a request, receiving output, and using it with minimal iteration — even when they describe their usage as iterative collaboration.',
+          'Most professionals interact with AI in directive, single-turn exchanges (typing a request, receiving output, using it with minimal iteration) even when they describe their usage as iterative collaboration.',
         isCorrect: true,
         feedbackText:
           'Large-scale behavioral studies show that directive, single-turn interactions have increased over time, even as professionals describe their usage as iterative collaboration. This matters because single-turn usage produces output that hasn\'t been refined through human judgment. That raises the risk of unverified or low-quality deliverables. Without awareness of this pattern, teams can\'t assess whether their actual workflow matches their intended quality standard.',
@@ -82,7 +82,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'D',
         text:
-          'Most professionals who describe themselves as frequent AI users actually engage with these tools far less consistently than their self-reports suggest — the gap is in usage frequency, not interaction style.',
+          'Most professionals who describe themselves as frequent AI users actually engage with these tools far less consistently than their self-reports suggest. The gap is in usage frequency, not interaction style.',
         isCorrect: false,
         feedbackText:
           'The issue is misidentifying interaction quality, not exaggerating frequency. Professionals genuinely use AI frequently; the gap is in how they characterize the nature of that interaction.',
@@ -262,7 +262,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'D',
         text:
-          'The AI tool hit a hard input limit and silently dropped the final portion of the document before processing it. The last ten pages were never received by the model, which is why those clauses don\'t appear in the output — this is a common failure with long documents that exceed the tool\'s maximum capacity.',
+          'The AI tool hit a hard input limit and silently dropped the final portion of the document before processing it. The last ten pages were never received by the model, which is why those clauses don\'t appear in the output. This is a common failure with long documents that exceed the tool\'s maximum capacity.',
         isCorrect: false,
         feedbackText:
           'Silent truncation can occur with very long inputs, and some older tools do fail this way. But modern AI tools typically indicate when input exceeds their limit, and a 40-page contract is within the capacity of most current models. The more common and harder-to-detect failure is attention degradation: the full text is received, but the model doesn\'t process all parts with equal fidelity. Silent truncation is the obvious failure mode to guard against; attention degradation is the subtle one that catches experienced users off guard.',
@@ -355,7 +355,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'The model processes text as chunks called tokens rather than as individual characters. Some tasks can be solved through pattern recognition at the token level, but tasks requiring precise character-by-character analysis depend on how the word was split into tokens, which the model doesn\'t control or see.',
         isCorrect: true,
         feedbackText:
-          'AI models convert text into tokens (sub-word chunks) before processing it. "Strawberry" might be split into tokens like "straw" + "berry" or "str" + "aw" + "berry," depending on the tokenizer. The model never "sees" individual letters the way a human reader does. Some tasks (like reversal) can be solved through learned patterns at the token level, but precise character-level operations (counting specific letters, identifying character positions) require the model to reason about units smaller than its tokens. When the tokenization splits an R across a token boundary, the model may not register it. This is a systematic limitation, not a random error: it affects any task that requires character-level precision. Some AI tools can route character-level tasks to a built-in program that processes letters directly — when that happens, the task succeeds reliably. The failure described here occurs when the AI handles the task conversationally, generating an answer rather than running an operation.',
+          'AI models convert text into tokens (sub-word chunks) before processing it. "Strawberry" might be split into tokens like "straw" + "berry" or "str" + "aw" + "berry," depending on the tokenizer. The model never "sees" individual letters the way a human reader does. Some tasks (like reversal) can be solved through learned patterns at the token level, but precise character-level operations (counting specific letters, identifying character positions) require the model to reason about units smaller than its tokens. When the tokenization splits an R across a token boundary, the model may not register it. This is a systematic limitation, not a random error: it affects any task that requires character-level precision. Some AI tools can route character-level tasks to a built-in program that processes letters directly. When that happens, the task succeeds reliably. The failure described here occurs when the AI handles the task conversationally, generating an answer rather than running an operation.',
       },
     ],
   },
