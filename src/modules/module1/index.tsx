@@ -94,13 +94,14 @@ function Section1({ module }: ModuleProp): JSX.Element {
           to capture that value.
         </p>
         <p className="m-0">
-          When researchers compared what professionals <em>report</em> doing with AI against what
-          the behavioral data actually <em>shows</em>, the two don’t match. Many workers who
-          believe they’re using AI to enhance their own thinking are, in practice, handing tasks
-          to the model entirely. They skip the evaluation step they’re confident they performed.
+          That question has become urgent faster than any previous technology shift. ChatGPT
+          reached 100 million users within two months of launch — a pace no consumer
+          application had achieved before. The tools are no longer emerging; they are embedded
+          in daily workflows across industries. And the speed of that adoption has outrun most
+          organizations’ ability to evaluate whether their people are using these tools well.
         </p>
         <p className="m-0">
-          That might seem like an individual concern. It isn’t. Sixty-three percent of employers
+          Sixty-three percent of employers
           worldwide identify workforce skill gaps, not tools or budget or infrastructure, as the
           single largest barrier to their AI transformation
           <Citation ids="wef-2025" pageKey="skill-gap-63" />. Your organization almost certainly
@@ -108,8 +109,9 @@ function Section1({ module }: ModuleProp): JSX.Element {
           people are using it well.
         </p>
         <p className="m-0">
-          This module is about what the data says: the market, adoption, and the gap between
-          confidence and competence.
+          This module grounds that claim in data: what the market demands, where adoption is
+          happening, how usage patterns are shifting, and why the gap between access and
+          competence matters now.
         </p>
       </div>
     </SectionContainer>
@@ -129,9 +131,10 @@ function Section2({ module }: ModuleProp): JSX.Element {
     >
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
-          The gap between confidence and competence doesn’t exist in a vacuum. It sits inside a
-          labor market that is transforming faster than most organizations can adapt, and the
-          data on that transformation is more complicated than the headlines suggest.
+          AI tools have been adopted faster than any consumer technology in history, reaching mass
+          usage in weeks rather than years. That speed is transforming the labor market faster
+          than most organizations can adapt, and the data on that transformation is more
+          complicated than the headlines suggest.
         </p>
         <p className="m-0">
           The next few sections explore three dimensions of that story through interactive data.
@@ -162,8 +165,8 @@ function Section2({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           How the workforce uses AI is changing rapidly, and the direction of that change matters.
           The way professionals interacted with AI tools twelve months ago is measurably different
-          from how they interact today, and the shift reveals something important about the kind
-          of judgment these tools demand.
+          from how they interact today, and that shift points to a new kind of judgment these
+          tools now demand.
         </p>
       </div>
     </SectionContainer>
@@ -195,7 +198,7 @@ function Section3({ module }: ModuleProp): JSX.Element {
       width="interactive"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
-        Three sequential stories. Each one combines a few paragraphs of context, a data
+        Below are three sequential stories. Each one combines a few paragraphs of context, a data
         visualization, and one interpretation check. Submit each interpretation check before
         moving on — the next story dims until you do, so the prompt stays where you left it.
       </p>
@@ -240,14 +243,16 @@ function Section4({ module }: ModuleProp): JSX.Element {
           they don’t tell anyone.
         </p>
         <p className="m-0">
-          The reasons are social, not technical. Professionals describe team environments where
-          expressing enthusiasm for AI risks being perceived as lazy, replaceable, or
-          insufficiently skilled to do the work themselves. In these environments, the rational
-          choice is silence: keep using AI privately, keep the gains, and avoid the professional
-          cost of visibility.
+          When asked why, professionals don’t point to technical barriers. They describe team
+          environments where expressing enthusiasm for AI risks being perceived as lazy,
+          replaceable, or insufficiently skilled to do the work themselves. In those
+          environments, the rational response is silence: keep using AI privately, keep the
+          gains, and avoid the professional cost of visibility.
         </p>
         <p className="m-0">
-          This is concealment, not resistance. And the organizational cost is substantial.
+          The result isn’t resistance to AI — most of these professionals are active users who
+          see clear value. The problem is that their usage stays invisible, and the
+          organizational cost of that invisibility is substantial.
         </p>
         <p className="m-0">
           When a significant share of your workforce uses AI in isolation, four things happen

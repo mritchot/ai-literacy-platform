@@ -270,8 +270,9 @@ function Story1Body({
           employers cite as the primary barrier to their AI transformation.
         </p>
         <p className="m-0">
-          The chart below shows the top rising skills and the scale of the gap between intent and
-          execution.
+          The chart below shows the top rising skills. Below it, a callout tracks how quickly the
+          required skills are turning over — a measure called skills instability that captures the
+          share of core workforce skills expected to change over a five-year window.
         </p>
       </div>
 
