@@ -6,14 +6,14 @@ Live: [ai-literacy.ritchot.me](https://ai-literacy.ritchot.me)
 
 ## Program structure
 
-The curriculum is organized around four competency dimensions adapted from Anthropic's 4D AI Fluency Framework:
+The curriculum grew out of my M.Ed. in Education Technology and Instructional Design, where I built a program that teaches AI through its mechanics — tokenization, next-token prediction, context windows — not just its outputs. The four modules:
 
 | Module | Focus | Sections | Duration |
 |--------|-------|----------|----------|
-| 1: Why AI Literacy Matters Now | Business case and adoption landscape | 8 | ~15 min |
-| 2: How AI Is Actually Being Used at Work | Real-world task patterns and productivity data | 8 | ~20 min |
-| 3: Understanding How Language Models Work | Tokenization, prediction, attention, steerability | 11 | ~25 min |
-| 4: Evaluating AI Outputs and Working Responsibly | Delegation, prompting, verification, diligence | 10 | ~32 min |
+| 1: Why AI Literacy Matters Now | Business case and adoption landscape | 8 | 15–20 min |
+| 2: How AI Is Actually Being Used at Work | Real-world task patterns and productivity data | 8 | 15–20 min |
+| 3: Understanding How Language Models Work | Tokenization, prediction, attention, steerability | 11 | 20–30 min |
+| 4: Evaluating AI Outputs and Working Responsibly | Delegation, prompting, verification, diligence | 10 | 30–40 min |
 
 37 sections total. 12 practice activities (P1–P12). 7 downloadable reference items (R1–R7). 16 scenario-based knowledge checks.
 
@@ -118,4 +118,4 @@ The competency taxonomy is adapted from Anthropic's 4D AI Fluency Framework, lic
 
 ## Author
 
-Michael Ritchot — [ritchot.me](https://ritchot.me) — [LinkedIn](https://www.linkedin.com/in/mritchot/)
+Michael Ritchot — [ritchot.me](https://ritchot.me) — [LinkedIn](https://www.linkedin.com/in/mritchot/) — [X](https://x.com/MichaelRitchot)
