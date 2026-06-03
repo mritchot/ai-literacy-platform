@@ -20,6 +20,15 @@ const ThankYou = lazy(() => import('./pages/ThankYou'));
 // assessment flow.
 const PreAssessment = lazy(() => import('./pages/PreAssessmentPage'));
 const PostAssessment = lazy(() => import('./pages/PostAssessmentPage'));
+// Needs-analysis artifact pages — standalone public portfolio documents
+// (hub + three reading pages + the interactive action map), lazy-loaded
+// like the other standalone pages. Reachable in every platform mode; not
+// part of the learner module sequence and not mode-gated.
+const NeedsAnalysisHub = lazy(() => import('./pages/needs-analysis/NeedsAnalysisHub'));
+const ProblemStatement = lazy(() => import('./pages/needs-analysis/ProblemStatement'));
+const CapabilityGap = lazy(() => import('./pages/needs-analysis/CapabilityGap'));
+const LearnerPersona = lazy(() => import('./pages/needs-analysis/LearnerPersona'));
+const ActionMap = lazy(() => import('./pages/needs-analysis/ActionMap'));
 
 // Suspense fallback for lazy routes. Note: the production build inlines
 // every lazy chunk via vite-plugin-singlefile, so this effectively never
@@ -80,6 +89,11 @@ const routes: RouteObject[] = [
       { path: 'thank-you', element: lazyRoute(ThankYou) },
       { path: 'pre-assessment', element: lazyRoute(PreAssessment) },
       { path: 'post-assessment', element: lazyRoute(PostAssessment) },
+      { path: 'needs-analysis', element: lazyRoute(NeedsAnalysisHub) },
+      { path: 'needs-analysis/problem-statement', element: lazyRoute(ProblemStatement) },
+      { path: 'needs-analysis/capability-gap', element: lazyRoute(CapabilityGap) },
+      { path: 'needs-analysis/learner-persona', element: lazyRoute(LearnerPersona) },
+      { path: 'needs-analysis/action-map', element: lazyRoute(ActionMap) },
       { path: '*', element: <Navigate to="/" replace /> },
     ],
   },
