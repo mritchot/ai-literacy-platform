@@ -50,11 +50,11 @@ const GITHUB_URL = 'https://github.com/mritchot';
 // markdown source of truth.
 const REPO_URL = 'https://github.com/mritchot/ai-literacy-platform';
 
-// Long-form write-up about the creation of this course — the
-// research, design choices, and build behind it. Currently empty;
-// the button is hidden until the URL is populated (same conditional-
-// render pattern as STRIPE_TIP_URL).
-const WRITEUP_URL = '';
+// Course Hub on the website — the index of AI courses (this one and
+// others). Surfaced as a soft exit from the thank-you page. The button
+// is hidden while this is empty (same conditional-render pattern as
+// STRIPE_TIP_URL); now populated, so the block renders.
+const WRITEUP_URL = 'https://ritchot.me/ai-courses/';
 
 // Direct email — surfaced as a personal sign-off before the closing
 // line. The framing is intentionally low-stakes ("or just to chat")
@@ -291,9 +291,9 @@ function NeedsAnalysisBlock(): JSX.Element {
 //
 // Quieter than the tip/blog cards — no surrounding card chrome, no
 // accent border. The block sits directly between the origin story
-// and the help cards as a depth option: read more about the build
-// itself. Hidden entirely when WRITEUP_URL is empty (same pattern
-// as the Stripe tip section).
+// and the help cards as a depth option: a soft exit to the course
+// hub (this course and others). Hidden entirely when WRITEUP_URL is
+// empty (same pattern as the Stripe tip section).
 
 function WriteupBlock({ onClick }: { onClick: () => void }): JSX.Element {
   return (
@@ -310,13 +310,13 @@ function WriteupBlock({ onClick }: { onClick: () => void }): JSX.Element {
           padding: '9px 18px',
         }}
       >
-        Read the write-up →
+        Explore the course hub →
       </a>
       <p
         className="m-0 mt-3 font-sans text-caption text-tertiary"
         style={{ lineHeight: 1.5 }}
       >
-        A longer piece on the research, design choices, and build behind this course.
+        All my AI courses in one place, on ritchot.me.
       </p>
     </div>
   );
