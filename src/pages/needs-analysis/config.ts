@@ -64,10 +64,10 @@ export const ARTIFACTS: ArtifactMeta[] = [
 // slug with e.g. `/needs-analysis/executive-problem-statement.pdf` (absolute,
 // matching the `/reference/...` links elsewhere) once the file lands.
 export const ARTIFACT_PDFS: Record<string, string> = {
-  'executive-problem-statement': '',
-  'capability-gap-analysis': '',
-  'learner-persona': '',
-  'action-map': '',
+  'executive-problem-statement': '/needs-analysis/executive-problem-statement.pdf',
+  'capability-gap-analysis': '/needs-analysis/capability-gap-analysis.pdf',
+  'learner-persona': '/needs-analysis/learner-persona.pdf',
+  'action-map': '/needs-analysis/action-map.pdf',
 };
 
 // Long-form blog post that frames the needs-analysis series on ritchot.me.
