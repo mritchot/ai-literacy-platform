@@ -92,6 +92,8 @@ export default function ThankYou(): JSX.Element {
     <div className="mx-auto max-w-reading px-4 py-14 sm:px-8 lg:px-16 lg:py-16">
       <OriginStory />
 
+      <NeedsAnalysisBlock />
+
       {showWriteup && <WriteupBlock onClick={onWriteupClick} />}
 
       {showTipSection && <TipCard onClick={onTipClick} />}
@@ -237,6 +239,51 @@ function OriginStory(): JSX.Element {
         below are how to support the work and stay in touch.
       </p>
     </div>
+  );
+}
+
+// ─── Needs-analysis block ─────────────────────────────────────────
+//
+// Links to the needs-analysis hub (`/#/needs-analysis`) — the four
+// portfolio documents (problem statement, capability gap analysis,
+// learner persona, action map) that make the research-and-design case
+// behind the course. Sits directly under the origin story as the first
+// "go deeper" affordance, framed as a card with the DILIGENCE accent so
+// it reads as a discrete artifact set alongside the write-up and tip
+// cards below. Internal hash link (no new-tab/rel) since it routes
+// within the platform.
+
+function NeedsAnalysisBlock(): JSX.Element {
+  return (
+    <section
+      aria-label="The needs analysis"
+      className="mt-10 rounded-lg"
+      style={{
+        background: 'rgb(var(--white))',
+        border: '1px solid rgb(var(--border))',
+        borderTop: `3px solid ${DILIGENCE}`,
+        padding: '24px 26px',
+      }}
+    >
+      <h2
+        className="m-0 mb-3 font-sans text-h3 font-semibold text-ink"
+        style={{ letterSpacing: '-0.005em' }}
+      >
+        The needs analysis
+      </h2>
+      <p className="m-0 mb-5 font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
+        The research-and-design case behind this course: the problem it addresses, the market gap,
+        the learner it targets, and the map from each documented gap to the behavior that closes it.
+        Four documents, reproduced with their evidence and citations intact.
+      </p>
+      <a
+        href="#/needs-analysis"
+        className="inline-flex items-center gap-2 rounded-md font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
+        style={{ background: 'transparent', border: '1.5px solid rgb(var(--border))', padding: '9px 18px' }}
+      >
+        Read the needs analysis →
+      </a>
+    </section>
   );
 }
 
