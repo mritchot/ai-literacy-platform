@@ -51,9 +51,10 @@ const GITHUB_URL = 'https://github.com/mritchot';
 const REPO_URL = 'https://github.com/mritchot/ai-literacy-platform';
 
 // Course Hub on the website — the index of AI courses (this one and
-// others). Surfaced as a soft exit from the thank-you page. The button
-// is hidden while this is empty (same conditional-render pattern as
-// STRIPE_TIP_URL); now populated, so the block renders.
+// others). Surfaced inside the "What's next" card as a secondary
+// affordance below the blog CTA. The link is hidden while this is empty
+// (same conditional-render pattern as STRIPE_TIP_URL); now populated, so
+// it renders.
 const WRITEUP_URL = 'https://ritchot.me/ai-courses/';
 
 // Direct email — surfaced as a personal sign-off before the closing
@@ -94,11 +95,11 @@ export default function ThankYou(): JSX.Element {
 
       <NeedsAnalysisBlock />
 
-      {showWriteup && <WriteupBlock onClick={onWriteupClick} />}
-
       {showTipSection && <TipCard onClick={onTipClick} />}
 
       <BlogCard
+        showCourseHub={showWriteup}
+        onCourseHubClick={onWriteupClick}
         onBlogClick={onBlogClick}
         onLinkedInClick={onLinkedInClick}
         onXClick={onXClick}
@@ -287,41 +288,6 @@ function NeedsAnalysisBlock(): JSX.Element {
   );
 }
 
-// ─── Write-up block ───────────────────────────────────────────────
-//
-// Quieter than the tip/blog cards — no surrounding card chrome, no
-// accent border. The block sits directly between the origin story
-// and the help cards as a depth option: a soft exit to the course
-// hub (this course and others). Hidden entirely when WRITEUP_URL is
-// empty (same pattern as the Stripe tip section).
-
-function WriteupBlock({ onClick }: { onClick: () => void }): JSX.Element {
-  return (
-    <div className="mt-8">
-      <a
-        href={WRITEUP_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={onClick}
-        className="inline-flex items-center gap-2 rounded-md font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
-        style={{
-          background: 'transparent',
-          border: '1.5px solid rgb(var(--border))',
-          padding: '9px 18px',
-        }}
-      >
-        Explore the course hub →
-      </a>
-      <p
-        className="m-0 mt-3 font-sans text-caption text-tertiary"
-        style={{ lineHeight: 1.5 }}
-      >
-        All my AI courses in one place, on ritchot.me.
-      </p>
-    </div>
-  );
-}
-
 // ─── Tip card ─────────────────────────────────────────────────────
 
 function TipCard({ onClick }: { onClick: () => void }): JSX.Element {
@@ -375,10 +341,14 @@ function TipCard({ onClick }: { onClick: () => void }): JSX.Element {
 // ─── Blog card ────────────────────────────────────────────────────
 
 function BlogCard({
+  showCourseHub,
+  onCourseHubClick,
   onBlogClick,
   onLinkedInClick,
   onXClick,
 }: {
+  showCourseHub: boolean;
+  onCourseHubClick: () => void;
   onBlogClick: () => void;
   onLinkedInClick: () => void;
   onXClick: () => void;
@@ -432,6 +402,34 @@ function BlogCard({
       >
         Email subscription available on the blog — you'll get notified when new posts go live.
       </p>
+      {/* Course hub — secondary affordance under the blog CTA. Same
+          outlined-button treatment as "Read the blog"; the two sit as
+          peer destinations (subscribe for what's coming / browse what's
+          live). Hidden while WRITEUP_URL is empty. */}
+      {showCourseHub && (
+        <div className="mt-5">
+          <a
+            href={WRITEUP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onCourseHubClick}
+            className="inline-flex items-center gap-2 rounded-md font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
+            style={{
+              background: 'transparent',
+              border: '1.5px solid rgb(var(--border))',
+              padding: '9px 18px',
+            }}
+          >
+            Explore the course hub →
+          </a>
+          <p
+            className="m-0 mt-3 font-sans text-caption text-tertiary"
+            style={{ lineHeight: 1.5 }}
+          >
+            All my AI courses in one place, on ritchot.me.
+          </p>
+        </div>
+      )}
       {/* Secondary social channels — quiet caption-sized links rather
           than buttons. They share the "stay connected" theme with the
           blog but aren't primary CTAs; the visual weight stays on the
