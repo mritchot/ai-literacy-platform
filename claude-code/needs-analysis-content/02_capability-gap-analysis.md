@@ -113,18 +113,17 @@ The structurally correct intervention targets the individual knowledge worker (t
 
 ---
 
-## References
+## Sources
 
 - **Anthropic Interviewer** — [*Introducing Anthropic Interviewer: What 1,250 Professionals Told Us About Working with AI*](https://www.anthropic.com/research/anthropic-interviewer) (Dec 2025)
 - **Appel, R., McCrory, P. & Tamkin, A.** — [*Anthropic Economic Index Report: Uneven Geographic and Enterprise AI Adoption*](https://www.anthropic.com/research/anthropic-economic-index-september-2025-report) (Sep 2025)
 - **Anthropic** — [*AI Fluency: Framework and Foundations*](https://anthropic.skilljar.com/ai-fluency-framework-foundations) (2025); *Teaching AI Fluency* (2025); *AI Fluency for Non-Profits* (2025); *Claude 101* (2025); [*AI Capabilities and Limitations*](https://anthropic.skilljar.com/ai-capabilities-and-limitations) (2026)
-- **CompTIA** — *AI's Impact on Productivity and the Workforce* (Nov 2025)
-- **DataCamp / YouGov** — *2026 State of Data and AI Literacy Report* (2026)
-- **Evans, B.** — *AI Eats the World* [slide deck] (May 2025; Nov 2025)
+- **CompTIA** — [*AI's Impact on Productivity and the Workforce*](https://www.comptia.org/en-us/resources/research/ai-impact-on-productivity-and-the-workforce/) (Nov 2025)
+- **DataCamp / YouGov** — [*2026 State of Data and AI Literacy Report*](https://www.datacamp.com/blog/the-state-of-data-and-ai-literacy-in-2026-definitions-statistics-and-the-ai-skills-gap) (2026)
+- **Evans, B.** — [*AI Eats the World*](https://www.ben-evans.com/presentations) [slide deck] (May 2025; Nov 2025)
 - **Handa, K. et al.** — [*Which Economic Tasks Are Performed with AI? Evidence from Millions of Claude Conversations*](https://bear-images.sfo2.cdn.digitaloceanspaces.com/ritchot/04761v1.pdf) (Feb 2025)
-- **Hardman, P.** — *The Course Is Dying as the Unit of Learning* [Substack] (Apr 2026)
+- **Hardman, P.** — [*The Course Is Dying as the Unit of Learning*](https://drphilippahardman.substack.com/p/the-course-is-dying-as-the-unit-of) [Substack] (Apr 2026)
 - **Lee, H. et al.** — [*The Impact of Generative AI on Critical Thinking: Self-Reported Reductions in Cognitive Effort and Confidence Effects From a Survey of Knowledge Workers*](https://doi.org/10.1145/3706598.3713778), CHI 2025
-- **Massenkoff, M. & McCrory, P.** — *Labor Market Impacts of AI: A New Measure and Early Evidence* (2026)
 - **Mollick, E.** — [*People and Process, Suits and Innovators: The Role of Individuals in Firm Performance*](https://doi.org/10.1002/smj.1958), *Strategic Management Journal* 33(9) (2012); *Co-Intelligence: Living and Working with AI* (2024) [practitioner text]
 - **Tamkin, A. & McCrory, P.** — [*Estimating AI Productivity Gains from Claude Conversations*](https://www.anthropic.com/research/estimating-ai-productivity-gains) (Nov 2025)
 - **World Economic Forum** — [*Future of Jobs Report 2025*](https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf) (Jan 2025)

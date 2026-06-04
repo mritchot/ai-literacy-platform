@@ -1,7 +1,7 @@
 # Action Map
 ## AI Literacy for the Modern Workforce
 
-*Following Cathy Moore's Action Mapping framework, organized by the [Anthropic 4D competency taxonomy](https://bear-images.sfo2.cdn.digitaloceanspaces.com/ritchot/2_ai_fluency_summary_one-pager.pdf) (Delegation, Description, Discernment, Diligence).*
+*Following Cathy Moore's Action Mapping framework, organized by the [Anthropic 4D competency taxonomy](https://bear-images.sfo2.cdn.digitaloceanspaces.com/ritchot/2_ai_fluency_summary_one-pager.pdf) of Delegation, Description, Discernment, and Diligence (Dakan & Feller, 2025).*
 
 > **Delivery note.** Each practice activity below is mapped to two deliverables: a custom-coded platform component (Component 4) and a corporate Articulate (Rise 360 / Storyline) component (Component 5). The program was designed against both contexts to demonstrate that the instructional design transfers across a bespoke build and a standard authoring stack. The custom platform was built and shipped ([ai-literacy.ritchot.me](https://ai-literacy.ritchot.me/)); the Articulate build was specified but not produced, a deliberate scope decision for an independent portfolio project without enterprise funding. The Component 5 mappings are retained because the interaction-fidelity tradeoffs they record are part of the design analysis.
 
@@ -238,7 +238,7 @@ Every Ring 1 behavior (D1–D12) maps to at least one practice activity (P1–P1
 ## Sources
 
 - **Anthropic Interviewer** — [*Introducing Anthropic Interviewer: What 1,250 Professionals Told Us About Working with AI*](https://www.anthropic.com/research/anthropic-interviewer) (Dec 2025)
-- **Appel, R., McCrory, P. & Tamkin, A.** — [*Anthropic Economic Index Report: Uneven Geographic and Enterprise AI Adoption*](https://www.anthropic.com/research/anthropic-economic-index-september-2025-report) (September 2025); [*Economic Primitives*](https://www.anthropic.com/research/anthropic-economic-index-january-2026-report) (January 2026)
+- **Appel, R., McCrory, P. & Tamkin, A.** — [*Anthropic Economic Index Report: Uneven Geographic and Enterprise AI Adoption*](https://www.anthropic.com/research/anthropic-economic-index-september-2025-report) (Sep 2025)
 - **Dakan, R. & Feller, J.** — *The AI Fluency Framework, Version 1.5* (2025)
 - **Handa, K. et al.** — [*Which Economic Tasks Are Performed with AI? Evidence from Millions of Claude Conversations*](https://bear-images.sfo2.cdn.digitaloceanspaces.com/ritchot/04761v1.pdf) (Feb 2025)
 - **Lee, H. et al.** — [*The Impact of Generative AI on Critical Thinking: Self-Reported Reductions in Cognitive Effort and Confidence Effects From a Survey of Knowledge Workers*](https://doi.org/10.1145/3706598.3713778), CHI 2025
