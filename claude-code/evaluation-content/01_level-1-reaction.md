@@ -1,7 +1,7 @@
 # Level 1: Reaction
 ## AI Literacy for the Modern Workforce
 
-Within the [Kirkpatrick model](https://www.kirkpatrickpartners.com/the-kirkpatrick-model/), Level 1 measures participant reaction: whether learners found the program relevant, credible, and applicable to their work. It is the earliest and most accessible evaluation tier, administered immediately after completion and before any on-the-job behavior can be observed. It is also the tier most often wasted, because the default reaction survey collects satisfaction that maps to no decision. This document is the full instrument: its purpose and scope, the item bank, the administration protocol, and the analysis framework. The single constraint behind every design choice is actionability: each item must produce data that drives a specific program change.
+Within the [Kirkpatrick model](https://www.kirkpatrickpartners.com/the-kirkpatrick-model/), Level 1 measures participant reaction: whether learners found the program relevant and applicable to their work. It is the earliest and most accessible evaluation tier, administered immediately after completion and before any on-the-job behavior can be observed. It is also the tier most often wasted, because the default reaction survey collects satisfaction that maps to no decision. This document is the full instrument: its purpose and scope, the item bank, the administration protocol, and the analysis framework. The single constraint behind every design choice is actionability: each item must produce data that drives a specific program change.
 
 ## What Level 1 measures, and what it does not
 
@@ -13,11 +13,15 @@ Reaction data cannot tell whether participants learned the content (Level 2), ch
 
 Every item was designed against one criterion: can the response drive a specific improvement decision? "How would you rate this program overall?" produces a number that traces to no design feature. "The scenarios in this program reflected situations I encounter in my role" maps directly to the scenario-design layer and triggers a concrete revision if it falls below threshold. That distinction separates a management-grade evaluation instrument from a compliance-grade satisfaction survey. The instrument deliberately excludes items it cannot act on: facilitator effectiveness (the program is self-paced, with no facilitator), platform satisfaction (better handled through UX research), and organizational support for AI adoption (outside the program's control).
 
-## Privacy by design, and why the survey is a prototype
+## Why the survey is a design, not a deployment
 
-I did not build the reaction survey as a live instrument. The platform carries a prototype of it, a working mock of what the survey would look like as part of the course, wired to collect nothing. The reason is structural. The platform collects no personally identifiable information; all learner progress (module completion, knowledge-check responses, pre/post scores) is persisted only in the browser's local storage and never reaches a server. As a solo-built portfolio project, it has no data processing agreement, no retention policy, no incident-response team, and no legal entity to bear data-controller liability. A reaction survey with free-text fields, which can carry identifying detail and opinions about an employer, is precisely the data this architecture should not hold.
+This page presents the proposed item bank, the candidate questions a deploying organization would draw from, not a running survey. The instrument is intentionally not live, for two reasons.
 
-So the live instrument is designed for external administration. A deploying organization runs it through its own survey infrastructure (internal tools, a third-party platform, or an HRIS survey module), which already carries access management, retention policies, anonymization, and regional compliance. The reaction data inherits that governance rather than forcing a parallel structure into being for one program. The recommended trigger is the platform's completion screen (Module 4, Section 10), where the participant sees their pre/post results: immediate post-completion is the window with the highest response rate and the freshest recall.
+First, the course is built for the general workforce, and a reaction survey only works when it fits the institution administering it. The items below are a calibrated starting point, but their relevance, phrasing, and scope would need tuning to a specific organization's context, roles, and reporting conventions before any response is worth collecting. Shipping a fixed, generic survey as if it were ready to run would misrepresent how reaction measurement actually works.
+
+Second, privacy. The platform collects no personally identifiable information; all learner progress (module completion, knowledge-check responses, pre/post scores) is persisted only in the browser's local storage and never reaches a server. As a solo-built portfolio project, it has no data processing agreement, no retention policy, and no legal entity to bear data-controller liability. A reaction survey with free-text fields, which can carry identifying detail and opinions about an employer, is precisely the data this architecture should not hold.
+
+So the instrument is designed for external administration. A deploying organization adapts the item bank to its context and runs it through its own survey infrastructure (internal tools, a third-party platform, or an HRIS survey module), which already carries access management, retention policies, anonymization, and regional compliance. The recommended trigger is the platform's completion screen (Module 4, Section 10), where the participant sees their pre/post results: immediate post-completion is the window with the highest response rate and the freshest recall.
 
 ## Survey dimensions
 
@@ -43,7 +47,7 @@ Scaled items use a 5-point Likert agreement scale (Strongly Disagree to Strongly
 | R3 | The program addressed AI-related challenges relevant to my industry or function. | 5-point Likert |
 | R4 | Which module or topic felt most relevant to your current role, and why? | Open response |
 
-**Confidence change.** C1 maps to Discernment (output evaluation), C2 to Description (prompt construction), C3 to the mechanistic understanding under both, and C4 surfaces residual uncertainty that informs supplemental resources or manager talking points for the Level 3 window.
+**Confidence change.** Its items map to the program's [4D competency framework](https://www.anthropic.com/ai-fluency): C1 to Discernment (output evaluation), C2 to Description (prompt construction), and C3 to the mechanistic understanding under both; C4 surfaces residual uncertainty that informs supplemental resources or manager talking points for the Level 3 window.
 
 | # | Item | Format |
 |---|---|---|
@@ -99,12 +103,4 @@ Level 1 contextualizes the levels above it. A cohort that scores well on the Lev
 
 ---
 
-¹ *This is an evaluation instrument design, not a results report. The program is an independent portfolio project that has not been deployed at organizational scale, so no Level 1 cohort data exists. The platform carries a prototype of the survey; the item bank, administration protocol, and analysis thresholds here are complete and ready for a deploying organization to administer the live version through its own survey infrastructure.*
-
----
-
-## Sources
-
-- **Kirkpatrick Partners** — [*The Kirkpatrick Model*](https://www.kirkpatrickpartners.com/the-kirkpatrick-model/)
-- **Bain & Company / Reichheld, F.** — [*Net Promoter System*](https://www.netpromoter.com/know/)
-- **Anthropic** — [*AI Fluency: Framework and Foundations*](https://www.anthropic.com/ai-fluency) (the 4D competency vocabulary referenced in the confidence-change dimension)
+¹ *This is an evaluation instrument design, not a results report. The program is an independent portfolio project that has not been deployed at organizational scale, so no Level 1 cohort data exists. The page presents the proposed item bank; the administration protocol and analysis thresholds are complete, and a deploying organization would adapt the items to its own context before administering the survey through its own infrastructure.*

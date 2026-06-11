@@ -20,7 +20,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     route: 'evaluation/level-1-reaction',
     title: 'Level 1: Reaction',
     blurb:
-      'The post-program reaction survey, built so every item drives a specific design change rather than collecting unactionable satisfaction.',
+      'The post-program reaction survey, designed so every item drives a specific program change rather than collecting unactionable satisfaction.',
     type: 'Reading',
   },
   {
