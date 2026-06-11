@@ -8,7 +8,7 @@
 import MARKDOWN from '../../../claude-code/evaluation-content/04_level-4-results.md?raw';
 import { renderMarkdown } from '../../components/shared/render-markdown';
 import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
-import { RoiCalculator } from './RoiCalculator';
+import { RoiCalculator, RoiFormulaFigure } from './RoiCalculator';
 
 // Split markers mirror the canonical section boundaries. Part A ends just
 // before the static model's lead-in line; Part B resumes at the timeline
@@ -35,6 +35,7 @@ export default function Level4Results(): JSX.Element {
       <ArtifactTopBar pdfSlug="level-4-results" />
       <SeriesEyebrow label="Evaluation framework · Interactive" />
       <article className="max-w-reading">{renderMarkdown(partA)}</article>
+      <RoiFormulaFigure />
       <RoiCalculator />
       {partB.length > 0 && (
         <article className="mt-10 max-w-reading">{renderMarkdown(partB)}</article>
