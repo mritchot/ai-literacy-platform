@@ -319,8 +319,8 @@ function EvaluationBlock(): JSX.Element {
         The evaluation framework
       </h2>
       <p className="m-0 mb-5 font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
-        How the course measures whether it works: the four Kirkpatrick levels — reaction, learning,
-        behavior, and results — designed before the modules were built, so success was defined
+        How the course measures whether it works: the four Kirkpatrick levels (reaction, learning,
+        behavior, and results), designed before the modules were built, so success was defined
         before anything existed to produce it. Four documents, instruments and methodology intact.
       </p>
       <a

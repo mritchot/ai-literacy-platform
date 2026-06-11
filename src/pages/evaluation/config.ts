@@ -36,7 +36,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     route: 'evaluation/level-3-behavior',
     title: 'Level 3: Behavior',
     blurb:
-      'Manager evidence review and participant self-assessment at 30, 60, and 90 days, scored on the 4D framework — measuring what people do with AI, not how much.',
+      'Manager evidence review and participant self-assessment at 30, 60, and 90 days, scored on the 4D framework to measure what people do with AI, not how much.',
     type: 'Reading',
   },
   {
