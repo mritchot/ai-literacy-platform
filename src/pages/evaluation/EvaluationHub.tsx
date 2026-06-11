@@ -45,7 +45,7 @@ export default function EvaluationHub(): JSX.Element {
           evaluation framework behind <em className="italic">AI Literacy for the Modern Workforce</em>,
           built on the four Kirkpatrick levels (reaction, learning, behavior, and results) and
           designed before the modules, so success was defined before anything existed to produce
-          it. Only Level 2 carries real validation data; the other three are instrument designs
+          it. Level 2 carries real validation data; the other three are instrument designs
           awaiting a first deployment cohort, and each says so plainly.
         </p>
       </div>
