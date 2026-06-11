@@ -1,7 +1,7 @@
 # Level 4: Results
 ## AI Literacy for the Modern Workforce
 
-Within the [Kirkpatrick model](https://www.kirkpatrickpartners.com/the-kirkpatrick-model/), Level 4 measures whether the behavioral changes documented at Level 3 produced measurable organizational outcomes. It is the tier that connects individual competency to business results, and therefore the tier executives care about. This document is an evaluation blueprint, not a results report: the program is a portfolio piece with no organizational deployment, so no Level 4 data exists. What follows is the complete methodology, the KPI framework, the isolation techniques, and a worked ROI example demonstrating how the model operates once an organization supplies its own data.
+Within the [Kirkpatrick model](https://www.kirkpatrickpartners.com/the-kirkpatrick-model/), Level 4 measures whether the behavioral changes documented at Level 3 produced measurable organizational outcomes. It is the tier that connects individual competency to business results, and therefore the tier executives care about. This document is an evaluation blueprint, not a results report: the program is a portfolio piece with no organizational deployment, so no Level 4 data exists. What follows is the complete methodology, the KPI framework, the isolation techniques, and a worked ROI example that shows how the model operates once an organization supplies its own data.
 
 ## The attribution chain
 
@@ -58,6 +58,8 @@ Attribution is the central methodological challenge, and the framework is honest
 
 ## The ROI model
 
+The model is not invented for this project. It instantiates the [Phillips ROI Methodology](https://roiinstitute.net/roi-methodology/), the established framework that extends Kirkpatrick with a fifth level, financial ROI, and is the standard approach to costing training in corporate L&D ([Training Industry](https://trainingindustry.com/glossary/phillips-roi-methodology/)). The formula below is Phillips' own, net program benefits over fully loaded cost expressed as a percentage; the isolation step above is Phillips' "isolate the effects of the program"; and the conservative inputs follow his Guiding Principles, which call for a fully loaded cost, the most conservative estimate among alternatives, and attribution adjusted downward for error. What this project supplies is not a new formula but defensible inputs, each drawn from the research corpus rather than a vendor benchmark.
+
 The model calculates two independently attributed benefit streams against total program cost:
 
 ```
@@ -82,15 +84,15 @@ The worked example runs a 200-person deployment at a mid-sized professional-serv
 | Variable | Value | Rationale |
 |---|---|---|
 | N | 200 | Departmental rollout |
-| W | $120,000 | Mid-career fully loaded (~$85K + 40% burden) |
+| W | $140,000 | Mid-career base ~$100K × 1.4 fully loaded (benefits ~30% per BLS, plus payroll taxes and overhead) |
 | T_ai | 25% | Against 57% AI-touched (Handa et al.); 25% = practical, not merely possible |
 | S | 30% | Against an 81% in-conversation median; 30% acknowledges full-cycle verification overhead |
 | A | 40% | Lower-bound; assumes 60% of improvement is other factors |
-| C_program | $180,000 | Development, delivery, participant time, admin, evaluation, contingency |
+| C_program | $300,000 | Amortized development (~735 hrs, Chapman), delivery, ~6 hrs participant time across the course's 37 sections, admin, the full four-level evaluation, and contingency; anchored to ATD's 2024 L&D cost benchmarks |
 | Q | $400,000 | Annual AI-related quality-failure cost across 200 employees |
 | Q_reduction | 20% | Conservative one-fifth reduction |
 
-Efficiency Benefit = 200 × $120,000 × 0.25 × 0.30 × 0.40 = **$720,000**. Quality Benefit = $400,000 × 0.20 × 0.40 = **$32,000**. Total $752,000 against $180,000 yields a **318% ROI**. The model is most sensitive to attribution, time savings, and AI-eligible task share; halving attribution still returns a positive 109%. The figure is not a claim about this program's realized return. It demonstrates that results measurement was built into the architecture from inception, ready for an organization to repopulate with its own baselines.
+Efficiency Benefit = 200 × $140,000 × 0.25 × 0.30 × 0.40 = **$840,000**. Quality Benefit = $400,000 × 0.20 × 0.40 = **$32,000**. Total $872,000 against $300,000 yields a **191% ROI**. The model is most sensitive to attribution, time savings, and AI-eligible task share; halving attribution still returns a positive 45%. The figure is not a claim about this program's realized return. It demonstrates that results measurement was built into the architecture from inception, ready for an organization to repopulate with its own baselines.
 
 ## Timeline, and the full chain
 
@@ -112,9 +114,11 @@ Populated, the chain reads as a single argument: participants rated the program 
 ## Sources
 
 - **Kirkpatrick Partners** — [*The Kirkpatrick Model*](https://www.kirkpatrickpartners.com/the-kirkpatrick-model/)
+- **Phillips, J. J. / ROI Institute** — [*The ROI Methodology*](https://roiinstitute.net/roi-methodology/) (the five-level model extending Kirkpatrick to financial ROI; the formula, isolation step, and conservative Guiding Principles this model follows)
 - **Fortune** — [*Uber's AI budget burn*](https://fortune.com/2026/05/26/uber-coo-ai-spending-tokens-claude-code/) and [*Tokenmaxxing is over*](https://fortune.com/2026/05/28/tokenmaxxing-is-dead-companies-didnt-get-the-roi-from-ai-they-wanted-to-see/) (May 2026)
 - **Tamkin, A. & McCrory, P.** — [*Estimating AI Productivity Gains from Claude Conversations*](https://www.anthropic.com/research/estimating-ai-productivity-gains) (Nov 2025)
 - **Handa, K. et al. / Anthropic** — [*Anthropic Economic Index*](https://www.anthropic.com/research/anthropic-economic-index) (augmentation-automation split)
 - **Anthropic Interviewer** — [*What 1,250 Professionals Told Us About Working with AI*](https://www.anthropic.com/research/anthropic-interviewer) (Dec 2025) (69% concealment baseline)
 - **World Economic Forum** — [*Future of Jobs Report 2025*](https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf) (Jan 2025)
+- **Association for Talent Development** — [*2024 State of the Industry*](https://www.td.org/content/press-release/atd-research-l-and-d-professionals-are-optimistic-about-td-s-value-within-organizations) (per-employee and per-learning-hour L&D cost benchmarks); the worked example also uses the standard 1.25–1.4× fully-loaded employee-cost multiplier and the Chapman Alliance content-development-hours benchmark
 - **OpenAI** — [*ChatGPT Enterprise workspace analytics*](https://help.openai.com/en/articles/10875114-user-analytics-for-chatgpt-enterprise-and-edu); **Anthropic** — [*Claude Enterprise usage analytics*](https://support.claude.com/en/articles/12883420-view-usage-analytics-for-team-and-enterprise-plans); **Google** — [*Gemini for Workspace usage reports*](https://support.google.com/a/answer/14564320)

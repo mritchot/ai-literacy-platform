@@ -45,7 +45,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     title: 'Level 4: Results',
     blurb:
       'The KPI framework, isolation methodology, and ROI model that connect behavior change to organizational outcomes without the volume-ROI fallacy.',
-    type: 'Reading',
+    type: 'Interactive',
   },
 ];
 

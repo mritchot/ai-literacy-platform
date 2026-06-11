@@ -85,7 +85,7 @@ export default function EvaluationHub(): JSX.Element {
 function ArtifactCard({ artifact, index }: { artifact: ArtifactMeta; index: number }): JSX.Element {
   const { slug, route, title, blurb, type } = artifact;
   const href = `#/${route}`;
-  const openLabel = type === 'Interactive' ? 'Open the map' : 'Read';
+  const openLabel = type === 'Interactive' ? 'Open the calculator' : 'Read';
   const num = String(index + 1).padStart(2, '0');
 
   return (
