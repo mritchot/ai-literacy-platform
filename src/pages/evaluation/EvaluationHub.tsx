@@ -41,12 +41,12 @@ export default function EvaluationHub(): JSX.Element {
 
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0 max-w-reading">
-          A course is only as good as the evidence that it works. These four documents are the
+          These four documents are the
           evaluation framework behind <em className="italic">AI Literacy for the Modern Workforce</em>,
           built on the four Kirkpatrick levels (reaction, learning, behavior, and results) and
           designed before the modules, so success was defined before anything existed to produce
           it. Level 2 carries real validation data; the other three are instrument designs
-          awaiting a first deployment cohort, and each says so plainly.
+          awaiting a first deployment cohort.
         </p>
       </div>
 

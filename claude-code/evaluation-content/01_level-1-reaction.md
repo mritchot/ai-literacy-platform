@@ -1,7 +1,7 @@
 # Level 1: Reaction
 ## AI Literacy for the Modern Workforce
 
-Within the [Kirkpatrick model](https://www.kirkpatrickpartners.com/the-kirkpatrick-model/), Level 1 measures participant reaction: whether learners found the program relevant and applicable to their work. It is the earliest and most accessible evaluation tier, administered immediately after completion and before any on-the-job behavior can be observed. It is also the tier most often wasted, because the default reaction survey collects satisfaction that maps to no decision. This document is the full instrument: its purpose and scope, the item bank, the administration protocol, and the analysis framework. The single constraint behind every design choice is actionability: each item must produce data that drives a specific program change.
+Within the Kirkpatrick model, Level 1 measures participant reaction: whether learners found the program relevant and applicable to their work. It is the earliest and most accessible evaluation tier, administered immediately after completion and before any on-the-job behavior can be observed. It is also the tier most often wasted, because the default reaction survey collects satisfaction that maps to no decision. This document is the full instrument: its purpose and scope, the item bank, the administration protocol, and the analysis framework. The single constraint behind every design choice is actionability: each item must produce data that drives a specific program change.
 
 ## What Level 1 measures, and what it does not
 
@@ -47,7 +47,7 @@ Scaled items use a 5-point Likert agreement scale (Strongly Disagree to Strongly
 | R3 | The program addressed AI-related challenges relevant to my industry or function. | 5-point Likert |
 | R4 | Which module or topic felt most relevant to your current role, and why? | Open response |
 
-**Confidence change.** Its items map to the program's [4D competency framework](https://www.anthropic.com/ai-fluency): C1 to Discernment (output evaluation), C2 to Description (prompt construction), and C3 to the mechanistic understanding under both; C4 surfaces residual uncertainty that informs supplemental resources or manager talking points for the Level 3 window.
+**Confidence change.** Its items map to the program's [4D competency framework](https://ai-literacy.ritchot.me/#/needs-analysis/action-map): C1 to Discernment (output evaluation), C2 to Description (prompt construction), and C3 to the mechanistic understanding under both; C4 surfaces residual uncertainty that informs supplemental resources or manager talking points for the Level 3 window.
 
 | # | Item | Format |
 |---|---|---|
