@@ -1,5 +1,4 @@
 # Level 2: Learning
-## AI Literacy for the Modern Workforce
 
 Within the Kirkpatrick model, Level 2 measures whether participants acquired the intended knowledge, as distinct from whether they liked the program (Level 1), changed their behavior (Level 3), or produced organizational results (Level 4). It is the only tier of this framework with empirical evidence behind it, and that evidence is qualified, so this document is careful to separate what the data supports from what it does not. The instrument is a ten-item, scenario-based pre/post assessment embedded in the program as a mandatory gate in every platform mode, with no skip option, because without paired pre/post data the level cannot function.
 
@@ -41,7 +40,7 @@ That matrix is the traceability artifact: no assessment item exists without a pa
 
 Scoring is binary per item, unweighted across blocks, with learning gain as the simple post-minus-pre delta. The interface frames outcomes positively: with a ten-item instrument a stable score most often reflects a strong baseline reinforced, so a zero delta reads as "solid foundation," not a failure. Beyond the aggregate, the admin view exposes a per-construct breakdown, so a participant who improved overall but missed verification priority on both forms is flagged for targeted follow-up rather than averaged into a single number.
 
-The program uses directional thresholds, not fixed pass/fail cutoffs, because a ten-item instrument lacks the precision for high-stakes certification and different organizations carry different risk. A single item swing equals ten percentage points, which is exactly why these are ranges:
+At ten items, a single-item swing moves the score ten points, so the thresholds are interpretive ranges rather than pass/fail cutoffs:
 
 | Post score | Interpretation | Action |
 |---|---|---|

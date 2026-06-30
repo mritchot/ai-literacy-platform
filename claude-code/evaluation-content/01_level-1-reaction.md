@@ -1,19 +1,18 @@
 # Level 1: Reaction
-## AI Literacy for the Modern Workforce
 
-Within the Kirkpatrick model, Level 1 measures participant reaction: whether learners found the program relevant and applicable to their work. It is the earliest and most accessible evaluation tier, administered immediately after completion and before any on-the-job behavior can be observed. It is also the tier most often wasted, because the default reaction survey collects satisfaction that maps to no decision. This document is the full instrument: its purpose and scope, the item bank, the administration protocol, and the analysis framework. The single constraint behind every design choice is actionability: each item must produce data that drives a specific program change.
+Within the Kirkpatrick model, Level 1 measures participant reaction: whether learners found the program relevant and applicable to their work. It is the earliest and most accessible evaluation tier, administered immediately after completion and before any on-the-job behavior can be observed. It is also the tier most often wasted, because the default reaction survey collects satisfaction that maps to no decision. The rest of this document is the instrument itself, from the item bank through administration to analysis. The single constraint behind every design choice is actionability: each item must produce data that drives a specific program change.
 
-## What Level 1 measures, and what it does not
+## What Level 1 measures
 
 Level 1 captures the participant's subjective assessment of the learning experience across four dimensions: perceived relevance to their role, confidence change in working with AI tools, content quality and pacing, and intent to apply or recommend the program. Each dimension was selected because it produces data tied to a specific improvement action. Generic satisfaction metrics ("I enjoyed the program") are excluded because they cannot be acted on.
 
-Reaction data cannot tell whether participants learned the content (Level 2), changed their on-the-job behavior (Level 3), or produced organizational results (Level 4). A participant who rates the program highly may not have acquired the target competencies; one who rates it poorly may still have learned effectively. The correlation between satisfaction and knowledge gain is weak across the L&D literature, which is the entire reason this framework does not stop here. Level 1 is diagnostic for program design, not for individual competency assessment.
+Reaction data cannot tell whether participants learned the content (Level 2), changed their on-the-job behavior (Level 3), or produced organizational results (Level 4). A participant who rates the program highly may not have acquired the target competencies; one who rates it poorly may still have learned effectively. The correlation between satisfaction and knowledge gain is weak across the L&D literature, which is the entire reason this framework does not stop here. Level 1 diagnoses program design; it does not score individual competency.
 
 ## The actionability requirement
 
 Every item was designed against one criterion: can the response drive a specific improvement decision? "How would you rate this program overall?" produces a number that traces to no design feature. "The scenarios in this program reflected situations I encounter in my role" maps directly to the scenario-design layer and triggers a concrete revision if it falls below threshold. That distinction separates a management-grade evaluation instrument from a compliance-grade satisfaction survey. The instrument deliberately excludes items it cannot act on: facilitator effectiveness (the program is self-paced, with no facilitator), platform satisfaction (better handled through UX research), and organizational support for AI adoption (outside the program's control).
 
-## Why the survey is a design, not a deployment
+## Why this stays a design
 
 This page presents the proposed item bank, the candidate questions a deploying organization would draw from, not a running survey. The instrument is intentionally not live, for two reasons.
 
@@ -81,7 +80,7 @@ Scaled items use a 5-point Likert agreement scale (Strongly Disagree to Strongly
 
 **Distribution.** An embedded link in the post-completion communication (an LMS-triggered email, an intranet notification, or a direct link on the completion screen). The link should appear at the moment of completion, not in a separate follow-up days later.
 
-**Anonymity.** Administer anonymously to maximize candor, particularly on the confidence and quality dimensions where social desirability inflates scores. If an organization needs to link Level 1 reactions to the same individual's Level 3 data, use a coded identifier rather than a name or email, and disclose the linking in the survey introduction. The tradeoff is explicit: identified responses enable longitudinal analysis but may suppress critical feedback.
+**Anonymity.** Administer anonymously to maximize candor, particularly on the confidence and quality dimensions where social desirability inflates scores. If an organization needs to link Level 1 reactions to the same individual's Level 3 data, use a coded identifier rather than a name or email, and disclose the linking in the survey introduction. Identified responses enable longitudinal analysis but may suppress critical feedback.
 
 **Response rate.** Target a minimum 60% response rate for cohort-level interpretation. Below that, non-response bias becomes a real concern, since strong positive and negative reactors tend to respond while moderate reactors do not, producing a bimodal distribution that misrepresents the cohort.
 
@@ -95,11 +94,11 @@ Each scaled item is analyzed for mean, standard deviation, and distribution, bec
 | 3.0–3.9 | Mixed | Acceptable, not strong. Review the open-response data for friction; revise if it does not improve across 1–2 cohorts. |
 | Below 3.0 | Concern | Not meeting expectations. Prioritize revision; cross-reference the open responses and the Level 2 per-construct analysis to locate the cause. |
 
-If A3 is included, the Net Promoter Score is promoters (9–10) minus detractors (0–6), with passives (7–8) excluded; above +30 is generally strong for corporate training, below 0 signals real dissatisfaction. Open responses are thematically coded (two reviewers, inductive on the first cohort, then a deductive codebook) into a frequency-ranked theme list that maps to revision priorities. The full value emerges across cohorts: when a revision is made between cohorts, the next cohort's reaction data shows whether it worked. That loop, reaction data driving revision and the next reaction data validating it, is the instrument's primary use.
+If A3 is included, the Net Promoter Score is promoters (9–10) minus detractors (0–6), with passives (7–8) excluded; above +30 is generally strong for corporate training, below 0 signals real dissatisfaction. Open responses are thematically coded (two reviewers, inductive on the first cohort, then a deductive codebook) into a frequency-ranked theme list that maps to revision priorities. The full value emerges across cohorts: when a revision is made between cohorts, the next cohort's reaction data shows whether it worked. That feedback loop is the instrument's primary use: one cohort's reaction data drives a revision, and the next cohort's data shows whether it worked.
 
 ## Integration with the framework
 
-Level 1 contextualizes the levels above it. A cohort that scores well on the Level 2 pre/post but rates relevance poorly has the knowledge but cannot see how to apply it: the scenarios need stronger workplace connection. A cohort that rates the program highly but shows little pre/post improvement enjoyed the experience without changing its knowledge state: engaging but not challenging enough. And items A1 and A4 bridge to Level 3, where the manager review measures whether the stated intent became behavior. The gap between intent and action is itself a diagnostic, one that informs the transfer supports (job aids, manager coaching prompts, peer accountability) that turn intention into practice.¹
+Level 1 sets the context for the levels above it. A cohort that scores well on the Level 2 pre/post but rates relevance poorly has the knowledge but cannot see how to apply it: the scenarios need stronger workplace connection. A cohort that rates the program highly but shows little pre/post improvement enjoyed the experience without changing its knowledge state: engaging but not challenging enough. And items A1 and A4 bridge to Level 3, where the manager review measures whether the stated intent became behavior. The gap between intent and action is itself a diagnostic, one that informs the transfer supports (job aids, manager coaching prompts, peer accountability) that turn intention into practice.¹
 
 ---
 
