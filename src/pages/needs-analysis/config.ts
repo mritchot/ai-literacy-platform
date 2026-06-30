@@ -73,7 +73,7 @@ export const ARTIFACT_PDFS: Record<string, string> = {
 // Long-form blog post that frames the needs-analysis series on ritchot.me.
 // Empty until the post is published after deploy; the hub's write-up link is
 // hidden while empty.
-export const NEEDS_ANALYSIS_WRITEUP_URL = '';
+export const NEEDS_ANALYSIS_WRITEUP_URL = 'https://ritchot.me/the-needs-analysis-for-my-ai-literacy-course/';
 
 // Series accent — the diligence purple already used on the thank-you page's
 // "artifact" cards. The needs analysis is part of the same behind-the-scenes
