@@ -16,7 +16,7 @@
 // and Sources are rendered verbatim from that same markdown file.
 
 import { useCallback, useMemo, useState, type ReactNode } from 'react';
-import ACTION_MAP_MD from '../../../claude-code/needs-analysis-content/04_action-map.md?raw';
+import ACTION_MAP_MD from './content/04_action-map.md?raw';
 import { renderInline, renderMarkdown } from '../../components/shared/render-markdown';
 import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
 
