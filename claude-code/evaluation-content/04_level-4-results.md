@@ -57,7 +57,7 @@ Attribution is the central methodological challenge, and the framework is honest
 
 ## The ROI model
 
-The model is not invented for this project. It instantiates the [Phillips ROI Methodology](https://roiinstitute.net/roi-methodology/), the established framework that extends Kirkpatrick with a fifth level, financial ROI, and is the standard approach to costing training in corporate L&D ([Training Industry](https://trainingindustry.com/glossary/phillips-roi-methodology/)). The formula below is Phillips' own, net program benefits over fully loaded cost expressed as a percentage; the isolation step above is Phillips' "isolate the effects of the program"; and the conservative inputs follow his Guiding Principles, which call for a fully loaded cost, the most conservative estimate among alternatives, and attribution adjusted downward for error. What this project supplies is not a new formula but defensible inputs, each drawn from the research corpus rather than a vendor benchmark.
+The model is not invented for this project. It applies the [Phillips ROI Methodology](https://roiinstitute.net/roi-methodology/), the established framework that extends Kirkpatrick with a fifth level, financial ROI, and is the standard approach to costing training in corporate L&D ([Training Industry](https://trainingindustry.com/glossary/phillips-roi-methodology/)). The formula below is Phillips' own, net program benefits over fully loaded cost expressed as a percentage; the isolation step above is Phillips' "isolate the effects of the program"; and the conservative inputs follow his Guiding Principles, which call for a fully loaded cost, the most conservative estimate among alternatives, and attribution adjusted downward for error. What this project supplies is not a new formula but defensible inputs, each drawn from the research corpus rather than a vendor benchmark.
 
 The model calculates two independently attributed benefit streams against total program cost:
 
@@ -91,7 +91,7 @@ The worked example runs a 200-person deployment at a mid-sized professional-serv
 | Q | $400,000 | Annual AI-related quality-failure cost across 200 employees |
 | Q_reduction | 20% | Conservative one-fifth reduction |
 
-Efficiency Benefit = 200 × $140,000 × 0.25 × 0.30 × 0.40 = **$840,000**. Quality Benefit = $400,000 × 0.20 × 0.40 = **$32,000**. Total $872,000 against $300,000 yields a **191% ROI**. The model is most sensitive to attribution, time savings, and AI-eligible task share; halving attribution still returns a positive 45%. The figure is not a claim about this program's realized return. It demonstrates that results measurement was built into the architecture from inception, ready for an organization to repopulate with its own baselines.
+Efficiency Benefit = 200 × $140,000 × 0.25 × 0.30 × 0.40 = **$840,000**. Quality Benefit = $400,000 × 0.20 × 0.40 = **$32,000**. Total $872,000 against $300,000 yields a **191% ROI**. The model is most sensitive to attribution, time savings, and AI-eligible task share; halving attribution still returns a positive 45%. The figure is not a claim about this program's realized return. It demonstrates that results measurement was built into the architecture from the start, ready for an organization to repopulate with its own baselines.
 
 ## Timeline, and the full chain
 
