@@ -56,7 +56,7 @@ At ten items, a single-item swing moves the score ten points, so the thresholds 
 | +1 | Incremental | Modest; may reflect a high baseline. Read against the pre score (+1 from 4 differs from +1 from 8). |
 | 0 | Solid foundation | No numerical change; with ten items, often a strong baseline reinforced. |
 
-A summative instrument this short is complemented by a formative layer: sixteen scenario-based knowledge checks (four per module) and three interpretation checks in Module 1's data narrative, which add temporal resolution the pre/post delta cannot reach, showing *when* a concept was acquired, not merely that it was.
+A summative instrument this short is complemented by a formative layer: sixteen scenario-based knowledge checks (four per module) and three interpretation checks in Module 1's data narrative. These add temporal resolution the pre/post delta cannot reach: they show *when* a concept was acquired, not only whether.
 
 ## Validity, and the capstone behind it
 
