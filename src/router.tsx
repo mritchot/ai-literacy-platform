@@ -29,6 +29,14 @@ const ProblemStatement = lazy(() => import('./pages/needs-analysis/ProblemStatem
 const CapabilityGap = lazy(() => import('./pages/needs-analysis/CapabilityGap'));
 const LearnerPersona = lazy(() => import('./pages/needs-analysis/LearnerPersona'));
 const ActionMap = lazy(() => import('./pages/needs-analysis/ActionMap'));
+// Evaluation-framework artifact pages — standalone public portfolio documents
+// (hub + four Kirkpatrick-level reading pages), mirroring the needs-analysis
+// series. Reachable in every platform mode; not part of the learner sequence.
+const EvaluationHub = lazy(() => import('./pages/evaluation/EvaluationHub'));
+const Level1Reaction = lazy(() => import('./pages/evaluation/Level1Reaction'));
+const Level2Learning = lazy(() => import('./pages/evaluation/Level2Learning'));
+const Level3Behavior = lazy(() => import('./pages/evaluation/Level3Behavior'));
+const Level4Results = lazy(() => import('./pages/evaluation/Level4Results'));
 
 // Suspense fallback for lazy routes. Note: the production build inlines
 // every lazy chunk via vite-plugin-singlefile, so this effectively never
@@ -94,6 +102,11 @@ const routes: RouteObject[] = [
       { path: 'needs-analysis/capability-gap', element: lazyRoute(CapabilityGap) },
       { path: 'needs-analysis/learner-persona', element: lazyRoute(LearnerPersona) },
       { path: 'needs-analysis/action-map', element: lazyRoute(ActionMap) },
+      { path: 'evaluation', element: lazyRoute(EvaluationHub) },
+      { path: 'evaluation/level-1-reaction', element: lazyRoute(Level1Reaction) },
+      { path: 'evaluation/level-2-learning', element: lazyRoute(Level2Learning) },
+      { path: 'evaluation/level-3-behavior', element: lazyRoute(Level3Behavior) },
+      { path: 'evaluation/level-4-results', element: lazyRoute(Level4Results) },
       { path: '*', element: <Navigate to="/" replace /> },
     ],
   },

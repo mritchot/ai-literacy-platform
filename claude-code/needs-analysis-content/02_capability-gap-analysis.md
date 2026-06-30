@@ -1,5 +1,4 @@
 # Market-Level Capability Gap Analysis
-## AI Literacy for the Modern Workforce
 
 ## Executive Summary
 

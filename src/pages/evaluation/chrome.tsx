@@ -1,6 +1,6 @@
-// Shared chrome for the needs-analysis artifact pages — the toolbar, the
-// PDF download affordance, the series eyebrow, and the footer back-links.
-// Reused across the reading pages, the action map, and (in part) the hub.
+// Shared chrome for the evaluation-framework artifact pages — the toolbar,
+// the PDF download affordance, the series eyebrow, and the footer back-links.
+// Reused across the reading pages and (in part) the hub.
 
 import { ARTIFACTS, ARTIFACT_PDFS, SERIES_ACCENT } from './config';
 
@@ -29,8 +29,8 @@ export function PdfDownload({ slug }: { slug: string }): JSX.Element | null {
 export function ArtifactTopBar({ pdfSlug }: { pdfSlug: string }): JSX.Element {
   return (
     <div className="mb-8 flex items-center justify-between gap-4 border-b border-border-light pb-5">
-      <a href="#/needs-analysis" className={TEXT_LINK}>
-        <span aria-hidden="true">←</span> Needs analysis
+      <a href="#/evaluation" className={TEXT_LINK}>
+        <span aria-hidden="true">←</span> Evaluation framework
       </a>
       <PdfDownload slug={pdfSlug} />
     </div>
@@ -73,8 +73,8 @@ export function ArtifactFooter({ currentSlug }: { currentSlug: string }): JSX.El
           <span aria-hidden="true">←</span> Previous: {prev.title}
         </a>
       ) : (
-        <a href="#/needs-analysis" className={TEXT_LINK}>
-          <span aria-hidden="true">←</span> Back to the needs analysis
+        <a href="#/evaluation" className={TEXT_LINK}>
+          <span aria-hidden="true">←</span> Back to the evaluation framework
         </a>
       )}
       {next ? (
