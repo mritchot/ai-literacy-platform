@@ -5,7 +5,7 @@
 // two markers below — is replaced on the web by the live RoiCalculator. The
 // canonical markdown keeps the full static model, so the PDF is unaffected.
 
-import MARKDOWN from '../../../claude-code/evaluation-content/04_level-4-results.md?raw';
+import MARKDOWN from './content/04_level-4-results.md?raw';
 import { renderMarkdown } from '../../components/shared/render-markdown';
 import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
 import { RoiCalculator, RoiFormulaFigure } from './RoiCalculator';
