@@ -57,18 +57,26 @@ export function SeriesEyebrow({ label }: { label: string }): JSX.Element {
   );
 }
 
-// Footer: back to the hub on the left; the next artifact on the right —
-// or "Back to the course" on the last artifact, as a deliberate
-// end-of-series capstone. The sidebar's program title always links home,
-// so the interior pages lose no navigation by dropping the course link.
+// Footer: a prev/next pager through the series. Left goes to the previous
+// artifact, falling back to the series hub on the first one; right goes to
+// the next artifact, falling back to "Back to the course" on the last as a
+// deliberate end-of-series capstone. The sidebar's program title always
+// links home, so the interior pages lose no navigation either way.
 export function ArtifactFooter({ currentSlug }: { currentSlug: string }): JSX.Element {
   const idx = ARTIFACTS.findIndex((a) => a.slug === currentSlug);
+  const prev = idx > 0 ? ARTIFACTS[idx - 1] : undefined;
   const next = idx >= 0 ? ARTIFACTS[idx + 1] : undefined;
   return (
     <div className="mt-14 flex flex-col gap-3 border-t border-border-light pt-6 sm:flex-row sm:items-center sm:justify-between">
-      <a href="#/needs-analysis" className={TEXT_LINK}>
-        <span aria-hidden="true">←</span> Back to the needs analysis
-      </a>
+      {prev ? (
+        <a href={`#/${prev.route}`} className={TEXT_LINK}>
+          <span aria-hidden="true">←</span> Previous: {prev.title}
+        </a>
+      ) : (
+        <a href="#/needs-analysis" className={TEXT_LINK}>
+          <span aria-hidden="true">←</span> Back to the needs analysis
+        </a>
+      )}
       {next ? (
         <a href={`#/${next.route}`} className={TEXT_LINK}>
           Next: {next.title} <span aria-hidden="true">→</span>
