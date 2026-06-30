@@ -40,7 +40,7 @@ export default function Level4Results(): JSX.Element {
       {partB.length > 0 && (
         <article className="mt-10 max-w-reading">{renderMarkdown(partB)}</article>
       )}
-      <ArtifactFooter />
+      <ArtifactFooter currentSlug="level-4-results" />
     </div>
   );
 }

@@ -2,7 +2,7 @@
 // the PDF download affordance, the series eyebrow, and the footer back-links.
 // Reused across the reading pages and (in part) the hub.
 
-import { ARTIFACT_PDFS, SERIES_ACCENT } from './config';
+import { ARTIFACTS, ARTIFACT_PDFS, SERIES_ACCENT } from './config';
 
 const TEXT_LINK =
   'inline-flex items-center gap-1.5 font-sans text-[13px] font-medium text-secondary no-underline transition-colors hover:text-ink';
@@ -57,16 +57,27 @@ export function SeriesEyebrow({ label }: { label: string }): JSX.Element {
   );
 }
 
-// Footer: back to the hub and back to the course.
-export function ArtifactFooter(): JSX.Element {
+// Footer: back to the hub on the left; the next artifact on the right —
+// or "Back to the course" on the last artifact, as a deliberate
+// end-of-series capstone. The sidebar's program title always links home,
+// so the interior pages lose no navigation by dropping the course link.
+export function ArtifactFooter({ currentSlug }: { currentSlug: string }): JSX.Element {
+  const idx = ARTIFACTS.findIndex((a) => a.slug === currentSlug);
+  const next = idx >= 0 ? ARTIFACTS[idx + 1] : undefined;
   return (
     <div className="mt-14 flex flex-col gap-3 border-t border-border-light pt-6 sm:flex-row sm:items-center sm:justify-between">
       <a href="#/evaluation" className={TEXT_LINK}>
         <span aria-hidden="true">←</span> Back to the evaluation framework
       </a>
-      <a href="#/" className={TEXT_LINK}>
-        Back to the course <span aria-hidden="true">→</span>
-      </a>
+      {next ? (
+        <a href={`#/${next.route}`} className={TEXT_LINK}>
+          Next: {next.title} <span aria-hidden="true">→</span>
+        </a>
+      ) : (
+        <a href="#/" className={TEXT_LINK}>
+          Back to the course <span aria-hidden="true">→</span>
+        </a>
+      )}
     </div>
   );
 }
