@@ -95,6 +95,8 @@ export default function ThankYou(): JSX.Element {
 
       <NeedsAnalysisBlock />
 
+      <EvaluationBlock />
+
       {showTipSection && <TipCard onClick={onTipClick} />}
 
       <BlogCard
@@ -283,6 +285,50 @@ function NeedsAnalysisBlock(): JSX.Element {
         style={{ background: 'transparent', border: '1.5px solid rgb(var(--border))', padding: '9px 18px' }}
       >
         Read the needs analysis →
+      </a>
+    </section>
+  );
+}
+
+// ─── Evaluation-framework block ───────────────────────────────────
+//
+// Links to the evaluation-framework hub (`/#/evaluation`) — the four
+// Kirkpatrick-level documents (reaction, learning, behavior, results)
+// that define how the course measures whether it works. Sits directly
+// under the needs-analysis block as its companion "go deeper"
+// affordance, with the same card treatment so the two read as a set
+// (the case for the course, then the evidence plan for it). Internal
+// hash link (no new-tab/rel) since it routes within the platform.
+
+function EvaluationBlock(): JSX.Element {
+  return (
+    <section
+      aria-label="The evaluation framework"
+      className="mt-6 rounded-lg"
+      style={{
+        background: 'rgb(var(--white))',
+        border: '1px solid rgb(var(--border))',
+        borderTop: `3px solid ${DILIGENCE}`,
+        padding: '24px 26px',
+      }}
+    >
+      <h2
+        className="m-0 mb-3 font-sans text-h3 font-semibold text-ink"
+        style={{ letterSpacing: '-0.005em' }}
+      >
+        The evaluation framework
+      </h2>
+      <p className="m-0 mb-5 font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
+        How the course measures whether it works: the four Kirkpatrick levels (reaction, learning,
+        behavior, and results), designed before the modules were built, so success was defined
+        before anything existed to produce it. Four documents, instruments and methodology intact.
+      </p>
+      <a
+        href="#/evaluation"
+        className="inline-flex items-center gap-2 rounded-md font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
+        style={{ background: 'transparent', border: '1.5px solid rgb(var(--border))', padding: '9px 18px' }}
+      >
+        Read the evaluation framework →
       </a>
     </section>
   );

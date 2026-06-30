@@ -1,5 +1,4 @@
 # Evidence-Based Learner Persona
-## AI Literacy for the Modern Workforce
 
 ## Persona: The Mid-Career Knowledge Professional
 
