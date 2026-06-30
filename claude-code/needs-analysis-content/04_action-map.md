@@ -1,5 +1,4 @@
 # Action Map
-## AI Literacy for the Modern Workforce
 
 *Following Cathy Moore's Action Mapping framework, organized by the [Anthropic 4D competency taxonomy](https://bear-images.sfo2.cdn.digitaloceanspaces.com/ritchot/2_ai_fluency_summary_one-pager.pdf) of Delegation, Description, Discernment, and Diligence (Dakan & Feller, 2025).*
 
