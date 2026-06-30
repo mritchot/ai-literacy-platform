@@ -61,7 +61,7 @@ export const ARTIFACT_PDFS: Record<string, string> = {
 
 // Long-form blog post that frames the series on ritchot.me. Empty until the
 // post is published; the hub's write-up link is hidden while empty.
-export const EVALUATION_WRITEUP_URL = '';
+export const EVALUATION_WRITEUP_URL = 'https://ritchot.me/the-evaluation-framework-for-my-ai-literacy-course/';
 
 // Series accent — Discernment slate from the 4D palette. Evaluation is the
 // discernment work of the project, so it carries its own quiet accent while
