@@ -874,7 +874,7 @@ export default function ActionMap(): JSX.Element {
       <ProseSection heading="Scope and Feasibility Notes" body={SCOPE_MD} />
       <ProseSection heading="Sources" body={SOURCES_MD} />
 
-      <ArtifactFooter />
+      <ArtifactFooter currentSlug="action-map" />
     </div>
   );
 }
