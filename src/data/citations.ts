@@ -99,6 +99,19 @@ export const CITATIONS = {
       'lost-in-middle': 'pp. 157–173',
     },
   },
+  'lee-2025': {
+    id: 'lee-2025',
+    shortLabel: 'Lee et al., 2025',
+    authors:
+      'Lee, H.-P., Sarkar, A., Tankelevitch, L., Drosos, I., Rintel, S., Banks, R., & Wilson, N.',
+    title:
+      'The Impact of Generative AI on Critical Thinking: Self-Reported Reductions in Cognitive Effort and Confidence Effects From a Survey of Knowledge Workers',
+    publisher: 'CHI Conference on Human Factors in Computing Systems (CHI ’25)',
+    date: '2025',
+    pages: {
+      'confidence-critical-thinking': 'abstract; survey of 319 knowledge workers',
+    },
+  },
   'tamkin-mccrory-2025': {
     id: 'tamkin-mccrory-2025',
     shortLabel: 'Tamkin & McCrory, 2025',

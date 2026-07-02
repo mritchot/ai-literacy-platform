@@ -418,6 +418,17 @@ function Section9({ module }: ModuleProp): JSX.Element {
           your AI practices visible to your team and your organization.
         </p>
         <p className="m-0">
+          One caution belongs in this closing. Research on knowledge workers using generative AI
+          has documented a pattern worth naming: the more confident people become in the tool,
+          the less critical thinking they report applying to its output
+          <Citation ids="lee-2025" pageKey="confidence-critical-thinking" />. Confidence is the
+          intended product of a program like this one — but the confidence this program built is
+          confidence in your evaluation process, not in the tool's output. The moment the
+          verification workflow starts to feel unnecessary is the moment it is doing the most
+          work. If your Discernment practice fades as the outputs keep looking clean, you have
+          not become better at using AI; you have become a faster route for unverified content.
+        </p>
+        <p className="m-0">
           The diligence statement is the artifact that outlasts the program. The action commitment
           you wrote in Module 2 identified two tasks to change your approach to. The diligence
           statement you wrote in this module documented how you actually did it. Both are
