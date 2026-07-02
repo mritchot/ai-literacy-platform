@@ -53,23 +53,37 @@ export function LandingPage(): JSX.Element {
   const preCtaActive = mode === 'learner' && !preComplete;
   // Resume target: first non-done section in the first module that still has
   // outstanding work, otherwise the first unlocked module's first section.
+  // A first-non-done section is unlocked by construction (all its
+  // predecessors are done) with ONE exception: M4 S10 additionally gates on
+  // the post-assessment. Deep-linking there would bypass the bookend gate
+  // that the sidebar and SectionContainer's S9 redirect both enforce — so
+  // route to the post-assessment instead.
   const resumeTarget = (() => {
     for (const m of modules) {
       if (gating.isModuleLocked(m.id)) continue;
       const next = m.sections.find((s) => s.state !== 'done');
-      if (next) return { moduleId: m.id, sectionId: next.id };
+      if (next) {
+        if (gating.isSectionLocked(m.id, next.id)) {
+          return { to: '/post-assessment', label: 'Continue to the post-assessment' };
+        }
+        return {
+          to: `/module/${m.id}/section/${next.id}`,
+          label: hasStarted ? 'Resume program' : 'Begin program',
+        };
+      }
     }
     const first = modules.find((m) => !gating.isModuleLocked(m.id));
-    return first ? { moduleId: first.id, sectionId: first.sections[0]?.id ?? 1 } : null;
+    return first
+      ? {
+          to: `/module/${first.id}/section/${first.sections[0]?.id ?? 1}`,
+          label: hasStarted ? 'Resume program' : 'Begin program',
+        }
+      : null;
   })();
 
   return (
     <div className="mx-auto max-w-[1160px] px-4 py-14 sm:px-8 lg:px-16 lg:py-14">
-      <Hero
-        hasStarted={hasStarted}
-        resumeTarget={resumeTarget}
-        preCtaActive={preCtaActive}
-      />
+      <Hero resumeTarget={resumeTarget} preCtaActive={preCtaActive} />
       <CompetencyLegend />
       <ModuleGrid modules={modules} gating={gating} />
       <SummaryBar completedSections={completedSections} totalSections={totalSections} />
@@ -80,12 +94,13 @@ export function LandingPage(): JSX.Element {
 }
 
 function Hero({
-  hasStarted,
   resumeTarget,
   preCtaActive,
 }: {
-  hasStarted: boolean;
-  resumeTarget: { moduleId: number; sectionId: number } | null;
+  /** Destination + label for the primary CTA — precomputed by the
+   *  parent so locked targets (M4 S10 behind the post-assessment)
+   *  are already rerouted. */
+  resumeTarget: { to: string; label: string } | null;
   /** When true, the primary CTA routes to `/pre-assessment` instead
    *  of the standard resume target. The pre-assessment gates Module 1
    *  in learner mode, so it has to be the visible first step. */
@@ -120,11 +135,11 @@ function Hero({
         ) : (
           resumeTarget && (
             <Link
-              to={`/module/${resumeTarget.moduleId}/section/${resumeTarget.sectionId}`}
+              to={resumeTarget.to}
               className="inline-flex items-center gap-2.5 rounded-md bg-action px-5 py-3 font-sans text-[14px] font-semibold text-[rgb(var(--white))] no-underline transition-colors duration-150 hover:bg-action-hover"
               style={{ border: '1.5px solid rgb(var(--action))' }}
             >
-              {hasStarted ? 'Resume program' : 'Begin program'}
+              {resumeTarget.label}
               <Icon name="arrowRight" size={15} />
             </Link>
           )
@@ -230,28 +245,48 @@ function ModuleGrid({
         style={{ gridAutoRows: '1fr' }}
       >
         {modules.map((m) => (
-          <ModuleCard key={m.id} module={m} locked={gating.isModuleLocked(m.id)} />
+          <ModuleCard
+            key={m.id}
+            module={m}
+            locked={gating.isModuleLocked(m.id)}
+            gating={gating}
+          />
         ))}
       </div>
     </section>
   );
 }
 
-function ModuleCard({ module, locked }: { module: ModuleMeta; locked: boolean }): JSX.Element {
+function ModuleCard({
+  module,
+  locked,
+  gating,
+}: {
+  module: ModuleMeta;
+  locked: boolean;
+  gating: ModuleGating;
+}): JSX.Element {
   const cardClass = [
     'flex min-h-[268px] flex-col rounded-xl bg-[rgb(var(--white))] transition-all duration-200',
     locked ? 'opacity-60' : 'hover:bg-surface',
   ].join(' ');
 
   // Determine where the CTA should land. If there's an unfinished section,
-  // deep-link to it (Resume); otherwise drop on the module landing.
+  // deep-link to it (Resume); otherwise drop on the module landing. The
+  // first unfinished section can itself be locked only in one case — M4
+  // S10 behind the post-assessment — so reroute there instead of
+  // bypassing the bookend gate with a direct deep link.
   const doneCount = module.sections.filter((s) => s.state === 'done').length;
   const total = module.sections.length;
   const isComplete = total > 0 && doneCount === total;
   const isStarted = doneCount > 0;
   const nextSection = module.sections.find((s) => s.state !== 'done');
+  const nextSectionLocked =
+    nextSection !== undefined && gating.isSectionLocked(module.id, nextSection.id);
   const ctaTarget = nextSection
-    ? `/module/${module.id}/section/${nextSection.id}`
+    ? nextSectionLocked
+      ? '/post-assessment'
+      : `/module/${module.id}/section/${nextSection.id}`
     : `/module/${module.id}`;
   const ctaLabel = isComplete ? 'Review module' : isStarted ? 'Resume' : 'Start module';
 

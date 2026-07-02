@@ -261,10 +261,10 @@ function Section3({ module }: ModuleProp): JSX.Element {
     const allDone = [1, 2, 3, 4].every(
       (n) => state.knowledgeChecks[`3.3.p5_round_${n}`],
     );
-    if (allDone && !state.completedSections['3.3']) {
+    if (allDone && !state.interactionCompleteSections['3.3']) {
       markInteractionComplete(3, 3);
     }
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete]);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete]);
 
   return (
     <SectionContainer
@@ -388,10 +388,10 @@ function Section5({ module }: ModuleProp): JSX.Element {
     const generated =
       Boolean(state.engagedFlags['3.5.stem_1_generated']) ||
       Boolean(state.engagedFlags['3.5.stem_2_generated']);
-    if (tabsViewed && generated && !state.completedSections['3.5']) {
+    if (tabsViewed && generated && !state.interactionCompleteSections['3.5']) {
       markInteractionComplete(3, 5);
     }
-  }, [state.viewedTabs, state.engagedFlags, state.completedSections, markInteractionComplete]);
+  }, [state.viewedTabs, state.engagedFlags, state.interactionCompleteSections, markInteractionComplete]);
 
   return (
     <SectionContainer
@@ -545,10 +545,10 @@ function Section7({ module }: ModuleProp): JSX.Element {
     const allItems = [1, 2, 3, 4].every(
       (n) => state.knowledgeChecks[`3.7.p7_item_${n}`],
     );
-    if (allItems && !state.completedSections['3.7']) {
+    if (allItems && !state.interactionCompleteSections['3.7']) {
       markInteractionComplete(3, 7);
     }
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete]);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete]);
 
   return (
     <SectionContainer
@@ -731,11 +731,11 @@ function Section10({ module }: ModuleProp): JSX.Element {
     const allDone = MODULE_3_KC_ITEMS.every((item) =>
       Boolean(state.knowledgeChecks[`3.10.${item.id}`]),
     );
-    if (allDone && !state.completedSections['3.10']) {
+    if (allDone && !state.interactionCompleteSections['3.10']) {
       markInteractionComplete(3, 10);
       track({ type: 'kc_module_3_complete', moduleId: 3, sectionId: 10 });
     }
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete, track]);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete, track]);
 
   return (
     <SectionContainer

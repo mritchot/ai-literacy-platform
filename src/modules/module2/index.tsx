@@ -522,11 +522,11 @@ function Section7({ module }: ModuleProp): JSX.Element {
     const allDone = MODULE_2_KC_ITEMS.every((item) =>
       Boolean(state.knowledgeChecks[`2.7.${item.id}`]),
     );
-    if (allDone && !state.completedSections['2.7']) {
+    if (allDone && !state.interactionCompleteSections['2.7']) {
       markInteractionComplete(2, 7);
       track({ type: 'kc_module_2_complete', moduleId: 2, sectionId: 7 });
     }
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete, track]);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete, track]);
 
   return (
     <SectionContainer
