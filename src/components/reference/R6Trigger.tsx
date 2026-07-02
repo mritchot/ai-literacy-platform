@@ -1,39 +1,11 @@
-// R6Trigger — AI Diligence Statement Template. See R1Trigger.tsx for
-// the shared trigger pattern.
+// R6Trigger — thin wrapper over the registry-driven ReferenceTrigger
+// (kept so existing call sites keep their names; the shared open/close
+// + panel wiring lives in ReferenceTrigger.tsx).
 
-import { useState } from 'react';
-import { ReferencePanel } from './ReferencePanel';
-import { ReferenceTriggerButton } from './ReferenceTriggerButton';
-import { R6DiligenceTemplate } from './items/R6DiligenceTemplate';
+import { ReferenceTrigger, type ReferenceTriggerProps } from './ReferenceTrigger';
 
-interface R6TriggerProps {
-  label?: string;
-  variant?: 'inline' | 'tab';
-}
+type R6TriggerProps = Omit<ReferenceTriggerProps, 'refId'>;
 
-export function R6Trigger({
-  label = 'Diligence Statement Template',
-  variant = 'inline',
-}: R6TriggerProps): JSX.Element {
-  const [open, setOpen] = useState(false);
-  return (
-    <>
-      <ReferenceTriggerButton
-        refId="R6"
-        label={label}
-        onClick={() => setOpen(true)}
-        variant={variant}
-      />
-      <ReferencePanel
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        id="R6"
-        title="AI Diligence Statement Template"
-        pdfPath="reference/r6-diligence-statement-template.pdf"
-        pdfFilename="r6-diligence-statement-template.pdf"
-      >
-        <R6DiligenceTemplate />
-      </ReferencePanel>
-    </>
-  );
+export function R6Trigger(props: R6TriggerProps): JSX.Element {
+  return <ReferenceTrigger refId="R6" {...props} />;
 }
