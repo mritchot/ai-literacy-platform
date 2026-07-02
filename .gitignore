@@ -18,14 +18,6 @@ dist-ssr
 # out of any public-repo push.
 .claude/
 
-# Working knowledge base — not part of the deployed bundle.
-# Contains the upstream course corpus (third-party videos/PDFs/transcripts
-# whose redistribution terms aren't clear), the research source papers,
-# planning offload files (todo.md, process-journal.md, ux-polish-audit.md),
-# and internal content drafts. All of it is local-only; nothing here ships
-# in dist/ or affects what users see.
-course-info/
-
 # Cognitive offload files — local-only project management and AI context.
 # Not part of the codebase or deployed bundle.
 CLAUDE.md

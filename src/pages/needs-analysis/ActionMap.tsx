@@ -1,6 +1,6 @@
-// Action Map — interactive artifact. Ported from the design-phase prototype
-// (`course-info/content/01_phase-01/02c_action-map.jsx`) into a typed route
-// component that lives inside PlatformShell.
+// Action Map — interactive artifact. Ported from the design-phase JSX
+// prototype (02c_action-map.jsx, Phase 1 planning corpus) into a typed
+// route component that lives inside PlatformShell.
 //
 // Changes from the prototype, all to fit the platform: the Google-Fonts
 // <link> is dropped (the platform self-hosts DM fonts via @fontsource — no
