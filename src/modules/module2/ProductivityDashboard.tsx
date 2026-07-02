@@ -60,15 +60,21 @@ export function ProductivityDashboard({
     markTabViewed(2, 5, activeTab);
   }, [activeTab, track, markTabViewed]);
 
+  // Roving tabindex: activation must move DOM focus with it (see
+  // AugAutoDashboard for the failure mode this prevents).
+  const activateTab = (tab: (typeof TABS)[number] | undefined) => {
+    if (!tab) return;
+    setActiveTab(tab.id);
+    document.getElementById(`p4-tab-${tab.id}`)?.focus();
+  };
+
   const onTabKeyDown = (e: KeyboardEvent<HTMLButtonElement>, idx: number) => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
       e.preventDefault();
-      const next = TABS[(idx + 1) % TABS.length];
-      if (next) setActiveTab(next.id);
+      activateTab(TABS[(idx + 1) % TABS.length]);
     } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
       e.preventDefault();
-      const prev = TABS[(idx - 1 + TABS.length) % TABS.length];
-      if (prev) setActiveTab(prev.id);
+      activateTab(TABS[(idx - 1 + TABS.length) % TABS.length]);
     }
   };
 
