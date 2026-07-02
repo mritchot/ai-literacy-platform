@@ -4,7 +4,7 @@
 // temperature comparison whose outputs are pre-written for pedagogical
 // consistency rather than randomly sampled.
 
-import { useEffect, useMemo, useState, type KeyboardEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { ReflectionPrompt } from '../../components/shared/ReflectionPrompt';
@@ -109,14 +109,29 @@ export function NextTokenDemo(): JSX.Element {
     setGenerated((prev) => ({ ...prev, [activeStem]: [] }));
   };
 
+  // Debounced analytics for the slider — the UI updates per step, but
+  // one drag across the range would otherwise emit ~19 events; track
+  // only the value the learner settles on (same 500ms pattern as the
+  // geo chart's search tracking).
+  const tempTrackRef = useRef<number | null>(null);
+  useEffect(
+    () => () => {
+      if (tempTrackRef.current !== null) window.clearTimeout(tempTrackRef.current);
+    },
+    [],
+  );
   const onTemperatureChange = (next: number) => {
     setTemperature(next);
-    track({
-      type: 'p6_temperature_adjusted',
-      moduleId: 3,
-      sectionId: 5,
-      payload: { temperature: next },
-    });
+    if (tempTrackRef.current !== null) window.clearTimeout(tempTrackRef.current);
+    tempTrackRef.current = window.setTimeout(() => {
+      tempTrackRef.current = null;
+      track({
+        type: 'p6_temperature_adjusted',
+        moduleId: 3,
+        sectionId: 5,
+        payload: { temperature: next },
+      });
+    }, 500);
   };
 
   const allStemsViewed =
