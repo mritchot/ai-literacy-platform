@@ -3,7 +3,8 @@
 // (top three, caution accent) and "physical-world / troubleshooting" (bottom
 // two, info accent). Spec §5.4.
 
-import { TOKEN_HEX, formatCurrency, formatPercent } from '../../utils/chart-config';
+import { formatCurrency, formatPercent } from '../../utils/chart-config';
+import { useChartTokens } from '../../hooks/useChartTokens';
 
 interface TaskExample {
   occupation: string;
@@ -26,13 +27,16 @@ function accentFor(index: number, total: number): Accent {
   return 'none';
 }
 
-const ACCENT_COLOR: Record<Accent, string | null> = {
-  caution: TOKEN_HEX.caution,
-  info: TOKEN_HEX.info,
-  none: null,
-};
-
 export function ProductivityViewB({ tasks }: ProductivityViewBProps): JSX.Element {
+  const tokens = useChartTokens();
+  // Accent hexes resolve through useChartTokens so the group coding
+  // (legend swatches, card border accents, savings-bar fills) flips
+  // with the theme.
+  const accentColor: Record<Accent, string | null> = {
+    caution: tokens.caution,
+    info: tokens.info,
+    none: null,
+  };
   return (
     <div className="space-y-5">
       <p className="m-0 font-sans text-body-sm text-body">
@@ -46,11 +50,11 @@ export function ProductivityViewB({ tasks }: ProductivityViewBProps): JSX.Elemen
 
       <div className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[11px] text-tertiary">
         <span className="inline-flex items-center gap-1.5">
-          <span aria-hidden="true" className="inline-block rounded-full" style={{ width: 10, height: 10, background: TOKEN_HEX.caution }} />
+          <span aria-hidden="true" className="inline-block rounded-full" style={{ width: 10, height: 10, background: tokens.caution }} />
           Information assembly: highest savings, hardest to verify
         </span>
         <span className="inline-flex items-center gap-1.5">
-          <span aria-hidden="true" className="inline-block rounded-full" style={{ width: 10, height: 10, background: TOKEN_HEX.info }} />
+          <span aria-hidden="true" className="inline-block rounded-full" style={{ width: 10, height: 10, background: tokens.info }} />
           Physical-world / troubleshooting: lower savings, more verifiable
         </span>
       </div>
@@ -66,14 +70,14 @@ export function ProductivityViewB({ tasks }: ProductivityViewBProps): JSX.Elemen
       >
         {tasks.map((t, i) => {
           const accent = accentFor(i, tasks.length);
-          const accentColor = ACCENT_COLOR[accent];
+          const cardAccent = accentColor[accent];
           return (
             <li
               key={`${t.occupation}-${i}`}
               className="flex flex-col rounded-lg bg-[rgb(var(--white))]"
               style={{
                 border: '1px solid rgb(var(--border))',
-                borderLeft: accentColor ? `3px solid ${accentColor}` : '1px solid rgb(var(--border))',
+                borderLeft: cardAccent ? `3px solid ${cardAccent}` : '1px solid rgb(var(--border))',
                 padding: '14px 18px',
               }}
             >
@@ -97,7 +101,7 @@ export function ProductivityViewB({ tasks }: ProductivityViewBProps): JSX.Elemen
                 <span aria-hidden="true" className="mx-1.5 text-ghost">→</span>
                 <span>{formatCurrency(t.task_cost_usd * (1 - t.time_savings_pct / 100))} with AI</span>
               </div>
-              <SavingsBar value={t.time_savings_pct} accent={accentColor} />
+              <SavingsBar value={t.time_savings_pct} accent={cardAccent} />
             </li>
           );
         })}
@@ -123,8 +127,9 @@ export function ProductivityViewB({ tasks }: ProductivityViewBProps): JSX.Elemen
 }
 
 function SavingsBar({ value, accent }: { value: number; accent: string | null }): JSX.Element {
+  const tokens = useChartTokens();
   const pct = Math.max(0, Math.min(100, value));
-  const fill = accent ?? TOKEN_HEX.secondary;
+  const fill = accent ?? tokens.secondary;
   return (
     <div className="flex items-center gap-3">
       <div

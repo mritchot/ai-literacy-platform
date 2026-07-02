@@ -7,6 +7,7 @@ import { useEffect, useState, type KeyboardEvent } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { TOKEN_HEX } from '../../utils/chart-config';
+import { useChartTokens } from '../../hooks/useChartTokens';
 import { AugAutoViewA } from './AugAutoViewA';
 import { AugAutoViewB } from './AugAutoViewB';
 import { AugAutoViewC } from './AugAutoViewC';
@@ -16,14 +17,13 @@ type TabId = 'adoption' | 'patterns' | 'self-report';
 interface Tab {
   id: TabId;
   label: string;
-  accent: string;
   event: string;
 }
 
 const TABS: Tab[] = [
-  { id: 'adoption', label: 'Adoption by Occupation', accent: TOKEN_HEX.secondary, event: 'p3_view_a_viewed' },
-  { id: 'patterns', label: 'Collaboration Patterns', accent: TOKEN_HEX.delegation, event: 'p3_view_b_viewed' },
-  { id: 'self-report', label: 'Self-Report vs. Behavioral Data', accent: TOKEN_HEX.discernment, event: 'p3_view_c_viewed' },
+  { id: 'adoption', label: 'Adoption by Occupation', event: 'p3_view_a_viewed' },
+  { id: 'patterns', label: 'Collaboration Patterns', event: 'p3_view_b_viewed' },
+  { id: 'self-report', label: 'Self-Report vs. Behavioral Data', event: 'p3_view_c_viewed' },
 ];
 
 interface OccupationCategory {
@@ -67,6 +67,17 @@ export function AugAutoDashboard(props: AugAutoDashboardProps): JSX.Element {
   const [activeTab, setActiveTab] = useState<TabId>('adoption');
   const { track } = useAnalytics();
   const { markTabViewed } = useLearnerProgress();
+  const tokens = useChartTokens();
+
+  // Active-tab underline accents. The neutral View A underline flips
+  // with the theme; the Delegation/Discernment underlines stay on the
+  // static 4D brand hexes — mid-tones that read on both canvases (same
+  // convention as CompetencyDot and the reference-item accents).
+  const tabAccent: Record<TabId, string> = {
+    adoption: tokens.secondary,
+    patterns: TOKEN_HEX.delegation,
+    'self-report': TOKEN_HEX.discernment,
+  };
 
   // Fire view-tracking event whenever a tab becomes active.
   useEffect(() => {
@@ -132,7 +143,7 @@ export function AugAutoDashboard(props: AugAutoDashboardProps): JSX.Element {
                 background: active ? 'rgb(var(--white))' : 'transparent',
                 color: active ? 'rgb(var(--ink))' : 'rgb(var(--secondary))',
                 fontWeight: active ? 600 : 500,
-                borderBottom: active ? `2px solid ${tab.accent}` : '2px solid transparent',
+                borderBottom: active ? `2px solid ${tabAccent[tab.id]}` : '2px solid transparent',
                 marginBottom: '-1px',
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',

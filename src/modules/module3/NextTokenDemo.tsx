@@ -12,6 +12,7 @@ import { Overline } from '../../components/shared/Overline';
 import { R5Trigger } from '../../components/reference/R5Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
 import { TOKEN_HEX } from '../../utils/chart-config';
+import { useChartTokens } from '../../hooks/useChartTokens';
 import { TokenChip } from './TokenChip';
 import { useViewport } from '../../hooks/useViewport';
 import {
@@ -203,6 +204,9 @@ export function NextTokenDemo(): JSX.Element {
                 background: active ? 'rgb(var(--white))' : 'transparent',
                 color: active ? 'rgb(var(--ink))' : 'rgb(var(--secondary))',
                 fontWeight: active ? 600 : 500,
+                // Static Discernment brand accent on the underline —
+                // intentionally NOT theme-flipped (mid-tone reads on both
+                // canvases; same convention as the dashboard tab accents).
                 borderBottom: active
                   ? `2px solid ${TOKEN_HEX.discernment}`
                   : '2px solid transparent',
@@ -456,6 +460,7 @@ function ProbabilityPanel({
 }
 
 function ProbabilityBar({ pct }: { pct: number }): JSX.Element {
+  const tokens = useChartTokens();
   const width = Math.max(0, Math.min(100, pct));
   return (
     <div
@@ -465,7 +470,7 @@ function ProbabilityBar({ pct }: { pct: number }): JSX.Element {
     >
       <div
         className="h-full rounded-sm transition-[width] duration-300 ease-out"
-        style={{ width: `${width}%`, background: TOKEN_HEX.info }}
+        style={{ width: `${width}%`, background: tokens.info }}
       />
     </div>
   );

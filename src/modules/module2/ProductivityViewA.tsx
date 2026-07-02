@@ -3,7 +3,8 @@
 
 import { Fragment, useMemo, useState, type KeyboardEvent } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
-import { TOKEN_HEX, formatCurrency, formatPercent } from '../../utils/chart-config';
+import { formatCurrency, formatPercent } from '../../utils/chart-config';
+import { useChartTokens } from '../../hooks/useChartTokens';
 
 interface OccupationRow {
   occupation: string;
@@ -308,13 +309,14 @@ export function ProductivityViewA({ rows }: ProductivityViewAProps): JSX.Element
 }
 
 function SavingsBar({ value }: { value: number }): JSX.Element {
+  const tokens = useChartTokens();
   const pct = Math.max(0, Math.min(100, value));
   return (
     <div className="relative h-5 overflow-hidden rounded-sm" style={{ background: 'rgb(var(--border-light))' }}>
       <div
         aria-hidden="true"
         className="absolute inset-y-0 left-0 transition-[width] duration-300"
-        style={{ width: `${pct}%`, background: TOKEN_HEX.secondary, opacity: 0.2 }}
+        style={{ width: `${pct}%`, background: tokens.secondary, opacity: 0.2 }}
       />
       <span
         className="relative z-10 flex h-full items-center font-mono text-[12px] font-semibold text-ink"

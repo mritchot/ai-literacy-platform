@@ -53,6 +53,15 @@ export const DISCERNMENT_COLORS = ['#5E7080', '#A8BCCA'] as const;
 
 // Plain hex shorthands for tokens that are referenced by Recharts as fills
 // or strokes — Recharts cannot read CSS variables, so we expose hex copies.
+//
+// NOTE: these are static LIGHT-mode hexes. Chart fills, strokes, and
+// inline value text must NOT reference them directly — use the
+// theme-resolved `useChartTokens()` hook instead, or dark mode keeps
+// light-mode shades on the dark canvas. Remaining legitimate consumers:
+//   - AugAutoDashboard / NextTokenDemo tab underlines: `delegation` /
+//     `discernment` as static 4D brand accents on borders (mid-tones
+//     that read on both canvases — same convention as CompetencyDot).
+// Everything else has been migrated to useChartTokens.
 export const TOKEN_HEX = {
   action: '#3D5A4E',
   success: '#4A7C59',
