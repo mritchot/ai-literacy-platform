@@ -3,8 +3,8 @@
 // section param. Data files are imported here once and passed as props to
 // the chart components (4A spec §11.1).
 
-import { useEffect, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useSectionParam } from '../../hooks/useSectionParam';
 import {
   SectionContainer,
   getModuleOrThrow,
@@ -51,26 +51,12 @@ import { RCTComparisonChart } from './RCTComparisonChart';
 const MODULE_ID = 2;
 
 export default function Module2(): JSX.Element {
-  const { sectionId: sectionParam } = useParams<{ sectionId?: string }>();
-  const navigate = useNavigate();
-
-  const sectionId = useMemo(() => {
-    if (sectionParam === undefined) return 1;
-    const parsed = Number.parseInt(sectionParam, 10);
-    if (Number.isNaN(parsed) || parsed < 1 || parsed > 8) return 1;
-    return parsed;
-  }, [sectionParam]);
+  const sectionId = useSectionParam(MODULE_ID);
 
   // If the user lands on /module/2 with no sectionId param, normalize the
   // URL so back/forward navigation lands on the right section. `navigate`
   // identity is stable across renders, but exclude it from deps to keep the
   // effect tied only to the URL param it actually responds to.
-  useEffect(() => {
-    if (sectionParam === undefined) {
-      navigate(`/module/${MODULE_ID}/section/1`, { replace: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sectionParam]);
 
   const module = getModuleOrThrow(MODULE_ID);
 

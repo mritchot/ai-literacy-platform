@@ -24,12 +24,13 @@
 // 'system' reachable from the UI.
 
 import { useSyncExternalStore } from 'react';
+import { STORAGE_KEYS } from '../constants/storage-keys';
 import type { IconName } from '../components/shared/Icon';
 
 export type ThemePreference = 'system' | 'light' | 'dark';
 type ResolvedTheme = 'light' | 'dark';
 
-const STORAGE_KEY = 'ail.theme';
+const STORAGE_KEY = STORAGE_KEYS.THEME;
 
 function isPreference(v: unknown): v is ThemePreference {
   return v === 'system' || v === 'light' || v === 'dark';

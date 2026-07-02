@@ -127,7 +127,7 @@ export function EventTimeline({ events }: EventTimelineProps): JSX.Element {
   return (
     <section aria-label="Analytics event timeline">
       <h2 className="m-0">
-        <Overline className="mb-3" style={{ fontSize: 11 }}>
+        <Overline as="span" className="mb-3" style={{ fontSize: 11 }}>
           Event Timeline
         </Overline>
       </h2>

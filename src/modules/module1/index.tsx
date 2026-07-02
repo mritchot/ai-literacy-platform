@@ -3,8 +3,8 @@
 // URL section param. Data files are imported here once and passed as props
 // to chart components (4C spec §18.1).
 
-import { useEffect, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useSectionParam } from '../../hooks/useSectionParam';
 import {
   SectionContainer,
   getModuleOrThrow,
@@ -29,23 +29,8 @@ import { StigmaReflection } from './StigmaReflection';
 const MODULE_ID = 1;
 
 export default function Module1(): JSX.Element {
-  const { sectionId: sectionParam } = useParams<{ sectionId?: string }>();
-  const navigate = useNavigate();
+  const sectionId = useSectionParam(MODULE_ID);
 
-  const sectionId = useMemo(() => {
-    if (sectionParam === undefined) return 1;
-    const parsed = Number.parseInt(sectionParam, 10);
-    if (Number.isNaN(parsed) || parsed < 1 || parsed > 8) return 1;
-    return parsed;
-  }, [sectionParam]);
-
-  // Normalize bare /module/1 to /module/1/section/1 so back/forward work.
-  useEffect(() => {
-    if (sectionParam === undefined) {
-      navigate(`/module/${MODULE_ID}/section/1`, { replace: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sectionParam]);
 
   const module = getModuleOrThrow(MODULE_ID);
 
