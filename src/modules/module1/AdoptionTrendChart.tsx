@@ -164,8 +164,9 @@ export function AdoptionTrendChart({
         </div>
 
         <p className="m-0 mt-3 font-sans text-body-sm italic text-secondary">
-          Note: percentages do not sum to 100%. A small share of interactions (3–4%) do not
-          clearly fit either category and remain unclassified.
+          Note: percentages in the Aug and Nov 2025 waves do not sum to 100% — a small share
+          of interactions (3–4%) do not clearly fit either category and remain unclassified.
+          The Jan 2025 wave uses the original Handa et al. classification, which sums to 100%.
         </p>
       </figure>
 
