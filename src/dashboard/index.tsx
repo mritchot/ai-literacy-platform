@@ -136,23 +136,29 @@ export default function AnalyticsDashboard(): JSX.Element {
               KC Response Analysis so reviewers see the pre→post growth
               picture before drilling into module-level details. */}
           <section>
-            <Overline className="mb-3" style={{ fontSize: 11 }}>
-              Assessment Response Analysis
-            </Overline>
+            <h2 className="m-0">
+              <Overline className="mb-3" style={{ fontSize: 11 }}>
+                Assessment Response Analysis
+              </Overline>
+            </h2>
             <AssessmentResponseAnalysis progress={data.progress} />
           </section>
 
           <section>
-            <Overline className="mb-3" style={{ fontSize: 11 }}>
-              Module Completion
-            </Overline>
+            <h2 className="m-0">
+              <Overline className="mb-3" style={{ fontSize: 11 }}>
+                Module Completion
+              </Overline>
+            </h2>
             <ModuleCompletionTable progress={data.progress} />
           </section>
 
           <section>
-            <Overline className="mb-3" style={{ fontSize: 11 }}>
-              Knowledge Check Response Analysis
-            </Overline>
+            <h2 className="m-0">
+              <Overline className="mb-3" style={{ fontSize: 11 }}>
+                Knowledge Check Response Analysis
+              </Overline>
+            </h2>
             <KCResponseAnalysis progress={data.progress} />
           </section>
 

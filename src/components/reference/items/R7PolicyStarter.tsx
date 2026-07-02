@@ -521,7 +521,7 @@ function FrameCard({ frame }: { frame: ConversationFrame }): JSX.Element {
         padding: '12px 16px',
       }}
     >
-      <h5
+      <h3
         className="m-0 mb-1 font-sans text-[12.5px] font-semibold"
         style={{
           color: 'rgb(var(--diligence-text))',
@@ -529,7 +529,7 @@ function FrameCard({ frame }: { frame: ConversationFrame }): JSX.Element {
         }}
       >
         {frame.title}
-      </h5>
+      </h3>
       <p
         className="m-0 font-sans text-[12.5px]"
         style={{
