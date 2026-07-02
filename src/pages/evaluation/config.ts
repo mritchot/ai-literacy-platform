@@ -51,12 +51,12 @@ export const ARTIFACTS: ArtifactMeta[] = [
 
 // Empty until the polished PDFs land in `public/evaluation/`; while empty the
 // per-page "Download PDF" button is hidden so it never points at a 404.
-// Populate e.g. `level-1-reaction: '/evaluation/level-1-reaction.pdf'`.
+// Populate e.g. `level-1-reaction: 'evaluation/level-1-reaction.pdf'`.
 export const ARTIFACT_PDFS: Record<string, string> = {
-  'level-1-reaction': '/evaluation/level-1-reaction.pdf',
-  'level-2-learning': '/evaluation/level-2-learning.pdf',
-  'level-3-behavior': '/evaluation/level-3-behavior.pdf',
-  'level-4-results': '/evaluation/level-4-results.pdf',
+  'level-1-reaction': 'evaluation/level-1-reaction.pdf',
+  'level-2-learning': 'evaluation/level-2-learning.pdf',
+  'level-3-behavior': 'evaluation/level-3-behavior.pdf',
+  'level-4-results': 'evaluation/level-4-results.pdf',
 };
 
 // Long-form blog post that frames the series on ritchot.me. Empty until the

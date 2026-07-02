@@ -61,13 +61,14 @@ export const ARTIFACTS: ArtifactMeta[] = [
 // convention that `vite-plugin-singlefile` leaves as standalone files in
 // `dist/`. Each value is the href to that PDF; while it is empty the page's
 // "Download PDF" button is hidden so it never points at a 404. Populate a
-// slug with e.g. `/needs-analysis/executive-problem-statement.pdf` (absolute,
-// matching the `/reference/...` links elsewhere) once the file lands.
+// slug with e.g. `needs-analysis/executive-problem-statement.pdf` (relative
+// to index.html, matching the `reference/...` links elsewhere — relative so
+// downloads work over file:// and sub-path hosting).
 export const ARTIFACT_PDFS: Record<string, string> = {
-  'executive-problem-statement': '/needs-analysis/executive-problem-statement.pdf',
-  'capability-gap-analysis': '/needs-analysis/capability-gap-analysis.pdf',
-  'learner-persona': '/needs-analysis/learner-persona.pdf',
-  'action-map': '/needs-analysis/action-map.pdf',
+  'executive-problem-statement': 'needs-analysis/executive-problem-statement.pdf',
+  'capability-gap-analysis': 'needs-analysis/capability-gap-analysis.pdf',
+  'learner-persona': 'needs-analysis/learner-persona.pdf',
+  'action-map': 'needs-analysis/action-map.pdf',
 };
 
 // Long-form blog post that frames the needs-analysis series on ritchot.me.
