@@ -220,9 +220,10 @@ function Section4({ module }: ModuleProp): JSX.Element {
           affects are making sure it stays invisible.
         </p>
         <p className="m-0">
-          In a survey of 1,250 professionals across industries, 69% reported that social stigma
-          is an active barrier
-          <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" /> to using AI at work.
+          In a survey of 1,250 professionals across industries (interviews conducted by an AI
+          interviewer, with the dataset publicly released), 69% mentioned the social stigma that
+          can come with using AI at work
+          <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" />.
           It’s not that they reject AI. Most of them use it regularly and report clear
           productivity gains. The barrier is disclosure. They use AI, they benefit from it, and
           they don’t tell anyone.
