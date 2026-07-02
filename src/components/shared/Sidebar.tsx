@@ -9,7 +9,7 @@ import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress, useResolvedModules } from '../../contexts/LearnerProgressContext';
 import { useCitations } from '../../hooks/useCitations';
 import { usePlatformMode } from '../../hooks/usePlatformMode';
-import { themeToggleMeta, type ThemePreference } from '../../hooks/useTheme';
+import { themeToggleMeta, useTheme } from '../../hooks/useTheme';
 import { computeGating, type ModuleGating } from '../../utils/module-gating';
 import { Icon } from './Icon';
 import { Overline } from './Overline';
@@ -18,12 +18,7 @@ import { SectionIndicator } from './SectionIndicator';
 
 interface SidebarProps {
   collapsed: boolean;
-  // Theme *preference* (not resolved) drives the toggle button's
-  // icon + label so all three modes — system / light / dark — are
-  // distinguishable at a glance.
-  themePreference: ThemePreference;
   onToggleCollapse: () => void;
-  onCycleTheme: () => void;
   isMobile?: boolean;
   onCloseMobile?: () => void;
 }
@@ -34,9 +29,7 @@ function isActiveModule(pathname: string, moduleId: number): boolean {
 
 export function Sidebar({
   collapsed,
-  themePreference,
   onToggleCollapse,
-  onCycleTheme,
   isMobile = false,
   onCloseMobile,
 }: SidebarProps): JSX.Element {
@@ -123,9 +116,7 @@ export function Sidebar({
 
       <SidebarFooter
         collapsed={collapsed}
-        themePreference={themePreference}
         onToggleCollapse={onToggleCollapse}
-        onCycleTheme={onCycleTheme}
         onCloseMobile={onCloseMobile}
         dashboardActive={location.pathname.startsWith('/dashboard')}
       />
@@ -515,19 +506,19 @@ function ConditionalLink({
 
 function SidebarFooter({
   collapsed,
-  themePreference,
   onToggleCollapse,
-  onCycleTheme,
   onCloseMobile,
   dashboardActive,
 }: {
   collapsed: boolean;
-  themePreference: ThemePreference;
   onToggleCollapse: () => void;
-  onCycleTheme: () => void;
   onCloseMobile?: () => void;
   dashboardActive: boolean;
 }): JSX.Element {
+  // Theme *preference* (not resolved) drives the toggle button so the
+  // sun/moon/monitor icon reflects which of the three modes is active.
+  // Read directly from the shared theme store — no prop threading.
+  const { preference: themePreference, cycle: onCycleTheme } = useTheme();
   // Platform mode drives two footer concerns: the analytics-dashboard
   // link is shown in portfolio mode, and a mode indicator + exit
   // control surfaces whenever the mode is not the default `learner`.
