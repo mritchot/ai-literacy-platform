@@ -44,7 +44,7 @@ export function Sidebar({
   const modules = useResolvedModules();
   // Sequential-progression lock state. In learner mode, modules and
   // sections lock until their prerequisites are complete; in portfolio
-  // and admin modes nothing is locked (free navigation). The pre-/
+  // mode nothing is locked (free navigation). The pre-/
   // post-assessment flags gate Module 1 and M4 S10 respectively in
   // learner mode.
   const { mode } = usePlatformMode();
@@ -127,7 +127,7 @@ export function Sidebar({
         onToggleCollapse={onToggleCollapse}
         onCycleTheme={onCycleTheme}
         onCloseMobile={onCloseMobile}
-        adminActive={location.pathname.startsWith('/admin')}
+        dashboardActive={location.pathname.startsWith('/admin')}
       />
     </aside>
   );
@@ -519,24 +519,24 @@ function SidebarFooter({
   onToggleCollapse,
   onCycleTheme,
   onCloseMobile,
-  adminActive,
+  dashboardActive,
 }: {
   collapsed: boolean;
   themePreference: ThemePreference;
   onToggleCollapse: () => void;
   onCycleTheme: () => void;
   onCloseMobile?: () => void;
-  adminActive: boolean;
+  dashboardActive: boolean;
 }): JSX.Element {
-  // Platform mode drives two footer concerns: the admin-dashboard link
-  // is shown in portfolio + admin modes, and a mode indicator + exit
+  // Platform mode drives two footer concerns: the analytics-dashboard
+  // link is shown in portfolio mode, and a mode indicator + exit
   // control surfaces whenever the mode is not the default `learner`.
   const { mode } = usePlatformMode();
-  const dashboardVisible = mode === 'admin' || mode === 'portfolio';
+  const dashboardVisible = mode === 'portfolio';
 
   return (
     <div className="border-t border-border-light">
-      {/* Mode indicator — renders only in portfolio/admin mode (learner
+      {/* Mode indicator — renders only in portfolio mode (learner
           is the default, no need to announce it). Carries the visible
           Exit control that resets back to learner mode. */}
       <ModeIndicator collapsed={collapsed} />
@@ -549,21 +549,21 @@ function SidebarFooter({
           gap: collapsed ? 6 : 8,
         }}
       >
-        {/* Admin dashboard link — shown in portfolio + admin modes
-            (both can reach the dashboard). Active state uses the same
-            inset left-border accent as the module rows (4D §4.1). */}
+        {/* Analytics dashboard link — shown in portfolio mode. Active
+            state uses the same inset left-border accent as the module
+            rows (4D §4.1). */}
         {dashboardVisible &&
           (collapsed ? (
             <Link
               to="/admin"
               onClick={onCloseMobile}
-              aria-label="Admin dashboard"
-              aria-current={adminActive ? 'page' : undefined}
+              aria-label="Analytics dashboard"
+              aria-current={dashboardActive ? 'page' : undefined}
               className="flex h-8 w-8 items-center justify-center rounded-md no-underline hover:bg-surface"
               style={{
-                color: adminActive ? 'rgb(var(--action))' : 'rgb(var(--tertiary))',
-                background: adminActive ? 'rgb(var(--white))' : 'transparent',
-                boxShadow: adminActive ? 'inset 3px 0 0 rgb(var(--action))' : 'none',
+                color: dashboardActive ? 'rgb(var(--action))' : 'rgb(var(--tertiary))',
+                background: dashboardActive ? 'rgb(var(--white))' : 'transparent',
+                boxShadow: dashboardActive ? 'inset 3px 0 0 rgb(var(--action))' : 'none',
               }}
             >
               <Icon name="chart" size={16} />
@@ -572,27 +572,27 @@ function SidebarFooter({
             <Link
               to="/admin"
               onClick={onCloseMobile}
-              aria-current={adminActive ? 'page' : undefined}
+              aria-current={dashboardActive ? 'page' : undefined}
               className="flex flex-1 items-center gap-2.5 rounded-md no-underline hover:bg-surface"
               style={{
                 padding: '8px 8px',
-                background: adminActive ? 'rgb(var(--white))' : 'transparent',
-                boxShadow: adminActive ? 'inset 3px 0 0 rgb(var(--action))' : 'none',
+                background: dashboardActive ? 'rgb(var(--white))' : 'transparent',
+                boxShadow: dashboardActive ? 'inset 3px 0 0 rgb(var(--action))' : 'none',
               }}
             >
               <Icon
                 name="chart"
                 size={15}
-                style={{ color: adminActive ? 'rgb(var(--action))' : 'rgb(var(--tertiary))' }}
+                style={{ color: dashboardActive ? 'rgb(var(--action))' : 'rgb(var(--tertiary))' }}
               />
               <span
                 className="font-sans text-[12.5px] font-medium"
                 style={{
-                  color: adminActive ? 'rgb(var(--ink))' : 'rgb(var(--secondary))',
-                  fontWeight: adminActive ? 600 : 500,
+                  color: dashboardActive ? 'rgb(var(--ink))' : 'rgb(var(--secondary))',
+                  fontWeight: dashboardActive ? 600 : 500,
                 }}
               >
-                Admin dashboard
+                Analytics dashboard
               </span>
             </Link>
           ))}
@@ -682,22 +682,22 @@ function CitationToggle(): JSX.Element {
 
 /**
  * Mode indicator + exit control. Renders nothing in `learner` mode (the
- * default — no need to announce it). In `portfolio` / `admin` mode it
- * shows a small pill naming the active mode with an Exit control that
- * calls `resetMode()` to drop back to learner mode.
+ * default — no need to announce it). In `portfolio` mode it shows a
+ * small pill naming the active mode with an Exit control that calls
+ * `resetMode()` to drop back to learner mode.
  *
- * Collapsed sidebar: a compact letter badge (P / A) that is itself the
+ * Collapsed sidebar: a compact letter badge (P) that is itself the
  * exit button — clicking it resets to learner mode (the `title` tooltip
- * explains). Expanded sidebar: the full "Portfolio Mode" / "Admin Mode"
- * label + an explicit "Exit" button. Each variant sits in its own lane
- * with a bottom border, separating it from the footer's control row.
+ * explains). Expanded sidebar: the full "Portfolio Mode" label + an
+ * explicit "Exit" button. Each variant sits in its own lane with a
+ * bottom border, separating it from the footer's control row.
  */
 function ModeIndicator({ collapsed }: { collapsed: boolean }): JSX.Element | null {
   const { mode, resetMode } = usePlatformMode();
   if (mode === 'learner') return null;
 
-  const label = mode === 'admin' ? 'Admin Mode' : 'Portfolio Mode';
-  const short = mode === 'admin' ? 'A' : 'P';
+  const label = 'Portfolio Mode';
+  const short = 'P';
 
   if (collapsed) {
     return (

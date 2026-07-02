@@ -1,5 +1,5 @@
-// AdminDashboard — Component 4D entry point. Lazy-loaded chunk mounted at
-// `/#/admin` (via the router). Owns the data-source toggle, normalizes
+// AnalyticsDashboard — Component 4D entry point. Lazy-loaded chunk mounted
+// at `/#/admin` (via the router). Owns the data-source toggle, normalizes
 // either demo data or live context state into a common shape, and stacks
 // the four dashboard sections.
 //
@@ -14,7 +14,6 @@ import {
   useLearnerProgress,
   type LearnerProgressState,
 } from '../contexts/LearnerProgressContext';
-import { usePlatformMode } from '../hooks/usePlatformMode';
 import { Overline } from '../components/shared/Overline';
 import { AssessmentResponseAnalysis } from './AssessmentResponseAnalysis';
 import { DataSourceToggle, type DataSource } from './DataSourceToggle';
@@ -39,15 +38,10 @@ function isProgressEmpty(progress: LearnerProgressState): boolean {
   );
 }
 
-export default function AdminDashboard(): JSX.Element {
-  // Data-source default follows the platform mode: portfolio mode opens
-  // on demo data (the dashboard is a showcase for reviewers), admin mode
-  // opens on live localStorage data (the operator wants the real numbers).
-  // Either way the toggle still works — this only sets the initial value.
-  const { mode } = usePlatformMode();
-  const [dataSource, setDataSource] = useState<DataSource>(
-    mode === 'admin' ? 'live' : 'demo',
-  );
+export default function AnalyticsDashboard(): JSX.Element {
+  // Opens on demo data (the dashboard is a showcase for reviewers); the
+  // toggle switches to live localStorage data for the real numbers.
+  const [dataSource, setDataSource] = useState<DataSource>('demo');
   const learnerProgress = useLearnerProgress();
   const analytics = useAnalytics();
 
@@ -92,7 +86,7 @@ export default function AdminDashboard(): JSX.Element {
       {/* Page header (4D §4.3) */}
       <header className="mb-6">
         <Overline className="mb-2" style={{ fontSize: 11 }}>
-          Admin Dashboard
+          Analytics
         </Overline>
         <h1
           className="m-0 font-display text-display font-normal text-ink"
@@ -139,7 +133,7 @@ export default function AdminDashboard(): JSX.Element {
 
           {/* Assessment Response Analysis is the program-level
               measurement surface — placed above Module Completion and
-              KC Response Analysis so admins see the pre→post growth
+              KC Response Analysis so reviewers see the pre→post growth
               picture before drilling into module-level details. */}
           <section>
             <Overline className="mb-3" style={{ fontSize: 11 }}>

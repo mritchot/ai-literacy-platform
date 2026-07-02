@@ -88,7 +88,7 @@ export interface LearnerProgressState {
   // effect below — only ticks while the tab is visible AND the user has
   // shown activity within `IDLE_MS`. Each section is capped at
   // `PER_SECTION_CAP_MS` to bound any walk-away artifact. Key:
-  // `${moduleId}.${sectionId}`. Read by the admin dashboard as the
+  // `${moduleId}.${sectionId}`. Read by the analytics dashboard as the
   // honest replacement for the old `max(ts) - min(ts)` session-span.
   activeTimeMs: Record<string, number>;
   // Pre / Post assessment lifecycle + per-item responses. The
@@ -137,7 +137,7 @@ const HEARTBEAT_MS = 10_000;
 const IDLE_MS = 60_000;
 const PER_SECTION_CAP_MS = 30 * 60_000;
 // Only count time when the URL hash points at a real section. Excludes
-// the landing page, admin dashboard, thank-you page, and any other
+// the landing page, analytics dashboard, thank-you page, and any other
 // non-instructional surface — those shouldn't bloat learning-time
 // metrics even when `state.current` still holds the last visited
 // section's coordinates.
@@ -420,7 +420,7 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
   //
   // Heartbeats every HEARTBEAT_MS while: (a) `state.current` points at
   // a real section, (b) the URL hash matches that section (so the
-  // landing/admin/thank-you pages don't accumulate even though
+  // landing/dashboard/thank-you pages don't accumulate even though
   // `state.current` is stale across navigation), (c) the tab is
   // visible (`document.visibilityState`), and (d) the learner has
   // shown activity within IDLE_MS. The effect re-runs only when the

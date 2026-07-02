@@ -3,8 +3,8 @@
 // current platform mode, and (when in learner mode) the pre/post
 // assessment completion flags.
 //
-// In `portfolio` and `admin` modes nothing is ever locked (free
-// navigation). In `learner` mode:
+// In `portfolio` mode nothing is ever locked (free navigation). In
+// `learner` mode:
 //   • Module 1 is locked unless the pre-assessment is complete.
 //   • Module M (M > 1) is locked unless the previous module is fully
 //     complete.
@@ -52,7 +52,7 @@ export function computeGating(
   mode: PlatformMode,
   assessments?: AssessmentGatingInput,
 ): ModuleGating {
-  // Portfolio + admin modes: free navigation, nothing locked. We
+  // Portfolio mode: free navigation, nothing locked. We
   // intentionally exempt portfolio mode from the assessment gates so a
   // portfolio reviewer can land on any module without first taking the
   // pre-assessment — the comparative results component handles the

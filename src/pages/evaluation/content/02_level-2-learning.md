@@ -38,7 +38,7 @@ That matrix is the traceability artifact: no assessment item exists without a pa
 
 ## Scoring and thresholds
 
-Scoring is binary per item, unweighted across blocks, with learning gain as the simple post-minus-pre delta. The interface frames outcomes positively: with a ten-item instrument a stable score most often reflects a strong baseline reinforced, so a zero delta reads as "solid foundation," not a failure. Beyond the aggregate, the admin view exposes a per-construct breakdown, so a participant who improved overall but missed verification priority on both forms is flagged for targeted follow-up rather than averaged into a single number.
+Scoring is binary per item, unweighted across blocks, with learning gain as the simple post-minus-pre delta. The interface frames outcomes positively: with a ten-item instrument a stable score most often reflects a strong baseline reinforced, so a zero delta reads as "solid foundation," not a failure. Beyond the aggregate, the analytics dashboard exposes a per-construct breakdown, so a participant who improved overall but missed verification priority on both forms is flagged for targeted follow-up rather than averaged into a single number.
 
 At ten items, a single-item swing moves the score ten points, so the thresholds are interpretive ranges rather than pass/fail cutoffs:
 

@@ -1,5 +1,5 @@
 // Knowledge Check + Interpretation Check display-relevant metadata for the
-// admin dashboard (4D §9.5). Static lookup — duplicates the *display-relevant
+// analytics dashboard (4D §9.5). Static lookup — duplicates the *display-relevant
 // subset* of the KC content (stem preview + option labels + preferred answer)
 // so the admin chunk doesn't need to import the full module content files.
 //
