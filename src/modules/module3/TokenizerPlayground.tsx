@@ -3,7 +3,7 @@
 // gpt-tokenizer library so guided and free flows share a single
 // tokenization codepath.
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { decode, encode } from 'gpt-tokenizer';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
@@ -50,7 +50,11 @@ export function TokenizerPlayground(): JSX.Element {
 
   // Restore round-completion from persisted state so re-mounting Module 3
   // (e.g., on hash navigation) doesn't reset the learner's progress.
-  const initialResults = useMemo<Record<number, RoundResult>>(() => {
+  // Lazy initializer: this runs exactly once, at mount. (It was a useMemo
+  // keyed on state.knowledgeChecks, which re-tokenized every completed
+  // round on every progress write — and the recomputed value was
+  // discarded, since it only ever fed this initial state.)
+  const [results, setResults] = useState<Record<number, RoundResult>>(() => {
     const out: Record<number, RoundResult> = {};
     for (const r of ROUNDS) {
       const stored = state.knowledgeChecks[`3.3.p5_round_${r.id}`];
@@ -66,20 +70,17 @@ export function TokenizerPlayground(): JSX.Element {
       }
     }
     return out;
-  }, [state.knowledgeChecks]);
+  });
 
-  const [results, setResults] = useState<Record<number, RoundResult>>(initialResults);
-
-  // Determine the current stage. The learner starts on the first
-  // unrevealed round; after Round 4 they enter free mode.
-  const initialStage = useMemo<StageId>(() => {
+  // Start on the first unrevealed round; after Round 4, free mode.
+  // `results` here is the freshly-initialized state above — this
+  // initializer also runs only at mount.
+  const [stage, setStage] = useState<StageId>(() => {
     for (const r of ROUNDS) {
-      if (!initialResults[r.id]) return r.id;
+      if (!results[r.id]) return r.id;
     }
     return 'free';
-  }, [initialResults]);
-
-  const [stage, setStage] = useState<StageId>(initialStage);
+  });
 
   return (
     <div className="space-y-3">

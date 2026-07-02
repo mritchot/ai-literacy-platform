@@ -8,7 +8,7 @@
 // is used for the directive sparkline because it's an editorial signal,
 // not a 4D one (see 4C spec §18.2 rationale).
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
   Bar,
   BarChart,
@@ -60,17 +60,29 @@ export function AdoptionTrendChart({
   // Convert decimals → percentage points for chart consumption.
   // X-axis label uses only the period (e.g. "Jan 2025") — the internal
   // wave id (V1/V3/V4) is dropped from the display.
-  const collabData = collaboration.map((p) => ({
-    waveLabel: p.period,
-    wave: p.wave,
-    augmentation: Math.round(p.augmentation * 100),
-    automation: Math.round(p.automation * 100),
-  }));
+  // Memoized on the (module-scope, stable) JSON props: a fresh array
+  // identity per render makes Recharts bump updateId — full axis/scale
+  // recomputation plus a 400ms animation restart on every parent
+  // re-render (including each 10s active-time heartbeat).
+  const collabData = useMemo(
+    () =>
+      collaboration.map((p) => ({
+        waveLabel: p.period,
+        wave: p.wave,
+        augmentation: Math.round(p.augmentation * 100),
+        automation: Math.round(p.automation * 100),
+      })),
+    [collaboration],
+  );
 
-  const directiveData = directive.map((p) => ({
-    waveLabel: p.period,
-    pct: Math.round(p.directiveShare * 100),
-  }));
+  const directiveData = useMemo(
+    () =>
+      directive.map((p) => ({
+        waveLabel: p.period,
+        pct: Math.round(p.directiveShare * 100),
+      })),
+    [directive],
+  );
 
   const collabAria = `Grouped bar chart of augmentation versus automation across three waves: ${collabData
     .map((d) => `${d.waveLabel} augmentation ${d.augmentation}%, automation ${d.automation}%`)
