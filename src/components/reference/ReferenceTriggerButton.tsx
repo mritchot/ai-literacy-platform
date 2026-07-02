@@ -1,18 +1,11 @@
-// ReferenceTriggerButton — shared button used by every RxTrigger. The
-// `variant` prop controls visual treatment:
-//   • 'inline' — original treatment (small ghost button that sat above
-//      the activity in flow). Currently unused at any call site after
-//      the tab-rail redesign, but kept available so consumers outside
-//      of the activity layout (e.g., a future docs index) can still
-//      embed a reference trigger inline.
-//   • 'tab' — used by `ReferenceTabRail` only. Rounded-left card that
-//      sits flush against the right edge of the viewport, ~140px × 38px,
-//      sticking out as a "pull tab" affordance.
+// ReferenceTriggerButton — shared button used by ReferenceTrigger.
+// Renders the folder-tab handle used inside `<ReferenceTabRail>`: a
+// rounded-left card flush against the right viewport edge, sticking
+// out as a "pull tab" affordance. (An 'inline' variant existed for the
+// pre-tab-rail layout; it had no remaining call sites and was removed.)
 //
 // All trigger buttons share the same content: book icon + reference
-// label + small mono R-identifier tag. Centralizing the rendering here
-// means visual changes apply once (rather than across seven RxTrigger
-// files).
+// label + small mono R-identifier tag.
 
 import { Icon } from '../shared/Icon';
 
@@ -23,59 +16,19 @@ interface ReferenceTriggerButtonProps {
   label: string;
   /** Click handler — opens the corresponding ReferencePanel. */
   onClick: () => void;
-  /** Visual variant. Defaults to 'inline'. */
-  variant?: 'inline' | 'tab';
+  /** Visual variant; the tab handle is the only remaining treatment. */
+  variant?: 'tab';
 }
 
 export function ReferenceTriggerButton({
   refId,
   label,
   onClick,
-  variant = 'inline',
 }: ReferenceTriggerButtonProps): JSX.Element {
-  if (variant === 'tab') return <TabHandle refId={refId} label={label} onClick={onClick} />;
-  return <InlineButton refId={refId} label={label} onClick={onClick} />;
+  return <TabHandle refId={refId} label={label} onClick={onClick} />;
 }
 
-// ─── Inline variant ────────────────────────────────────────────────
-
-function InlineButton({
-  refId,
-  label,
-  onClick,
-}: Omit<ReferenceTriggerButtonProps, 'variant'>): JSX.Element {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={`Open ${label} reference panel`}
-      className="inline-flex items-center gap-1.5 rounded-md font-sans text-[12px] font-semibold transition-colors duration-150"
-      style={{
-        padding: '5px 10px',
-        color: 'rgb(var(--secondary))',
-        background: 'rgb(var(--surface))',
-        border: '1px solid rgb(var(--border))',
-      }}
-    >
-      <Icon name="book" size={13} />
-      <span>{label}</span>
-      <span
-        className="font-mono text-[10px] font-bold uppercase"
-        style={{
-          color: 'rgb(var(--tertiary))',
-          letterSpacing: '0.08em',
-          paddingLeft: 4,
-          borderLeft: '1px solid rgb(var(--border))',
-          marginLeft: 4,
-        }}
-      >
-        {refId}
-      </span>
-    </button>
-  );
-}
-
-// ─── Tab variant ──────────────────────────────────────────────────
+// ─── Tab handle ───────────────────────────────────────────────────
 //
 // Folder-tab handle that sticks out from the right edge of the
 // viewport. Container (`ReferenceTabRail`) handles positioning and
