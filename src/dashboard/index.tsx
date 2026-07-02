@@ -143,10 +143,15 @@ export default function AnalyticsDashboard(): JSX.Element {
               picture before drilling into module-level details. */}
           <section>
             <h2 className="m-0">
-              <Overline as="span" className="mb-3" style={{ fontSize: 11 }}>
+              <Overline as="span" className="mb-1" style={{ fontSize: 11 }}>
                 Assessment Response Analysis
               </Overline>
             </h2>
+            <p className="m-0 mb-3 font-sans text-caption text-tertiary">
+              Pre→post growth across the instrument&rsquo;s four construct blocks (usage,
+              failure modes, mechanics, evaluation) — the program&rsquo;s core constructs,
+              not every module objective.
+            </p>
             <AssessmentResponseAnalysis progress={data.progress} />
           </section>
 
