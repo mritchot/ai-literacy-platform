@@ -30,7 +30,7 @@ export function LandingPage(): JSX.Element {
   const modules = useResolvedModules();
   // Sequential-progression gating for the module cards. In learner mode
   // a module locks until the previous one is fully complete; in
-  // portfolio + admin modes nothing locks. Module 1 also waits on the
+  // portfolio mode nothing locks. Module 1 also waits on the
   // pre-assessment, and M4 S10 on the post-assessment.
   const { mode } = usePlatformMode();
   const { isAssessmentComplete } = useLearnerProgress();
@@ -49,7 +49,7 @@ export function LandingPage(): JSX.Element {
   // Pre-assessment status in learner mode controls the hero CTA: if the
   // learner hasn't completed the pre-assessment, the primary action
   // routes them to the assessment instead of into Module 1. Portfolio
-  // and admin modes always show the normal Begin/Resume button.
+  // mode always shows the normal Begin/Resume button.
   const preCtaActive = mode === 'learner' && !preComplete;
   // Resume target: first non-done section in the first module that still has
   // outstanding work, otherwise the first unlocked module's first section.

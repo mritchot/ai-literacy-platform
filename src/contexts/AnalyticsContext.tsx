@@ -1,6 +1,6 @@
-// AnalyticsContext — accumulates interaction events for the admin dashboard
-// (Component 4D). Written to localStorage; the dashboard reads the same store.
-// downloadAnalytics() exports a JSON file for portability (Section 5).
+// AnalyticsContext — accumulates interaction events for the analytics
+// dashboard (Component 4D). Written to localStorage; the dashboard reads
+// the same store. JSON/xAPI export lives in dashboard/ExportControls.
 
 import { createContext, useCallback, useContext, useMemo, type ReactNode } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';

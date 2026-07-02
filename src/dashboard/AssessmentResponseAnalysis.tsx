@@ -1,4 +1,4 @@
-// AssessmentResponseAnalysis — admin per-item view of the pre/post
+// AssessmentResponseAnalysis — dashboard per-item view of the pre/post
 // assessment, organized by block. Parallel to KCResponseAnalysis but
 // reads from `progress.assessments.{pre,post}.responses` instead of
 // `progress.knowledgeChecks`.
