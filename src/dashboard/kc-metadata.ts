@@ -1,7 +1,7 @@
 // Knowledge Check + Interpretation Check display-relevant metadata for the
 // analytics dashboard (4D §9.5). Static lookup — duplicates the *display-relevant
 // subset* of the KC content (stem preview + option labels + preferred answer)
-// so the admin chunk doesn't need to import the full module content files.
+// so the dashboard chunk does not need the full module content files.
 //
 // `sectionId` matches where the KC is rendered in the platform; this lets
 // the dashboard locate the stored response via `4.7.kc_4_3` etc.
