@@ -89,56 +89,9 @@ export function CompletionSummary(): JSX.Element {
     track({ type: 'completion_profile_viewed', moduleId: 4, sectionId: 10 });
   }, [allModulesComplete, track]);
 
-  if (!allModulesComplete) {
-    return (
-      <div
-        className="rounded-lg font-sans"
-        style={{
-          background: 'rgb(var(--surface))',
-          border: '1px solid rgb(var(--border))',
-          padding: '32px 24px',
-          textAlign: 'center',
-        }}
-      >
-        <p
-          className="m-0 mb-2 font-sans text-h3 font-semibold text-ink"
-          style={{ letterSpacing: '-0.005em' }}
-        >
-          Complete all four modules to see your profile
-        </p>
-        <p className="m-0 font-sans text-body-sm text-secondary">
-          Your competency profile summarizes your work across the entire program. It becomes
-          available once you've finished every section.
-        </p>
-      </div>
-    );
-  }
-
-  // ── Pull learner artifacts from context state ──────────────────
-  const task1 = state.reflections['2.5.p4_task1'] ?? '';
-  const task2 = state.reflections['2.5.p4_task2'] ?? '';
-  const p9Product = state.reflections['4.3.p9_product'] ?? '';
-  const p9Process = state.reflections['4.3.p9_process'] ?? '';
-  const p9Performance = state.reflections['4.3.p9_performance'] ?? '';
-  const p11Refinement = state.reflections['4.6.p11_t3_refinement'] ?? '';
-  const p12Statement = state.reflections['4.8.p12_statement'] ?? '';
-
-  // P10 triage accuracy: 6 elements, each stored with isPreferred = true
-  // when the learner's classification matched the intended one.
-  const p10Total = 6;
-  const p10Accuracy = ['element_1', 'element_2', 'element_3', 'element_4', 'element_5', 'element_6']
-    .reduce((acc, id) => {
-      const result = state.knowledgeChecks[`4.5.${id}`];
-      return result?.isPreferred ? acc + 1 : acc;
-    }, 0);
-
-  // KC aggregate
-  const kcTotal = ALL_KC_KEYS.length;
-  const kcCorrect = ALL_KC_KEYS.reduce((acc, key) => {
-    const result = state.knowledgeChecks[key];
-    return result?.isPreferred ? acc + 1 : acc;
-  }, 0);
-
+  // Both memos live above the early return so the hook order is
+  // identical on every render (Rules of Hooks); their bodies are
+  // safe to run while the program is incomplete.
   // Completion date — derive from the most recent reflection or KC
   // timestamp in state, falling back to today. Timestamps live on
   // KnowledgeCheckResult objects; reflections don't carry per-field
@@ -189,6 +142,56 @@ export function CompletionSummary(): JSX.Element {
     const postTotal = blocks.reduce((acc, b) => acc + b.post, 0);
     return { preTotal, postTotal, blocks };
   }, [state.assessments]);
+
+  if (!allModulesComplete) {
+    return (
+      <div
+        className="rounded-lg font-sans"
+        style={{
+          background: 'rgb(var(--surface))',
+          border: '1px solid rgb(var(--border))',
+          padding: '32px 24px',
+          textAlign: 'center',
+        }}
+      >
+        <p
+          className="m-0 mb-2 font-sans text-h3 font-semibold text-ink"
+          style={{ letterSpacing: '-0.005em' }}
+        >
+          Complete all four modules to see your profile
+        </p>
+        <p className="m-0 font-sans text-body-sm text-secondary">
+          Your competency profile summarizes your work across the entire program. It becomes
+          available once you've finished every section.
+        </p>
+      </div>
+    );
+  }
+
+  // ── Pull learner artifacts from context state ──────────────────
+  const task1 = state.reflections['2.5.p4_task1'] ?? '';
+  const task2 = state.reflections['2.5.p4_task2'] ?? '';
+  const p9Product = state.reflections['4.3.p9_product'] ?? '';
+  const p9Process = state.reflections['4.3.p9_process'] ?? '';
+  const p9Performance = state.reflections['4.3.p9_performance'] ?? '';
+  const p11Refinement = state.reflections['4.6.p11_t3_refinement'] ?? '';
+  const p12Statement = state.reflections['4.8.p12_statement'] ?? '';
+
+  // P10 triage accuracy: 6 elements, each stored with isPreferred = true
+  // when the learner's classification matched the intended one.
+  const p10Total = 6;
+  const p10Accuracy = ['element_1', 'element_2', 'element_3', 'element_4', 'element_5', 'element_6']
+    .reduce((acc, id) => {
+      const result = state.knowledgeChecks[`4.5.${id}`];
+      return result?.isPreferred ? acc + 1 : acc;
+    }, 0);
+
+  // KC aggregate
+  const kcTotal = ALL_KC_KEYS.length;
+  const kcCorrect = ALL_KC_KEYS.reduce((acc, key) => {
+    const result = state.knowledgeChecks[key];
+    return result?.isPreferred ? acc + 1 : acc;
+  }, 0);
 
   const pdfData: CompletionProfileData = {
     completionDate,
