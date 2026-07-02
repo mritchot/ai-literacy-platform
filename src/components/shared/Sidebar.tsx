@@ -127,7 +127,7 @@ export function Sidebar({
         onToggleCollapse={onToggleCollapse}
         onCycleTheme={onCycleTheme}
         onCloseMobile={onCloseMobile}
-        dashboardActive={location.pathname.startsWith('/admin')}
+        dashboardActive={location.pathname.startsWith('/dashboard')}
       />
     </aside>
   );
@@ -555,7 +555,7 @@ function SidebarFooter({
         {dashboardVisible &&
           (collapsed ? (
             <Link
-              to="/admin"
+              to="/dashboard"
               onClick={onCloseMobile}
               aria-label="Analytics dashboard"
               aria-current={dashboardActive ? 'page' : undefined}
@@ -570,7 +570,7 @@ function SidebarFooter({
             </Link>
           ) : (
             <Link
-              to="/admin"
+              to="/dashboard"
               onClick={onCloseMobile}
               aria-current={dashboardActive ? 'page' : undefined}
               className="flex flex-1 items-center gap-2.5 rounded-md no-underline hover:bg-surface"

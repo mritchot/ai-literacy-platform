@@ -65,8 +65,8 @@ function lazyRoute(Component: React.LazyExoticComponent<React.ComponentType>): J
 }
 
 // Dashboard route guard. The analytics dashboard is reachable only in
-// portfolio mode; in learner mode (the default) `/#/admin` redirects home
-// so a learner can't stumble into the analytics dashboard.
+// portfolio mode; in learner mode (the default) `/#/dashboard` redirects
+// home so a learner can't stumble into the analytics dashboard.
 function DashboardRoute(): JSX.Element {
   const { mode } = usePlatformMode();
   if (mode === 'learner') return <Navigate to="/" replace />;
@@ -91,9 +91,7 @@ const routes: RouteObject[] = [
       { path: 'module/3/section/:sectionId', element: lazyRoute(Module3) },
       { path: 'module/4', element: lazyRoute(Module4) },
       { path: 'module/4/section/:sectionId', element: lazyRoute(Module4) },
-      // Path kept as 'admin' for existing external links/bookmarks; the
-      // dashboard itself is mode-gated by DashboardRoute.
-      { path: 'admin', element: <DashboardRoute /> },
+      { path: 'dashboard', element: <DashboardRoute /> },
       { path: 'thank-you', element: lazyRoute(ThankYou) },
       { path: 'pre-assessment', element: lazyRoute(PreAssessment) },
       { path: 'post-assessment', element: lazyRoute(PostAssessment) },

@@ -3,8 +3,8 @@
 //   • learner   (default) — sequential progression: future sections are
 //                locked in the sidebar, module cards on the landing page
 //                lock until the previous module is complete, the Next
-//                button is gated on completion, and `/#/admin` redirects
-//                home.
+//                button is gated on completion, and `/#/dashboard`
+//                redirects home.
 //   • portfolio — free navigation everywhere; the analytics dashboard is
 //                reachable and defaults to demo data (for hiring
 //                committees / reviewers), with a Live toggle for real
@@ -34,14 +34,8 @@ export type PlatformMode = 'learner' | 'portfolio';
 
 const STORAGE_KEY = 'platform-mode';
 
-// Resolve a persisted value to a mode. The key itself is frozen; the
-// legacy 'admin' value (from the removed three-mode system) maps to
-// 'portfolio' so a previously unlocked reviewer state isn't silently
-// relocked to learner.
-function normalizeStoredMode(v: unknown): PlatformMode | null {
-  if (v === 'learner' || v === 'portfolio') return v;
-  if (v === 'admin') return 'portfolio';
-  return null;
+function isMode(v: unknown): v is PlatformMode {
+  return v === 'learner' || v === 'portfolio';
 }
 
 // Resolve the initial mode at module-import time. URL param wins (and is
@@ -73,8 +67,8 @@ function readInitialMode(): PlatformMode {
   }
 
   try {
-    const stored = normalizeStoredMode(window.localStorage.getItem(STORAGE_KEY));
-    if (stored) return stored;
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    if (isMode(stored)) return stored;
   } catch {
     /* ignore */
   }
@@ -109,7 +103,7 @@ if (typeof window !== 'undefined') {
   // Cross-tab sync.
   window.addEventListener('storage', (e: StorageEvent) => {
     if (e.key !== STORAGE_KEY) return;
-    value = normalizeStoredMode(e.newValue) ?? 'learner';
+    value = isMode(e.newValue) ? e.newValue : 'learner';
     notify();
   });
 
