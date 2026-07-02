@@ -76,23 +76,28 @@ export function AugAutoDashboard(props: AugAutoDashboardProps): JSX.Element {
     markTabViewed(2, 3, activeTab);
   }, [activeTab, track, markTabViewed]);
 
+  // Roving tabindex: activation must move DOM focus with it, or the
+  // keydown target stays on the old (now tabIndex=-1) tab and repeated
+  // arrows recompute from the same index — stranding keyboard users.
+  const activateTab = (tab: (typeof TABS)[number] | undefined) => {
+    if (!tab) return;
+    setActiveTab(tab.id);
+    document.getElementById(`p3-tab-${tab.id}`)?.focus();
+  };
+
   const onTabKeyDown = (e: KeyboardEvent<HTMLButtonElement>, idx: number) => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
       e.preventDefault();
-      const next = TABS[(idx + 1) % TABS.length];
-      if (next) setActiveTab(next.id);
+      activateTab(TABS[(idx + 1) % TABS.length]);
     } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
       e.preventDefault();
-      const prev = TABS[(idx - 1 + TABS.length) % TABS.length];
-      if (prev) setActiveTab(prev.id);
+      activateTab(TABS[(idx - 1 + TABS.length) % TABS.length]);
     } else if (e.key === 'Home') {
       e.preventDefault();
-      const first = TABS[0];
-      if (first) setActiveTab(first.id);
+      activateTab(TABS[0]);
     } else if (e.key === 'End') {
       e.preventDefault();
-      const last = TABS[TABS.length - 1];
-      if (last) setActiveTab(last.id);
+      activateTab(TABS[TABS.length - 1]);
     }
   };
 

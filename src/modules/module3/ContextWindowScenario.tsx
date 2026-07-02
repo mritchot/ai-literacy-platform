@@ -198,6 +198,7 @@ function DocumentPanels({
           return (
             <button
               key={t}
+              id={`p7-doctab-${t}`}
               role="tab"
               aria-selected={active}
               tabIndex={active ? 0 : -1}
@@ -205,7 +206,10 @@ function DocumentPanels({
               onKeyDown={(e: KeyboardEvent<HTMLButtonElement>) => {
                 if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
                   e.preventDefault();
-                  onTabChange(t === 'source' ? 'summary' : 'source');
+                  // Move DOM focus with the activation (roving tabindex).
+                  const next = t === 'source' ? 'summary' : 'source';
+                  onTabChange(next);
+                  document.getElementById(`p7-doctab-${next}`)?.focus();
                 }
               }}
               className="font-sans text-[13px] transition-colors duration-150"

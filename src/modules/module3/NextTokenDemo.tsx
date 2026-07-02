@@ -56,13 +56,22 @@ export function NextTokenDemo(): JSX.Element {
     markTabViewed(3, 5, `stem_${activeStem}`);
   }, [activeStem, track, markTabViewed]);
 
+  // Roving tabindex: move DOM focus with the activation, otherwise the
+  // keydown target keeps its stale index and Stem 3 is unreachable from
+  // Stem 1 by keyboard (viewing all three stems is the completion
+  // condition, so this stranded keyboard learners).
+  const activateStem = (n: 1 | 2 | 3) => {
+    setActiveStem(n);
+    document.getElementById(`p6-tab-${n}`)?.focus();
+  };
+
   const onTabKey = (e: KeyboardEvent<HTMLButtonElement>, idx: number) => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
       e.preventDefault();
-      setActiveStem(((idx % 3) + 1) as 1 | 2 | 3);
+      activateStem(((idx % 3) + 1) as 1 | 2 | 3);
     } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
       e.preventDefault();
-      setActiveStem((((idx - 2 + 3) % 3) + 1) as 1 | 2 | 3);
+      activateStem((((idx - 2 + 3) % 3) + 1) as 1 | 2 | 3);
     }
   };
 
