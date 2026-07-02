@@ -124,7 +124,7 @@ function ModuleGroup({
         <>
           {/* `--discernment-text` flips for dark mode; the raw
               #5E7080 (discernment DEFAULT) stayed dark and lost
-              contrast on the dark admin surface. */}
+              contrast on the dark dashboard surface. */}
           <Overline
             className="mb-3 mt-5"
             style={{ color: 'rgb(var(--discernment-text))', fontSize: 11 }}
