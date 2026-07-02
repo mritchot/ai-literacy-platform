@@ -314,7 +314,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'The AI model was trained on a significantly larger corpus of French text than Thai text, giving it stronger translation capabilities for French. The quality gap reflects a training data imbalance rather than a structural limitation of the model\'s architecture.',
         isCorrect: false,
         feedbackText:
-          'Training data volume is a real factor in translation quality, but it doesn\'t explain the *structural* nature of the disparity. A model with less Thai training data would produce lower-quality translations, but the specific failure pattern (meaning collapse during round-trip translation) points to a representation issue, not a data quantity issue. The question asks for the structural explanation, and tokenization granularity is the structural difference between how the model processes Thai vs. French text.',
+          'Training data volume is a real factor in translation quality, but it doesn\'t explain the *structural* nature of the disparity. A model with less Thai training data would produce lower-quality translations, but the specific failure pattern (meaning collapse during round-trip translation) points to a representation issue, not a data quantity issue. The question asks for the structural explanation, and tokenization alignment is the structural difference: Thai fragments into sub-character pieces while French tokens track meaningful units.',
       },
       {
         id: 'B',
@@ -322,7 +322,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'Thai is a tonal language with context-dependent meanings, making it inherently more difficult for any translation system to handle. The round-trip error reflects the genuine linguistic complexity of Thai rather than a limitation specific to how AI models process text.',
         isCorrect: false,
         feedbackText:
-          'Thai\'s linguistic complexity (tonal distinctions, context-dependent meanings) is real, but framing this as "inherent difficulty" obscures the mechanism. The model\'s difficulty with Thai is mostly about how the model represents Thai text internally, not about the language\'s complexity. A language that is tokenized into coarse chunks loses information at the representation level, before translation even begins. Latin-script languages receive finer-grained tokenization, which preserves more meaning at the token level.',
+          'Thai\'s linguistic complexity (tonal distinctions, context-dependent meanings) is real, but framing this as "inherent difficulty" obscures the mechanism. The model\'s difficulty with Thai is mostly about how the model represents Thai text internally, not about the language\'s complexity. A language whose tokens don\'t align with its meaningful units loses structure at the representation level, before translation even begins. Latin-script languages get tokens that track words and word parts, which preserves more meaning at the token level.',
       },
       {
         id: 'C',
@@ -335,10 +335,10 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'D',
         text:
-          'Thai script is tokenized into longer, less granular chunks than French or English text. Each Thai token may encompass multiple meaningful units that the model cannot decompose, causing meaning to shift or collapse during translation in ways that don\'t occur with Latin-script languages that receive finer-grained tokenization.',
+          'Thai script is tokenized into many small byte-level fragments that don\'t align with Thai\'s meaningful units, while French and English text maps onto tokens that track whole words and word parts. The model\'s representation of the Thai tagline is built from pieces that carry little meaning on their own, so meaning shifts or collapses during round-trip translation in ways that don\'t occur for Latin-script languages.',
         isCorrect: true,
         feedbackText:
-          'Tokenization is the structural explanation. Most tokenizers are trained primarily on English and Latin-script languages, producing fine-grained tokens (often individual syllables or morphemes) for those languages. Non-Latin scripts, including Thai, Korean, and Chinese, are often tokenized into larger, less granular chunks. Each Thai token may span multiple meaningful units that would be separate tokens in English or French. During translation, this coarser tokenization means the model has fewer "handles" on meaning. It can\'t manipulate individual meaning units as precisely, so meaning shifts or collapses. The round-trip test exposes this: French→English→French preserves meaning because both languages have fine-grained tokenization; Thai→English→Thai loses meaning because Thai tokenization is too coarse to preserve the original structure.',
+          'Tokenization is the structural explanation. Tokenizer vocabularies are built mostly from English and other Latin-script text, so common English and French words map onto whole-word or word-part tokens that line up with meaning. Non-Latin scripts, including Thai, appeared far less often in that data, so Thai text fragments much more aggressively — often into byte-level pieces that split individual characters and ignore where Thai\'s words and syllables actually begin and end. The model has to rebuild meaning from fragments that don\'t align with meaningful units, which gives it weaker handles on the content it needs to preserve. The round-trip test exposes this: French→English→French holds because French tokens track meaningful units; Thai→English→Thai degrades because the representation is built on misaligned fragments. Thinner Thai training data compounds the problem, but the fragmentation is the structural piece.',
       },
     ],
   },
