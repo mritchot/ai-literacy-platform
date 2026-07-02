@@ -5,6 +5,7 @@
 
 import { useMemo, useState } from 'react';
 import { Overline } from '../components/shared/Overline';
+import { nextRadioIndex } from '../components/shared/radio-group-nav';
 import type { AnalyticsEvent } from '../contexts/AnalyticsContext';
 
 interface EventTimelineProps {
@@ -140,17 +141,24 @@ export function EventTimeline({ events }: EventTimelineProps): JSX.Element {
           Filter:
         </span>
         <div role="radiogroup" aria-label="Filter by module" className="flex flex-wrap gap-1">
-          {([
-            [0, 'All'],
-            [1, 'M1'],
-            [2, 'M2'],
-            [3, 'M3'],
-            [4, 'M4'],
-          ] as const).map(([id, label]) => (
+          {MODULE_FILTER_OPTIONS.map(([id, label], idx) => (
             <FilterPill
               key={id}
+              id={`evt-filter-m${id}`}
               role="radio"
               active={filters.module === id}
+              tabIndex={filters.module === id ? 0 : -1}
+              onKeyDown={(e) => {
+                // role=radio promises arrow-key movement (APG); roving
+                // tabindex + focus-follows-activation, as elsewhere.
+                const next = nextRadioIndex(e.key, idx, MODULE_FILTER_OPTIONS.length);
+                if (next === null) return;
+                e.preventDefault();
+                const target = MODULE_FILTER_OPTIONS[next];
+                if (!target) return;
+                setModule(target[0] as ModuleFilter);
+                document.getElementById(`evt-filter-m${target[0]}`)?.focus();
+              }}
               onClick={() => setModule(id as ModuleFilter)}
             >
               {label}
@@ -304,19 +312,41 @@ function formatPayload(payload: Record<string, unknown>): string {
   return parts.join(' · ');
 }
 
+const MODULE_FILTER_OPTIONS = [
+  [0, 'All'],
+  [1, 'M1'],
+  [2, 'M2'],
+  [3, 'M3'],
+  [4, 'M4'],
+] as const;
+
 interface FilterPillProps {
   active: boolean;
   role: 'radio' | 'checkbox';
   onClick: () => void;
   children: React.ReactNode;
+  id?: string;
+  tabIndex?: number;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void;
 }
 
-function FilterPill({ active, role, onClick, children }: FilterPillProps): JSX.Element {
+function FilterPill({
+  active,
+  role,
+  onClick,
+  children,
+  id,
+  tabIndex,
+  onKeyDown,
+}: FilterPillProps): JSX.Element {
   return (
     <button
       type="button"
+      id={id}
       role={role}
       aria-checked={active}
+      tabIndex={tabIndex}
+      onKeyDown={onKeyDown}
       onClick={onClick}
       className="rounded-full font-sans text-[12px] font-medium transition-colors duration-150"
       style={{

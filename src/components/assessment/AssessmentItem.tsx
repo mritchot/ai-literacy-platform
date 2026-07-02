@@ -8,9 +8,10 @@
 //   3. Stems may contain blank-line-separated paragraphs and numbered
 //      lists; rendered via the shared `render-markdown-lite` helper.
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type KeyboardEvent } from 'react';
 import type { AssessmentItem as AssessmentItemData } from '../../data/pre-assessment';
 import { renderMarkdownLite } from '../../modules/module4/render-markdown-lite';
+import { nextRadioIndex } from '../shared/radio-group-nav';
 
 const ASSESSMENT_ACCENT = '#5E7080'; // matches the discernment color family
 
@@ -38,7 +39,8 @@ export function AssessmentItem({
 
   return (
     <section
-      aria-labelledby={`item-${item.id}-stem`}
+      aria-labelledby={`item-${item.id}-heading`}
+      aria-describedby={`item-${item.id}-stem`}
       className="rounded-lg bg-[rgb(var(--white))]"
       style={{
         borderLeft: `3px solid ${ASSESSMENT_ACCENT}`,
@@ -51,34 +53,60 @@ export function AssessmentItem({
         minWidth: 0,
       }}
     >
+      {/* Concise, visually-hidden heading (the focus target) — the full
+          stem renders below as regular flow content. Stems carry
+          markdown-lite paragraphs/lists (PRE-9 / POST-9), and block
+          content inside a heading is invalid; a multi-paragraph
+          scenario is also a terrible heading for SR navigation. */}
       <h2
-        id={`item-${item.id}-stem`}
+        id={`item-${item.id}-heading`}
         ref={stemRef}
         tabIndex={-1}
-        className="m-0 mb-5 font-sans text-body font-semibold leading-snug text-ink focus:outline-none"
-        // Stems carry markdown-lite (paragraphs + occasional numbered
-        // list, see PRE-9 / POST-9). The renderer returns a fragment;
-        // wrap in a <div> so the heading-styled type still applies.
+        className="sr-only focus:outline-none"
       >
-        <div style={{ overflowWrap: 'anywhere' }}>
-          {renderMarkdownLite(item.stem)}
-        </div>
+        Question {item.id.replace(/^(PRE|POST)-/, '')}
       </h2>
+      <div
+        id={`item-${item.id}-stem`}
+        className="m-0 mb-5 font-sans text-body font-semibold leading-snug text-ink"
+        style={{ overflowWrap: 'anywhere' }}
+      >
+        {renderMarkdownLite(item.stem)}
+      </div>
 
       {/* Accessibility note: avoid `<legend className="sr-only">` here
           (it leaked into iOS document.scrollWidth and caused mobile
           horizontal pan). Use `aria-label` on the fieldset instead.
           Same pattern as KnowledgeCheck.tsx and InterpretationCheck.tsx. */}
-      <fieldset className="m-0 border-0 p-0" aria-label="Choose the option that best matches your reasoning.">
-        <ul className="m-0 list-none space-y-2 p-0">
-          {item.options.map((opt) => {
+      <fieldset className="m-0 border-0 p-0">
+        {/* Radio semantics + roving tabindex — see KnowledgeCheck. */}
+        <ul
+          role="radiogroup"
+          aria-label="Choose the option that best matches your reasoning."
+          className="m-0 list-none space-y-2 p-0"
+        >
+          {item.options.map((opt, optIdx) => {
             const isSelected = selectedOptionId === opt.id;
             return (
               <li key={opt.id}>
                 <button
                   type="button"
+                  id={`item-${item.id}-opt-${opt.id}`}
+                  role="radio"
+                  aria-checked={isSelected}
+                  tabIndex={
+                    isSelected || (selectedOptionId === null && optIdx === 0) ? 0 : -1
+                  }
+                  onKeyDown={(e: KeyboardEvent<HTMLButtonElement>) => {
+                    const next = nextRadioIndex(e.key, optIdx, item.options.length);
+                    if (next === null) return;
+                    e.preventDefault();
+                    const nextOpt = item.options[next];
+                    if (!nextOpt) return;
+                    onSelect(nextOpt.id);
+                    document.getElementById(`item-${item.id}-opt-${nextOpt.id}`)?.focus();
+                  }}
                   onClick={() => onSelect(opt.id)}
-                  aria-pressed={isSelected}
                   className="flex w-full items-start gap-3 rounded-md text-left transition-colors duration-150"
                   style={{
                     background: isSelected ? 'rgb(var(--surface))' : 'rgb(var(--white))',
