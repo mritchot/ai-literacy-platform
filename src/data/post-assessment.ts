@@ -10,9 +10,7 @@
 // Source: the post-assessment instrument document (Phase 4 planning corpus).
 // Answer key distribution: A=3, B=3, C=2, D=2.
 
-import type { AssessmentBlock, AssessmentItem, AssessmentOption } from './pre-assessment';
-
-export type { AssessmentBlock, AssessmentOption };
+import type { AssessmentItem } from './pre-assessment';
 
 export interface PostAssessmentItem extends AssessmentItem {
   /** Id of the parallel pre-assessment item that tests the same

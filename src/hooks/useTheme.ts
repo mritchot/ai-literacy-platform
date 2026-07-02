@@ -37,7 +37,6 @@ function resolveTheme(pref: ThemePreference): ResolvedTheme {
 export function useTheme(): {
   preference: ThemePreference;
   resolved: ResolvedTheme;
-  setPreference: (pref: ThemePreference) => void;
   cycle: () => void;
 } {
   const [preference, setPreferenceRaw] = useLocalStorage<ThemePreference>(STORAGE_KEY, 'system');
@@ -69,11 +68,6 @@ export function useTheme(): {
     else html.classList.remove('dark');
   }, [resolved]);
 
-  const setPreference = useCallback(
-    (pref: ThemePreference) => setPreferenceRaw(pref),
-    [setPreferenceRaw],
-  );
-
   // Rotate through all three states: system → light → dark → system.
   // The functional updater means `cycle`'s identity stays stable (empty
   // dep array) and it always acts on the latest preference. The icon
@@ -86,7 +80,7 @@ export function useTheme(): {
     );
   }, [setPreferenceRaw]);
 
-  return { preference, resolved, setPreference, cycle };
+  return { preference, resolved, cycle };
 }
 
 /**

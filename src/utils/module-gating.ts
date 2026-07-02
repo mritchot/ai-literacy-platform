@@ -34,9 +34,8 @@ export interface ModuleGating {
   isSectionLocked: (moduleId: number, sectionId: number) => boolean;
 }
 
-/** Optional assessment-completion view passed into computeGating in
- *  learner mode. Both flags default to `true` if omitted so callers
- *  that haven't been migrated yet keep their existing behavior. */
+/** Assessment-completion view passed into computeGating; consulted
+ *  only in learner mode (portfolio mode is never locked). */
 export interface AssessmentGatingInput {
   preComplete: boolean;
   postComplete: boolean;
@@ -50,7 +49,7 @@ const UNLOCKED: ModuleGating = {
 export function computeGating(
   modules: ModuleMeta[],
   mode: PlatformMode,
-  assessments?: AssessmentGatingInput,
+  assessments: AssessmentGatingInput,
 ): ModuleGating {
   // Portfolio mode: free navigation, nothing locked. We
   // intentionally exempt portfolio mode from the assessment gates so a
@@ -59,8 +58,7 @@ export function computeGating(
   // missing-data case with its own placeholder.
   if (mode !== 'learner') return UNLOCKED;
 
-  const preComplete = assessments?.preComplete ?? true;
-  const postComplete = assessments?.postComplete ?? true;
+  const { preComplete, postComplete } = assessments;
 
   // Typed as Map<number, …> so the helpers can be called with plain
   // `number` ids — `ModuleMeta['id']` is the literal union `1 | 2 | 3 | 4`,
