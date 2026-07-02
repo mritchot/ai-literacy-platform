@@ -230,6 +230,41 @@ export function R2DelegationGuide(): JSX.Element {
         </p>
       </aside>
 
+      {/* The data gate — organizational-boundary callout. Sits with the
+          concept callouts because it precedes the four questions
+          conceptually: what enters an external tool is a policy
+          decision, not an individual delegation decision. */}
+      <aside
+        role="note"
+        aria-label="The data gate"
+        className="mt-4 rounded-lg"
+        style={{
+          background: 'rgb(var(--surface-warm))',
+          border: '1px solid rgb(var(--border))',
+          borderLeft: `3px solid ${DIAMOND_STROKE}`,
+          padding: '14px 16px',
+        }}
+      >
+        <div
+          className="mb-1.5 font-mono text-overline font-bold uppercase"
+          style={{ color: DIAMOND_STROKE, letterSpacing: '0.1em' }}
+        >
+          Before the four questions: the data gate
+        </div>
+        <p className="m-0 text-body-sm text-body" style={{ lineHeight: 1.55 }}>
+          The flowchart assumes the task is yours to delegate. One gate comes first: whatever you
+          paste into an AI tool leaves your organization&rsquo;s boundary the moment you send it.
+          Client records, unreleased financials, personal data, internal strategy, anything under
+          NDA — whether that material can enter an external tool at all is an organizational
+          policy decision, not an individual delegation decision.
+        </p>
+        <p className="m-0 text-body-sm text-body" style={{ lineHeight: 1.55, marginTop: 8 }}>
+          Check your organization&rsquo;s AI-use policy before the flowchart, not after. If no
+          policy exists, that absence is worth surfacing — R7&rsquo;s Delegation Norms section is
+          the conversation starter for exactly this question.
+        </p>
+      </aside>
+
       {/* Attribution footer — matches R1's footer treatment */}
       <p
         className="m-0 mt-6 text-caption text-tertiary"

@@ -40,6 +40,7 @@ const CHECKLIST_SECTIONS: ChecklistSection[] = [
       'Statistics and specific numbers checked against original data',
       'Names, dates, and institutional references confirmed',
       'Scope matches what was requested (nothing critical added or omitted)',
+      'Framing and defaults checked for skew the training data may have introduced (who is represented, what is treated as the norm, which perspectives are missing)',
       'Format and length match specification',
     ],
   },
