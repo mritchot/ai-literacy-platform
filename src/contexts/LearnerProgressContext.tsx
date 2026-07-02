@@ -159,21 +159,13 @@ interface LearnerProgressValue {
   saveReflection: (moduleId: number, sectionId: number, promptId: string, text: string) => void;
   markTabViewed: (moduleId: number, sectionId: number, tabId: string) => void;
   markEngaged: (moduleId: number, sectionId: number, flagId: string) => void;
-  // Add `ms` to a section's accumulated active reading time, capped at
-  // `PER_SECTION_CAP_MS`. Used by the tracker effect; not normally
-  // called directly by components.
-  addActiveTime: (moduleId: number, sectionId: number, ms: number) => void;
   isSectionComplete: (moduleId: number, sectionId: number) => boolean;
-  isSectionScrolled: (moduleId: number, sectionId: number) => boolean;
-  isSectionInteractionComplete: (moduleId: number, sectionId: number) => boolean;
   getKnowledgeCheck: (
     moduleId: number,
     sectionId: number,
     checkId: string,
   ) => KnowledgeCheckResult | undefined;
   getReflection: (moduleId: number, sectionId: number, promptId: string) => string;
-  getViewedTabCount: (moduleId: number, sectionId: number) => number;
-  isEngaged: (moduleId: number, sectionId: number, flagId: string) => boolean;
   // ── Assessment lifecycle ─────────────────────────────────────────
   /** Mark the assessment as started. Idempotent — re-entering an
    *  in-progress assessment does not reset `startedAt`. */
@@ -482,27 +474,16 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
       saveReflection,
       markTabViewed,
       markEngaged,
-      addActiveTime,
       isSectionComplete: (moduleId, sectionId) => {
         const key = k(moduleId, sectionId);
         return Boolean(
           state.scrolledSections[key] && state.interactionCompleteSections[key],
         );
       },
-      isSectionScrolled: (moduleId, sectionId) =>
-        Boolean(state.scrolledSections[k(moduleId, sectionId)]),
-      isSectionInteractionComplete: (moduleId, sectionId) =>
-        Boolean(state.interactionCompleteSections[k(moduleId, sectionId)]),
       getKnowledgeCheck: (moduleId, sectionId, checkId) =>
         state.knowledgeChecks[k(moduleId, sectionId, checkId)],
       getReflection: (moduleId, sectionId, promptId) =>
         state.reflections[k(moduleId, sectionId, promptId)] ?? '',
-      getViewedTabCount: (moduleId, sectionId) => {
-        const prefix = `${moduleId}.${sectionId}.`;
-        return Object.keys(state.viewedTabs).filter((key) => key.startsWith(prefix)).length;
-      },
-      isEngaged: (moduleId, sectionId, flagId) =>
-        Boolean(state.engagedFlags[k(moduleId, sectionId, flagId)]),
       startAssessment,
       recordAssessmentResponse,
       completeAssessment,
@@ -522,7 +503,6 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
       saveReflection,
       markTabViewed,
       markEngaged,
-      addActiveTime,
       startAssessment,
       recordAssessmentResponse,
       completeAssessment,

@@ -17,7 +17,6 @@ interface AnalyticsValue {
   events: AnalyticsEvent[];
   track: (event: Omit<AnalyticsEvent, 'ts'>) => void;
   reset: () => void;
-  download: () => void;
 }
 
 const AnalyticsContext = createContext<AnalyticsValue | null>(null);
@@ -34,21 +33,9 @@ export function AnalyticsProvider({ children }: { children: ReactNode }): JSX.El
 
   const reset = useCallback(() => setEvents([]), [setEvents]);
 
-  const download = useCallback(() => {
-    const blob = new Blob([JSON.stringify(events, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `ai-literacy-analytics-${new Date().toISOString().slice(0, 10)}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }, [events]);
-
   const value = useMemo<AnalyticsValue>(
-    () => ({ events, track, reset, download }),
-    [events, track, reset, download],
+    () => ({ events, track, reset }),
+    [events, track, reset],
   );
 
   return <AnalyticsContext.Provider value={value}>{children}</AnalyticsContext.Provider>;

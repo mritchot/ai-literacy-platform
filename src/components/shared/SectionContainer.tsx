@@ -187,11 +187,13 @@ export function SectionContainer({
     !isAssessmentComplete('post');
 
   // When the learner reaches the last section of a module, surface a link
-  // to the first section of the next unlocked module so the cross-module
-  // continuation is one click away.
+  // to the first section of the next module so the cross-module
+  // continuation is one click away. (Lock state is handled by the
+  // sidebar/landing gating; this link is only reachable once the module
+  // is complete.)
   const nextModule =
     !nextSection
-      ? MODULES.find((m) => m.id === module.id + 1 && !m.locked)
+      ? MODULES.find((m) => m.id === module.id + 1)
       : undefined;
   const nextModuleFirstSection = nextModule?.sections[0];
 
