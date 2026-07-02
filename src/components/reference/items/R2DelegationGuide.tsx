@@ -621,7 +621,7 @@ function CategoryCard({ cat }: { cat: CategorySpec }): JSX.Element {
         padding: '12px 14px',
       }}
     >
-      <h4
+      <h3
         className="m-0 mb-1 font-sans text-h4 font-semibold uppercase"
         style={{
           color: `rgb(var(--${cat.cssVar}-text))`,
@@ -630,7 +630,7 @@ function CategoryCard({ cat }: { cat: CategorySpec }): JSX.Element {
         }}
       >
         {cat.name}
-      </h4>
+      </h3>
       <DetailRow label="What it means">{cat.meaning}</DetailRow>
       <DetailRow label="Typical tasks">{cat.typical}</DetailRow>
     </article>

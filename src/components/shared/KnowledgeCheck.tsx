@@ -303,6 +303,7 @@ export function KnowledgeCheck({
           <button
             type="button"
             onClick={() => setShowAll((v) => !v)}
+            aria-expanded={showAll}
             className="inline-flex items-center gap-1.5 font-sans text-[12.5px] font-semibold text-action hover:text-action-hover"
           >
             <Icon name={showAll ? 'chevronDown' : 'chevronRight'} size={14} />

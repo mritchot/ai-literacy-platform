@@ -360,12 +360,12 @@ function ExampleACard(): JSX.Element {
           padding: '16px 18px',
         }}
       >
-        <h5
+        <h3
           className="m-0 mb-3 font-sans text-h4 font-semibold text-ink"
           style={{ fontSize: 13.5 }}
         >
           {EXAMPLE_A_TITLE}
-        </h5>
+        </h3>
         {EXAMPLE_A_PARAGRAPHS.map((para, i) => (
           <p
             key={i}
@@ -410,12 +410,12 @@ function ExampleBCard(): JSX.Element {
           padding: '16px 18px',
         }}
       >
-        <h5
+        <h3
           className="m-0 mb-3 font-sans text-h4 font-semibold text-ink"
           style={{ fontSize: 13.5 }}
         >
           {EXAMPLE_B_TITLE}
-        </h5>
+        </h3>
         {EXAMPLE_B_BLOCKS.map((block, i) => (
           <p
             key={block.label}
