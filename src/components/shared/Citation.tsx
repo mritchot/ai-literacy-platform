@@ -38,7 +38,7 @@ interface CitationProps {
   /** Optional key into a citation's `pages` map for a stat-specific
    *  page reference. When supplied with a multi-id citation, it applies
    *  only to the FIRST id. */
-  pageKey?: string;
+  pageKey?: string | undefined;
 }
 
 const HOVER_OPEN_DELAY = 250;
@@ -313,7 +313,7 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
 interface CitationPopoverProps {
   id: string;
   sources: CitationMeta[];
-  pageKey?: string;
+  pageKey?: string | undefined;
   pos: { left: number; top: number; placement: 'above' | 'below' };
   onMouseEnter: () => void;
   onMouseLeave: () => void;
@@ -415,7 +415,7 @@ function SourceBlock({
   pageRef,
 }: {
   source: CitationMeta;
-  pageRef?: string;
+  pageRef?: string | undefined;
 }): JSX.Element {
   return (
     <div className="font-sans text-body-sm">

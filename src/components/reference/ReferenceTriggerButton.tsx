@@ -17,7 +17,7 @@ interface ReferenceTriggerButtonProps {
   /** Click handler — opens the corresponding ReferencePanel. */
   onClick: () => void;
   /** Visual variant; the tab handle is the only remaining treatment. */
-  variant?: 'tab';
+  variant?: 'tab' | undefined;
 }
 
 export function ReferenceTriggerButton({

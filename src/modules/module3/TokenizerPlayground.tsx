@@ -276,7 +276,7 @@ function GuidedRound({
   onAdvance,
 }: {
   stageId: 1 | 2 | 3 | 4;
-  existing?: RoundResult;
+  existing?: RoundResult | undefined;
   onLocked: (predicted: number, tokens: string[]) => void;
   onAdvance: () => void;
 }): JSX.Element {

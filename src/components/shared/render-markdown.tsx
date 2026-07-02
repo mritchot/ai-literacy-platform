@@ -137,7 +137,10 @@ export function renderMarkdown(raw: string): ReactNode[] {
   let id = 0;
 
   while (i < lines.length) {
-    const line = lines[i];
+    // The `!` assertions on lines[i] below are justified by the loop
+    // bounds (every access is guarded by i < lines.length); the h[1]!/
+    // h[2]! pair is guaranteed by HEADING_RE's two capture groups.
+    const line = lines[i]!;
 
     if (/^\s*$/.test(line)) {
       i++;
@@ -152,7 +155,7 @@ export function renderMarkdown(raw: string): ReactNode[] {
 
     const h = line.match(HEADING_RE);
     if (h) {
-      blocks.push(heading(h[1].length, h[2].trim(), id++));
+      blocks.push(heading(h[1]!.length, h[2]!.trim(), id++));
       i++;
       continue;
     }
@@ -161,8 +164,8 @@ export function renderMarkdown(raw: string): ReactNode[] {
       const header = splitRow(line);
       i += 2; // header row + separator
       const rows: string[][] = [];
-      while (i < lines.length && TABLE_ROW_RE.test(lines[i])) {
-        rows.push(splitRow(lines[i]));
+      while (i < lines.length && TABLE_ROW_RE.test(lines[i]!)) {
+        rows.push(splitRow(lines[i]!));
         i++;
       }
       const tid = id++;
@@ -203,8 +206,8 @@ export function renderMarkdown(raw: string): ReactNode[] {
 
     if (BLOCKQUOTE_RE.test(line)) {
       const quote: string[] = [];
-      while (i < lines.length && BLOCKQUOTE_RE.test(lines[i])) {
-        quote.push(lines[i].replace(BLOCKQUOTE_RE, ''));
+      while (i < lines.length && BLOCKQUOTE_RE.test(lines[i]!)) {
+        quote.push(lines[i]!.replace(BLOCKQUOTE_RE, ''));
         i++;
       }
       const qid = id++;
@@ -221,8 +224,8 @@ export function renderMarkdown(raw: string): ReactNode[] {
 
     if (UL_RE.test(line)) {
       const items: string[] = [];
-      while (i < lines.length && UL_RE.test(lines[i])) {
-        items.push(lines[i].replace(UL_RE, ''));
+      while (i < lines.length && UL_RE.test(lines[i]!)) {
+        items.push(lines[i]!.replace(UL_RE, ''));
         i++;
       }
       const lid = id++;
@@ -238,8 +241,8 @@ export function renderMarkdown(raw: string): ReactNode[] {
 
     if (OL_RE.test(line)) {
       const items: string[] = [];
-      while (i < lines.length && OL_RE.test(lines[i])) {
-        items.push(lines[i].replace(OL_RE, ''));
+      while (i < lines.length && OL_RE.test(lines[i]!)) {
+        items.push(lines[i]!.replace(OL_RE, ''));
         i++;
       }
       const lid = id++;
@@ -257,10 +260,10 @@ export function renderMarkdown(raw: string): ReactNode[] {
     const para: string[] = [];
     while (
       i < lines.length &&
-      !/^\s*$/.test(lines[i]) &&
-      !isSpecial(lines[i], lines[i + 1])
+      !/^\s*$/.test(lines[i]!) &&
+      !isSpecial(lines[i]!, lines[i + 1])
     ) {
-      para.push(lines[i].trim());
+      para.push(lines[i]!.trim());
       i++;
     }
     const pid = id++;

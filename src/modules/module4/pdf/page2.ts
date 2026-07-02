@@ -137,7 +137,7 @@ function drawMilestonesCard(doc: jsPDF, data: CompletionProfileData): void {
   ];
 
   for (let i = 0; i < milestones.length; i += 1) {
-    const m = milestones[i];
+    const m = milestones[i]!; // in bounds per the loop condition
     const rowY = rowTop + i * rowH;
 
     // Separator (skip for first row)
@@ -354,7 +354,7 @@ function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
   ];
 
   for (let i = 0; i < cells.length; i += 1) {
-    const cell = cells[i];
+    const cell = cells[i]!; // in bounds per the loop condition
     const cellLeft = stripX + i * cellW;
     const cellCenter = cellLeft + cellW / 2;
 
@@ -447,7 +447,7 @@ function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
   // ── Data rows ──
   const rowH = 18;
   for (let i = 0; i < growth.blocks.length; i += 1) {
-    const block = growth.blocks[i];
+    const block = growth.blocks[i]!; // in bounds per the loop condition
     const rowY = tableY + headerH + i * rowH;
     const baselineY = rowY + 13;
 
@@ -470,7 +470,7 @@ function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
       doc.splitTextToSize(safe(block.name), blockNameMaxW) as string[],
       1,
       blockNameMaxW,
-    )[0];
+    )[0] ?? '';
     doc.text(blockName, tableX + 9, baselineY);
 
     // Pre / Post / Δ — Helvetica Bold for delta, regular for counts

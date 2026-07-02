@@ -19,7 +19,7 @@ export function SidebarFooter({
 }: {
   collapsed: boolean;
   onToggleCollapse: () => void;
-  onCloseMobile?: () => void;
+  onCloseMobile?: (() => void) | undefined;
   dashboardActive: boolean;
 }): JSX.Element {
   // Theme *preference* (not resolved) drives the toggle button so the
