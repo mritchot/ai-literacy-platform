@@ -391,8 +391,9 @@ function Section5({ module }: ModuleProp): JSX.Element {
         Three stems show the prediction mechanism in three modes: a pattern-completion task where
         one token dominates, a factual-specificity task where no candidate dominates, and a
         side-by-side temperature comparison where the same prompt produces three different
-        outputs. The probability bars use a real softmax-with-temperature calculation, the same
-        mechanism commercial models use.
+        outputs. The candidate tokens and their base probabilities are illustrative, pre-computed
+        examples rather than a live model's output; the temperature math applied to them is the
+        real softmax calculation, the same mechanism commercial models use.
       </p>
       <NextTokenDemo />
 
@@ -608,7 +609,8 @@ function Section8({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           The first is <strong>sycophancy</strong>. The model is trained on data where agreeable,
-          affirming responses are common. When you present a flawed argument and ask for
+          affirming responses are common, including the human-preference tuning that rewards
+          agreeable answers. When you present a flawed argument and ask for
           feedback, the most statistically probable response is agreement, not critique. The
           model is more likely to tell you your analysis is insightful than to tell you it
           contains an error.
