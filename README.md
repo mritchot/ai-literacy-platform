@@ -33,7 +33,7 @@ The curriculum grew out of my M.Ed. in Education Technology and Instructional De
 The platform supports two access modes, activated via URL parameter or keyboard shortcut and persisted in localStorage:
 
 - **Learner** (default) — sequential section gating, no dashboard access
-- **Portfolio** (`?portfolio=true` or Ctrl/Cmd+Shift+A) — free navigation, analytics dashboard at `/#/admin` (demo data by default, with a live-data toggle)
+- **Portfolio** (`?portfolio=true` or Ctrl/Cmd+Shift+A) — free navigation, analytics dashboard at `/#/dashboard` (demo data by default, with a live-data toggle)
 
 ## Getting started
 

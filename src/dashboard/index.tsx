@@ -1,5 +1,5 @@
 // AnalyticsDashboard — Component 4D entry point. Lazy-loaded chunk mounted
-// at `/#/admin` (via the router). Owns the data-source toggle, normalizes
+// at `/#/dashboard` (via the router). Owns the data-source toggle, normalizes
 // either demo data or live context state into a common shape, and stacks
 // the four dashboard sections.
 //
