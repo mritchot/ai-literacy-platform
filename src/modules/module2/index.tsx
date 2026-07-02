@@ -153,7 +153,8 @@ function Section2({ module }: ModuleProp): JSX.Element {
     >
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
-          When researchers analyzed over a million AI conversations, they didn't just count how
+          When researchers analyzed over a million AI conversations (the same single-platform
+          Claude dataset introduced in Module 1), they didn't just count how
           often people used AI. They classified <em>how</em> those conversations worked. The
           result is a five-pattern taxonomy that captures the range of ways professionals interact
           with AI tools.
