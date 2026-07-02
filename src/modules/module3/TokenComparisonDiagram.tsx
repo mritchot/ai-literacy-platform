@@ -35,7 +35,7 @@ const PANELS: PanelData[] = [
     // around operators tokenize separately.
     tokens: ['Calculate', ':', ' ', '1', ',', '279', ' ×', ' ', '48', ' =', ' ?'],
     annotation:
-      'The split between "127" and "9" isn\'t based on math. It\'s based on which digit sequences the tokenizer saw most often during training.',
+      'The comma splits "1,279" into "1" and "279" — token boundaries follow which digit strings appeared most often in training data, not place value or mathematical structure.',
   },
   {
     id: 'c',
