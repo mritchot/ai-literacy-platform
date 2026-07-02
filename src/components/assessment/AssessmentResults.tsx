@@ -510,8 +510,8 @@ function ResponsePill({
   isCorrect,
 }: {
   label: string;
-  optionId?: string;
-  isCorrect?: boolean;
+  optionId?: string | undefined;
+  isCorrect?: boolean | undefined;
 }): JSX.Element {
   const display = optionId ?? '—';
   const ok = optionId && isCorrect;

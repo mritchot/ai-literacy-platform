@@ -18,7 +18,8 @@ export function truncateLines(
   if (lines.length <= max) return lines;
   const out = lines.slice(0, max);
   const lastIdx = out.length - 1;
-  let last = out[lastIdx].trimEnd().replace(/[\s.,;:!?\-—]+$/, '');
+  // out is non-empty here (max >= 1 and lines.length > max).
+  let last = out[lastIdx]!.trimEnd().replace(/[\s.,;:!?\-—]+$/, '');
   let candidate = `${last}…`;
   // Trim word-by-word until the line + ellipsis fits.
   while (doc.getTextWidth(candidate) > maxWidth && last.length > 0) {
@@ -68,7 +69,7 @@ export function wrapParagraphs(doc: jsPDF, text: string, maxWidth: number): stri
   const paragraphs = text.split(/\n\s*\n/);
   const out: string[] = [];
   for (let i = 0; i < paragraphs.length; i += 1) {
-    const para = paragraphs[i].replace(/\n+/g, ' ').trim();
+    const para = paragraphs[i]!.replace(/\n+/g, ' ').trim(); // in bounds per the loop condition
     const wrapped = doc.splitTextToSize(para, maxWidth) as string[];
     out.push(...wrapped);
     if (i < paragraphs.length - 1) out.push('');

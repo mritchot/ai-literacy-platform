@@ -91,7 +91,8 @@ export function computeGating(
     // module itself is unlocked, since isModuleLocked returned false).
     if (idx <= 0) return false;
     // Otherwise: open only once the previous section is complete.
-    return m.sections[idx - 1].state !== 'done';
+    // (idx > 0 is guaranteed by the check above, so the index is in bounds.)
+    return m.sections[idx - 1]!.state !== 'done';
   };
 
   return { isModuleLocked, isSectionLocked };

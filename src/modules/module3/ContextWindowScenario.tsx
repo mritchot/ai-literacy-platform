@@ -368,7 +368,7 @@ function VerificationItemCard({
   onSubmit,
 }: {
   item: (typeof VERIFICATION_ITEMS)[number];
-  submitted?: VerificationAnswer;
+  submitted?: VerificationAnswer | undefined;
   onSubmit: (a: VerificationAnswer) => void;
 }): JSX.Element {
   const [selected, setSelected] = useState<VerificationAnswer | null>(submitted ?? null);

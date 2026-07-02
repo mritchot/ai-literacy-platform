@@ -98,7 +98,7 @@ export interface CompletionProfileData {
   kcTotal: number;
   /** Optional pre→post assessment growth. When omitted, page 2's
    *  right column falls back to the standalone knowledge-stat card. */
-  growth?: AssessmentGrowthData;
+  growth?: AssessmentGrowthData | undefined;
 }
 
 // (The canonical block list — name + item count — is declared by the

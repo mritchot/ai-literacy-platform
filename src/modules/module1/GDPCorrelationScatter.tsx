@@ -352,10 +352,10 @@ export function GDPCorrelationScatter({
                 // caption below the figure already names the axes, so we
                 // drop the in-chart label on mobile to avoid the cropped
                 // look. Desktop keeps the inline label.
-                label={
-                  isMobile
-                    ? undefined
-                    : {
+                {...(isMobile
+                  ? {}
+                  : {
+                      label: {
                         value: 'Income per working-age person (log scale)',
                         position: 'insideBottom',
                         offset: -16,
@@ -364,9 +364,9 @@ export function GDPCorrelationScatter({
                           fontSize: 11.5,
                           fontWeight: 500,
                           fill: tokens.secondary,
-                        },
-                      }
-                }
+                      },
+                    },
+                  })}
               />
               <YAxis
                 type="number"
@@ -376,10 +376,10 @@ export function GDPCorrelationScatter({
                 tick={AXIS_TICK_STYLE}
                 stroke="rgb(var(--border-light))"
                 tickFormatter={(v: number) => v.toFixed(0)}
-                label={
-                  isMobile
-                    ? undefined
-                    : {
+                {...(isMobile
+                  ? {}
+                  : {
+                      label: {
                         value: 'AI adoption rate (log scale)',
                         angle: -90,
                         position: 'insideLeft',
@@ -391,8 +391,8 @@ export function GDPCorrelationScatter({
                           fill: tokens.secondary,
                           textAnchor: 'middle',
                         },
-                      }
-                }
+                      },
+                    })}
               />
               <Tooltip
                 cursor={{ stroke: 'rgb(var(--border))', strokeDasharray: '3 3' }}

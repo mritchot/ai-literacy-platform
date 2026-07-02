@@ -18,7 +18,7 @@ interface SidebarProps {
   collapsed: boolean;
   onToggleCollapse: () => void;
   isMobile?: boolean;
-  onCloseMobile?: () => void;
+  onCloseMobile?: (() => void) | undefined;
 }
 
 function isActiveModule(pathname: string, moduleId: number): boolean {
@@ -141,8 +141,8 @@ function SidebarHeader({
 }: {
   collapsed: boolean;
   isMobile: boolean;
-  onCloseMobile?: () => void;
-  closeButtonRef?: React.RefObject<HTMLButtonElement>;
+  onCloseMobile?: (() => void) | undefined;
+  closeButtonRef?: React.RefObject<HTMLButtonElement> | undefined;
 }): JSX.Element {
   return (
     <div
@@ -209,7 +209,7 @@ interface ModuleItemProps {
   /** Toggle handler for the full-sidebar module button. */
   onToggleExpand: () => void;
   gating: ModuleGating;
-  onCloseMobile?: () => void;
+  onCloseMobile?: (() => void) | undefined;
 }
 
 function ModuleItem({
@@ -380,7 +380,7 @@ function SectionRow({
   moduleId: number;
   section: ModuleMeta['sections'][number];
   locked: boolean;
-  onCloseMobile?: () => void;
+  onCloseMobile?: (() => void) | undefined;
 }): JSX.Element {
   // `isViewing` (current URL match) is distinct from `s.state === 'current'`
   // (the next-to-complete section per the learner's linear progress). The
@@ -486,9 +486,9 @@ function ConditionalLink({
   style,
   children,
 }: {
-  to?: string;
+  to?: string | undefined;
   disabled: boolean;
-  onNavigate?: () => void;
+  onNavigate?: (() => void) | undefined;
   className?: string;
   style?: React.CSSProperties;
   children: React.ReactNode;

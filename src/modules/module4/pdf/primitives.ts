@@ -29,7 +29,8 @@ import { fitText } from './text-fit';
 function hexToRgb(hex: string): [number, number, number] {
   const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   if (!m) return [0, 0, 0];
-  return [parseInt(m[1], 16), parseInt(m[2], 16), parseInt(m[3], 16)];
+  // The three capture groups are guaranteed by the regex shape.
+  return [parseInt(m[1]!, 16), parseInt(m[2]!, 16), parseInt(m[3]!, 16)];
 }
 
 /** Inverse of hexToRgb — used by the Growth card to convert
@@ -89,7 +90,7 @@ export function drawSignatureBar(doc: jsPDF): void {
   const segW = PAGE_W / 4;
   const segs = [C.delegation, C.description, C.discernment, C.diligence];
   for (let i = 0; i < segs.length; i += 1) {
-    setFillHex(doc, segs[i]);
+    setFillHex(doc, segs[i]!); // in bounds per the loop condition
     // Tiny overlap (+0.4) hides any sub-pixel seam between adjacent rects.
     doc.rect(i * segW, 0, segW + 0.4, SIGNATURE_BAR_H, 'F');
   }
@@ -139,7 +140,7 @@ function drawRefTag(doc: jsPDF, x: number, y: number): void {
   const stripW = tagW / 4;
   const colors = [C.delegation, C.description, C.discernment, C.diligence];
   for (let i = 0; i < 4; i += 1) {
-    setFillHex(doc, colors[i]);
+    setFillHex(doc, colors[i]!); // colors has exactly 4 entries
     doc.rect(x + i * stripW, y, stripW + 0.4, tagH, 'F');
   }
   doc.setFont(FONT.sans, 'bold');
@@ -192,7 +193,7 @@ export function drawHeader(
   let metaY = top;
   for (let i = 0; i < opts.metaLines.length; i += 1) {
     setTextHex(doc, i === 0 ? C.tertiary : C.secondary);
-    const line = safe(opts.metaLines[i].toUpperCase());
+    const line = safe(opts.metaLines[i]!.toUpperCase()); // in bounds per the loop condition
     const w = doc.getTextWidth(line);
     doc.text(line, PAGE_W - MARGIN_RIGHT - w, metaY);
     metaY += 13;
@@ -378,11 +379,12 @@ export function drawStackedFields(
   const n = fields.length;
   const fieldH = (innerH - gap * (n - 1)) / n;
   for (let i = 0; i < n; i += 1) {
+    const field = fields[i]!; // in bounds: n = fields.length
     drawField(
       doc,
       { x: innerX, y: innerY + i * (fieldH + gap), w: innerW, h: fieldH },
-      fields[i].label,
-      fields[i].body,
+      field.label,
+      field.body,
       accentText,
       maxLines,
     );
