@@ -29,7 +29,7 @@ export function R6Trigger({
         onClose={() => setOpen(false)}
         id="R6"
         title="AI Diligence Statement Template"
-        pdfPath="/reference/r6-diligence-statement-template.pdf"
+        pdfPath="reference/r6-diligence-statement-template.pdf"
         pdfFilename="r6-diligence-statement-template.pdf"
       >
         <R6DiligenceTemplate />

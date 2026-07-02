@@ -29,7 +29,7 @@ export function R2Trigger({
         onClose={() => setOpen(false)}
         id="R2"
         title="Task Delegation Decision Guide"
-        pdfPath="/reference/r2-task-delegation-guide.pdf"
+        pdfPath="reference/r2-task-delegation-guide.pdf"
         pdfFilename="r2-task-delegation-guide.pdf"
       >
         <R2DelegationGuide />

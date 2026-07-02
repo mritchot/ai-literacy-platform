@@ -29,7 +29,7 @@ export function R3Trigger({
         onClose={() => setOpen(false)}
         id="R3"
         title="Prompt Structure Template"
-        pdfPath="/reference/r3-prompt-structure-template.pdf"
+        pdfPath="reference/r3-prompt-structure-template.pdf"
         pdfFilename="r3-prompt-structure-template.pdf"
       >
         <R3PromptTemplate />

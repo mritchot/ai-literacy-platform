@@ -31,7 +31,7 @@ export function R7Trigger({
         onClose={() => setOpen(false)}
         id="R7"
         title="Organizational AI Use Policy Starter"
-        pdfPath="/reference/r7-policy-starter.pdf"
+        pdfPath="reference/r7-policy-starter.pdf"
         pdfFilename="r7-policy-starter.pdf"
       >
         <R7PolicyStarter />

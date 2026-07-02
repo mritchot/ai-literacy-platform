@@ -41,7 +41,7 @@ export function R1Trigger({
         onClose={() => setOpen(false)}
         id="R1"
         title="4D Competency Quick-Reference Card"
-        pdfPath="/reference/r1-4d-quick-reference.pdf"
+        pdfPath="reference/r1-4d-quick-reference.pdf"
         pdfFilename="r1-4d-quick-reference.pdf"
       >
         <R1QuickReference />

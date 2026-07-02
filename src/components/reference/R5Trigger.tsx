@@ -32,7 +32,7 @@ export function R5Trigger({
         onClose={() => setOpen(false)}
         id="R5"
         title="AI Capability Boundary Reference"
-        pdfPath="/reference/r5-capability-boundary-reference.pdf"
+        pdfPath="reference/r5-capability-boundary-reference.pdf"
         pdfFilename="r5-capability-boundary-reference.pdf"
       >
         <R5CapabilityBoundary />

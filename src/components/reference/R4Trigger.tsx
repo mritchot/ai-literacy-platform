@@ -47,7 +47,7 @@ export function R4Trigger({
         onClose={() => setOpen(false)}
         id="R4"
         title="Output Verification Checklist"
-        pdfPath="/reference/r4-output-verification-checklist.pdf"
+        pdfPath="reference/r4-output-verification-checklist.pdf"
         pdfFilename="r4-output-verification-checklist.pdf"
       >
         <R4VerificationChecklist checked={checked} onToggle={toggle} />
