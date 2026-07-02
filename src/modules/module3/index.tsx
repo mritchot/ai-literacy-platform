@@ -263,7 +263,9 @@ function Section3({ module }: ModuleProp): JSX.Element {
       <p className="m-0 mb-6 font-sans text-body text-body">
         Predict the token count, then see the actual result. Four guided rounds — each designed
         to surface a different aspect of the tokenizer’s behavior — followed by free exploration
-        with your own text.
+        with your own text. Counts here come from one widely used tokenizer (cl100k_base); other
+        models split text differently, but the pattern — common text compresses, unusual text
+        fragments — holds across all of them.
       </p>
       <TokenizerPlayground />
 
@@ -786,6 +788,7 @@ function Section11({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           These five properties are not separate problems; they interact. Hallucinated citations
+          (hallucination is the industry’s name for this class of fabricated specifics)
           are next-token prediction meeting thin knowledge. Long-conversation drift is context
           window limits meeting steerability. Confident arithmetic errors are tokenization
           meeting probability-based generation. Naming the pair that failed is the diagnostic
