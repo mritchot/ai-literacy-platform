@@ -184,10 +184,10 @@ function Section3({ module }: ModuleProp): JSX.Element {
       Boolean(state.knowledgeChecks['1.3.ic_1_1']) &&
       Boolean(state.knowledgeChecks['1.3.ic_1_2']) &&
       Boolean(state.knowledgeChecks['1.3.ic_1_3']);
-    if (allDone && !state.completedSections['1.3']) {
+    if (allDone && !state.interactionCompleteSections['1.3']) {
       markInteractionComplete(1, 3);
     }
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete]);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete]);
 
   return (
     <SectionContainer
@@ -289,10 +289,10 @@ function Section5({ module }: ModuleProp): JSX.Element {
   // they've spent enough time that the timer fires; we use the engaged
   // flag as a proxy here.
   useEffect(() => {
-    if (state.engagedFlags['1.5.p2_continued'] && !state.completedSections['1.5']) {
+    if (state.engagedFlags['1.5.p2_continued'] && !state.interactionCompleteSections['1.5']) {
       markInteractionComplete(1, 5);
     }
-  }, [state.engagedFlags, state.completedSections, markInteractionComplete]);
+  }, [state.engagedFlags, state.interactionCompleteSections, markInteractionComplete]);
 
   // The shared SectionContainer handles auto-complete for autoComplete=true
   // sections; this one is autoComplete=false but we mark it via the flag.
@@ -471,11 +471,11 @@ function Section7({ module }: ModuleProp): JSX.Element {
     const allDone = MODULE_1_KC_ITEMS.every((item) =>
       Boolean(state.knowledgeChecks[`1.7.${item.id}`]),
     );
-    if (allDone && !state.completedSections['1.7']) {
+    if (allDone && !state.interactionCompleteSections['1.7']) {
       markInteractionComplete(1, 7);
       track({ type: 'kc_module_1_complete', moduleId: 1, sectionId: 7 });
     }
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete, track]);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete, track]);
 
   return (
     <SectionContainer

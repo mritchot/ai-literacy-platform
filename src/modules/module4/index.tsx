@@ -144,8 +144,8 @@ function Section2({ module }: ModuleProp): JSX.Element {
     const allDone = ['card_1', 'card_2', 'card_3', 'card_4', 'card_5', 'card_6'].every(
       (cardId) => Boolean(state.knowledgeChecks[`4.2.${cardId}`]),
     );
-    if (allDone && !state.completedSections['4.2']) markInteractionComplete(4, 2);
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete]);
+    if (allDone && !state.interactionCompleteSections['4.2']) markInteractionComplete(4, 2);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete]);
 
   return (
     <SectionContainer
@@ -178,10 +178,10 @@ function Section3({ module }: ModuleProp): JSX.Element {
   const { state, markInteractionComplete } = useLearnerProgress();
   // Complete when phase reaches "compare" (recorded via engagedFlags).
   useEffect(() => {
-    if (state.engagedFlags['4.3.phase_compare'] && !state.completedSections['4.3']) {
+    if (state.engagedFlags['4.3.phase_compare'] && !state.interactionCompleteSections['4.3']) {
       markInteractionComplete(4, 3);
     }
-  }, [state.engagedFlags, state.completedSections, markInteractionComplete]);
+  }, [state.engagedFlags, state.interactionCompleteSections, markInteractionComplete]);
 
   return (
     <SectionContainer
@@ -211,11 +211,11 @@ function Section4({ module }: ModuleProp): JSX.Element {
     const allDone = MODULE_4_KC_ITEMS_S4.every((item) =>
       Boolean(state.knowledgeChecks[`4.4.${item.id}`]),
     );
-    if (allDone && !state.completedSections['4.4']) {
+    if (allDone && !state.interactionCompleteSections['4.4']) {
       markInteractionComplete(4, 4);
       track({ type: 'kc_4_1_4_2_complete', moduleId: 4, sectionId: 4 });
     }
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete, track]);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete, track]);
 
   return (
     <SectionContainer
@@ -252,8 +252,8 @@ function Section5({ module }: ModuleProp): JSX.Element {
   useEffect(() => {
     const allDone = ['element_1', 'element_2', 'element_3', 'element_4', 'element_5', 'element_6']
       .every((id) => Boolean(state.knowledgeChecks[`4.5.${id}`]));
-    if (allDone && !state.completedSections['4.5']) markInteractionComplete(4, 5);
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete]);
+    if (allDone && !state.interactionCompleteSections['4.5']) markInteractionComplete(4, 5);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete]);
 
   return (
     <SectionContainer
@@ -289,8 +289,8 @@ function Section6({ module }: ModuleProp): JSX.Element {
       (state.reflections['4.6.p11_t3_refinement'] ?? '').trim().length >= 20 ||
       (state.reflections['4.6.p11_t2_refinement'] ?? '').trim().length >= 20 ||
       (state.reflections['4.6.p11_t2_gap'] ?? '').trim().length >= 20;
-    if (sectionDone && !state.completedSections['4.6']) markInteractionComplete(4, 6);
-  }, [state.reflections, state.completedSections, markInteractionComplete]);
+    if (sectionDone && !state.interactionCompleteSections['4.6']) markInteractionComplete(4, 6);
+  }, [state.reflections, state.interactionCompleteSections, markInteractionComplete]);
 
   return (
     <SectionContainer
@@ -323,13 +323,13 @@ function Section7({ module }: ModuleProp): JSX.Element {
     const s7Done = MODULE_4_KC_ITEMS_S7.every((item) =>
       Boolean(state.knowledgeChecks[`4.7.${item.id}`]),
     );
-    if (s7Done && !state.completedSections['4.7']) {
+    if (s7Done && !state.interactionCompleteSections['4.7']) {
       markInteractionComplete(4, 7);
       if (s4Done) {
         track({ type: 'kc_module_4_complete', moduleId: 4, sectionId: 7 });
       }
     }
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete, track]);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete, track]);
 
   return (
     <SectionContainer
@@ -365,8 +365,8 @@ function Section8({ module }: ModuleProp): JSX.Element {
   const { state, markInteractionComplete } = useLearnerProgress();
   useEffect(() => {
     const seen = Boolean(state.engagedFlags['4.8.exemplar_viewed']);
-    if (seen && !state.completedSections['4.8']) markInteractionComplete(4, 8);
-  }, [state.engagedFlags, state.completedSections, markInteractionComplete]);
+    if (seen && !state.interactionCompleteSections['4.8']) markInteractionComplete(4, 8);
+  }, [state.engagedFlags, state.interactionCompleteSections, markInteractionComplete]);
 
   return (
     <SectionContainer
