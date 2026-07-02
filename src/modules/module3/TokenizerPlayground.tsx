@@ -272,9 +272,6 @@ function GuidedRound({
   onLocked: (predicted: number, tokens: string[]) => void;
   onAdvance: () => void;
 }): JSX.Element {
-  const round = ROUNDS.find((r) => r.id === stageId);
-  if (!round) return <p>Unknown round.</p>;
-
   const [prediction, setPrediction] = useState<string>(
     existing ? String(existing.predicted) : '',
   );
@@ -287,6 +284,12 @@ function GuidedRound({
     setLocked(Boolean(existing));
     setTokens(existing?.tokens ?? []);
   }, [existing, stageId]);
+
+  // Looked up after the hooks so the hook order is identical on
+  // every render (Rules of Hooks); stageId is typed 1|2|3|4 so the
+  // guard is defensive only.
+  const round = ROUNDS.find((r) => r.id === stageId);
+  if (!round) return <p>Unknown round.</p>;
 
   const lock = () => {
     const n = Number.parseInt(prediction, 10);

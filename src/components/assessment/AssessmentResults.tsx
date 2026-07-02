@@ -67,13 +67,6 @@ export function AssessmentResults({ variant }: AssessmentResultsProps): JSX.Elem
   // also blocks this at the controller level; this is the second wall.)
   const preComplete = isAssessmentComplete('pre');
   const postComplete = isAssessmentComplete('post');
-  if (!preComplete || !postComplete) {
-    return <IncompletePlaceholder preComplete={preComplete} postComplete={postComplete} />;
-  }
-
-  const preResponses = getAssessmentResponses('pre');
-  const postResponses = getAssessmentResponses('post');
-
   // Join pre + post items by constructKey. The post list drives the
   // order (post-assessment ordering matches the spec table).
   const pairs = useMemo<ConstructPair[]>(
@@ -96,6 +89,13 @@ export function AssessmentResults({ variant }: AssessmentResultsProps): JSX.Elem
       }).filter((p): p is ConstructPair => p !== null),
     [],
   );
+
+  if (!preComplete || !postComplete) {
+    return <IncompletePlaceholder preComplete={preComplete} postComplete={postComplete} />;
+  }
+
+  const preResponses = getAssessmentResponses('pre');
+  const postResponses = getAssessmentResponses('post');
 
   // Per-item correctness for the score header + block breakdown.
   const preScore = countCorrect(PRE_ASSESSMENT_ITEMS, preResponses);
