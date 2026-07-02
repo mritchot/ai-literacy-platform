@@ -34,10 +34,15 @@ export function renderInline(text: string, keyBase = 'i'): ReactNode {
     if (m.index > last) out.push(text.slice(last, m.index));
     const key = `${keyBase}-${k++}`;
     if (m[1] !== undefined && m[2] !== undefined) {
+      // Scheme allowlist: a stray `[x](javascript:...)` in future markdown
+      // must never become an executable anchor. All current content uses
+      // https/mailto/#, so rendered output is unchanged; a disallowed
+      // scheme renders as a non-navigating anchor (no href).
+      const safeHref = /^(https?:|mailto:|#)/i.test(m[2].trim()) ? m[2] : undefined;
       out.push(
         <a
           key={key}
-          href={m[2]}
+          href={safeHref}
           target="_blank"
           rel="noopener noreferrer"
           className="font-medium text-action underline decoration-1 underline-offset-2 transition-colors hover:text-action-hover"
