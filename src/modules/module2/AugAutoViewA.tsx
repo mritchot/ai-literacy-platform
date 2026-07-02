@@ -7,7 +7,7 @@
 
 import { useMemo, useState } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
-import { TOKEN_HEX } from '../../utils/chart-config';
+import { useChartTokens } from '../../hooks/useChartTokens';
 import { useViewport } from '../../hooks/useViewport';
 
 interface OccupationRow {
@@ -33,10 +33,10 @@ const SORT_OPTIONS: { id: SortKey; label: string }[] = [
 const X_AXIS_TICKS = [0, 10, 20, 30, 40] as const;
 
 // Marker styles. The Claude series uses a filled disc in the action color
-// so the "AI" reading reads quickly; the workforce series uses a hollow
-// ring in the tertiary tone so it reads as the baseline reference.
-const CLAUDE_FILL = TOKEN_HEX.action;
-const WORKFORCE_FILL = TOKEN_HEX.tertiary;
+// (tokens.action) so the "AI" reading reads quickly; the workforce series
+// uses a hollow ring in the chart-only tertiary tone (tokens.tertiaryChart)
+// so it reads as the baseline reference. Both resolve through
+// useChartTokens so the markers flip with the theme.
 
 export function AugAutoViewA({
   categories,
@@ -46,6 +46,7 @@ export function AugAutoViewA({
   const [sortKey, setSortKey] = useState<SortKey>('overrepresentation_ratio');
   const viewport = useViewport();
   const isMobile = viewport === 'mobile';
+  const tokens = useChartTokens();
 
   const sorted = useMemo(
     () => [...categories].sort((a, b) => b[sortKey] - a[sortKey]),
@@ -62,7 +63,7 @@ export function AugAutoViewA({
     return Math.max(40, Math.ceil(maxObserved / 5) * 5);
   }, [categories]);
 
-  const ariaLabel = `Connected dot plot for 22 occupation categories: each row shows the share of AI conversations (${CLAUDE_FILL}) and the share of the U.S. workforce (${WORKFORCE_FILL}), connected by a line whose length is the gap. Sorted by ${
+  const ariaLabel = `Connected dot plot for 22 occupation categories: each row shows the share of AI conversations (${tokens.action}) and the share of the U.S. workforce (${tokens.tertiaryChart}), connected by a line whose length is the gap. Sorted by ${
     SORT_OPTIONS.find((o) => o.id === sortKey)?.label.toLowerCase() ?? 'overrepresentation'
   }.`;
 
@@ -156,8 +157,11 @@ export function AugAutoViewA({
         role="note"
         className="rounded-lg bg-surface-warm"
         style={{
-          borderLeft: `3px solid ${TOKEN_HEX.info}`,
+          // `border` shorthand must come first — it resets all four
+          // sides, so the accent override has to follow it (the
+          // previous order silently erased the accent).
           border: '1px solid rgb(var(--border))',
+          borderLeft: `3px solid ${tokens.info}`,
           padding: '14px 18px',
         }}
       >
@@ -175,13 +179,14 @@ export function AugAutoViewA({
 }
 
 function DumbbellLegend(): JSX.Element {
+  const tokens = useChartTokens();
   return (
     <div className="flex flex-wrap gap-x-5 gap-y-1.5 font-mono text-[11px] text-tertiary">
       <span className="inline-flex items-center gap-2">
         <span
           aria-hidden="true"
           className="inline-block rounded-full"
-          style={{ width: 10, height: 10, background: CLAUDE_FILL }}
+          style={{ width: 10, height: 10, background: tokens.action }}
         />
         Share of AI conversations (Claude.ai)
       </span>
@@ -193,7 +198,7 @@ function DumbbellLegend(): JSX.Element {
             width: 10,
             height: 10,
             background: 'transparent',
-            border: `2px solid ${WORKFORCE_FILL}`,
+            border: `2px solid ${tokens.tertiaryChart}`,
             boxSizing: 'border-box',
           }}
         />
@@ -219,6 +224,7 @@ function DumbbellChart({
   domainMax: number;
 }): JSX.Element {
   const viewport = useViewport();
+  const tokens = useChartTokens();
 
   // Mobile gets a completely different layout: one vertical card per
   // occupation with stacked "AI use" and "Workforce" progress bars,
@@ -363,7 +369,7 @@ function DumbbellChart({
                     width: DOT_SIZE,
                     height: DOT_SIZE,
                     background: 'rgb(var(--white))',
-                    border: `2px solid ${WORKFORCE_FILL}`,
+                    border: `2px solid ${tokens.tertiaryChart}`,
                     boxSizing: 'border-box',
                   }}
                 />
@@ -377,7 +383,7 @@ function DumbbellChart({
                     top: '50%',
                     width: DOT_SIZE,
                     height: DOT_SIZE,
-                    background: CLAUDE_FILL,
+                    background: tokens.action,
                   }}
                 />
               </div>
@@ -392,9 +398,9 @@ function DumbbellChart({
                   marginLeft: -VALUE_WIDTH,
                 }}
               >
-                <span style={{ color: CLAUDE_FILL, fontWeight: 600 }}>{claude}%</span>
+                <span style={{ color: tokens.action, fontWeight: 600 }}>{claude}%</span>
                 <span className="text-ghost">·</span>
-                <span style={{ color: WORKFORCE_FILL }}>{workforce}%</span>
+                <span style={{ color: tokens.tertiaryChart }}>{workforce}%</span>
               </div>
             </li>
           );
@@ -418,6 +424,7 @@ function MobileOccupationList({
   rows: OccupationRow[];
   domainMax: number;
 }): JSX.Element {
+  const tokens = useChartTokens();
   return (
     <div className="space-y-2.5">
       {rows.map((row) => {
@@ -455,7 +462,7 @@ function MobileOccupationList({
                 </span>
                 <span
                   className="font-mono text-caption font-semibold"
-                  style={{ color: CLAUDE_FILL, letterSpacing: '0.02em' }}
+                  style={{ color: tokens.action, letterSpacing: '0.02em' }}
                 >
                   {row.claude_pct}%
                 </span>
@@ -466,7 +473,7 @@ function MobileOccupationList({
               >
                 <div
                   className="h-full rounded-full"
-                  style={{ width: `${claudeBarPct}%`, background: CLAUDE_FILL }}
+                  style={{ width: `${claudeBarPct}%`, background: tokens.action }}
                 />
               </div>
             </div>
@@ -493,7 +500,7 @@ function MobileOccupationList({
               >
                 <div
                   className="h-full rounded-full"
-                  style={{ width: `${workforceBarPct}%`, background: WORKFORCE_FILL }}
+                  style={{ width: `${workforceBarPct}%`, background: tokens.tertiaryChart }}
                 />
               </div>
             </div>

@@ -20,11 +20,11 @@ import { ReflectionPrompt } from '../../components/shared/ReflectionPrompt';
 import { Icon } from '../../components/shared/Icon';
 import {
   AXIS_TICK_STYLE,
-  TOKEN_HEX,
   TOOLTIP_ITEM_STYLE,
   TOOLTIP_LABEL_STYLE,
   TOOLTIP_STYLE,
 } from '../../utils/chart-config';
+import { useChartTokens } from '../../hooks/useChartTokens';
 import { useViewport } from '../../hooks/useViewport';
 
 interface AugAutoViewCProps {
@@ -56,16 +56,17 @@ export function AugAutoViewC({
   const [methodOpen, setMethodOpen] = useState(false);
   const viewport = useViewport();
   const isMobile = viewport === 'mobile';
+  const tokens = useChartTokens();
 
   const reflection1Text = getReflection(2, 3, 'p3_reflection_1');
 
   const data: SeriesRow[] = useMemo(
     () => [
-      { label: 'Self-reported', augmentation: selfReportAug, automation: selfReportAuto, fill: TOKEN_HEX.secondary },
-      { label: 'Behavioral (Jan 2025)', augmentation: v1Aug, automation: v1Auto, fill: TOKEN_HEX.delegation },
-      { label: 'Behavioral (Nov 2025)', augmentation: latestAug, automation: latestAuto, fill: TOKEN_HEX.discernment },
+      { label: 'Self-reported', augmentation: selfReportAug, automation: selfReportAuto, fill: tokens.secondary },
+      { label: 'Behavioral (Jan 2025)', augmentation: v1Aug, automation: v1Auto, fill: tokens.delegation },
+      { label: 'Behavioral (Nov 2025)', augmentation: latestAug, automation: latestAuto, fill: tokens.discernment },
     ],
-    [selfReportAug, selfReportAuto, v1Aug, v1Auto, latestAug, latestAuto],
+    [selfReportAug, selfReportAuto, v1Aug, v1Auto, latestAug, latestAuto, tokens],
   );
 
   const v1Gap = selfReportAug - v1Aug;
@@ -135,15 +136,15 @@ export function AugAutoViewC({
 
       <div className="flex flex-wrap gap-x-5 gap-y-1.5 font-mono text-[11px] text-tertiary">
         <span className="inline-flex items-center gap-1.5">
-          <span aria-hidden="true" className="inline-block rounded-sm" style={{ width: 10, height: 10, background: TOKEN_HEX.secondary }} />
+          <span aria-hidden="true" className="inline-block rounded-sm" style={{ width: 10, height: 10, background: tokens.secondary }} />
           Self-reported (Anthropic Interviewer, Dec 2025)
         </span>
         <span className="inline-flex items-center gap-1.5">
-          <span aria-hidden="true" className="inline-block rounded-sm" style={{ width: 10, height: 10, background: TOKEN_HEX.delegation }} />
+          <span aria-hidden="true" className="inline-block rounded-sm" style={{ width: 10, height: 10, background: tokens.delegation }} />
           Behavioral (Handa et al., Feb 2025)
         </span>
         <span className="inline-flex items-center gap-1.5">
-          <span aria-hidden="true" className="inline-block rounded-sm" style={{ width: 10, height: 10, background: TOKEN_HEX.discernment }} />
+          <span aria-hidden="true" className="inline-block rounded-sm" style={{ width: 10, height: 10, background: tokens.discernment }} />
           Behavioral (Nov 2025)
         </span>
       </div>
@@ -152,14 +153,14 @@ export function AugAutoViewC({
       <div className="flex flex-wrap gap-3" aria-label="Augmentation gaps between self-report and behavioral data">
         <span
           className="inline-flex items-center gap-2 rounded-md font-mono text-[11px]"
-          style={{ padding: '6px 10px', background: 'rgb(var(--error-light))', color: TOKEN_HEX.error, border: `1px solid ${TOKEN_HEX.error}` }}
+          style={{ padding: '6px 10px', background: 'rgb(var(--error-light))', color: tokens.error, border: `1px solid ${tokens.error}` }}
         >
           <strong className="font-bold">{v1Gap}pp gap</strong>
           <span>self-report vs. Jan 2025 behavioral</span>
         </span>
         <span
           className="inline-flex items-center gap-2 rounded-md font-mono text-[11px]"
-          style={{ padding: '6px 10px', background: 'rgb(var(--error-light))', color: TOKEN_HEX.error, border: `1px solid ${TOKEN_HEX.error}` }}
+          style={{ padding: '6px 10px', background: 'rgb(var(--error-light))', color: tokens.error, border: `1px solid ${tokens.error}` }}
         >
           <strong className="font-bold">{latestGap}pp gap</strong>
           <span>self-report vs. Nov 2025 behavioral</span>

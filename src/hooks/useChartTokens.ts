@@ -27,6 +27,19 @@ interface ChartTokens {
   tierUpperMiddle: string;
   tierLowerMiddle: string;
   tierEmerging: string;
+  // Chart-only tertiary — the pre-3B-8 #888888 kept for chart marks
+  // (dumbbell workforce markers, pill fallbacks) where the text-contrast
+  // pass doesn't apply. Same pairing as tierLowerMiddle.
+  tertiaryChart: string;
+  // Feedback hues used as chart fills / inline chart text.
+  caution: string;
+  error: string;
+  info: string;
+  // 4D competency hues used as chart series fills or value text (P3
+  // View C, dashboards' legend swatches). Static brand-accent uses
+  // (tab underlines, competency dots) keep the plain TOKEN_HEX values.
+  delegation: string;
+  discernment: string;
 }
 
 const LIGHT: ChartTokens = {
@@ -42,6 +55,12 @@ const LIGHT: ChartTokens = {
   tierUpperMiddle: '#666666', // --secondary
   tierLowerMiddle: '#888888', // --tertiary (chart-only — preserves the original ramp)
   tierEmerging: '#BBBBBB', // --ghost (chart-only)
+  tertiaryChart: '#888888', // pre-3B-8 tertiary (matches TOKEN_HEX.tertiary)
+  caution: '#9B7B2E',
+  error: '#8B4A4A',
+  info: '#5E7080',
+  delegation: '#6B7F5E',
+  discernment: '#5E7080',
 };
 
 const DARK: ChartTokens = {
@@ -63,6 +82,18 @@ const DARK: ChartTokens = {
   tierUpperMiddle: '#A8A29A',
   tierLowerMiddle: '#807A72',
   tierEmerging: '#5C564D',
+  tertiaryChart: '#807A72', // same step as tierLowerMiddle
+  // Feedback hues lifted to their dark-theme CSS-variable values
+  // (index.css §10.4) so inline chart fills/text match the rest of the
+  // dark UI — e.g. the error chips sit on the dark --error-light wash.
+  caution: '#B8943A',
+  error: '#BD8383',
+  info: '#7A96A8',
+  // Competency hues lightened to their established dark-mode text
+  // variants (CompetencyDot.textDark / --{competency}-text): same hue
+  // family, but readable as fills against the dark canvas (~#1A1917).
+  delegation: '#B5C4AB',
+  discernment: '#A8BCCA',
 };
 
 export function useChartTokens(): ChartTokens {

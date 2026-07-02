@@ -5,7 +5,7 @@
 import { useEffect, useState, type KeyboardEvent } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
-import { TOKEN_HEX } from '../../utils/chart-config';
+import { useChartTokens } from '../../hooks/useChartTokens';
 import { ActionCommitment } from './ActionCommitment';
 import { ProductivityViewA } from './ProductivityViewA';
 import { ProductivityViewB } from './ProductivityViewB';
@@ -52,6 +52,7 @@ export function ProductivityDashboard({
   const [activeTab, setActiveTab] = useState<TabId>('occupation');
   const { track } = useAnalytics();
   const { markTabViewed } = useLearnerProgress();
+  const tokens = useChartTokens();
 
   useEffect(() => {
     const tab = TABS.find((t) => t.id === activeTab);
@@ -110,7 +111,7 @@ export function ProductivityDashboard({
                   background: active ? 'rgb(var(--white))' : 'transparent',
                   color: active ? 'rgb(var(--ink))' : 'rgb(var(--secondary))',
                   fontWeight: active ? 600 : 500,
-                  borderBottom: active ? `2px solid ${TOKEN_HEX.secondary}` : '2px solid transparent',
+                  borderBottom: active ? `2px solid ${tokens.secondary}` : '2px solid transparent',
                   marginBottom: '-1px',
                   cursor: 'pointer',
                 }}
