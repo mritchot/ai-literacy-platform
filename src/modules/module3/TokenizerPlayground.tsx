@@ -4,7 +4,14 @@
 // tokenization codepath.
 
 import { useEffect, useState } from 'react';
-import { decode, encode } from 'gpt-tokenizer';
+// Leaf entry, not the package root: the root re-exports the o200k_base
+// encoding (~2.2 MB of rank data built eagerly at import — the largest
+// single contributor to bundle parse/startup cost in the single-file
+// build), while every documented token count in this module
+// (TokenComparisonDiagram, StickerAnalogyDiagram) was verified against
+// cl100k_base. The leaf import halves the payload and makes the live
+// playground agree with the documented encoding.
+import { decode, encode } from 'gpt-tokenizer/encoding/cl100k_base';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { Icon } from '../../components/shared/Icon';

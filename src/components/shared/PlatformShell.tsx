@@ -5,7 +5,6 @@
 
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { useTheme } from '../../hooks/useTheme';
 import { useViewport } from '../../hooks/useViewport';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { CompetencyDarkStyles } from './CompetencyDot';
@@ -14,10 +13,6 @@ import { TopBar } from './TopBar';
 
 export function PlatformShell(): JSX.Element {
   const viewport = useViewport();
-  // `preference` (not `resolved`) drives the toggle button so the
-  // sun/moon/monitor icon reflects which of the three modes is
-  // active. `resolved` is still applied to <html> inside useTheme.
-  const { preference: themePreference, cycle: cycleTheme } = useTheme();
 
   // Persist user-driven collapse intent only — viewport default still wins
   // when the user hasn't expressed a preference.
@@ -56,11 +51,7 @@ export function PlatformShell(): JSX.Element {
 
       {viewport === 'mobile' ? (
         <>
-          <TopBar
-            themePreference={themePreference}
-            onOpenMenu={() => setMobileMenuOpen(true)}
-            onCycleTheme={cycleTheme}
-          />
+          <TopBar onOpenMenu={() => setMobileMenuOpen(true)} />
           {mobileMenuOpen && (
             <>
               <button
@@ -73,9 +64,7 @@ export function PlatformShell(): JSX.Element {
               <Sidebar
                 collapsed={false}
                 isMobile
-                themePreference={themePreference}
                 onToggleCollapse={() => setMobileMenuOpen(false)}
-                onCycleTheme={cycleTheme}
                 onCloseMobile={() => setMobileMenuOpen(false)}
               />
             </>
@@ -84,9 +73,7 @@ export function PlatformShell(): JSX.Element {
       ) : (
         <Sidebar
           collapsed={collapsed}
-          themePreference={themePreference}
           onToggleCollapse={() => setExplicitCollapsed(!collapsed)}
-          onCycleTheme={cycleTheme}
         />
       )}
 
