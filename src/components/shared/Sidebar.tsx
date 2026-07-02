@@ -3,7 +3,7 @@
 // the active module. Collapsed state shows sequence-letter chips only.
 
 import { Link, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { type ModuleMeta } from '../../data/program';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress, useResolvedModules } from '../../contexts/LearnerProgressContext';
@@ -34,6 +34,12 @@ export function Sidebar({
   onCloseMobile,
 }: SidebarProps): JSX.Element {
   const location = useLocation();
+  // Mobile drawer: move focus to the close button on open so keyboard
+  // users land inside the drawer instead of behind the overlay.
+  const mobileCloseRef = useRef<HTMLButtonElement | null>(null);
+  useEffect(() => {
+    if (isMobile) mobileCloseRef.current?.focus();
+  }, [isMobile]);
   const modules = useResolvedModules();
   // Sequential-progression lock state. In learner mode, modules and
   // sections lock until their prerequisites are complete; in portfolio
@@ -86,7 +92,12 @@ export function Sidebar({
         boxShadow: isMobile ? '0 2px 8px rgba(0, 0, 0, 0.07)' : 'none',
       }}
     >
-      <SidebarHeader collapsed={collapsed} onCloseMobile={onCloseMobile} isMobile={isMobile} />
+      <SidebarHeader
+        collapsed={collapsed}
+        onCloseMobile={onCloseMobile}
+        isMobile={isMobile}
+        closeButtonRef={mobileCloseRef}
+      />
 
       <nav
         aria-label="Modules"
@@ -128,10 +139,12 @@ function SidebarHeader({
   collapsed,
   isMobile,
   onCloseMobile,
+  closeButtonRef,
 }: {
   collapsed: boolean;
   isMobile: boolean;
   onCloseMobile?: () => void;
+  closeButtonRef?: React.RefObject<HTMLButtonElement>;
 }): JSX.Element {
   return (
     <div
@@ -172,6 +185,7 @@ function SidebarHeader({
           </Link>
           {isMobile && onCloseMobile && (
             <button
+              ref={closeButtonRef}
               type="button"
               onClick={onCloseMobile}
               aria-label="Close menu"
