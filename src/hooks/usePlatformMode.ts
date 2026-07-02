@@ -29,10 +29,11 @@
 // import time — not per hook instance.
 
 import { useSyncExternalStore } from 'react';
+import { STORAGE_KEYS } from '../constants/storage-keys';
 
 export type PlatformMode = 'learner' | 'portfolio';
 
-const STORAGE_KEY = 'platform-mode';
+const STORAGE_KEY = STORAGE_KEYS.PLATFORM_MODE;
 
 function isMode(v: unknown): v is PlatformMode {
   return v === 'learner' || v === 'portfolio';

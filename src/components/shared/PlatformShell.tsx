@@ -5,6 +5,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+import { STORAGE_KEYS } from '../../constants/storage-keys';
 import { useViewport } from '../../hooks/useViewport';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { CompetencyDarkStyles } from './CompetencyDot';
@@ -17,7 +18,7 @@ export function PlatformShell(): JSX.Element {
   // Persist user-driven collapse intent only — viewport default still wins
   // when the user hasn't expressed a preference.
   const [explicitCollapsed, setExplicitCollapsed] = useLocalStorage<boolean | null>(
-    'ail.sidebar-collapsed',
+    STORAGE_KEYS.SIDEBAR_COLLAPSED,
     null,
     { validate: (v): v is boolean | null => typeof v === 'boolean' || v === null },
   );

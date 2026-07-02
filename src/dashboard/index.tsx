@@ -18,6 +18,7 @@ import {
   useLearnerProgress,
   type LearnerProgressState,
 } from '../contexts/LearnerProgressContext';
+import { STORAGE_KEYS } from '../constants/storage-keys';
 import { Overline } from '../components/shared/Overline';
 import { AssessmentResponseAnalysis } from './AssessmentResponseAnalysis';
 import { DataSourceToggle, type DataSource } from './DataSourceToggle';
@@ -69,8 +70,8 @@ export default function AnalyticsDashboard(): JSX.Element {
     // up the empty state. This matches what the existing Reset Progress link
     // does for the same keys.
     try {
-      window.localStorage.removeItem('ail.progress');
-      window.localStorage.removeItem('ail.analytics');
+      window.localStorage.removeItem(STORAGE_KEYS.PROGRESS);
+      window.localStorage.removeItem(STORAGE_KEYS.ANALYTICS);
     } catch {
       /* ignore */
     }
@@ -142,7 +143,7 @@ export default function AnalyticsDashboard(): JSX.Element {
               picture before drilling into module-level details. */}
           <section>
             <h2 className="m-0">
-              <Overline className="mb-3" style={{ fontSize: 11 }}>
+              <Overline as="span" className="mb-3" style={{ fontSize: 11 }}>
                 Assessment Response Analysis
               </Overline>
             </h2>
@@ -151,7 +152,7 @@ export default function AnalyticsDashboard(): JSX.Element {
 
           <section>
             <h2 className="m-0">
-              <Overline className="mb-3" style={{ fontSize: 11 }}>
+              <Overline as="span" className="mb-3" style={{ fontSize: 11 }}>
                 Module Completion
               </Overline>
             </h2>
@@ -160,7 +161,7 @@ export default function AnalyticsDashboard(): JSX.Element {
 
           <section>
             <h2 className="m-0">
-              <Overline className="mb-3" style={{ fontSize: 11 }}>
+              <Overline as="span" className="mb-3" style={{ fontSize: 11 }}>
                 Knowledge Check Response Analysis
               </Overline>
             </h2>

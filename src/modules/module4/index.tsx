@@ -2,8 +2,8 @@
 // Ten sections: opening, five practice activities, two knowledge-check
 // blocks, a program closing, and a personalized competency profile.
 
-import { useEffect, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useSectionParam } from '../../hooks/useSectionParam';
 import { Citation } from '../../components/shared/Citation';
 import { KnowledgeCheck } from '../../components/shared/KnowledgeCheck';
 import {
@@ -29,22 +29,8 @@ import { TaskDecomposition } from './TaskDecomposition';
 const MODULE_ID = 4;
 
 export default function Module4(): JSX.Element {
-  const { sectionId: sectionParam } = useParams<{ sectionId?: string }>();
-  const navigate = useNavigate();
+  const sectionId = useSectionParam(MODULE_ID);
 
-  const sectionId = useMemo(() => {
-    if (sectionParam === undefined) return 1;
-    const parsed = Number.parseInt(sectionParam, 10);
-    if (Number.isNaN(parsed) || parsed < 1 || parsed > 10) return 1;
-    return parsed;
-  }, [sectionParam]);
-
-  useEffect(() => {
-    if (sectionParam === undefined) {
-      navigate(`/module/${MODULE_ID}/section/1`, { replace: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sectionParam]);
 
   const module = getModuleOrThrow(MODULE_ID);
 

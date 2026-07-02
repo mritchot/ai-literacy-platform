@@ -19,10 +19,11 @@
 // another tab.
 
 import { useSyncExternalStore } from 'react';
+import { STORAGE_KEYS } from '../constants/storage-keys';
 
 type CitationVisibility = 'visible' | 'hidden';
 
-const STORAGE_KEY = 'citation-visibility';
+const STORAGE_KEY = STORAGE_KEYS.CITATIONS;
 
 // Read the persisted preference. Anything other than the explicit
 // 'visible' string (including a missing key or a localStorage failure)

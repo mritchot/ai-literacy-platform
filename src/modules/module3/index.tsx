@@ -4,8 +4,8 @@
 // container so the sidebar stays at 11 entries (4C spec §6 design
 // note).
 
-import { useEffect, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useSectionParam } from '../../hooks/useSectionParam';
 import { R1Trigger } from '../../components/reference/R1Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
 import { BottleneckCallout } from '../../components/shared/BottleneckCallout';
@@ -28,22 +28,8 @@ import { TokenizerPlayground } from './TokenizerPlayground';
 const MODULE_ID = 3;
 
 export default function Module3(): JSX.Element {
-  const { sectionId: sectionParam } = useParams<{ sectionId?: string }>();
-  const navigate = useNavigate();
+  const sectionId = useSectionParam(MODULE_ID);
 
-  const sectionId = useMemo(() => {
-    if (sectionParam === undefined) return 1;
-    const parsed = Number.parseInt(sectionParam, 10);
-    if (Number.isNaN(parsed) || parsed < 1 || parsed > 11) return 1;
-    return parsed;
-  }, [sectionParam]);
-
-  useEffect(() => {
-    if (sectionParam === undefined) {
-      navigate(`/module/${MODULE_ID}/section/1`, { replace: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sectionParam]);
 
   const module = getModuleOrThrow(MODULE_ID);
 

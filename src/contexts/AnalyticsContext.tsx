@@ -11,6 +11,7 @@
 // only the dashboard subscribes to `useAnalyticsEvents()`.
 
 import { createContext, useCallback, useContext, useMemo, type ReactNode } from 'react';
+import { STORAGE_KEYS } from '../constants/storage-keys';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
 export interface AnalyticsEvent {
@@ -37,7 +38,7 @@ function isEventArray(v: unknown): v is AnalyticsEvent[] {
 }
 
 export function AnalyticsProvider({ children }: { children: ReactNode }): JSX.Element {
-  const [events, setEvents] = useLocalStorage<AnalyticsEvent[]>('ail.analytics', [], {
+  const [events, setEvents] = useLocalStorage<AnalyticsEvent[]>(STORAGE_KEYS.ANALYTICS, [], {
     validate: isEventArray,
   });
 

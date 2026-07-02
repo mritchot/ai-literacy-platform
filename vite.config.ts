@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { viteSingleFile } from 'vite-plugin-singlefile';
-import path from 'node:path';
 
 export default defineConfig({
   // Relative base so the build can be served from any path (file://,
@@ -16,9 +15,4 @@ export default defineConfig({
     // alongside the inlined index.html.
     viteSingleFile({ removeViteModuleLoader: true }),
   ],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
-  },
 });

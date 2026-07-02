@@ -13,6 +13,7 @@
 // half.
 
 import { createContext, useCallback, useContext, useEffect, useMemo, type ReactNode } from 'react';
+import { STORAGE_KEYS } from '../constants/storage-keys';
 import { MODULES, type ModuleMeta, type SectionState } from '../data/program';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
@@ -240,7 +241,7 @@ function migrateProgress(raw: LearnerProgressState): LearnerProgressState {
 }
 
 export function LearnerProgressProvider({ children }: { children: ReactNode }): JSX.Element {
-  const [state, setState] = useLocalStorage<LearnerProgressState>('ail.progress', INITIAL, {
+  const [state, setState] = useLocalStorage<LearnerProgressState>(STORAGE_KEYS.PROGRESS, INITIAL, {
     validate: isProgressShape,
     migrate: migrateProgress,
   });

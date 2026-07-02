@@ -234,7 +234,7 @@ function ModuleGrid({
           mid-content with a dangling bullet on mobile. */}
       <div className="mb-5 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-3">
         <h2 id="modules-heading" className="m-0">
-          <Overline style={{ fontSize: 11 }}>The four modules</Overline>
+          <Overline as="span" style={{ fontSize: 11 }}>The four modules</Overline>
         </h2>
         <div className="font-mono text-[11px] font-medium text-muted">
           Take in order · each self-contained
