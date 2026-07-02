@@ -3,13 +3,17 @@
 // either demo data or live context state into a common shape, and stacks
 // the four dashboard sections.
 //
-// Live mode reads from `useLearnerProgress` and `useAnalytics`. Demo mode
-// reads from the static `demo-data.ts` file. The demo data is never written
+// Live mode reads from `useLearnerProgress` and `useAnalyticsEvents`. Demo
+// mode reads from the static `demo-data.ts` file. Demo data is never written
 // to localStorage — switching back to Live mode reveals the actual learner
 // state (or the empty state if it's empty).
 
 import { useMemo, useState } from 'react';
-import { useAnalytics, type AnalyticsEvent } from '../contexts/AnalyticsContext';
+import {
+  useAnalytics,
+  useAnalyticsEvents,
+  type AnalyticsEvent,
+} from '../contexts/AnalyticsContext';
 import {
   useLearnerProgress,
   type LearnerProgressState,
@@ -43,15 +47,16 @@ export default function AnalyticsDashboard(): JSX.Element {
   // toggle switches to live localStorage data for the real numbers.
   const [dataSource, setDataSource] = useState<DataSource>('demo');
   const learnerProgress = useLearnerProgress();
-  const analytics = useAnalytics();
+  const { reset: resetAnalytics } = useAnalytics();
+  const liveEvents = useAnalyticsEvents();
 
   // Normalize: produce a single `DashboardData` from whichever source is active.
   const data: DashboardData = useMemo(() => {
     if (dataSource === 'demo') {
       return { progress: DEMO_PROGRESS, events: DEMO_EVENTS };
     }
-    return { progress: learnerProgress.state, events: analytics.events };
-  }, [dataSource, learnerProgress.state, analytics.events]);
+    return { progress: learnerProgress.state, events: liveEvents };
+  }, [dataSource, learnerProgress.state, liveEvents]);
 
   const isLiveEmpty = dataSource === 'live' && isProgressEmpty(data.progress);
 
@@ -72,7 +77,7 @@ export default function AnalyticsDashboard(): JSX.Element {
     // Reset in-memory state via the analytics context's reset function (the
     // progress context doesn't have a reset; reload picks it up). Since
     // we can't fully reset progress in-memory without a reload, we reload.
-    analytics.reset();
+    resetAnalytics();
     setDataSource('demo');
     // Force the rest of the platform to re-read from cleared localStorage.
     window.location.reload();
