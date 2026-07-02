@@ -400,8 +400,8 @@ function Section9({ module }: ModuleProp): JSX.Element {
           />
           . The mechanical data says the tool generates output by probability, not by retrieving
           facts, which means fluent text and accurate text are independent properties. And the
-          adoption data says 69% of professionals report that social stigma is an active barrier
-          to open AI use
+          adoption data says 69% of professionals mention the social stigma that comes with
+          using AI at work
           <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" />, which means the
           fastest-growing capability in the modern workforce is developing in isolation, without
           shared standards, without peer learning, and without organizational visibility.

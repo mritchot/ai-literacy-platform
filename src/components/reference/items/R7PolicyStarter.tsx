@@ -207,7 +207,8 @@ export function R7PolicyStarter(): JSX.Element {
         <strong style={{ color: 'rgb(var(--ink))' }}>
           This is a conversation starter, not a policy.
         </strong>{' '}
-        69% of professionals who use AI productively conceal it from colleagues. This scaffold
+        69% of professionals mention the social stigma that comes with using AI at work, and
+        many conceal their use from colleagues. This scaffold
         helps you initiate a conversation about shared AI use norms. You are proposing shared
         standards, not asking for permission.
       </p>
