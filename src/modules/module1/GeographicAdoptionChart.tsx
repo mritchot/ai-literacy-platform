@@ -203,6 +203,7 @@ export function GeographicAdoptionChart({
           rows={filteredAll}
           tierColor={tierColor}
           maxHeight={SCROLL_MAX_HEIGHT}
+          animate={!search.trim()}
           ariaLabel={`Horizontal bar chart of ${filteredAll.length} countries (full dataset, sorted by AUI descending), color-coded by adoption tier.`}
         />
       )}
@@ -424,11 +425,16 @@ function BarChartFigure({
   tierColor,
   maxHeight,
   ariaLabel,
+  // Animation is suppressed while a search filter is active — each
+  // keystroke produces a new rows array, and restarting the 400ms bar
+  // animation per character is pure jank on a ~115-row chart.
+  animate = true,
 }: {
   rows: GeoCountry[];
   tierColor: Record<TierName, string>;
   maxHeight: number | null;
   ariaLabel: string;
+  animate?: boolean;
 }): JSX.Element {
   const viewport = useViewport();
 
@@ -540,7 +546,7 @@ function BarChartFigure({
                   }) as any}
                   labelFormatter={(label) => label}
                 />
-                <Bar dataKey="aui" isAnimationActive animationDuration={400} radius={[0, 3, 3, 0]}>
+                <Bar dataKey="aui" isAnimationActive={animate} animationDuration={400} radius={[0, 3, 3, 0]}>
                   {rows.map((c) => (
                     <Cell key={c.iso3} fill={tierColor[c.tier as TierName] ?? tierColor.Emerging} />
                   ))}

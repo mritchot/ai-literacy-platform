@@ -23,6 +23,10 @@ import {
   type VerificationAnswer,
 } from './p7-content';
 
+function isVerificationAnswer(v: unknown): v is VerificationAnswer {
+  return v === 'accurate' || v === 'inaccurate' || v === 'cannot-verify';
+}
+
 type Phase = 'setup' | 'verification' | 'debrief';
 type DocTab = 'source' | 'summary';
 
@@ -37,8 +41,10 @@ export function ContextWindowScenario(): JSX.Element {
     const out: Record<number, VerificationAnswer> = {};
     for (const item of VERIFICATION_ITEMS) {
       const stored = state.knowledgeChecks[`3.7.p7_item_${item.id}`];
-      if (stored) {
-        out[item.id] = stored.selectedOptionId as VerificationAnswer;
+      // Guard the persisted union — a corrupt value would otherwise
+      // count as a submission and jump initialPhase past setup.
+      if (stored && isVerificationAnswer(stored.selectedOptionId)) {
+        out[item.id] = stored.selectedOptionId;
       }
     }
     return out;

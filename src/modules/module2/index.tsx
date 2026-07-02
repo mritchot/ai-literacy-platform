@@ -22,8 +22,10 @@ import productivityGains from '../../data/productivity-gains.json';
 import interviewerFindings from '../../data/interviewer-findings.json';
 import adoptionTrends from '../../data/adoption-trends.json';
 
-// JSON inference widens union literals to `string`. Narrow the few keys
-// where downstream chart props expect literal unions.
+// JSON inference widens union literals to `string`. Narrow ONLY the
+// `category` key: the intermediate assignment is a plain (uncast)
+// structural check, so renaming/removing any other field in the JSON
+// fails to compile — the old `as unknown as` bridge silenced that too.
 type CollaborationCategoryArray = Array<{
   pattern: string;
   category: 'augmentation' | 'automation';
@@ -32,8 +34,12 @@ type CollaborationCategoryArray = Array<{
   example: string;
   typical_tasks: string;
 }>;
-const COLLABORATION_CATEGORIES =
-  augmentationAutomation.collaboration_patterns.categories as unknown as CollaborationCategoryArray;
+type CollaborationCategoryRaw = Omit<CollaborationCategoryArray[number], 'category'> & {
+  category: string;
+};
+const RAW_COLLABORATION_CATEGORIES: CollaborationCategoryRaw[] =
+  augmentationAutomation.collaboration_patterns.categories;
+const COLLABORATION_CATEGORIES = RAW_COLLABORATION_CATEGORIES as CollaborationCategoryArray;
 
 import { AugAutoDashboard } from './AugAutoDashboard';
 import { DirectiveTrendSparkline } from './DirectiveTrendSparkline';

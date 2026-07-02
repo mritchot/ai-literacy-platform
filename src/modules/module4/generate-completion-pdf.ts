@@ -993,14 +993,22 @@ function drawMilestonesCard(doc: jsPDF, data: CompletionProfileData): void {
   setTextHex(doc, C.ink);
   doc.text(safe('Three commitments to carry forward'), x + padX, y + padY + 22);
 
-  // Connection excerpts (quote learner artifacts where available)
+  // Connection excerpts (quote learner artifacts where available).
+  // Ellipsis only when text was actually truncated — mirrors the
+  // on-screen truncateToLines behavior.
+  const quoteExcerpt = (raw: string): string => {
+    const compact = raw.replace(/\s+/g, ' ').trim();
+    return compact.length <= 130
+      ? `"${compact}"`
+      : `"${compact.slice(0, 130).trimEnd()}…"`;
+  };
   const task1Excerpt =
     data.task1.trim().length > 0
-      ? `"${data.task1.replace(/\s+/g, ' ').slice(0, 130).trim()}…"`
+      ? quoteExcerpt(data.task1)
       : 'Complete the action commitment to see your commitment here.';
   const p12Excerpt =
     data.p12Statement.trim().length > 0
-      ? `"${data.p12Statement.replace(/\s+/g, ' ').slice(0, 130).trim()}…"`
+      ? quoteExcerpt(data.p12Statement)
       : 'Complete the diligence statement builder to see your template here.';
 
   const rowTop = y + padY + 50;

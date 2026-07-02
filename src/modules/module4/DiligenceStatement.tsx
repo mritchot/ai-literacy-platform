@@ -67,6 +67,15 @@ export function DiligenceStatement(): JSX.Element {
   const [savedAt, setSavedAt] = useState<number | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
   const exemplarRef = useRef<HTMLDivElement>(null);
+  // Pending scroll-into-view timer — cleared on unmount so a fast
+  // navigation away can't fire it against an unmounted tree.
+  const scrollTimerRef = useRef<number | null>(null);
+  useEffect(
+    () => () => {
+      if (scrollTimerRef.current !== null) window.clearTimeout(scrollTimerRef.current);
+    },
+    [],
+  );
 
   const phase: 'write' | 'compare' = exemplarSeen ? 'compare' : 'write';
   const canSave = text.trim().length >= MIN_CHARS;
@@ -95,7 +104,7 @@ export function DiligenceStatement(): JSX.Element {
         sectionId: SECTION,
         payload: { chars: text.length },
       });
-      setTimeout(() => {
+      scrollTimerRef.current = window.setTimeout(() => {
         exemplarRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         track({ type: 'p12_exemplar_viewed', moduleId: 4, sectionId: SECTION });
       }, 200);
