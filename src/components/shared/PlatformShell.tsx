@@ -24,6 +24,7 @@ export function PlatformShell(): JSX.Element {
   const [explicitCollapsed, setExplicitCollapsed] = useLocalStorage<boolean | null>(
     'ail.sidebar-collapsed',
     null,
+    { validate: (v): v is boolean | null => typeof v === 'boolean' || v === null },
   );
 
   const defaultCollapsed = viewport === 'tablet';
