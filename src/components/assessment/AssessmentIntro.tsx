@@ -89,7 +89,9 @@ function PreFraming({ itemCount }: { itemCount: number }): JSX.Element {
       <p className="m-0">
         Before the program starts, take 10 minutes to capture a baseline.
         You&rsquo;ll answer <strong className="text-ink">{itemCount} scenario-based questions</strong>{' '}
-        about how AI tools work and where they break down.
+        about how AI tools work and where they break down. The items sample the program&rsquo;s
+        four core construct areas — usage patterns, failure modes, mechanics, and evaluation —
+        rather than every module objective.
       </p>
       <ul className="m-0 list-disc space-y-1.5 pl-5">
         <li>
