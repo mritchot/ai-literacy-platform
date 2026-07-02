@@ -528,6 +528,10 @@ function BarChartFigure({
                   itemStyle={TOOLTIP_ITEM_STYLE}
                   labelStyle={TOOLTIP_LABEL_STYLE}
                   cursor={{ fill: 'rgba(0,0,0,0.04)' }}
+                  // Recharts boundary: the Formatter generic doesn't model the
+                  // per-entry `payload` shape, so the callback params are typed
+                  // loosely and matched to the prop with `as any` (same pattern
+                  // documented in GDPCorrelationScatter).
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   formatter={((value: number, _name: string, entry: any) => {
                     const c = entry?.payload as GeoCountry | undefined;
