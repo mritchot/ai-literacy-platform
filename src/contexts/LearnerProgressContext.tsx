@@ -131,8 +131,8 @@ const INITIAL: LearnerProgressState = {
 // fixed heartbeat and adds one heartbeat-worth of time per tick.
 //
 // Heartbeat 10s + idle 60s + cap 30min is the standard "visibility +
-// activity" recipe; see the analytics rationale in
-// `course-info/process-journal.md`.
+// activity" recipe: count time only while the tab is visible and the
+// learner has shown recent input, and bound the per-section total.
 const HEARTBEAT_MS = 10_000;
 const IDLE_MS = 60_000;
 const PER_SECTION_CAP_MS = 30 * 60_000;
