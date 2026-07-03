@@ -60,10 +60,10 @@ export function AssessmentIntro({
         //     content-width afterthought floating beneath a text link.
         //   • Desktop (≥ sm): horizontal row, Back left, Begin right,
         //     both at content width (the original layout).
-        <div className="mt-6 flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-3">
+        <div className="mt-8 flex flex-col items-start gap-5 pb-4 sm:mt-6 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-3 sm:pb-0">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 font-sans text-[13.5px] font-semibold text-tertiary no-underline hover:text-secondary"
+            className="inline-flex items-center gap-2 py-1 font-sans text-[13.5px] font-semibold text-tertiary no-underline hover:text-secondary sm:py-0"
           >
             <Icon name="arrowLeft" size={14} />
             Back to program home

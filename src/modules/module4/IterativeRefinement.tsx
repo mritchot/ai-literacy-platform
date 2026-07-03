@@ -462,7 +462,7 @@ function Turn1({
             onClick={onSubmit}
             disabled={!allEvalsFilled}
             aria-disabled={!allEvalsFilled}
-            className="inline-flex items-center gap-2 rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-action px-5 py-2.5 text-center font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted sm:w-auto sm:justify-start sm:text-left"
           >
             Continue → See a Refinement and Draft 2
             <Icon name="arrowRight" size={14} />
@@ -564,7 +564,7 @@ function Turn2({
             onClick={onSubmit}
             disabled={!bothEvalsFilled}
             aria-disabled={!bothEvalsFilled}
-            className="inline-flex items-center gap-2 rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-action px-5 py-2.5 text-center font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted sm:w-auto sm:justify-start sm:text-left"
           >
             Continue → Write Your Own Refinement
             <Icon name="arrowRight" size={14} />
@@ -635,7 +635,7 @@ function Turn3({
             onClick={onSubmitRefinement}
             disabled={refinement.trim().length < MIN_REFINEMENT_CHARS}
             aria-disabled={refinement.trim().length < MIN_REFINEMENT_CHARS}
-            className="inline-flex items-center gap-2 rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-action px-5 py-2.5 text-center font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted sm:w-auto sm:justify-start sm:text-left"
           >
             Submit Refinement → See Draft 3 and Compare
             <Icon name="arrowRight" size={14} />

@@ -121,7 +121,7 @@ export function createArtifactSeries(series: SeriesConfig): {
     const prev = idx > 0 ? series.artifacts[idx - 1] : undefined;
     const next = idx >= 0 ? series.artifacts[idx + 1] : undefined;
     return (
-      <div className="mt-14 flex flex-col gap-3 border-t border-border-light pt-6 sm:flex-row sm:items-center sm:justify-between">
+      <div className="mt-14 flex flex-col items-start gap-4 border-t border-border-light pt-6 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
         {prev ? (
           <a href={`#/${prev.route}`} className={TEXT_LINK}>
             <span aria-hidden="true">←</span> Previous: {prev.title}
