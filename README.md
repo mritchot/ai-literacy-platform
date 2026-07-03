@@ -112,8 +112,8 @@ This is the v1 minimum-viable corpus. Additional research will be added in futur
 
 This project uses a dual license:
 
-- **Code** (`LICENSE-CODE`): MIT License
-- **Content** (`LICENSE-CONTENT`): CC BY-NC-SA 4.0
+- **Code** (`LICENSE`): MIT License
+- **Content** (`licenses/LICENSE-CONTENT`): CC BY-NC-SA 4.0
 
 The competency taxonomy is adapted from Anthropic's 4D AI Fluency Framework, licensed under CC BY-NC-SA 4.0. Commercial use of course content requires a separate agreement — contact michael@ritchot.me.
 
