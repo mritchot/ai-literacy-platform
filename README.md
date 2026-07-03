@@ -1,5 +1,8 @@
 # AI Literacy for the Modern Workforce
 
+[![Code license: MIT](https://img.shields.io/badge/code-MIT-yellow.svg)](LICENSE)
+[![Content license: CC BY-NC-SA 4.0](https://img.shields.io/badge/content-CC_BY--NC--SA_4.0-lightgrey.svg)](licenses/LICENSE-CONTENT)
+
 A four-module interactive learning platform teaching AI literacy to mid-career knowledge workers. Built as a portfolio piece demonstrating end-to-end L&D program development — from needs analysis and instructional design through custom platform engineering and Kirkpatrick evaluation architecture.
 
 Live: [ai-literacy.ritchot.me](https://ai-literacy.ritchot.me)
