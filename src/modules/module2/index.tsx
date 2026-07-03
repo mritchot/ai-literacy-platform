@@ -310,7 +310,7 @@ function Section4({ module }: ModuleProp): JSX.Element {
           tool saves across different types of work.
         </p>
         <p className="m-0">
-          There are two ways to measure how much time AI saves on a task, and both matter.
+          There are two ways to measure how much time AI saves on a task.
         </p>
         <p className="m-0">
           The first measures only what happens inside the AI interaction: the portion of the work
@@ -331,7 +331,7 @@ function Section4({ module }: ModuleProp): JSX.Element {
           and 56%, depending on the task and the model generation tested.
         </p>
         <p className="m-0">
-          Both measurements are valid, and neither alone tells the complete story. The gap between
+          The gap between
           them, from 81% down to 14–56%, is the cost of verification: the time where human
           judgment converts AI-generated output into a reliable deliverable. Even at the
           conservative end, a 14% reduction in task time across routine workflows is operationally
@@ -393,7 +393,7 @@ function Section5({ module }: ModuleProp): JSX.Element {
         looked correct on first read.
       </p>
       <p className="m-0 mb-6 font-sans text-body text-body">
-        Two tabs, then a structured action commitment. <em>By Occupation</em> covers all 22
+        <em>By Occupation</em> covers all 22
         occupation categories; sort the table to find where the time savings, hourly wages, and
         task costs concentrate. <em>Task-Level Examples</em> drills into nine specific tasks that
         span the full range from 96% savings down to 56%, grouped to show the pattern:
@@ -461,7 +461,7 @@ function Section6({ module }: ModuleProp): JSX.Element {
           through less human review.
         </p>
         <p className="m-0">
-          This is where the productivity data from the previous section matters most. The tasks
+          The tasks
           with the highest time savings (compiling information, drafting documents, preparing
           reports) are also the tasks most amenable to directive delegation. The efficiency gain
           is real. But so is the verification gap.
