@@ -41,14 +41,14 @@ interface XAPIStatement {
   result?: Record<string, unknown>;
 }
 
-const VERB_MAP: Record<string, { id: string; display: string }> = {
+const VERB_MAP = {
   module_start: { id: 'http://adlnet.gov/expapi/verbs/launched', display: 'launched' },
   module_complete: { id: 'http://adlnet.gov/expapi/verbs/completed', display: 'completed' },
   section_enter: { id: 'http://adlnet.gov/expapi/verbs/experienced', display: 'experienced' },
   kc_submitted: { id: 'http://adlnet.gov/expapi/verbs/answered', display: 'answered' },
   reflection: { id: 'http://adlnet.gov/expapi/verbs/reflected', display: 'reflected' },
   generic: { id: 'http://adlnet.gov/expapi/verbs/interacted', display: 'interacted' },
-};
+} satisfies Record<string, { id: string; display: string }>;
 
 function categorizeForXAPI(eventType: string): keyof typeof VERB_MAP {
   if (/^module_\d+_start$/.test(eventType)) return 'module_start';
@@ -61,7 +61,7 @@ function categorizeForXAPI(eventType: string): keyof typeof VERB_MAP {
 
 function eventToXAPI(event: AnalyticsEvent, index: number): XAPIStatement {
   const cat = categorizeForXAPI(event.type);
-  const verb = VERB_MAP[cat]!;
+  const verb = VERB_MAP[cat];
   const objectId = event.moduleId
     ? `https://ai-literacy.example.com/module/${event.moduleId}${event.sectionId ? `/section/${event.sectionId}` : ''}`
     : `https://ai-literacy.example.com/event/${event.type}`;

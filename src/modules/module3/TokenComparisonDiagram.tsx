@@ -35,19 +35,23 @@ const PANELS: PanelData[] = [
     // around operators tokenize separately.
     tokens: ['Calculate', ':', ' ', '1', ',', '279', ' ×', ' ', '48', ' =', ' ?'],
     annotation:
-      'The split between "127" and "9" isn\'t based on math. It\'s based on which digit sequences the tokenizer saw most often during training.',
+      'The comma splits "1,279" into "1" and "279" — token boundaries follow which digit strings appeared most often in training data, not place value or mathematical structure.',
   },
   {
     id: 'c',
     label: 'Panel C: non-English text',
     inputText: '東京の天気はどうですか',
-    // Verified → 8 tokens. Eleven characters become eight tokens. The
+    // Verified: gpt-tokenizer (cl100k_base) → 11 tokens. The previous
+    // 8-token split was the o200k_base output; regenerated when the
+    // playground's runtime encoding moved to cl100k_base so the diagram
+    // matches what learners see in P5. 東 splits into two byte-level
+    // tokens (rendered 東¹ / 東² — neither is a whole character). The
     // English translation lives in the annotation below the chips, not
     // in inputText, so the "What you type" surface stays faithful to
     // what a user would actually paste in.
-    tokens: ['東京', 'の', '天', '気', 'は', 'どう', 'です', 'か'],
+    tokens: ['東¹', '東²', '京', 'の', '天', '気', 'は', 'ど', 'う', 'です', 'か'],
     annotation:
-      'Eleven Japanese characters ("What\'s the weather like in Tokyo?") become eight tokens, each consuming working memory that a single English word would not. The same question in English would tokenize into roughly seven tokens.',
+      'Eleven Japanese characters ("What\'s the weather like in Tokyo?") become eleven tokens — and the first character, 東, is split into two byte-level pieces (marked ¹ and ²), neither of which is a whole character on its own. The same question in English tokenizes into eight.',
   },
 ];
 

@@ -73,7 +73,6 @@
     --sidebar-bg: 245 242 237;
 
     /* Motion */
-    --ease: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .dark {
@@ -89,7 +88,11 @@
     --tertiary: 150 145 137;
     --muted: 149 145 139;
     --subtle: 86 80 72;
-    --ghost: 70 64 56;
+    /* Lightened from 70 64 56 (~1.4:1 vs the dark card surface — the
+       radio-bullet rings were near-invisible) to ~3.1:1, matching the
+       3:1 non-text minimum the light-mode ghost was already raised
+       to meet. */
+    --ghost: 128 122 112;
     --border: 61 58 53;
     --border-light: 51 48 43;
     --surface: 37 35 32;
@@ -253,6 +256,13 @@
     outline: none;
   }
   input[type='range']:focus-visible::-webkit-slider-thumb {
+    box-shadow:
+      0 0 0 3px rgb(var(--action) / 0.25),
+      0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+  /* Firefox equivalent — outline:none above would otherwise leave
+     keyboard focus on the slider with no visible indicator. */
+  input[type='range']:focus-visible::-moz-range-thumb {
     box-shadow:
       0 0 0 3px rgb(var(--action) / 0.25),
       0 1px 3px rgba(0, 0, 0, 0.15);

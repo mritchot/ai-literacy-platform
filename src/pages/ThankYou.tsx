@@ -6,7 +6,7 @@
 // and the landing page footer, but also reachable directly at
 // `/#/thank-you`. Renders inside `PlatformShell` (so sidebar/top bar
 // stay present) but is not listed in the sidebar's module section
-// nav — it's a standalone page like the admin dashboard.
+// nav — it's a standalone page like the analytics dashboard.
 //
 // Voice note: this page is the only place in the platform written in
 // the creator's first person. Everything else uses the instructional

@@ -3,8 +3,8 @@
 // section param. Data files are imported here once and passed as props to
 // the chart components (4A spec §11.1).
 
-import { useEffect, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useSectionParam } from '../../hooks/useSectionParam';
 import {
   SectionContainer,
   getModuleOrThrow,
@@ -22,8 +22,10 @@ import productivityGains from '../../data/productivity-gains.json';
 import interviewerFindings from '../../data/interviewer-findings.json';
 import adoptionTrends from '../../data/adoption-trends.json';
 
-// JSON inference widens union literals to `string`. Narrow the few keys
-// where downstream chart props expect literal unions.
+// JSON inference widens union literals to `string`. Narrow ONLY the
+// `category` key: the intermediate assignment is a plain (uncast)
+// structural check, so renaming/removing any other field in the JSON
+// fails to compile — the old `as unknown as` bridge silenced that too.
 type CollaborationCategoryArray = Array<{
   pattern: string;
   category: 'augmentation' | 'automation';
@@ -32,8 +34,12 @@ type CollaborationCategoryArray = Array<{
   example: string;
   typical_tasks: string;
 }>;
-const COLLABORATION_CATEGORIES =
-  augmentationAutomation.collaboration_patterns.categories as unknown as CollaborationCategoryArray;
+type CollaborationCategoryRaw = Omit<CollaborationCategoryArray[number], 'category'> & {
+  category: string;
+};
+const RAW_COLLABORATION_CATEGORIES: CollaborationCategoryRaw[] =
+  augmentationAutomation.collaboration_patterns.categories;
+const COLLABORATION_CATEGORIES = RAW_COLLABORATION_CATEGORIES as CollaborationCategoryArray;
 
 import { AugAutoDashboard } from './AugAutoDashboard';
 import { DirectiveTrendSparkline } from './DirectiveTrendSparkline';
@@ -45,26 +51,12 @@ import { RCTComparisonChart } from './RCTComparisonChart';
 const MODULE_ID = 2;
 
 export default function Module2(): JSX.Element {
-  const { sectionId: sectionParam } = useParams<{ sectionId?: string }>();
-  const navigate = useNavigate();
-
-  const sectionId = useMemo(() => {
-    if (sectionParam === undefined) return 1;
-    const parsed = Number.parseInt(sectionParam, 10);
-    if (Number.isNaN(parsed) || parsed < 1 || parsed > 8) return 1;
-    return parsed;
-  }, [sectionParam]);
+  const sectionId = useSectionParam(MODULE_ID);
 
   // If the user lands on /module/2 with no sectionId param, normalize the
   // URL so back/forward navigation lands on the right section. `navigate`
   // identity is stable across renders, but exclude it from deps to keep the
   // effect tied only to the URL param it actually responds to.
-  useEffect(() => {
-    if (sectionParam === undefined) {
-      navigate(`/module/${MODULE_ID}/section/1`, { replace: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sectionParam]);
 
   const module = getModuleOrThrow(MODULE_ID);
 
@@ -161,7 +153,8 @@ function Section2({ module }: ModuleProp): JSX.Element {
     >
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
-          When researchers analyzed over a million AI conversations, they didn't just count how
+          When researchers analyzed over a million AI conversations (the same single-platform
+          Claude dataset introduced in Module 1), they didn't just count how
           often people used AI. They classified <em>how</em> those conversations worked. The
           result is a five-pattern taxonomy that captures the range of ways professionals interact
           with AI tools.
@@ -522,11 +515,11 @@ function Section7({ module }: ModuleProp): JSX.Element {
     const allDone = MODULE_2_KC_ITEMS.every((item) =>
       Boolean(state.knowledgeChecks[`2.7.${item.id}`]),
     );
-    if (allDone && !state.completedSections['2.7']) {
+    if (allDone && !state.interactionCompleteSections['2.7']) {
       markInteractionComplete(2, 7);
       track({ type: 'kc_module_2_complete', moduleId: 2, sectionId: 7 });
     }
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete, track]);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete, track]);
 
   return (
     <SectionContainer

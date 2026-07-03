@@ -1,6 +1,6 @@
 // DataSourceToggle — two-segment Demo / Live pill (4D §5).
 // `role="radiogroup"` with arrow-key navigation. The empty-state card
-// (4D §5.4) is rendered by the parent (`AdminDashboard`) when live mode is
+// (4D §5.4) is rendered by the parent (`AnalyticsDashboard`) when live mode is
 // chosen and no learner data exists; this component just owns the toggle UI
 // and accessibility.
 

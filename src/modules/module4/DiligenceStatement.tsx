@@ -67,6 +67,15 @@ export function DiligenceStatement(): JSX.Element {
   const [savedAt, setSavedAt] = useState<number | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
   const exemplarRef = useRef<HTMLDivElement>(null);
+  // Pending scroll-into-view timer — cleared on unmount so a fast
+  // navigation away can't fire it against an unmounted tree.
+  const scrollTimerRef = useRef<number | null>(null);
+  useEffect(
+    () => () => {
+      if (scrollTimerRef.current !== null) window.clearTimeout(scrollTimerRef.current);
+    },
+    [],
+  );
 
   const phase: 'write' | 'compare' = exemplarSeen ? 'compare' : 'write';
   const canSave = text.trim().length >= MIN_CHARS;
@@ -95,7 +104,7 @@ export function DiligenceStatement(): JSX.Element {
         sectionId: SECTION,
         payload: { chars: text.length },
       });
-      setTimeout(() => {
+      scrollTimerRef.current = window.setTimeout(() => {
         exemplarRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         track({ type: 'p12_exemplar_viewed', moduleId: 4, sectionId: SECTION });
       }, 200);
@@ -131,11 +140,11 @@ export function DiligenceStatement(): JSX.Element {
           See module4-content.ts for the rationale comment. */}
       <article className="font-sans text-body text-body">
         <p className="m-0" style={{ marginBottom: '0.85em' }}>
-          Module 1 opened with a number: 69% of professionals report that social stigma is an
-          active barrier
-          <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" /> to disclosing AI use
-          at work. Not because they reject the tool, but because they fear how colleagues and
-          managers will perceive them for using it. The result is the concealment dynamic:
+          Module 1 opened with a number: 69% of professionals mention the social stigma that
+          comes with using AI at work
+          <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" />, and for many of
+          them it keeps their use undisclosed. Not because they reject the tool, but because
+          they fear how colleagues and managers will perceive them for using it. The result is the concealment dynamic:
           individuals getting faster while the institution stays blind.
         </p>
         <p className="m-0" style={{ marginBottom: '0.85em' }}>

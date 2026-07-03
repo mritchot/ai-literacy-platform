@@ -106,6 +106,15 @@ export function IterativeRefinement(): JSX.Element {
 
   // Refs for scroll-on-unlock
   const turn2Ref = useRef<HTMLDivElement>(null);
+  // Pending scroll-into-view timer — cleared on unmount so a fast
+  // navigation away can't fire it against an unmounted tree.
+  const scrollTimerRef = useRef<number | null>(null);
+  useEffect(
+    () => () => {
+      if (scrollTimerRef.current !== null) window.clearTimeout(scrollTimerRef.current);
+    },
+    [],
+  );
   const turn3Ref = useRef<HTMLDivElement>(null);
   const scenarioRef = useRef<HTMLDivElement>(null);
   const [scenarioViewed, setScenarioViewed] = useState(false);
@@ -155,7 +164,10 @@ export function IterativeRefinement(): JSX.Element {
         performanceChars: t1Performance.length,
       },
     });
-    setTimeout(() => turn2Ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    scrollTimerRef.current = window.setTimeout(
+      () => turn2Ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
+      100,
+    );
   };
 
   const onSubmitTurn2 = () => {
@@ -180,7 +192,7 @@ export function IterativeRefinement(): JSX.Element {
         gapChars: t2Gap.length,
       },
     });
-    setTimeout(() => {
+    scrollTimerRef.current = window.setTimeout(() => {
       track({ type: 'p11_turn3_viewed', moduleId: 4, sectionId: SECTION });
       turn3Ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
@@ -755,6 +767,7 @@ function RefinementTextarea({
       onChange={(e) => onChange(e.target.value)}
       disabled={disabled}
       rows={4}
+      aria-label="Your refined prompt"
       placeholder="Write your refined prompt here…"
       className="block w-full resize-y rounded-md border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
       style={{ minHeight, lineHeight: 1.55 }}

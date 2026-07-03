@@ -3,8 +3,15 @@
 // gpt-tokenizer library so guided and free flows share a single
 // tokenization codepath.
 
-import { useEffect, useMemo, useState } from 'react';
-import { decode, encode } from 'gpt-tokenizer';
+import { useEffect, useState } from 'react';
+// Leaf entry, not the package root: the root re-exports the o200k_base
+// encoding (~2.2 MB of rank data built eagerly at import — the largest
+// single contributor to bundle parse/startup cost in the single-file
+// build), while every documented token count in this module
+// (TokenComparisonDiagram, StickerAnalogyDiagram) was verified against
+// cl100k_base. The leaf import halves the payload and makes the live
+// playground agree with the documented encoding.
+import { decode, encode } from 'gpt-tokenizer/encoding/cl100k_base';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { Icon } from '../../components/shared/Icon';
@@ -50,7 +57,11 @@ export function TokenizerPlayground(): JSX.Element {
 
   // Restore round-completion from persisted state so re-mounting Module 3
   // (e.g., on hash navigation) doesn't reset the learner's progress.
-  const initialResults = useMemo<Record<number, RoundResult>>(() => {
+  // Lazy initializer: this runs exactly once, at mount. (It was a useMemo
+  // keyed on state.knowledgeChecks, which re-tokenized every completed
+  // round on every progress write — and the recomputed value was
+  // discarded, since it only ever fed this initial state.)
+  const [results, setResults] = useState<Record<number, RoundResult>>(() => {
     const out: Record<number, RoundResult> = {};
     for (const r of ROUNDS) {
       const stored = state.knowledgeChecks[`3.3.p5_round_${r.id}`];
@@ -66,20 +77,17 @@ export function TokenizerPlayground(): JSX.Element {
       }
     }
     return out;
-  }, [state.knowledgeChecks]);
+  });
 
-  const [results, setResults] = useState<Record<number, RoundResult>>(initialResults);
-
-  // Determine the current stage. The learner starts on the first
-  // unrevealed round; after Round 4 they enter free mode.
-  const initialStage = useMemo<StageId>(() => {
+  // Start on the first unrevealed round; after Round 4, free mode.
+  // `results` here is the freshly-initialized state above — this
+  // initializer also runs only at mount.
+  const [stage, setStage] = useState<StageId>(() => {
     for (const r of ROUNDS) {
-      if (!initialResults[r.id]) return r.id;
+      if (!results[r.id]) return r.id;
     }
     return 'free';
-  }, [initialResults]);
-
-  const [stage, setStage] = useState<StageId>(initialStage);
+  });
 
   return (
     <div className="space-y-3">
@@ -268,13 +276,10 @@ function GuidedRound({
   onAdvance,
 }: {
   stageId: 1 | 2 | 3 | 4;
-  existing?: RoundResult;
+  existing?: RoundResult | undefined;
   onLocked: (predicted: number, tokens: string[]) => void;
   onAdvance: () => void;
 }): JSX.Element {
-  const round = ROUNDS.find((r) => r.id === stageId);
-  if (!round) return <p>Unknown round.</p>;
-
   const [prediction, setPrediction] = useState<string>(
     existing ? String(existing.predicted) : '',
   );
@@ -287,6 +292,12 @@ function GuidedRound({
     setLocked(Boolean(existing));
     setTokens(existing?.tokens ?? []);
   }, [existing, stageId]);
+
+  // Looked up after the hooks so the hook order is identical on
+  // every render (Rules of Hooks); stageId is typed 1|2|3|4 so the
+  // guard is defensive only.
+  const round = ROUNDS.find((r) => r.id === stageId);
+  if (!round) return <p>Unknown round.</p>;
 
   const lock = () => {
     const n = Number.parseInt(prediction, 10);

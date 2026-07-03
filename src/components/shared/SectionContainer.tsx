@@ -57,8 +57,8 @@ export function SectionContainer({
     isAssessmentComplete,
   } = useLearnerProgress();
   // Platform mode gates the Next button: learner mode requires the
-  // section to be complete before advancing; portfolio + admin modes
-  // allow free navigation.
+  // section to be complete before advancing; portfolio mode
+  // allows free navigation.
   const { mode } = usePlatformMode();
   const navigate = useNavigate();
   // Viewport drives the section-nav labels: on mobile we render just the
@@ -178,8 +178,8 @@ export function SectionContainer({
   // the spot where the post-assessment intercepts the standard flow.
   // When the post-assessment isn't complete in learner mode, route the
   // Next button to `/post-assessment` instead of to S10 directly, and
-  // adjust the label so the learner knows what's next. Portfolio +
-  // admin modes skip this redirect (they get free navigation).
+  // adjust the label so the learner knows what's next. Portfolio
+  // mode skips this redirect (it gets free navigation).
   const postAssessmentRedirect =
     module.id === 4 &&
     sectionId === 9 &&
@@ -187,17 +187,19 @@ export function SectionContainer({
     !isAssessmentComplete('post');
 
   // When the learner reaches the last section of a module, surface a link
-  // to the first section of the next unlocked module so the cross-module
-  // continuation is one click away.
+  // to the first section of the next module so the cross-module
+  // continuation is one click away. (Lock state is handled by the
+  // sidebar/landing gating; this link is only reachable once the module
+  // is complete.)
   const nextModule =
     !nextSection
-      ? MODULES.find((m) => m.id === module.id + 1 && !m.locked)
+      ? MODULES.find((m) => m.id === module.id + 1)
       : undefined;
   const nextModuleFirstSection = nextModule?.sections[0];
 
   const innerMaxWidth = width === 'interactive' ? 'max-w-interactive' : 'max-w-reading';
-  // Learner mode gates advancement on completion; portfolio + admin
-  // modes allow free navigation (the helper text below also hides,
+  // Learner mode gates advancement on completion; portfolio mode
+  // allows free navigation (the helper text below also hides,
   // since it's keyed off `!canAdvance`).
   const canAdvance =
     mode !== 'learner' || isSectionComplete(module.id, sectionId);

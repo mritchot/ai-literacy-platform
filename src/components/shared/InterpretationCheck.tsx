@@ -10,6 +10,7 @@ import { forwardRef, useEffect, useRef, useState, type ReactNode } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { Icon } from './Icon';
+import { nextRadioIndex } from './radio-group-nav';
 
 type InterpretationCheckTone = 'success' | 'caution' | 'error';
 
@@ -130,21 +131,34 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
             node entirely with no accessibility loss; the fieldset's
             implicit role is "group" and aria-label is supported on
             groups. */}
-        <fieldset
-          disabled={submitted}
-          className="m-0 border-0 p-0"
-          aria-label="Choose the response that best fits the data."
-        >
-          <ul className="m-0 list-none space-y-2 p-0">
-            {item.options.map((opt) => {
+        <fieldset disabled={submitted} className="m-0 border-0 p-0">
+          {/* Radio semantics + roving tabindex — see KnowledgeCheck. */}
+          <ul
+            role="radiogroup"
+            aria-label="Choose the response that best fits the data."
+            className="m-0 list-none space-y-2 p-0"
+          >
+            {item.options.map((opt, optIdx) => {
               const isSelected = selected === opt.id;
               const isFeedbackBorder = submitted && isSelected;
               return (
                 <li key={opt.id}>
                   <button
                     type="button"
+                    id={`ic-${item.id}-opt-${opt.id}`}
+                    role="radio"
+                    aria-checked={isSelected}
+                    tabIndex={isSelected || (selected === null && optIdx === 0) ? 0 : -1}
+                    onKeyDown={(e) => {
+                      const next = nextRadioIndex(e.key, optIdx, item.options.length);
+                      if (next === null) return;
+                      e.preventDefault();
+                      const nextOpt = item.options[next];
+                      if (!nextOpt) return;
+                      setSelected(nextOpt.id);
+                      document.getElementById(`ic-${item.id}-opt-${nextOpt.id}`)?.focus();
+                    }}
                     onClick={() => !submitted && setSelected(opt.id)}
-                    aria-pressed={isSelected}
                     className="flex w-full items-start gap-3 rounded-md text-left transition-colors duration-150"
                     style={{
                       background: 'rgb(var(--white))',
@@ -208,10 +222,16 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
           </div>
         )}
 
+        {/* Always-mounted live region — see KnowledgeCheck. */}
+        <span aria-live="polite" className="sr-only">
+          {submitted && selectedOption
+            ? `${selectedOption.feedbackTitle}. ${selectedOption.feedbackText}`
+            : ''}
+        </span>
+
         {submitted && selectedOption && (
           <div
             ref={feedbackRef}
-            aria-live="polite"
             className="mt-4 rounded-md transition-opacity duration-200"
             style={{
               background: TONE_BG[selectedOption.feedbackTone],

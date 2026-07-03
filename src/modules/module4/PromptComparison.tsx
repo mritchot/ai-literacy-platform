@@ -508,7 +508,10 @@ function CompareTabs({
   const onKey = (e: KeyboardEvent<HTMLButtonElement>) => {
     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
       e.preventDefault();
-      onTabChange(compareTab === 'before' ? 'after' : 'before');
+      // Move DOM focus with the activation (roving tabindex).
+      const next = compareTab === 'before' ? 'after' : 'before';
+      onTabChange(next);
+      document.getElementById(`p11-comparetab-${next}`)?.focus();
     }
   };
   return (
@@ -523,6 +526,7 @@ function CompareTabs({
         return (
           <button
             key={t.id}
+            id={`p11-comparetab-${t.id}`}
             type="button"
             role="tab"
             aria-selected={active}

@@ -1,10 +1,12 @@
 // P7 attention heatmap — 42 page rectangles arranged in 3 rows of 14,
-// shaded by approximate model attention. Strong attention (--action) at
-// the document boundaries; weak attention (--border-light) in the
-// middle. Page 18 (Section 12, the failed clause) outlined in --error
-// to mark the failure point. Static / illustrative — purely visual.
+// shaded by approximate model attention. Strong attention (tokens.action)
+// at the document boundaries; weak attention (--border-light) in the
+// middle. Page 18 (Section 12, the failed clause) outlined in
+// tokens.error to mark the failure point. Static / illustrative —
+// purely visual; colors resolve through useChartTokens so the cells
+// flip with the theme.
 
-import { TOKEN_HEX } from '../../utils/chart-config';
+import { useChartTokens } from '../../hooks/useChartTokens';
 
 const TOTAL_PAGES = 42;
 // Pages 1-5 and 38-42 receive strong attention.
@@ -15,6 +17,7 @@ for (let p = 38; p <= 42; p++) STRONG_PAGES.add(p);
 const FAILURE_PAGE = 18;
 
 export function AttentionVisualization(): JSX.Element {
+  const tokens = useChartTokens();
   const pages = Array.from({ length: TOTAL_PAGES }, (_, i) => i + 1);
 
   return (
@@ -50,10 +53,10 @@ export function AttentionVisualization(): JSX.Element {
                 aspectRatio: '12 / 16',
                 borderRadius: 2,
                 background: isStrong
-                  ? TOKEN_HEX.action
+                  ? tokens.action
                   : 'rgb(var(--border-light))',
                 opacity: isStrong ? 1 : 0.45,
-                border: isFailure ? `2px solid ${TOKEN_HEX.error}` : 'none',
+                border: isFailure ? `2px solid ${tokens.error}` : 'none',
               }}
             />
           );
@@ -65,7 +68,7 @@ export function AttentionVisualization(): JSX.Element {
           <span
             aria-hidden="true"
             className="inline-block rounded-sm"
-            style={{ width: 10, height: 10, background: TOKEN_HEX.action }}
+            style={{ width: 10, height: 10, background: tokens.action }}
           />
           Strong attention
         </span>
@@ -86,7 +89,7 @@ export function AttentionVisualization(): JSX.Element {
               height: 10,
               background: 'rgb(var(--border-light))',
               opacity: 0.45,
-              border: `2px solid ${TOKEN_HEX.error}`,
+              border: `2px solid ${tokens.error}`,
               boxSizing: 'border-box',
             }}
           />

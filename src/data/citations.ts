@@ -56,9 +56,9 @@ export const CITATIONS = {
     publisher: 'Anthropic',
     date: 'December 2025',
     pages: {
-      'time-savings-86': 'survey response, p. 1',
-      'stigma-69': 'survey response, p. 2',
-      'self-report-augmentation': 'survey response, p. 3',
+      'time-savings-86': 'research post',
+      'stigma-69': 'research post',
+      'self-report-augmentation': 'research post',
     },
   },
   'handa-2025': {
@@ -71,8 +71,8 @@ export const CITATIONS = {
     date: 'February 2025',
     pages: {
       'aug-auto-split-57-43': 'p. 3',
-      'directive-share-28': 'p. 9',
-      'feedback-loop-15': 'p. 9',
+      'directive-share-28': 'p. 10',
+      'feedback-loop-15': 'p. 10',
       'self-vs-behavioral': 'pp. 13–14',
     },
   },
@@ -97,6 +97,19 @@ export const CITATIONS = {
     date: '2024',
     pages: {
       'lost-in-middle': 'pp. 157–173',
+    },
+  },
+  'lee-2025': {
+    id: 'lee-2025',
+    shortLabel: 'Lee et al., 2025',
+    authors:
+      'Lee, H.-P., Sarkar, A., Tankelevitch, L., Drosos, I., Rintel, S., Banks, R., & Wilson, N.',
+    title:
+      'The Impact of Generative AI on Critical Thinking: Self-Reported Reductions in Cognitive Effort and Confidence Effects From a Survey of Knowledge Workers',
+    publisher: 'CHI Conference on Human Factors in Computing Systems (CHI ’25)',
+    date: '2025',
+    pages: {
+      'confidence-critical-thinking': 'abstract; survey of 319 knowledge workers',
     },
   },
   'tamkin-mccrory-2025': {

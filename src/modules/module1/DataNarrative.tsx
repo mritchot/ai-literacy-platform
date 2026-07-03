@@ -85,7 +85,7 @@ export function DataNarrative(props: DataNarrativeProps): JSX.Element {
         headline="What employers say they need, and what's standing in the way"
         unlocked
         ic={MODULE_1_IC_ITEMS[0] ?? null}
-        debrief={ic1Submitted ? MODULE_1_DEBRIEFS.ic_1_1 ?? null : null}
+        debrief={ic1Submitted ? MODULE_1_DEBRIEFS['ic_1_1'] ?? null : null}
       >
         <Story1Body skills={props.skills} instability={props.instability} />
       </StoryShell>
@@ -95,7 +95,7 @@ export function DataNarrative(props: DataNarrativeProps): JSX.Element {
         headline="Geography, context, and the adoption gap"
         unlocked={ic1Submitted}
         ic={MODULE_1_IC_ITEMS[1] ?? null}
-        debrief={ic2Submitted ? MODULE_1_DEBRIEFS.ic_1_2 ?? null : null}
+        debrief={ic2Submitted ? MODULE_1_DEBRIEFS['ic_1_2'] ?? null : null}
       >
         <Story2Body
           countries={props.countries}
@@ -109,7 +109,7 @@ export function DataNarrative(props: DataNarrativeProps): JSX.Element {
         headline="Twelve months of behavioral shift"
         unlocked={ic2Submitted}
         ic={MODULE_1_IC_ITEMS[2] ?? null}
-        debrief={ic3Submitted ? MODULE_1_DEBRIEFS.ic_1_3 ?? null : null}
+        debrief={ic3Submitted ? MODULE_1_DEBRIEFS['ic_1_3'] ?? null : null}
       >
         <Story3Body
           collaboration={props.collaboration}

@@ -3,8 +3,8 @@
 // URL section param. Data files are imported here once and passed as props
 // to chart components (4C spec §18.1).
 
-import { useEffect, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useSectionParam } from '../../hooks/useSectionParam';
 import {
   SectionContainer,
   getModuleOrThrow,
@@ -29,23 +29,8 @@ import { StigmaReflection } from './StigmaReflection';
 const MODULE_ID = 1;
 
 export default function Module1(): JSX.Element {
-  const { sectionId: sectionParam } = useParams<{ sectionId?: string }>();
-  const navigate = useNavigate();
+  const sectionId = useSectionParam(MODULE_ID);
 
-  const sectionId = useMemo(() => {
-    if (sectionParam === undefined) return 1;
-    const parsed = Number.parseInt(sectionParam, 10);
-    if (Number.isNaN(parsed) || parsed < 1 || parsed > 8) return 1;
-    return parsed;
-  }, [sectionParam]);
-
-  // Normalize bare /module/1 to /module/1/section/1 so back/forward work.
-  useEffect(() => {
-    if (sectionParam === undefined) {
-      navigate(`/module/${MODULE_ID}/section/1`, { replace: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sectionParam]);
 
   const module = getModuleOrThrow(MODULE_ID);
 
@@ -184,10 +169,10 @@ function Section3({ module }: ModuleProp): JSX.Element {
       Boolean(state.knowledgeChecks['1.3.ic_1_1']) &&
       Boolean(state.knowledgeChecks['1.3.ic_1_2']) &&
       Boolean(state.knowledgeChecks['1.3.ic_1_3']);
-    if (allDone && !state.completedSections['1.3']) {
+    if (allDone && !state.interactionCompleteSections['1.3']) {
       markInteractionComplete(1, 3);
     }
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete]);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete]);
 
   return (
     <SectionContainer
@@ -235,9 +220,10 @@ function Section4({ module }: ModuleProp): JSX.Element {
           affects are making sure it stays invisible.
         </p>
         <p className="m-0">
-          In a survey of 1,250 professionals across industries, 69% reported that social stigma
-          is an active barrier
-          <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" /> to using AI at work.
+          In a survey of 1,250 professionals across industries (interviews conducted by an AI
+          interviewer, with the dataset publicly released), 69% mentioned the social stigma that
+          can come with using AI at work
+          <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" />.
           It’s not that they reject AI. Most of them use it regularly and report clear
           productivity gains. The barrier is disclosure. They use AI, they benefit from it, and
           they don’t tell anyone.
@@ -289,10 +275,10 @@ function Section5({ module }: ModuleProp): JSX.Element {
   // they've spent enough time that the timer fires; we use the engaged
   // flag as a proxy here.
   useEffect(() => {
-    if (state.engagedFlags['1.5.p2_continued'] && !state.completedSections['1.5']) {
+    if (state.engagedFlags['1.5.p2_continued'] && !state.interactionCompleteSections['1.5']) {
       markInteractionComplete(1, 5);
     }
-  }, [state.engagedFlags, state.completedSections, markInteractionComplete]);
+  }, [state.engagedFlags, state.interactionCompleteSections, markInteractionComplete]);
 
   // The shared SectionContainer handles auto-complete for autoComplete=true
   // sections; this one is autoComplete=false but we mark it via the flag.
@@ -471,11 +457,11 @@ function Section7({ module }: ModuleProp): JSX.Element {
     const allDone = MODULE_1_KC_ITEMS.every((item) =>
       Boolean(state.knowledgeChecks[`1.7.${item.id}`]),
     );
-    if (allDone && !state.completedSections['1.7']) {
+    if (allDone && !state.interactionCompleteSections['1.7']) {
       markInteractionComplete(1, 7);
       track({ type: 'kc_module_1_complete', moduleId: 1, sectionId: 7 });
     }
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete, track]);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete, track]);
 
   return (
     <SectionContainer

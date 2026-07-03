@@ -1,5 +1,5 @@
-// Section labels for the admin Module Completion Table expanded detail view
-// (4D §8.6). Static lookup — labels are admin-display-only and don't need to
+// Section labels for the dashboard Module Completion Table expanded detail view
+// (4D §8.6). Static lookup — labels are dashboard-display-only and do not need to
 // stay in lockstep with the actual sidebar titles. Counts must match the
 // section counts in `data/program.ts` (M1: 8, M2: 8, M3: 11, M4: 10 = 37).
 

@@ -3,15 +3,11 @@
 
 import { useLocation } from 'react-router-dom';
 import { MODULES } from '../../data/program';
-import { themeToggleMeta, type ThemePreference } from '../../hooks/useTheme';
+import { themeToggleMeta, useTheme } from '../../hooks/useTheme';
 import { Icon } from './Icon';
 
 interface TopBarProps {
-  // Theme *preference* (not resolved) — drives the toggle's icon +
-  // label so system / light / dark are all distinguishable.
-  themePreference: ThemePreference;
   onOpenMenu: () => void;
-  onCycleTheme: () => void;
 }
 
 function currentModuleLabel(pathname: string): { seq: string; label: string } | null {
@@ -33,11 +29,11 @@ function currentSectionId(pathname: string): number | null {
   return Number.isFinite(id) ? id : null;
 }
 
-export function TopBar({
-  themePreference,
-  onOpenMenu,
-  onCycleTheme,
-}: TopBarProps): JSX.Element {
+export function TopBar({ onOpenMenu }: TopBarProps): JSX.Element {
+  // Theme *preference* (not resolved) — drives the toggle's icon +
+  // label so system / light / dark are all distinguishable. Read from
+  // the shared theme store directly.
+  const { preference: themePreference, cycle: onCycleTheme } = useTheme();
   const location = useLocation();
   const current = currentModuleLabel(location.pathname);
   const currentSection = currentSectionId(location.pathname);

@@ -15,7 +15,7 @@
 // program's MODULES metadata + state.completedSections (there is no
 // dedicated `completedModules` field in the context state).
 
-import { useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { AssessmentGrowth } from '../../components/assessment/AssessmentGrowth';
 import { R7Trigger } from '../../components/reference/R7Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
@@ -83,11 +83,66 @@ export function CompletionSummary(): JSX.Element {
   // context (which would happen if the dependency array included
   // `track` and `track`'s identity changed).
   const viewedRef = useRef(false);
+  const [downloadError, setDownloadError] = useState(false);
   useEffect(() => {
     if (!allModulesComplete || viewedRef.current) return;
     viewedRef.current = true;
     track({ type: 'completion_profile_viewed', moduleId: 4, sectionId: 10 });
   }, [allModulesComplete, track]);
+
+  // Both memos live above the early return so the hook order is
+  // identical on every render (Rules of Hooks); their bodies are
+  // safe to run while the program is incomplete.
+  // Completion date — derive from the most recent reflection or KC
+  // timestamp in state, falling back to today. Timestamps live on
+  // KnowledgeCheckResult objects; reflections don't carry per-field
+  // timestamps, so KCs are the primary signal.
+  const completionDate = useMemo(() => formatCompletionDate(state), []);
+
+  // Pre/post assessment growth — aggregate per-block correct counts
+  // from the recorded responses. Returns undefined when either side
+  // is missing (portfolio reviewers without an assessment history,
+  // or a learner who somehow reached this page without both
+  // assessments) so the PDF can fall back to the standalone KC card.
+  const growth = useMemo<AssessmentGrowthData | undefined>(() => {
+    const preResponses = state.assessments?.pre?.responses ?? {};
+    const postResponses = state.assessments?.post?.responses ?? {};
+    if (
+      !state.assessments?.pre?.completedAt ||
+      !state.assessments?.post?.completedAt
+    ) {
+      return undefined;
+    }
+    // Aggregate by block. The block field on each item comes from the
+    // instrument data files, so the four canonical buckets are
+    // populated directly from the items themselves. Built as an
+    // explicit 4-tuple (no cast) — the PDF layout depends on exactly
+    // four rows, and a cast would let a fifth entry compile silently.
+    const blockFor = (
+      key: 'usage' | 'failure' | 'mechanics' | 'evaluation',
+      name: AssessmentBlockResult['name'],
+      items: AssessmentBlockResult['items'],
+    ): AssessmentBlockResult => {
+      const pre = PRE_ASSESSMENT_ITEMS.filter((it) => it.block === key).reduce(
+        (acc, it) => (preResponses[it.id]?.isCorrect ? acc + 1 : acc),
+        0,
+      );
+      const post = POST_ASSESSMENT_ITEMS.filter((it) => it.block === key).reduce(
+        (acc, it) => (postResponses[it.id]?.isCorrect ? acc + 1 : acc),
+        0,
+      );
+      return { name, items, pre, post };
+    };
+    const blocks: AssessmentGrowthData['blocks'] = [
+      blockFor('usage', 'Usage patterns', 2),
+      blockFor('failure', 'Failure modes', 3),
+      blockFor('mechanics', 'Mechanics', 3),
+      blockFor('evaluation', 'Evaluation', 2),
+    ];
+    const preTotal = blocks.reduce((acc, b) => acc + b.pre, 0);
+    const postTotal = blocks.reduce((acc, b) => acc + b.post, 0);
+    return { preTotal, postTotal, blocks };
+  }, [state.assessments]);
 
   if (!allModulesComplete) {
     return (
@@ -139,57 +194,6 @@ export function CompletionSummary(): JSX.Element {
     return result?.isPreferred ? acc + 1 : acc;
   }, 0);
 
-  // Completion date — derive from the most recent reflection or KC
-  // timestamp in state, falling back to today. Timestamps live on
-  // KnowledgeCheckResult objects; reflections don't carry per-field
-  // timestamps, so KCs are the primary signal.
-  const completionDate = useMemo(() => formatCompletionDate(state), []);
-
-  // Pre/post assessment growth — aggregate per-block correct counts
-  // from the recorded responses. Returns undefined when either side
-  // is missing (portfolio reviewers without an assessment history,
-  // or a learner who somehow reached this page without both
-  // assessments) so the PDF can fall back to the standalone KC card.
-  const growth = useMemo<AssessmentGrowthData | undefined>(() => {
-    const preResponses = state.assessments?.pre?.responses ?? {};
-    const postResponses = state.assessments?.post?.responses ?? {};
-    if (
-      !state.assessments?.pre?.completedAt ||
-      !state.assessments?.post?.completedAt
-    ) {
-      return undefined;
-    }
-    // Aggregate by block. The block field on each item comes from the
-    // instrument data files, so the four canonical buckets are
-    // populated directly from the items themselves.
-    const blockOrder: Array<{
-      key: 'usage' | 'failure' | 'mechanics' | 'evaluation';
-      name: AssessmentBlockResult['name'];
-      items: AssessmentBlockResult['items'];
-    }> = [
-      { key: 'usage', name: 'Usage patterns', items: 2 },
-      { key: 'failure', name: 'Failure modes', items: 3 },
-      { key: 'mechanics', name: 'Mechanics', items: 3 },
-      { key: 'evaluation', name: 'Evaluation', items: 2 },
-    ];
-    const blocks = blockOrder.map(({ key, name, items }) => {
-      const preItems = PRE_ASSESSMENT_ITEMS.filter((it) => it.block === key);
-      const postItems = POST_ASSESSMENT_ITEMS.filter((it) => it.block === key);
-      const pre = preItems.reduce(
-        (acc, it) => (preResponses[it.id]?.isCorrect ? acc + 1 : acc),
-        0,
-      );
-      const post = postItems.reduce(
-        (acc, it) => (postResponses[it.id]?.isCorrect ? acc + 1 : acc),
-        0,
-      );
-      return { name, items, pre, post } satisfies AssessmentBlockResult;
-    }) as AssessmentGrowthData['blocks'];
-    const preTotal = blocks.reduce((acc, b) => acc + b.pre, 0);
-    const postTotal = blocks.reduce((acc, b) => acc + b.post, 0);
-    return { preTotal, postTotal, blocks };
-  }, [state.assessments]);
-
   const pdfData: CompletionProfileData = {
     completionDate,
     task1,
@@ -211,8 +215,14 @@ export function CompletionSummary(): JSX.Element {
   // with jsPDF before rendering. The first click incurs the font
   // load; subsequent clicks reuse the cached binaries.
   const onDownloadPDF = async () => {
-    track({ type: 'completion_pdf_downloaded', moduleId: 4, sectionId: 10 });
-    await generateCompletionPDF(pdfData);
+    setDownloadError(false);
+    try {
+      await generateCompletionPDF(pdfData);
+      // Tracked on success only — a failed generation is not a download.
+      track({ type: 'completion_pdf_downloaded', moduleId: 4, sectionId: 10 });
+    } catch {
+      setDownloadError(true);
+    }
   };
 
   return (
@@ -236,6 +246,15 @@ export function CompletionSummary(): JSX.Element {
           instead of being adjacent to it). */}
       <div>
         <ProfileHeader completionDate={completionDate} onDownload={onDownloadPDF} />
+      {downloadError && (
+        <p
+          role="alert"
+          className="m-0 font-sans text-body-sm"
+          style={{ color: 'rgb(var(--error))' }}
+        >
+          The PDF could not be generated. Check your connection and try again.
+        </p>
+      )}
         <p
           className="m-0 font-sans text-caption text-tertiary"
           style={{ textAlign: 'right', marginTop: 6, paddingRight: 4, lineHeight: 1.45 }}

@@ -23,13 +23,17 @@ import {
   type VerificationAnswer,
 } from './p7-content';
 
+function isVerificationAnswer(v: unknown): v is VerificationAnswer {
+  return v === 'accurate' || v === 'inaccurate' || v === 'cannot-verify';
+}
+
 type Phase = 'setup' | 'verification' | 'debrief';
 type DocTab = 'source' | 'summary';
 
 const DELEGATION = '#6B7F5E';
 
 export function ContextWindowScenario(): JSX.Element {
-  const { state, recordKnowledgeCheck } = useLearnerProgress();
+  const { state, recordKnowledgeCheck, markEngaged } = useLearnerProgress();
   const { track } = useAnalytics();
 
   // Restore prior submissions so navigating away and back doesn't reset.
@@ -37,8 +41,10 @@ export function ContextWindowScenario(): JSX.Element {
     const out: Record<number, VerificationAnswer> = {};
     for (const item of VERIFICATION_ITEMS) {
       const stored = state.knowledgeChecks[`3.7.p7_item_${item.id}`];
-      if (stored) {
-        out[item.id] = stored.selectedOptionId as VerificationAnswer;
+      // Guard the persisted union — a corrupt value would otherwise
+      // count as a submission and jump initialPhase past setup.
+      if (stored && isVerificationAnswer(stored.selectedOptionId)) {
+        out[item.id] = stored.selectedOptionId;
       }
     }
     return out;
@@ -56,6 +62,10 @@ export function ContextWindowScenario(): JSX.Element {
   const [phase, setPhase] = useState<Phase>(initialPhase);
   const [submitted, setSubmitted] = useState<Record<number, VerificationAnswer>>(submittedItems);
   const [docTab, setDocTab] = useState<DocTab>('source');
+  // True when the section mounted with the debrief already reached — the
+  // debrief block suppresses its scroll-into-view then, so a restored
+  // re-entry doesn't fight SectionContainer's heading focus.
+  const restoredToDebrief = useRef(initialPhase === 'debrief');
 
   // Determine the next item the learner should answer (sequential gating).
   const nextItemIdx = VERIFICATION_ITEMS.findIndex((it) => !submitted[it.id]);
@@ -129,6 +139,10 @@ export function ContextWindowScenario(): JSX.Element {
             type="button"
             onClick={() => {
               setPhase('verification');
+              // Persist the phase so re-entering the section restores to
+              // verification/debrief instead of resetting to setup —
+              // initialPhase reads this flag.
+              markEngaged(3, 7, 'p7_verification_started');
               track({ type: 'p7_verification_started', moduleId: 3, sectionId: 7 });
             }}
             className="inline-flex items-center gap-2 rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover"
@@ -170,7 +184,7 @@ export function ContextWindowScenario(): JSX.Element {
         </div>
       )}
 
-      {phase === 'debrief' && <DebriefBlock />}
+      {phase === 'debrief' && <DebriefBlock scrollOnMount={!restoredToDebrief.current} />}
       </section>
     </div>
   );
@@ -198,6 +212,7 @@ function DocumentPanels({
           return (
             <button
               key={t}
+              id={`p7-doctab-${t}`}
               role="tab"
               aria-selected={active}
               tabIndex={active ? 0 : -1}
@@ -205,7 +220,10 @@ function DocumentPanels({
               onKeyDown={(e: KeyboardEvent<HTMLButtonElement>) => {
                 if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
                   e.preventDefault();
-                  onTabChange(t === 'source' ? 'summary' : 'source');
+                  // Move DOM focus with the activation (roving tabindex).
+                  const next = t === 'source' ? 'summary' : 'source';
+                  onTabChange(next);
+                  document.getElementById(`p7-doctab-${next}`)?.focus();
                 }
               }}
               className="font-sans text-[13px] transition-colors duration-150"
@@ -350,7 +368,7 @@ function VerificationItemCard({
   onSubmit,
 }: {
   item: (typeof VERIFICATION_ITEMS)[number];
-  submitted?: VerificationAnswer;
+  submitted?: VerificationAnswer | undefined;
   onSubmit: (a: VerificationAnswer) => void;
 }): JSX.Element {
   const [selected, setSelected] = useState<VerificationAnswer | null>(submitted ?? null);
@@ -509,13 +527,16 @@ function VerificationItemCard({
 
 // ─── Debrief: mechanism reveal + attention viz + reflection ──────
 
-function DebriefBlock(): JSX.Element {
+function DebriefBlock({ scrollOnMount }: { scrollOnMount: boolean }): JSX.Element {
   const { track } = useAnalytics();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     track({ type: 'p7_debrief_viewed', moduleId: 3, sectionId: 7 });
-    ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (scrollOnMount) {
+      ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only
   }, [track]);
 
   return (

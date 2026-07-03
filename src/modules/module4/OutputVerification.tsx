@@ -310,8 +310,8 @@ function BriefingDocument({
   onMarkerClick: (marker: number) => void;
 }): JSX.Element {
   // Group segments into paragraphs by `newParagraph: true` boundaries.
-  const paragraphs: { heading?: string; nodes: JSX.Element[] }[] = [];
-  let current: { heading?: string; nodes: JSX.Element[] } = { nodes: [] };
+  const paragraphs: { heading?: string | undefined; nodes: JSX.Element[] }[] = [];
+  let current: { heading?: string | undefined; nodes: JSX.Element[] } = { nodes: [] };
 
   P10_BRIEFING_SEGMENTS.forEach((seg, i) => {
     if (seg.newParagraph || seg.heading) {

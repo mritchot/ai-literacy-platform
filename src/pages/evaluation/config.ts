@@ -4,15 +4,9 @@
 // and PDF slug; the constants gate the "Download PDF" buttons and the hub's
 // write-up link until those resources exist.
 
-export type ArtifactType = 'Reading' | 'Interactive';
+import type { ArtifactMeta, SeriesConfig } from '../artifact-series/artifact-series';
 
-export interface ArtifactMeta {
-  slug: string;
-  route: string;
-  title: string;
-  blurb: string;
-  type: ArtifactType;
-}
+export type { ArtifactMeta, ArtifactType } from '../artifact-series/artifact-series';
 
 export const ARTIFACTS: ArtifactMeta[] = [
   {
@@ -51,12 +45,12 @@ export const ARTIFACTS: ArtifactMeta[] = [
 
 // Empty until the polished PDFs land in `public/evaluation/`; while empty the
 // per-page "Download PDF" button is hidden so it never points at a 404.
-// Populate e.g. `level-1-reaction: '/evaluation/level-1-reaction.pdf'`.
+// Populate e.g. `level-1-reaction: 'evaluation/level-1-reaction.pdf'`.
 export const ARTIFACT_PDFS: Record<string, string> = {
-  'level-1-reaction': '/evaluation/level-1-reaction.pdf',
-  'level-2-learning': '/evaluation/level-2-learning.pdf',
-  'level-3-behavior': '/evaluation/level-3-behavior.pdf',
-  'level-4-results': '/evaluation/level-4-results.pdf',
+  'level-1-reaction': 'evaluation/level-1-reaction.pdf',
+  'level-2-learning': 'evaluation/level-2-learning.pdf',
+  'level-3-behavior': 'evaluation/level-3-behavior.pdf',
+  'level-4-results': 'evaluation/level-4-results.pdf',
 };
 
 // Long-form blog post that frames the series on ritchot.me. Empty until the
@@ -67,3 +61,15 @@ export const EVALUATION_WRITEUP_URL = 'https://ritchot.me/the-evaluation-framewo
 // discernment work of the project, so it carries its own quiet accent while
 // staying in the same behind-the-scenes home as the needs analysis.
 export const SERIES_ACCENT = '#5E7080';
+
+// Bound series configuration consumed by ./chrome (which re-exports the
+// shared artifact-series components with this series baked in).
+export const SERIES: SeriesConfig = {
+  hubRoute: 'evaluation',
+  hubLabel: 'Evaluation framework',
+  backToSeriesLabel: 'Back to the evaluation framework',
+  readingEyebrow: 'Evaluation framework · Reading',
+  accent: SERIES_ACCENT,
+  artifacts: ARTIFACTS,
+  pdfs: ARTIFACT_PDFS,
+};

@@ -38,7 +38,7 @@ function buildKCRows(
   progress: LearnerProgressState,
 ): ResponseRow[] {
   return KC_IDS[moduleId].map((kcId) => {
-    const meta = KC_METADATA[kcId]!;
+    const meta = KC_METADATA[kcId];
     // Storage key: `${moduleId}.${sectionId}.${kcId}` — section comes from metadata.
     const key = `${meta.moduleId}.${meta.sectionId}.${kcId}`;
     const stored = progress.knowledgeChecks[key];
@@ -59,7 +59,7 @@ function buildKCRows(
 
 function buildICRows(progress: LearnerProgressState): ResponseRow[] {
   return IC_IDS[1].map((icId) => {
-    const meta = IC_METADATA[icId]!;
+    const meta = IC_METADATA[icId];
     const key = `${meta.moduleId}.${meta.sectionId}.${icId}`;
     const stored = progress.knowledgeChecks[key];
     const fullMeta: KCMetadata = { ...meta, objectiveRef: '—' };
@@ -124,7 +124,7 @@ function ModuleGroup({
         <>
           {/* `--discernment-text` flips for dark mode; the raw
               #5E7080 (discernment DEFAULT) stayed dark and lost
-              contrast on the dark admin surface. */}
+              contrast on the dark dashboard surface. */}
           <Overline
             className="mb-3 mt-5"
             style={{ color: 'rgb(var(--discernment-text))', fontSize: 11 }}

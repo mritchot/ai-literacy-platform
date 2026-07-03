@@ -1,6 +1,6 @@
 # AI Diligence Statement
 
-This course was built with material assistance from large language models, primarily Anthropic's Claude (Opus 4.6 and 4.7). NotebookLM helped me cross-reference the research corpus, and Claude Design handled the reference materials' layout.
+This course was built with material assistance from large language models, primarily Anthropic's Claude (Opus 4.6, 4.7, and 4.8). NotebookLM helped me cross-reference the research corpus, and Claude Design handled the reference materials' layout. Claude Fable performed the code review and the content review.
 
 The curriculum architecture for Modules 3 and 4 originated in my Master's work (including the decision to teach LLM limitations through tokenization mechanics) and was adapted here for a corporate workforce audience. Modules 1 and 2 were shaped collaboratively with Claude after I collated and read the underlying research, marking the passages worth foregrounding and the citations worth using. The 4D taxonomy, adopted from Anthropic's AI Fluency Framework, is the fixed scaffold throughout. Claude drafted the instructional prose; I revised it manually. I specified the data visualizations and built them with Claude. The interactive scenarios and knowledge checks we co-created. Claude did most of the platform engineering; I reviewed and directed it. I generated the seven reference PDFs from the written content and laid them out using Claude Design.
 

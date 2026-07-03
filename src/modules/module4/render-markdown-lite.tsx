@@ -60,7 +60,7 @@ function renderInline(text: string): ReactNode {
     lastIdx = match.index + match[0].length;
   }
   if (lastIdx < text.length) {
-    parts.push(<span key={key++}>{text.slice(lastIdx)}</span>);
+    parts.push(<span key={key}>{text.slice(lastIdx)}</span>);
   }
   return parts;
 }

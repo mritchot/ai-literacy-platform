@@ -31,19 +31,18 @@
       }
     ]
   },
-
   "collaborationMode": {
-    "_source": "V1: Economic Primitives, p. 9 (V4 retrospective of V1 data — Handa et al. reports 57/43; see _v1DiscrepancyNote); V3: Appel et al., p. 9; V4: Economic Primitives, pp. 9–10",
+    "_source": "V1: Handa et al., pp. 3, 9, Figure 7; V3: Appel et al., p. 9; V4: Economic Primitives, pp. 9–10",
     "description": "How users engage with Claude — automation (task delegation) vs. augmentation (collaborative interaction) — tracked over three waves.",
-    "_v1DiscrepancyNote": "V1 augmentation/automation values differ across files. Handa et al. (the primary V1 study) reports 57% augmentation / 43% automation (pp. 3, 9; Figure 7; sum = 100%). Economic Primitives (V4) retrospectively reports the same V1 period as 56% / 41% (p. 9; sum = 97%, remainder unclassified). This file uses V4's retrospective figures for trend chart consistency across waves — all three data points come from the same classification pipeline as reported in Economic Primitives. augmentation-automation.json uses the Handa et al. 57/43 figures for the V1 pattern breakdown. If both views are displayed simultaneously in the dashboard, a tooltip should note the discrepancy and its source.",
+    "_v1DiscrepancyNote": "V1 augmentation/automation values reconciled to the Handa et al. primary figures (57% augmentation / 43% automation; pp. 3, 9; Figure 7; sum = 100%) by author decision on 03-07-2026 so the platform teaches one V1 number everywhere (Module 2 body text and augmentation-automation.json use the same 57/43). Economic Primitives (V4) retrospectively reports the same V1 period as 56/41 (p. 9; sum = 97%, remainder unclassified) from its own classification pipeline; V3 and V4 points in this series remain from that pipeline, so the cross-wave comparison spans classifier generations — see _classifierCaveat, which the chart surfaces in its 'About this data' expandable.",
     "timeSeries": [
       {
         "wave": "V1",
         "period": "Jan 2025",
-        "augmentation": 0.56,
-        "automation": 0.41,
+        "augmentation": 0.57,
+        "automation": 0.43,
         "dominant": "augmentation",
-        "note": "Remaining ~3% unclassified — interaction modes are not mutually exhaustive (Economic Primitives, footnote 6, p. 18). The unclassified share fell from 3.9% (V3) to 3.0% (V4) per footnote 2, p. 17; V1-specific unclassified share is inferred from 56+41=97% but not stated independently in any source."
+        "note": "Handa et al. primary figures (sum = 100%). The V4 retrospective of this wave reports 56/41 with ~3% unclassified (Economic Primitives, p. 9; footnote 6, p. 18) — see _v1DiscrepancyNote."
       },
       {
         "wave": "V3",
@@ -66,14 +65,26 @@
     ],
     "interpretation": "The trajectory is not linear. Users shifted sharply toward automation between January and August 2025, then partially reverted by November. The underlying trend favors greater automation, but the August spike was a temporary overshoot."
   },
-
   "directiveInteractions": {
     "_source": "V1: Handa et al., Figure 7 (27.8% precise value from augmentation-automation.json); V3: Appel et al., p. 9; V4: Economic Primitives, p. 9",
     "description": "Share of conversations classified as 'directive' — users give Claude a task and it completes it with minimal back-and-forth. This is the purest form of automation.",
     "timeSeries": [
-      { "wave": "V1", "period": "Jan 2025", "directiveShare": 0.278, "_note": "Source narrative text rounds to 27%; 27.8% is the precise value from Handa et al. Figure 7, consistent with augmentation-automation.json." },
-      { "wave": "V3", "period": "Aug 2025", "directiveShare": 0.39 },
-      { "wave": "V4", "period": "Nov 2025", "directiveShare": 0.32 }
+      {
+        "wave": "V1",
+        "period": "Jan 2025",
+        "directiveShare": 0.278,
+        "_note": "Source narrative text rounds to 27%; 27.8% is the precise value from Handa et al. Figure 7, consistent with augmentation-automation.json."
+      },
+      {
+        "wave": "V3",
+        "period": "Aug 2025",
+        "directiveShare": 0.39
+      },
+      {
+        "wave": "V4",
+        "period": "Nov 2025",
+        "directiveShare": 0.32
+      }
     ],
     "v1ToV3Change": {
       "changePP": 11.2,
@@ -98,9 +109,12 @@
       "description": "Fell 7 percentage points from 39% to 32% as augmentation became dominant again.",
       "interpretation": "The underlying trend is still toward greater automation, but the August spike overstated the pace."
     },
-    "usedIn": ["Component 2C (D4 gap trace)", "Module 1 (data narrative)", "Module 2 (dashboard trend visualization)"]
+    "usedIn": [
+      "Component 2C (D4 gap trace)",
+      "Module 1 (data narrative)",
+      "Module 2 (dashboard trend visualization)"
+    ]
   },
-
   "taskCategoryShifts": {
     "v1ToV3": {
       "_source": "Appel et al. (V3), pp. 3, 7",
@@ -112,8 +126,16 @@
           "v3Share": 0.36,
           "trend": "Continues to dominate total sample",
           "withinCodingShifts": {
-            "programCreation": { "v1": 0.041, "v3": 0.086, "changePP": 4.5 },
-            "debugging": { "v1": 0.161, "v3": 0.133, "changePP": -2.8 },
+            "programCreation": {
+              "v1": 0.041,
+              "v3": 0.086,
+              "changePP": 4.5
+            },
+            "debugging": {
+              "v1": 0.161,
+              "v3": 0.133,
+              "changePP": -2.8
+            },
             "netShift": "7.4pp shift toward creation over fixing code",
             "interpretation": "Models may have become increasingly reliable, so users spend less time fixing problems and more time creating things in a single interaction."
           }
@@ -176,18 +198,22 @@
       ]
     }
   },
-
   "enterpriseAdoptionTrend": {
     "_source": "Appel et al. (V3), p. 32; Census Bureau Business Trends and Outlook Survey",
     "description": "AI adoption among US firms tracked over time.",
     "timeSeries": [
-      { "period": "Fall 2023",       "adoptionRate": 0.037 },
-      { "period": "Early August 2025","adoptionRate": 0.097 }
+      {
+        "period": "Fall 2023",
+        "adoptionRate": 0.037
+      },
+      {
+        "period": "Early August 2025",
+        "adoptionRate": 0.097
+      }
     ],
     "trend": "More than doubled in approximately two years. Despite rapid growth, the vast majority of firms still do not report using AI in their production processes.",
     "note": "This data is also present in geographic-adoption.json. Included here for completeness of the longitudinal trend picture. Values (3.7% and 9.7%) confirmed via visual inspection of Figure 3.1 (Validation Pass 1)."
   },
-
   "collaborationPatternDefinitions": {
     "_source": "Handa et al. (V1), Table 1, p. 10; confirmed in V3 (p. 9) and V4 (footnote 5, p. 18)",
     "description": "The five interaction types used consistently across all three waves, grouped into automation and augmentation.",
@@ -195,12 +221,20 @@
       {
         "pattern": "Directive",
         "definition": "Users give Claude a task and it completes it with minimal back-and-forth.",
-        "wordCloudThemes": ["create", "develop", "draft"]
+        "wordCloudThemes": [
+          "create",
+          "develop",
+          "draft"
+        ]
       },
       {
         "pattern": "Feedback Loop",
         "definition": "Users automate tasks and provide feedback (typically error states) to Claude as needed.",
-        "wordCloudThemes": ["debug", "fix", "error"],
+        "wordCloudThemes": [
+          "debug",
+          "fix",
+          "error"
+        ],
         "_wordCloudNote": "Inferred from descriptive text (Handa et al. p. 10: 'related to coding and debugging, where the user repeatedly relayed the error'). V4 Figure 1.5 word clouds cover Directive, Task Iteration, and Learning only — Feedback Loop and Validation are not included."
       }
     ],
@@ -208,12 +242,20 @@
       {
         "pattern": "Learning",
         "definition": "Users ask Claude for information or explanations about various topics.",
-        "wordCloudThemes": ["help", "explain", "provide"]
+        "wordCloudThemes": [
+          "help",
+          "explain",
+          "provide"
+        ]
       },
       {
         "pattern": "Task Iteration",
         "definition": "Users iterate on tasks collaboratively with Claude.",
-        "wordCloudThemes": ["edit", "rewrite", "revise"]
+        "wordCloudThemes": [
+          "edit",
+          "rewrite",
+          "revise"
+        ]
       },
       {
         "pattern": "Validation",

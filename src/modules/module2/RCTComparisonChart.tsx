@@ -15,12 +15,13 @@
 // scale fluidly with container width. CSS variables (`--action`,
 // `--info`) supply the bar colors directly via `rgb(var(--…))`,
 // which means dark mode flips automatically through the existing
-// design-token system — no `useChartTokens` extension needed.
+// design-token system. Only the caveat note's inline color goes
+// through useChartTokens (tokens.error).
 //
 // Source: Tamkin & McCrory, Nov 2025.
 
 import { useState, type CSSProperties } from 'react';
-import { TOKEN_HEX } from '../../utils/chart-config';
+import { useChartTokens } from '../../hooks/useChartTokens';
 
 interface RCTComparisonChartProps {
   median: number;
@@ -43,6 +44,7 @@ export function RCTComparisonChart({
   rctFindings,
   note,
 }: RCTComparisonChartProps): JSX.Element {
+  const tokens = useChartTokens();
   const fullCycleMin = Math.min(...rctFindings);
   const fullCycleMax = Math.max(...rctFindings);
 
@@ -106,7 +108,7 @@ export function RCTComparisonChart({
       {/* Caveat note about the negative-finding RCT and earlier model gens */}
       <p
         className="m-0 mt-3 font-sans text-body-sm"
-        style={{ color: TOKEN_HEX.error, fontStyle: 'italic' }}
+        style={{ color: tokens.error, fontStyle: 'italic' }}
       >
         {note}
       </p>

@@ -17,7 +17,6 @@ export type IconName =
   | 'chart'
   | 'menu'
   | 'close'
-  | 'refresh'
   | 'download'
   | 'book'
   | 'bookClosed';
@@ -91,14 +90,6 @@ const PATHS: Record<IconName, JSX.Element> = {
     <>
       <line x1="18" y1="6" x2="6" y2="18" />
       <line x1="6" y1="6" x2="18" y2="18" />
-    </>
-  ),
-  // Counter-clockwise circular arrow — the "rotate-ccw" / reset glyph from
-  // Lucide. Top arc + tip pointing back at start to read as "go back".
-  refresh: (
-    <>
-      <polyline points="1 4 1 10 7 10" />
-      <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10" />
     </>
   ),
   // Down-arrow into tray — Lucide "download" glyph.

@@ -5,7 +5,7 @@
 import { useEffect, useState, type KeyboardEvent } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
-import { TOKEN_HEX } from '../../utils/chart-config';
+import { useChartTokens } from '../../hooks/useChartTokens';
 import { ActionCommitment } from './ActionCommitment';
 import { ProductivityViewA } from './ProductivityViewA';
 import { ProductivityViewB } from './ProductivityViewB';
@@ -52,6 +52,7 @@ export function ProductivityDashboard({
   const [activeTab, setActiveTab] = useState<TabId>('occupation');
   const { track } = useAnalytics();
   const { markTabViewed } = useLearnerProgress();
+  const tokens = useChartTokens();
 
   useEffect(() => {
     const tab = TABS.find((t) => t.id === activeTab);
@@ -60,15 +61,21 @@ export function ProductivityDashboard({
     markTabViewed(2, 5, activeTab);
   }, [activeTab, track, markTabViewed]);
 
+  // Roving tabindex: activation must move DOM focus with it (see
+  // AugAutoDashboard for the failure mode this prevents).
+  const activateTab = (tab: (typeof TABS)[number] | undefined) => {
+    if (!tab) return;
+    setActiveTab(tab.id);
+    document.getElementById(`p4-tab-${tab.id}`)?.focus();
+  };
+
   const onTabKeyDown = (e: KeyboardEvent<HTMLButtonElement>, idx: number) => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
       e.preventDefault();
-      const next = TABS[(idx + 1) % TABS.length];
-      if (next) setActiveTab(next.id);
+      activateTab(TABS[(idx + 1) % TABS.length]);
     } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
       e.preventDefault();
-      const prev = TABS[(idx - 1 + TABS.length) % TABS.length];
-      if (prev) setActiveTab(prev.id);
+      activateTab(TABS[(idx - 1 + TABS.length) % TABS.length]);
     }
   };
 
@@ -104,7 +111,7 @@ export function ProductivityDashboard({
                   background: active ? 'rgb(var(--white))' : 'transparent',
                   color: active ? 'rgb(var(--ink))' : 'rgb(var(--secondary))',
                   fontWeight: active ? 600 : 500,
-                  borderBottom: active ? `2px solid ${TOKEN_HEX.secondary}` : '2px solid transparent',
+                  borderBottom: active ? `2px solid ${tokens.secondary}` : '2px solid transparent',
                   marginBottom: '-1px',
                   cursor: 'pointer',
                 }}

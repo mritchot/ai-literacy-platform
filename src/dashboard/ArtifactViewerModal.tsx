@@ -19,6 +19,8 @@ export function ArtifactViewerModal({
   content,
 }: ArtifactViewerModalProps): JSX.Element | null {
   const closeRef = useRef<HTMLButtonElement | null>(null);
+  const headerCloseRef = useRef<HTMLButtonElement | null>(null);
+  const bodyRef = useRef<HTMLDivElement | null>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
   const titleId = 'artifact-modal-title';
   const bodyId = 'artifact-modal-body';
@@ -39,9 +41,20 @@ export function ArtifactViewerModal({
         e.preventDefault();
         onClose();
       } else if (e.key === 'Tab') {
-        // Single focusable element — keep focus on Close.
+        // Cycle focus across the dialog's three stops (header X,
+        // scrollable body, footer Close). The body is a stop so long
+        // artifacts can be scrolled with the keyboard.
         e.preventDefault();
-        closeRef.current?.focus();
+        const candidates: (HTMLElement | null)[] = [
+          headerCloseRef.current,
+          bodyRef.current,
+          closeRef.current,
+        ];
+        const stops = candidates.filter((el): el is HTMLElement => el !== null);
+        if (stops.length === 0) return;
+        const idx = stops.indexOf(document.activeElement as HTMLElement);
+        const delta = e.shiftKey ? -1 : 1;
+        stops[(idx + delta + stops.length) % stops.length]?.focus();
       }
     };
     window.addEventListener('keydown', handler);
@@ -86,6 +99,7 @@ export function ArtifactViewerModal({
             {title}
           </h2>
           <button
+            ref={headerCloseRef}
             type="button"
             onClick={onClose}
             aria-label="Close"
@@ -95,7 +109,11 @@ export function ArtifactViewerModal({
           </button>
         </div>
         <div
+          ref={bodyRef}
           id={bodyId}
+          tabIndex={0}
+          role="region"
+          aria-labelledby={titleId}
           className="font-sans text-body text-secondary"
           style={{
             whiteSpace: 'pre-wrap',
