@@ -43,11 +43,11 @@ export const KC_METADATA = {
     objectiveRef: '1.1',
     stemPreview:
       'You manage an operations team in Southeast Asia with high AI adoption. A peer in Latin America asks…',
-    preferredOptionId: 'b',
+    preferredOptionId: 'c',
     options: [
       { id: 'a', label: '(a) GDP-and-infrastructure framing' },
-      { id: 'b', label: '(b) Share workflows with institutional caveat' },
-      { id: 'c', label: '(c) Decline based on use-case concentration' },
+      { id: 'b', label: '(b) Decline based on use-case concentration' },
+      { id: 'c', label: '(c) Share workflows with institutional caveat' },
       { id: 'd', label: '(d) Wait for adoption equalization' },
     ],
   },
@@ -60,10 +60,10 @@ export const KC_METADATA = {
       'Your CLO asks for a one-paragraph justification for an AI literacy program. Which draft makes the…',
     preferredOptionId: 'a',
     options: [
-      { id: 'a', label: '(a) Behavioral evidence + use-case data' },
-      { id: 'b', label: '(b) Adoption rate + competitive framing' },
-      { id: 'c', label: '(c) Productivity multiplier framing' },
-      { id: 'd', label: '(d) Skill-gap framing' },
+      { id: 'a', label: '(a) Behavioral divergence + concealment evidence' },
+      { id: 'b', label: '(b) WEF ranking + competitive urgency' },
+      { id: 'c', label: '(c) Satisfaction data as proof it already works' },
+      { id: 'd', label: '(d) Five-year full-automation claim' },
     ],
   },
   kc_1_3: {
@@ -72,13 +72,13 @@ export const KC_METADATA = {
     sectionId: 7,
     objectiveRef: '1.3',
     stemPreview:
-      'Two team members produce different first drafts using AI. The work-product distinction tells you…',
-    preferredOptionId: 'a',
+      'A junior colleague mentions she hides her AI use for client drafts, and the room tenses. Which…',
+    preferredOptionId: 'd',
     options: [
-      { id: 'a', label: '(a) Surface-similarity vs. judgment-required' },
-      { id: 'b', label: '(b) Speed-only outcome metric' },
-      { id: 'c', label: '(c) Output-volume framing' },
-      { id: 'd', label: '(d) Tool-skill framing' },
+      { id: 'a', label: '(a) Just-be-open encouragement' },
+      { id: 'b', label: '(b) Advise discretion until a policy exists' },
+      { id: 'c', label: '(c) Anecdotal reassurance, stigma overblown' },
+      { id: 'd', label: '(d) Validate with data + shared vocabulary' },
     ],
   },
   kc_1_4: {
@@ -87,13 +87,13 @@ export const KC_METADATA = {
     sectionId: 7,
     objectiveRef: '1.4',
     stemPreview:
-      'A junior analyst hides AI use because they fear it will look like cheating. The stigma data suggests…',
-    preferredOptionId: 'd',
+      'You paste notes into AI for your weekly summary, scan for obvious errors, and send. Which…',
+    preferredOptionId: 'b',
     options: [
-      { id: 'a', label: '(a) Personal-coaching framing' },
-      { id: 'b', label: '(b) Tool-fluency framing' },
-      { id: 'c', label: '(c) Disclosure-policy framing' },
-      { id: 'd', label: '(d) Norm-and-stigma framing' },
+      { id: 'a', label: '(a) Augmentation: the judgment is in my notes' },
+      { id: 'b', label: '(b) Automation: substantive work is delegated' },
+      { id: 'c', label: '(c) The category doesn’t matter, output does' },
+      { id: 'd', label: '(d) Augmentation: I’m still the decision-maker' },
     ],
   },
 
