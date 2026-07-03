@@ -471,7 +471,7 @@ function Footer(): JSX.Element {
 
 // Licensing + third-party attribution. Renders on the landing page (the
 // platform's persistent root); doesn't need to repeat on section pages.
-// Mirrors what LICENSE-CODE and LICENSE-CONTENT formalize: the project's
+// Mirrors what LICENSE and licenses/LICENSE-CONTENT formalize: the project's
 // code is MIT, the instructional content is CC BY-NC-SA 4.0, and the
 // 4D taxonomy is adopted from Anthropic under the same CC license.
 function AttributionFooter(): JSX.Element {
