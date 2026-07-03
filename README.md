@@ -4,6 +4,8 @@ A four-module interactive learning platform teaching AI literacy to mid-career k
 
 Live: [ai-literacy.ritchot.me](https://ai-literacy.ritchot.me)
 
+Best viewed on desktop. Mobile is fully functional, but the data dashboards and multi-panel practice activities are designed for larger screens.
+
 ## Program structure
 
 The curriculum grew out of my M.Ed. in Education Technology and Instructional Design, where I built a program that teaches AI through its mechanics — tokenization, next-token prediction, context windows — not just its outputs. The four modules:
