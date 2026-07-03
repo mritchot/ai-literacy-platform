@@ -58,10 +58,10 @@ function kc(
 
 const KC_RESPONSES: Record<string, KnowledgeCheckResult> = {
   // M1 S7: 4 items, 3 preferred (KC-1.2 chose c instead of a).
-  '1.7.kc_1_1': kc('b', true, at(13, 12)),
+  '1.7.kc_1_1': kc('c', true, at(13, 12)),
   '1.7.kc_1_2': kc('c', false, at(13, 41)),
-  '1.7.kc_1_3': kc('a', true, at(14, 8)),
-  '1.7.kc_1_4': kc('d', true, at(14, 33)),
+  '1.7.kc_1_3': kc('d', true, at(14, 8)),
+  '1.7.kc_1_4': kc('b', true, at(14, 33)),
   // M2 S7: 4 items, 3 preferred (KC-2.3 chose b instead of c).
   '2.7.kc_2_1': kc('a', true, at(35, 18)),
   '2.7.kc_2_2': kc('b', true, at(35, 47)),
@@ -226,10 +226,10 @@ const M1_EVENTS: Ev[] = [
   ev(at(12, 47), 'p2_reflection_continued', 1, 5),
   ev(at(12, 47), 'p2_time_on_prompt', 1, 5, { seconds: 74 }),
   // KC-1.1 to KC-1.4 on S7.
-  ev(at(13, 12), 'kc_1_1_submitted', 1, 7, { optionId: 'b', isPreferred: true }),
+  ev(at(13, 12), 'kc_1_1_submitted', 1, 7, { optionId: 'c', isPreferred: true }),
   ev(at(13, 41), 'kc_1_2_submitted', 1, 7, { optionId: 'c', isPreferred: false }),
-  ev(at(14, 8), 'kc_1_3_submitted', 1, 7, { optionId: 'a', isPreferred: true }),
-  ev(at(14, 33), 'kc_1_4_submitted', 1, 7, { optionId: 'd', isPreferred: true }),
+  ev(at(14, 8), 'kc_1_3_submitted', 1, 7, { optionId: 'd', isPreferred: true }),
+  ev(at(14, 33), 'kc_1_4_submitted', 1, 7, { optionId: 'b', isPreferred: true }),
   ev(at(14, 36), 'kc_module_1_complete', 1, 7),
   // Module 1 complete after S8.
   ev(at(m1.endMin, 0), 'module_1_complete', 1),

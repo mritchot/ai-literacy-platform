@@ -30,21 +30,21 @@ const KC_1_1: KnowledgeCheckItemData = {
     },
     {
       id: 'b',
-      text: '“Happy to share our workflows, but keep in mind that adoption differences aren’t just about access. Your team’s institutional context (organizational norms, how AI use is perceived by leadership, the types of tasks your office handles) will shape whether these workflows transfer effectively. I’d suggest we walk through them together so we can flag where your context might need a different approach.”',
-      isPreferred: true,
-      feedbackTitle: 'Best response',
-      feedbackTone: 'success',
-      feedbackText:
-        'This answer shows the core skill at play: interpreting adoption data and identifying what it means for a specific operational context. It correctly identifies that workflows don’t transfer automatically across institutional environments and names the contextual factors the data highlights. The willingness to share combined with an informed caveat is the professionally useful response.',
-    },
-    {
-      id: 'c',
       text: '“I wouldn’t invest too much effort in this right now. The data shows that lower-adoption regions concentrate overwhelmingly on coding and technical tasks, which suggests the demand for operations-focused AI workflows hasn’t developed yet in those markets. Sharing our workflows before that demand exists risks creating adoption pressure without the supporting ecosystem. It might be more productive to revisit once their usage patterns diversify.”',
       isPreferred: false,
       feedbackTitle: 'Misreads the data',
       feedbackTone: 'error',
       feedbackText:
         'The use case concentration finding (lower-adoption regions skewing toward coding) describes a population-level pattern, not a ceiling on what’s possible in those regions. It reflects current adoption maturity, not inherent limitations. Dismissing a colleague’s request based on aggregate data applied to a specific team is exactly the kind of overconfident inference the module warns against.',
+    },
+    {
+      id: 'c',
+      text: '“Happy to share our workflows, but keep in mind that adoption differences aren’t just about access. Your team’s institutional context (organizational norms, how AI use is perceived by leadership, the types of tasks your office handles) will shape whether these workflows transfer effectively. I’d suggest we walk through them together so we can flag where your context might need a different approach.”',
+      isPreferred: true,
+      feedbackTitle: 'Best response',
+      feedbackTone: 'success',
+      feedbackText:
+        'This answer shows the core skill at play: interpreting adoption data and identifying what it means for a specific operational context. It correctly identifies that workflows don’t transfer automatically across institutional environments and names the contextual factors the data highlights. The willingness to share combined with an informed caveat is the professionally useful response.',
     },
     {
       id: 'd',
@@ -73,21 +73,21 @@ const KC_1_2: KnowledgeCheckItemData = {
   options: [
     {
       id: 'a',
-      text: '“AI is the most in-demand skill in the global workforce. The World Economic Forum ranks it number one, and 85% of employers plan to invest in AI upskilling by 2030. Our competitors are almost certainly building these capabilities already. If we wait, we risk falling behind in talent retention and operational efficiency, and the cost of catching up later will be higher than the cost of investing now. This is a competitive necessity, not an optional investment.”',
-      isPreferred: false,
-      feedbackTitle: 'Directionally correct but unpersuasive',
-      feedbackTone: 'caution',
-      feedbackText:
-        'A CLO evaluating budget requests needs specific evidence, not general urgency. This draft contains one data point (WEF ranking), no distinction between opportunity and risk, and no connection to the organization’s specific situation. “We’ll be left behind” is an appeal to fear, not an evidence-based argument.',
-    },
-    {
-      id: 'b',
       text: '“Our team uses AI daily, and most report time savings. But research shows that when professionals’ actual AI usage is compared to their self-reports, the two diverge: a significant share are automating tasks they believe they’re augmenting. Meanwhile, 69% of AI-using professionals conceal their usage, which means we can’t learn from, measure, or improve whatever practices are already working. The gap isn’t capability. It’s the competency to use these tools in ways we can actually evaluate and build on.”',
       isPreferred: true,
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
         'This draft does three things the CLO needs: it grounds the case in multiple quantified findings (self-report vs. behavioral divergence, 69% concealment rate, skill demand ranking, skill gap barrier, 86% time savings), it distinguishes between the productivity opportunity (time savings when competency is present) and the capability risk (divergent behavior, invisible practices), and it connects both to a measurable organizational consequence (the inability to learn from, measure, or improve existing practices). This is the structure of a business case, not a training request.',
+    },
+    {
+      id: 'b',
+      text: '“AI is the most in-demand skill in the global workforce. The World Economic Forum ranks it number one, and 85% of employers plan to invest in AI upskilling by 2030. Our competitors are almost certainly building these capabilities already. If we wait, we risk falling behind in talent retention and operational efficiency, and the cost of catching up later will be higher than the cost of investing now. This is a competitive necessity, not an optional investment.”',
+      isPreferred: false,
+      feedbackTitle: 'Directionally correct but unpersuasive',
+      feedbackTone: 'caution',
+      feedbackText:
+        'A CLO evaluating budget requests needs specific evidence, not general urgency. This draft contains one data point (WEF ranking), no distinction between opportunity and risk, and no connection to the organization’s specific situation. “We’ll be left behind” is an appeal to fear, not an evidence-based argument.',
     },
     {
       id: 'c',
@@ -135,15 +135,6 @@ const KC_1_3: KnowledgeCheckItemData = {
     },
     {
       id: 'b',
-      text: '“I understand the hesitation. Research shows about 69% of professionals feel the same way. The issue isn’t whether people use AI. Most do. The issue is that when everyone works with AI privately, the team can’t learn from each other’s approaches, identify best practices, or evaluate whether AI-assisted work meets our standards. That’s why it helps to have shared language for talking about how we delegate tasks to AI and how we evaluate what it gives back.”',
-      isPreferred: true,
-      feedbackTitle: 'Best response',
-      feedbackTone: 'success',
-      feedbackText:
-        'This answer does four things well: it validates the colleague’s experience with data (69% finding), identifies the organizational consequences of concealment (can’t learn, can’t evaluate, can’t improve), introduces shared vocabulary as the practical solution (delegation and evaluation language rather than binary framing), and models the behavior it advocates by using specific, professional language rather than vague encouragement. The response demonstrates the competency, not just the knowledge.',
-    },
-    {
-      id: 'c',
       text: '“That’s a smart instinct, and I’d keep exercising caution for now. Until the company has a formal AI use policy (including clear guidelines on disclosure, client communication, and quality standards), being selective about what you share protects you professionally. Once leadership sets the norms, you’ll have a clearer picture of what’s expected and what’s safe to disclose. In the meantime, there’s no reason to take on reputational risk before the organization has caught up.”',
       isPreferred: false,
       feedbackTitle: 'Reinforces the concealment dynamic',
@@ -152,13 +143,22 @@ const KC_1_3: KnowledgeCheckItemData = {
         'Advising discretion may feel pragmatic, but it perpetuates exactly the pattern Section 4 described: each person navigating AI use privately, without shared norms or vocabulary. The colleague’s disclosure was an opportunity to shift the team dynamic. This response closes it.',
     },
     {
-      id: 'd',
+      id: 'c',
       text: '“Don’t worry about it. I use AI for most of my work and nobody’s ever said anything. The stigma around AI is overblown. Most people on this team are probably using it too and just not talking about it either. The best approach is to keep doing what works for you and not overthink the social dynamics. Results speak for themselves, and once the team sees the quality of your output, the question of how you produced it won’t matter.”',
       isPreferred: false,
       feedbackTitle: 'Anecdotal dismissal',
       feedbackTone: 'error',
       feedbackText:
         'Personal experience (“nobody’s ever complained”) doesn’t address the systemic pattern. The 69% finding isn’t about individual exceptions. It’s about a workforce-wide dynamic where the majority conceal, meaning the colleague’s discomfort reflects the norm, not an anomaly. Casual reassurance from one person doesn’t change the team’s operating norms.',
+    },
+    {
+      id: 'd',
+      text: '“I understand the hesitation. Research shows about 69% of professionals feel the same way. The issue isn’t whether people use AI. Most do. The issue is that when everyone works with AI privately, the team can’t learn from each other’s approaches, identify best practices, or evaluate whether AI-assisted work meets our standards. That’s why it helps to have shared language for talking about how we delegate tasks to AI and how we evaluate what it gives back.”',
+      isPreferred: true,
+      feedbackTitle: 'Best response',
+      feedbackTone: 'success',
+      feedbackText:
+        'This answer does four things well: it validates the colleague’s experience with data (69% finding), identifies the organizational consequences of concealment (can’t learn, can’t evaluate, can’t improve), introduces shared vocabulary as the practical solution (delegation and evaluation language rather than binary framing), and models the behavior it advocates by using specific, professional language rather than vague encouragement. The response demonstrates the competency, not just the knowledge.',
     },
   ],
 };
