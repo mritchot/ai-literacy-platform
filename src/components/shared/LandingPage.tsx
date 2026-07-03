@@ -464,7 +464,7 @@ function Footer(): JSX.Element {
       style={{ letterSpacing: '0.02em' }}
     >
       <div>AI Literacy · v1.0 · portfolio edition</div>
-      <div>Last updated · May 2026</div>
+      <div>Last updated · July 2026</div>
     </footer>
   );
 }
