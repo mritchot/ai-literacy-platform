@@ -24,8 +24,6 @@ export interface ModuleMeta {
   activities: number;
   objectives: number;
   progress: number; // 0–1
-  locked: boolean;
-  active?: boolean;
   sections: SectionMeta[];
 }
 
@@ -54,8 +52,6 @@ export const MODULES: ModuleMeta[] = [
     activities: 2,
     objectives: 4,
     progress: 0,
-    locked: false,
-    active: true,
     sections: [
       { id: 1, title: 'You already use AI. Can you prove it’s working?', state: 'todo' },
       { id: 2, title: 'The market picture', state: 'todo' },
@@ -78,7 +74,6 @@ export const MODULES: ModuleMeta[] = [
     activities: 2,
     objectives: 4,
     progress: 0,
-    locked: false,
     sections: [
       { id: 1, title: 'Opening hook', state: 'todo' },
       { id: 2, title: 'What the workforce is actually doing', state: 'todo' },
@@ -101,7 +96,6 @@ export const MODULES: ModuleMeta[] = [
     activities: 3,
     objectives: 4,
     progress: 0,
-    locked: false,
     sections: [
       { id: 1, title: 'Opening hook', state: 'todo' },
       { id: 2, title: 'How text becomes data — tokenization', state: 'todo' },
@@ -127,7 +121,6 @@ export const MODULES: ModuleMeta[] = [
     activities: 5,
     objectives: 5,
     progress: 0,
-    locked: false,
     sections: [
       { id: 1, title: 'Opening hook — putting it all together', state: 'todo' },
       { id: 2, title: 'Task decomposition', state: 'todo' },

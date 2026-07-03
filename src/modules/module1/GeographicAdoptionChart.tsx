@@ -203,6 +203,7 @@ export function GeographicAdoptionChart({
           rows={filteredAll}
           tierColor={tierColor}
           maxHeight={SCROLL_MAX_HEIGHT}
+          animate={!search.trim()}
           ariaLabel={`Horizontal bar chart of ${filteredAll.length} countries (full dataset, sorted by AUI descending), color-coded by adoption tier.`}
         />
       )}
@@ -424,11 +425,16 @@ function BarChartFigure({
   tierColor,
   maxHeight,
   ariaLabel,
+  // Animation is suppressed while a search filter is active — each
+  // keystroke produces a new rows array, and restarting the 400ms bar
+  // animation per character is pure jank on a ~115-row chart.
+  animate = true,
 }: {
   rows: GeoCountry[];
   tierColor: Record<TierName, string>;
   maxHeight: number | null;
   ariaLabel: string;
+  animate?: boolean;
 }): JSX.Element {
   const viewport = useViewport();
 
@@ -528,6 +534,10 @@ function BarChartFigure({
                   itemStyle={TOOLTIP_ITEM_STYLE}
                   labelStyle={TOOLTIP_LABEL_STYLE}
                   cursor={{ fill: 'rgba(0,0,0,0.04)' }}
+                  // Recharts boundary: the Formatter generic doesn't model the
+                  // per-entry `payload` shape, so the callback params are typed
+                  // loosely and matched to the prop with `as any` (same pattern
+                  // documented in GDPCorrelationScatter).
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   formatter={((value: number, _name: string, entry: any) => {
                     const c = entry?.payload as GeoCountry | undefined;
@@ -536,7 +546,7 @@ function BarChartFigure({
                   }) as any}
                   labelFormatter={(label) => label}
                 />
-                <Bar dataKey="aui" isAnimationActive animationDuration={400} radius={[0, 3, 3, 0]}>
+                <Bar dataKey="aui" isAnimationActive={animate} animationDuration={400} radius={[0, 3, 3, 0]}>
                   {rows.map((c) => (
                     <Cell key={c.iso3} fill={tierColor[c.tier as TierName] ?? tierColor.Emerging} />
                   ))}
@@ -693,12 +703,16 @@ export function CensusEnterpriseInset({
   adoption: CensusAdoption;
 }): JSX.Element {
   const tokens = useChartTokens();
-  const fall = Math.round(adoption.fall2023 * 1000) / 10;
-  const aug = Math.round(adoption.earlyAugust2025 * 1000) / 10;
-  const data = [
-    { period: 'Fall 2023', pct: fall, label: `${fall}%` },
-    { period: 'Aug 2025', pct: aug, label: `${aug}%` },
-  ];
+  // Memoized so the two-bar inset keeps a stable data identity across
+  // re-renders (fresh arrays restart Recharts' layout + animation).
+  const data = useMemo(() => {
+    const fall = Math.round(adoption.fall2023 * 1000) / 10;
+    const aug = Math.round(adoption.earlyAugust2025 * 1000) / 10;
+    return [
+      { period: 'Fall 2023', pct: fall, label: `${fall}%` },
+      { period: 'Aug 2025', pct: aug, label: `${aug}%` },
+    ];
+  }, [adoption]);
 
   return (
     <aside

@@ -1,4 +1,4 @@
-// Pre-populated demo data for the admin dashboard (4D §11). Static — never
+// Pre-populated demo data for the analytics dashboard (4D §11). Static — never
 // written to localStorage. Mirrors the *actual* shapes the platform stores
 // (`LearnerProgressState` and `AnalyticsEvent[]`), not the spec's idealized
 // nested shape.

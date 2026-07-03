@@ -30,11 +30,10 @@ The curriculum grew out of my M.Ed. in Education Technology and Instructional De
 
 ## Platform modes
 
-The platform supports three access modes, activated via URL parameters and persisted in localStorage:
+The platform supports two access modes, activated via URL parameter or keyboard shortcut and persisted in localStorage:
 
-- **Learner** (default) — sequential section gating, no admin access
-- **Portfolio** (`?portfolio=true`) — free navigation, demo analytics dashboard
-- **Admin** (`?admin=true` or Ctrl/Cmd+Shift+A) — free navigation, live analytics dashboard
+- **Learner** (default) — sequential section gating, no dashboard access
+- **Portfolio** (`?portfolio=true` or Ctrl/Cmd+Shift+A) — free navigation, analytics dashboard at `/#/dashboard` (demo data by default, with a live-data toggle)
 
 ## Getting started
 
@@ -63,7 +62,7 @@ The single-file architecture means the entire platform — React app, fonts, sty
 
 ```
 src/
-├── admin/            Admin dashboard (Component 4D)
+├── dashboard/        Learning analytics dashboard (Component 4D)
 ├── assets/           Static assets (SVG icons)
 ├── components/
 │   ├── shared/       Platform-wide components (SectionContainer, Citation,
@@ -88,7 +87,7 @@ src/
 
 **Single-file build.** The platform must work when opened directly from disk (`file://` protocol) — this enables offline distribution and removes hosting as a dependency for portfolio reviewers. The tradeoff is ~585 KB of inlined font binaries and no lazy-loading of route chunks.
 
-**No backend.** All state lives in localStorage. Analytics events are captured client-side and exportable as JSON/xAPI from the admin dashboard. This keeps deployment to a single static file with zero ongoing infrastructure cost.
+**No backend.** All state lives in localStorage. Analytics events are captured client-side and exportable as JSON/xAPI from the analytics dashboard. This keeps deployment to a single static file with zero ongoing infrastructure cost.
 
 **Sequential gating in Learner mode.** Sections unlock only when the preceding section is complete (scroll + interaction). This models the instructional design principle that each section builds on prior knowledge — but Portfolio mode removes the gate for non-sequential reviewers.
 

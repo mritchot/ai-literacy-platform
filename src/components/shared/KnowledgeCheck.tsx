@@ -3,15 +3,21 @@
 // response, partial, misidentifies, etc.). Stem may include arbitrary JSX
 // for the KC-2.2 inline data table case.
 
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { Icon } from './Icon';
+import { nextRadioIndex } from './radio-group-nav';
 import { Overline } from './Overline';
 
 type KnowledgeCheckTone = 'success' | 'caution' | 'error';
 
 const TIER1 = '#A0AEB8';
+// Selected-option stroke. TIER1 (#A0AEB8) is ~2.2:1 on white — below the
+// 3:1 non-text minimum the unselected ring was already fixed to meet —
+// so the selected border/ring/dot use the theme-aware slate --info token
+// instead; TIER1 remains as the decorative card accent only.
+const SELECTED_STROKE = 'rgb(var(--info))';
 
 interface KnowledgeCheckOption {
   id: string;
@@ -108,6 +114,16 @@ export function KnowledgeCheck({
     }
   }, [submitted]);
 
+  const onRadioKey = (e: KeyboardEvent<HTMLButtonElement>, idx: number) => {
+    const next = nextRadioIndex(e.key, idx, item.options.length);
+    if (next === null) return;
+    e.preventDefault();
+    const opt = item.options[next];
+    if (!opt) return;
+    setSelected(opt.id);
+    document.getElementById(`kc-${item.id}-opt-${opt.id}`)?.focus();
+  };
+
   const selectedOption = item.options.find((o) => o.id === selected);
   const preferredOption = item.options.find((o) => o.isPreferred);
 
@@ -155,21 +171,29 @@ export function KnowledgeCheck({
           InterpretationCheck.tsx for the full rationale (the sr-only
           legend pattern leaked into iOS document.scrollWidth and made
           pages with multiple checks horizontally pannable on mobile). */}
-      <fieldset
-        disabled={submitted}
-        className="m-0 border-0 p-0"
-        aria-label="Choose the response that best applies the module framework."
-      >
-        <ul className="m-0 list-none space-y-2 p-0">
-          {item.options.map((opt) => {
+      <fieldset disabled={submitted} className="m-0 border-0 p-0">
+        {/* Real radio semantics: mutually exclusive options announced as
+            "x of y" with roving tabindex + arrow keys (APG pattern) —
+            these were aria-pressed toggle buttons before, which never
+            told SR users that selecting one deselects the others. */}
+        <ul
+          role="radiogroup"
+          aria-label="Choose the response that best applies the module framework."
+          className="m-0 list-none space-y-2 p-0"
+        >
+          {item.options.map((opt, optIdx) => {
             const isSelected = selected === opt.id;
             const isFeedbackBorder = submitted && isSelected;
             return (
               <li key={opt.id}>
                 <button
                   type="button"
+                  id={`kc-${item.id}-opt-${opt.id}`}
+                  role="radio"
+                  aria-checked={isSelected}
+                  tabIndex={isSelected || (selected === null && optIdx === 0) ? 0 : -1}
+                  onKeyDown={(e) => onRadioKey(e, optIdx)}
                   onClick={() => !submitted && setSelected(opt.id)}
-                  aria-pressed={isSelected}
                   className="flex w-full items-start gap-3 rounded-md text-left transition-colors duration-150"
                   style={{
                     background: isSelected ? 'rgb(var(--surface))' : 'rgb(var(--white))',
@@ -185,14 +209,14 @@ export function KnowledgeCheck({
                       isFeedbackBorder
                         ? TONE_BORDER[opt.feedbackTone]
                         : isSelected
-                          ? TIER1
+                          ? SELECTED_STROKE
                           : 'rgb(var(--border))'
                     }`,
                     padding: '12px 16px',
                     boxShadow: isFeedbackBorder
                       ? `inset 0 0 0 1px ${TONE_BORDER[opt.feedbackTone]}`
                       : isSelected
-                        ? `inset 0 0 0 1px ${TIER1}`
+                        ? `inset 0 0 0 1px ${SELECTED_STROKE}`
                         : 'none',
                     cursor: submitted ? 'default' : 'pointer',
                   }}
@@ -203,7 +227,7 @@ export function KnowledgeCheck({
                     style={{
                       width: 18,
                       height: 18,
-                      border: isSelected ? `5px solid ${TIER1}` : '1.5px solid rgb(var(--ghost))',
+                      border: isSelected ? `5px solid ${SELECTED_STROKE}` : '1.5px solid rgb(var(--ghost))',
                       background: isSelected ? 'rgb(var(--white))' : 'transparent',
                       boxSizing: 'border-box',
                     }}
@@ -259,10 +283,18 @@ export function KnowledgeCheck({
         </div>
       )}
 
+      {/* Always-mounted live region: content injected on submit is
+          reliably announced (a region that mounts together with its
+          content often isn't). The visual callout below is separate. */}
+      <span aria-live="polite" className="sr-only">
+        {submitted && selectedOption
+          ? `${selectedOption.feedbackTitle}. ${selectedOption.feedbackText}`
+          : ''}
+      </span>
+
       {submitted && selectedOption && (
         <div
           ref={feedbackRef}
-          aria-live="polite"
           className="mt-4 rounded-md"
           style={{
             background: TONE_BG[selectedOption.feedbackTone],
@@ -303,6 +335,7 @@ export function KnowledgeCheck({
           <button
             type="button"
             onClick={() => setShowAll((v) => !v)}
+            aria-expanded={showAll}
             className="inline-flex items-center gap-1.5 font-sans text-[12.5px] font-semibold text-action hover:text-action-hover"
           >
             <Icon name={showAll ? 'chevronDown' : 'chevronRight'} size={14} />

@@ -1,15 +1,10 @@
-// R4Trigger — Output Verification Checklist. See R1Trigger.tsx for the
-// shared trigger pattern.
-//
-// R4 differs from the other RxTriggers: the panel body has interactive
-// checkboxes that the learner toggles as they verify an output. Earlier
-// the state lived inside R4VerificationChecklist itself, which made it
-// reset on every panel close (the panel unmounts its children). The
-// learner needed checks to persist while moving between the panel and
-// the activity below — so the state is now lifted here. R4Trigger
-// stays mounted as long as the learner is on P10, so checks persist
-// across open/close cycles within an activity visit, and naturally
-// reset when the learner navigates away.
+// R4Trigger — Output Verification Checklist. Deliberately NOT a thin
+// wrapper over the registry-driven ReferenceTrigger like its siblings:
+// the panel body has interactive checkboxes the learner toggles while
+// verifying an output, and that state is lifted here so checks persist
+// across panel close/reopen for the lifetime of this instance (the
+// panel unmounts its children on close). Checks naturally reset when
+// the learner navigates away from the activity.
 
 import { useCallback, useState } from 'react';
 import { ReferencePanel } from './ReferencePanel';
@@ -18,12 +13,12 @@ import { R4VerificationChecklist } from './items/R4VerificationChecklist';
 
 interface R4TriggerProps {
   label?: string;
-  variant?: 'inline' | 'tab';
+  variant?: 'tab';
 }
 
 export function R4Trigger({
   label = 'Verification Checklist',
-  variant = 'inline',
+  variant,
 }: R4TriggerProps): JSX.Element {
   const [open, setOpen] = useState(false);
   // Lifted state — keyed by `${sectionId}-${itemIndex}` (e.g.,
@@ -47,7 +42,7 @@ export function R4Trigger({
         onClose={() => setOpen(false)}
         id="R4"
         title="Output Verification Checklist"
-        pdfPath="/reference/r4-output-verification-checklist.pdf"
+        pdfPath="reference/r4-output-verification-checklist.pdf"
         pdfFilename="r4-output-verification-checklist.pdf"
       >
         <R4VerificationChecklist checked={checked} onToggle={toggle} />

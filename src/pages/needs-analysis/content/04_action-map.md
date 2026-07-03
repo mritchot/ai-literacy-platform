@@ -39,7 +39,7 @@ Organized by the 4D competency framework (Delegation, Description, Discernment, 
 
 **D4. The participant provides task-relevant context, constraints, and output specifications when prompting AI, rather than issuing single-turn, underspecified requests.**
 - Sub-component: Product Description → Process Description
-- Gap trace: Surface-level engagement producing a fraction of available efficiency ([Tamkin & McCrory, pp. 12–13](https://www.anthropic.com/research/estimating-ai-productivity-gains): 81% median savings under proficient use in observational data, against a more conservative 14–56% range in the referenced randomized controlled trials); directive single-turn interactions constitute a substantial and growing share of AI usage, rising from 27% to 39% of sampled conversations between January and August 2025 ([Anthropic Economic Index, September 2025 report](https://www.anthropic.com/research/anthropic-economic-index-september-2025-report), p. 9), indicating that many users are not iterating or providing contextual specifications.
+- Gap trace: Surface-level engagement producing a fraction of available efficiency ([Tamkin & McCrory, pp. 12–13](https://www.anthropic.com/research/estimating-productivity-gains): 81% median savings under proficient use in observational data, against a more conservative 14–56% range in the referenced randomized controlled trials); directive single-turn interactions constitute a substantial and growing share of AI usage, rising from 27% to 39% of sampled conversations between January and August 2025 ([Anthropic Economic Index, September 2025 report](https://www.anthropic.com/research/anthropic-economic-index-september-2025-report), p. 9), indicating that many users are not iterating or providing contextual specifications.
 - Module trace: Module 4 (AI Interaction Sandbox — side-by-side comparison of prompt reformulation → output quality change)
 
 **D5. The participant specifies the desired format, audience, and quality criteria for AI output before generating it.**
@@ -241,5 +241,5 @@ Every Ring 1 behavior (D1–D12) maps to at least one practice activity (P1–P1
 - **Dakan, R. & Feller, J.** — *The AI Fluency Framework, Version 1.5* (2025)
 - **Handa, K. et al.** — [*Which Economic Tasks Are Performed with AI? Evidence from Millions of Claude Conversations*](https://bear-images.sfo2.cdn.digitaloceanspaces.com/ritchot/04761v1.pdf) (Feb 2025)
 - **Lee, H. et al.** — [*The Impact of Generative AI on Critical Thinking: Self-Reported Reductions in Cognitive Effort and Confidence Effects From a Survey of Knowledge Workers*](https://doi.org/10.1145/3706598.3713778), CHI 2025
-- **Tamkin, A. & McCrory, P.** — [*Estimating AI Productivity Gains from Claude Conversations*](https://www.anthropic.com/research/estimating-ai-productivity-gains) (Nov 2025)
+- **Tamkin, A. & McCrory, P.** — [*Estimating AI Productivity Gains from Claude Conversations*](https://www.anthropic.com/research/estimating-productivity-gains) (Nov 2025)
 - **World Economic Forum** — [*Future of Jobs Report 2025*](https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf) (Jan 2025)

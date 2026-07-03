@@ -1,4 +1,4 @@
-// AssessmentResponseAnalysis — admin per-item view of the pre/post
+// AssessmentResponseAnalysis — dashboard per-item view of the pre/post
 // assessment, organized by block. Parallel to KCResponseAnalysis but
 // reads from `progress.assessments.{pre,post}.responses` instead of
 // `progress.knowledgeChecks`.
@@ -35,7 +35,7 @@ interface AssessmentResponseAnalysisProps {
 }
 
 // Block display metadata. Names + ordering are canonical (match the
-// instrument spec); colors are admin-only display tokens picked to
+// instrument spec); colors are dashboard-only display tokens picked to
 // stay distinct from the 4D competency palette used in
 // KCResponseAnalysis. Hex declared here, consumed via `style` props
 // in render — the rest of the file uses CSS variables.

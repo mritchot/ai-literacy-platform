@@ -4,7 +4,7 @@
 //
 //   1. A "vocabulary strip" showing a small sample of the model's
 //      ~100,000 cl100k_base tokens (mix of whole-word and sub-word).
-//   2. A common-text example: "quarterly report" → 2 tokens.
+//   2. A common-text example: "quarterly report" → 3 tokens.
 //   3. An uncommon-text example: "Schwarzenegger" → 5 tokens.
 //
 // The two examples sit visually in parallel so the contrast (one
@@ -13,7 +13,8 @@
 //
 // All token boundaries are verified cl100k_base output — same tokenizer
 // powering the S3 TokenizerPlayground. Verified via gpt-tokenizer:
-//   encode(' quarterly report') → [' quarterly', ' report']
+//   encode('quarterly report') → ['quarter', 'ly', ' report'] (3 tokens —
+//   without a leading space, 'quarterly' itself splits)
 //   encode('Schwarzenegger')    → ['Sch', 'war', 'zen', 'eg', 'ger']
 // If the vocabulary changes upstream, regenerate these constants.
 //
@@ -49,7 +50,7 @@ const VOCABULARY_SAMPLE: string[] = [
 
 const COMMON_EXAMPLE = {
   text: 'quarterly report',
-  tokens: [' quarterly', ' report'],
+  tokens: ['quarter', 'ly', ' report'],
 };
 
 // "Schwarzenegger" was selected over the prompt's suggested "Kuznetsova"
@@ -105,7 +106,7 @@ export function StickerAnalogyDiagram(): JSX.Element {
       <ExampleRow
         text={COMMON_EXAMPLE.text}
         tokens={COMMON_EXAMPLE.tokens}
-        label="Common English: one token per word"
+        label="Common English: two words, three tokens"
       />
 
       {/* Inner divider between the two examples — dashed so it reads as
@@ -123,7 +124,7 @@ export function StickerAnalogyDiagram(): JSX.Element {
       <ExampleRow
         text={UNCOMMON_EXAMPLE.text}
         tokens={UNCOMMON_EXAMPLE.tokens}
-        label="Uncommon text: many tokens to spell it out"
+        label="Uncommon text: one word, five tokens"
       />
 
       <figcaption

@@ -7,7 +7,7 @@
 // `components/assessment/AssessmentResults.tsx` shows pre→post
 // learning gains.
 //
-// Source: course-info/content/04_phase-04/06b_pre-assessment-instrument.md
+// Source: the pre-assessment instrument document (Phase 4 planning corpus).
 // Answer key distribution: A=2, B=3, C=2, D=3.
 
 export type AssessmentBlock = 'usage' | 'failure' | 'mechanics' | 'evaluation';

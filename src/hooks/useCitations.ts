@@ -4,16 +4,14 @@
 // learner opts in via the sidebar toggle when they want to see sources.
 //
 // Design note — why a module-level store rather than per-instance
-// `useState` (the useTheme pattern):
-//   useTheme is lifted to PlatformShell and threaded down via props,
-//   so there's exactly one instance. This hook is called directly at
-//   *every* site that needs it — Citation.tsx (20+ instances across
-//   the modules) and Sidebar.tsx (one). If each call site held its own
-//   `useState`, toggling from the sidebar would not re-render the
-//   Citation chips — they'd hold stale, independent state. So the
-//   visibility lives in a single module-level store, shared across all
-//   instances via `useSyncExternalStore`. No context provider, no prop
-//   threading: components just call the hook and stay in sync.
+// `useState`: this hook is called directly at *every* site that needs
+// it — Citation.tsx (20+ instances across the modules) and Sidebar.tsx
+// (one). If each call site held its own `useState`, toggling from the
+// sidebar would not re-render the Citation chips — they'd hold stale,
+// independent state. So the visibility lives in a single module-level
+// store, shared across all instances via `useSyncExternalStore` (the
+// same pattern usePlatformMode and useTheme use). No context provider,
+// no prop threading: components just call the hook and stay in sync.
 //
 // Persistence: localStorage key 'citation-visibility'. Default
 // 'hidden' when no stored value exists. A module-level `storage`
@@ -21,10 +19,11 @@
 // another tab.
 
 import { useSyncExternalStore } from 'react';
+import { STORAGE_KEYS } from '../constants/storage-keys';
 
 type CitationVisibility = 'visible' | 'hidden';
 
-const STORAGE_KEY = 'citation-visibility';
+const STORAGE_KEY = STORAGE_KEYS.CITATIONS;
 
 // Read the persisted preference. Anything other than the explicit
 // 'visible' string (including a missing key or a localStorage failure)

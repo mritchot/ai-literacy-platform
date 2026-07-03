@@ -4,7 +4,7 @@
 // temperature comparison whose outputs are pre-written for pedagogical
 // consistency rather than randomly sampled.
 
-import { useEffect, useMemo, useState, type KeyboardEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { ReflectionPrompt } from '../../components/shared/ReflectionPrompt';
@@ -12,6 +12,7 @@ import { Overline } from '../../components/shared/Overline';
 import { R5Trigger } from '../../components/reference/R5Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
 import { TOKEN_HEX } from '../../utils/chart-config';
+import { useChartTokens } from '../../hooks/useChartTokens';
 import { TokenChip } from './TokenChip';
 import { useViewport } from '../../hooks/useViewport';
 import {
@@ -56,13 +57,22 @@ export function NextTokenDemo(): JSX.Element {
     markTabViewed(3, 5, `stem_${activeStem}`);
   }, [activeStem, track, markTabViewed]);
 
+  // Roving tabindex: move DOM focus with the activation, otherwise the
+  // keydown target keeps its stale index and Stem 3 is unreachable from
+  // Stem 1 by keyboard (viewing all three stems is the completion
+  // condition, so this stranded keyboard learners).
+  const activateStem = (n: 1 | 2 | 3) => {
+    setActiveStem(n);
+    document.getElementById(`p6-tab-${n}`)?.focus();
+  };
+
   const onTabKey = (e: KeyboardEvent<HTMLButtonElement>, idx: number) => {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
       e.preventDefault();
-      setActiveStem(((idx % 3) + 1) as 1 | 2 | 3);
+      activateStem(((idx % 3) + 1) as 1 | 2 | 3);
     } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
       e.preventDefault();
-      setActiveStem((((idx - 2 + 3) % 3) + 1) as 1 | 2 | 3);
+      activateStem((((idx - 2 + 3) % 3) + 1) as 1 | 2 | 3);
     }
   };
 
@@ -100,14 +110,29 @@ export function NextTokenDemo(): JSX.Element {
     setGenerated((prev) => ({ ...prev, [activeStem]: [] }));
   };
 
+  // Debounced analytics for the slider — the UI updates per step, but
+  // one drag across the range would otherwise emit ~19 events; track
+  // only the value the learner settles on (same 500ms pattern as the
+  // geo chart's search tracking).
+  const tempTrackRef = useRef<number | null>(null);
+  useEffect(
+    () => () => {
+      if (tempTrackRef.current !== null) window.clearTimeout(tempTrackRef.current);
+    },
+    [],
+  );
   const onTemperatureChange = (next: number) => {
     setTemperature(next);
-    track({
-      type: 'p6_temperature_adjusted',
-      moduleId: 3,
-      sectionId: 5,
-      payload: { temperature: next },
-    });
+    if (tempTrackRef.current !== null) window.clearTimeout(tempTrackRef.current);
+    tempTrackRef.current = window.setTimeout(() => {
+      tempTrackRef.current = null;
+      track({
+        type: 'p6_temperature_adjusted',
+        moduleId: 3,
+        sectionId: 5,
+        payload: { temperature: next },
+      });
+    }, 500);
   };
 
   const allStemsViewed =
@@ -179,6 +204,9 @@ export function NextTokenDemo(): JSX.Element {
                 background: active ? 'rgb(var(--white))' : 'transparent',
                 color: active ? 'rgb(var(--ink))' : 'rgb(var(--secondary))',
                 fontWeight: active ? 600 : 500,
+                // Static Discernment brand accent on the underline —
+                // intentionally NOT theme-flipped (mid-tone reads on both
+                // canvases; same convention as the dashboard tab accents).
                 borderBottom: active
                   ? `2px solid ${TOKEN_HEX.discernment}`
                   : '2px solid transparent',
@@ -432,6 +460,7 @@ function ProbabilityPanel({
 }
 
 function ProbabilityBar({ pct }: { pct: number }): JSX.Element {
+  const tokens = useChartTokens();
   const width = Math.max(0, Math.min(100, pct));
   return (
     <div
@@ -441,7 +470,7 @@ function ProbabilityBar({ pct }: { pct: number }): JSX.Element {
     >
       <div
         className="h-full rounded-sm transition-[width] duration-300 ease-out"
-        style={{ width: `${width}%`, background: TOKEN_HEX.info }}
+        style={{ width: `${width}%`, background: tokens.info }}
       />
     </div>
   );

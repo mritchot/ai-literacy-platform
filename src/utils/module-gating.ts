@@ -3,8 +3,8 @@
 // current platform mode, and (when in learner mode) the pre/post
 // assessment completion flags.
 //
-// In `portfolio` and `admin` modes nothing is ever locked (free
-// navigation). In `learner` mode:
+// In `portfolio` mode nothing is ever locked (free navigation). In
+// `learner` mode:
 //   • Module 1 is locked unless the pre-assessment is complete.
 //   • Module M (M > 1) is locked unless the previous module is fully
 //     complete.
@@ -34,9 +34,8 @@ export interface ModuleGating {
   isSectionLocked: (moduleId: number, sectionId: number) => boolean;
 }
 
-/** Optional assessment-completion view passed into computeGating in
- *  learner mode. Both flags default to `true` if omitted so callers
- *  that haven't been migrated yet keep their existing behavior. */
+/** Assessment-completion view passed into computeGating; consulted
+ *  only in learner mode (portfolio mode is never locked). */
 export interface AssessmentGatingInput {
   preComplete: boolean;
   postComplete: boolean;
@@ -50,17 +49,16 @@ const UNLOCKED: ModuleGating = {
 export function computeGating(
   modules: ModuleMeta[],
   mode: PlatformMode,
-  assessments?: AssessmentGatingInput,
+  assessments: AssessmentGatingInput,
 ): ModuleGating {
-  // Portfolio + admin modes: free navigation, nothing locked. We
+  // Portfolio mode: free navigation, nothing locked. We
   // intentionally exempt portfolio mode from the assessment gates so a
   // portfolio reviewer can land on any module without first taking the
   // pre-assessment — the comparative results component handles the
   // missing-data case with its own placeholder.
   if (mode !== 'learner') return UNLOCKED;
 
-  const preComplete = assessments?.preComplete ?? true;
-  const postComplete = assessments?.postComplete ?? true;
+  const { preComplete, postComplete } = assessments;
 
   // Typed as Map<number, …> so the helpers can be called with plain
   // `number` ids — `ModuleMeta['id']` is the literal union `1 | 2 | 3 | 4`,
@@ -93,7 +91,8 @@ export function computeGating(
     // module itself is unlocked, since isModuleLocked returned false).
     if (idx <= 0) return false;
     // Otherwise: open only once the previous section is complete.
-    return m.sections[idx - 1].state !== 'done';
+    // (idx > 0 is guaranteed by the check above, so the index is in bounds.)
+    return m.sections[idx - 1]!.state !== 'done';
   };
 
   return { isModuleLocked, isSectionLocked };

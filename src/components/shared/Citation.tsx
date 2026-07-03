@@ -26,6 +26,7 @@ import {
   useRef,
   useState,
   type CSSProperties,
+  type FocusEvent as ReactFocusEvent,
   type KeyboardEvent,
 } from 'react';
 import { getCitation, type CitationMeta } from '../../data/citations';
@@ -37,7 +38,7 @@ interface CitationProps {
   /** Optional key into a citation's `pages` map for a stat-specific
    *  page reference. When supplied with a multi-id citation, it applies
    *  only to the FIRST id. */
-  pageKey?: string;
+  pageKey?: string | undefined;
 }
 
 const HOVER_OPEN_DELAY = 250;
@@ -144,9 +145,22 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
   };
 
   const handleFocus = () => {
-    // Focus opens but is non-sticky; pressing Tab away closes naturally
-    // via blur. Esc still works as an explicit dismissal.
+    // Focus opens non-sticky; handleBlur closes it when focus leaves.
+    // Esc still works as an explicit dismissal.
     if (!open) openNow(false);
+  };
+
+  const handleBlur = (e: ReactFocusEvent<HTMLButtonElement>) => {
+    // Tab-away must actually close focus-opened popovers — without
+    // this, tabbing through a citation-dense section left every
+    // visited chip's popover open. Sticky (click-opened) popovers
+    // stay; focus moving into the popover itself doesn't dismiss.
+    if (stickyRef.current) return;
+    const next = e.relatedTarget as Node | null;
+    if (next && (popoverRef.current?.contains(next) || chipRef.current?.contains(next))) {
+      return;
+    }
+    closeNow();
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
@@ -249,6 +263,7 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
         onMouseLeave={handleMouseLeave}
         onClick={handleClick}
         onFocus={handleFocus}
+        onBlur={handleBlur}
         onKeyDown={handleKeyDown}
         aria-expanded={open}
         aria-describedby={open ? popoverId : undefined}
@@ -298,7 +313,7 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
 interface CitationPopoverProps {
   id: string;
   sources: CitationMeta[];
-  pageKey?: string;
+  pageKey?: string | undefined;
   pos: { left: number; top: number; placement: 'above' | 'below' };
   onMouseEnter: () => void;
   onMouseLeave: () => void;
@@ -400,7 +415,7 @@ function SourceBlock({
   pageRef,
 }: {
   source: CitationMeta;
-  pageRef?: string;
+  pageRef?: string | undefined;
 }): JSX.Element {
   return (
     <div className="font-sans text-body-sm">

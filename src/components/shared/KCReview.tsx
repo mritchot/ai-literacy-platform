@@ -468,8 +468,8 @@ function ResponsePill({
   optionId,
   isPreferred,
 }: {
-  optionId?: string;
-  isPreferred?: boolean;
+  optionId?: string | undefined;
+  isPreferred?: boolean | undefined;
 }): JSX.Element {
   if (!optionId) {
     return (

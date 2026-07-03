@@ -1,20 +1,24 @@
-// AdminDashboard — Component 4D entry point. Lazy-loaded chunk mounted at
-// `/#/admin` (via the router). Owns the data-source toggle, normalizes
+// AnalyticsDashboard — Component 4D entry point. Lazy-loaded chunk mounted
+// at `/#/dashboard` (via the router). Owns the data-source toggle, normalizes
 // either demo data or live context state into a common shape, and stacks
 // the four dashboard sections.
 //
-// Live mode reads from `useLearnerProgress` and `useAnalytics`. Demo mode
-// reads from the static `demo-data.ts` file. The demo data is never written
+// Live mode reads from `useLearnerProgress` and `useAnalyticsEvents`. Demo
+// mode reads from the static `demo-data.ts` file. Demo data is never written
 // to localStorage — switching back to Live mode reveals the actual learner
 // state (or the empty state if it's empty).
 
 import { useMemo, useState } from 'react';
-import { useAnalytics, type AnalyticsEvent } from '../contexts/AnalyticsContext';
+import {
+  useAnalytics,
+  useAnalyticsEvents,
+  type AnalyticsEvent,
+} from '../contexts/AnalyticsContext';
 import {
   useLearnerProgress,
   type LearnerProgressState,
 } from '../contexts/LearnerProgressContext';
-import { usePlatformMode } from '../hooks/usePlatformMode';
+import { STORAGE_KEYS } from '../constants/storage-keys';
 import { Overline } from '../components/shared/Overline';
 import { AssessmentResponseAnalysis } from './AssessmentResponseAnalysis';
 import { DataSourceToggle, type DataSource } from './DataSourceToggle';
@@ -39,25 +43,21 @@ function isProgressEmpty(progress: LearnerProgressState): boolean {
   );
 }
 
-export default function AdminDashboard(): JSX.Element {
-  // Data-source default follows the platform mode: portfolio mode opens
-  // on demo data (the dashboard is a showcase for reviewers), admin mode
-  // opens on live localStorage data (the operator wants the real numbers).
-  // Either way the toggle still works — this only sets the initial value.
-  const { mode } = usePlatformMode();
-  const [dataSource, setDataSource] = useState<DataSource>(
-    mode === 'admin' ? 'live' : 'demo',
-  );
+export default function AnalyticsDashboard(): JSX.Element {
+  // Opens on demo data (the dashboard is a showcase for reviewers); the
+  // toggle switches to live localStorage data for the real numbers.
+  const [dataSource, setDataSource] = useState<DataSource>('demo');
   const learnerProgress = useLearnerProgress();
-  const analytics = useAnalytics();
+  const { reset: resetAnalytics } = useAnalytics();
+  const liveEvents = useAnalyticsEvents();
 
   // Normalize: produce a single `DashboardData` from whichever source is active.
   const data: DashboardData = useMemo(() => {
     if (dataSource === 'demo') {
       return { progress: DEMO_PROGRESS, events: DEMO_EVENTS };
     }
-    return { progress: learnerProgress.state, events: analytics.events };
-  }, [dataSource, learnerProgress.state, analytics.events]);
+    return { progress: learnerProgress.state, events: liveEvents };
+  }, [dataSource, learnerProgress.state, liveEvents]);
 
   const isLiveEmpty = dataSource === 'live' && isProgressEmpty(data.progress);
 
@@ -70,15 +70,15 @@ export default function AdminDashboard(): JSX.Element {
     // up the empty state. This matches what the existing Reset Progress link
     // does for the same keys.
     try {
-      window.localStorage.removeItem('ail.progress');
-      window.localStorage.removeItem('ail.analytics');
+      window.localStorage.removeItem(STORAGE_KEYS.PROGRESS);
+      window.localStorage.removeItem(STORAGE_KEYS.ANALYTICS);
     } catch {
       /* ignore */
     }
     // Reset in-memory state via the analytics context's reset function (the
     // progress context doesn't have a reset; reload picks it up). Since
     // we can't fully reset progress in-memory without a reload, we reload.
-    analytics.reset();
+    resetAnalytics();
     setDataSource('demo');
     // Force the rest of the platform to re-read from cleared localStorage.
     window.location.reload();
@@ -92,7 +92,7 @@ export default function AdminDashboard(): JSX.Element {
       {/* Page header (4D §4.3) */}
       <header className="mb-6">
         <Overline className="mb-2" style={{ fontSize: 11 }}>
-          Admin Dashboard
+          Analytics
         </Overline>
         <h1
           className="m-0 font-display text-display font-normal text-ink"
@@ -139,26 +139,37 @@ export default function AdminDashboard(): JSX.Element {
 
           {/* Assessment Response Analysis is the program-level
               measurement surface — placed above Module Completion and
-              KC Response Analysis so admins see the pre→post growth
+              KC Response Analysis so reviewers see the pre→post growth
               picture before drilling into module-level details. */}
           <section>
-            <Overline className="mb-3" style={{ fontSize: 11 }}>
-              Assessment Response Analysis
-            </Overline>
+            <h2 className="m-0">
+              <Overline as="span" className="mb-1" style={{ fontSize: 11 }}>
+                Assessment Response Analysis
+              </Overline>
+            </h2>
+            <p className="m-0 mb-3 font-sans text-caption text-tertiary">
+              Pre→post growth across the instrument&rsquo;s four construct blocks (usage,
+              failure modes, mechanics, evaluation) — the program&rsquo;s core constructs,
+              not every module objective.
+            </p>
             <AssessmentResponseAnalysis progress={data.progress} />
           </section>
 
           <section>
-            <Overline className="mb-3" style={{ fontSize: 11 }}>
-              Module Completion
-            </Overline>
+            <h2 className="m-0">
+              <Overline as="span" className="mb-3" style={{ fontSize: 11 }}>
+                Module Completion
+              </Overline>
+            </h2>
             <ModuleCompletionTable progress={data.progress} />
           </section>
 
           <section>
-            <Overline className="mb-3" style={{ fontSize: 11 }}>
-              Knowledge Check Response Analysis
-            </Overline>
+            <h2 className="m-0">
+              <Overline as="span" className="mb-3" style={{ fontSize: 11 }}>
+                Knowledge Check Response Analysis
+              </Overline>
+            </h2>
             <KCResponseAnalysis progress={data.progress} />
           </section>
 

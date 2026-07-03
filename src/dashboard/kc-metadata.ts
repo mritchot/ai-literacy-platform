@@ -1,7 +1,7 @@
 // Knowledge Check + Interpretation Check display-relevant metadata for the
-// admin dashboard (4D §9.5). Static lookup — duplicates the *display-relevant
+// analytics dashboard (4D §9.5). Static lookup — duplicates the *display-relevant
 // subset* of the KC content (stem preview + option labels + preferred answer)
-// so the admin chunk doesn't need to import the full module content files.
+// so the dashboard chunk does not need the full module content files.
 //
 // `sectionId` matches where the KC is rendered in the platform; this lets
 // the dashboard locate the stored response via `4.7.kc_4_3` etc.
@@ -18,7 +18,7 @@ export interface KCMetadata {
   options: { id: string; label: string }[];
 }
 
-export const KC_IDS: Record<ModuleId, string[]> = {
+export const KC_IDS: Record<ModuleId, KCId[]> = {
   1: ['kc_1_1', 'kc_1_2', 'kc_1_3', 'kc_1_4'],
   2: ['kc_2_1', 'kc_2_2', 'kc_2_3', 'kc_2_4'],
   3: ['kc_3_1', 'kc_3_2', 'kc_3_3', 'kc_3_4'],
@@ -27,14 +27,14 @@ export const KC_IDS: Record<ModuleId, string[]> = {
 
 // IC IDs and the section where they're rendered. Module 1 is the only module
 // with interpretation checks (P1 data narrative, all on S3).
-export const IC_IDS: Record<ModuleId, string[]> = {
+export const IC_IDS: Record<ModuleId, ICId[]> = {
   1: ['ic_1_1', 'ic_1_2', 'ic_1_3'],
   2: [],
   3: [],
   4: [],
 };
 
-export const KC_METADATA: Record<string, KCMetadata> = {
+export const KC_METADATA = {
   // ── Module 1 ──────────────────────────────────────────────────────────
   kc_1_1: {
     id: 'kc_1_1',
@@ -282,9 +282,13 @@ export const KC_METADATA: Record<string, KCMetadata> = {
       { id: 'd', label: '(d) Hand-edit final output' },
     ],
   },
-};
+} satisfies Record<string, KCMetadata>;
 
-export const IC_METADATA: Record<string, Omit<KCMetadata, 'objectiveRef'>> = {
+/** KC ids as a literal union — keys of KC_METADATA, compiler-enforced
+ *  so KC_IDS and consumers can index without non-null assertions. */
+export type KCId = keyof typeof KC_METADATA;
+
+export const IC_METADATA = {
   ic_1_1: {
     id: 'ic_1_1',
     moduleId: 1,
@@ -324,4 +328,7 @@ export const IC_METADATA: Record<string, Omit<KCMetadata, 'objectiveRef'>> = {
       { id: 'c', label: '(c) Coding is the only viable use case' },
     ],
   },
-};
+} satisfies Record<string, Omit<KCMetadata, 'objectiveRef'>>;
+
+/** IC ids as a literal union — keys of IC_METADATA. */
+export type ICId = keyof typeof IC_METADATA;

@@ -1,23 +1,20 @@
-// usePlatformMode — the platform's three-mode system. Replaces the old
-// `useAdminMode` flag with a richer model:
+// usePlatformMode — the platform's two-mode system:
 //
 //   • learner   (default) — sequential progression: future sections are
 //                locked in the sidebar, module cards on the landing page
 //                lock until the previous module is complete, the Next
-//                button is gated on completion, and `/#/admin` redirects
-//                home.
-//   • portfolio — free navigation everywhere; the admin dashboard is
+//                button is gated on completion, and `/#/dashboard`
+//                redirects home.
+//   • portfolio — free navigation everywhere; the analytics dashboard is
 //                reachable and defaults to demo data (for hiring
-//                committees / reviewers).
-//   • admin     — free navigation everywhere; the admin dashboard is
-//                reachable and defaults to live data + full controls.
+//                committees / reviewers), with a Live toggle for real
+//                localStorage data.
 //
 // Activation:
-//   • `?portfolio=true` or `?admin=true` URL search param — the param is
-//     consumed and stripped from the URL via `history.replaceState` so
-//     it doesn't linger or get bookmarked.
-//   • Ctrl/Cmd+Shift+A — toggles: learner→admin, admin→learner,
-//     portfolio→admin (an "upgrade").
+//   • `?portfolio=true` URL search param — the param is consumed and
+//     stripped from the URL via `history.replaceState` so it doesn't
+//     linger or get bookmarked.
+//   • Ctrl/Cmd+Shift+A — toggles learner ↔ portfolio.
 //   • `setMode` / `resetMode` from the hook (the visible Exit control).
 //
 // Persistence: localStorage key `platform-mode`. `learner` is the
@@ -26,19 +23,20 @@
 //
 // Architecture: same module-level store + `useSyncExternalStore` pattern
 // as `useCitations.ts`. The store is shared across every consumer
-// (Sidebar, SectionContainer, LandingPage, router guard, admin
+// (Sidebar, SectionContainer, LandingPage, router guard, analytics
 // dashboard) with no context provider and no prop threading. The
 // keyboard listener and the URL-param consumption run once, at module
 // import time — not per hook instance.
 
 import { useSyncExternalStore } from 'react';
+import { STORAGE_KEYS } from '../constants/storage-keys';
 
-export type PlatformMode = 'learner' | 'portfolio' | 'admin';
+export type PlatformMode = 'learner' | 'portfolio';
 
-const STORAGE_KEY = 'platform-mode';
+const STORAGE_KEY = STORAGE_KEYS.PLATFORM_MODE;
 
 function isMode(v: unknown): v is PlatformMode {
-  return v === 'learner' || v === 'portfolio' || v === 'admin';
+  return v === 'learner' || v === 'portfolio';
 }
 
 // Resolve the initial mode at module-import time. URL param wins (and is
@@ -49,26 +47,21 @@ function readInitialMode(): PlatformMode {
 
   try {
     const params = new URLSearchParams(window.location.search);
-    let detected: PlatformMode | null = null;
-    if (params.get('admin') === 'true') detected = 'admin';
-    else if (params.get('portfolio') === 'true') detected = 'portfolio';
-
-    if (detected) {
+    if (params.get('portfolio') === 'true') {
       try {
-        window.localStorage.setItem(STORAGE_KEY, detected);
+        window.localStorage.setItem(STORAGE_KEY, 'portfolio');
       } catch {
         /* localStorage may be unavailable — in-memory value still drives the UI */
       }
       // Strip the activation param so it doesn't linger in the address
       // bar or get bookmarked. Keep the rest of the search + the hash
       // route intact.
-      params.delete('admin');
       params.delete('portfolio');
       const search = params.toString();
       const cleanUrl =
         window.location.pathname + (search ? `?${search}` : '') + window.location.hash;
       window.history.replaceState({}, '', cleanUrl);
-      return detected;
+      return 'portfolio';
     }
   } catch {
     /* malformed URL — fall through to localStorage */
@@ -115,12 +108,11 @@ if (typeof window !== 'undefined') {
     notify();
   });
 
-  // Ctrl/Cmd+Shift+A — toggle. learner→admin, admin→learner,
-  // portfolio→admin (upgrade). Mirrors the old useAdminMode shortcut.
+  // Ctrl/Cmd+Shift+A — toggles learner ↔ portfolio.
   window.addEventListener('keydown', (e: KeyboardEvent) => {
     if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
       e.preventDefault();
-      commit(value === 'admin' ? 'learner' : 'admin');
+      commit(value === 'portfolio' ? 'learner' : 'portfolio');
     }
   });
 }

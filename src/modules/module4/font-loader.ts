@@ -77,6 +77,9 @@ function bytesToBinary(bytes: Uint8Array): string {
 
 async function loadAllBinaries(): Promise<LoadedFont[]> {
   if (!cachedBinaries) {
+    // A failed load must not poison the cache: clear it on rejection so
+    // the next Download click retries the fetch instead of awaiting the
+    // same rejected promise for the rest of the session.
     cachedBinaries = Promise.all(
       FONTS.map(async (f) => {
         const res = await fetch(f.url);
@@ -90,6 +93,9 @@ async function loadAllBinaries(): Promise<LoadedFont[]> {
         };
       }),
     );
+    cachedBinaries.catch(() => {
+      cachedBinaries = null;
+    });
   }
   return cachedBinaries;
 }

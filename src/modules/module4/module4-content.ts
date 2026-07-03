@@ -45,7 +45,7 @@ export const P8_CARDS: TaskCard[] = [
       },
       human: {
         title: 'Time cost with no quality gain.',
-        text: 'Manual competitor research on publicly available data takes 2–3 hours per company. AI handles this category reliably; these are well-documented entities with extensive web presence. Reserving human effort for this step means less time available for the components that actually require your judgment.',
+        text: 'Manual competitor research on publicly available data takes 2–3 hours per company. AI handles this category reliably; these are well-documented entities with extensive web presence, and the unverified output is caught by the dedicated verification component that follows. Reserving human effort for this step means less time available for the components that actually require your judgment.',
         tone: 'error',
       },
     },

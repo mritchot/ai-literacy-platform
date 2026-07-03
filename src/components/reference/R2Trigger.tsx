@@ -1,39 +1,11 @@
-// R2Trigger — Task Delegation Decision Guide. See R1Trigger.tsx for
-// the shared trigger pattern.
+// R2Trigger — thin wrapper over the registry-driven ReferenceTrigger
+// (kept so existing call sites keep their names; the shared open/close
+// + panel wiring lives in ReferenceTrigger.tsx).
 
-import { useState } from 'react';
-import { ReferencePanel } from './ReferencePanel';
-import { ReferenceTriggerButton } from './ReferenceTriggerButton';
-import { R2DelegationGuide } from './items/R2DelegationGuide';
+import { ReferenceTrigger, type ReferenceTriggerProps } from './ReferenceTrigger';
 
-interface R2TriggerProps {
-  label?: string;
-  variant?: 'inline' | 'tab';
-}
+type R2TriggerProps = Omit<ReferenceTriggerProps, 'refId'>;
 
-export function R2Trigger({
-  label = 'Delegation Decision Guide',
-  variant = 'inline',
-}: R2TriggerProps): JSX.Element {
-  const [open, setOpen] = useState(false);
-  return (
-    <>
-      <ReferenceTriggerButton
-        refId="R2"
-        label={label}
-        onClick={() => setOpen(true)}
-        variant={variant}
-      />
-      <ReferencePanel
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        id="R2"
-        title="Task Delegation Decision Guide"
-        pdfPath="/reference/r2-task-delegation-guide.pdf"
-        pdfFilename="r2-task-delegation-guide.pdf"
-      >
-        <R2DelegationGuide />
-      </ReferencePanel>
-    </>
-  );
+export function R2Trigger(props: R2TriggerProps): JSX.Element {
+  return <ReferenceTrigger refId="R2" {...props} />;
 }

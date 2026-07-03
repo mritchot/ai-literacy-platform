@@ -1,29 +1,4 @@
-// Shared layout for the three reading artifacts (problem statement,
-// capability gap analysis, learner persona). Each page is a thin wrapper
-// that imports its finalized markdown via `?raw` and hands it here; this
-// component supplies the "artifact treatment" frame — toolbar, series
-// eyebrow, the rendered document at reading width, and the footer links.
-// Renders inside PlatformShell exactly like ThankYou (standalone page, not
-// part of the learner module nav).
+// Re-export of the series-bound ReadingArtifact (see ./chrome) so the
+// per-artifact page files keep their existing import path.
 
-import { renderMarkdown } from '../../components/shared/render-markdown';
-import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
-
-export function ReadingArtifact({
-  markdown,
-  pdfSlug,
-}: {
-  markdown: string;
-  pdfSlug: string;
-}): JSX.Element {
-  return (
-    <div className="mx-auto max-w-reading px-4 py-12 sm:px-8 lg:px-16 lg:py-14">
-      <ArtifactTopBar pdfSlug={pdfSlug} />
-      <SeriesEyebrow label="Needs Analysis · Reading" />
-      {/* The document's own H1/H2 carry the title; the renderer zeroes the
-          first heading's top margin so it sits flush under the eyebrow. */}
-      <article>{renderMarkdown(markdown)}</article>
-      <ArtifactFooter currentSlug={pdfSlug} />
-    </div>
-  );
-}
+export { ReadingArtifact } from './chrome';

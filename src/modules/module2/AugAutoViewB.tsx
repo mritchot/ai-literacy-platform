@@ -18,12 +18,12 @@ import {
   AXIS_TICK_STYLE,
   DELEGATION_COLORS,
   DISCERNMENT_COLORS,
-  TOKEN_HEX,
   TOOLTIP_ITEM_STYLE,
   TOOLTIP_LABEL_STYLE,
   TOOLTIP_STYLE,
 } from '../../utils/chart-config';
 import { Icon } from '../../components/shared/Icon';
+import { useChartTokens } from '../../hooks/useChartTokens';
 import { useViewport } from '../../hooks/useViewport';
 
 interface CollaborationCategory {
@@ -58,6 +58,7 @@ export function AugAutoViewB({
   const [zonesOpen, setZonesOpen] = useState<boolean>(true);
   const viewport = useViewport();
   const isMobile = viewport === 'mobile';
+  const tokens = useChartTokens();
 
   const meta = useMemo(
     () => [
@@ -97,7 +98,7 @@ export function AugAutoViewB({
 
   const expandedCat = categories.find((c) => c.pattern === expanded) ?? null;
   const expandedColor = expandedCat
-    ? meta[categories.indexOf(expandedCat)]?.color ?? TOKEN_HEX.delegation
+    ? meta[categories.indexOf(expandedCat)]?.color ?? tokens.delegation
     : null;
 
   const ariaLabel = `Interactive stacked bar chart of five collaboration patterns. Click a segment to view details.`;
@@ -217,7 +218,7 @@ export function AugAutoViewB({
         {categories.map((c, i) => {
           const active = expanded === c.pattern;
           const hasAnySelection = expanded !== null;
-          const accent = meta[i]?.color ?? TOKEN_HEX.tertiary;
+          const accent = meta[i]?.color ?? tokens.tertiaryChart;
           return (
             <button
               key={c.pattern}
@@ -326,7 +327,7 @@ export function AugAutoViewB({
                       {jobZones.map((z) => (
                         <Cell
                           key={z.zone}
-                          fill={z.zone === 4 ? TOKEN_HEX.action : TOKEN_HEX.secondary}
+                          fill={z.zone === 4 ? tokens.action : tokens.secondary}
                           fillOpacity={z.zone === 4 ? 1 : 0.6}
                         />
                       ))}
@@ -415,6 +416,7 @@ function SelectionMarker({
 // "highlight" zone in the desktop chart) keeps the action color at
 // full opacity; other zones use the muted secondary tone.
 function MobileJobZoneList({ zones }: { zones: JobZone[] }): JSX.Element {
+  const tokens = useChartTokens();
   const maxRatio = Math.max(...zones.map((z) => z.representation_ratio));
   return (
     <div className="space-y-2.5">
@@ -445,7 +447,7 @@ function MobileJobZoneList({ zones }: { zones: JobZone[] }): JSX.Element {
                 className="h-full rounded-full"
                 style={{
                   width: `${widthPct}%`,
-                  background: isHighlight ? TOKEN_HEX.action : TOKEN_HEX.secondary,
+                  background: isHighlight ? tokens.action : tokens.secondary,
                   opacity: isHighlight ? 1 : 0.7,
                 }}
               />

@@ -261,12 +261,12 @@ function SectionCard({
           >
             {section.overline}
           </div>
-          <h4
+          <h3
             className="m-0 font-sans text-h4 font-semibold text-ink"
             style={{ lineHeight: 1.3 }}
           >
             {section.heading}
-          </h4>
+          </h3>
           <p
             className="m-0 mt-1 font-sans text-body-sm"
             style={{

@@ -2,31 +2,50 @@
 // Applies the `dark` class to <html> based on resolved preference,
 // reacts to OS-level changes when in 'system' mode (Section 10.1).
 //
-// Implementation note: `resolved` is real React state (not a `useMemo`),
-// so when in 'system' mode and the OS toggles dark mode, the listener
-// updates state — which propagates to every `useTheme()` consumer via
-// re-render. An earlier version derived `resolved` via `useMemo([pref])`,
-// which kept the cached value when `pref === 'system'` and the OS
-// changed; the .dark class flipped (CSS reacted) but components reading
-// `resolved` (the topbar moon/sun icon, `useChartTokens`, aria labels)
-// stayed frozen — producing a half-converted UI on OS changes.
+// Module-level store + `useSyncExternalStore` — the same pattern as
+// usePlatformMode and useCitations. useTheme used to hold per-instance
+// React state, and useChartTokens calls it directly inside every chart
+// component: toggling the theme updated only the shell's instance, so
+// on-screen charts kept the stale palette until remount, and each
+// chart's 'system' listener could fight an explicit light/dark choice.
+// One shared store means every consumer (shell toggle, TopBar, chart
+// tokens, aria labels) flips together, and the sidebar no longer needs
+// theme props threaded through PlatformShell.
+//
+// Persistence: localStorage key 'ail.theme'. The value is
+// JSON-encoded ("\"dark\"", with quotes) because this hook previously
+// stored through useLocalStorage — the format is kept so existing
+// stored preferences survive.
 //
 // Toggle model: `cycle()` rotates through all three states —
 // system → light → dark → system. An earlier version only flipped
 // between light and dark, which meant a single click permanently
-// locked the user out of 'system' mode (the OS-change listener only
-// mounts while preference === 'system', so the auto-switch silently
-// died after the first toggle). The 3-state rotation keeps 'system'
-// reachable from the UI.
+// locked the user out of 'system' mode. The 3-state rotation keeps
+// 'system' reachable from the UI.
 
-import { useCallback, useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
+import { STORAGE_KEYS } from '../constants/storage-keys';
 import type { IconName } from '../components/shared/Icon';
-import { useLocalStorage } from './useLocalStorage';
 
 export type ThemePreference = 'system' | 'light' | 'dark';
 type ResolvedTheme = 'light' | 'dark';
 
-const STORAGE_KEY = 'ail.theme';
+const STORAGE_KEY = STORAGE_KEYS.THEME;
+
+function isPreference(v: unknown): v is ThemePreference {
+  return v === 'system' || v === 'light' || v === 'dark';
+}
+
+function readStoredPreference(): ThemePreference {
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (raw === null) return 'system';
+    const parsed: unknown = JSON.parse(raw);
+    return isPreference(parsed) ? parsed : 'system';
+  } catch {
+    return 'system';
+  }
+}
 
 function resolveTheme(pref: ThemePreference): ResolvedTheme {
   if (pref !== 'system') return pref;
@@ -34,59 +53,106 @@ function resolveTheme(pref: ThemePreference): ResolvedTheme {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
+// ─── Module-level store ───────────────────────────────────────────
+
+interface ThemeSnapshot {
+  preference: ThemePreference;
+  resolved: ResolvedTheme;
+}
+
+let preference: ThemePreference =
+  typeof window === 'undefined' ? 'system' : readStoredPreference();
+let resolved: ResolvedTheme = resolveTheme(preference);
+// Immutable snapshot object — useSyncExternalStore compares by identity.
+let snapshot: ThemeSnapshot = { preference, resolved };
+const listeners = new Set<() => void>();
+
+function applyClass(): void {
+  if (typeof document === 'undefined') return;
+  document.documentElement.classList.toggle('dark', resolved === 'dark');
+}
+
+function notify(): void {
+  snapshot = { preference, resolved };
+  for (const listener of listeners) listener();
+}
+
+// OS-level change listener — active only while preference === 'system',
+// so an explicit light/dark choice can never be overridden by the OS.
+let mql: MediaQueryList | null = null;
+const onSystemChange = (): void => {
+  resolved = resolveTheme(preference);
+  applyClass();
+  notify();
+};
+function syncSystemListener(): void {
+  if (typeof window === 'undefined') return;
+  if (preference === 'system') {
+    if (!mql) {
+      mql = window.matchMedia('(prefers-color-scheme: dark)');
+      mql.addEventListener('change', onSystemChange);
+    }
+  } else if (mql) {
+    mql.removeEventListener('change', onSystemChange);
+    mql = null;
+  }
+}
+
+function commit(next: ThemePreference): void {
+  preference = next;
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  } catch {
+    /* in-memory value still drives the UI for this session */
+  }
+  resolved = resolveTheme(preference);
+  applyClass();
+  syncSystemListener();
+  notify();
+}
+
+if (typeof window !== 'undefined') {
+  applyClass();
+  syncSystemListener();
+  // Cross-tab sync.
+  window.addEventListener('storage', (e: StorageEvent) => {
+    if (e.key !== STORAGE_KEY) return;
+    preference = readStoredPreference();
+    resolved = resolveTheme(preference);
+    applyClass();
+    syncSystemListener();
+    notify();
+  });
+}
+
+function subscribe(listener: () => void): () => void {
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+  };
+}
+
+function getSnapshot(): ThemeSnapshot {
+  return snapshot;
+}
+
+// Rotate through all three states: system → light → dark → system.
+// The icon (driven by `themeToggleMeta` below) changes on every click,
+// so each press gives visible feedback even when the resolved CSS theme
+// doesn't change (e.g. system→light while the OS is already light).
+function cycle(): void {
+  commit(preference === 'system' ? 'light' : preference === 'light' ? 'dark' : 'system');
+}
+
+// ─── Hook ─────────────────────────────────────────────────────────
+
 export function useTheme(): {
   preference: ThemePreference;
   resolved: ResolvedTheme;
-  setPreference: (pref: ThemePreference) => void;
   cycle: () => void;
 } {
-  const [preference, setPreferenceRaw] = useLocalStorage<ThemePreference>(STORAGE_KEY, 'system');
-
-  // Real state, not derived. The OS-change listener updates this directly
-  // so consumers re-render when system theme changes.
-  const [resolved, setResolved] = useState<ResolvedTheme>(() => resolveTheme(preference));
-
-  // Recompute resolved whenever preference changes (manual switches).
-  useEffect(() => {
-    setResolved(resolveTheme(preference));
-  }, [preference]);
-
-  // Listen for OS-level theme changes when in 'system' mode. Updates
-  // React state, which then drives the .dark class effect below — so
-  // CSS, icons, aria labels, and chart tokens all flip together.
-  useEffect(() => {
-    if (preference !== 'system' || typeof window === 'undefined') return;
-    const mql = window.matchMedia('(prefers-color-scheme: dark)');
-    const handler = () => setResolved(mql.matches ? 'dark' : 'light');
-    mql.addEventListener('change', handler);
-    return () => mql.removeEventListener('change', handler);
-  }, [preference]);
-
-  // Apply the .dark class to <html> whenever the resolved theme changes.
-  useEffect(() => {
-    const html = document.documentElement;
-    if (resolved === 'dark') html.classList.add('dark');
-    else html.classList.remove('dark');
-  }, [resolved]);
-
-  const setPreference = useCallback(
-    (pref: ThemePreference) => setPreferenceRaw(pref),
-    [setPreferenceRaw],
-  );
-
-  // Rotate through all three states: system → light → dark → system.
-  // The functional updater means `cycle`'s identity stays stable (empty
-  // dep array) and it always acts on the latest preference. The icon
-  // (driven by `themeToggleMeta` below) changes on every click, so each
-  // press gives visible feedback even when the resolved CSS theme
-  // doesn't change (e.g. system→light while the OS is already light).
-  const cycle = useCallback(() => {
-    setPreferenceRaw((prev) =>
-      prev === 'system' ? 'light' : prev === 'light' ? 'dark' : 'system',
-    );
-  }, [setPreferenceRaw]);
-
-  return { preference, resolved, setPreference, cycle };
+  const snap = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
+  return { preference: snap.preference, resolved: snap.resolved, cycle };
 }
 
 /**

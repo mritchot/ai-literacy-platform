@@ -13,6 +13,7 @@
 // half.
 
 import { createContext, useCallback, useContext, useEffect, useMemo, type ReactNode } from 'react';
+import { STORAGE_KEYS } from '../constants/storage-keys';
 import { MODULES, type ModuleMeta, type SectionState } from '../data/program';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
@@ -88,7 +89,7 @@ export interface LearnerProgressState {
   // effect below — only ticks while the tab is visible AND the user has
   // shown activity within `IDLE_MS`. Each section is capped at
   // `PER_SECTION_CAP_MS` to bound any walk-away artifact. Key:
-  // `${moduleId}.${sectionId}`. Read by the admin dashboard as the
+  // `${moduleId}.${sectionId}`. Read by the analytics dashboard as the
   // honest replacement for the old `max(ts) - min(ts)` session-span.
   activeTimeMs: Record<string, number>;
   // Pre / Post assessment lifecycle + per-item responses. The
@@ -131,13 +132,13 @@ const INITIAL: LearnerProgressState = {
 // fixed heartbeat and adds one heartbeat-worth of time per tick.
 //
 // Heartbeat 10s + idle 60s + cap 30min is the standard "visibility +
-// activity" recipe; see the analytics rationale in
-// `course-info/process-journal.md`.
+// activity" recipe: count time only while the tab is visible and the
+// learner has shown recent input, and bound the per-section total.
 const HEARTBEAT_MS = 10_000;
 const IDLE_MS = 60_000;
 const PER_SECTION_CAP_MS = 30 * 60_000;
 // Only count time when the URL hash points at a real section. Excludes
-// the landing page, admin dashboard, thank-you page, and any other
+// the landing page, analytics dashboard, thank-you page, and any other
 // non-instructional surface — those shouldn't bloat learning-time
 // metrics even when `state.current` still holds the last visited
 // section's coordinates.
@@ -159,21 +160,13 @@ interface LearnerProgressValue {
   saveReflection: (moduleId: number, sectionId: number, promptId: string, text: string) => void;
   markTabViewed: (moduleId: number, sectionId: number, tabId: string) => void;
   markEngaged: (moduleId: number, sectionId: number, flagId: string) => void;
-  // Add `ms` to a section's accumulated active reading time, capped at
-  // `PER_SECTION_CAP_MS`. Used by the tracker effect; not normally
-  // called directly by components.
-  addActiveTime: (moduleId: number, sectionId: number, ms: number) => void;
   isSectionComplete: (moduleId: number, sectionId: number) => boolean;
-  isSectionScrolled: (moduleId: number, sectionId: number) => boolean;
-  isSectionInteractionComplete: (moduleId: number, sectionId: number) => boolean;
   getKnowledgeCheck: (
     moduleId: number,
     sectionId: number,
     checkId: string,
   ) => KnowledgeCheckResult | undefined;
   getReflection: (moduleId: number, sectionId: number, promptId: string) => string;
-  getViewedTabCount: (moduleId: number, sectionId: number) => number;
-  isEngaged: (moduleId: number, sectionId: number, flagId: string) => boolean;
   // ── Assessment lifecycle ─────────────────────────────────────────
   /** Mark the assessment as started. Idempotent — re-entering an
    *  in-progress assessment does not reset `startedAt`. */
@@ -199,31 +192,40 @@ const LearnerProgressContext = createContext<LearnerProgressValue | null>(null);
 const k = (moduleId: number, sectionId: number, leaf?: string): string =>
   leaf === undefined ? `${moduleId}.${sectionId}` : `${moduleId}.${sectionId}.${leaf}`;
 
-export function LearnerProgressProvider({ children }: { children: ReactNode }): JSX.Element {
-  const [rawState, setState] = useLocalStorage<LearnerProgressState>('ail.progress', INITIAL);
+// Read-side shape guard for the frozen 'ail.progress' key: a corrupted
+// or hand-edited value (null, an array, a bare string) falls back to
+// INITIAL instead of crashing the first field access. Field-level
+// top-up is migrateProgress's job.
+function isProgressShape(v: unknown): v is LearnerProgressState {
+  return typeof v === 'object' && v !== null && !Array.isArray(v);
+}
 
-  // Migration: any keys present in the legacy `completedSections` map (from
-  // the pre-split model) are promoted to BOTH `scrolledSections` AND
-  // `interactionCompleteSections`, so persisted progress doesn't silently
-  // regress. New writes go to the split maps only.
-  const state = useMemo<LearnerProgressState>(() => {
-    const legacyCompleted = rawState.completedSections ?? {};
-    const scrolledMerged = {
+// One-time load migration (runs in useLocalStorage's initializer, NOT
+// per render — sub-map identities stay stable across writes so
+// downstream memoization works):
+//  • keys in the legacy `completedSections` map (pre-split model) are
+//    promoted to BOTH `scrolledSections` AND `interactionCompleteSections`
+//    so persisted progress doesn't silently regress;
+//  • `assessments` is topped up to the INITIAL shape so consumers can
+//    always destructure `pre`/`post` without a null guard.
+function migrateProgress(raw: LearnerProgressState): LearnerProgressState {
+  const legacyCompleted = raw.completedSections ?? {};
+  const rawAssessments = raw.assessments;
+  return {
+    ...INITIAL,
+    ...raw,
+    scrolledSections: { ...legacyCompleted, ...(raw.scrolledSections ?? {}) },
+    interactionCompleteSections: {
       ...legacyCompleted,
-      ...(rawState.scrolledSections ?? {}),
-    };
-    const interactionMerged = {
-      ...legacyCompleted,
-      ...(rawState.interactionCompleteSections ?? {}),
-    };
-    // Assessments migration: persisted state from before this field
-    // existed has `rawState.assessments === undefined`. Top up with the
-    // INITIAL shape so consumers can always destructure `pre` / `post`
-    // without a null guard. When the field exists but one side is
-    // missing (defensive — shouldn't happen, but cheap to guard
-    // against), fall back to EMPTY_ASSESSMENT for that side.
-    const rawAssessments = rawState.assessments;
-    const assessmentsMerged: LearnerProgressState['assessments'] = {
+      ...(raw.interactionCompleteSections ?? {}),
+    },
+    completedSections: legacyCompleted,
+    knowledgeChecks: { ...(raw.knowledgeChecks ?? {}) },
+    reflections: { ...(raw.reflections ?? {}) },
+    viewedTabs: { ...(raw.viewedTabs ?? {}) },
+    engagedFlags: { ...(raw.engagedFlags ?? {}) },
+    activeTimeMs: { ...(raw.activeTimeMs ?? {}) },
+    assessments: {
       pre: {
         ...EMPTY_ASSESSMENT,
         ...(rawAssessments?.pre ?? {}),
@@ -234,21 +236,15 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
         ...(rawAssessments?.post ?? {}),
         responses: { ...(rawAssessments?.post?.responses ?? {}) },
       },
-    };
-    return {
-      ...INITIAL,
-      ...rawState,
-      scrolledSections: scrolledMerged,
-      interactionCompleteSections: interactionMerged,
-      completedSections: legacyCompleted,
-      knowledgeChecks: { ...INITIAL.knowledgeChecks, ...rawState.knowledgeChecks },
-      reflections: { ...INITIAL.reflections, ...rawState.reflections },
-      viewedTabs: { ...INITIAL.viewedTabs, ...(rawState.viewedTabs ?? {}) },
-      engagedFlags: { ...INITIAL.engagedFlags, ...(rawState.engagedFlags ?? {}) },
-      activeTimeMs: { ...INITIAL.activeTimeMs, ...(rawState.activeTimeMs ?? {}) },
-      assessments: assessmentsMerged,
-    };
-  }, [rawState]);
+    },
+  };
+}
+
+export function LearnerProgressProvider({ children }: { children: ReactNode }): JSX.Element {
+  const [state, setState] = useLocalStorage<LearnerProgressState>(STORAGE_KEYS.PROGRESS, INITIAL, {
+    validate: isProgressShape,
+    migrate: migrateProgress,
+  });
 
   // ── Stable setters ── never reference `state` directly, so their identity
   // stays referentially equal across re-renders even when state changes.
@@ -420,19 +416,25 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
   //
   // Heartbeats every HEARTBEAT_MS while: (a) `state.current` points at
   // a real section, (b) the URL hash matches that section (so the
-  // landing/admin/thank-you pages don't accumulate even though
+  // landing/dashboard/thank-you pages don't accumulate even though
   // `state.current` is stale across navigation), (c) the tab is
   // visible (`document.visibilityState`), and (d) the learner has
-  // shown activity within IDLE_MS. The effect re-runs only when the
-  // current section *changes* (the section's identity, not the rest of
-  // state — the setter spread preserves the `current` object
-  // reference), so the listeners and interval are stable across
-  // ticks.
+  // shown activity within IDLE_MS.
+  //
+  // Time accumulates in a LOCAL variable, not React state — a state
+  // write every 10s re-rendered every progress consumer (sidebar,
+  // charts, KC panels) and re-serialized all of 'ail.progress' per
+  // tick, for a metric only the dashboard reads. The pending total is
+  // flushed to state (one write) on: section change/unmount, tab
+  // hidden, pagehide, navigation off a section surface, and at the
+  // per-section cap. Stored shape and cap semantics are unchanged;
+  // only the write cadence differs.
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const current = state.current;
     if (!current) return;
 
+    let pendingMs = 0;
     let lastActivityAt = Date.now();
     let throttled = false;
     const onActivity = () => {
@@ -454,19 +456,44 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
       window.addEventListener(e, onActivity, { passive: true });
     }
 
+    const flush = () => {
+      if (pendingMs <= 0) return;
+      const ms = pendingMs;
+      pendingMs = 0;
+      // addActiveTime clamps at PER_SECTION_CAP_MS, so an over-cap
+      // pending total can't push the stored value past the cap.
+      addActiveTime(current.moduleId, current.sectionId, ms);
+    };
+
     const tick = () => {
       if (document.visibilityState !== 'visible') return;
       if (Date.now() - lastActivityAt > IDLE_MS) return;
-      if (!SECTION_HASH_RE.test(window.location.hash)) return;
-      addActiveTime(current.moduleId, current.sectionId, HEARTBEAT_MS);
+      if (!SECTION_HASH_RE.test(window.location.hash)) {
+        // Off a section surface (landing/dashboard/thank-you) — flush
+        // so those views read fresh totals; nothing new accumulates.
+        flush();
+        return;
+      }
+      pendingMs += HEARTBEAT_MS;
+      if (pendingMs >= PER_SECTION_CAP_MS) flush();
     };
     const intervalId = window.setInterval(tick, HEARTBEAT_MS);
+
+    const onVisibility = () => {
+      if (document.visibilityState === 'hidden') flush();
+    };
+    const onPageHide = () => flush();
+    document.addEventListener('visibilitychange', onVisibility);
+    window.addEventListener('pagehide', onPageHide);
 
     return () => {
       window.clearInterval(intervalId);
       for (const e of activityEvents) {
         window.removeEventListener(e, onActivity);
       }
+      document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener('pagehide', onPageHide);
+      flush();
     };
   }, [state.current, addActiveTime]);
 
@@ -482,27 +509,16 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
       saveReflection,
       markTabViewed,
       markEngaged,
-      addActiveTime,
       isSectionComplete: (moduleId, sectionId) => {
         const key = k(moduleId, sectionId);
         return Boolean(
           state.scrolledSections[key] && state.interactionCompleteSections[key],
         );
       },
-      isSectionScrolled: (moduleId, sectionId) =>
-        Boolean(state.scrolledSections[k(moduleId, sectionId)]),
-      isSectionInteractionComplete: (moduleId, sectionId) =>
-        Boolean(state.interactionCompleteSections[k(moduleId, sectionId)]),
       getKnowledgeCheck: (moduleId, sectionId, checkId) =>
         state.knowledgeChecks[k(moduleId, sectionId, checkId)],
       getReflection: (moduleId, sectionId, promptId) =>
         state.reflections[k(moduleId, sectionId, promptId)] ?? '',
-      getViewedTabCount: (moduleId, sectionId) => {
-        const prefix = `${moduleId}.${sectionId}.`;
-        return Object.keys(state.viewedTabs).filter((key) => key.startsWith(prefix)).length;
-      },
-      isEngaged: (moduleId, sectionId, flagId) =>
-        Boolean(state.engagedFlags[k(moduleId, sectionId, flagId)]),
       startAssessment,
       recordAssessmentResponse,
       completeAssessment,
@@ -522,7 +538,6 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
       saveReflection,
       markTabViewed,
       markEngaged,
-      addActiveTime,
       startAssessment,
       recordAssessmentResponse,
       completeAssessment,

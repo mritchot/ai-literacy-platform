@@ -97,8 +97,8 @@ export function DirectiveTrendSparkline({ series }: DirectiveTrendSparklineProps
         className="mt-3 font-mono text-caption text-muted"
         style={{ letterSpacing: '0.02em' }}
       >
-        Source: Handa et al., Feb 2025; Appel, McCrory &amp; Tamkin, Sep 2025, p. 9; Economic
-        Primitives, Nov 2025, p. 9.
+        Y-axis spans 20–45%, not 0–100%. Source: Handa et al., Feb 2025; Appel, McCrory &amp;
+        Tamkin, Sep 2025, p. 9; Economic Primitives, Nov 2025, p. 9.
       </figcaption>
     </figure>
   );

@@ -4,8 +4,8 @@
 // container so the sidebar stays at 11 entries (4C spec §6 design
 // note).
 
-import { useEffect, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useSectionParam } from '../../hooks/useSectionParam';
 import { R1Trigger } from '../../components/reference/R1Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
 import { BottleneckCallout } from '../../components/shared/BottleneckCallout';
@@ -28,22 +28,8 @@ import { TokenizerPlayground } from './TokenizerPlayground';
 const MODULE_ID = 3;
 
 export default function Module3(): JSX.Element {
-  const { sectionId: sectionParam } = useParams<{ sectionId?: string }>();
-  const navigate = useNavigate();
+  const sectionId = useSectionParam(MODULE_ID);
 
-  const sectionId = useMemo(() => {
-    if (sectionParam === undefined) return 1;
-    const parsed = Number.parseInt(sectionParam, 10);
-    if (Number.isNaN(parsed) || parsed < 1 || parsed > 11) return 1;
-    return parsed;
-  }, [sectionParam]);
-
-  useEffect(() => {
-    if (sectionParam === undefined) {
-      navigate(`/module/${MODULE_ID}/section/1`, { replace: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sectionParam]);
 
   const module = getModuleOrThrow(MODULE_ID);
 
@@ -261,10 +247,10 @@ function Section3({ module }: ModuleProp): JSX.Element {
     const allDone = [1, 2, 3, 4].every(
       (n) => state.knowledgeChecks[`3.3.p5_round_${n}`],
     );
-    if (allDone && !state.completedSections['3.3']) {
+    if (allDone && !state.interactionCompleteSections['3.3']) {
       markInteractionComplete(3, 3);
     }
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete]);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete]);
 
   return (
     <SectionContainer
@@ -277,7 +263,9 @@ function Section3({ module }: ModuleProp): JSX.Element {
       <p className="m-0 mb-6 font-sans text-body text-body">
         Predict the token count, then see the actual result. Four guided rounds — each designed
         to surface a different aspect of the tokenizer’s behavior — followed by free exploration
-        with your own text.
+        with your own text. Counts here come from one widely used tokenizer (cl100k_base); other
+        models split text differently, but the pattern — common text compresses, unusual text
+        fragments — holds across all of them.
       </p>
       <TokenizerPlayground />
 
@@ -388,10 +376,10 @@ function Section5({ module }: ModuleProp): JSX.Element {
     const generated =
       Boolean(state.engagedFlags['3.5.stem_1_generated']) ||
       Boolean(state.engagedFlags['3.5.stem_2_generated']);
-    if (tabsViewed && generated && !state.completedSections['3.5']) {
+    if (tabsViewed && generated && !state.interactionCompleteSections['3.5']) {
       markInteractionComplete(3, 5);
     }
-  }, [state.viewedTabs, state.engagedFlags, state.completedSections, markInteractionComplete]);
+  }, [state.viewedTabs, state.engagedFlags, state.interactionCompleteSections, markInteractionComplete]);
 
   return (
     <SectionContainer
@@ -405,8 +393,9 @@ function Section5({ module }: ModuleProp): JSX.Element {
         Three stems show the prediction mechanism in three modes: a pattern-completion task where
         one token dominates, a factual-specificity task where no candidate dominates, and a
         side-by-side temperature comparison where the same prompt produces three different
-        outputs. The probability bars use a real softmax-with-temperature calculation, the same
-        mechanism commercial models use.
+        outputs. The candidate tokens and their base probabilities are illustrative, pre-computed
+        examples rather than a live model's output; the temperature math applied to them is the
+        real softmax calculation, the same mechanism commercial models use.
       </p>
       <NextTokenDemo />
 
@@ -545,10 +534,10 @@ function Section7({ module }: ModuleProp): JSX.Element {
     const allItems = [1, 2, 3, 4].every(
       (n) => state.knowledgeChecks[`3.7.p7_item_${n}`],
     );
-    if (allItems && !state.completedSections['3.7']) {
+    if (allItems && !state.interactionCompleteSections['3.7']) {
       markInteractionComplete(3, 7);
     }
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete]);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete]);
 
   return (
     <SectionContainer
@@ -622,7 +611,8 @@ function Section8({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           The first is <strong>sycophancy</strong>. The model is trained on data where agreeable,
-          affirming responses are common. When you present a flawed argument and ask for
+          affirming responses are common, including the human-preference tuning that rewards
+          agreeable answers. When you present a flawed argument and ask for
           feedback, the most statistically probable response is agreement, not critique. The
           model is more likely to tell you your analysis is insightful than to tell you it
           contains an error.
@@ -731,11 +721,11 @@ function Section10({ module }: ModuleProp): JSX.Element {
     const allDone = MODULE_3_KC_ITEMS.every((item) =>
       Boolean(state.knowledgeChecks[`3.10.${item.id}`]),
     );
-    if (allDone && !state.completedSections['3.10']) {
+    if (allDone && !state.interactionCompleteSections['3.10']) {
       markInteractionComplete(3, 10);
       track({ type: 'kc_module_3_complete', moduleId: 3, sectionId: 10 });
     }
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete, track]);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete, track]);
 
   return (
     <SectionContainer
@@ -798,6 +788,7 @@ function Section11({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           These five properties are not separate problems; they interact. Hallucinated citations
+          (hallucination is the industry’s name for this class of fabricated specifics)
           are next-token prediction meeting thin knowledge. Long-conversation drift is context
           window limits meeting steerability. Confident arithmetic errors are tokenization
           meeting probability-based generation. Naming the pair that failed is the diagnostic

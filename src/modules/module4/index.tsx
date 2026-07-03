@@ -2,8 +2,8 @@
 // Ten sections: opening, five practice activities, two knowledge-check
 // blocks, a program closing, and a personalized competency profile.
 
-import { useEffect, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useSectionParam } from '../../hooks/useSectionParam';
 import { Citation } from '../../components/shared/Citation';
 import { KnowledgeCheck } from '../../components/shared/KnowledgeCheck';
 import {
@@ -29,22 +29,8 @@ import { TaskDecomposition } from './TaskDecomposition';
 const MODULE_ID = 4;
 
 export default function Module4(): JSX.Element {
-  const { sectionId: sectionParam } = useParams<{ sectionId?: string }>();
-  const navigate = useNavigate();
+  const sectionId = useSectionParam(MODULE_ID);
 
-  const sectionId = useMemo(() => {
-    if (sectionParam === undefined) return 1;
-    const parsed = Number.parseInt(sectionParam, 10);
-    if (Number.isNaN(parsed) || parsed < 1 || parsed > 10) return 1;
-    return parsed;
-  }, [sectionParam]);
-
-  useEffect(() => {
-    if (sectionParam === undefined) {
-      navigate(`/module/${MODULE_ID}/section/1`, { replace: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sectionParam]);
 
   const module = getModuleOrThrow(MODULE_ID);
 
@@ -144,8 +130,8 @@ function Section2({ module }: ModuleProp): JSX.Element {
     const allDone = ['card_1', 'card_2', 'card_3', 'card_4', 'card_5', 'card_6'].every(
       (cardId) => Boolean(state.knowledgeChecks[`4.2.${cardId}`]),
     );
-    if (allDone && !state.completedSections['4.2']) markInteractionComplete(4, 2);
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete]);
+    if (allDone && !state.interactionCompleteSections['4.2']) markInteractionComplete(4, 2);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete]);
 
   return (
     <SectionContainer
@@ -178,10 +164,10 @@ function Section3({ module }: ModuleProp): JSX.Element {
   const { state, markInteractionComplete } = useLearnerProgress();
   // Complete when phase reaches "compare" (recorded via engagedFlags).
   useEffect(() => {
-    if (state.engagedFlags['4.3.phase_compare'] && !state.completedSections['4.3']) {
+    if (state.engagedFlags['4.3.phase_compare'] && !state.interactionCompleteSections['4.3']) {
       markInteractionComplete(4, 3);
     }
-  }, [state.engagedFlags, state.completedSections, markInteractionComplete]);
+  }, [state.engagedFlags, state.interactionCompleteSections, markInteractionComplete]);
 
   return (
     <SectionContainer
@@ -211,11 +197,11 @@ function Section4({ module }: ModuleProp): JSX.Element {
     const allDone = MODULE_4_KC_ITEMS_S4.every((item) =>
       Boolean(state.knowledgeChecks[`4.4.${item.id}`]),
     );
-    if (allDone && !state.completedSections['4.4']) {
+    if (allDone && !state.interactionCompleteSections['4.4']) {
       markInteractionComplete(4, 4);
       track({ type: 'kc_4_1_4_2_complete', moduleId: 4, sectionId: 4 });
     }
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete, track]);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete, track]);
 
   return (
     <SectionContainer
@@ -252,8 +238,8 @@ function Section5({ module }: ModuleProp): JSX.Element {
   useEffect(() => {
     const allDone = ['element_1', 'element_2', 'element_3', 'element_4', 'element_5', 'element_6']
       .every((id) => Boolean(state.knowledgeChecks[`4.5.${id}`]));
-    if (allDone && !state.completedSections['4.5']) markInteractionComplete(4, 5);
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete]);
+    if (allDone && !state.interactionCompleteSections['4.5']) markInteractionComplete(4, 5);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete]);
 
   return (
     <SectionContainer
@@ -289,8 +275,8 @@ function Section6({ module }: ModuleProp): JSX.Element {
       (state.reflections['4.6.p11_t3_refinement'] ?? '').trim().length >= 20 ||
       (state.reflections['4.6.p11_t2_refinement'] ?? '').trim().length >= 20 ||
       (state.reflections['4.6.p11_t2_gap'] ?? '').trim().length >= 20;
-    if (sectionDone && !state.completedSections['4.6']) markInteractionComplete(4, 6);
-  }, [state.reflections, state.completedSections, markInteractionComplete]);
+    if (sectionDone && !state.interactionCompleteSections['4.6']) markInteractionComplete(4, 6);
+  }, [state.reflections, state.interactionCompleteSections, markInteractionComplete]);
 
   return (
     <SectionContainer
@@ -323,13 +309,13 @@ function Section7({ module }: ModuleProp): JSX.Element {
     const s7Done = MODULE_4_KC_ITEMS_S7.every((item) =>
       Boolean(state.knowledgeChecks[`4.7.${item.id}`]),
     );
-    if (s7Done && !state.completedSections['4.7']) {
+    if (s7Done && !state.interactionCompleteSections['4.7']) {
       markInteractionComplete(4, 7);
       if (s4Done) {
         track({ type: 'kc_module_4_complete', moduleId: 4, sectionId: 7 });
       }
     }
-  }, [state.knowledgeChecks, state.completedSections, markInteractionComplete, track]);
+  }, [state.knowledgeChecks, state.interactionCompleteSections, markInteractionComplete, track]);
 
   return (
     <SectionContainer
@@ -365,8 +351,8 @@ function Section8({ module }: ModuleProp): JSX.Element {
   const { state, markInteractionComplete } = useLearnerProgress();
   useEffect(() => {
     const seen = Boolean(state.engagedFlags['4.8.exemplar_viewed']);
-    if (seen && !state.completedSections['4.8']) markInteractionComplete(4, 8);
-  }, [state.engagedFlags, state.completedSections, markInteractionComplete]);
+    if (seen && !state.interactionCompleteSections['4.8']) markInteractionComplete(4, 8);
+  }, [state.engagedFlags, state.interactionCompleteSections, markInteractionComplete]);
 
   return (
     <SectionContainer
@@ -414,8 +400,8 @@ function Section9({ module }: ModuleProp): JSX.Element {
           />
           . The mechanical data says the tool generates output by probability, not by retrieving
           facts, which means fluent text and accurate text are independent properties. And the
-          adoption data says 69% of professionals report that social stigma is an active barrier
-          to open AI use
+          adoption data says 69% of professionals mention the social stigma that comes with
+          using AI at work
           <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" />, which means the
           fastest-growing capability in the modern workforce is developing in isolation, without
           shared standards, without peer learning, and without organizational visibility.
@@ -430,6 +416,17 @@ function Section9({ module }: ModuleProp): JSX.Element {
           Description-Discernment loop that converts a mediocre first draft into a reliable
           output. Finally, you produced a diligence statement: a concrete document that makes
           your AI practices visible to your team and your organization.
+        </p>
+        <p className="m-0">
+          One caution belongs in this closing. Research on knowledge workers using generative AI
+          has documented a pattern worth naming: the more confident people become in the tool,
+          the less critical thinking they report applying to its output
+          <Citation ids="lee-2025" pageKey="confidence-critical-thinking" />. Confidence is the
+          intended product of a program like this one — but the confidence this program built is
+          confidence in your evaluation process, not in the tool's output. The moment the
+          verification workflow starts to feel unnecessary is the moment it is doing the most
+          work. If your Discernment practice fades as the outputs keep looking clean, you have
+          not become better at using AI; you have become a faster route for unverified content.
         </p>
         <p className="m-0">
           The diligence statement is the artifact that outlasts the program. The action commitment

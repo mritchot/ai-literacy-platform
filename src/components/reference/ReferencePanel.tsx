@@ -11,7 +11,7 @@
 //     onClose={() => setOpen(false)}
 //     id="R1"
 //     title="4D Competency Quick-Reference Card"
-//     pdfPath="/reference/r1-4d-quick-reference.pdf"
+//     pdfPath="reference/r1-4d-quick-reference.pdf"
 //     pdfFilename="r1-4d-quick-reference.pdf"
 //   >
 //     <R1QuickReference />
@@ -204,9 +204,15 @@ export function ReferencePanel({
         {/* Body — scrollable. `min-h-0` is required: a flex child defaults
             to `min-height: auto`, which would keep this div from shrinking
             below its content height, so `overflow-y-auto` would never engage. */}
+        {/* tabIndex=0 so the region is keyboard-scrollable even when an
+            item has no focusable children; picked up automatically by the
+            drawer's focus-trap query. */}
         <div
           className="min-h-0 flex-1 overflow-y-auto"
           style={{ padding: '20px 22px 24px' }}
+          tabIndex={0}
+          role="region"
+          aria-labelledby={titleId}
         >
           {children}
         </div>

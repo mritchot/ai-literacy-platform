@@ -7,18 +7,9 @@
 // resources exist (same conditional-render pattern as STRIPE_TIP_URL /
 // WRITEUP_URL in ThankYou.tsx).
 
-export type ArtifactType = 'Reading' | 'Interactive';
+import type { ArtifactMeta, SeriesConfig } from '../artifact-series/artifact-series';
 
-export interface ArtifactMeta {
-  /** PDF slug + registry key. */
-  slug: string;
-  /** Hash route, without the leading `#/`. */
-  route: string;
-  title: string;
-  /** One-line description shown on the hub index. */
-  blurb: string;
-  type: ArtifactType;
-}
+export type { ArtifactMeta, ArtifactType } from '../artifact-series/artifact-series';
 
 // Canonical reading order.
 export const ARTIFACTS: ArtifactMeta[] = [
@@ -61,13 +52,14 @@ export const ARTIFACTS: ArtifactMeta[] = [
 // convention that `vite-plugin-singlefile` leaves as standalone files in
 // `dist/`. Each value is the href to that PDF; while it is empty the page's
 // "Download PDF" button is hidden so it never points at a 404. Populate a
-// slug with e.g. `/needs-analysis/executive-problem-statement.pdf` (absolute,
-// matching the `/reference/...` links elsewhere) once the file lands.
+// slug with e.g. `needs-analysis/executive-problem-statement.pdf` (relative
+// to index.html, matching the `reference/...` links elsewhere — relative so
+// downloads work over file:// and sub-path hosting).
 export const ARTIFACT_PDFS: Record<string, string> = {
-  'executive-problem-statement': '/needs-analysis/executive-problem-statement.pdf',
-  'capability-gap-analysis': '/needs-analysis/capability-gap-analysis.pdf',
-  'learner-persona': '/needs-analysis/learner-persona.pdf',
-  'action-map': '/needs-analysis/action-map.pdf',
+  'executive-problem-statement': 'needs-analysis/executive-problem-statement.pdf',
+  'capability-gap-analysis': 'needs-analysis/capability-gap-analysis.pdf',
+  'learner-persona': 'needs-analysis/learner-persona.pdf',
+  'action-map': 'needs-analysis/action-map.pdf',
 };
 
 // Long-form blog post that frames the needs-analysis series on ritchot.me.
@@ -80,3 +72,15 @@ export const NEEDS_ANALYSIS_WRITEUP_URL = 'https://ritchot.me/the-needs-analysis
 // home, so it carries the same quiet accent to tie the set together. Used
 // only as a thin decorative rule/border, never as a competency tag.
 export const SERIES_ACCENT = '#7A6B80';
+
+// Bound series configuration consumed by ./chrome (which re-exports the
+// shared artifact-series components with this series baked in).
+export const SERIES: SeriesConfig = {
+  hubRoute: 'needs-analysis',
+  hubLabel: 'Needs analysis',
+  backToSeriesLabel: 'Back to the needs analysis',
+  readingEyebrow: 'Needs Analysis · Reading',
+  accent: SERIES_ACCENT,
+  artifacts: ARTIFACTS,
+  pdfs: ARTIFACT_PDFS,
+};

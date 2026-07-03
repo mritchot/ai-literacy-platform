@@ -18,6 +18,10 @@ import { P8_CARDS, P8_REFLECTION, P8_SCENARIO, P8_SUMMARY, type P8Category, type
 
 const DELEGATION = '#6B7F5E';
 
+function isP8Category(v: unknown): v is P8Category {
+  return v === 'human' || v === 'assisted' || v === 'delegated';
+}
+
 const CATEGORY_LABELS: Record<P8Category, string> = {
   human: 'Human-Only',
   assisted: 'AI-Assisted',
@@ -55,12 +59,15 @@ export function TaskDecomposition(): JSX.Element {
   const { state, recordKnowledgeCheck } = useLearnerProgress();
   const { track } = useAnalytics();
 
-  // Restore prior assignments from persisted state.
+  // Restore prior assignments from persisted state. The stored value
+  // comes from the frozen 'ail.progress' store — guard the union so a
+  // legacy or corrupt string reads as unassigned instead of rendering
+  // a phantom category (and NaN-ing the tally).
   const restored = useMemo<Record<string, P8Category | null>>(() => {
     const out: Record<string, P8Category | null> = {};
     for (const card of P8_CARDS) {
       const stored = state.knowledgeChecks[`4.2.${card.id}`];
-      out[card.id] = (stored?.selectedOptionId as P8Category | undefined) ?? null;
+      out[card.id] = isP8Category(stored?.selectedOptionId) ? stored.selectedOptionId : null;
     }
     return out;
   }, [state.knowledgeChecks]);
