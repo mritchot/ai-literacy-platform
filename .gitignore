@@ -12,10 +12,10 @@ dist-ssr
 # TypeScript incremental build caches (not source code)
 *.tsbuildinfo
 
-# Claude Code workspace config: contains absolute $HOME paths in
+# Claude Code workspace config: contains machine-specific absolute paths in
 # launch.json + start-dev.sh and a per-user permission allowlist in
-# settings.local.json. Ignored wholesale to keep the username/local paths
-# out of any public-repo push.
+# settings.local.json. Ignored wholesale to keep local paths out of any
+# public-repo push.
 .claude/
 
 # Cognitive offload files — local-only project management and AI context.
