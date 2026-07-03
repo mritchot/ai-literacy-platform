@@ -299,7 +299,7 @@ function Section4({ module }: ModuleProp): JSX.Element {
     >
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
-          The second mechanical idea is the one that matters most. If you leave this module with
+          If you leave this module with
           only one concept, it should be this: language models generate output by predicting the
           next token in a sequence, one fragment at a time, based on probability. On their own,
           language models do not retrieve information from a database, look up facts, or consult

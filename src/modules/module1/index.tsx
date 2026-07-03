@@ -118,8 +118,7 @@ function Section2({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           AI tools have been adopted faster than any consumer technology in history, reaching mass
           usage in weeks rather than years. That speed is transforming the labor market faster
-          than most organizations can adapt, and the data on that transformation is more
-          complicated than the headlines suggest.
+          than most organizations can adapt, and the data on that transformation is complicated.
         </p>
         <p className="m-0">
           The next few sections explore three dimensions of that story through interactive data.
