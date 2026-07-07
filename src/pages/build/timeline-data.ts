@@ -54,7 +54,7 @@ export const EFFORT = {
   baselineLabel: '≈735 hrs',
   baselineAnchor: 735,
   reductionLabel: '4.6–4.9×',
-  baselineNote: 'Chapman Alliance baseline for comparable Level-3 e-learning',
+  baselineNote: 'Chapman Alliance (2010) baseline for comparable Level-3 e-learning',
   soloNote: 'Focused solo effort, AI-accelerated',
   // Calendar is secondary context, never the compression figure.
   soloCalendar: '≈8 weeks',
