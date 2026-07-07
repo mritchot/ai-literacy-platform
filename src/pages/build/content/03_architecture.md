@@ -1,4 +1,4 @@
-Every technical decision behind the custom platform, recorded before implementation began so the AI development partner had a single reference to build against. This is the architecture decision record: seven adopted decisions, and the two hosting options evaluated and declined. Expand any card for the decision and its rationale.
+Every technical decision behind the custom platform, recorded before implementation began so the AI development partner had a single reference to build against. This is the architecture decision record. Expand any card for the decision and its rationale.
 
 The common thread is simplicity and openness: choices that keep the whole platform a single, self-contained site anyone can open, read, and check.
 
