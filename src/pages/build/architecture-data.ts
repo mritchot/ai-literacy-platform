@@ -36,7 +36,7 @@ export const ADRS: Adr[] = [
     decision: 'React Router v6 with HashRouter',
     status: 'adopted',
     rationale: [
-      'Moving between the four modules and their sections runs on React Router, a common navigation tool for a site like this. It is set to "hash" mode, which is why every address carries a # (for example, /#/module/1/section/2). That # keeps the full address on the visitor\'s device instead of sending it to a server, so the site runs on simple, free hosting with no server setup.',
+      'Moving between the four modules and their sections runs on React Router, a common navigation tool for a site like this. It is set to "hash" mode, which is why every address carries a # (for example, /#/module/1/section/2). That # keeps the part after it on the visitor\'s device instead of sending it to a server, so the site runs on simple, free hosting with no server setup.',
       'That is what makes the zero-setup hosting described below possible.',
     ],
   },
@@ -104,7 +104,7 @@ export const ADRS: Adr[] = [
     decision: 'Evaluated and declined',
     status: 'declined',
     rationale: [
-      'Declined on security grounds. In April 2026, Vercel disclosed a serious breach: an attacker got into a third-party AI tool used by a Vercel employee, took over that employee\'s work account, and reached internal systems, including customer data that had been left unencrypted. The stolen data was put up for sale online.',
+      'Declined on security grounds. In April 2026, Vercel disclosed a serious breach: an attacker got into a third-party AI tool used by a Vercel employee, took over that employee\'s work account, and reached internal systems, including customer configuration data the attacker was able to decrypt. The stolen data was put up for sale online.',
       'This site stores no sensitive data of its own, so it was not directly at risk, but the breach pointed to a broader security concern. Vercel was also unnecessary here, since Cloudflare already manages the domain.',
     ],
   },
