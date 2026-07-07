@@ -367,9 +367,9 @@ function BuildBlock(): JSX.Element {
         Behind the build
       </h2>
       <p className="m-0 mb-5 font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
-        How the course and platform were actually built: the learning architecture, the design
-        system, and the technical decisions, plus the project-management record — timeline,
-        responsibilities, budget, communications, and QA — that reframes a solo build as the
+        How the course and platform were built: the learning architecture, the design
+        system, and the technical decisions, plus the project-management record (timeline,
+        responsibilities, budget, communications, and QA) that reframes a solo build as the
         organizational deployment it models. Eight artifacts.
       </p>
       <a

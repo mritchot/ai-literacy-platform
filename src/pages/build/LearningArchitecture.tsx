@@ -38,11 +38,11 @@ export default function LearningArchitecture(): JSX.Element {
 
       <div className="max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
 
-      <LearningArchitectureDiagram />
-
       {SECTIONS.map((s) => (
         <ProseSection key={s.heading} heading={s.heading} body={s.body} />
       ))}
+
+      <LearningArchitectureDiagram />
 
       <ArtifactFooter currentSlug="learning-architecture" />
     </div>

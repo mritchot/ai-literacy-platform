@@ -18,7 +18,6 @@ import {
   SAMPLE2_INTRO,
   SAMPLE2_META,
   SAMPLE2_NOTE,
-  VOICE_NOTE,
   type MemoMeta,
   type StatusTone,
 } from './communications-data';
@@ -134,7 +133,7 @@ function StatusUpdate(): JSX.Element {
 function DesignReview(): JSX.Element {
   return (
     <MemoCard>
-      <MemoHeader eyebrow="Sample 2 · Design review (simulated)" title="Phase 2 Design Review — Decisions and Action Items" meta={SAMPLE2_META} />
+      <MemoHeader eyebrow="Sample 2 · Design review (simulated)" title="Phase 2 Design Review: Decisions and Action Items" meta={SAMPLE2_META} />
       <p className="m-0 mt-4 max-w-reading font-sans text-body text-body" style={{ lineHeight: 1.65 }}>
         {SAMPLE2_INTRO}
       </p>
@@ -184,13 +183,6 @@ export default function Communications(): JSX.Element {
         <DesignReview />
         <DesignNote text={SAMPLE2_NOTE} />
       </div>
-
-      <section className="mt-10">
-        <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">Voice and tone</h2>
-        <p className="m-0 max-w-reading font-sans text-body text-body" style={{ lineHeight: 1.65 }}>
-          {VOICE_NOTE}
-        </p>
-      </section>
 
       <ArtifactFooter currentSlug="communications" />
     </div>

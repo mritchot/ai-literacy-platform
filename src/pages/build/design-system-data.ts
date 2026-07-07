@@ -2,7 +2,7 @@
 //
 // Values mirror src/styles/index.css (the implemented single source of truth)
 // and the Phase 3 Design System Document (§1). Where the two differ, the
-// IMPLEMENTED value wins and the divergence is annotated: the low-emphasis
+// IMPLEMENTED value wins: the low-emphasis
 // neutrals (tertiary, muted, subtle, ghost) were tightened in the 3B-8 WCAG
 // 2.1 AA pass so they clear 4.5:1 against the warm canvas. Each token stores
 // its light and dark RGB triple — the exact `rgb(var(--token))` format the
@@ -21,8 +21,6 @@ export interface TokenSpec {
   /** Dark-mode RGB triple. */
   dark: string;
   usage: string;
-  /** Optional note, e.g. an AA tightening away from the spec value. */
-  note?: string;
 }
 
 export const NEUTRAL_TOKENS: TokenSpec[] = [
@@ -30,10 +28,10 @@ export const NEUTRAL_TOKENS: TokenSpec[] = [
   { name: 'ink-secondary', light: '58 58 58', dark: '213 208 200', usage: 'Subheadings, emphasized body text' },
   { name: 'body', light: '85 85 85', dark: '192 186 176', usage: 'Standard body text in content areas' },
   { name: 'secondary', light: '102 102 102', dark: '168 162 154', usage: 'Secondary text, descriptions' },
-  { name: 'tertiary', light: '110 110 110', dark: '150 145 137', usage: 'Tertiary text, metadata', note: 'Tightened from spec #888 for AA' },
-  { name: 'muted', light: '110 110 110', dark: '149 145 139', usage: 'Placeholder, disabled labels', note: 'Tightened from spec #999 for AA' },
+  { name: 'tertiary', light: '110 110 110', dark: '150 145 137', usage: 'Tertiary text, metadata' },
+  { name: 'muted', light: '110 110 110', dark: '149 145 139', usage: 'Placeholder, disabled labels' },
   { name: 'subtle', light: '170 170 170', dark: '86 80 72', usage: 'Divider dots, very low-emphasis' },
-  { name: 'ghost', light: '148 148 148', dark: '128 122 112', usage: 'Lightweight UI strokes', note: 'Raised from spec #BBB for 3:1' },
+  { name: 'ghost', light: '148 148 148', dark: '128 122 112', usage: 'Lightweight UI strokes' },
   { name: 'border', light: '232 230 225', dark: '61 58 53', usage: 'Default card and container borders' },
   { name: 'border-light', light: '224 221 215', dark: '51 48 43', usage: 'Divider lines, section separators' },
   { name: 'surface', light: '250 250 247', dark: '37 35 32', usage: 'Card backgrounds, inset areas' },

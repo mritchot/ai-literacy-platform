@@ -1,6 +1,6 @@
 // Resource & Budget Plan — interactive artifact page (`/#/build/resources`).
-// The $160 solo direct cost against the $191K–271K organizational budget, the
-// per-role FTE allocation, the budget breakdown with labor at 82–85% of the
+// The $260 solo direct cost against the $190K–258K organizational budget, the
+// per-role FTE allocation, the budget breakdown with labor at ≈80% of the
 // total, and the custom-vs-Articulate rationale as an expandable panel. Data
 // lives in ./resources-data; prose is sliced from the co-located markdown.
 
@@ -35,7 +35,7 @@ function CostContrast(): JSX.Element {
           {SOLO_TOTAL}
         </div>
         <p className="m-0 mt-1.5 font-sans text-caption text-tertiary" style={{ lineHeight: 1.5 }}>
-          Excludes uncosted labor (~150–160 focused hours). Everything but the AI subscription ran on free tiers.
+          Out-of-pocket only. The ~150–160 hours of labor is an approximate opportunity cost of roughly $7,500. Everything but the AI subscriptions ran on free tiers.
         </p>
       </div>
       <div className="rounded-xl" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', borderTop: '3px solid rgb(var(--border))', padding: '20px 22px' }}>
@@ -44,7 +44,7 @@ function CostContrast(): JSX.Element {
           {BUDGET_TOTAL.low}–{BUDGET_TOTAL.high}
         </div>
         <p className="m-0 mt-1.5 font-sans text-caption text-tertiary" style={{ lineHeight: 1.5 }}>
-          Full development cost for a five-person team delivering the same scope to 200 participants.
+          An approximate sample for a five-person team delivering the same scope to 200 participants; the shape of the cost to plan around, not a number to commit to.
         </p>
       </div>
     </section>
@@ -128,29 +128,29 @@ export default function Resources(): JSX.Element {
       <CostContrast />
 
       <div className="mt-8 grid gap-4 lg:grid-cols-2">
-        <DataCard label="Actual build — direct costs">
+        <DataCard label="Actual build · direct costs">
           {SOLO_COSTS.map((c) => (
             <DataRow key={c.item} label={c.item} value={c.cost} note={c.note} />
           ))}
-          <DataRow label="Total direct cost" value={SOLO_TOTAL} emphasis />
+          <DataRow label="Total direct (out-of-pocket)" value={SOLO_TOTAL} emphasis />
         </DataCard>
 
-        <DataCard label="Organizational — headcount (FTE)">
+        <DataCard label="Organizational · headcount (FTE)">
           {FTE_ALLOC.map((f) => (
-            <DataRow key={f.role} label={f.role} value={`${f.fte} FTE`} note={`${f.duration} — ${f.note}`} />
+            <DataRow key={f.role} label={f.role} value={`${f.fte} FTE`} note={`${f.duration}: ${f.note}`} />
           ))}
         </DataCard>
       </div>
 
       <div className="mt-4">
-        <DataCard label="Organizational — budget estimate">
+        <DataCard label="Organizational · budget estimate">
           {BUDGET_LINES.map((b) => (
             <DataRow key={b.category} label={b.category} value={`${b.low}–${b.high}`} note={b.note} />
           ))}
           <DataRow label="Total" value={`${BUDGET_TOTAL.low}–${BUDGET_TOTAL.high}`} emphasis />
           <p className="m-0 mt-3 font-sans text-caption text-tertiary" style={{ lineHeight: 1.5 }}>
-            Labor is <strong className="text-secondary">{LABOR_SHARE}</strong> of the total — consistent with L&amp;D
-            industry benchmarks. The front-end developer is the single largest line item.
+            Labor is <strong className="text-secondary">{LABOR_SHARE}</strong> of the total, consistent with L&amp;D
+            industry benchmarks. The full-stack developer is the single largest line item.
           </p>
         </DataCard>
       </div>

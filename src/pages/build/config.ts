@@ -21,7 +21,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     route: 'build/learning-architecture',
     title: 'Learning Architecture',
     blurb:
-      'The four-module map: competency emphasis, practice activities, performance objectives, and the assessment tiers that feed the Kirkpatrick evaluation — filterable by 4D competency.',
+      'The four-module map: competency emphasis, practice activities, performance objectives, and the assessment tiers that feed the Kirkpatrick evaluation, filterable by 4D competency.',
     type: 'Interactive',
     group: 'Design',
     openLabel: 'Explore',
@@ -41,7 +41,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     route: 'build/architecture',
     title: 'Architecture Decisions',
     blurb:
-      'Every technical decision behind the platform — framework, routing, styling, charting, state, data, deployment — as an expandable record, including the two hosts evaluated and declined.',
+      'Every technical decision behind the platform (framework, routing, styling, charting, state, data, deployment) as an expandable record, including the two hosts evaluated and declined.',
     type: 'Interactive',
     group: 'Design',
     openLabel: 'Browse',
@@ -61,7 +61,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     route: 'build/raci',
     title: 'RACI Matrix',
     blurb:
-      'Thirty-two activities across six phases against five roles, color-coded R/A/C/I and filterable — the responsibility model a team would run, made explicit against a solo build.',
+      'Thirty-two activities across six phases against five roles, color-coded R/A/C/I and filterable: the responsibility model a team would run, compared against a solo build.',
     type: 'Interactive',
     group: 'Project Management',
     openLabel: 'Open',
@@ -71,7 +71,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     route: 'build/resources',
     title: 'Resource & Budget Plan',
     blurb:
-      'The $160 solo direct cost against a $191K–271K organizational budget, the per-role FTE allocation, and the custom-platform-versus-Articulate rationale.',
+      'The $260 solo direct cost against a $190K–258K organizational budget, the per-role FTE allocation, and the custom-platform-versus-Articulate rationale.',
     type: 'Interactive',
     group: 'Project Management',
     openLabel: 'View',
@@ -81,7 +81,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     route: 'build/communications',
     title: 'Stakeholder Communications',
     blurb:
-      'Two annotated samples in the L&D-Manager voice — a weekly status update and a design-review summary — framed as the organizational-context simulation they are.',
+      'Two annotated samples in the L&D-Manager voice (a weekly status update and a design-review summary), framed as organizational-context exemplars.',
     type: 'Reading',
     group: 'Project Management',
   },

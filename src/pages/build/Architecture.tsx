@@ -64,19 +64,6 @@ function AdrCard({ adr, expanded, onToggle }: { adr: Adr; expanded: boolean; onT
               {p}
             </p>
           ))}
-          {adr.config && (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {adr.config.map((c, i) => (
-                <span
-                  key={i}
-                  className="rounded-md font-mono text-[11px] text-secondary"
-                  style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border-light))', padding: '5px 10px' }}
-                >
-                  {c}
-                </span>
-              ))}
-            </div>
-          )}
         </div>
       )}
     </div>
