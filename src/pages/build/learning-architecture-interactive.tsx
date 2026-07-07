@@ -545,8 +545,20 @@ function distributionLabel(): string {
 // ─── Main ──────────────────────────────────────────────────────────────
 
 export function LearningArchitectureDiagram(): JSX.Element {
-  const [expandedModule, setExpandedModule] = useState<number | null>(null);
+  const [expandedModules, setExpandedModules] = useState<Set<number>>(new Set());
   const [kirkExpanded, setKirkExpanded] = useState(false);
+  const allExpanded = expandedModules.size === ARCH_MODULES.length && kirkExpanded;
+  const toggleModule = (id: number): void =>
+    setExpandedModules((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  const setAll = (v: boolean): void => {
+    setExpandedModules(v ? new Set(ARCH_MODULES.map((m) => m.id)) : new Set());
+    setKirkExpanded(v);
+  };
 
   const stats: { n: number | string; l: string }[] = [
     { n: 4, l: 'Modules' },
@@ -600,14 +612,24 @@ export function LearningArchitectureDiagram(): JSX.Element {
 
       <SectionRule label="Learning Progression" hint="Context → Evidence → Mechanism → Application" />
 
+      <div className="-mt-2 mb-3 flex justify-end">
+        <button
+          type="button"
+          onClick={() => setAll(!allExpanded)}
+          className="font-sans text-[12px] font-semibold text-action hover:text-action-hover"
+        >
+          {allExpanded ? 'Collapse all' : 'Expand all'}
+        </button>
+      </div>
+
       {/* Module flow */}
       <div className="mb-7 flex flex-col">
         {ARCH_MODULES.map((m, i) => (
           <div key={m.id}>
             <ModuleCard
               module={m}
-              expanded={expandedModule === m.id}
-              onToggle={() => setExpandedModule((prev) => (prev === m.id ? null : m.id))}
+              expanded={expandedModules.has(m.id)}
+              onToggle={() => toggleModule(m.id)}
             />
             {i < ARCH_MODULES.length - 1 && <VConnector />}
           </div>
