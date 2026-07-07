@@ -13,7 +13,7 @@
 export type Assignment = 'R' | 'A' | 'C' | 'I' | '—';
 
 export interface Role {
-  /** Column abbreviation (LM, ID, FE, SME, ES). */
+  /** Column abbreviation (LM, ID, FS, SME, ES). */
   abbr: string;
   name: string;
   definition: string;
@@ -30,7 +30,7 @@ export interface RaciDef {
 export interface Activity {
   phase: string;
   name: string;
-  /** One assignment per role, in ROLES order [LM, ID, FE, SME, ES]. */
+  /** One assignment per role, in ROLES order [LM, ID, FS, SME, ES]. */
   assignments: Assignment[];
 }
 
@@ -46,11 +46,11 @@ export const ROLES: Role[] = [
     abbr: 'ID',
     name: 'Instructional Designer',
     definition:
-      'Responsible for content design, learning architecture, assessment instruments, and the evaluation framework. Translates the needs analysis into learning experiences — the primary producer of program content.',
+      'Responsible for content design, learning architecture, assessment instruments, and the evaluation framework. Translates the needs analysis into learning experiences, the primary producer of program content.',
   },
   {
-    abbr: 'FE',
-    name: 'Front-End Developer',
+    abbr: 'FS',
+    name: 'Full-Stack Developer',
     definition:
       'Responsible for platform implementation: the custom interactive learning environment, data visualizations, admin dashboard, and deployment infrastructure. Works from the Instructional Designer’s component specifications.',
   },
@@ -69,7 +69,7 @@ export const ROLES: Role[] = [
 ];
 
 export const RACI: RaciDef[] = [
-  { letter: 'R', name: 'Responsible', meaning: 'Does the work — produces the deliverable or completes the activity.', token: 'success' },
+  { letter: 'R', name: 'Responsible', meaning: 'Does the work: produces the deliverable or completes the activity.', token: 'success' },
   { letter: 'A', name: 'Accountable', meaning: 'Approves the work and holds final decision authority. Only one A per activity.', token: 'caution' },
   { letter: 'C', name: 'Consulted', meaning: 'Provides input before or during the work. Two-way communication.', token: 'info' },
   { letter: 'I', name: 'Informed', meaning: 'Receives notification of outcomes. One-way communication.', token: 'neutral' },

@@ -32,7 +32,7 @@ function Legend(): JSX.Element {
             {d.letter}
           </span>
           <span className="font-sans text-[12px] text-body">
-            <span className="font-semibold text-ink">{d.name}</span> — {d.meaning}
+            <span className="font-semibold text-ink">{d.name}</span>: {d.meaning}
           </span>
         </div>
       ))}
@@ -56,7 +56,7 @@ export function RaciGrid(): JSX.Element {
             <Overline className="mb-1.5">Accountability</Overline>
             <p className="m-0 max-w-reading font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
               The <strong className="text-ink">L&amp;D Manager</strong> is Accountable (A) for{' '}
-              <strong className="text-ink">{lmAccountable} of {ACTIVITIES.length}</strong> activities — the program
+              <strong className="text-ink">{lmAccountable} of {ACTIVITIES.length}</strong> activities, as the program
               owner who approves each deliverable before it advances. The Executive Sponsor is Accountable only at
               the {countFor(4, 'A')} phase gates. Select a role header to see its definition and totals.
             </p>
@@ -123,7 +123,7 @@ export function RaciGrid(): JSX.Element {
                       type="button"
                       onClick={() => setSelectedRole((prev) => (prev === i ? null : i))}
                       aria-pressed={on}
-                      title={`${r.name} — ${r.definition}`}
+                      title={`${r.name}: ${r.definition}`}
                       className="w-full rounded-md font-mono text-[12px] font-bold transition-colors"
                       style={{
                         padding: '8px 4px',

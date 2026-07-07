@@ -5,7 +5,8 @@
 //
 // Source: Phase 3A-1 Platform Architecture Decision Document
 // (course-info/content/03_phase-03/04_platform-architecture-decision-document.md),
-// §1–§7. Rationale is condensed faithfully from that document.
+// §1–§7. Rationale is condensed faithfully from that document, in plain language
+// for a non-technical reader.
 
 export interface Adr {
   id: string;
@@ -16,8 +17,6 @@ export interface Adr {
   status: 'adopted' | 'declined';
   /** Rationale paragraphs, shown when expanded. */
   rationale: string[];
-  /** Optional configuration / detail chips. */
-  config?: string[];
 }
 
 export const ADRS: Adr[] = [
@@ -27,10 +26,9 @@ export const ADRS: Adr[] = [
     decision: 'Vite + React + TypeScript (strict mode)',
     status: 'adopted',
     rationale: [
-      'Vite provides fast builds, native ES modules, tree-shaking, and code splitting — all critical for bundle efficiency. React is the dominant component framework for interactive SPAs and is well-supported by the charting and UI libraries the dashboard and sandbox require.',
-      'TypeScript strict mode catches data-shape errors at build time, which matters most when wiring static JSON to chart components. The codebase is itself a portfolio artifact subject to technical review; strict mode signals engineering rigor.',
+      'The platform is built with three common web tools. React is a common framework for building interactive interfaces, and it works well with the charting and interface libraries the dashboards and sandbox rely on. Vite is the build tool that packages everything the browser downloads, and it keeps that package small and quick to load.',
+      'TypeScript is a version of JavaScript that checks the code for mistakes before the site ever ships, rather than letting them surface for a learner. Its strict setting applies those checks more rigorously, which is especially useful where the research data files connect to the charts that display them.',
     ],
-    config: ['strict: true — no any except as a documented last resort', 'Standard React plugin, no SSR'],
   },
   {
     id: 'routing',
@@ -38,10 +36,9 @@ export const ADRS: Adr[] = [
     decision: 'React Router v6 with HashRouter',
     status: 'adopted',
     rationale: [
-      'React Router v6 cleanly handles a four-module SPA with section-level navigation. HashRouter is chosen over BrowserRouter because the hash fragment is never sent to the server, so every URL resolves to index.html regardless of host — no server-side redirect configuration.',
-      'That is exactly what makes zero-config deployment to static hosts (Cloudflare Pages, GitHub Pages) possible.',
+      'Moving between the four modules and their sections runs on React Router, a common navigation tool for a site like this. It is set to "hash" mode, which is why every address carries a # (for example, /#/module/1/section/2). That # keeps the full address on the visitor\'s device instead of sending it to a server, so the site runs on simple, free hosting with no server setup.',
+      'That is what makes the zero-setup hosting described below possible.',
     ],
-    config: ['URL structure: /#/module/1/section/2'],
   },
   {
     id: 'styling',
@@ -49,10 +46,9 @@ export const ADRS: Adr[] = [
     decision: 'Tailwind CSS with design tokens in the config',
     status: 'adopted',
     rationale: [
-      'Tailwind’s utility-first approach enables rapid component development with visual consistency, and its purge pipeline produces small CSS bundles — typically under 10KB gzipped at this scope.',
-      'The established design tokens — the DM font stack, the 4D competency palette with all variants, the spacing scale, radii, and breakpoints — are encoded in tailwind.config.js so they are available as utilities throughout the codebase.',
+      'The visual styling uses Tailwind, a system that builds the look from small, reusable pieces. It keeps the design consistent across the site and strips out any styling the site does not actually use, so the styling file the browser downloads stays tiny.',
+      'Every choice from the earlier design system (the fonts, the four competency colors and their variants, the spacing, the corner rounding, the screen-size breakpoints) is defined once in a central settings file, so the whole platform draws from one source and stays consistent.',
     ],
-    config: ['No component library (no Material UI, Chakra) — full visual control, no dependency bloat'],
   },
   {
     id: 'charting',
@@ -60,9 +56,8 @@ export const ADRS: Adr[] = [
     decision: 'Recharts',
     status: 'adopted',
     rationale: [
-      'The Module 2 live data dashboard needs several chart types — augmentation/automation splits, geographic adoption, productivity distributions, and WEF skill-demand projections. Recharts is React-native, composable, and covers them all. D3 offers more control at substantially higher build cost, which the chart complexity here does not justify.',
+      'Module 2\'s dashboard shows several interactive charts: the split between AI augmenting versus automating tasks, adoption by country, productivity gains, and projected skill demand. Recharts is a charting library made for React, and it draws all of these with very little custom code. An alternative, D3, offers more control but would have added a lot of extra work the charts here do not need.',
     ],
-    config: ['Recharts bundles much of D3 internally, so Module 2 is lazy-loaded — Module 1 learners do not pay the charting cost upfront'],
   },
   {
     id: 'state',
@@ -70,18 +65,18 @@ export const ADRS: Adr[] = [
     decision: 'React Context + useReducer, persisted to localStorage',
     status: 'adopted',
     rationale: [
-      'The state surface is small and well-defined; no external state library (Redux, Zustand) is warranted. Two contexts cover the full scope, both wrapping the app at the root.',
-      'LearnerProgressContext tracks module/section position, per-section completion, knowledge-check responses, and reflection text — persisted so progress survives refresh and interruption. AnalyticsContext accumulates interaction events for the admin dashboard, with a JSON export for data portability.',
+      'The platform only needs to remember a small, well-defined amount of information, so it uses React\'s built-in tools for this rather than a separate add-on library. Two pieces cover everything.',
+      'The first remembers each learner\'s progress: where they are, which sections they have finished, their knowledge-check answers, and their written reflections, all saved in the browser so nothing is lost on a refresh or an interruption. The second records activity for the admin dashboard and can export it as a file the organization can take with it.',
     ],
   },
   {
     id: 'data',
     category: 'Data approach',
-    decision: 'Static JSON in /src/data — no backend for V1',
+    decision: 'Static JSON in /src/data, no backend for V1',
     status: 'adopted',
     rationale: [
-      'All visualization data originates from published research with fixed figures; it does not change at runtime and needs no server-side processing. Static JSON imported directly by the consuming components is fast, reviewable, and eliminates deployment complexity.',
-      'The JSON files double as reviewable artifacts: a technically literate evaluator can open augmentation-automation.json and verify the data traces back to Handa et al. (2025). Analytics persist to localStorage, with a downloadAnalytics() export providing portability without server infrastructure.',
+      'All the data behind the charts comes from published research with fixed numbers, so it never changes while the site is running and needs no server to process it. It is stored in plain data files that load straight into the page, which is fast and keeps hosting simple.',
+      'Those files are also open to inspection: anyone can open one and check that a figure traces back to its source study, such as Handa et al. (2025). Learner activity is saved in the browser and can be exported as a file, so none of this requires a server.',
     ],
   },
   {
@@ -90,10 +85,9 @@ export const ADRS: Adr[] = [
     decision: 'Cloudflare Pages (primary), GitHub Pages (fallback)',
     status: 'adopted',
     rationale: [
-      'The project domain is already managed through Cloudflare, so Cloudflare Pages auto-configures the custom domain and eliminates DNS complexity. Its edge network is the fastest CDN in Southeast Asia — directly relevant to the Singapore and Hong Kong positioning — and the free tier includes unlimited bandwidth. A Git-based deploy builds on push to main, with preview deployments generated for non-main branches.',
-      'GitHub Pages is a zero-configuration fallback: because HashRouter is used, no redirect rules are needed. A GitHub Action builds and pushes dist/ to the gh-pages branch. Its Asia-Pacific CDN is adequate but slower than Cloudflare’s — an acceptable tradeoff for a low-traffic portfolio piece.',
+      'The site is hosted on Cloudflare Pages. The domain was already managed by Cloudflare, so this setup handles the web address automatically, and its network delivers pages quickly across Southeast Asia at no cost. Each time an update is saved, the site rebuilds and publishes itself, and draft versions get their own preview links.',
+      'GitHub Pages is a free backup host that needs no special configuration (the hash-based addresses above are what make that possible). Its network is a little slower than Cloudflare\'s, a fair tradeoff for a low-traffic portfolio site.',
     ],
-    config: ['Build command: npm run build', 'Output directory: dist/'],
   },
   {
     id: 'netlify',
@@ -101,7 +95,7 @@ export const ADRS: Adr[] = [
     decision: 'Evaluated and declined',
     status: 'declined',
     rationale: [
-      'Functionally equivalent to Cloudflare Pages for this project — free tier, Git-based deploys, SPA redirect support, custom-domain configuration. It was declined because it adds a third-party platform account and trust boundary with no compensating advantage over Cloudflare, whose DNS the project already uses.',
+      'Netlify would have done the same job as Cloudflare Pages: free hosting, automatic publishing on save, and custom-domain support. It was declined because it would mean adding another company\'s account into the mix with no real advantage over Cloudflare, which already manages the domain.',
     ],
   },
   {
@@ -110,8 +104,8 @@ export const ADRS: Adr[] = [
     decision: 'Evaluated and declined',
     status: 'declined',
     rationale: [
-      'Declined on security-posture grounds. Vercel disclosed a significant breach on April 19, 2026: an attacker compromised a third-party AI tool (Context AI) used by a Vercel employee, took over that employee’s Google Workspace account, and reached internal systems — including customer environment variables that were not encrypted at rest. Stolen data (API keys, source code, database records) was listed for sale on BreachForums.',
-      'This project’s deployment holds no secrets (a static SPA, no environment variables, no API keys), but the breach represents a systemic security-posture concern. Vercel is also redundant here, since the domain is already managed by Cloudflare.',
+      'Declined on security grounds. In April 2026, Vercel disclosed a serious breach: an attacker got into a third-party AI tool used by a Vercel employee, took over that employee\'s work account, and reached internal systems, including customer data that had been left unencrypted. The stolen data was put up for sale online.',
+      'This site stores no sensitive data of its own, so it was not directly at risk, but the breach pointed to a broader security concern. Vercel was also unnecessary here, since Cloudflare already manages the domain.',
     ],
   },
 ];

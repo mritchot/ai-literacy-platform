@@ -17,13 +17,13 @@ export default function BuildHub(): JSX.Element {
       intro={
         <p className="m-0 max-w-reading">
           These eight artifacts are the design and project-management record behind{' '}
-          <em className="italic">AI Literacy for the Modern Workforce</em> — the decisions, the plan,
+          <em className="italic">AI Literacy for the Modern Workforce</em>: the decisions, the plan,
           and the quality system that produced the course and the platform you are reading this on.
           The <strong className="font-semibold text-ink">Design</strong> set traces the learning
           architecture, the visual system, and the technical decisions; the{' '}
           <strong className="font-semibold text-ink">Project Management</strong> set reframes a solo,
-          AI-accelerated build as the five-person organizational deployment it models — the timeline,
-          responsibilities, budget, stakeholder communications, and QA that implies.
+          AI-accelerated build as the five-person organizational deployment it models, with the timeline,
+          responsibilities, budget, stakeholder communications, and QA.
         </p>
       }
       writeupUrl={BUILD_WRITEUP_URL}

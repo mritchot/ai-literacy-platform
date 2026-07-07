@@ -244,10 +244,10 @@ export interface KirkLevel {
 }
 
 export const KIRK_LEVELS: KirkLevel[] = [
-  { key: 'L1', label: 'Level 1', name: 'Reaction', color: '#8B7355', detail: 'Post-program survey measuring perceived relevance, confidence change, NPS, and actionable open response' },
-  { key: 'L2', label: 'Level 2', name: 'Learning', color: '#5E7080', detail: 'Three-tier assessment architecture: Tier 1 formative knowledge checks, Tier 2 practice activity performance, Tier 3 competency assessment' },
-  { key: 'L3', label: 'Level 3', name: 'Behavior', color: '#6B7F5E', detail: '30/60/90-day manager observation checklist organized by 4D framework. Tracks objectives 2.3 (task action commitment) and 4.5 (AI diligence statement) for sustained use' },
-  { key: 'L4', label: 'Level 4', name: 'Results & ROI', color: '#7A6B80', detail: 'Business impact measurement: error reduction, time-to-competency, adoption rates, support tickets. ROI projection using 81% median task time reduction, 1.8% annual productivity growth' },
+  { key: 'L1', label: 'Level 1', name: 'Reaction', color: '#8B7355', detail: 'Post-program survey across four actionable dimensions: perceived relevance, confidence change, content quality, and intent to apply, plus a standard NPS item' },
+  { key: 'L2', label: 'Level 2', name: 'Learning', color: '#5E7080', detail: 'Ten-item scenario-based pre/post assessment, parallel-form to resist gaming, measuring knowledge gain across usage patterns, failure modes, mechanics, and evaluation' },
+  { key: 'L3', label: 'Level 3', name: 'Behavior', color: '#6B7F5E', detail: 'Manager evidence review and participant self-assessment at 30/60/90 days, rating twelve 4D-mapped behavioral indicators; objectives 2.3 and 4.5 produce the trackable artifacts' },
+  { key: 'L4', label: 'Level 4', name: 'Results', color: '#7A6B80', detail: 'Business outcomes downstream of competent use: efficiency (time-to-first-draft, revision cycles), quality (AI-error rate), transparency, and time-to-competency, run through a Phillips ROI model (191% in the conservative worked example)' },
 ];
 
 // ─── Admin / analytics infrastructure (hidden from learners) ───────────

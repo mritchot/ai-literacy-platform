@@ -1,15 +1,16 @@
 // Project Timeline — interactive artifact page (`/#/build/timeline`). Leads on
 // the effort comparison (≈150–160 focused hours vs a ~735-hour baseline, a
-// 4.6–4.9× reduction — the reconciled canonical figures), then a dual-track
-// view of the ~8-week solo build against the 24–33-week organizational plan
-// with dated, collapsible phases. Data lives in ./timeline-data; prose is
-// sliced from the co-located markdown (via ?raw).
+// 4.6–4.9× reduction, the reconciled canonical figures), then a two-swimlane
+// Gantt of the ~8-week solo build against the 24–33-week organizational plan on
+// a shared week axis, with dated, click-to-expand phases sharing lifecycle
+// colors across the two tracks. Data lives in ./timeline-data; prose is sliced
+// from the co-located markdown (via ?raw).
 
 import { useState } from 'react';
 import TL_MD from './content/04_timeline.md?raw';
 import { renderMarkdown } from '../../components/shared/render-markdown';
 import { Overline } from '../../components/shared/Overline';
-import { EFFORT, ORG_PHASES, SOLO_PHASES, type Phase } from './timeline-data';
+import { EFFORT, ORG_PHASES, SOLO_PHASES, STAGES, TIMELINE_MAX_WEEKS, type Phase } from './timeline-data';
 import { SERIES_ACCENT } from './config';
 import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
 
@@ -18,6 +19,9 @@ const SECTIONS = REST.map((part) => {
   const nl = part.indexOf('\n');
   return { heading: part.slice(0, nl).trim(), body: part.slice(nl + 1).trim() };
 });
+
+const TICKS = [5, 10, 15, 20, 25, 30];
+const LABEL_W = 150;
 
 // ─── Effort comparison (the headline) ──────────────────────────────────
 
@@ -49,7 +53,7 @@ function EffortComparison(): JSX.Element {
         <div
           className="space-y-4"
           role="img"
-          aria-label={`Focused solo effort about 150 to 160 hours, against a roughly 735-hour Chapman Alliance baseline for comparable Level-3 e-learning — a 4.6 to 4.9 times reduction.`}
+          aria-label={`Focused solo effort about 150 to 160 hours, against a roughly 735-hour Chapman Alliance baseline for comparable Level-3 e-learning, a 4.6 to 4.9 times reduction.`}
         >
           <EffortBar label="Focused solo effort" note={EFFORT.soloNote} hoursLabel={EFFORT.soloHoursLabel} widthPct={soloPct} accent={SERIES_ACCENT} />
           <EffortBar label="Conventional baseline" note={EFFORT.baselineNote} hoursLabel={EFFORT.baselineLabel} widthPct={100} accent="rgb(var(--ghost))" />
@@ -65,35 +69,94 @@ function EffortComparison(): JSX.Element {
       </div>
       <p className="m-0 mt-5 border-t border-border-light pt-3 font-sans text-caption text-tertiary" style={{ lineHeight: 1.5 }}>
         Calendar, for context only: {EFFORT.soloCalendar} solo against {EFFORT.orgCalendar} for the five-person
-        organizational plan. The calendar span overstates working time — it is not the compression figure.
+        organizational plan. The calendar span overstates working time; it is not the compression figure.
       </p>
     </section>
   );
 }
 
-// ─── Dual-track phases ─────────────────────────────────────────────────
+// ─── Dual-track Gantt ──────────────────────────────────────────────────
 
-function PhaseCard({ phase, id, open, onToggle }: { phase: Phase; id: string; open: boolean; onToggle: () => void }): JSX.Element {
+function GanttLegend(): JSX.Element {
   return (
-    <div className="rounded-lg" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))' }}>
+    <div className="mb-4 flex flex-wrap gap-x-4 gap-y-1.5">
+      {Object.values(STAGES).map((s) => (
+        <span key={s.label} className="inline-flex items-center gap-1.5 font-sans text-[11px] text-tertiary">
+          <span aria-hidden="true" className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />
+          {s.label}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function WeekAxis(): JSX.Element {
+  return (
+    <div className="mb-2 flex items-end gap-2">
+      <span aria-hidden="true" className="shrink-0" style={{ width: LABEL_W }} />
+      <div className="relative h-4 flex-1">
+        {TICKS.map((w) => (
+          <span
+            key={w}
+            className="absolute font-mono text-[9px] text-muted"
+            style={{ left: `${(w / TIMELINE_MAX_WEEKS) * 100}%`, transform: 'translateX(-50%)' }}
+          >
+            {w}w
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Gridlines(): JSX.Element {
+  return (
+    <>
+      {TICKS.map((w) => (
+        <span
+          key={w}
+          aria-hidden="true"
+          className="absolute bottom-0 top-0 w-px"
+          style={{ left: `${(w / TIMELINE_MAX_WEEKS) * 100}%`, background: 'rgb(var(--border-light))' }}
+        />
+      ))}
+    </>
+  );
+}
+
+function GanttRow({ phase, id, open, onToggle }: { phase: Phase; id: string; open: boolean; onToggle: () => void }): JSX.Element {
+  const stage = STAGES[phase.stage];
+  const left = ((phase.startWeek - 1) / TIMELINE_MAX_WEEKS) * 100;
+  const width = (phase.weeks / TIMELINE_MAX_WEEKS) * 100;
+  return (
+    <div>
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={open}
-        aria-controls={`${id}-detail`}
-        className="flex w-full items-center gap-3 text-left"
-        style={{ padding: '12px 16px' }}
+        aria-controls={`${id}-d`}
+        aria-label={`${phase.name}, ${phase.when}`}
+        className="flex w-full items-center gap-2 rounded transition-colors hover:bg-surface"
+        style={{ padding: '5px 0' }}
       >
-        <span className="flex-1">
-          <span className="block font-sans text-[13.5px] font-semibold text-ink">{phase.name}</span>
-          <span className="block font-mono text-[11px] text-tertiary">{phase.when}</span>
+        <span className="shrink-0 font-sans text-[11px] font-semibold text-ink" style={{ width: LABEL_W, lineHeight: 1.25 }}>
+          {phase.name}
         </span>
-        <span aria-hidden="true" className="text-tertiary transition-transform" style={{ transform: open ? 'rotate(180deg)' : 'none' }}>
-          ▾
+        <span className="relative h-5 flex-1 overflow-hidden rounded-sm" style={{ background: 'rgb(var(--surface))' }}>
+          <Gridlines />
+          <span
+            className="absolute top-1/2 h-3.5 -translate-y-1/2 rounded-sm"
+            style={{ left: `${left}%`, width: `${width}%`, minWidth: 6, background: stage.color }}
+          />
         </span>
       </button>
       {open && (
-        <div id={`${id}-detail`} className="border-t border-border-light font-sans text-[12.5px] text-body" style={{ padding: '12px 16px', lineHeight: 1.6 }}>
+        <div
+          id={`${id}-d`}
+          className="font-sans text-[12px] text-body"
+          style={{ paddingLeft: LABEL_W + 8, paddingRight: 4, paddingBottom: 8, paddingTop: 2, lineHeight: 1.6 }}
+        >
+          <span className="mr-2 font-mono text-[11px] font-semibold text-secondary">{phase.when}</span>
           {phase.detail}
         </div>
       )}
@@ -101,26 +164,26 @@ function PhaseCard({ phase, id, open, onToggle }: { phase: Phase; id: string; op
   );
 }
 
-function Track({ title, total, phases, prefix, open, toggle }: { title: string; total: string; phases: Phase[]; prefix: string; open: Set<string>; toggle: (id: string) => void }): JSX.Element {
+function Swimlane({ title, total, phases, prefix, open, toggle }: { title: string; total: string; phases: Phase[]; prefix: string; open: Set<string>; toggle: (id: string) => void }): JSX.Element {
   return (
-    <div className="flex-1">
-      <div className="mb-3 flex items-baseline justify-between gap-2 border-b border-border-light pb-2">
-        <h3 className="m-0 font-sans text-h4 font-semibold text-ink">{title}</h3>
-        <span className="font-mono text-[11px] font-semibold text-secondary">{total}</span>
+    <div className="mt-5">
+      <div className="mb-1.5 flex items-baseline gap-2 border-b border-border-light pb-1">
+        <h3 className="m-0 font-sans text-[12px] font-bold uppercase text-secondary" style={{ letterSpacing: '0.06em' }}>
+          {title}
+        </h3>
+        <span className="font-mono text-[11px] text-tertiary">{total}</span>
       </div>
-      <div className="space-y-2">
-        {phases.map((p, i) => {
-          const id = `${prefix}-${i}`;
-          return <PhaseCard key={id} id={id} phase={p} open={open.has(id)} onToggle={() => toggle(id)} />;
-        })}
-      </div>
+      {phases.map((p, i) => {
+        const id = `${prefix}-${i}`;
+        return <GanttRow key={id} id={id} phase={p} open={open.has(id)} onToggle={() => toggle(id)} />;
+      })}
     </div>
   );
 }
 
-function DualTrack(): JSX.Element {
+function GanttChart(): JSX.Element {
   const allIds = [...SOLO_PHASES.map((_, i) => `solo-${i}`), ...ORG_PHASES.map((_, i) => `org-${i}`)];
-  const [open, setOpen] = useState<Set<string>>(() => new Set(allIds));
+  const [open, setOpen] = useState<Set<string>>(() => new Set());
   const allOpen = open.size === allIds.length;
   const toggle = (id: string): void =>
     setOpen((prev) => {
@@ -133,7 +196,7 @@ function DualTrack(): JSX.Element {
   return (
     <div className="mt-10">
       <div className="mb-4 flex items-center justify-between">
-        <Overline as="span">Dual-track phases</Overline>
+        <Overline as="span">Dual-track Gantt</Overline>
         <button
           type="button"
           onClick={() => setOpen(allOpen ? new Set() : new Set(allIds))}
@@ -142,10 +205,20 @@ function DualTrack(): JSX.Element {
           {allOpen ? 'Collapse all' : 'Expand all'}
         </button>
       </div>
-      <div className="flex flex-col gap-6 sm:flex-row sm:gap-5">
-        <Track title="Solo build" total={EFFORT.soloCalendar} phases={SOLO_PHASES} prefix="solo" open={open} toggle={toggle} />
-        <Track title="Organizational deployment" total={EFFORT.orgCalendar} phases={ORG_PHASES} prefix="org" open={open} toggle={toggle} />
+      <GanttLegend />
+      <div className="overflow-x-auto">
+        <div style={{ minWidth: 560 }}>
+          <WeekAxis />
+          <Swimlane title="Solo build" total={EFFORT.soloCalendar} phases={SOLO_PHASES} prefix="solo" open={open} toggle={toggle} />
+          <Swimlane title="Organizational deployment" total={EFFORT.orgCalendar} phases={ORG_PHASES} prefix="org" open={open} toggle={toggle} />
+        </div>
       </div>
+      <p className="m-0 mt-4 font-sans text-caption text-tertiary" style={{ lineHeight: 1.5 }}>
+        Both tracks run the same lifecycle. The solo build merges content development and platform build into one block
+        and folds integration, QA, and launch prep into adjacent phases: compression, not skipped steps. The
+        organizational schedule is illustrative, derived from typical phase durations; real timings vary by team and
+        scope.
+      </p>
     </div>
   );
 }
@@ -162,7 +235,7 @@ export default function Timeline(): JSX.Element {
       <div className="max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
 
       <EffortComparison />
-      <DualTrack />
+      <GanttChart />
 
       {SECTIONS.map((s) => (
         <section key={s.heading} className="mt-10">

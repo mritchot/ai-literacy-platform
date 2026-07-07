@@ -31,48 +31,10 @@ import {
   type ArchObjective,
   type ArchPlatformCell,
   type AssessmentTier,
-  type CompetencyKey,
   type PlatformIdentity,
 } from './learning-architecture-data';
 
-const COMPETENCIES: CompetencyKey[] = ['delegation', 'description', 'discernment', 'diligence'];
-
-function cap(word: string): string {
-  return word.charAt(0).toUpperCase() + word.slice(1);
-}
-
 // ─── Small shared pieces ───────────────────────────────────────────────
-
-function FilterPill({
-  competency,
-  active,
-  onClick,
-}: {
-  competency: CompetencyKey;
-  active: boolean;
-  onClick: () => void;
-}): JSX.Element {
-  const hex = COMPETENCY_HEX[competency].bg;
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={active}
-      className="rounded-full font-sans text-[12px] font-semibold transition-colors"
-      style={{
-        padding: '5px 14px',
-        border: `1.5px solid ${hex}`,
-        background: active ? hex : 'transparent',
-        // Active: white on the competency fill (design system §5.1). Inactive:
-        // the AA-contrast competency text token, which flips for dark mode.
-        color: active ? '#fff' : `rgb(var(--${competency}-text))`,
-        letterSpacing: '0.02em',
-      }}
-    >
-      {cap(competency)}
-    </button>
-  );
-}
 
 // Vertical flow connector between stacked cards — purely decorative.
 function VConnector(): JSX.Element {
@@ -243,15 +205,12 @@ function ModuleCard({
   module,
   expanded,
   onToggle,
-  dimFilter,
 }: {
   module: ArchModule;
   expanded: boolean;
   onToggle: () => void;
-  dimFilter: CompetencyKey | null;
 }): JSX.Element {
   const panelId = useId();
-  const isFiltered = dimFilter !== null && !module.emphasis.includes(dimFilter);
   const emph = module.emphasis.map((d) => COMPETENCY_HEX[d].bg);
   const gradBar =
     emph.length === 4
@@ -260,23 +219,15 @@ function ModuleCard({
         ? `linear-gradient(90deg, ${emph[0]} 0%, ${emph[0]} 50%, ${emph[1]} 50%)`
         : emph[0];
 
-  const fObj = dimFilter ? module.objectives.filter((o) => o.dims.includes(dimFilter)) : module.objectives;
-  const fAct = dimFilter
-    ? module.activities.filter((a) => {
-        const pIds = module.objectives
-          .filter((o) => o.dims.includes(dimFilter))
-          .flatMap((o) => o.assessment.match(/P\d+/g) ?? []);
-        return pIds.includes(a.id);
-      })
-    : module.activities;
+  const fObj = module.objectives;
+  const fAct = module.activities;
 
   return (
     <div
-      className="overflow-hidden rounded-xl transition-opacity"
+      className="overflow-hidden rounded-xl"
       style={{
         background: 'rgb(var(--white))',
         border: `1.5px solid ${expanded ? emph[0] : 'rgb(var(--border-light))'}`,
-        opacity: isFiltered ? 0.35 : 1,
       }}
     >
       <div aria-hidden="true" className="h-1" style={{ background: gradBar }} />
@@ -287,7 +238,7 @@ function ModuleCard({
         onClick={onToggle}
         aria-expanded={expanded}
         aria-controls={panelId}
-        className="flex w-full items-start gap-4 text-left"
+        className="flex w-full items-start gap-4 text-left transition-colors hover:bg-surface"
         style={{ padding: '18px 22px 16px' }}
       >
         <span className="flex min-w-[44px] flex-col items-center gap-1">
@@ -396,7 +347,7 @@ function KirkpatrickLane({ expanded, onToggle }: { expanded: boolean; onToggle: 
         onClick={onToggle}
         aria-expanded={expanded}
         aria-controls={panelId}
-        className="flex w-full items-center justify-between text-left"
+        className="flex w-full items-center justify-between text-left transition-colors hover:bg-surface"
         style={{ padding: '14px 22px' }}
       >
         <span className="font-mono text-overline font-bold uppercase text-tertiary" style={{ letterSpacing: '0.1em' }}>
@@ -595,7 +546,6 @@ function distributionLabel(): string {
 
 export function LearningArchitectureDiagram(): JSX.Element {
   const [expandedModule, setExpandedModule] = useState<number | null>(null);
-  const [dimFilter, setDimFilter] = useState<CompetencyKey | null>(null);
   const [kirkExpanded, setKirkExpanded] = useState(false);
 
   const stats: { n: number | string; l: string }[] = [
@@ -621,30 +571,6 @@ export function LearningArchitectureDiagram(): JSX.Element {
             </span>
           </div>
         ))}
-      </div>
-
-      {/* Filter controls */}
-      <div className="mb-6 flex flex-wrap items-center gap-2.5 border-b border-border-light pb-4">
-        <span className="mr-1 font-mono text-[11px] font-semibold uppercase text-tertiary" style={{ letterSpacing: '0.08em' }}>
-          Filter
-        </span>
-        {COMPETENCIES.map((c) => (
-          <FilterPill
-            key={c}
-            competency={c}
-            active={dimFilter === c}
-            onClick={() => setDimFilter((prev) => (prev === c ? null : c))}
-          />
-        ))}
-        {dimFilter && (
-          <button
-            type="button"
-            onClick={() => setDimFilter(null)}
-            className="font-sans text-[12px] font-medium text-action hover:text-action-hover"
-          >
-            Clear
-          </button>
-        )}
       </div>
 
       {/* Platform legend */}
@@ -682,7 +608,6 @@ export function LearningArchitectureDiagram(): JSX.Element {
               module={m}
               expanded={expandedModule === m.id}
               onToggle={() => setExpandedModule((prev) => (prev === m.id ? null : m.id))}
-              dimFilter={dimFilter}
             />
             {i < ARCH_MODULES.length - 1 && <VConnector />}
           </div>

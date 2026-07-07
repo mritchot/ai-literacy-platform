@@ -42,11 +42,6 @@ function Swatch({ token, mode }: { token: TokenSpec; mode: Mode }): JSX.Element 
         <div className="mt-1 font-sans text-[10.5px] text-muted" style={{ lineHeight: 1.4 }}>
           {token.usage}
         </div>
-        {token.note && (
-          <div className="mt-1 font-sans text-[10px] italic" style={{ color: 'rgb(var(--caution))', lineHeight: 1.4 }}>
-            {token.note}
-          </div>
-        )}
       </div>
     </div>
   );
