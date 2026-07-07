@@ -97,6 +97,8 @@ export default function ThankYou(): JSX.Element {
 
       <EvaluationBlock />
 
+      <BuildBlock />
+
       {showTipSection && <TipCard onClick={onTipClick} />}
 
       <BlogCard
@@ -329,6 +331,53 @@ function EvaluationBlock(): JSX.Element {
         style={{ background: 'transparent', border: '1.5px solid rgb(var(--border))', padding: '9px 18px' }}
       >
         Read the evaluation framework →
+      </a>
+    </section>
+  );
+}
+
+// ─── Behind-the-build block ───────────────────────────────────────
+//
+// Links to the build hub (`/#/build`) — the eight design and
+// project-management artifacts (learning architecture, design system,
+// architecture decisions, timeline, RACI, resources, communications, QA)
+// that document how the course and platform were built. The series finale
+// of the behind-the-scenes set: it sits under the needs-analysis and
+// evaluation blocks with the same card treatment so the three read as a
+// progression (the case for the course, the plan to measure it, then the
+// record of building it). Internal hash link since it routes within the
+// platform.
+
+function BuildBlock(): JSX.Element {
+  return (
+    <section
+      aria-label="Behind the build"
+      className="mt-6 rounded-lg"
+      style={{
+        background: 'rgb(var(--white))',
+        border: '1px solid rgb(var(--border))',
+        borderTop: `3px solid ${DILIGENCE}`,
+        padding: '24px 26px',
+      }}
+    >
+      <h2
+        className="m-0 mb-3 font-sans text-h3 font-semibold text-ink"
+        style={{ letterSpacing: '-0.005em' }}
+      >
+        Behind the build
+      </h2>
+      <p className="m-0 mb-5 font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
+        How the course and platform were built: the learning architecture, the design
+        system, and the technical decisions, plus the project-management record (timeline,
+        responsibilities, budget, communications, and QA) that reframes a solo build as the
+        organizational deployment it models. Eight artifacts.
+      </p>
+      <a
+        href="#/build"
+        className="inline-flex items-center gap-2 rounded-md font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
+        style={{ background: 'transparent', border: '1.5px solid rgb(var(--border))', padding: '9px 18px' }}
+      >
+        Go behind the build →
       </a>
     </section>
   );

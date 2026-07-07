@@ -37,6 +37,19 @@ const Level1Reaction = lazy(() => import('./pages/evaluation/Level1Reaction'));
 const Level2Learning = lazy(() => import('./pages/evaluation/Level2Learning'));
 const Level3Behavior = lazy(() => import('./pages/evaluation/Level3Behavior'));
 const Level4Results = lazy(() => import('./pages/evaluation/Level4Results'));
+// Behind-the-build artifact pages — standalone public portfolio documents
+// (hub + three design pages + five project-management pages), mirroring the
+// needs-analysis and evaluation series. Reachable in every platform mode; not
+// part of the learner module sequence and not mode-gated.
+const BuildHub = lazy(() => import('./pages/build/BuildHub'));
+const LearningArchitecture = lazy(() => import('./pages/build/LearningArchitecture'));
+const DesignSystem = lazy(() => import('./pages/build/DesignSystem'));
+const Architecture = lazy(() => import('./pages/build/Architecture'));
+const Timeline = lazy(() => import('./pages/build/Timeline'));
+const Raci = lazy(() => import('./pages/build/Raci'));
+const Resources = lazy(() => import('./pages/build/Resources'));
+const Communications = lazy(() => import('./pages/build/Communications'));
+const Quality = lazy(() => import('./pages/build/Quality'));
 
 // Suspense fallback for lazy routes. Note: the production build inlines
 // every lazy chunk via vite-plugin-singlefile, so this effectively never
@@ -105,6 +118,15 @@ const routes: RouteObject[] = [
       { path: 'evaluation/level-2-learning', element: lazyRoute(Level2Learning) },
       { path: 'evaluation/level-3-behavior', element: lazyRoute(Level3Behavior) },
       { path: 'evaluation/level-4-results', element: lazyRoute(Level4Results) },
+      { path: 'build', element: lazyRoute(BuildHub) },
+      { path: 'build/learning-architecture', element: lazyRoute(LearningArchitecture) },
+      { path: 'build/design-system', element: lazyRoute(DesignSystem) },
+      { path: 'build/architecture', element: lazyRoute(Architecture) },
+      { path: 'build/timeline', element: lazyRoute(Timeline) },
+      { path: 'build/raci', element: lazyRoute(Raci) },
+      { path: 'build/resources', element: lazyRoute(Resources) },
+      { path: 'build/communications', element: lazyRoute(Communications) },
+      { path: 'build/quality', element: lazyRoute(Quality) },
       { path: '*', element: <Navigate to="/" replace /> },
     ],
   },
