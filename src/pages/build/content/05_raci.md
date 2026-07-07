@@ -1,4 +1,5 @@
 A RACI matrix assigns responsibility for every major deliverable across five roles. This one describes how the program would be governed in an organizational deployment, not how the portfolio build actually ran, which collapsed all five roles into one person. It is a sample of what a RACI matrix could look like; the roles and assignments could change significantly with how a given organization is actually structured.
+
 Select a role header to see its definition and totals; filter by phase to narrow the grid. Every cell is labeled R, A, C, or I.
 
 ## What the distribution shows

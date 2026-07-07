@@ -107,7 +107,7 @@ export const ARCH_MODULES: ArchModule[] = [
     custom: {
       component: '4C',
       label: 'Interactive Explorations',
-      desc: 'Interactive data narratives — scrollable data stories combining WEF and Anthropic findings with embedded reflection prompts',
+      desc: 'Interactive data narratives: scrollable data stories combining WEF and Anthropic findings with embedded reflection prompts',
     },
     articulate: {
       component: '5B',
@@ -228,9 +228,9 @@ export interface AssessmentTier {
 }
 
 export const ASSESSMENT_TIERS: AssessmentTier[] = [
-  { tier: 1, label: 'Tier 1: Formative', desc: 'Scenario-based knowledge checks with explanatory feedback — embedded within modules', color: '#A0AEB8', icon: '○' },
-  { tier: 2, label: 'Tier 2: Practice', desc: 'Learner choices and outputs within interactives, sandbox, and dashboards — assessed in-flow', color: '#7D9BAD', icon: '◐' },
-  { tier: 3, label: 'Tier 3: Summative', desc: 'Competency assessment (5C) and Level 3 behavioral observation (6C) — post-program transfer measurement', color: '#4A6D80', icon: '●' },
+  { tier: 1, label: 'Tier 1: Formative', desc: 'Scenario-based knowledge checks with explanatory feedback, embedded within modules', color: '#A0AEB8', icon: '○' },
+  { tier: 2, label: 'Tier 2: Practice', desc: 'Learner choices and outputs within interactives, sandbox, and dashboards, assessed in-flow', color: '#7D9BAD', icon: '◐' },
+  { tier: 3, label: 'Tier 3: Summative', desc: 'Competency assessment (5C) and Level 3 behavioral observation (6C): post-program transfer measurement', color: '#4A6D80', icon: '●' },
 ];
 
 // ─── Kirkpatrick evaluation lane ───────────────────────────────────────
@@ -261,17 +261,17 @@ export interface InfraComponent {
 
 export const INFRA_COMPONENTS: InfraComponent[] = [
   {
-    component: '4D — Admin Analytics Dashboard',
+    component: '4D · Admin Analytics Dashboard',
     title: 'Per-learner progress tracking, module completion rates, practice activity engagement metrics, and time-on-task data.',
     detail:
       'Hidden admin-only overlay reachable via Cmd/Ctrl+Shift+A. Surfaces the practice-activity and KC data that feeds Kirkpatrick Levels 2 and 3.',
     note: 'Cmd/Ctrl+Shift+A',
   },
   {
-    component: '4E — Platform Shell',
+    component: '4E · Platform Shell',
     title: 'Sidebar navigation, the 90% scroll-completion sentinel, hash router, theme system, and the learner-progress and analytics contexts.',
     detail:
-      'Wraps every module — every section renders inside the shell’s SectionContainer and consumes its shared progress and analytics providers.',
+      'Wraps every module: every section renders inside the shell’s SectionContainer and consumes its shared progress and analytics providers.',
     note: 'SectionContainer',
   },
 ];

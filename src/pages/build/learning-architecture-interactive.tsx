@@ -655,7 +655,7 @@ export function LearningArchitectureDiagram(): JSX.Element {
 
       {/* Admin / analytics infrastructure */}
       <div className="mb-7">
-        <SectionRule label="Admin / Analytics Infrastructure" hint="Hidden from the learner — supports Levels 2 & 3" />
+        <SectionRule label="Admin / Analytics Infrastructure" hint="Hidden from the learner; supports Levels 2 & 3" />
         <InfraCards />
       </div>
 

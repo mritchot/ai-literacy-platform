@@ -225,14 +225,14 @@ const DEMO_KC: KnowledgeCheckItemData = {
       id: 'a',
       text: 'The competency bg and mid values are mid-tone by design and hold contrast on both light and dark surfaces, so they are intentionally unchanged; only the light wash and text tints flip.',
       isPreferred: true,
-      feedbackTitle: 'Correct — this is the design decision',
+      feedbackTitle: 'Correct: this is the design decision',
       feedbackText:
         'Exactly. The palette was chosen so the primary and border tints stay stable across modes, which keeps a competency’s color recognizable everywhere. Only the wash surfaces and on-tint text shift.',
       feedbackTone: 'success',
     },
     {
       id: 'b',
-      text: 'It is a rendering bug — every color should shift in dark mode.',
+      text: 'It is a rendering bug: every color should shift in dark mode.',
       isPreferred: false,
       feedbackTitle: 'Not a bug',
       feedbackText:
@@ -243,7 +243,7 @@ const DEMO_KC: KnowledgeCheckItemData = {
       id: 'c',
       text: 'Dark mode only affects neutral tokens and never touches semantic color.',
       isPreferred: false,
-      feedbackTitle: 'Partly — but not quite',
+      feedbackTitle: 'Partly, but not quite',
       feedbackText:
         'Feedback colors and the action color do shift in dark mode for legibility. It is specifically the competency bg/mid that stay fixed, while their light/text tints adapt.',
       feedbackTone: 'caution',
@@ -323,15 +323,15 @@ export function DesignSystemGallery(): JSX.Element {
           </div>
         </GallerySection>
 
-        <GallerySection label="Color · Neutrals" note="Warm neutrals — no pure grays. Every value carries the same warm undertone in both modes.">
+        <GallerySection label="Color · Neutrals" note="Warm neutrals: no pure grays. Every value carries the same warm undertone in both modes.">
           <SwatchGrid tokens={NEUTRAL_TOKENS} mode={mode} />
         </GallerySection>
 
-        <GallerySection label="Color · Feedback" note="Muted, earthy — not saturated traffic-light colors. Used only for knowledge-check feedback and system states.">
+        <GallerySection label="Color · Feedback" note="Muted and earthy, not saturated traffic-light colors. Used only for knowledge-check feedback and system states.">
           <SwatchGrid tokens={FEEDBACK_TOKENS} mode={mode} />
         </GallerySection>
 
-        <GallerySection label="Color · Action" note="A dedicated interactive teal, outside the 4D palette — so competency colors never do double duty as buttons.">
+        <GallerySection label="Color · Action" note="A dedicated interactive teal, outside the 4D palette, so competency colors never do double duty as buttons.">
           <SwatchGrid tokens={ACTION_TOKENS} mode={mode} />
         </GallerySection>
 
@@ -372,11 +372,11 @@ export function DesignSystemGallery(): JSX.Element {
           <ButtonSpecimens />
         </GallerySection>
 
-        <GallerySection label="Components · Knowledge check" note="The live shared component — select a response to see consequence-based feedback.">
+        <GallerySection label="Components · Knowledge check" note="The live shared component: select a response to see consequence-based feedback.">
           <KnowledgeCheck moduleId={0} sectionId={1} item={DEMO_KC} itemNumber={1} totalItems={1} />
         </GallerySection>
 
-        <GallerySection label="Components · Reflection prompt" note="The live shared component — a private, ungraded reflection with the Diligence accent.">
+        <GallerySection label="Components · Reflection prompt" note="The live shared component: a private, ungraded reflection with the Diligence accent.">
           <ReflectionPrompt
             moduleId={0}
             sectionId={1}

@@ -105,7 +105,7 @@ export const SOLO_PHASES: Phase[] = [
     startWeek: 4,
     weeks: 3,
     detail:
-      'Four module documents (36 sections) and the custom platform: Vite + React + TypeScript, Tailwind, Recharts, 12 practice activities, 16 knowledge checks, the pre/post assessment, the admin dashboard, three-mode navigation, and dark mode. Deployed to Cloudflare Pages.',
+      'Four module documents (37 sections) and the custom platform: Vite + React + TypeScript, Tailwind, Recharts, 12 practice activities, 16 knowledge checks, the pre/post assessment, the admin dashboard, three-mode navigation, and dark mode. Deployed to Cloudflare Pages.',
   },
   {
     name: 'Phase 4 · Evaluation',
@@ -144,7 +144,7 @@ export const ORG_PHASES: Phase[] = [
     startWeek: 10,
     weeks: 8,
     detail:
-      'Module authoring (4 modules, 36 sections), knowledge-check and assessment items, data-file creation and validation, and 2–3 SME content-review rounds per module.',
+      'Module authoring (4 modules, 37 sections), knowledge-check and assessment items, data-file creation and validation, and 2–3 SME content-review rounds per module.',
   },
   {
     name: 'Platform Build',
