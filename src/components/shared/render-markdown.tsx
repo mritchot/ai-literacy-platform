@@ -38,13 +38,17 @@ export function renderInline(text: string, keyBase = 'i'): ReactNode {
       // must never become an executable anchor. All current content uses
       // https/mailto/#, so rendered output is unchanged; a disallowed
       // scheme renders as a non-navigating anchor (no href).
-      const safeHref = /^(https?:|mailto:|#)/i.test(m[2].trim()) ? m[2] : undefined;
+      const rawHref = m[2].trim();
+      const safeHref = /^(https?:|mailto:|#)/i.test(rawHref) ? m[2] : undefined;
+      // Internal hash-route links (`#/...`) navigate within the HashRouter SPA,
+      // so they must stay in the same tab. External links (https/mailto) keep
+      // opening in a new tab with noopener/noreferrer.
+      const isInternal = safeHref !== undefined && rawHref.startsWith('#');
       out.push(
         <a
           key={key}
           href={safeHref}
-          target="_blank"
-          rel="noopener noreferrer"
+          {...(isInternal ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
           className="font-medium text-action underline decoration-1 underline-offset-2 transition-colors hover:text-action-hover"
         >
           {renderInline(m[1], key)}
