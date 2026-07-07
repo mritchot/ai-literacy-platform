@@ -1,3 +1,3 @@
 This is the platform's design system. Toggle between light and dark to watch the token system flip.
 
-It is designed around a warm neutral palette with no pure grays, a muted feedback set that shows outcomes rather than verdicts, and one dedicated action color kept deliberately outside the 4D competency palette, so the competency colors never lose their meaning.
+It is designed around a warm neutral palette with no pure grays, a muted feedback set that shows outcomes rather than verdicts, and one dedicated action color kept deliberately outside the 4D competency palette, so the competency colors never lose their meaning. Four of the low-emphasis neutrals run slightly darker than the original specification after a WCAG 2.1 AA contrast pass; the swatches show the shipped values.
