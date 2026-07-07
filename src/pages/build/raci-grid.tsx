@@ -58,7 +58,8 @@ export function RaciGrid(): JSX.Element {
               The <strong className="text-ink">L&amp;D Manager</strong> is Accountable (A) for{' '}
               <strong className="text-ink">{lmAccountable} of {ACTIVITIES.length}</strong> activities, as the program
               owner who approves each deliverable before it advances. The Executive Sponsor is Accountable only at
-              the {countFor(4, 'A')} phase gates. Select a role header to see its definition and totals.
+              the strategic decision points: three phase-gate approvals and the Level-4 ROI model. Select a role
+              header to see its definition and totals.
             </p>
           </>
         ) : (

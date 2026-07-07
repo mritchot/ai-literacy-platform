@@ -460,10 +460,10 @@ function L3Callout(): JSX.Element {
       <div>
         <div className="mb-1.5 font-sans text-[13px] font-semibold text-ink-secondary">Transfer Measurement by Design</div>
         <p className="m-0 font-sans text-[12px] text-body" style={{ lineHeight: 1.6 }}>
-          Two objectives produce trackable artifacts that the 30/60/90-day behavioral observation checks for
-          sustained use: <strong className="text-ink">Objective 2.3</strong> (task-level action commitment — the
+          Two objectives produce trackable artifacts that the 30/60/90-day behavioral follow-up checks for
+          sustained use: <strong className="text-ink">Objective 2.3</strong> (task-level action commitment: the
           participant identifies a specific task they will change their approach to) and{' '}
-          <strong className="text-ink">Objective 4.5</strong> (AI diligence statement — the participant documents
+          <strong className="text-ink">Objective 4.5</strong> (AI diligence statement: the participant documents
           AI’s role in a completed work product using 4D vocabulary). If the program produces behavior change,
           Level 3 data shows it. If it does not, Level 3 data shows that too.
         </p>
