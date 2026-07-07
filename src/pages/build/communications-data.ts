@@ -43,7 +43,7 @@ export const SAMPLE1_META: MemoMeta = {
 };
 
 export const SAMPLE1_STATUS: StatusRow[] = [
-  { workstream: 'Content Development', status: 'Complete', tone: 'success', notes: 'All four modules authored, reviewed, and integrated. 36 sections, 16 knowledge checks, 3 interpretation checks finalized.' },
+  { workstream: 'Content Development', status: 'Complete', tone: 'success', notes: 'All four modules authored, reviewed, and integrated. 37 sections, 16 knowledge checks, 3 interpretation checks finalized.' },
   { workstream: 'Platform Build', status: 'Complete', tone: 'success', notes: 'Custom React platform deployed to Cloudflare Pages. 12 interactive components, admin dashboard, three-mode navigation, dark mode. Production code cleanup complete.' },
   { workstream: 'Assessment System', status: 'Complete', tone: 'success', notes: '10-item pre/post assessment (parallel design) implemented and integrated into the admin-dashboard analytics.' },
   { workstream: 'Evaluation Framework', status: 'In Progress', tone: 'caution', notes: 'Levels 1 and 2 design documents complete. Level 3 (behavioral) in final review. Level 4 (ROI) drafting this week. Target: complete by May 16.' },
@@ -52,7 +52,7 @@ export const SAMPLE1_STATUS: StatusRow[] = [
 
 export const SAMPLE1_BODY_MD = `### Progress since last update
 
-The platform build reached production quality this week. The three-mode navigation system (learner, portfolio, admin) is deployed and tested. Learner mode enforces sequential progression; portfolio mode enables free navigation for hiring reviewers and internal stakeholders; admin mode exposes the full analytics dashboard with live data. The citation-visibility toggle, which lets readers show or hide inline source references, passed smoke testing across all 40 platform routes with zero errors.
+The platform build reached production quality this week. The three-mode navigation system (learner, portfolio, admin) is deployed and tested. Learner mode enforces sequential progression; portfolio mode enables free navigation for hiring reviewers and internal stakeholders; admin mode exposes the full analytics dashboard with live data. The citation-visibility toggle, which lets readers show or hide inline source references, passed smoke testing across all 41 platform routes with zero errors.
 
 ### Risks and mitigations
 
