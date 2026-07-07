@@ -53,7 +53,7 @@ function EffortComparison(): JSX.Element {
         <div
           className="space-y-4"
           role="img"
-          aria-label={`Focused solo effort about 150 to 160 hours, against a roughly 735-hour Chapman Alliance baseline for comparable Level-3 e-learning, a 4.6 to 4.9 times reduction.`}
+          aria-label={`Focused solo effort about 150 to 160 hours, against a roughly 735-hour Chapman Alliance (2010) baseline for comparable Level-3 e-learning, a 4.6 to 4.9 times reduction.`}
         >
           <EffortBar label="Focused solo effort" note={EFFORT.soloNote} hoursLabel={EFFORT.soloHoursLabel} widthPct={soloPct} accent={SERIES_ACCENT} />
           <EffortBar label="Conventional baseline" note={EFFORT.baselineNote} hoursLabel={EFFORT.baselineLabel} widthPct={100} accent="rgb(var(--ghost))" />
@@ -135,7 +135,7 @@ function GanttRow({ phase, id, open, onToggle }: { phase: Phase; id: string; ope
         onClick={onToggle}
         aria-expanded={open}
         aria-controls={`${id}-d`}
-        aria-label={`${phase.name}, ${phase.when}`}
+        aria-label={`${phase.name}, ${phase.when}, stage: ${stage.label}`}
         className="flex w-full items-center gap-2 rounded transition-colors hover:bg-surface"
         style={{ padding: '5px 0' }}
       >
