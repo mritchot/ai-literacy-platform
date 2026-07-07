@@ -209,7 +209,7 @@ export function createArtifactSeries(series: SeriesConfig): {
 
     return (
       <article
-        className="rounded-lg bg-[rgb(var(--white))] transition-colors hover:bg-surface"
+        className="flex h-full flex-col rounded-lg bg-[rgb(var(--white))] transition-colors hover:bg-surface"
         style={{ border: '1px solid rgb(var(--border))', borderTop: `3px solid ${series.accent}`, padding: '20px 22px' }}
       >
         <div className="mb-2 flex items-center gap-2.5">
@@ -232,7 +232,11 @@ export function createArtifactSeries(series: SeriesConfig): {
           {blurb}
         </p>
 
-        <div className="flex flex-wrap items-center gap-3">
+        {/* mt-auto pins the CTA row to the card bottom so, in the hub's
+            equal-height grid, the open-link / Download-PDF rows align across
+            cards regardless of blurb length. No-op in the flat single-column
+            hubs (needs-analysis, evaluation), where cards size to content. */}
+        <div className="mt-auto flex flex-wrap items-center gap-3">
           <a
             href={href}
             className="inline-flex items-center gap-1.5 font-sans text-[13px] font-semibold text-action no-underline hover:underline"
