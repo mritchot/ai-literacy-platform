@@ -19,6 +19,19 @@ export interface ArtifactMeta {
   /** One-line description shown on the hub index. */
   blurb: string;
   type: ArtifactType;
+  /**
+   * Optional hub grouping label (e.g. 'Design'). When any artifact in a
+   * series sets this, the hub renders labeled group card-grids instead of
+   * a single flat list. Series without groups (evaluation, needs-analysis)
+   * leave it undefined and render exactly as before.
+   */
+  group?: string;
+  /**
+   * Optional override for the card's open-link verb. Defaults to "Read"
+   * (Reading) / "Open the map" (Interactive) when omitted, preserving the
+   * needs-analysis action-map label.
+   */
+  openLabel?: string;
 }
 
 export interface SeriesConfig {
@@ -40,6 +53,15 @@ export interface SeriesConfig {
 
 export const TEXT_LINK =
   'inline-flex items-center gap-1.5 font-sans text-[13px] font-medium text-secondary no-underline transition-colors hover:text-ink';
+
+/** Distinct artifact groups in first-seen order (empty when none are grouped). */
+function orderedGroups(artifacts: ArtifactMeta[]): string[] {
+  const seen: string[] = [];
+  for (const a of artifacts) {
+    if (a.group && !seen.includes(a.group)) seen.push(a.group);
+  }
+  return seen;
+}
 
 export interface ArtifactHubProps {
   /** Eyebrow label above the title (e.g. 'Behind the course'). */
@@ -167,11 +189,23 @@ export function createArtifactSeries(series: SeriesConfig): {
     );
   }
 
-  function ArtifactCard({ artifact, index }: { artifact: ArtifactMeta; index: number }): JSX.Element {
+  function ArtifactCard({
+    artifact,
+    index,
+    headingLevel = 2,
+  }: {
+    artifact: ArtifactMeta;
+    index: number;
+    /** 2 in the flat hub; 3 when the card sits under a group's <h2>. */
+    headingLevel?: 2 | 3;
+  }): JSX.Element {
     const { slug, route, title, blurb, type } = artifact;
     const href = `#/${route}`;
-    const openLabel = type === 'Interactive' ? 'Open the map' : 'Read';
+    // Interactive artifacts default to "Open the map" (the needs-analysis
+    // action map); any artifact may override with its own verb.
+    const openLabel = artifact.openLabel ?? (type === 'Interactive' ? 'Open the map' : 'Read');
     const num = String(index + 1).padStart(2, '0');
+    const Heading = headingLevel === 3 ? 'h3' : 'h2';
 
     return (
       <article
@@ -188,11 +222,11 @@ export function createArtifactSeries(series: SeriesConfig): {
           </span>
         </div>
 
-        <h2 className="m-0 mb-2 font-sans text-h3 font-semibold" style={{ letterSpacing: '-0.005em' }}>
+        <Heading className="m-0 mb-2 font-sans text-h3 font-semibold" style={{ letterSpacing: '-0.005em' }}>
           <a href={href} className="text-ink no-underline hover:underline">
             {title}
           </a>
-        </h2>
+        </Heading>
 
         <p className="m-0 mb-4 font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
           {blurb}
@@ -259,11 +293,42 @@ export function createArtifactSeries(series: SeriesConfig): {
           </div>
         )}
 
-        <div className="mt-10 space-y-4">
-          {series.artifacts.map((a, i) => (
-            <ArtifactCard key={a.slug} artifact={a} index={i} />
-          ))}
-        </div>
+        {(() => {
+          const groups = orderedGroups(series.artifacts);
+          // Flat list — evaluation and needs-analysis (output unchanged).
+          if (groups.length === 0) {
+            return (
+              <div className="mt-10 space-y-4">
+                {series.artifacts.map((a, i) => (
+                  <ArtifactCard key={a.slug} artifact={a} index={i} />
+                ))}
+              </div>
+            );
+          }
+          // Grouped card grids — the build series' labeled groups.
+          return (
+            <div className="mt-10 space-y-10">
+              {groups.map((group) => (
+                <section key={group} aria-label={group}>
+                  <h2
+                    className="mb-4 font-mono text-overline font-semibold uppercase text-tertiary"
+                    style={{ letterSpacing: '0.12em' }}
+                  >
+                    {group}
+                  </h2>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {series.artifacts
+                      .map((a, i) => ({ a, i }))
+                      .filter(({ a }) => a.group === group)
+                      .map(({ a, i }) => (
+                        <ArtifactCard key={a.slug} artifact={a} index={i} headingLevel={3} />
+                      ))}
+                  </div>
+                </section>
+              ))}
+            </div>
+          );
+        })()}
 
         <div className="mt-12 border-t border-border-light pt-6">
           <a href="#/" className={TEXT_LINK}>
