@@ -21,7 +21,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     route: 'build/learning-architecture',
     title: 'Learning Architecture',
     blurb:
-      'The four-module map: competency emphasis, practice activities, performance objectives, and the assessment tiers that feed the Kirkpatrick evaluation, filterable by 4D competency.',
+      'The four-module map: competency emphasis, practice activities, performance objectives, and the assessment tiers that feed the Kirkpatrick evaluation, with every module expandable down to its objectives and activities.',
     type: 'Interactive',
     group: 'Design',
     openLabel: 'Explore',
@@ -90,7 +90,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     route: 'build/quality',
     title: 'QA Dashboard',
     blurb:
-      'The quality-assurance system: a ~65-defect typed taxonomy, the ten-pass QA record, the triple-validation data protocol, and the eight-check capability framework.',
+      'The quality-assurance system: the ten-pass verification record, the triple-validation data protocol, and the eight-check capability framework.',
     type: 'Interactive',
     group: 'Project Management',
     openLabel: 'Open',
