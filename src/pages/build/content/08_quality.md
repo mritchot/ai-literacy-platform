@@ -1,0 +1,7 @@
+Quality assurance on this project adapted Hardman's AI Evals framework to an L&D context. When the practitioner's core job shifts from authoring content to evaluating AI-generated content, the critical skills become specification — defining "good" precisely enough for AI to produce it — and verification — reliably detecting when output fails that bar. The method is a binary pass/fail cycle: select an output type, collect samples, define checks, score, diagnose root cause (specification failure vs. generalization failure), revise the specification, re-score, and repeat on a schedule.
+
+Applied across four output categories and six data files, it surfaced roughly 65 defects, all resolved before or during the build. What follows is the record: the defect taxonomy, the ten verification passes, the triple-validation data protocol, and the eight-check capability framework.
+
+## The single-evaluator limit
+
+One caveat is load-bearing: all QA was performed by the same person who authored the content, so specification failures are hardest to detect where the specifier and the evaluator share a mental model. In an organizational deployment the evaluation role would be separated from authoring, with inter-rater reliability established for the check framework. The binary pass/fail format is designed to transfer — specific enough that a different evaluator would reach substantially similar conclusions — which is the practical test of whether the methodology scales beyond one person.
