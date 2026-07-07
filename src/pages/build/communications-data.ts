@@ -6,10 +6,9 @@
 // Source: Phase 4 Component 7C Stakeholder Communication Samples
 // (course-info/content/04_phase-04/07c_stakeholder-communications.docx). The
 // samples are the document's fictional-but-grounded originals. ONE reconciliation:
-// design-review item 5 originally cited a divergent Module-4 duration ("20–30
-// target / 31–33 minutes"); that figure conflicts with the canonical durations
-// in src/data/program.ts (M4 = 30–40 min), so the item's substance is preserved
-// but the specific minute-count is generalized.
+// design-review item 5 originally cited a stale Module-4 duration (the memo
+// said "31–33 minutes"); per src/data/program.ts — the source of truth,
+// M4 = 30–40 min — the item now uses the actual shipped module duration.
 
 export interface MemoMeta {
   to: string;
@@ -115,8 +114,8 @@ export const SAMPLE2_DECISIONS: DecisionRow[] = [
   },
   {
     n: '5',
-    item: 'Module 4 duration exceeds its original target.',
-    decision: 'Accepted as-is. Module 4 carries the highest practice density (5 activities, P8–P12) because it is the program’s capstone; the overage is a reasonable tradeoff for assessment completeness.',
+    item: 'Module 4 runs 30–40 minutes, over its original 20–30 minute target — the longest of the four modules.',
+    decision: 'Accepted as-is. Module 4 carries the highest practice density (5 activities, P8–P12) because it is the program’s capstone; the extra length is a reasonable tradeoff for assessment completeness.',
     status: 'Resolved',
     tone: 'success',
     owner: 'Instructional Designer',
