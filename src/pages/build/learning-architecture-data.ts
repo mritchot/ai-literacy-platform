@@ -230,7 +230,7 @@ export interface AssessmentTier {
 export const ASSESSMENT_TIERS: AssessmentTier[] = [
   { tier: 1, label: 'Tier 1: Formative', desc: 'Scenario-based knowledge checks with explanatory feedback, embedded within modules', color: '#A0AEB8', icon: '○' },
   { tier: 2, label: 'Tier 2: Practice', desc: 'Learner choices and outputs within interactives, sandbox, and dashboards, assessed in-flow', color: '#7D9BAD', icon: '◐' },
-  { tier: 3, label: 'Tier 3: Summative', desc: 'Competency assessment (5C) and Level 3 behavioral observation (6C): post-program transfer measurement', color: '#4A6D80', icon: '●' },
+  { tier: 3, label: 'Tier 3: Summative', desc: 'Competency assessment (5C) and Level 3 behavioral follow-up (6C): post-program transfer measurement', color: '#4A6D80', icon: '●' },
 ];
 
 // ─── Kirkpatrick evaluation lane ───────────────────────────────────────
