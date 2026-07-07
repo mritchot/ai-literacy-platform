@@ -30,3 +30,6 @@ TODOARCHIVE.md
 # needs-analysis-content/ subfolder below is intentionally NOT ignored —
 # its markdown is imported at build time by the needs-analysis pages.
 claude-code/*.md
+
+# Audit working notes (session-scoped, never committed)
+BEHIND-THE-BUILD-audit.md
