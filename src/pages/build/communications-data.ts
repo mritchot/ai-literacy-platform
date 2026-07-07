@@ -131,4 +131,4 @@ The review confirms that the Phase 2 architecture is approved for content develo
 *Action-items tracker updated. Next design review: post-build QA review, tentatively May 12.*`;
 
 export const SAMPLE2_NOTE =
-  'The design-review summary leads with a decision table, not meeting minutes: stakeholders need to know what was decided and who owns the action, not what was discussed. Each row carries a disposition (Implemented, Resolved, Deferred) and an owner, and the format scales: a fifteen-item review uses the same structure.';
+  'The design-review summary leads with a decision table: stakeholders need to know what was decided and who owns the action, not what was discussed. Each row carries a disposition (Implemented, Resolved, Deferred) and an owner, and the format scales: a fifteen-item review uses the same structure.';

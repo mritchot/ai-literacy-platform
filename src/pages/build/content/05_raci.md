@@ -8,4 +8,4 @@ The L&D Manager carries most of the accountability: the program owner who approv
 
 ## Solo build versus team execution
 
-In the actual portfolio build, all five roles collapsed into the solo practitioner. The matrix makes explicit what that collapse obscures: a production deployment needs domain expertise (SME), technical implementation (FS), organizational authority (ES), design methodology (ID), and program governance (LM), a combination rarely found in one person. Reading the grid as five separate columns is the point; it is what makes the program executable by a conventional team, not only by the person who built it.
+In the actual portfolio build, all five roles collapsed into the solo practitioner. The matrix makes explicit what that collapse obscures: a production deployment needs domain expertise (SME), technical implementation (FS), organizational authority (ES), design methodology (ID), and program governance (LM), a combination rarely found in one person.
