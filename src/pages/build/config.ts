@@ -4,9 +4,10 @@
 // from the series-finale blog post. The registry below drives the hub's two
 // grouped card grids (Design, Project Management) and gives each page its
 // title, blurb, and series ordering (which the footer pager threads through).
-// Mirrors src/pages/evaluation/config.ts; the build series carries no PDFs
-// (a standalone-HTML export is produced separately), so ARTIFACT_PDFS is
-// empty and every "Download PDF" affordance stays hidden.
+// Mirrors src/pages/evaluation/config.ts. The build series ships seven
+// artifact PDFs in public/build/ (every page except the Design System, whose
+// living style guide stays interactive-only); ARTIFACT_PDFS below wires each
+// page's "Download PDF" button to its file.
 
 import type { ArtifactMeta, SeriesConfig } from '../artifact-series/artifact-series';
 
@@ -97,10 +98,19 @@ export const ARTIFACTS: ArtifactMeta[] = [
   },
 ];
 
-// The build series ships no downloadable PDFs — a standalone-HTML export is
-// handled outside this work. Empty registry ⇒ every "Download PDF" button is
-// hidden (same conditional-render contract as the other two series).
-export const ARTIFACT_PDFS: Record<string, string> = {};
+// Seven polished artifact PDFs in public/build/, one per page except the
+// Design System (the living style guide stays interactive-only). A slug's
+// presence here reveals its "Download PDF" button; absence hides it (same
+// conditional-render contract as the other two series).
+export const ARTIFACT_PDFS: Record<string, string> = {
+  'learning-architecture': 'build/learning-architecture.pdf',
+  'architecture': 'build/architecture.pdf',
+  'timeline': 'build/timeline.pdf',
+  'raci': 'build/raci.pdf',
+  'resources': 'build/resources.pdf',
+  'communications': 'build/communications.pdf',
+  'quality': 'build/quality.pdf',
+};
 
 // Long-form series-finale blog post ("behind the build") on ritchot.me.
 // Empty until Maverick sets it at publish (same pattern as
