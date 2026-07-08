@@ -53,9 +53,11 @@ export const ARTIFACT_PDFS: Record<string, string> = {
   'level-4-results': 'evaluation/level-4-results.pdf',
 };
 
-// Long-form blog post that frames the series on ritchot.me. Empty until the
-// post is published; the hub's write-up link is hidden while empty.
-export const EVALUATION_WRITEUP_URL = 'https://ritchot.me/the-evaluation-framework-for-my-ai-literacy-course/';
+// Long-form blog post that frames the series on ritchot.me. Emptied 08-07-2026:
+// the individual series posts were retired pending one consolidated write-up.
+// Repopulate with the combined post URL when it is live; the hub's write-up
+// link stays hidden while empty.
+export const EVALUATION_WRITEUP_URL = '';
 
 // Series accent — Discernment slate from the 4D palette. Evaluation is the
 // discernment work of the project, so it carries its own quiet accent while
