@@ -7,6 +7,7 @@
 
 import type { ReactNode } from 'react';
 import { renderMarkdown } from '../../components/shared/render-markdown';
+import { useViewport } from '../../hooks/useViewport';
 
 export type ArtifactType = 'Reading' | 'Interactive';
 
@@ -139,30 +140,43 @@ export function createArtifactSeries(series: SeriesConfig): {
   // right goes to the next artifact, falling back to "Back to the course"
   // on the last as a deliberate end-of-series capstone.
   function ArtifactFooter({ currentSlug }: { currentSlug: string }): JSX.Element {
+    const isMobile = useViewport() === 'mobile';
     const idx = series.artifacts.findIndex((a) => a.slug === currentSlug);
     const prev = idx > 0 ? series.artifacts[idx - 1] : undefined;
     const next = idx >= 0 ? series.artifacts[idx + 1] : undefined;
+    // Single-row pager at every breakpoint, matching the module-section
+    // footer: short labels on mobile keep prev/next on one line; full titles
+    // on wider screens. min-w-0 + truncate guards the longest titles.
+    const linkBase =
+      'flex min-w-0 flex-1 items-center gap-1.5 font-sans text-[13px] font-medium text-secondary no-underline transition-colors hover:text-ink';
     return (
-      <div className="mt-14 flex flex-col items-start gap-4 border-t border-border-light pt-6 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
+      <nav
+        aria-label="Series navigation"
+        className="mt-14 flex w-full flex-nowrap items-center justify-between gap-4 border-t border-border-light pt-6"
+      >
         {prev ? (
-          <a href={`#/${prev.route}`} className={TEXT_LINK}>
-            <span aria-hidden="true">←</span> Previous: {prev.title}
+          <a href={`#/${prev.route}`} className={linkBase}>
+            <span aria-hidden="true">←</span>
+            <span className="truncate">{isMobile ? 'Previous' : `Previous: ${prev.title}`}</span>
           </a>
         ) : (
-          <a href={`#/${series.hubRoute}`} className={TEXT_LINK}>
-            <span aria-hidden="true">←</span> {series.backToSeriesLabel}
+          <a href={`#/${series.hubRoute}`} className={linkBase}>
+            <span aria-hidden="true">←</span>
+            <span className="truncate">{isMobile ? 'Back' : series.backToSeriesLabel}</span>
           </a>
         )}
         {next ? (
-          <a href={`#/${next.route}`} className={TEXT_LINK}>
-            Next: {next.title} <span aria-hidden="true">→</span>
+          <a href={`#/${next.route}`} className={`${linkBase} justify-end`}>
+            <span className="truncate">{isMobile ? 'Next' : `Next: ${next.title}`}</span>
+            <span aria-hidden="true">→</span>
           </a>
         ) : (
-          <a href="#/" className={TEXT_LINK}>
-            Back to the course <span aria-hidden="true">→</span>
+          <a href="#/" className={`${linkBase} justify-end`}>
+            <span className="truncate">{isMobile ? 'Course' : 'Back to the course'}</span>
+            <span aria-hidden="true">→</span>
           </a>
         )}
-      </div>
+      </nav>
     );
   }
 

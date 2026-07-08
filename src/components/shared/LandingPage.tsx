@@ -460,7 +460,7 @@ function SummaryBar({
 function Footer(): JSX.Element {
   return (
     <footer
-      className="mt-12 flex items-center justify-between border-t border-border-light pt-6 font-mono text-[11px] font-medium text-muted"
+      className="mt-12 flex flex-col gap-1 border-t border-border-light pt-6 font-mono text-[11px] font-medium text-muted sm:flex-row sm:items-center sm:justify-between sm:gap-4"
       style={{ letterSpacing: '0.02em' }}
     >
       <div>AI Literacy · v1.0 · portfolio edition</div>
