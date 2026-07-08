@@ -8,6 +8,7 @@
 import { Link } from 'react-router-dom';
 import { Icon } from '../shared/Icon';
 import { Overline } from '../shared/Overline';
+import { useViewport } from '../../hooks/useViewport';
 
 interface AssessmentIntroProps {
   kind: 'pre' | 'post';
@@ -30,6 +31,7 @@ export function AssessmentIntro({
   alreadyComplete,
 }: AssessmentIntroProps): JSX.Element {
   const isPre = kind === 'pre';
+  const isMobile = useViewport() === 'mobile';
   return (
     <div className="mx-auto max-w-reading">
       <Overline className="mb-2">{isPre ? 'Pre-assessment' : 'Post-assessment'}</Overline>
@@ -50,28 +52,22 @@ export function AssessmentIntro({
       {alreadyComplete ? (
         <AlreadyCompleteNotice kind={kind} />
       ) : (
-        // Bottom navigation:
-        //   • Mobile (< sm): vertical stack with the Back link on top
-        //     (left-aligned, content-width) and the primary Begin CTA
-        //     below as a full-width button with centered content. This
-        //     is the conventional mobile primary-action treatment —
-        //     thumb-friendly target, clear visual hierarchy where the
-        //     CTA reads as "the next thing to do" rather than a
-        //     content-width afterthought floating beneath a text link.
-        //   • Desktop (≥ sm): horizontal row, Back left, Begin right,
-        //     both at content width (the original layout).
-        <div className="mt-8 flex flex-col items-start gap-5 pb-4 sm:mt-6 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-3 sm:pb-0">
+        // Bottom navigation — a single row at every breakpoint (matching the
+        // module-section footer): the Back link sits left, the primary Begin
+        // CTA right. On mobile the Back link shortens to "Back" so both stay
+        // on one line; the Begin button keeps its size and prominence.
+        <div className="mt-8 flex flex-nowrap items-center justify-between gap-3 pb-4 sm:mt-6 sm:pb-0">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 py-1 font-sans text-[13.5px] font-semibold text-tertiary no-underline hover:text-secondary sm:py-0"
+            className="inline-flex shrink-0 items-center gap-2 font-sans text-[13.5px] font-semibold text-tertiary no-underline hover:text-secondary"
           >
             <Icon name="arrowLeft" size={14} />
-            Back to program home
+            {isMobile ? 'Back' : 'Back to program home'}
           </Link>
           <button
             type="button"
             onClick={onBegin}
-            className="inline-flex w-full items-center justify-center gap-2.5 rounded-md bg-action px-5 py-3 font-sans text-[14px] font-semibold text-[rgb(var(--white))] transition-colors duration-150 hover:bg-action-hover sm:w-auto sm:justify-start"
+            className="inline-flex shrink-0 items-center justify-center gap-2.5 rounded-md bg-action px-5 py-3 font-sans text-[14px] font-semibold text-[rgb(var(--white))] transition-colors duration-150 hover:bg-action-hover"
             style={{ border: '1.5px solid rgb(var(--action))' }}
           >
             {isPre ? 'Begin pre-assessment' : 'Begin post-assessment'}
