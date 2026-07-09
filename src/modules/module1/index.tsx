@@ -72,7 +72,7 @@ function Section1({ module }: ModuleProp): JSX.Element {
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
           If you use AI at work, you’re in good company: 86% of professionals report that it
-          saves them time, and 65% say they’re satisfied with the results
+          saves them time, and 65% say they’re satisfied with the role AI plays in their work
           <Citation ids="anthropic-interviewer-2025" pageKey="time-savings-86" />. But
           widespread adoption is not the same thing as effective use. The tools can produce real
           productivity gains. The question is whether workers have the understanding and judgment
