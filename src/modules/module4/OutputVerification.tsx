@@ -22,7 +22,6 @@ import {
 } from './module4-content';
 
 const DISCERNMENT = '#5E7080';
-const INFO = '#5E7080';
 
 const CLASSIFICATION_META: Record<
   Classification,
@@ -210,7 +209,7 @@ export function OutputVerification(): JSX.Element {
       >
         <div
           className="mb-2 font-mono text-overline font-bold uppercase"
-          style={{ color: DISCERNMENT, letterSpacing: '0.1em' }}
+          style={{ color: 'rgb(var(--discernment-text))', letterSpacing: '0.1em' }}
         >
           Triage decision
         </div>
@@ -595,7 +594,7 @@ function VerificationCard({
                 className="rounded-full font-mono text-[10.5px] font-semibold"
                 style={{
                   background: 'rgba(94, 112, 128, 0.15)',
-                  color: INFO,
+                  color: 'rgb(var(--info))',
                   padding: '2px 8px',
                   letterSpacing: '0.04em',
                 }}

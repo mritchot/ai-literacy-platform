@@ -365,7 +365,7 @@ function ProfileHeader({
       <div>
         <Overline
           className="mb-1"
-          style={{ color: COLORS.diligence, letterSpacing: '0.1em' }}
+          style={{ color: 'rgb(var(--diligence-text))', letterSpacing: '0.1em' }}
         >
           Competency Profile
         </Overline>
@@ -398,12 +398,17 @@ function ProfileHeader({
 
 function CompetencyCard({
   accent,
+  accentText,
   label,
   heading,
   children,
   footerNote,
 }: {
+  /** Brand hex for the decorative left rule (theme-invariant). */
   accent: string;
+  /** Theme-adaptive text token for the overline — the brand hex sits
+   *  at ~3:1 on the dark card surface, below AA. */
+  accentText: string;
   label: string;
   heading: string;
   children: React.ReactNode;
@@ -424,7 +429,7 @@ function CompetencyCard({
         minWidth: 0,
       }}
     >
-      <Overline className="mb-1.5" style={{ color: accent, letterSpacing: '0.1em' }}>
+      <Overline className="mb-1.5" style={{ color: accentText, letterSpacing: '0.1em' }}>
         {label}
       </Overline>
       <h3 className="m-0 mb-3 font-sans text-h4 font-semibold text-ink">{heading}</h3>
@@ -444,6 +449,7 @@ function DelegationCard({ task1, task2 }: { task1: string; task2: string }): JSX
   return (
     <CompetencyCard
       accent={COLORS.delegation}
+      accentText="rgb(var(--delegation-text))"
       label="Delegation"
       heading="What you committed to changing"
       footerNote="From Module 2: Action Commitment"
@@ -477,6 +483,7 @@ function DescriptionCard({
   return (
     <CompetencyCard
       accent={COLORS.description}
+      accentText="rgb(var(--description-text))"
       label="Description"
       heading="How you specified the task"
       footerNote="From Module 4: Prompt Reformulation"
@@ -520,6 +527,7 @@ function DiscernmentCard({
   return (
     <CompetencyCard
       accent={COLORS.discernment}
+      accentText="rgb(var(--discernment-text))"
       label="Discernment"
       heading="How you evaluated AI output"
       footerNote="From Module 4: Output Verification + Iterative Refinement"
@@ -552,6 +560,7 @@ function DiligenceCard({ statement }: { statement: string }): JSX.Element {
   return (
     <CompetencyCard
       accent={COLORS.diligence}
+      accentText="rgb(var(--diligence-text))"
       label="Diligence"
       heading="Your AI practices, documented"
       footerNote="From Module 4: Diligence Statement"
@@ -709,7 +718,7 @@ function MilestoneTable({
     >
       <Overline
         className="mb-4"
-        style={{ color: COLORS.diligence, letterSpacing: '0.1em' }}
+        style={{ color: 'rgb(var(--diligence-text))', letterSpacing: '0.1em' }}
       >
         30 / 60 / 90 day milestones
       </Overline>

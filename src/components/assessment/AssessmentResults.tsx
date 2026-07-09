@@ -197,7 +197,10 @@ function ScoreHeader({
         padding: '20px 24px',
       }}
     >
-      <Overline className="mb-3" style={{ color: ASSESSMENT_ACCENT }}>
+      {/* --info: theme-adaptive slate (KnowledgeCheck precedent) — the
+          static ASSESSMENT_ACCENT hex fails AA on the dark card and
+          stays for the decorative border only. */}
+      <Overline className="mb-3" style={{ color: 'rgb(var(--info))' }}>
         Assessment growth
       </Overline>
       {/* Grid: stack on mobile, three columns at sm+. Each cell uses

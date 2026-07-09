@@ -88,7 +88,9 @@ export function AssessmentItem({
           {item.options.map((opt, optIdx) => {
             const isSelected = selectedOptionId === opt.id;
             return (
-              <li key={opt.id}>
+              // role="presentation": a radiogroup owns radios, not
+              // listitems — the <li> is layout-only.
+              <li key={opt.id} role="presentation">
                 <button
                   type="button"
                   id={`item-${item.id}-opt-${opt.id}`}
