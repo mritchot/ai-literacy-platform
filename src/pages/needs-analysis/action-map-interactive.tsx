@@ -44,6 +44,7 @@ function Pill({
   onClick,
   small,
   activeText = '#fff',
+  inactiveText,
 }: {
   label: string;
   color: string;
@@ -55,6 +56,10 @@ function Pill({
   // `color` is a theme token pass `rgb(var(--white))` so the active label
   // inverts with the theme.
   activeText?: string;
+  // Text color when inactive (sitting on the adaptive page surface).
+  // Defaults to `color`; quadrant pills pass the adaptive `--*-text`
+  // token because their brand-hex `color` fails AA on the dark canvas.
+  inactiveText?: string | undefined;
 }): JSX.Element {
   return (
     <button
@@ -65,7 +70,7 @@ function Pill({
         borderRadius: 20,
         border: `1.5px solid ${color}`,
         background: active ? color : 'transparent',
-        color: active ? activeText : color,
+        color: active ? activeText : (inactiveText ?? color),
         fontSize: small ? 11 : 12,
         fontFamily: "'DM Sans', sans-serif",
         fontWeight: 600,
@@ -211,13 +216,15 @@ function BehaviorCard({
           </span>
           {showMeta && (
             <>
-              <MetaBlock label="Sub-component" color={c.bg}>
+              {/* c.text (adaptive token), not c.bg: the brand hex fails
+                  AA as label text on the adaptive card surfaces. */}
+              <MetaBlock label="Sub-component" color={c.text}>
                 {b.subComp}
               </MetaBlock>
-              <MetaBlock label="Gap Trace" color={c.bg}>
+              <MetaBlock label="Gap Trace" color={c.text}>
                 {renderInline(b.gap, `${b.id}-gap`)}
               </MetaBlock>
-              <MetaBlock label="Module Trace" color={c.bg}>
+              <MetaBlock label="Module Trace" color={c.text}>
                 {renderInline(b.module, `${b.id}-mod`)}
               </MetaBlock>
             </>
@@ -344,6 +351,7 @@ export function InteractiveMap(): JSX.Element {
               key={q.key}
               label={q.label}
               color={COLORS[q.key].bg}
+              inactiveText={COLORS[q.key].text}
               active={activeQuadrant === q.key}
               onClick={() => handleQuadrantClick(q.key)}
             />
@@ -399,7 +407,7 @@ export function InteractiveMap(): JSX.Element {
               fontWeight: 700,
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
-              color: '#6B7F5E',
+              color: 'rgb(var(--delegation-text))',
               marginBottom: 10,
               fontFamily: "'DM Mono', monospace",
             }}
@@ -415,9 +423,11 @@ export function InteractiveMap(): JSX.Element {
         {/* Ring Labels */}
         <div style={{ display: 'flex', gap: 16, marginBottom: 20, flexWrap: 'wrap' }}>
           {[
-            { label: 'Ring 1 — Observable Behaviors', color: '#6B7F5E' },
-            { label: 'Ring 2 — Practice Activities', color: '#5E7080' },
-            { label: 'Ring 3 — Reference Information', color: '#7A6B80' },
+            // dot: brand hex (decorative swatch, theme-invariant);
+            // text: adaptive token (the hex fails AA on the dark canvas).
+            { label: 'Ring 1 — Observable Behaviors', dot: '#6B7F5E', text: 'rgb(var(--delegation-text))' },
+            { label: 'Ring 2 — Practice Activities', dot: '#5E7080', text: 'rgb(var(--discernment-text))' },
+            { label: 'Ring 3 — Reference Information', dot: '#7A6B80', text: 'rgb(var(--diligence-text))' },
           ].map((r) => (
             <div
               key={r.label}
@@ -427,12 +437,12 @@ export function InteractiveMap(): JSX.Element {
                 gap: 6,
                 fontSize: 11,
                 fontWeight: 600,
-                color: r.color,
+                color: r.text,
                 fontFamily: "'DM Mono', monospace",
                 letterSpacing: '0.04em',
               }}
             >
-              <div style={{ width: 10, height: 10, borderRadius: 3, background: r.color }} />
+              <div style={{ width: 10, height: 10, borderRadius: 3, background: r.dot }} />
               {r.label}
             </div>
           ))}
@@ -562,7 +572,7 @@ export function InteractiveMap(): JSX.Element {
               fontWeight: 700,
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
-              color: '#5E7080',
+              color: 'rgb(var(--discernment-text))',
               marginBottom: 14,
               fontFamily: "'DM Mono', monospace",
               display: 'flex',
@@ -604,7 +614,7 @@ export function InteractiveMap(): JSX.Element {
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-                    <span style={{ fontSize: 10, fontWeight: 700, color: '#5E7080', fontFamily: "'DM Mono', monospace", minWidth: 24 }}>{a.id}</span>
+                    <span style={{ fontSize: 10, fontWeight: 700, color: 'rgb(var(--discernment-text))', fontFamily: "'DM Mono', monospace", minWidth: 24 }}>{a.id}</span>
                     <span style={{ fontSize: 12.5, fontWeight: 600, color: 'rgb(var(--ink))' }}>{a.short}</span>
                   </div>
                   <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -629,7 +639,7 @@ export function InteractiveMap(): JSX.Element {
               fontWeight: 700,
               letterSpacing: '0.1em',
               textTransform: 'uppercase',
-              color: '#7A6B80',
+              color: 'rgb(var(--diligence-text))',
               marginBottom: 14,
               fontFamily: "'DM Mono', monospace",
               display: 'flex',
@@ -671,7 +681,7 @@ export function InteractiveMap(): JSX.Element {
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
-                    <span style={{ fontSize: 10, fontWeight: 700, color: '#7A6B80', fontFamily: "'DM Mono', monospace", minWidth: 20 }}>{r.id}</span>
+                    <span style={{ fontSize: 10, fontWeight: 700, color: 'rgb(var(--diligence-text))', fontFamily: "'DM Mono', monospace", minWidth: 20 }}>{r.id}</span>
                     <span style={{ fontSize: 12.5, fontWeight: 600, color: 'rgb(var(--ink))' }}>{r.short}</span>
                   </div>
                   {(showAll || showMeta) && (
@@ -697,10 +707,10 @@ export function InteractiveMap(): JSX.Element {
           }}
         >
           <strong style={{ color: 'rgb(var(--secondary))' }}>Interactions:</strong> Click a{' '}
-          <strong style={{ color: '#6B7F5E' }}>competency header</strong> to filter by dimension. Click a{' '}
-          <strong style={{ color: '#6B7F5E' }}>behavior card</strong> to expand details and highlight linked activities and
-          references. Hover over a <strong style={{ color: '#5E7080' }}>practice activity</strong> or{' '}
-          <strong style={{ color: '#7A6B80' }}>reference item</strong> to see which behaviors it supports. Toggle{' '}
+          <strong style={{ color: 'rgb(var(--delegation-text))' }}>competency header</strong> to filter by dimension. Click a{' '}
+          <strong style={{ color: 'rgb(var(--delegation-text))' }}>behavior card</strong> to expand details and highlight linked activities and
+          references. Hover over a <strong style={{ color: 'rgb(var(--discernment-text))' }}>practice activity</strong> or{' '}
+          <strong style={{ color: 'rgb(var(--diligence-text))' }}>reference item</strong> to see which behaviors it supports. Toggle{' '}
           <em>Show Metadata</em> for gap traces, module traces, and sub-component alignment. Toggle <em>Show All</em> to expand
           every element simultaneously.
         </div>

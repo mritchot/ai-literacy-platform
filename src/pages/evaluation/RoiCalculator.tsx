@@ -394,7 +394,10 @@ export function RoiCalculator(): JSX.Element {
           </div>
           <div
             className="mt-1 font-mono font-semibold"
-            style={{ fontSize: 40, lineHeight: 1.2, color: SERIES_ACCENT }}
+            // Theme-adaptive: the static series accent measures 2.77:1
+            // on the dark surface — under even the 3:1 large-text
+            // minimum. SERIES_ACCENT stays on the decorative rules.
+            style={{ fontSize: 40, lineHeight: 1.2, color: 'rgb(var(--discernment-text))' }}
           >
             {fmtPct(roi)}
           </div>

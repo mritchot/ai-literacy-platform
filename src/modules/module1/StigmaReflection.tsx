@@ -82,7 +82,7 @@ export function StigmaReflection({ scrollTargetId }: StigmaReflectionProps): JSX
         padding: '20px 22px',
       }}
     >
-      <Overline className="mb-2" style={{ color: DELEGATION }}>
+      <Overline className="mb-2" style={{ color: 'rgb(var(--delegation-text))' }}>
         Reflection
       </Overline>
 

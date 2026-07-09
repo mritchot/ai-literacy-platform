@@ -34,7 +34,7 @@ export function AssessmentGrowth(): JSX.Element {
     >
       <Overline
         className="mb-1"
-        style={{ color: ASSESSMENT_ACCENT, letterSpacing: '0.1em' }}
+        style={{ color: 'rgb(var(--info))', letterSpacing: '0.1em' }}
       >
         Assessment Growth
       </Overline>
