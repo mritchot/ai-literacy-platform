@@ -251,7 +251,7 @@ export const KIRK_LEVELS: KirkLevel[] = [
   { key: 'L4', label: 'Level 4', name: 'Results', color: '#7A6B80', detail: 'Business outcomes downstream of competent use: efficiency (time-to-first-draft, revision cycles), quality (AI-error rate), transparency, and time-to-competency, run through a Phillips ROI model (191% in the conservative worked example)' },
 ];
 
-// ─── Admin / analytics infrastructure (hidden from learners) ───────────
+// ─── Analytics infrastructure (hidden from learners) ───────────────────
 
 export interface InfraComponent {
   component: string;
@@ -261,10 +261,10 @@ export interface InfraComponent {
 
 export const INFRA_COMPONENTS: InfraComponent[] = [
   {
-    component: '4D · Admin Analytics Dashboard',
+    component: '4D · Analytics Dashboard',
     title: 'Per-learner progress tracking, module completion rates, practice activity engagement metrics, and time-on-task data.',
     detail:
-      'Hidden admin-only overlay reachable via Cmd/Ctrl+Shift+A. Surfaces the practice-activity and KC data that feeds Kirkpatrick Levels 2 and 3.',
+      'Portfolio-mode analytics dashboard at /#/dashboard (Ctrl/Cmd+Shift+A enters portfolio mode). Surfaces the practice-activity and KC data that feeds Kirkpatrick Levels 2 and 3.',
   },
   {
     component: '4E · Platform Shell',

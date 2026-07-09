@@ -653,9 +653,9 @@ export function LearningArchitectureDiagram(): JSX.Element {
         <L3Callout />
       </div>
 
-      {/* Admin / analytics infrastructure */}
+      {/* Analytics infrastructure */}
       <div className="mb-7">
-        <SectionRule label="Admin / Analytics Infrastructure" hint="Hidden from the learner; supports Levels 2 & 3" />
+        <SectionRule label="Analytics Infrastructure" hint="Hidden from the learner; supports Levels 2 & 3" />
         <InfraCards />
       </div>
 

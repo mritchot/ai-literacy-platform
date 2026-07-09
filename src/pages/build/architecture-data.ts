@@ -67,7 +67,7 @@ export const ADRS: Adr[] = [
     status: 'adopted',
     rationale: [
       'The platform only needs to remember a small, well-defined amount of information, so it uses React\'s built-in tools for this rather than a separate add-on library. Two pieces cover everything.',
-      'The first remembers each learner\'s progress: where they are, which sections they have finished, their knowledge-check answers, and their written reflections, all saved in the browser so nothing is lost on a refresh or an interruption. The second records activity for the admin dashboard and can export it as a file the organization can take with it.',
+      'The first remembers each learner\'s progress: where they are, which sections they have finished, their knowledge-check answers, and their written reflections, all saved in the browser so nothing is lost on a refresh or an interruption. The second records activity for the analytics dashboard and can export it as a file the organization can take with it.',
     ],
   },
   {
