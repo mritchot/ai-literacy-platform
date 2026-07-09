@@ -57,9 +57,9 @@ const REPO_URL = 'https://github.com/mritchot/ai-literacy-platform';
 // it renders.
 const WRITEUP_URL = 'https://ritchot.me/ai-courses/';
 
-// Direct email — surfaced as a personal sign-off before the closing
-// line. The framing is intentionally low-stakes ("or just to chat")
-// so readers feel invited rather than transactional.
+// Direct email — surfaced inside the "What's next" card. The framing
+// is intentionally low-stakes ("or just to chat") so readers feel
+// invited rather than transactional.
 const EMAIL = 'michael@ritchot.me';
 
 // Diligence accent — the page's primary identity color. The tip card
@@ -93,6 +93,15 @@ export default function ThankYou(): JSX.Element {
     <div className="mx-auto max-w-reading px-4 py-14 sm:px-8 lg:px-16 lg:py-16">
       <OriginStory />
 
+      <BlogCard
+        showCourseHub={showWriteup}
+        onCourseHubClick={onWriteupClick}
+        onBlogClick={onBlogClick}
+        onLinkedInClick={onLinkedInClick}
+        onXClick={onXClick}
+        onEmailClick={onEmailClick}
+      />
+
       <NeedsAnalysisBlock />
 
       <EvaluationBlock />
@@ -100,18 +109,6 @@ export default function ThankYou(): JSX.Element {
       <BuildBlock />
 
       {showTipSection && <TipCard onClick={onTipClick} />}
-
-      <BlogCard
-        showCourseHub={showWriteup}
-        onCourseHubClick={onWriteupClick}
-        onBlogClick={onBlogClick}
-        onLinkedInClick={onLinkedInClick}
-        onXClick={onXClick}
-      />
-
-      <EmailInvitation onClick={onEmailClick} />
-
-      <ClosingLine />
 
       <DiligenceStatement />
     </div>
@@ -125,8 +122,8 @@ export default function ThankYou(): JSX.Element {
 // own dog food: the course teaches diligence statements as a practice,
 // and this is one for the course itself.
 //
-// Placed at the very bottom of the page, beneath the closing line, so
-// the warm first-person content (origin story → CTAs → sign-off) flows
+// Placed at the very bottom of the page so the warm first-person
+// content (origin story → what's-next card → artifact hubs) flows
 // uninterrupted and the formal disclosure sits as an appendix the
 // reader meets only after the personal voice has done its work. Card
 // chrome with the DILIGENCE accent border frames it as a discrete
@@ -252,11 +249,10 @@ function OriginStory(): JSX.Element {
 // Links to the needs-analysis hub (`/#/needs-analysis`) — the four
 // portfolio documents (problem statement, capability gap analysis,
 // learner persona, action map) that make the research-and-design case
-// behind the course. Sits directly under the origin story as the first
-// "go deeper" affordance, framed as a card with the DILIGENCE accent so
-// it reads as a discrete artifact set alongside the write-up and tip
-// cards below. Internal hash link (no new-tab/rel) since it routes
-// within the platform.
+// behind the course. Opens the "go deeper" set beneath the what's-next
+// card, framed with the DILIGENCE accent so it reads as a discrete
+// artifact set alongside the evaluation and build cards below. Internal
+// hash link (no new-tab/rel) since it routes within the platform.
 
 function NeedsAnalysisBlock(): JSX.Element {
   return (
@@ -441,17 +437,19 @@ function BlogCard({
   onBlogClick,
   onLinkedInClick,
   onXClick,
+  onEmailClick,
 }: {
   showCourseHub: boolean;
   onCourseHubClick: () => void;
   onBlogClick: () => void;
   onLinkedInClick: () => void;
   onXClick: () => void;
+  onEmailClick: () => void;
 }): JSX.Element {
   return (
     <section
       aria-label="Stay connected"
-      className="mt-6 rounded-lg"
+      className="mt-10 rounded-lg"
       style={{
         background: 'rgb(var(--white))',
         // Neutral top border — this card isn't tied to a specific 4D
@@ -525,6 +523,25 @@ function BlogCard({
           </p>
         </div>
       )}
+      {/* Direct-email invitation — the personal channel, folded into
+          this card so every way to stay in touch lives in one place.
+          Deliberately phrased to lower the threshold for sending
+          ("or just to chat"). */}
+      <p
+        className="m-0 mt-5 font-sans text-body-sm text-body"
+        style={{ lineHeight: 1.6 }}
+      >
+        If you'd like to email me — about the course, what you wish you could learn next, or just
+        to chat — I'm at{' '}
+        <a
+          href={`mailto:${EMAIL}`}
+          onClick={onEmailClick}
+          className="font-medium text-secondary no-underline hover:text-ink hover:underline"
+        >
+          {EMAIL}
+        </a>
+        . I read everything that comes in.
+      </p>
       {/* Secondary social channels — quiet caption-sized links rather
           than buttons. They share the "stay connected" theme with the
           blog but aren't primary CTAs; the visual weight stays on the
@@ -571,47 +588,3 @@ function BlogCard({
   );
 }
 
-// ─── Email invitation ─────────────────────────────────────────────
-//
-// A personal, low-friction invitation to reach out by email. Sits
-// between the help cards and the closing line — close enough to the
-// sign-off that it reads as part of the personal voice, not as another
-// "stay connected" channel. Deliberately phrased to lower the
-// threshold for sending ("or just to chat") since the user explicitly
-// wants people to feel comfortable emailing in.
-
-function EmailInvitation({ onClick }: { onClick: () => void }): JSX.Element {
-  return (
-    <div
-      className="mt-10 font-sans text-body-sm text-body"
-      style={{ lineHeight: 1.6 }}
-    >
-      <p className="m-0">
-        If you'd like to email me — about the course, what you wish you could learn next, or just
-        to chat — I'm at{' '}
-        <a
-          href={`mailto:${EMAIL}`}
-          onClick={onClick}
-          className="font-medium text-secondary no-underline hover:text-ink hover:underline"
-        >
-          {EMAIL}
-        </a>
-        . I read everything that comes in.
-      </p>
-    </div>
-  );
-}
-
-// ─── Closing line ─────────────────────────────────────────────────
-
-function ClosingLine(): JSX.Element {
-  return (
-    <p
-      className="m-0 mt-10 font-sans text-body-sm text-secondary"
-      style={{ textAlign: 'center', lineHeight: 1.6 }}
-    >
-      It meant something to build this. Thanks for being here — whether you've finished the
-      course or are still deciding whether to start.
-    </p>
-  );
-}
