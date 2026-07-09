@@ -192,6 +192,36 @@ const LearnerProgressContext = createContext<LearnerProgressValue | null>(null);
 const k = (moduleId: number, sectionId: number, leaf?: string): string =>
   leaf === undefined ? `${moduleId}.${sectionId}` : `${moduleId}.${sectionId}.${leaf}`;
 
+// Merge pending active time straight into the persisted store. Used only on
+// the pagehide / visibility-hidden flush: React's effect-based localStorage
+// write runs after a re-render, which the browser won't grant during unload,
+// so the final flush was otherwise lost on hard tab close. The queued
+// setState from the same flush still applies when the page survives; its
+// subsequent effect write lands on the same total, so the two paths cannot
+// double-count.
+function writeThroughActiveTime(moduleId: number, sectionId: number, ms: number): void {
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEYS.PROGRESS);
+    if (raw === null) return;
+    const parsed: unknown = JSON.parse(raw);
+    if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) return;
+    const stored = parsed as LearnerProgressState;
+    const key = k(moduleId, sectionId);
+    const cur = stored.activeTimeMs?.[key] ?? 0;
+    const next = Math.min(cur + ms, PER_SECTION_CAP_MS);
+    if (next === cur) return;
+    window.localStorage.setItem(
+      STORAGE_KEYS.PROGRESS,
+      JSON.stringify({
+        ...stored,
+        activeTimeMs: { ...(stored.activeTimeMs ?? {}), [key]: next },
+      }),
+    );
+  } catch {
+    /* storage unavailable — nothing to persist */
+  }
+}
+
 // Read-side shape guard for the frozen 'ail.progress' key: a corrupted
 // or hand-edited value (null, an array, a bare string) falls back to
 // INITIAL instead of crashing the first field access. Field-level
@@ -429,9 +459,13 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
   // hidden, pagehide, navigation off a section surface, and at the
   // per-section cap. Stored shape and cap semantics are unchanged;
   // only the write cadence differs.
+  // Destructured before the effect: depending on `state.current` inside a
+  // dependency array trips the react-hooks mutable-ref heuristic (the field
+  // is named `current`), though it is plain React state.
+  const currentSection = state.current;
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const current = state.current;
+    const current = currentSection;
     if (!current) return;
 
     let pendingMs = 0;
@@ -479,10 +513,20 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
     };
     const intervalId = window.setInterval(tick, HEARTBEAT_MS);
 
-    const onVisibility = () => {
-      if (document.visibilityState === 'hidden') flush();
+    // Unload-adjacent flush: also write the pending total straight to
+    // localStorage — the setState path's effect write never runs if the
+    // page is actually going away (see writeThroughActiveTime).
+    const flushForUnload = () => {
+      if (pendingMs <= 0) return;
+      const ms = pendingMs;
+      pendingMs = 0;
+      addActiveTime(current.moduleId, current.sectionId, ms);
+      writeThroughActiveTime(current.moduleId, current.sectionId, ms);
     };
-    const onPageHide = () => flush();
+    const onVisibility = () => {
+      if (document.visibilityState === 'hidden') flushForUnload();
+    };
+    const onPageHide = () => flushForUnload();
     document.addEventListener('visibilitychange', onVisibility);
     window.addEventListener('pagehide', onPageHide);
 
@@ -495,7 +539,7 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
       window.removeEventListener('pagehide', onPageHide);
       flush();
     };
-  }, [state.current, addActiveTime]);
+  }, [currentSection, addActiveTime]);
 
   // ── Reactive getters ── new identity on each state change is fine because
   // they're called inside render or memoized effects that depend on `state`.
@@ -563,10 +607,11 @@ export function useLearnerProgress(): LearnerProgressValue {
 // directly so completion ticks live.
 export function useResolvedModules(): ModuleMeta[] {
   const { state } = useLearnerProgress();
+  // Destructured outside the memo: `state.current` in a dependency array
+  // trips the react-hooks mutable-ref heuristic (field named `current`),
+  // though it is plain React state.
+  const { scrolledSections: scrolled, interactionCompleteSections: interacted, current } = state;
   return useMemo(() => {
-    const scrolled = state.scrolledSections;
-    const interacted = state.interactionCompleteSections;
-    const current = state.current;
     return MODULES.map((m) => {
       const total = m.sections.length;
       let doneCount = 0;
@@ -586,5 +631,5 @@ export function useResolvedModules(): ModuleMeta[] {
       const progress = total === 0 ? 0 : doneCount / total;
       return { ...m, sections, progress };
     });
-  }, [state.scrolledSections, state.interactionCompleteSections, state.current]);
+  }, [scrolled, interacted, current]);
 }

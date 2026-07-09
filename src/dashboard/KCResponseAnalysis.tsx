@@ -214,7 +214,7 @@ function ResponseCard({
             className="font-sans text-[12.5px] font-semibold"
             style={{ color: row.feedbackTone ? TONE_COLOR[row.feedbackTone] : undefined }}
           >
-            {row.isPreferred ? '✓ Preferred' : `✗ ${row.feedbackTone ?? 'caution'}`}
+            {row.isPreferred ? '✓ Preferred' : '✗ Not preferred'}
           </span>
         ) : (
           <span className="font-mono text-[11px] text-muted">Not attempted</span>

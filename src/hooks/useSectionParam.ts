@@ -20,10 +20,17 @@ export function useSectionParam(moduleId: number): number {
     return parsed;
   }, [sectionParam, maxSection]);
 
-  // Normalize bare /module/N to /module/N/section/1 so back/forward work.
+  // Normalize the URL so back/forward and the mobile TopBar label agree
+  // with what actually renders: bare /module/N and any invalid or
+  // out-of-range section param (e.g. /section/99, /section/abc) both
+  // replace to the section that is really shown. Previously only the
+  // missing-param case normalized, so /module/1/section/99 rendered
+  // Section 1 under a URL — and a TopBar "S99" cue — claiming otherwise.
   useEffect(() => {
-    if (sectionParam === undefined) {
-      navigate(`/module/${moduleId}/section/1`, { replace: true });
+    const parsed = sectionParam === undefined ? NaN : Number.parseInt(sectionParam, 10);
+    const outOfRange = Number.isNaN(parsed) || parsed < 1 || parsed > maxSection;
+    if (sectionParam === undefined || outOfRange) {
+      navigate(`/module/${moduleId}/section/${sectionId}`, { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- normalize once per param change
   }, [sectionParam]);

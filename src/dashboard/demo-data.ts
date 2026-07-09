@@ -9,7 +9,7 @@
 //   • Module 3: ~60% through (7/11) — first three sections of P5/P6/P7 work
 //     done, last four sections (S8 Steerability through S11 Transition,
 //     including the M3 KC) NOT yet reached
-//   • Module 4: untouched (0/9)
+//   • Module 4: untouched (0/10)
 //
 // **KC mix:** 8 of 16 items attempted (M1 + M2 only — the M3 KC sits on
 // S10 which is past the learner's progress, M4 not yet started). 6 of 8
@@ -58,15 +58,19 @@ function kc(
 
 const KC_RESPONSES: Record<string, KnowledgeCheckResult> = {
   // M1 S7: 4 items, 3 preferred (KC-1.2 chose c instead of a).
-  '1.7.kc_1_1': kc('c', true, at(13, 12)),
-  '1.7.kc_1_2': kc('c', false, at(13, 41)),
-  '1.7.kc_1_3': kc('d', true, at(14, 8)),
-  '1.7.kc_1_4': kc('b', true, at(14, 33)),
+  // Timestamps sit inside S7's nav window (10.5–13 min) so the module
+  // completion event can't predate its knowledge checks.
+  '1.7.kc_1_1': kc('c', true, at(11, 12)),
+  '1.7.kc_1_2': kc('c', false, at(11, 41)),
+  '1.7.kc_1_3': kc('d', true, at(12, 8)),
+  '1.7.kc_1_4': kc('b', true, at(12, 33)),
   // M2 S7: 4 items, 3 preferred (KC-2.3 chose b instead of c).
-  '2.7.kc_2_1': kc('a', true, at(35, 18)),
-  '2.7.kc_2_2': kc('b', true, at(35, 47)),
-  '2.7.kc_2_3': kc('b', false, at(36, 14)),
-  '2.7.kc_2_4': kc('a', true, at(36, 41)),
+  // Timestamps sit inside S7's nav window (28.5–31.5 min); module_2_complete
+  // fires at m2.endMin = 32.5 min, after all four.
+  '2.7.kc_2_1': kc('a', true, at(29, 18)),
+  '2.7.kc_2_2': kc('b', true, at(29, 47)),
+  '2.7.kc_2_3': kc('b', false, at(30, 14)),
+  '2.7.kc_2_4': kc('a', true, at(30, 41)),
   // M1 S3 interpretation checks (P1 data narrative). All preferred.
   '1.3.ic_1_1': kc('b', true, at(5, 22)),
   '1.3.ic_1_2': kc('a', true, at(7, 41)),
@@ -148,7 +152,7 @@ export const DEMO_PROGRESS: LearnerProgressState = {
         'PRE-6':  { itemId: 'PRE-6',  selectedOptionId: 'C', isCorrect: false, timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
         'PRE-7':  { itemId: 'PRE-7',  selectedOptionId: 'D', isCorrect: true,  timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
         'PRE-8':  { itemId: 'PRE-8',  selectedOptionId: 'C', isCorrect: true,  timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
-        'PRE-9':  { itemId: 'PRE-9',  selectedOptionId: 'A', isCorrect: true,  timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
+        'PRE-9':  { itemId: 'PRE-9',  selectedOptionId: 'B', isCorrect: true,  timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
         'PRE-10': { itemId: 'PRE-10', selectedOptionId: 'B', isCorrect: false, timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
       },
     },
@@ -225,12 +229,13 @@ const M1_EVENTS: Ev[] = [
   ev(at(11, 33), 'p2_reflection_viewed', 1, 5),
   ev(at(12, 47), 'p2_reflection_continued', 1, 5),
   ev(at(12, 47), 'p2_time_on_prompt', 1, 5, { seconds: 74 }),
-  // KC-1.1 to KC-1.4 on S7.
-  ev(at(13, 12), 'kc_1_1_submitted', 1, 7, { optionId: 'c', isPreferred: true }),
-  ev(at(13, 41), 'kc_1_2_submitted', 1, 7, { optionId: 'c', isPreferred: false }),
-  ev(at(14, 8), 'kc_1_3_submitted', 1, 7, { optionId: 'd', isPreferred: true }),
-  ev(at(14, 33), 'kc_1_4_submitted', 1, 7, { optionId: 'b', isPreferred: true }),
-  ev(at(14, 36), 'kc_module_1_complete', 1, 7),
+  // KC-1.1 to KC-1.4 on S7 (10.5–13 min window; must precede
+  // module_1_complete at 14:00). Timestamps mirror KC_RESPONSES.
+  ev(at(11, 12), 'kc_1_1_submitted', 1, 7, { optionId: 'c', isPreferred: true }),
+  ev(at(11, 41), 'kc_1_2_submitted', 1, 7, { optionId: 'c', isPreferred: false }),
+  ev(at(12, 8), 'kc_1_3_submitted', 1, 7, { optionId: 'd', isPreferred: true }),
+  ev(at(12, 33), 'kc_1_4_submitted', 1, 7, { optionId: 'b', isPreferred: true }),
+  ev(at(12, 36), 'kc_module_1_complete', 1, 7),
   // Module 1 complete after S8.
   ev(at(m1.endMin, 0), 'module_1_complete', 1),
 ];
@@ -255,12 +260,14 @@ const M2_EVENTS: Ev[] = [
   ev(at(m1.endMin + 13, 47), 'p4_commitment_task1_engaged', 2, 5),
   ev(at(m1.endMin + 14, 22), 'p4_commitment_task2_engaged', 2, 5),
   ev(at(m1.endMin + 15, 51), 'p4_commitment_saved', 2, 5, { task1Chars: 380, task2Chars: 312 }),
-  // KCs on M2 S7. KC-2.3 non-preferred.
-  ev(at(35, 18), 'kc_2_1_submitted', 2, 7, { optionId: 'a', isPreferred: true }),
-  ev(at(35, 47), 'kc_2_2_submitted', 2, 7, { optionId: 'b', isPreferred: true }),
-  ev(at(36, 14), 'kc_2_3_submitted', 2, 7, { optionId: 'b', isPreferred: false }),
-  ev(at(36, 41), 'kc_2_4_submitted', 2, 7, { optionId: 'a', isPreferred: true }),
-  ev(at(36, 44), 'kc_module_2_complete', 2, 7),
+  // KCs on M2 S7 (28.5–31.5 min window; must precede module_2_complete
+  // at m2.endMin = 32.5). KC-2.3 non-preferred. Timestamps mirror
+  // KC_RESPONSES.
+  ev(at(29, 18), 'kc_2_1_submitted', 2, 7, { optionId: 'a', isPreferred: true }),
+  ev(at(29, 47), 'kc_2_2_submitted', 2, 7, { optionId: 'b', isPreferred: true }),
+  ev(at(30, 14), 'kc_2_3_submitted', 2, 7, { optionId: 'b', isPreferred: false }),
+  ev(at(30, 41), 'kc_2_4_submitted', 2, 7, { optionId: 'a', isPreferred: true }),
+  ev(at(30, 44), 'kc_module_2_complete', 2, 7),
   ev(at(m2.endMin, 0), 'module_2_complete', 2),
 ];
 
@@ -355,7 +362,7 @@ const PRE_ASSESSMENT_EVENTS: Ev[] = [
   }),
   ev(at(-6, 0), 'assessment_item_answered', undefined, undefined, {
     kind: 'pre', itemId: 'PRE-9', construct: 'verification-priority', block: 'evaluation',
-    selectedOptionId: 'A', isCorrect: true,
+    selectedOptionId: 'B', isCorrect: true,
   }),
   ev(at(-5, 0), 'assessment_item_answered', undefined, undefined, {
     kind: 'pre', itemId: 'PRE-10', construct: 'structured-prompting', block: 'evaluation',

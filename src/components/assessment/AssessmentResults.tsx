@@ -178,7 +178,9 @@ function ScoreHeader({
   total: number;
 }): JSX.Element {
   const delta = postCorrect - preCorrect;
-  const deltaSign = delta > 0 ? '+' : delta < 0 ? '' : '±';
+  // U+2212 minus so a score drop reads as "−2", not a bare "2" whose
+  // only regression cue was the error color.
+  const deltaSign = delta > 0 ? '+' : delta < 0 ? '−' : '±';
   const deltaColor =
     delta > 0 ? SUCCESS : delta < 0 ? ERROR : 'rgb(var(--muted))';
   const deltaBg =
@@ -345,7 +347,7 @@ function BlockBreakdown({
                   Post <strong className="text-ink">{stats.postCorrect}/{stats.total}</strong>
                 </div>
                 <div style={{ color: delta > 0 ? SUCCESS : delta < 0 ? ERROR : 'rgb(var(--muted))' }}>
-                  {delta > 0 ? '+' : delta < 0 ? '' : '±'}
+                  {delta > 0 ? '+' : delta < 0 ? '−' : '±'}
                   {Math.abs(delta)} change
                 </div>
               </div>

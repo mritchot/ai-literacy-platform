@@ -266,15 +266,16 @@ function Section6({ module }: ModuleProp): JSX.Element {
   const { state, markInteractionComplete } = useLearnerProgress();
   useEffect(() => {
     // Complete once the learner has submitted their Turn 3 refinement
-    // (the new author-and-compare step is the pedagogical core).
-    // Legacy fallbacks: `p11_t2_refinement` from the original design
-    // and `p11_t2_gap` from the earlier worked-example restructure
-    // both still mark the section complete for in-progress sessions
-    // under prior designs.
+    // (the author-and-compare step is the pedagogical core). The only
+    // fallback is `p11_t2_refinement`, a textarea key from the original
+    // pre-restructure design, kept so old in-progress sessions don't
+    // regress. `p11_t2_gap` must NOT count: the current Turn 2 submit
+    // writes it, so treating it as a completion signal marked the
+    // section done a full turn early — before the learner authored
+    // their own refinement.
     const sectionDone =
       (state.reflections['4.6.p11_t3_refinement'] ?? '').trim().length >= 20 ||
-      (state.reflections['4.6.p11_t2_refinement'] ?? '').trim().length >= 20 ||
-      (state.reflections['4.6.p11_t2_gap'] ?? '').trim().length >= 20;
+      (state.reflections['4.6.p11_t2_refinement'] ?? '').trim().length >= 20;
     if (sectionDone && !state.interactionCompleteSections['4.6']) markInteractionComplete(4, 6);
   }, [state.reflections, state.interactionCompleteSections, markInteractionComplete]);
 
@@ -383,7 +384,7 @@ function Section9({ module }: ModuleProp): JSX.Element {
           they're in the closing reading, mirroring how it'll feel to
           reach for outside the program. */}
       <ReferenceTabRail>
-        <R7Trigger variant="tab" label="Policy Starter" />
+        <R7Trigger label="Policy Starter" />
       </ReferenceTabRail>
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
