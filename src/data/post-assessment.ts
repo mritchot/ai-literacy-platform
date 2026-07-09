@@ -135,7 +135,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'B',
         text:
-          'The model generates text by predicting what a plausible analyst citation should look like based on patterns in its training data. Unless it actively retrieved and read the actual Gartner report during this interaction, the quadrant placement, consecutive-year claim, and cited differentiators may all be fabricated independently.',
+          'The model generates text by predicting what a plausible analyst citation should look like from training-data patterns. Unless it actually retrieved and read the Gartner report, the quadrant placement, consecutive-year claim, and cited differentiators may each be fabricated.',
         isCorrect: true,
         feedbackText:
           'The model\'s next-token prediction mechanism generates what a plausible analyst citation should contain, based on statistical patterns. Each element (the quadrant placement, the "third consecutive year" claim, the specific differentiators) is independently generated to fit the expected format of a Gartner citation. Unless the tool performed an active retrieval step (searching for and reading the actual report during this interaction), every detail may be fabricated while appearing authoritative. The specificity and formatting are features of fluent generation, not evidence of accuracy.',
@@ -281,7 +281,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'C',
         text:
-          'The AI tool retrieved the core ISO requirements accurately from its training data but filled in additional items by generating text that matches the linguistic patterns of certification documentation. Once the model established the format of "ISO requirement," it continued producing items that fit that pattern regardless of whether they exist in the actual standard.',
+          'The AI tool reproduced the core ISO requirements accurately but filled in additional items with text matching the linguistic patterns of certification documentation. Once it established the "ISO requirement" format, it kept producing items that fit the pattern whether or not they exist in the actual standard.',
         isCorrect: true,
         feedbackText:
           'This is the prediction-vs.-retrieval distinction in action. The model may have encoded some real ISO 9001 requirements from its training data, producing accurate items 1 through 7. But the model doesn\'t "know" how many requirements exist. It generates one item after another by predicting what the next plausible requirement should look like. Once the output format is established ("numbered requirement in formal certification language"), the model continues generating items that fit that pattern. Requirements 8 through 12 exist because they\'re linguistically plausible, not because they correspond to real provisions. The model can\'t distinguish between generating a real requirement from memory and generating a fabricated one from pattern matching: from the model\'s perspective, both processes are identical.',
@@ -335,7 +335,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'D',
         text:
-          'Thai script is tokenized into many small byte-level fragments that don\'t align with Thai\'s meaningful units, while French and English text maps onto tokens that track whole words and word parts. The model\'s representation of the Thai tagline is built from pieces that carry little meaning on their own, so meaning shifts or collapses during round-trip translation in ways that don\'t occur for Latin-script languages.',
+          'Thai script tokenizes into many small byte-level fragments that don\'t align with its meaningful units, while French and English map onto tokens tracking whole words and word parts, so the Thai tagline\'s meaning shifts or collapses in round-trip translation.',
         isCorrect: true,
         feedbackText:
           'Tokenization is the structural explanation. Tokenizer vocabularies are built mostly from English and other Latin-script text, so common English and French words map onto whole-word or word-part tokens that line up with meaning. Non-Latin scripts, including Thai, appeared far less often in that data, so Thai text fragments much more aggressively — often into byte-level pieces that split individual characters and ignore where Thai\'s words and syllables actually begin and end. The model has to rebuild meaning from fragments that don\'t align with meaningful units, which gives it weaker handles on the content it needs to preserve. The round-trip test exposes this: French→English→French holds because French tokens track meaningful units; Thai→English→Thai degrades because the representation is built on misaligned fragments. Thinner Thai training data compounds the problem, but the fragmentation is the structural piece.',
@@ -365,7 +365,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'B',
         text:
-          'Task A succeeded because it required generating plausible, well-structured text, which is what the model\'s architecture is optimized for. Task B failed because verifying a specific fact in a long document requires sustained attention across the full input and retrieval of a precise detail, stressing the model\'s context window. Task C failed because exact numerical computation conflicts with the model\'s token-based, probabilistic architecture.',
+          'Task A required generating plausible, well-structured text, which is what the architecture is optimized for. Task B stressed the context window: verifying one precise fact demands sustained attention across a long input. Task C failed because exact numerical computation conflicts with token-based, probabilistic generation.',
         isCorrect: true,
         feedbackText:
           'The capability diagnosis framework maps each success or failure to a specific property of the model\'s architecture. Task A (press release) succeeded because generating well-structured, contextually appropriate text is precisely what next-token prediction is optimized for. The model excels at producing language that fits the expected patterns of a given document type. Task B (clause verification) failed because finding a specific fact in a 200-page document requires sustained attention across the entire input and precise retrieval. The model\'s attention degrades across long inputs, so it sometimes "finds" clauses that don\'t exist or misses clauses that do. Task C (WACC calculation) failed because exact arithmetic requires precise numerical operations that conflict with the model\'s token-based, probabilistic architecture. The model generates plausible-looking numbers rather than computing.',
@@ -415,7 +415,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'B',
         text:
-          'Claim 2, because it cites a specific government report with a precise statistic. If the report doesn\'t exist or the 34% figure is fabricated, the grant application contains a falsified citation that could disqualify the proposal and damage the organization\'s credibility with the funder.',
+          'Claim 2, because it cites a specific government report with a precise statistic. If the report doesn\'t exist or the 34% is fabricated, the application contains a falsified citation that could disqualify the proposal and damage credibility with the funder.',
         isCorrect: true,
         feedbackText:
           'Claim 2 cites a specific government report ("U.S. Department of Labor\'s 2024 Workforce Innovation Report") with a precise statistic (34% turnover reduction). This is exactly the type of claim AI models fabricate fluently: a plausible-sounding report title, a credible government source, and a specific percentage that would be impressive if real. If the report doesn\'t exist or the statistic is fabricated, the grant application contains a falsified citation. In a grant review context, a falsified citation can disqualify the proposal and damage the organization\'s credibility with the funder. The consequences are immediate and disproportionate to the other claims.',

@@ -109,7 +109,9 @@ function Hero({
   return (
     <section aria-labelledby="program-title" className="mb-14">
       <Overline className="mb-3.5" style={{ fontSize: 11 }}>
-        Program · 4 modules · 80–120 min total
+        {/* 90–120: module durations sum to 80–110 (program.ts) plus
+            ~10 min for the pre/post assessments. */}
+        Program · 4 modules · 90–120 min total
       </Overline>
       <h1
         id="program-title"

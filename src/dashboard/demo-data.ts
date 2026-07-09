@@ -64,17 +64,17 @@ const KC_RESPONSES: Record<string, KnowledgeCheckResult> = {
   '1.7.kc_1_2': kc('c', false, at(11, 41)),
   '1.7.kc_1_3': kc('d', true, at(12, 8)),
   '1.7.kc_1_4': kc('b', true, at(12, 33)),
-  // M2 S7: 4 items, 3 preferred (KC-2.3 chose b instead of c).
+  // M2 S7: 4 items, 3 preferred (KC-2.3 chose d instead of b).
   // Timestamps sit inside S7's nav window (28.5–31.5 min); module_2_complete
   // fires at m2.endMin = 32.5 min, after all four.
   '2.7.kc_2_1': kc('a', true, at(29, 18)),
-  '2.7.kc_2_2': kc('b', true, at(29, 47)),
-  '2.7.kc_2_3': kc('b', false, at(30, 14)),
-  '2.7.kc_2_4': kc('a', true, at(30, 41)),
+  '2.7.kc_2_2': kc('d', true, at(29, 47)),
+  '2.7.kc_2_3': kc('d', false, at(30, 14)),
+  '2.7.kc_2_4': kc('c', true, at(30, 41)),
   // M1 S3 interpretation checks (P1 data narrative). All preferred.
   '1.3.ic_1_1': kc('b', true, at(5, 22)),
-  '1.3.ic_1_2': kc('a', true, at(7, 41)),
-  '1.3.ic_1_3': kc('b', true, at(9, 53)),
+  '1.3.ic_1_2': kc('b', true, at(7, 41)),
+  '1.3.ic_1_3': kc('c', true, at(9, 53)),
 };
 
 // ── Reflections ─────────────────────────────────────────────────────────
@@ -112,7 +112,7 @@ const ENGAGED_FLAGS: Record<string, true> = {
 // visibility/idle tracker in LearnerProgressContext. Heavier values on
 // interactive sections (data narratives, dashboards, the tokenizer
 // playground); shorter on transitions. Sums to ~60 min across the 23
-// completed sections — proportional to the 80–120 min full-program
+// completed sections — proportional to the 90–120 min full-program
 // duration estimate.
 const ACTIVE_TIME_MS: Record<string, number> = {
   '1.1':  90_000, '1.2': 120_000, '1.3': 240_000, '1.4':  90_000,
@@ -221,9 +221,9 @@ const M1_EVENTS: Ev[] = [
   ev(at(3, 12), 'p1_story_1_viewed', 1, 3),
   ev(at(5, 22), 'ic_1_1_submitted', 1, 3, { optionId: 'b', isPreferred: true }),
   ev(at(6, 5), 'p1_story_2_viewed', 1, 3),
-  ev(at(7, 41), 'ic_1_2_submitted', 1, 3, { optionId: 'a', isPreferred: true }),
+  ev(at(7, 41), 'ic_1_2_submitted', 1, 3, { optionId: 'b', isPreferred: true }),
   ev(at(8, 19), 'p1_story_3_viewed', 1, 3),
-  ev(at(9, 53), 'ic_1_3_submitted', 1, 3, { optionId: 'b', isPreferred: true }),
+  ev(at(9, 53), 'ic_1_3_submitted', 1, 3, { optionId: 'c', isPreferred: true }),
   ev(at(10, 22), 'p1_chart_toggle_used', 1, 3, { toggleId: 'productivity-band', state: 'on' }),
   // P2 reflection on M1 S5.
   ev(at(11, 33), 'p2_reflection_viewed', 1, 5),
@@ -264,9 +264,9 @@ const M2_EVENTS: Ev[] = [
   // at m2.endMin = 32.5). KC-2.3 non-preferred. Timestamps mirror
   // KC_RESPONSES.
   ev(at(29, 18), 'kc_2_1_submitted', 2, 7, { optionId: 'a', isPreferred: true }),
-  ev(at(29, 47), 'kc_2_2_submitted', 2, 7, { optionId: 'b', isPreferred: true }),
-  ev(at(30, 14), 'kc_2_3_submitted', 2, 7, { optionId: 'b', isPreferred: false }),
-  ev(at(30, 41), 'kc_2_4_submitted', 2, 7, { optionId: 'a', isPreferred: true }),
+  ev(at(29, 47), 'kc_2_2_submitted', 2, 7, { optionId: 'd', isPreferred: true }),
+  ev(at(30, 14), 'kc_2_3_submitted', 2, 7, { optionId: 'd', isPreferred: false }),
+  ev(at(30, 41), 'kc_2_4_submitted', 2, 7, { optionId: 'c', isPreferred: true }),
   ev(at(30, 44), 'kc_module_2_complete', 2, 7),
   ev(at(m2.endMin, 0), 'module_2_complete', 2),
 ];
