@@ -20,7 +20,7 @@ The curriculum grew out of my M.Ed. in Education Technology and Instructional De
 | 3: Understanding How Language Models Work | Tokenization, prediction, attention, steerability | 11 | 20–30 min |
 | 4: Evaluating AI Outputs and Working Responsibly | Delegation, prompting, verification, diligence | 10 | 30–40 min |
 
-37 sections total. 12 practice activities (P1–P12). 7 downloadable reference items (R1–R7). 16 scenario-based knowledge checks.
+37 sections total, 90–120 minutes end to end including the 10-item pre/post assessments. 12 practice activities (P1–P12). 7 downloadable reference items (R1–R7). 16 scenario-based knowledge checks.
 
 ## Tech stack
 
