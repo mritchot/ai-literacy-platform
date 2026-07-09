@@ -19,7 +19,7 @@
 import type { ReactNode } from 'react';
 
 interface ReferenceTabRailProps {
-  /** One or more `<RxTrigger variant="tab" />` children. */
+  /** One or more `<RxTrigger />` children. */
   children: ReactNode;
   /** Optional label override for screen-reader landmark. */
   ariaLabel?: string;

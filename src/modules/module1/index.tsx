@@ -294,7 +294,7 @@ function Section5({ module }: ModuleProp): JSX.Element {
           trigger surfaces only after the learner has the conceptual
           anchor for what's behind it. */}
       <ReferenceTabRail>
-        <R1Trigger variant="tab" label="4D Reference" />
+        <R1Trigger label="4D Reference" />
       </ReferenceTabRail>
 
       <StigmaReflection scrollTargetId="m1-s5-content-block" />

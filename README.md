@@ -27,7 +27,7 @@ The curriculum grew out of my M.Ed. in Education Technology and Instructional De
 - **Framework:** React 18 + TypeScript (strict mode)
 - **Build:** Vite 5 with `vite-plugin-singlefile` — produces a single `index.html` (no server required; works via `file://`)
 - **Styling:** Tailwind CSS 3 with a custom design system (DM Sans / DM Serif Display / DM Mono typography, 4D competency color palette, CSS-variable-driven dark mode)
-- **Charts:** Recharts (6 interactive data visualizations across Modules 1–2)
+- **Charts:** Recharts (interactive data visualizations across Modules 1–2, the analytics dashboard, and the Behind-the-Build pages)
 - **Routing:** React Router v6 HashRouter (compatible with static hosting and `file://`)
 - **State:** React Context (`LearnerProgressContext`) with localStorage persistence
 - **Special:** `gpt-tokenizer` for the client-side tokenizer playground (Module 3), `jsPDF` for the completion profile PDF export (Module 4)
@@ -42,7 +42,7 @@ The platform supports two access modes, activated via URL parameter or keyboard 
 
 ## Getting started
 
-Prerequisites: Node.js 18+ and npm.
+Prerequisites: Node.js 20+ (see `.nvmrc`) and npm.
 
 ```
 git clone <repo-url>
@@ -59,7 +59,7 @@ Open `http://localhost:5173` in your browser.
 npm run build
 ```
 
-Output: `dist/index.html` (single file, ~4.7 MB ungzipped / ~1.9 MB gzipped) plus `dist/reference/*.pdf` (7 downloadable reference items).
+Output: `dist/index.html` (single file, ~4.6 MB ungzipped / ~1.9 MB gzipped) plus the downloadable PDF sets — `dist/reference/` (7 reference items), `dist/needs-analysis/` (4), `dist/evaluation/` (4), and `dist/build/` (7).
 
 The single-file architecture means the entire platform — React app, fonts, styles, chart libraries — is inlined into one HTML file. This enables `file://` delivery with zero infrastructure, at the cost of code-splitting (not possible with `vite-plugin-singlefile`).
 
@@ -68,24 +68,26 @@ The single-file architecture means the entire platform — React app, fonts, sty
 ```
 src/
 ├── dashboard/        Learning analytics dashboard (Component 4D)
-├── assets/           Static assets (SVG icons)
 ├── components/
 │   ├── shared/       Platform-wide components (SectionContainer, Citation,
 │   │                 KnowledgeCheck, LandingPage, PlatformShell, Sidebar)
+│   ├── assessment/   Pre/post assessment flow (items, results, growth view)
 │   └── reference/    R1–R7 reference panel components
 ├── contexts/         React contexts (LearnerProgress, Analytics)
-├── data/             JSON datasets, citation registry, program structure
+├── data/             JSON datasets, citation registry, program structure,
+│                     pre/post assessment item banks
 ├── hooks/            Custom hooks (useTheme, usePlatformMode, useCitations,
-│                     useChartTokens, useAnalytics)
+│                     useChartTokens, useSectionParam, useViewport)
 ├── modules/
 │   ├── module1/      Data narratives, geographic scatter, adoption charts
 │   ├── module2/      Augmentation/automation dashboard, productivity dashboard
 │   ├── module3/      Tokenizer playground, next-token demo, context window sim
 │   └── module4/      Task decomposition, prompt reformulation, output verification,
 │                     iterative refinement, diligence statement, completion summary
-├── pages/            Standalone pages (ThankYou)
+├── pages/            Standalone pages: needs-analysis, evaluation, and
+│                     Behind-the-Build artifact series, assessments, ThankYou
 ├── styles/           Global CSS (variables, keyframes, utilities)
-└── utils/            Helpers (module-gating, chart-config)
+└── utils/            Helpers (module-gating, chart-config, motion)
 ```
 
 ## Design decisions

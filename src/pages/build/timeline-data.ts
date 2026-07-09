@@ -3,7 +3,8 @@
 // shared week axis, plus the effort-comparison figures.
 //
 // Source: Phase 4 Component 7A Project Timeline
-// (course-info/content/04_phase-04/07a_project-timeline.docx). The effort
+// (planning corpus, outside the repo: ~/Downloads/course-info/content/
+// 04_phase-04/07a_project-timeline.docx). The effort
 // figures use the RECONCILED canonical values, not 07a's superseded ones:
 // ~150–160 focused hours against a ~735-hour Chapman Alliance baseline for
 // comparable Level-3 e-learning, a 4.6–4.9× reduction. The comparison leads on

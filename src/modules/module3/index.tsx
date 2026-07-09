@@ -591,7 +591,7 @@ function Section8({ module }: ModuleProp): JSX.Element {
             where the named-competency framing is explicit, mirroring
             M1 S5 and M2 S6's placement pattern. */}
         <ReferenceTabRail>
-          <R1Trigger variant="tab" label="4D Reference" />
+          <R1Trigger label="4D Reference" />
         </ReferenceTabRail>
         <p className="m-0">
           You now have three mechanical ideas: tokenization determines how text enters the model,
@@ -656,7 +656,7 @@ function Section9({ module }: ModuleProp): JSX.Element {
             framework, which the body text explicitly maps to Discernment
             and the broader 4D vocabulary. Same placement pattern as S8. */}
         <ReferenceTabRail>
-          <R1Trigger variant="tab" label="4D Reference" />
+          <R1Trigger label="4D Reference" />
         </ReferenceTabRail>
         <p className="m-0">
           You now have five concepts (tokenization, next-token prediction, knowledge, context

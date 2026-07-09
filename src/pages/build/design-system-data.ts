@@ -94,12 +94,11 @@ export const COMPETENCY_SWATCHES: CompetencySpec[] = [
 ];
 
 // Dark-mode competency text hex vars consumed by CompetencyDot's fallback var.
-const COMPETENCY_TEXT_HEX: Record<CompetencyKey, { light: string; dark: string }> = {
-  delegation: { light: '#3D4A35', dark: '#B5C4AB' },
-  description: { light: '#5A4A37', dark: '#C9B99E' },
-  discernment: { light: '#354A57', dark: '#A8BCCA' },
-  diligence: { light: '#4A3557', dark: '#BEA8C9' },
-};
+// Derived from COMPETENCY_SWATCHES so the two can't drift. The cast is safe:
+// the swatch array enumerates exactly the four CompetencyKey values.
+const COMPETENCY_TEXT_HEX = Object.fromEntries(
+  COMPETENCY_SWATCHES.map((s) => [s.key, s.textHex]),
+) as Record<CompetencyKey, { light: string; dark: string }>;
 
 // ─── Typography scale (design system §2.2) ─────────────────────────────
 

@@ -146,7 +146,7 @@ export function NextTokenDemo(): JSX.Element {
           Specificity Tasks section gives the integrated picture of where
           this generation mechanism produces fabrications. */}
       <ReferenceTabRail>
-        <R5Trigger variant="tab" label="Capability Boundaries" />
+        <R5Trigger label="Capability Boundaries" />
       </ReferenceTabRail>
 
       <section
