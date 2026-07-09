@@ -14,7 +14,12 @@ import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
 const [INTRO_MD = '', ...REST] = DS_MD.replace(/\r\n/g, '\n').split(/\n## /);
 const SECTIONS = REST.map((part) => {
   const nl = part.indexOf('\n');
-  return { heading: part.slice(0, nl).trim(), body: part.slice(nl + 1).trim() };
+  // Guard the heading-at-EOF case: nl === -1 would otherwise slice off
+  // the heading's last character (ActionMap.tsx pattern).
+  return {
+    heading: (nl === -1 ? part : part.slice(0, nl)).trim(),
+    body: nl === -1 ? '' : part.slice(nl + 1).trim(),
+  };
 });
 
 export default function DesignSystem(): JSX.Element {

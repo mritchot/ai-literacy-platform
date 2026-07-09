@@ -7,7 +7,6 @@ import { SERIES } from './config';
 
 export { TEXT_LINK } from '../artifact-series/artifact-series';
 export const {
-  PdfDownload,
   ArtifactTopBar,
   SeriesEyebrow,
   ArtifactFooter,

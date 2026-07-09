@@ -10,9 +10,9 @@ export default defineConfig({
     react(),
     // Inline all JS + CSS into a single index.html so the build works
     // when opened directly via file:// (no local server needed). The
-    // public/reference/*.pdf assets stay as separate files because
-    // they're downloaded, not bundled — keep them in `dist/reference/`
-    // alongside the inlined index.html.
+    // public/ PDF sets (reference/, needs-analysis/, evaluation/,
+    // build/) stay as separate files because they're downloaded, not
+    // bundled — they ship in dist/ alongside the inlined index.html.
     viteSingleFile({ removeViteModuleLoader: true }),
   ],
 });

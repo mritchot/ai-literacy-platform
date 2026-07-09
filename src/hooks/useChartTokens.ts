@@ -18,7 +18,6 @@ interface ChartTokens {
   tertiary: string;
   muted: string;
   ghost: string;
-  borderLight: string;
   action: string;
   // Adoption-tier ramp (4C spec §18.2). Lower tiers were originally tied
   // to neutral grays — those grays disappear on the dark canvas, so the
@@ -49,7 +48,6 @@ const LIGHT: ChartTokens = {
   tertiary: '#6E6E6E', // post-3B-8 contrast pass
   muted: '#6E6E6E',
   ghost: '#949494',
-  borderLight: '#E0DDD7',
   action: '#3D5A4E',
   tierLeading: '#3D5A4E', // --action
   tierUpperMiddle: '#666666', // --secondary
@@ -70,7 +68,6 @@ const DARK: ChartTokens = {
   tertiary: '#969189', // post-3B-8 contrast pass
   muted: '#95918B',
   ghost: '#605A52',
-  borderLight: '#33302B',
   // Action in dark mode is the inverted lighter teal so series accented
   // with `action` remain visible on the dark canvas.
   action: '#8BB8A8',

@@ -96,7 +96,7 @@ export function TokenizerPlayground(): JSX.Element {
           tokenization causes real errors. The right-edge tab is the
           single entry point. */}
       <ReferenceTabRail>
-        <R5Trigger variant="tab" label="Capability Boundaries" />
+        <R5Trigger label="Capability Boundaries" />
       </ReferenceTabRail>
 
       {/* Padding switches by breakpoint. Mobile uses tighter 18/16 so

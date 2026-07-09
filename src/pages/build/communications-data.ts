@@ -4,7 +4,8 @@
 // notes that annotate them.
 //
 // Source: Phase 4 Component 7C Stakeholder Communication Samples
-// (course-info/content/04_phase-04/07c_stakeholder-communications.docx). The
+// (planning corpus, outside the repo: ~/Downloads/course-info/content/
+// 04_phase-04/07c_stakeholder-communications.docx). The
 // samples are the document's fictional-but-grounded originals. ONE reconciliation:
 // design-review item 5 originally cited a stale Module-4 duration (the memo
 // said "31–33 minutes"); per src/data/program.ts — the source of truth,

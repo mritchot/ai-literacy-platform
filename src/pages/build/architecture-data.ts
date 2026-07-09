@@ -4,7 +4,8 @@
 // page.
 //
 // Source: Phase 3A-1 Platform Architecture Decision Document
-// (course-info/content/03_phase-03/04_platform-architecture-decision-document.md),
+// (planning corpus, outside the repo: ~/Downloads/course-info/content/
+// 03_phase-03/04_platform-architecture-decision-document.md),
 // §1–§7. Rationale is condensed faithfully from that document, in plain language
 // for a non-technical reader.
 
