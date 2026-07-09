@@ -21,7 +21,7 @@
 // — the same keys recorded by KnowledgeCheck.tsx at submission time.
 // Missing responses render as "Not answered" rather than blowing up.
 
-import { useState, type ReactNode } from 'react';
+import { useState } from 'react';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { MODULE_1_KC_ITEMS } from '../../modules/module1/knowledge-check-items';
 import { MODULE_2_KC_ITEMS } from '../../modules/module2/knowledge-check-items';
@@ -162,7 +162,7 @@ export function KCReview(): JSX.Element {
         padding: '20px 24px',
       }}
     >
-      <Overline className="mb-1" style={{ color: ACCENT, letterSpacing: '0.1em' }}>
+      <Overline className="mb-1" style={{ color: 'rgb(var(--discernment-text))', letterSpacing: '0.1em' }}>
         Knowledge check review
       </Overline>
       <h2
@@ -332,7 +332,7 @@ function KCItemRow({
         >
           {/* Stem */}
           <div className="font-sans text-body-sm font-semibold leading-snug text-ink">
-            {entry.item.stem as ReactNode}
+            {entry.item.stem}
           </div>
 
           {/* All four options, with the selected one highlighted */}

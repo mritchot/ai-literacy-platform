@@ -13,6 +13,7 @@ import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
 import { ReflectionPrompt } from '../../components/shared/ReflectionPrompt';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { scrollBehavior } from '../../utils/motion';
 import { AttentionVisualization } from './AttentionVisualization';
 import {
   AI_SUMMARY,
@@ -29,8 +30,6 @@ function isVerificationAnswer(v: unknown): v is VerificationAnswer {
 
 type Phase = 'setup' | 'verification' | 'debrief';
 type DocTab = 'source' | 'summary';
-
-const DELEGATION = '#6B7F5E';
 
 export function ContextWindowScenario(): JSX.Element {
   const { state, recordKnowledgeCheck, markEngaged } = useLearnerProgress();
@@ -66,6 +65,9 @@ export function ContextWindowScenario(): JSX.Element {
   // debrief block suppresses its scroll-into-view then, so a restored
   // re-entry doesn't fight SectionContainer's heading focus.
   const restoredToDebrief = useRef(initialPhase === 'debrief');
+  // Verification block — focus target after the "Begin verification"
+  // button unmounts on phase advance.
+  const verificationRef = useRef<HTMLDivElement>(null);
 
   // Determine the next item the learner should answer (sequential gating).
   const nextItemIdx = VERIFICATION_ITEMS.findIndex((it) => !submitted[it.id]);
@@ -99,7 +101,7 @@ export function ContextWindowScenario(): JSX.Element {
           R5's Volume Tasks section gives the integrated picture of where
           finite attention causes systematic failures. */}
       <ReferenceTabRail>
-        <R5Trigger variant="tab" label="Capability Boundaries" />
+        <R5Trigger label="Capability Boundaries" />
       </ReferenceTabRail>
 
       <section
@@ -144,6 +146,10 @@ export function ContextWindowScenario(): JSX.Element {
               // initialPhase reads this flag.
               markEngaged(3, 7, 'p7_verification_started');
               track({ type: 'p7_verification_started', moduleId: 3, sectionId: 7 });
+              // This button unmounts on advance; hand keyboard focus to
+              // the verification block so SR/keyboard users aren't
+              // dropped to <body>. rAF so the block exists first.
+              window.requestAnimationFrame(() => verificationRef.current?.focus());
             }}
             className="inline-flex items-center gap-2 rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover"
           >
@@ -154,7 +160,7 @@ export function ContextWindowScenario(): JSX.Element {
       )}
 
       {phase !== 'setup' && (
-        <div className="mt-8 space-y-6">
+        <div ref={verificationRef} tabIndex={-1} className="mt-8 space-y-6 focus:outline-none">
           {VERIFICATION_ITEMS.map((item, idx) => {
             const isSubmitted = Boolean(submitted[item.id]);
             const isVisible = idx <= nextItemIdx || isSubmitted || allSubmitted;
@@ -390,7 +396,7 @@ function VerificationItemCard({
   useEffect(() => {
     if (isSubmitted && didJustSubmitRef.current && feedbackRef.current) {
       didJustSubmitRef.current = false;
-      feedbackRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      feedbackRef.current.scrollIntoView({ behavior: scrollBehavior(), block: 'nearest' });
     }
   }, [isSubmitted]);
 
@@ -534,7 +540,7 @@ function DebriefBlock({ scrollOnMount }: { scrollOnMount: boolean }): JSX.Elemen
   useEffect(() => {
     track({ type: 'p7_debrief_viewed', moduleId: 3, sectionId: 7 });
     if (scrollOnMount) {
-      ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      ref.current?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps -- mount-only
   }, [track]);
@@ -582,7 +588,7 @@ function ReflectionPromptDelegation(): JSX.Element {
       engagedEvent="p7_reasoning_engaged"
       savedEvent="p7_reasoning_submitted"
       promptText={REASONING_PROMPT}
-      accentColor={DELEGATION}
+      accent="delegation"
     />
   );
 }

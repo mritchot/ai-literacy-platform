@@ -12,7 +12,7 @@
 // Color palette: Diligence purple-gray throughout, same as R6 — these
 // are the two "transparency" tools the learner can reach for at P12.
 
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 
 // ─────────────────────────────────────────────────────────────────────
 // Constants
@@ -273,7 +273,7 @@ function HowToUse(): JSX.Element {
         <span
           className="font-mono text-overline font-bold uppercase"
           style={{
-            color: DILIGENCE,
+            color: 'rgb(var(--diligence-text))',
             letterSpacing: '0.1em',
           }}
         >
@@ -289,7 +289,7 @@ function HowToUse(): JSX.Element {
               <span
                 className="font-mono font-bold"
                 style={{
-                  color: DILIGENCE,
+                  color: 'rgb(var(--diligence-text))',
                   marginRight: 4,
                 }}
               >
@@ -340,14 +340,14 @@ function AreaCard({
           <div className="mb-1 flex items-baseline gap-2">
             <span
               className="font-mono text-[11px] font-bold"
-              style={{ color: DILIGENCE }}
+              style={{ color: 'rgb(var(--diligence-text))' }}
             >
               {area.number}.
             </span>
             <span
               className="font-mono text-overline font-bold uppercase"
               style={{
-                color: DILIGENCE,
+                color: 'rgb(var(--diligence-text))',
                 letterSpacing: '0.12em',
               }}
             >
@@ -365,7 +365,7 @@ function AreaCard({
           aria-hidden="true"
           className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md"
           style={{
-            color: DILIGENCE,
+            color: 'rgb(var(--diligence-text))',
             background: 'rgb(var(--surface))',
             transform: isOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
             transition: 'transform 180ms ease',
@@ -375,9 +375,11 @@ function AreaCard({
         </span>
       </button>
 
-      {/* Body — topic table + "Your input" */}
-      {isOpen && (
-        <div id={panelId} style={{ borderTop: '1px solid rgb(var(--border-light))' }}>
+      {/* Body — topic table + "Your input". Kept mounted and toggled
+          with `hidden` so the header's aria-controls always resolves to
+          a real element (a conditionally-rendered panel left it
+          dangling while closed). */}
+      <div id={panelId} hidden={!isOpen} style={{ borderTop: '1px solid rgb(var(--border-light))' }}>
           {/* Header row */}
           <div
             className="grid"
@@ -434,7 +436,6 @@ function AreaCard({
               as a writable preparation field. */}
           <YourInputBox text={area.yourInput} />
         </div>
-      )}
     </article>
   );
 }
@@ -452,7 +453,7 @@ function YourInputBox({ text }: { text: string }): JSX.Element {
       <div
         className="font-mono text-[9px] font-bold uppercase"
         style={{
-          color: DILIGENCE,
+          color: 'rgb(var(--diligence-text))',
           letterSpacing: '0.1em',
           marginBottom: 4,
         }}
@@ -487,7 +488,7 @@ function ConversationFrames(): JSX.Element {
         <div
           className="font-mono text-overline font-bold uppercase"
           style={{
-            color: DILIGENCE,
+            color: 'rgb(var(--diligence-text))',
             letterSpacing: '0.12em',
           }}
         >
@@ -549,7 +550,7 @@ function FrameCard({ frame }: { frame: ConversationFrame }): JSX.Element {
 // Helpers
 // ─────────────────────────────────────────────────────────────────────
 
-function ColLabel({ children }: { children: React.ReactNode }): JSX.Element {
+function ColLabel({ children }: { children: ReactNode }): JSX.Element {
   return (
     <div
       className="font-mono text-[9px] font-bold uppercase"

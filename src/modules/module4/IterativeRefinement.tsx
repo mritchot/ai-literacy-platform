@@ -11,6 +11,7 @@ import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
 import { ReflectionPrompt } from '../../components/shared/ReflectionPrompt';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { scrollBehavior } from '../../utils/motion';
 import {
   P11_DRAFT_1,
   P11_DRAFT_2,
@@ -29,7 +30,6 @@ import {
 } from './module4-content';
 import { renderMarkdownLite } from './render-markdown-lite';
 
-const DISCERNMENT = '#5E7080';
 // Description-accent hex used for the example-refinement callout in Turn 3 —
 // matches the accent treatment used by the P9 reformulated-prompt callout
 // in Phase 3 so the "this is a refinement prompt" visual signal is
@@ -116,6 +116,9 @@ export function IterativeRefinement(): JSX.Element {
     [],
   );
   const turn3Ref = useRef<HTMLDivElement>(null);
+  // Turn 3's reveal (worked example + Draft 3 + comparison) — focus
+  // target after the refinement submit button unmounts.
+  const t3RevealRef = useRef<HTMLDivElement>(null);
   const scenarioRef = useRef<HTMLDivElement>(null);
   const [scenarioViewed, setScenarioViewed] = useState(false);
 
@@ -164,10 +167,12 @@ export function IterativeRefinement(): JSX.Element {
         performanceChars: t1Performance.length,
       },
     });
-    scrollTimerRef.current = window.setTimeout(
-      () => turn2Ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }),
-      100,
-    );
+    scrollTimerRef.current = window.setTimeout(() => {
+      // The submit button unmounts on advance; hand keyboard focus to
+      // the revealed step so SR/keyboard users aren't dropped to <body>.
+      turn2Ref.current?.focus({ preventScroll: true });
+      turn2Ref.current?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
+    }, 100);
   };
 
   const onSubmitTurn2 = () => {
@@ -194,7 +199,8 @@ export function IterativeRefinement(): JSX.Element {
     });
     scrollTimerRef.current = window.setTimeout(() => {
       track({ type: 'p11_turn3_viewed', moduleId: 4, sectionId: SECTION });
-      turn3Ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      turn3Ref.current?.focus({ preventScroll: true });
+      turn3Ref.current?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
     }, 100);
   };
 
@@ -212,6 +218,11 @@ export function IterativeRefinement(): JSX.Element {
       sectionId: SECTION,
       payload: { refinementChars: t3Refinement.length },
     });
+    scrollTimerRef.current = window.setTimeout(() => {
+      // Same focus hand-off as Turns 1–2: the submit button unmounts.
+      t3RevealRef.current?.focus({ preventScroll: true });
+      t3RevealRef.current?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
+    }, 100);
   };
 
   // Comparison field save handler — fires onBlur of the Turn 3
@@ -234,7 +245,7 @@ export function IterativeRefinement(): JSX.Element {
           the bottom of R3 is directly relevant to the evaluate-revise
           pattern used here. */}
       <ReferenceTabRail>
-        <R3Trigger variant="tab" label="Prompt Template" />
+        <R3Trigger label="Prompt Template" />
       </ReferenceTabRail>
 
       <section
@@ -278,7 +289,7 @@ export function IterativeRefinement(): JSX.Element {
       </div>
 
       {currentTurn >= 2 && (
-        <div ref={turn2Ref} className="mt-10">
+        <div ref={turn2Ref} tabIndex={-1} className="mt-10 focus:outline-none">
           <Turn2
             draft={P11_DRAFT_2}
             submitted={currentTurn > 2}
@@ -292,7 +303,7 @@ export function IterativeRefinement(): JSX.Element {
       )}
 
       {currentTurn >= 3 && (
-        <div ref={turn3Ref} className="mt-10">
+        <div ref={turn3Ref} tabIndex={-1} className="mt-10 focus:outline-none">
           <Turn3
             draft={P11_DRAFT_3}
             refinement={t3Refinement}
@@ -302,6 +313,7 @@ export function IterativeRefinement(): JSX.Element {
             onComparisonChange={setT3Comparison}
             onComparisonBlur={onSaveT3Comparison}
             onSubmitRefinement={onSubmitTurn3Refinement}
+            revealRef={t3RevealRef}
           />
           {t3RefinementSubmitted && (
             <div className="mt-8">
@@ -309,7 +321,7 @@ export function IterativeRefinement(): JSX.Element {
                 moduleId={4}
                 sectionId={SECTION}
                 promptId="p11_reflection"
-                accentColor={DISCERNMENT}
+                accent="discernment"
                 engagedEvent="p11_reflection_engaged"
                 savedEvent="p11_reflection_saved"
                 promptText={P11_REFLECTION}
@@ -586,6 +598,7 @@ function Turn3({
   onComparisonChange,
   onComparisonBlur,
   onSubmitRefinement,
+  revealRef,
 }: {
   draft: string;
   refinement: string;
@@ -595,6 +608,8 @@ function Turn3({
   onComparisonChange: (v: string) => void;
   onComparisonBlur: () => void;
   onSubmitRefinement: () => void;
+  /** Focus target for the post-submit reveal (the submit button unmounts). */
+  revealRef: React.RefObject<HTMLDivElement>;
 }): JSX.Element {
   return (
     <article aria-label="Turn 3: Author and compare">
@@ -648,7 +663,7 @@ function Turn3({
           comparison field where the learner reflects on how their
           authored refinement differs from the sample. */}
       {refinementSubmitted && (
-        <>
+        <div ref={revealRef} tabIndex={-1} className="focus:outline-none">
           <aside
             role="note"
             aria-label={P11_TURN3_EXAMPLE_LABEL_FOR_DRAFT_3}
@@ -682,7 +697,7 @@ function Turn3({
               onBlur={onComparisonBlur}
             />
           </div>
-        </>
+        </div>
       )}
     </article>
   );
@@ -729,7 +744,7 @@ function EvaluationField({
       <label
         htmlFor={id}
         className="mb-1 block font-mono text-overline font-bold uppercase"
-        style={{ color: DISCERNMENT, letterSpacing: '0.1em' }}
+        style={{ color: 'rgb(var(--discernment-text))', letterSpacing: '0.1em' }}
       >
         {label}
       </label>

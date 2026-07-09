@@ -11,6 +11,7 @@
 import { useCallback, useEffect, useRef, type ReactNode } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { scrollBehavior } from '../../utils/motion';
 import { Citation } from '../../components/shared/Citation';
 import { InterpretationCheck } from '../../components/shared/InterpretationCheck';
 import { Overline } from '../../components/shared/Overline';
@@ -176,7 +177,7 @@ function StoryShell({
         for (const entry of entries) {
           if (entry.isIntersecting && !scrolledBackRef.current) {
             scrolledBackRef.current = true;
-            icRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            icRef.current?.scrollIntoView({ behavior: scrollBehavior(), block: 'center' });
           }
         }
       },

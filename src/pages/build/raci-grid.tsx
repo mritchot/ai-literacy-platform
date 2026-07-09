@@ -145,7 +145,7 @@ export function RaciGrid(): JSX.Element {
               <Fragment key={phase}>
                 <tr>
                   <th
-                    scope="colgroup"
+                    scope="rowgroup"
                     colSpan={ROLES.length + 1}
                     className="font-mono text-overline font-bold uppercase text-tertiary"
                     style={{ background: 'rgb(var(--surface))', padding: '7px 12px', letterSpacing: '0.1em', borderTop: '1px solid rgb(var(--border-light))' }}

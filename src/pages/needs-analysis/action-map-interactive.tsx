@@ -579,8 +579,13 @@ export function InteractiveMap(): JSX.Element {
               return (
                 <div
                   key={a.id}
+                  // Focusable so keyboard/AT users get the same
+                  // activity→behavior highlight that hover provides.
+                  tabIndex={0}
                   onMouseEnter={() => setHoveredActivity(a.id)}
                   onMouseLeave={() => setHoveredActivity(null)}
+                  onFocus={() => setHoveredActivity(a.id)}
+                  onBlur={() => setHoveredActivity(null)}
                   style={{
                     padding: '10px 14px',
                     borderRadius: 8,
@@ -641,8 +646,13 @@ export function InteractiveMap(): JSX.Element {
               return (
                 <div
                   key={r.id}
+                  // Focusable so keyboard/AT users get the same
+                  // reference→behavior highlight that hover provides.
+                  tabIndex={0}
                   onMouseEnter={() => setHoveredRef(r.id)}
                   onMouseLeave={() => setHoveredRef(null)}
+                  onFocus={() => setHoveredRef(r.id)}
+                  onBlur={() => setHoveredRef(null)}
                   style={{
                     padding: '10px 14px',
                     borderRadius: 8,

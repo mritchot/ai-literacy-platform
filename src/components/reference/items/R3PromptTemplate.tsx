@@ -254,7 +254,7 @@ function SectionCard({
           <div
             className="font-mono text-overline font-bold uppercase"
             style={{
-              color: DESCRIPTION,
+              color: 'rgb(var(--description-text))',
               letterSpacing: '0.1em',
               marginBottom: 4,
             }}
@@ -284,7 +284,7 @@ function SectionCard({
           aria-hidden="true"
           className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md"
           style={{
-            color: DESCRIPTION,
+            color: 'rgb(var(--description-text))',
             background: 'rgb(var(--surface))',
             transform: isOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
             transition: 'transform 180ms ease',
@@ -294,13 +294,13 @@ function SectionCard({
         </span>
       </button>
 
-      {/* Body — table + fill-in. Hidden when collapsed. */}
-      {isOpen && (
-        <div id={panelId}>
-          <SpecTable rows={section.rows} />
-          <FillIn text={section.fillIn} />
-        </div>
-      )}
+      {/* Body — table + fill-in. Kept mounted and toggled with `hidden`
+          so the header's aria-controls always resolves to a real element
+          (a conditionally-rendered panel left it dangling while closed). */}
+      <div id={panelId} hidden={!isOpen}>
+        <SpecTable rows={section.rows} />
+        <FillIn text={section.fillIn} />
+      </div>
     </article>
   );
 }
@@ -408,7 +408,7 @@ function FillIn({ text }: { text: string }): JSX.Element {
       <div
         className="font-mono text-[10px] font-bold uppercase"
         style={{
-          color: DESCRIPTION,
+          color: 'rgb(var(--description-text))',
           letterSpacing: '0.1em',
           marginBottom: 6,
         }}
@@ -449,7 +449,7 @@ function LoopStrip(): JSX.Element {
       <div
         className="font-mono text-overline font-bold uppercase"
         style={{
-          color: DESCRIPTION,
+          color: 'rgb(var(--description-text))',
           letterSpacing: '0.1em',
           marginBottom: 6,
         }}

@@ -235,7 +235,7 @@ function ReliableSection(): JSX.Element {
         <div
           className="font-mono text-overline font-bold uppercase"
           style={{
-            color: DELEGATION,
+            color: 'rgb(var(--delegation-text))',
             letterSpacing: '0.1em',
             marginBottom: 4,
           }}
@@ -299,14 +299,14 @@ function ReliableSection(): JSX.Element {
           </div>
           {isMobile ? (
             <>
-              <MobileFieldLabel label="Why it works" color={DELEGATION} />
+              <MobileFieldLabel label="Why it works" color="rgb(var(--delegation-text))" />
               <div
                 className="font-sans text-[12px]"
                 style={{ color: 'rgb(var(--ink))', lineHeight: 1.5, marginBottom: 8 }}
               >
                 {row.why}
               </div>
-              <MobileFieldLabel label="Notes" color={DELEGATION} />
+              <MobileFieldLabel label="Notes" color="rgb(var(--delegation-text))" />
               <div
                 className="font-sans text-[12px]"
                 style={{ color: 'rgb(var(--ink))', lineHeight: 1.5 }}
@@ -380,7 +380,7 @@ function FailsSection(): JSX.Element {
         <div
           className="font-mono text-overline font-bold uppercase"
           style={{
-            color: DISCERNMENT,
+            color: 'rgb(var(--discernment-text))',
             letterSpacing: '0.1em',
             marginBottom: 4,
           }}
@@ -445,7 +445,7 @@ function FailsCategoryBlock({
         <div
           className="font-mono text-[11px] font-bold uppercase"
           style={{
-            color: DISCERNMENT,
+            color: 'rgb(var(--discernment-text))',
             letterSpacing: '0.12em',
           }}
         >
@@ -525,14 +525,14 @@ function FailsCategoryBlock({
           </div>
           {isMobile ? (
             <>
-              <MobileFieldLabel label="Why" color={DISCERNMENT} />
+              <MobileFieldLabel label="Why" color="rgb(var(--discernment-text))" />
               <div
                 className="font-sans text-[12px]"
                 style={{ color: 'rgb(var(--ink))', lineHeight: 1.5, marginBottom: 8 }}
               >
                 {row.why}
               </div>
-              <MobileFieldLabel label="Instead" color={DISCERNMENT} />
+              <MobileFieldLabel label="Instead" color="rgb(var(--discernment-text))" />
               {/* Instead column rendered BOLD per spec — these are
                   the actionable takeaways. */}
               <div
@@ -585,7 +585,7 @@ function CoreDistinctionStrip(): JSX.Element {
       <div
         className="mb-1 font-mono text-overline font-bold uppercase"
         style={{
-          color: DISCERNMENT,
+          color: 'rgb(var(--discernment-text))',
           letterSpacing: '0.12em',
         }}
       >
