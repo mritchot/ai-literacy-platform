@@ -76,7 +76,9 @@ export function CompletionSummary(): JSX.Element {
         .filter((sec) => !(mod.id === 4 && sec.id === 10))
         .every((sec) => isSectionComplete(mod.id, sec.id)),
     );
-  }, [state.scrolledSections, state.interactionCompleteSections, isSectionComplete]);
+    // isSectionComplete's identity tracks every state change, so it is
+    // the only dependency the memo needs.
+  }, [isSectionComplete]);
 
   // Fire the view event once when the complete profile first renders.
   // The ref guard prevents re-fires on every state change in the
@@ -97,7 +99,7 @@ export function CompletionSummary(): JSX.Element {
   // timestamp in state, falling back to today. Timestamps live on
   // KnowledgeCheckResult objects; reflections don't carry per-field
   // timestamps, so KCs are the primary signal.
-  const completionDate = useMemo(() => formatCompletionDate(state), []);
+  const completionDate = useMemo(() => formatCompletionDate(state), [state]);
 
   // Pre/post assessment growth — aggregate per-block correct counts
   // from the recorded responses. Returns undefined when either side
@@ -233,7 +235,7 @@ export function CompletionSummary(): JSX.Element {
           hiding it on the placeholder. ReferenceTabRail uses fixed
           positioning, so its DOM placement here is fine. */}
       <ReferenceTabRail>
-        <R7Trigger variant="tab" label="Policy Starter" />
+        <R7Trigger label="Policy Starter" />
       </ReferenceTabRail>
       {/* ProfileHeader leads the page — it's the document title block
           (program name, completion date, Download PDF action). Putting
