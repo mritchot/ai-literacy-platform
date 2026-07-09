@@ -9,6 +9,7 @@
 import { forwardRef, useEffect, useRef, useState, type ReactNode } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { scrollBehavior } from '../../utils/motion';
 import { Icon } from './Icon';
 import { nextRadioIndex } from './radio-group-nav';
 
@@ -94,7 +95,7 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
     useEffect(() => {
       if (submitted && didJustSubmitRef.current && feedbackRef.current) {
         didJustSubmitRef.current = false;
-        feedbackRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        feedbackRef.current.scrollIntoView({ behavior: scrollBehavior(), block: 'nearest' });
       }
     }, [submitted]);
 
@@ -142,7 +143,9 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
               const isSelected = selected === opt.id;
               const isFeedbackBorder = submitted && isSelected;
               return (
-                <li key={opt.id}>
+                // role="presentation": a radiogroup owns radios, not
+                // listitems — the <li> is layout-only.
+                <li key={opt.id} role="presentation">
                   <button
                     type="button"
                     id={`ic-${item.id}-opt-${opt.id}`}

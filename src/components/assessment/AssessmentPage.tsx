@@ -20,6 +20,7 @@ import {
 } from '../../contexts/LearnerProgressContext';
 import { PRE_ASSESSMENT_ITEMS, type AssessmentItem as AssessmentItemData } from '../../data/pre-assessment';
 import { POST_ASSESSMENT_ITEMS } from '../../data/post-assessment';
+import { scrollBehavior } from '../../utils/motion';
 import { Icon } from '../shared/Icon';
 import { AssessmentCompletion } from './AssessmentCompletion';
 import { AssessmentIntro } from './AssessmentIntro';
@@ -161,7 +162,7 @@ export function AssessmentPage({ kind }: AssessmentPageProps): JSX.Element {
       // and after a long question the next one would otherwise appear
       // mid-scroll on mobile.
       if (typeof window !== 'undefined') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0, behavior: scrollBehavior() });
       }
     }
   }, [

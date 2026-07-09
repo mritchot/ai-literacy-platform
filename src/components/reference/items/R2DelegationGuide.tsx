@@ -211,7 +211,7 @@ export function R2DelegationGuide(): JSX.Element {
       >
         <div
           className="mb-1.5 font-mono text-overline font-bold uppercase"
-          style={{ color: DIAMOND_STROKE, letterSpacing: '0.1em' }}
+          style={{ color: 'rgb(var(--delegation-text))', letterSpacing: '0.1em' }}
         >
           One task, multiple components
         </div>
@@ -247,7 +247,7 @@ export function R2DelegationGuide(): JSX.Element {
       >
         <div
           className="mb-1.5 font-mono text-overline font-bold uppercase"
-          style={{ color: DIAMOND_STROKE, letterSpacing: '0.1em' }}
+          style={{ color: 'rgb(var(--delegation-text))', letterSpacing: '0.1em' }}
         >
           Before the four questions: the data gate
         </div>

@@ -1,7 +1,9 @@
 // QA dashboard — three panels rendered from ./quality-data: the ten
 // verification passes (a scrollable table), the triple-validation data protocol
 // (three passes + the six-file results), and the eight-check capability
-// framework. Every count is derived from the data, so the panels stay in sync.
+// framework. Row/tile content derives from the data arrays; the spelled-out
+// counts in the section headings ("Ten…", "Eight-check…") are hardcoded prose
+// and must be updated by hand if the arrays change.
 
 import { Overline } from '../../components/shared/Overline';
 import {
@@ -36,7 +38,7 @@ function QaPassTable(): JSX.Element {
         <thead>
           <tr>
             {['QA pass', 'Scope · sample', 'Result'].map((h) => (
-              <th key={h} className="border-b border-border px-3 py-2 align-bottom font-sans text-label font-semibold uppercase text-ink-secondary">
+              <th key={h} scope="col" className="border-b border-border px-3 py-2 align-bottom font-sans text-label font-semibold uppercase text-ink-secondary">
                 {h}
               </th>
             ))}
@@ -89,7 +91,7 @@ function TripleValidation(): JSX.Element {
           <thead>
             <tr>
               {['Data file', 'Source', 'Key content', 'Status'].map((h) => (
-                <th key={h} className="border-b border-border px-3 py-2 font-sans text-label font-semibold uppercase text-ink-secondary">
+                <th key={h} scope="col" className="border-b border-border px-3 py-2 font-sans text-label font-semibold uppercase text-ink-secondary">
                   {h}
                 </th>
               ))}

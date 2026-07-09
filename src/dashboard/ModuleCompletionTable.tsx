@@ -399,7 +399,7 @@ function ModuleCardMobile({
       <div className="font-mono font-bold text-[11px] uppercase text-tertiary mb-1">
         Module {stats.moduleId}
       </div>
-      <div className="font-sans text-h4 font-semibold text-ink mb-2">
+      <div id={`${detailId}-label`} className="font-sans text-h4 font-semibold text-ink mb-2">
         {MODULE_TITLES[stats.moduleId]}
       </div>
       <div className="mb-2">
@@ -419,7 +419,7 @@ function ModuleCardMobile({
         <Icon name={expanded ? 'chevronDown' : 'chevronRight'} size={14} />
       </button>
       {expanded && (
-        <div id={detailId} className="mt-3" role="region">
+        <div id={detailId} className="mt-3" role="region" aria-labelledby={`${detailId}-label`}>
           <ModuleDetail stats={stats} onArtifactClick={onArtifactClick} compact />
         </div>
       )}

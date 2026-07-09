@@ -78,7 +78,6 @@ export interface ArtifactHubProps {
 }
 
 export function createArtifactSeries(series: SeriesConfig): {
-  PdfDownload: (props: { slug: string }) => JSX.Element | null;
   ArtifactTopBar: (props: { pdfSlug: string }) => JSX.Element;
   SeriesEyebrow: (props: { label: string }) => JSX.Element;
   ArtifactFooter: (props: { currentSlug: string }) => JSX.Element;
@@ -86,14 +85,17 @@ export function createArtifactSeries(series: SeriesConfig): {
   ArtifactHub: (props: ArtifactHubProps) => JSX.Element;
 } {
   // "Download PDF" — hidden entirely while the per-slug constant is empty,
-  // so it never points at a 404 before the polished PDF lands.
-  function PdfDownload({ slug }: { slug: string }): JSX.Element | null {
+  // so it never points at a 404 before the polished PDF lands. `ariaLabel`
+  // disambiguates the link on hub pages, where several cards would
+  // otherwise expose identical "Download PDF" accessible names.
+  function PdfDownload({ slug, ariaLabel }: { slug: string; ariaLabel?: string | undefined }): JSX.Element | null {
     const href = series.pdfs[slug];
     if (!href || href.trim().length === 0) return null;
     return (
       <a
         href={href}
         download
+        aria-label={ariaLabel}
         className="inline-flex items-center gap-2 rounded-md font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
         style={{ background: 'transparent', border: '1.5px solid rgb(var(--border))', padding: '8px 16px' }}
       >
@@ -257,7 +259,7 @@ export function createArtifactSeries(series: SeriesConfig): {
           >
             {openLabel} <span aria-hidden="true">→</span>
           </a>
-          <PdfDownload slug={slug} />
+          <PdfDownload slug={slug} ariaLabel={`Download ${title} (PDF)`} />
         </div>
       </article>
     );
@@ -357,5 +359,5 @@ export function createArtifactSeries(series: SeriesConfig): {
     );
   }
 
-  return { PdfDownload, ArtifactTopBar, SeriesEyebrow, ArtifactFooter, ReadingArtifact, ArtifactHub };
+  return { ArtifactTopBar, SeriesEyebrow, ArtifactFooter, ReadingArtifact, ArtifactHub };
 }

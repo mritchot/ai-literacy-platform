@@ -11,6 +11,7 @@ import { R4Trigger } from '../../components/reference/R4Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { scrollBehavior } from '../../utils/motion';
 import {
   P10_BRIEFING_SEGMENTS,
   P10_ELEMENTS,
@@ -141,7 +142,7 @@ export function OutputVerification(): JSX.Element {
   const onMarkerClick = (marker: number) => {
     const el = P10_ELEMENTS.find((e) => e.marker === marker);
     if (!el) return;
-    cardRefs.current[el.id]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    cardRefs.current[el.id]?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
   };
 
   // Reverse navigation: when the learner clicks "View in briefing ↑"
@@ -149,7 +150,7 @@ export function OutputVerification(): JSX.Element {
   // back into view. Symmetric counterpart to onMarkerClick above.
   const onScrollToMarker = (marker: number) => {
     const el = document.getElementById(`p10-marker-${marker}`);
-    el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el?.scrollIntoView({ behavior: scrollBehavior(), block: 'center' });
   };
 
   return (
@@ -159,7 +160,7 @@ export function OutputVerification(): JSX.Element {
           checklist gives the learner a verification scratch tool while
           they classify each element of the AI-generated briefing. */}
       <ReferenceTabRail>
-        <R4Trigger variant="tab" label="Verification Checklist" />
+        <R4Trigger label="Verification Checklist" />
       </ReferenceTabRail>
 
       <section
@@ -321,11 +322,22 @@ function BriefingDocument({
     if (seg.text) {
       if (seg.marker !== undefined) {
         current.nodes.push(
+          // Keyboard-activatable highlight: role/tabIndex/Enter+Space make
+          // the briefing→card jump reachable without a mouse (the reverse
+          // card→briefing jump is already a real <button>).
           <mark
             key={i}
             id={`p10-marker-${seg.marker}`}
-            aria-label={`Highlighted element ${seg.marker}: ${seg.text.slice(0, 60)}`}
+            role="button"
+            tabIndex={0}
+            aria-label={`Jump to verification card ${seg.marker}: ${seg.text.slice(0, 60)}`}
             onClick={() => onMarkerClick(seg.marker as number)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                onMarkerClick(seg.marker as number);
+              }
+            }}
             style={{
               background: 'rgba(155, 123, 46, 0.18)',
               borderBottom: '2px dotted rgb(var(--caution))',

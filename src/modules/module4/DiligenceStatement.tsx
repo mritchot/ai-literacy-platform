@@ -13,6 +13,7 @@ import { Citation } from '../../components/shared/Citation';
 import { ReflectionPrompt } from '../../components/shared/ReflectionPrompt';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { scrollBehavior } from '../../utils/motion';
 import {
   P12_EFFECTIVENESS,
   P12_EXEMPLAR,
@@ -64,15 +65,20 @@ export function DiligenceStatement(): JSX.Element {
   const exemplarSeen = Boolean(state.engagedFlags[`4.${SECTION}.exemplar_viewed`]);
 
   const [text, setText] = useState(stored);
-  const [savedAt, setSavedAt] = useState<number | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
   const exemplarRef = useRef<HTMLDivElement>(null);
   // Pending scroll-into-view timer — cleared on unmount so a fast
   // navigation away can't fire it against an unmounted tree.
   const scrollTimerRef = useRef<number | null>(null);
+  // "Saved ✓" badge: set by the save handler, cleared by its own timer.
+  // (The previous `Date.now() - savedAt < 2500` render check had no timer
+  // behind it, so the badge stuck until an unrelated re-render.)
+  const [showSavedBadge, setShowSavedBadge] = useState(false);
+  const badgeTimerRef = useRef<number | null>(null);
   useEffect(
     () => () => {
       if (scrollTimerRef.current !== null) window.clearTimeout(scrollTimerRef.current);
+      if (badgeTimerRef.current !== null) window.clearTimeout(badgeTimerRef.current);
     },
     [],
   );
@@ -105,7 +111,7 @@ export function DiligenceStatement(): JSX.Element {
         payload: { chars: text.length },
       });
       scrollTimerRef.current = window.setTimeout(() => {
-        exemplarRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        exemplarRef.current?.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
         track({ type: 'p12_exemplar_viewed', moduleId: 4, sectionId: SECTION });
       }, 200);
     } else {
@@ -116,10 +122,11 @@ export function DiligenceStatement(): JSX.Element {
         payload: { chars: text.length },
       });
     }
-    setSavedAt(Date.now());
+    setShowSavedBadge(true);
+    if (badgeTimerRef.current !== null) window.clearTimeout(badgeTimerRef.current);
+    badgeTimerRef.current = window.setTimeout(() => setShowSavedBadge(false), 2500);
   };
 
-  const showSavedBadge = savedAt !== null && Date.now() - savedAt < 2500;
   const buttonLabel = phase === 'write' ? 'Save Statement and See Exemplar' : 'Update Statement';
 
   return (
@@ -131,8 +138,8 @@ export function DiligenceStatement(): JSX.Element {
           the handoff tool the learner takes back to their team after
           finishing the program, not a P12-time job aid. */}
       <ReferenceTabRail>
-        <R1Trigger variant="tab" label="4D Reference" />
-        <R6Trigger variant="tab" label="Diligence Template" />
+        <R1Trigger label="4D Reference" />
+        <R6Trigger label="Diligence Template" />
       </ReferenceTabRail>
 
       {/* P12 framing — inlined as JSX rather than a plain string export
@@ -301,7 +308,7 @@ export function DiligenceStatement(): JSX.Element {
             moduleId={4}
             sectionId={SECTION}
             promptId="p12_reflection"
-            accentColor={DILIGENCE}
+            accent="diligence"
             engagedEvent="p12_reflection_engaged"
             savedEvent="p12_reflection_saved"
             promptText={P12_REFLECTION}

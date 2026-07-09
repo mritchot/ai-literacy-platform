@@ -379,7 +379,7 @@ function ModuleCard({
         ) : (
           <Link
             to={ctaTarget}
-            className="inline-flex items-center gap-2 rounded-md font-sans text-[13.5px] font-semibold text-action no-underline transition-colors duration-150 hover:bg-[rgba(61,90,78,0.08)]"
+            className="inline-flex items-center gap-2 rounded-md font-sans text-[13.5px] font-semibold text-action no-underline transition-colors duration-150 hover:bg-[rgb(var(--action)/0.08)]"
             style={{ padding: '9px 16px', border: '1.5px solid rgb(var(--action))' }}
             aria-label={`${ctaLabel}: module ${module.id}, ${module.title}`}
           >

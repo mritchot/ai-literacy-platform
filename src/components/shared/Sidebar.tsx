@@ -78,6 +78,11 @@ export function Sidebar({
   return (
     <aside
       aria-label="Program navigation"
+      // Mobile drawer is a modal surface: dialog semantics pair with
+      // PlatformShell's Tab trap + Escape handling. Desktop/tablet keep
+      // plain landmark semantics.
+      role={isMobile ? 'dialog' : undefined}
+      aria-modal={isMobile ? true : undefined}
       className="flex flex-shrink-0 flex-col border-r border-border transition-[width] duration-[250ms]"
       style={{
         ...sidebarStyle,
@@ -222,8 +227,8 @@ function ModuleItem({
   onCloseMobile,
 }: ModuleItemProps): JSX.Element {
   // Lock state is computed from the current platform mode + completion
-  // progress (see module-gating.ts) — not the static `module.locked`
-  // field, which is always false in the current program metadata.
+  // progress (see module-gating.ts); the static program metadata carries
+  // no lock field.
   const locked = gating.isModuleLocked(module.id);
   const linkTo = locked ? undefined : `/module/${module.id}`;
 

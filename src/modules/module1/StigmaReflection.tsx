@@ -8,6 +8,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { scrollBehavior } from '../../utils/motion';
 import { Icon } from '../../components/shared/Icon';
 import { Overline } from '../../components/shared/Overline';
 
@@ -61,12 +62,12 @@ export function StigmaReflection({ scrollTargetId }: StigmaReflectionProps): JSX
     if (scrollTargetId) {
       const el = document.getElementById(scrollTargetId);
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        el.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
         return;
       }
     }
     // Default fallback — scroll to bottom of viewport.
-    window.scrollBy({ top: window.innerHeight * 0.7, behavior: 'smooth' });
+    window.scrollBy({ top: window.innerHeight * 0.7, behavior: scrollBehavior() });
   };
 
   return (

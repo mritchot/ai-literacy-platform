@@ -6,6 +6,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { scrollBehavior } from '../../utils/motion';
 import { Icon } from './Icon';
 import { nextRadioIndex } from './radio-group-nav';
 import { Overline } from './Overline';
@@ -110,7 +111,7 @@ export function KnowledgeCheck({
   useEffect(() => {
     if (submitted && didJustSubmitRef.current && feedbackRef.current) {
       didJustSubmitRef.current = false;
-      feedbackRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      feedbackRef.current.scrollIntoView({ behavior: scrollBehavior(), block: 'nearest' });
     }
   }, [submitted]);
 
@@ -185,7 +186,9 @@ export function KnowledgeCheck({
             const isSelected = selected === opt.id;
             const isFeedbackBorder = submitted && isSelected;
             return (
-              <li key={opt.id}>
+              // role="presentation": a radiogroup owns radios, not
+              // listitems — the <li> is layout-only.
+              <li key={opt.id} role="presentation">
                 <button
                   type="button"
                   id={`kc-${item.id}-opt-${opt.id}`}
