@@ -39,13 +39,16 @@ export const ARTIFACTS: ArtifactMeta[] = [
     title: 'Level 4: Results',
     blurb:
       'The KPI framework, isolation methodology, and ROI model that connect behavior change to organizational outcomes without the volume-ROI fallacy.',
-    type: 'Reading',
+    // Interactive: the page embeds the live ROI calculator and labels
+    // itself "Evaluation framework · Interactive" — the hub card tag and
+    // CTA verb now match that.
+    type: 'Interactive',
+    openLabel: 'Open the calculator',
   },
 ];
 
-// Empty until the polished PDFs land in `public/evaluation/`; while empty the
-// per-page "Download PDF" button is hidden so it never points at a 404.
-// Populate e.g. `level-1-reaction: 'evaluation/level-1-reaction.pdf'`.
+// All four polished PDFs ship from `public/evaluation/`. An empty entry
+// hides that page's "Download PDF" button so it never points at a 404.
 export const ARTIFACT_PDFS: Record<string, string> = {
   'level-1-reaction': 'evaluation/level-1-reaction.pdf',
   'level-2-learning': 'evaluation/level-2-learning.pdf',

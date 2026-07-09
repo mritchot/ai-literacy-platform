@@ -53,11 +53,6 @@ const MODULE_ID = 2;
 export default function Module2(): JSX.Element {
   const sectionId = useSectionParam(MODULE_ID);
 
-  // If the user lands on /module/2 with no sectionId param, normalize the
-  // URL so back/forward navigation lands on the right section. `navigate`
-  // identity is stable across renders, but exclude it from deps to keep the
-  // effect tied only to the URL param it actually responds to.
-
   const module = getModuleOrThrow(MODULE_ID);
 
   switch (sectionId) {
@@ -426,7 +421,7 @@ function Section6({ module }: ModuleProp): JSX.Element {
           reference is unambiguously in scope. The rail mounts inside
           the SectionContainer matching M1 S5's pattern. */}
       <ReferenceTabRail>
-        <R1Trigger variant="tab" label="4D Reference" />
+        <R1Trigger label="4D Reference" />
       </ReferenceTabRail>
 
       <div className="space-y-4 font-sans text-body text-body">

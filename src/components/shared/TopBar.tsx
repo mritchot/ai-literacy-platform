@@ -8,6 +8,8 @@ import { Icon } from './Icon';
 
 interface TopBarProps {
   onOpenMenu: () => void;
+  /** Hamburger ref — PlatformShell restores focus here on drawer close. */
+  menuButtonRef?: React.RefObject<HTMLButtonElement> | undefined;
 }
 
 function currentModuleLabel(pathname: string): { seq: string; label: string } | null {
@@ -29,7 +31,7 @@ function currentSectionId(pathname: string): number | null {
   return Number.isFinite(id) ? id : null;
 }
 
-export function TopBar({ onOpenMenu }: TopBarProps): JSX.Element {
+export function TopBar({ onOpenMenu, menuButtonRef }: TopBarProps): JSX.Element {
   // Theme *preference* (not resolved) — drives the toggle's icon +
   // label so system / light / dark are all distinguishable. Read from
   // the shared theme store directly.
@@ -45,6 +47,7 @@ export function TopBar({ onOpenMenu }: TopBarProps): JSX.Element {
       style={{ height: 56, padding: '0 16px' }}
     >
       <button
+        ref={menuButtonRef}
         type="button"
         onClick={onOpenMenu}
         aria-label="Open program menu"

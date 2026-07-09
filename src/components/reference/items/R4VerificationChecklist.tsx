@@ -227,7 +227,7 @@ function ChecklistCard({
         <div
           className="font-mono text-overline font-bold uppercase"
           style={{
-            color: DISCERNMENT,
+            color: 'rgb(var(--discernment-text))',
             letterSpacing: '0.1em',
             marginBottom: 4,
           }}
@@ -367,7 +367,7 @@ function VerificationFramework(): JSX.Element {
         <div
           className="font-mono text-overline font-bold uppercase"
           style={{
-            color: DISCERNMENT,
+            color: 'rgb(var(--discernment-text))',
             letterSpacing: '0.1em',
             marginBottom: 4,
           }}
@@ -455,7 +455,7 @@ function FrameworkRow({
         <div
           className="font-mono text-[9px] font-bold uppercase"
           style={{
-            color: DISCERNMENT,
+            color: 'rgb(var(--discernment-text))',
             letterSpacing: '0.1em',
             marginBottom: 2,
           }}
@@ -513,7 +513,7 @@ function DiagnosticPairsCard(): JSX.Element {
         <div
           className="font-mono text-overline font-bold uppercase"
           style={{
-            color: DISCERNMENT,
+            color: 'rgb(var(--discernment-text))',
             letterSpacing: '0.1em',
             marginBottom: 4,
           }}
@@ -583,7 +583,7 @@ function DiagnosticPairsCard(): JSX.Element {
             <div
               className="font-mono text-[9px] font-bold uppercase"
               style={{
-                color: DISCERNMENT,
+                color: 'rgb(var(--discernment-text))',
                 letterSpacing: '0.1em',
                 marginBottom: 2,
               }}

@@ -190,12 +190,12 @@ export function AugAutoViewC({
               AI conversations) but draw on different datasets and time periods. The Jan 2025 data
               (Handa et al., February 2025) is the standalone published study with full
               methodology. The later figure comes from the Interviewer paper's reference to
-              Anthropic's most recent internal analysis using November 2025 data.
+              an Anthropic internal analysis of November 2025 data.
             </p>
             <p className="m-0">
               The directional finding is the same in both: professionals believe they augment more
               than they do. The gap ranges from 8 to 18 percentage points depending on the
-              baseline. The latest behavioral figures sum to 96%, with approximately 4% of
+              baseline. The November 2025 behavioral figures sum to 96%, with approximately 4% of
               conversations unclassified by the automated analysis.
             </p>
           </div>

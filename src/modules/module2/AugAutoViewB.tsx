@@ -185,7 +185,7 @@ export function AugAutoViewB({
             style={{
               flexBasis: `${augTotal}%`,
               letterSpacing: '0.08em',
-              color: '#3D4A35',
+              color: 'rgb(var(--delegation-text))',
               fontWeight: 700,
               borderTop: '1px solid #B5C4AB',
               paddingTop: 4,
@@ -199,7 +199,7 @@ export function AugAutoViewB({
             style={{
               flexBasis: `${autoTotal}%`,
               letterSpacing: '0.08em',
-              color: '#354A57',
+              color: 'rgb(var(--discernment-text))',
               fontWeight: 700,
               borderTop: '1px solid #A8BCCA',
               paddingTop: 4,

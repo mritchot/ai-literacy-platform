@@ -22,14 +22,10 @@ dist-ssr
 # Not part of the codebase or deployed bundle.
 CLAUDE.md
 MEMORY.md
+MEMORYARCHIVE.md
 ARCHIVE.md
 TODO.md
 TODOARCHIVE.md
-
-# Claude Code task prompts (local working instruction docs). The
-# needs-analysis-content/ subfolder below is intentionally NOT ignored —
-# its markdown is imported at build time by the needs-analysis pages.
-claude-code/*.md
 
 # Audit working notes (session-scoped, never committed)
 BEHIND-THE-BUILD-audit.md

@@ -2,7 +2,15 @@
   "name": "ai-literacy-platform",
   "private": true,
   "version": "0.1.0",
+  "description": "AI Literacy for the Modern Workforce — four-module interactive learning platform (React + TypeScript, single-file build). Live at ai-literacy.ritchot.me.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mritchot/ai-literacy-platform"
+  },
   "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",

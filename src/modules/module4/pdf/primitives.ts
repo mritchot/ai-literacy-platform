@@ -47,9 +47,11 @@ export function rgbToHex(rgb: [number, number, number]): string {
  *  WinAnsi has both glyphs, so the strings render correctly without
  *  font fallback. */
 export function fmtDelta(n: number): { text: string; rgb: [number, number, number] } {
-  if (n > 0) return { text: `+${n}`, rgb: [79, 122, 61] }; // positive #4F7A3D
-  if (n < 0) return { text: `−${Math.abs(n)}`, rgb: [155, 123, 46] }; // negative #9B7B2E
-  return { text: '±0', rgb: [136, 136, 136] }; // neutral #888888
+  // Colors come from the shared C palette (constants.ts) so the delta
+  // hues can't drift from the rest of the document.
+  if (n > 0) return { text: `+${n}`, rgb: hexToRgb(C.positive) };
+  if (n < 0) return { text: `−${Math.abs(n)}`, rgb: hexToRgb(C.negative) };
+  return { text: '±0', rgb: hexToRgb(C.neutral) };
 }
 export function setFillHex(doc: jsPDF, hex: string): void {
   const [r, g, b] = hexToRgb(hex);

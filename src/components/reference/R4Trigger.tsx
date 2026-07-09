@@ -13,12 +13,10 @@ import { R4VerificationChecklist } from './items/R4VerificationChecklist';
 
 interface R4TriggerProps {
   label?: string;
-  variant?: 'tab';
 }
 
 export function R4Trigger({
   label = 'Verification Checklist',
-  variant,
 }: R4TriggerProps): JSX.Element {
   const [open, setOpen] = useState(false);
   // Lifted state — keyed by `${sectionId}-${itemIndex}` (e.g.,
@@ -35,7 +33,6 @@ export function R4Trigger({
         refId="R4"
         label={label}
         onClick={() => setOpen(true)}
-        variant={variant}
       />
       <ReferencePanel
         isOpen={open}

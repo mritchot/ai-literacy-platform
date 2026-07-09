@@ -120,7 +120,9 @@ export const CITATIONS = {
     publisher: 'Anthropic',
     date: 'November 5, 2025',
     pages: {
-      'median-savings-81': 'p. 12, Figure 6',
+      // Figure 6's caption (the canonical 81% locator) sits on p. 13;
+      // p. 12's body text carries the 84% conversation-level figure.
+      'median-savings-81': 'p. 13, Figure 6',
       'compile-95': 'p. 12',
       'documents-87': 'p. 10',
       'diagnostic-20': 'p. 12',

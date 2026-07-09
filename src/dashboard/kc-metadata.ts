@@ -98,19 +98,23 @@ export const KC_METADATA = {
   },
 
   // ── Module 2 ──────────────────────────────────────────────────────────
+  // Regenerated from the shipped scenario item bank (module2/
+  // knowledge-check-items.tsx) — the previous entries described the
+  // pre-25-05 definitional items. Option letters reflect the 09-07
+  // repositioning; keep in sync with the bank AND demo-data.ts.
   kc_2_1: {
     id: 'kc_2_1',
     moduleId: 2,
     sectionId: 7,
     objectiveRef: '2.1',
     stemPreview:
-      'Your team uses AI heavily for first-draft writing. Augmentation vs. automation framing suggests…',
+      'A product manager describes her AI workflow: notes in, stakeholder summary out, names…',
     preferredOptionId: 'a',
     options: [
-      { id: 'a', label: '(a) Augmentation pattern, judgment retained' },
-      { id: 'b', label: '(b) Automation pattern, supervision required' },
-      { id: 'c', label: '(c) Mixed; depends on draft quality' },
-      { id: 'd', label: '(d) Insufficient information' },
+      { id: 'a', label: '(a) Automation classified as augmentation' },
+      { id: 'b', label: '(b) She’s right — this is augmentation' },
+      { id: 'c', label: '(c) Could be either; withhold judgment' },
+      { id: 'd', label: '(d) Well-designed directive interaction' },
     ],
   },
   kc_2_2: {
@@ -119,13 +123,13 @@ export const KC_METADATA = {
     sectionId: 7,
     objectiveRef: '2.2',
     stemPreview:
-      'A 27% productivity gain in a workflow using directives like "make this more concise"…',
-    preferredOptionId: 'b',
+      'Your department head asks which of four work activities to prioritize for AI integration…',
+    preferredOptionId: 'd',
     options: [
-      { id: 'a', label: '(a) Generalize to all writing tasks' },
-      { id: 'b', label: '(b) Tied to directive specificity, not generalizable' },
-      { id: 'c', label: '(c) Reflects tool maturity broadly' },
-      { id: 'd', label: '(d) Driven by user expertise level' },
+      { id: 'a', label: '(a) Start with Task A — highest savings' },
+      { id: 'b', label: '(b) Start with Task D — safest to learn on' },
+      { id: 'c', label: '(c) Deploy across all four simultaneously' },
+      { id: 'd', label: '(d) Depends on the verification burden' },
     ],
   },
   kc_2_3: {
@@ -134,13 +138,13 @@ export const KC_METADATA = {
     sectionId: 7,
     objectiveRef: '2.3',
     stemPreview:
-      'In an RCT, novices gained 35% on customer-service tasks while experts gained 11%. Reading this…',
-    preferredOptionId: 'c',
+      'A finance colleague uses AI extensively for two tasks and handles two others manually…',
+    preferredOptionId: 'b',
     options: [
-      { id: 'a', label: '(a) AI replaces expertise' },
-      { id: 'b', label: '(b) Experts disadvantaged by AI' },
-      { id: 'c', label: '(c) Levels narrow on routine tasks; non-routine stays expert-bounded' },
-      { id: 'd', label: '(d) Sample size invalidates the result' },
+      { id: 'a', label: '(a) Her balance is right' },
+      { id: 'b', label: '(b) Partially inverted vs the savings data' },
+      { id: 'c', label: '(c) Add AI to all four tasks' },
+      { id: 'd', label: '(d) Stop using AI for the summaries' },
     ],
   },
   kc_2_4: {
@@ -149,30 +153,30 @@ export const KC_METADATA = {
     sectionId: 7,
     objectiveRef: '2.4',
     stemPreview:
-      'A workflow shows speed gains but no quality gain. The judgment-vs-speed split implies…',
-    preferredOptionId: 'a',
+      'Your HR director presents a 72% "collaborative use" survey result as proof adoption is healthy…',
+    preferredOptionId: 'c',
     options: [
-      { id: 'a', label: '(a) Speed gains do not imply judgment gains' },
-      { id: 'b', label: '(b) Quality is bottlenecked by tool capability' },
-      { id: 'c', label: '(c) Workflow needs more AI integration' },
-      { id: 'd', label: '(d) User skill is the limiting factor' },
+      { id: 'a', label: '(a) Encouraging — ahead of external benchmarks' },
+      { id: 'b', label: '(b) Self-report is unreliable; discard it' },
+      { id: 'c', label: '(c) Check behavioral indicators first' },
+      { id: 'd', label: '(d) Interaction patterns don’t matter' },
     ],
   },
 
   // ── Module 3 ──────────────────────────────────────────────────────────
+  // Regenerated from the shipped bank — three-option scenario items.
   kc_3_1: {
     id: 'kc_3_1',
     moduleId: 3,
     sectionId: 10,
     objectiveRef: '3.1',
     stemPreview:
-      'A response splits "unbreakable" into "un | break | able". The tokenization implies…',
+      'A colleague’s AI translations: French output is strong, Vietnamese is noticeably worse…',
     preferredOptionId: 'b',
     options: [
-      { id: 'a', label: '(a) Word-level tokenizer behavior' },
-      { id: 'b', label: '(b) BPE-style sub-word; tokens ≠ words' },
-      { id: 'c', label: '(c) Character-level tokenization' },
-      { id: 'd', label: '(d) Random fragmentation' },
+      { id: 'a', label: '(a) Less training data — knowledge problem' },
+      { id: 'b', label: '(b) Tokenization + training data; structural' },
+      { id: 'c', label: '(c) Temperature settings — tune it lower' },
     ],
   },
   kc_3_2: {
@@ -181,13 +185,12 @@ export const KC_METADATA = {
     sectionId: 10,
     objectiveRef: '3.2',
     stemPreview:
-      'You paste a 50-page memo and ask the model to summarize. It misses the second-half conclusion. Most likely cause…',
+      'An AI-drafted competitive analysis cites a Forrester report with specific figures…',
     preferredOptionId: 'a',
     options: [
-      { id: 'a', label: '(a) Context window truncation' },
-      { id: 'b', label: '(b) Tokenizer mishandling' },
-      { id: 'c', label: '(c) Temperature too high' },
-      { id: 'd', label: '(d) Random hallucination' },
+      { id: 'a', label: '(a) Verify every specific element' },
+      { id: 'b', label: '(b) Looks fine — major analysts are reliable' },
+      { id: 'c', label: '(c) Delete it and write manually' },
     ],
   },
   kc_3_3: {
@@ -196,13 +199,12 @@ export const KC_METADATA = {
     sectionId: 10,
     objectiveRef: '3.3',
     stemPreview:
-      'Running the same prompt twice with temperature 0.7 yields different answers. This reflects…',
-    preferredOptionId: 'c',
+      'Three team members report three different AI failures. The best diagnostic reading…',
+    preferredOptionId: 'b',
     options: [
-      { id: 'a', label: '(a) Tokenizer non-determinism' },
-      { id: 'b', label: '(b) Server-side variance' },
-      { id: 'c', label: '(c) Probabilistic next-token sampling' },
-      { id: 'd', label: '(d) A bug in the model' },
+      { id: 'a', label: '(a) All three are knowledge problems' },
+      { id: 'b', label: '(b) Three distinct failure mechanisms' },
+      { id: 'c', label: '(c) Parameter fixes without diagnosis' },
     ],
   },
   kc_3_4: {
@@ -211,30 +213,31 @@ export const KC_METADATA = {
     sectionId: 10,
     objectiveRef: '3.4',
     stemPreview:
-      'A diagnostic pair lets you isolate which mechanism caused a failure. The right pair compares…',
-    preferredOptionId: 'a',
+      'A strategy-meeting brief loads long documents; the analysis misses late-input material…',
+    preferredOptionId: 'c',
     options: [
-      { id: 'a', label: '(a) Two prompts that differ along a single mechanism axis' },
-      { id: 'b', label: '(b) Two prompts that differ along all axes' },
-      { id: 'c', label: '(c) Two outputs from different models' },
-      { id: 'd', label: '(d) Two outputs from the same prompt' },
+      { id: 'a', label: '(a) Model supplemented from general knowledge' },
+      { id: 'b', label: '(b) Only two risks were well-supported' },
+      { id: 'c', label: '(c) Context window nearly consumed' },
     ],
   },
 
   // ── Module 4 ──────────────────────────────────────────────────────────
+  // Regenerated from the shipped bank; letters reflect the 09-07
+  // repositioning.
   kc_4_1: {
     id: 'kc_4_1',
     moduleId: 4,
     sectionId: 4,
     objectiveRef: '4.1',
     stemPreview:
-      'You face a competitive analysis task. Decomposition into Human-Only / Assisted / Delegated requires…',
-    preferredOptionId: 'b',
+      'A product manager plans to delegate all four components of a quarterly product review…',
+    preferredOptionId: 'd',
     options: [
-      { id: 'a', label: '(a) Default to Fully Delegated for speed' },
-      { id: 'b', label: '(b) Match each component to its reliability profile' },
-      { id: 'c', label: '(c) Default to Human-Only when in doubt' },
-      { id: 'd', label: '(d) Skip decomposition; iterate later' },
+      { id: 'a', label: '(a) Efficient delegation as planned' },
+      { id: 'b', label: '(b) Keep all four components human-only' },
+      { id: 'c', label: '(c) Mostly fine; adjust component 1' },
+      { id: 'd', label: '(d) Delegate 1 + 4; keep 2 + 3 human-led' },
     ],
   },
   kc_4_2: {
@@ -243,13 +246,13 @@ export const KC_METADATA = {
     sectionId: 4,
     objectiveRef: '4.2',
     stemPreview:
-      'A weak prompt produced a fluent but wrong output. The reformulation framework prioritizes…',
-    preferredOptionId: 'c',
+      'A vague social-post prompt returns generic output. The best diagnosis of the problem…',
+    preferredOptionId: 'b',
     options: [
-      { id: 'a', label: '(a) Add length constraints' },
-      { id: 'b', label: '(b) Add style instructions' },
-      { id: 'c', label: '(c) Specify Product / Process / Performance criteria' },
-      { id: 'd', label: '(d) Try a different model' },
+      { id: 'a', label: '(a) The AI tool’s quality is the issue' },
+      { id: 'b', label: '(b) All three Description dimensions missing' },
+      { id: 'c', label: '(c) Prompt length — just write more' },
+      { id: 'd', label: '(d) AI isn’t reliable for creative work' },
     ],
   },
   kc_4_3: {
@@ -258,13 +261,13 @@ export const KC_METADATA = {
     sectionId: 7,
     objectiveRef: '4.3',
     stemPreview:
-      'You spot a fabricated statistic in an AI output. The verification loop says next step is…',
-    preferredOptionId: 'd',
+      'An AI-drafted investment summary cites a Morgan Stanley report with precise figures…',
+    preferredOptionId: 'a',
     options: [
-      { id: 'a', label: '(a) Accept and ship; cite the source' },
-      { id: 'b', label: '(b) Re-prompt with the same framing' },
-      { id: 'c', label: '(c) Lower the temperature' },
-      { id: 'd', label: '(d) Diagnose and reformulate' },
+      { id: 'a', label: '(a) Verify the citation; assess the rest' },
+      { id: 'b', label: '(b) Likely reliable — specifics are plausible' },
+      { id: 'c', label: '(c) Classify the whole paragraph fabricated' },
+      { id: 'd', label: '(d) Send it; flag concerns verbally later' },
     ],
   },
   kc_4_4: {
@@ -273,13 +276,13 @@ export const KC_METADATA = {
     sectionId: 7,
     objectiveRef: '4.4',
     stemPreview:
-      'After three refinement turns the output is acceptable but not great. Description→Discernment loop says…',
-    preferredOptionId: 'a',
+      'A stakeholder-update draft omits the vendor delay from its root causes. The loop says…',
+    preferredOptionId: 'c',
     options: [
-      { id: 'a', label: '(a) Accept; further refinement has diminishing returns' },
-      { id: 'b', label: '(b) Continue refining until perfect' },
-      { id: 'c', label: '(c) Restart with a new prompt' },
-      { id: 'd', label: '(d) Hand-edit final output' },
+      { id: 'a', label: '(a) Manually patch the root-causes section' },
+      { id: 'b', label: '(b) Ask the AI to self-evaluate the draft' },
+      { id: 'c', label: '(c) Reformulate with the missing context' },
+      { id: 'd', label: '(d) Discard it and write manually' },
     ],
   },
 } satisfies Record<string, KCMetadata>;
@@ -289,17 +292,21 @@ export const KC_METADATA = {
 export type KCId = keyof typeof KC_METADATA;
 
 export const IC_METADATA = {
+  // Regenerated from the shipped bank (module1/interpretation-check-items.ts)
+  // — the previous entries carried three-option summaries and two wrong
+  // keys from a superseded item generation.
   ic_1_1: {
     id: 'ic_1_1',
     moduleId: 1,
     sectionId: 3,
     stemPreview:
-      'Story 1 — adoption rates. The variation across regions reflects…',
+      'A VP asks whether AI literacy training belongs in the 2026 workforce development budget…',
     preferredOptionId: 'b',
     options: [
-      { id: 'a', label: '(a) Pure infrastructure access' },
-      { id: 'b', label: '(b) Institutional + economic + access factors' },
-      { id: 'c', label: '(c) Inevitable convergence' },
+      { id: 'a', label: '(a) Wait — skill change is declining' },
+      { id: 'b', label: '(b) Prioritize — fastest-growing demand' },
+      { id: 'c', label: '(c) Deprioritize — the market will solve it' },
+      { id: 'd', label: '(d) Wait — expectations, not outcomes' },
     ],
   },
   ic_1_2: {
@@ -307,12 +314,13 @@ export const IC_METADATA = {
     moduleId: 1,
     sectionId: 3,
     stemPreview:
-      'Story 2 — use-case mix. The 57/43 split between augmentation and automation suggests…',
-    preferredOptionId: 'a',
+      'A colleague says the adoption gap is mostly about access and GDP. The best reading…',
+    preferredOptionId: 'b',
     options: [
-      { id: 'a', label: '(a) Augmentation dominates; human judgment central' },
-      { id: 'b', label: '(b) Workforce already automated' },
-      { id: 'c', label: '(c) Automation will overtake within a year' },
+      { id: 'a', label: '(a) Essentially correct — income drives it' },
+      { id: 'b', label: '(b) Partially right — income explains ~70%' },
+      { id: 'c', label: '(c) Wrong — no correlation in the data' },
+      { id: 'd', label: '(d) Impossible to tell from this data' },
     ],
   },
   ic_1_3: {
@@ -320,12 +328,13 @@ export const IC_METADATA = {
     moduleId: 1,
     sectionId: 3,
     stemPreview:
-      'Story 3 — task concentration. Lower-adoption regions skew toward coding; this means…',
-    preferredOptionId: 'b',
+      'Looking at the augmentation–automation trend, which interpretation is best supported…',
+    preferredOptionId: 'c',
     options: [
-      { id: 'a', label: '(a) Those regions have ceiling on AI use' },
-      { id: 'b', label: '(b) Current adoption maturity, not inherent limitation' },
-      { id: 'c', label: '(c) Coding is the only viable use case' },
+      { id: 'a', label: '(a) Clear automation trajectory' },
+      { id: 'b', label: '(b) Too few waves to read a direction' },
+      { id: 'c', label: '(c) Toward automation, but not linear' },
+      { id: 'd', label: '(d) Augmentation recovered — August was noise' },
     ],
   },
 } satisfies Record<string, Omit<KCMetadata, 'objectiveRef'>>;

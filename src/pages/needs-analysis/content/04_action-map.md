@@ -22,7 +22,7 @@ Organized by the 4D competency framework (Delegation, Description, Discernment, 
 
 **D1. Before using AI, the participant defines the task goal, identifies which components require human judgment, and determines which are appropriate for AI assistance.**
 - Sub-component: Problem Awareness → Task Delegation
-- Gap trace: Misreading the augmentation/automation boundary (Persona — 65% self-report vs. 57% behavioral; participants don't recognize when they've shifted from collaboration to full delegation; [Handa et al. 2025, p. 3](https://bear-images.sfo2.cdn.digitaloceanspaces.com/ritchot/04761v1.pdf))
+- Gap trace: Misreading the augmentation/automation boundary (Persona — 65% self-report vs. 57% behavioral; participants do not recognize when they have shifted from collaboration to full delegation; [Handa et al. 2025, p. 3](https://bear-images.sfo2.cdn.digitaloceanspaces.com/ritchot/04761v1.pdf))
 - Module trace: Module 2 (Live Data Dashboard — augmentation vs. automation aggregate data with self-reflection prompts that surface the documented behavioral discrepancy) → Module 4 (AI Interaction Sandbox — structured task decomposition exercises where the participant practices the delegation decision before prompting)
 
 **D2. The participant distinguishes between tasks that benefit from AI augmentation and tasks that should remain human-only, based on stakes, verifiability, and domain expertise requirements.**
@@ -159,7 +159,7 @@ The participant receives an AI-generated deliverable (e.g., a client-ready summa
 - Interaction type: Sequential classification scenario with consequence-based feedback
 
 **P11. Iterative Refinement Exercise**
-The participant begins with a generated output and iterates through 3–4 turns of refinement, guided by scaffolded prompts that model the Description-Discernment loop. After each turn, they evaluate what improved, what didn't, and what to adjust next. The exercise concludes with a reflection on their own refinement pattern.
+The participant begins with a generated output and iterates through 3–4 turns of refinement, guided by scaffolded prompts that model the Description-Discernment loop. After each turn, they evaluate what improved, what did not, and what to adjust next. The exercise concludes with a reflection on their own refinement pattern.
 - Builds: D6, D9
 - Component: 4B (AI Interaction Sandbox — feedback simulator) / 5A (Storyline — Module 4)
 - Interaction type: Multi-turn guided interaction with self-assessment

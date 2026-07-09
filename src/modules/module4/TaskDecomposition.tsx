@@ -133,8 +133,8 @@ export function TaskDecomposition(): JSX.Element {
           the learner can reach for whichever frame fits their current
           question. */}
       <ReferenceTabRail>
-        <R1Trigger variant="tab" label="4D Reference" />
-        <R2Trigger variant="tab" label="Delegation Guide" />
+        <R1Trigger label="4D Reference" />
+        <R2Trigger label="Delegation Guide" />
       </ReferenceTabRail>
 
       <section
@@ -201,7 +201,7 @@ export function TaskDecomposition(): JSX.Element {
               moduleId={4}
               sectionId={2}
               promptId="p8_reflection"
-              accentColor={DELEGATION}
+              accent="delegation"
               engagedEvent="p8_reflection_engaged"
               savedEvent="p8_reflection_saved"
               promptText={P8_REFLECTION}

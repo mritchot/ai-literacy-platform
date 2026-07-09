@@ -109,7 +109,9 @@ function Hero({
   return (
     <section aria-labelledby="program-title" className="mb-14">
       <Overline className="mb-3.5" style={{ fontSize: 11 }}>
-        Program · 4 modules · 80–120 min total
+        {/* 90–120: module durations sum to 80–110 (program.ts) plus
+            ~10 min for the pre/post assessments. */}
+        Program · 4 modules · 90–120 min total
       </Overline>
       <h1
         id="program-title"
@@ -379,7 +381,7 @@ function ModuleCard({
         ) : (
           <Link
             to={ctaTarget}
-            className="inline-flex items-center gap-2 rounded-md font-sans text-[13.5px] font-semibold text-action no-underline transition-colors duration-150 hover:bg-[rgba(61,90,78,0.08)]"
+            className="inline-flex items-center gap-2 rounded-md font-sans text-[13.5px] font-semibold text-action no-underline transition-colors duration-150 hover:bg-[rgb(var(--action)/0.08)]"
             style={{ padding: '9px 16px', border: '1.5px solid rgb(var(--action))' }}
             aria-label={`${ctaLabel}: module ${module.id}, ${module.title}`}
           >

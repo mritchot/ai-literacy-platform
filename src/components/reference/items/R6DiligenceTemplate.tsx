@@ -178,7 +178,7 @@ function StatementStructure(): JSX.Element {
         <div
           className="font-mono text-overline font-bold uppercase"
           style={{
-            color: DILIGENCE,
+            color: 'rgb(var(--diligence-text))',
             letterSpacing: '0.1em',
             marginBottom: 4,
           }}
@@ -225,7 +225,7 @@ function ScaffoldRow({
         <span
           className="font-mono text-[11px] font-bold"
           style={{
-            color: DILIGENCE,
+            color: 'rgb(var(--diligence-text))',
             marginRight: 6,
           }}
         >
@@ -234,7 +234,7 @@ function ScaffoldRow({
         <span
           className="font-mono text-[11px] font-bold uppercase"
           style={{
-            color: DILIGENCE,
+            color: 'rgb(var(--diligence-text))',
             letterSpacing: '0.12em',
             marginRight: 8,
           }}
@@ -281,7 +281,7 @@ function ScaffoldRow({
                 position: 'absolute',
                 left: 4,
                 top: 0,
-                color: DILIGENCE,
+                color: 'rgb(var(--diligence-text))',
               }}
             >
               •
@@ -311,7 +311,7 @@ function FillInBox({ text }: { text: string }): JSX.Element {
       <div
         className="font-mono text-[9px] font-bold uppercase"
         style={{
-          color: DILIGENCE,
+          color: 'rgb(var(--diligence-text))',
           letterSpacing: '0.1em',
           marginBottom: 4,
         }}
@@ -460,7 +460,7 @@ function ExampleHeader({
       <div
         className="font-mono text-overline font-bold uppercase"
         style={{
-          color: DILIGENCE,
+          color: 'rgb(var(--diligence-text))',
           letterSpacing: '0.1em',
           marginBottom: 4,
         }}

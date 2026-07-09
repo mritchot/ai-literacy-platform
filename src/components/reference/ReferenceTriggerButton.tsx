@@ -16,8 +16,6 @@ interface ReferenceTriggerButtonProps {
   label: string;
   /** Click handler — opens the corresponding ReferencePanel. */
   onClick: () => void;
-  /** Visual variant; the tab handle is the only remaining treatment. */
-  variant?: 'tab' | undefined;
 }
 
 export function ReferenceTriggerButton({
@@ -53,7 +51,7 @@ function TabHandle({
   refId,
   label,
   onClick,
-}: Omit<ReferenceTriggerButtonProps, 'variant'>): JSX.Element {
+}: ReferenceTriggerButtonProps): JSX.Element {
   return (
     <button
       type="button"

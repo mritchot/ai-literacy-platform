@@ -102,7 +102,7 @@ function StatusUpdate(): JSX.Element {
           <thead>
             <tr>
               {['Workstream', 'Status', 'Notes'].map((h) => (
-                <th key={h} className="border-b border-border px-3 py-2 font-sans text-label font-semibold uppercase text-ink-secondary">
+                <th key={h} scope="col" className="border-b border-border px-3 py-2 font-sans text-label font-semibold uppercase text-ink-secondary">
                   {h}
                 </th>
               ))}

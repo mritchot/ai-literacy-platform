@@ -39,7 +39,12 @@ function isProgressEmpty(progress: LearnerProgressState): boolean {
     Object.keys(progress.scrolledSections).length === 0 &&
     Object.keys(progress.interactionCompleteSections).length === 0 &&
     Object.keys(progress.knowledgeChecks).length === 0 &&
-    Object.keys(progress.reflections).length === 0
+    Object.keys(progress.reflections).length === 0 &&
+    // A completed assessment is real learner data even before any section
+    // is visited — the pre-assessment is the mandatory first step in
+    // learner mode, so it must not read as "no learner data yet."
+    progress.assessments?.pre?.completedAt == null &&
+    progress.assessments?.post?.completedAt == null
   );
 }
 

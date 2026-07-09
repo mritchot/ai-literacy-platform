@@ -575,7 +575,7 @@ export function LearningArchitectureDiagram(): JSX.Element {
       <div className="mb-6 flex flex-wrap gap-x-6 gap-y-3 rounded-xl" style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border-light))', padding: '18px 22px' }}>
         {stats.map((s) => (
           <div key={s.l} className="flex items-baseline gap-1.5">
-            <span className="font-mono text-[20px] font-bold" style={{ color: '#5E7080' }}>
+            <span className="font-mono text-[20px] font-bold" style={{ color: 'rgb(var(--discernment-text))' }}>
               {s.n}
             </span>
             <span className="font-mono text-[10px] font-semibold uppercase text-muted" style={{ letterSpacing: '0.06em' }}>
@@ -653,9 +653,9 @@ export function LearningArchitectureDiagram(): JSX.Element {
         <L3Callout />
       </div>
 
-      {/* Admin / analytics infrastructure */}
+      {/* Analytics infrastructure */}
       <div className="mb-7">
-        <SectionRule label="Admin / Analytics Infrastructure" hint="Hidden from the learner; supports Levels 2 & 3" />
+        <SectionRule label="Analytics Infrastructure" hint="Hidden from the learner; supports Levels 2 & 3" />
         <InfraCards />
       </div>
 
