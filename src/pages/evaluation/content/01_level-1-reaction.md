@@ -94,7 +94,7 @@ Each scaled item is analyzed for mean, standard deviation, and distribution, bec
 | 3.0–3.9 | Mixed | Acceptable, not strong. Review the open-response data for friction; revise if it does not improve across 1–2 cohorts. |
 | Below 3.0 | Concern | Not meeting expectations. Prioritize revision; cross-reference the open responses and the Level 2 per-construct analysis to locate the cause. |
 
-If A3 is included, the Net Promoter Score is promoters (9–10) minus detractors (0–6), with passives (7–8) excluded; above +30 is generally strong for corporate training, below 0 signals real dissatisfaction. Open responses are thematically coded (two reviewers, inductive on the first cohort, then a deductive codebook) into a frequency-ranked theme list that maps to revision priorities. The full value emerges across cohorts: when a revision is made between cohorts, the next cohort's reaction data shows whether it worked. That feedback loop is the instrument's primary use: one cohort's reaction data drives a revision, and the next cohort's data shows whether it worked.
+If A3 is included, the Net Promoter Score is promoters (9–10) minus detractors (0–6), with passives (7–8) excluded; above +30 is generally strong for corporate training, below 0 signals real dissatisfaction. Open responses are thematically coded (two reviewers, inductive on the first cohort, then a deductive codebook) into a frequency-ranked theme list that maps to revision priorities. The full value emerges across cohorts: one cohort's reaction data drives a revision, and the next cohort's data shows whether it worked. That feedback loop is the instrument's primary use.
 
 ## Integration with the framework
 
