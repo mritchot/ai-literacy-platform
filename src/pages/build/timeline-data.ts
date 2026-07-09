@@ -3,7 +3,8 @@
 // shared week axis, plus the effort-comparison figures.
 //
 // Source: Phase 4 Component 7A Project Timeline
-// (course-info/content/04_phase-04/07a_project-timeline.docx). The effort
+// (planning corpus, outside the repo: ~/Downloads/course-info/content/
+// 04_phase-04/07a_project-timeline.docx). The effort
 // figures use the RECONCILED canonical values, not 07a's superseded ones:
 // ~150–160 focused hours against a ~735-hour Chapman Alliance baseline for
 // comparable Level-3 e-learning, a 4.6–4.9× reduction. The comparison leads on
@@ -105,7 +106,7 @@ export const SOLO_PHASES: Phase[] = [
     startWeek: 4,
     weeks: 3,
     detail:
-      'Four module documents (37 sections) and the custom platform: Vite + React + TypeScript, Tailwind, Recharts, 12 practice activities, 16 knowledge checks, the pre/post assessment, the admin dashboard, three-mode navigation, and dark mode. Deployed to Cloudflare Pages.',
+      'Four module documents (37 sections) and the custom platform: Vite + React + TypeScript, Tailwind, Recharts, 12 practice activities, 16 knowledge checks, the pre/post assessment, the analytics dashboard, three-mode navigation (later consolidated into the two-mode learner/portfolio system), and dark mode. Deployed to Cloudflare Pages.',
   },
   {
     name: 'Phase 4 · Evaluation',
@@ -153,7 +154,7 @@ export const ORG_PHASES: Phase[] = [
     startWeek: 14,
     weeks: 10,
     detail:
-      'Custom React platform: 12 interactive components, data dashboards, admin panel, responsive design, dark mode, three-mode navigation, and QA cycles. Runs parallel with content development for the first ~4 weeks.',
+      'Custom React platform: 12 interactive components, data dashboards, analytics panel, responsive design, dark mode, three-mode navigation (later consolidated to two modes), and QA cycles. Runs parallel with content development for the first ~4 weeks.',
   },
   {
     name: 'Integration + QA',

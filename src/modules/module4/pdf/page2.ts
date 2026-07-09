@@ -516,7 +516,13 @@ function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
   doc.setFontSize(7.5);
   setTextHex(doc, C.tertiary);
   setTracked(doc, 7.5, 0.16);
-  doc.text(safe('KNOWLEDGE CHECKS'), innerX, kcBaselineY);
+  const kcLabel = safe('KNOWLEDGE CHECKS');
+  // Measured here, in the label's own font, size, and tracking
+  // (getTextWidth ignores charSpace, so the per-gap tracking is added
+  // manually) — the overflow guard below previously measured this label
+  // in sans-italic 9.5 and was slightly off.
+  const kcLabelW = doc.getTextWidth(kcLabel) + 7.5 * 0.16 * (kcLabel.length - 1);
+  doc.text(kcLabel, innerX, kcBaselineY);
   resetTracking(doc);
 
   // Value: "{n} / {t}" in Sans Bold 11, then italic caption tail in
@@ -534,7 +540,7 @@ function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
   // Total width = value + caption. Right-align the combined block.
   const kcCombinedW = kcValueW + kcCaptionW;
   // If the combined width would overflow the row, drop the caption.
-  const kcRowAvailW = cardRight - (innerX + doc.getTextWidth(safe('KNOWLEDGE CHECKS')) + 12);
+  const kcRowAvailW = cardRight - (innerX + kcLabelW + 12);
   const renderCaption = kcCombinedW <= kcRowAvailW;
   const renderStartX = cardRight - (renderCaption ? kcCombinedW : kcValueW);
 

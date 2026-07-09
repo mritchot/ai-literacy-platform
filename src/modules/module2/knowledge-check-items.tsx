@@ -26,21 +26,21 @@ const KC_2_1: KnowledgeCheckItemData = {
   options: [
     {
       id: 'a',
-      text: '"She\'s right. This is augmentation. The intellectual contribution is hers: she attended the meetings, captured the notes, and reviews the output before it reaches stakeholders. The AI is handling the formatting and structural organization, which is mechanical work that doesn\'t require professional judgment. Her review step (checking names and scanning for errors) confirms she\'s maintaining quality control over the final deliverable. This is consistent with the task iteration pattern, where a professional provides substantive input and the AI assists with execution."',
-      isPreferred: false,
-      feedbackTitle: 'Misidentifies the substantive contribution',
-      feedbackTone: 'error',
-      feedbackText:
-        'Attending meetings and taking notes is data collection, not the analytical work this task requires. The substantive intellectual contribution in a stakeholder summary is deciding which decisions matter most, what action items follow from them, and how to frame them for the audience. The AI is performing all three of those judgments. Providing raw material and checking names is not augmentation; it is automation with input provision.',
-    },
-    {
-      id: 'b',
       text: '"This is functionally automation classified as augmentation. She provides raw input, but the AI is performing the substantive analytical work: identifying what matters most, prioritizing decisions, structuring action items, and drafting stakeholder communication. Her review step checks for surface errors like name corrections, not for whether the AI\'s judgment about what\'s important matches her own. The behavioral data shows this pattern is common: professionals overestimate their augmentative use by 8 to 18 percentage points, often because providing input and performing surface review feels collaborative even when the core intellectual work has been delegated."',
       isPreferred: true,
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
         'This answer correctly identifies the gap between the product manager\'s self-assessment and her actual behavior, applies the behavioral data (8–18pp overestimation) as an explanatory frame rather than an accusation, and names the specific mechanism: surface review feels like quality control but isn\'t the same as evaluating the AI\'s analytical judgments. That is the core skill on display: comparing self-reported patterns against the behavioral evidence and identifying where they diverge.',
+    },
+    {
+      id: 'b',
+      text: '"She\'s right. This is augmentation. The intellectual contribution is hers: she attended the meetings, captured the notes, and reviews the output before it reaches stakeholders. The AI is handling the formatting and structural organization, which is mechanical work that doesn\'t require professional judgment. Her review step (checking names and scanning for errors) confirms she\'s maintaining quality control over the final deliverable. This is consistent with the task iteration pattern, where a professional provides substantive input and the AI assists with execution."',
+      isPreferred: false,
+      feedbackTitle: 'Misidentifies the substantive contribution',
+      feedbackTone: 'error',
+      feedbackText:
+        'Attending meetings and taking notes is data collection, not the analytical work this task requires. The substantive intellectual contribution in a stakeholder summary is deciding which decisions matter most, what action items follow from them, and how to frame them for the audience. The AI is performing all three of those judgments. Providing raw material and checking names is not augmentation; it is automation with input provision.',
     },
     {
       id: 'c',
@@ -193,21 +193,21 @@ const KC_2_2: KnowledgeCheckItemData = {
     },
     {
       id: 'c',
-      text: '"It depends on the verification burden, not just the time savings. Task A saves 93% of the time, but it involves assembling references and citations, exactly the category where errors look correct on surface review and require checking every source individually to detect. Task C at 87% involves document preparation where format and content errors are more visible on review. I\'d recommend starting with Task C: high savings, but with errors that are easier to catch during normal quality checks. Task A should follow once we have a verification process in place specifically designed for source-level accuracy."',
-      isPreferred: true,
-      feedbackTitle: 'Best response',
-      feedbackTone: 'success',
-      feedbackText:
-        'This answer shows the analytical skill the section calls for: evaluating task-level productivity data along both the efficiency and risk dimensions simultaneously. It correctly identifies that Task A\'s high savings come with high verification burden (citation fabrication risk), recommends Task C as the better starting point because its error types are more visible, and specifies a condition for Task A deployment (a verification process for source accuracy). This is the Delegation-Discernment intersection the module teaches: choosing where to deploy AI based on both the gain and the evaluability of the output.',
-    },
-    {
-      id: 'd',
       text: '"We should deploy AI across all four tasks simultaneously rather than sequencing them. The savings range from 56% to 93%, and even the lowest figure represents a substantial efficiency gain that the team shouldn\'t defer. Phased rollouts introduce unnecessary delay and create uneven adoption across the department: some people benefit immediately while others wait. The team can develop verification practices organically as they encounter each task type, and any errors caught early will become learning opportunities that strengthen the team\'s overall AI competency."',
       isPreferred: false,
       feedbackTitle: 'Ignores capacity and learning constraints',
       feedbackTone: 'error',
       feedbackText:
         'Simultaneous deployment across four task types with different risk profiles and different verification requirements overwhelms the team\'s ability to develop competent evaluation practices for any of them. "Learn organically" and "errors as learning opportunities" is the approach the module\'s data shows is already failing: professionals are using AI across task types without calibrated verification, producing the self-report/behavioral gap the module documents. Unstructured adoption replicates the problem rather than solving it.',
+    },
+    {
+      id: 'd',
+      text: '"It depends on the verification burden, not just the time savings. Task A saves 93% of the time, but it involves assembling references and citations, exactly the category where errors look correct on surface review and require checking every source individually to detect. Task C at 87% involves document preparation where format and content errors are more visible on review. I\'d recommend starting with Task C: high savings, but with errors that are easier to catch during normal quality checks. Task A should follow once we have a verification process in place specifically designed for source-level accuracy."',
+      isPreferred: true,
+      feedbackTitle: 'Best response',
+      feedbackTone: 'success',
+      feedbackText:
+        'This answer shows the analytical skill the section calls for: evaluating task-level productivity data along both the efficiency and risk dimensions simultaneously. It correctly identifies that Task A\'s high savings come with high verification burden (citation fabrication risk), recommends Task C as the better starting point because its error types are more visible, and specifies a condition for Task A deployment (a verification process for source accuracy). This is the Delegation-Discernment intersection the module teaches: choosing where to deploy AI based on both the gain and the evaluability of the output.',
     },
   ],
 };
@@ -242,21 +242,21 @@ const KC_2_3: KnowledgeCheckItemData = {
     },
     {
       id: 'b',
+      text: '"Her usage is partially inverted. Compiling information from reports is among the highest-savings task categories (around 95%), so manual work leaves substantial gains on the table. Meanwhile, her AI-drafted summaries and earnings analyses are the task types where output looks authoritative but is hardest to verify without domain-expert checking. She doesn\'t need to stop using AI there; she needs a more rigorous verification process for them, and she should consider adding AI to the compilation work, where the speed gain is enormous and the outputs are straightforwardly verifiable."',
+      isPreferred: true,
+      feedbackTitle: 'Best response',
+      feedbackTone: 'success',
+      feedbackText:
+        'This answer captures both dimensions of the augmentation-automation diagnosis: it identifies an underuse case (manual data compilation where productivity gains are highest and verification is relatively straightforward) and an overreliance case (AI-generated investment analysis where the verification burden is highest). Crucially, it does not recommend eliminating AI from the high-risk tasks; it recommends increasing oversight. This matches the module\'s framework: the augmentation-automation distinction is not about whether to use AI, but about how much human judgment to apply.',
+    },
+    {
+      id: 'c',
       text: '"She should add AI to all four tasks to maximize her total productivity. The data shows time savings above 60% across virtually every occupation category, and even routine compilation and slide preparation would benefit from acceleration. There\'s no reason to keep any task fully manual when the tools are available. Selective AI usage means she\'s capturing only a fraction of the available efficiency gains, and the tasks she keeps manual are consuming time that could be redirected to strategic work or client relationship building."',
       isPreferred: false,
       feedbackTitle: 'Ignores the verification dimension entirely',
       feedbackTone: 'error',
       feedbackText:
         'Maximizing AI usage across all tasks treats productivity as the only relevant variable. The module\'s data shows that the gap between in-conversation time savings (81%) and full-cycle productivity gains (14–56% in controlled trials) is verification and refinement time. Adding AI to every task without calibrating oversight to risk produces speed, not quality. The recommendation to redirect time savings to "strategic work" assumes the AI output is reliable enough to stop reviewing, exactly the assumption the behavioral data contradicts.',
-    },
-    {
-      id: 'c',
-      text: '"Her usage is partially inverted. The data shows that compiling information from reports is among the highest-savings task categories (around 95%), which means she\'s leaving substantial productivity gains on the table by doing it manually. Meanwhile, her AI-drafted investment summaries and earnings analyses are exactly the task types where the output looks authoritative on surface review but is hardest to verify without domain-expert checking against the underlying data. She doesn\'t necessarily need to stop using AI for those tasks, but the data suggests she needs a more rigorous verification process for them, and she should consider adding AI to the compilation work where the speed gain is enormous and the outputs are more straightforwardly verifiable."',
-      isPreferred: true,
-      feedbackTitle: 'Best response',
-      feedbackTone: 'success',
-      feedbackText:
-        'This answer captures both dimensions of the augmentation-automation diagnosis: it identifies an underuse case (manual data compilation where productivity gains are highest and verification is relatively straightforward) and an overreliance case (AI-generated investment analysis where the verification burden is highest). Crucially, it does not recommend eliminating AI from the high-risk tasks; it recommends increasing oversight. This matches the module\'s framework: the augmentation-automation distinction is not about whether to use AI, but about how much human judgment to apply.',
     },
     {
       id: 'd',
@@ -297,21 +297,21 @@ const KC_2_4: KnowledgeCheckItemData = {
     },
     {
       id: 'b',
-      text: '"The survey result is a useful data point, but external research shows a consistent pattern: professionals overestimate how collaboratively they use AI. When researchers compared self-reports against behavioral data from actual conversations, the gap ranged from 8 to 18 percentage points: professionals believed they were augmenting more than they were. And the share of directive interactions (where users give a task and accept the result with minimal review) has been rising over time and constitutes roughly a third of all AI interactions. Our 72% collaborative self-report may reflect the same overestimation pattern. Before concluding that adoption is healthy, we\'d want to look at behavioral indicators, not just what people say they do but what their interaction patterns show."',
-      isPreferred: true,
-      feedbackTitle: 'Best response',
-      feedbackTone: 'success',
-      feedbackText:
-        'This answer covers all four components that matter here: it identifies the self-report/behavioral divergence (8–18pp), names the directive interaction pattern as a specific observable indicator, explains why the gap matters (the difference between perceived and actual collaboration affects output quality), and offers a constructive next step (look at behavioral indicators, not just survey data). It engages with the HR director\'s conclusion respectfully while providing the evidence base to challenge it. This is Discernment applied to organizational data.',
-    },
-    {
-      id: 'c',
       text: '"Self-report data on AI use is unreliable, and we shouldn\'t base conclusions on it. The research shows that professionals systematically misrepresent their AI usage, partly because of the social stigma documented in the literature, and partly because people genuinely can\'t distinguish between collaboration and delegation in their own workflows. We need to move away from survey-based measurement entirely and implement direct monitoring of AI usage patterns through interaction logs, API tracking, and output auditing. That\'s the only way to get an accurate picture of how the team is actually working with these tools."',
       isPreferred: false,
       feedbackTitle: 'Overcorrects and mischaracterizes',
       feedbackTone: 'caution',
       feedbackText:
         'The research does not show that professionals "systematically misrepresent" their AI usage; the term implies intentional deception. The self-report/behavioral gap is a calibration error, the same kind of overestimation that appears across self-assessments of any complex behavior. Dismissing all self-report data as unreliable loses a useful signal (what people believe about their practice), and the recommendation to implement direct monitoring through interaction logs and output auditing raises significant privacy, trust, and labor relations concerns that the response ignores entirely.',
+    },
+    {
+      id: 'c',
+      text: '"The survey is a useful data point, but external research shows a consistent pattern: professionals overestimate how collaboratively they use AI. When researchers compared self-reports against behavioral data from actual conversations, the gap ranged from 8 to 18 percentage points. And the share of directive interactions (give a task, accept the result) has been rising over time and constitutes roughly a third of all AI interactions. Our 72% collaborative self-report may reflect the same overestimation pattern. Before calling adoption healthy, we\'d want behavioral indicators, not just self-description."',
+      isPreferred: true,
+      feedbackTitle: 'Best response',
+      feedbackTone: 'success',
+      feedbackText:
+        'This answer covers all four components that matter here: it identifies the self-report/behavioral divergence (8–18pp), names the directive interaction pattern as a specific observable indicator, explains why the gap matters (the difference between perceived and actual collaboration affects output quality), and offers a constructive next step (look at behavioral indicators, not just survey data). It engages with the HR director\'s conclusion respectfully while providing the evidence base to challenge it. This is Discernment applied to organizational data.',
     },
     {
       id: 'd',

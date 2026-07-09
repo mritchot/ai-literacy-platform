@@ -178,7 +178,9 @@ function ScoreHeader({
   total: number;
 }): JSX.Element {
   const delta = postCorrect - preCorrect;
-  const deltaSign = delta > 0 ? '+' : delta < 0 ? '' : '±';
+  // U+2212 minus so a score drop reads as "−2", not a bare "2" whose
+  // only regression cue was the error color.
+  const deltaSign = delta > 0 ? '+' : delta < 0 ? '−' : '±';
   const deltaColor =
     delta > 0 ? SUCCESS : delta < 0 ? ERROR : 'rgb(var(--muted))';
   const deltaBg =
@@ -195,7 +197,10 @@ function ScoreHeader({
         padding: '20px 24px',
       }}
     >
-      <Overline className="mb-3" style={{ color: ASSESSMENT_ACCENT }}>
+      {/* --info: theme-adaptive slate (KnowledgeCheck precedent) — the
+          static ASSESSMENT_ACCENT hex fails AA on the dark card and
+          stays for the decorative border only. */}
+      <Overline className="mb-3" style={{ color: 'rgb(var(--info))' }}>
         Assessment growth
       </Overline>
       {/* Grid: stack on mobile, three columns at sm+. Each cell uses
@@ -345,7 +350,7 @@ function BlockBreakdown({
                   Post <strong className="text-ink">{stats.postCorrect}/{stats.total}</strong>
                 </div>
                 <div style={{ color: delta > 0 ? SUCCESS : delta < 0 ? ERROR : 'rgb(var(--muted))' }}>
-                  {delta > 0 ? '+' : delta < 0 ? '' : '±'}
+                  {delta > 0 ? '+' : delta < 0 ? '−' : '±'}
                   {Math.abs(delta)} change
                 </div>
               </div>

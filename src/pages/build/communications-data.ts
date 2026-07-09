@@ -4,7 +4,8 @@
 // notes that annotate them.
 //
 // Source: Phase 4 Component 7C Stakeholder Communication Samples
-// (course-info/content/04_phase-04/07c_stakeholder-communications.docx). The
+// (planning corpus, outside the repo: ~/Downloads/course-info/content/
+// 04_phase-04/07c_stakeholder-communications.docx). The
 // samples are the document's fictional-but-grounded originals. ONE reconciliation:
 // design-review item 5 originally cited a stale Module-4 duration (the memo
 // said "31–33 minutes"); per src/data/program.ts — the source of truth,
@@ -67,7 +68,7 @@ None this week. The remaining work is execution against approved designs.
 *Next update: week of May 12.*`;
 
 export const SAMPLE1_NOTE =
-  'The status update leads with a status table so a reader can assess overall health in about ten seconds; the narrative sections are read only when the table raises a question. The "Decisions needed" section appears even when empty; its absence would leave a reader wondering whether they had missed something.';
+  'The status update leads with a status table so a reader can assess overall health in about ten seconds; the narrative sections are read only when the table raises a question. The "Decisions needed" section appears even when empty; its absence would leave a reader wondering whether they had missed something. One dated detail: the memo reflects the build\'s then-current three-mode design; the platform later consolidated to two modes (learner/portfolio).';
 
 export const SAMPLE2_META: MemoMeta = {
   to: 'Design Review Attendees (ID, FS, SME, ES)',

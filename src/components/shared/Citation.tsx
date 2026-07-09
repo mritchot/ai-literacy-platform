@@ -20,6 +20,7 @@
 
 import {
   forwardRef,
+  useCallback,
   useEffect,
   useId,
   useLayoutEffect,
@@ -85,8 +86,11 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
   } | null>(null);
 
   // ─── Open / close helpers ─────────────────────────────────────────
+  // cancelTimers/closeNow are stable (refs + a stable state setter only)
+  // so effects can list closeNow as a dependency without re-subscribing
+  // per render.
 
-  const cancelTimers = () => {
+  const cancelTimers = useCallback(() => {
     if (openTimerRef.current !== null) {
       window.clearTimeout(openTimerRef.current);
       openTimerRef.current = null;
@@ -95,7 +99,7 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
       window.clearTimeout(closeTimerRef.current);
       closeTimerRef.current = null;
     }
-  };
+  }, []);
 
   const openNow = (sticky: boolean) => {
     cancelTimers();
@@ -103,11 +107,11 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
     setOpen(true);
   };
 
-  const closeNow = () => {
+  const closeNow = useCallback(() => {
     cancelTimers();
     setOpen(false);
     stickyRef.current = false;
-  };
+  }, [cancelTimers]);
 
   // ─── Mouse hover (open with delay; close on leave) ────────────────
 
@@ -193,7 +197,7 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
       window.clearTimeout(timer);
       document.removeEventListener('mousedown', handler);
     };
-  }, [open]);
+  }, [open, closeNow]);
 
   // ─── Position computation (run on open + on scroll/resize while open) ─
 
@@ -220,10 +224,13 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
       const maxLeft = window.innerWidth - POPOVER_MAX_WIDTH - VIEWPORT_PAD;
       const left = Math.max(VIEWPORT_PAD, Math.min(desiredLeft, maxLeft));
 
+      // Above-placement uses the height ESTIMATE; clamp so a popover
+      // taller than the estimate can't push its top edge off-screen
+      // (it may overlap the chip instead, which stays dismissable).
       const top =
         placement === 'below'
           ? chipRect.bottom + GAP
-          : chipRect.top - GAP - ESTIMATED_HEIGHT;
+          : Math.max(VIEWPORT_PAD, chipRect.top - GAP - ESTIMATED_HEIGHT);
 
       setPos({ left, top, placement });
     };
@@ -238,7 +245,7 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
 
   // ─── Cleanup timers on unmount ────────────────────────────────────
 
-  useEffect(() => () => cancelTimers(), []);
+  useEffect(() => () => cancelTimers(), [cancelTimers]);
 
   // ─── Display label ────────────────────────────────────────────────
 
@@ -344,7 +351,11 @@ const CitationPopover = forwardRef<HTMLDivElement, CitationPopoverProps>(
       <div
         ref={ref}
         id={id}
-        role="tooltip"
+        // Non-modal dialog, not tooltip: the ARIA tooltip role forbids
+        // interactive content, and this popover holds a close button and
+        // toggles open on click.
+        role="dialog"
+        aria-label="Citation details"
         style={style}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}

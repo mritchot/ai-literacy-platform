@@ -3,7 +3,8 @@
 // rationale.
 //
 // Source: Phase 4 Component 7D Resource Planning Summary
-// (course-info/content/04_phase-04/07d_resource-planning.docx), §2–§4. The
+// (planning corpus, outside the repo: ~/Downloads/course-info/content/
+// 04_phase-04/07d_resource-planning.docx), §2–§4. The
 // practitioner-labor figure uses the RECONCILED canonical value (~150–160
 // focused hours). Solo costs reflect the actual spend (Claude Pro then Max 5x,
 // plus Google AI Pro for NotebookLM). Org salaries are fully loaded (base ×1.4).
@@ -27,7 +28,6 @@ export interface BudgetLine {
   low: string;
   high: string;
   note: string;
-  labor: boolean;
 }
 
 export interface RationaleBlock {
@@ -57,14 +57,14 @@ export const FTE_ALLOC: FteLine[] = [
 ];
 
 export const BUDGET_LINES: BudgetLine[] = [
-  { category: 'Labor · L&D Manager', low: '$47,000', high: '$53,000', note: '0.5 FTE × 28 wks × ~$175–195K fully loaded', labor: true },
-  { category: 'Labor · Instructional Designer', low: '$42,000', high: '$55,000', note: '1.0 FTE × 24 wks × $90–120K fully loaded', labor: true },
-  { category: 'Labor · Full-Stack Developer', low: '$52,000', high: '$72,000', note: '1.0 FTE × 18 wks × $150–210K fully loaded (contractor may be higher)', labor: true },
-  { category: 'Labor · SME', low: '$8,000', high: '$15,000', note: '0.2 FTE × 18 wks, or external consultation', labor: true },
-  { category: 'Labor · QA Specialist', low: '$6,000', high: '$9,000', note: '0.5 FTE × 8 wks × $80–120K fully loaded', labor: true },
-  { category: 'Technology + licensing', low: '$5,000', high: '$10,000', note: 'Hosting, AI tools, CI/CD, testing tools', labor: false },
-  { category: 'Evaluation administration', low: '$5,000', high: '$10,000', note: 'Survey tools, data collection, reporting', labor: false },
-  { category: 'Contingency (15%)', low: '$25,000', high: '$34,000', note: 'Scope changes, extended timelines, additional review cycles', labor: false },
+  { category: 'Labor · L&D Manager', low: '$47,000', high: '$53,000', note: '0.5 FTE × 28 wks × ~$175–195K fully loaded' },
+  { category: 'Labor · Instructional Designer', low: '$42,000', high: '$55,000', note: '1.0 FTE × 24 wks × $90–120K fully loaded' },
+  { category: 'Labor · Full-Stack Developer', low: '$52,000', high: '$72,000', note: '1.0 FTE × 18 wks × $150–210K fully loaded (contractor may be higher)' },
+  { category: 'Labor · SME', low: '$8,000', high: '$15,000', note: '0.2 FTE × 18 wks, or external consultation' },
+  { category: 'Labor · QA Specialist', low: '$6,000', high: '$9,000', note: '0.5 FTE × 8 wks × $80–120K fully loaded' },
+  { category: 'Technology + licensing', low: '$5,000', high: '$10,000', note: 'Hosting, AI tools, CI/CD, testing tools' },
+  { category: 'Evaluation administration', low: '$5,000', high: '$10,000', note: 'Survey tools, data collection, reporting' },
+  { category: 'Contingency (15%)', low: '$25,000', high: '$34,000', note: 'Scope changes, extended timelines, additional review cycles' },
 ];
 
 export const BUDGET_TOTAL = { low: '$190,000', high: '$258,000' };
@@ -75,7 +75,7 @@ export const RATIONALE: RationaleBlock[] = [
     heading: 'Why custom code',
     paragraphs: [
       'Interactive complexity. The program includes 12 practice activities with varied interaction models: live data dashboards with filter controls, a tokenizer playground with real-time client-side tokenization, a next-token prediction simulator, a multi-step AI interaction sandbox, and a context-window failure scenario. Standard authoring tools cannot produce these natively; building them as embedded iframes would fracture the experience and block the learning-analytics tracking.',
-      'Data architecture. The platform renders six validated JSON datasets through interactive Recharts visualizations: live renderings with filters, tooltips, and guided reflections, not static images. The admin dashboard aggregates learning events from localStorage and can export them as xAPI statements. This is beyond what an authoring tool produces without custom JavaScript, at which point the tool adds overhead rather than value.',
+      'Data architecture. The platform renders six validated JSON datasets through interactive Recharts visualizations: live renderings with filters, tooltips, and guided reflections, not static images. The analytics dashboard aggregates learning events from localStorage and can export them as xAPI statements. This is beyond what an authoring tool produces without custom JavaScript, at which point the tool adds overhead rather than value.',
       'Portfolio differentiation. For a candidate targeting L&D Manager or Senior Learning Experience Designer roles, the custom platform signals what a Storyline build does not: technical fluency, product thinking, and the ability to work with (or manage) engineering resources. The production-grade codebase is itself a reviewable artifact.',
     ],
   },

@@ -3,7 +3,8 @@
 // lane, and the three-tier assessment architecture.
 //
 // Source: Phase 2 "Visual Learning Architecture" prototype
-// (course-info/content/02_phase-02/03b_learning-architecture.jsx). Ported
+// (planning corpus, outside the repo: ~/Downloads/course-info/content/
+// 02_phase-02/03b_learning-architecture.jsx). Ported
 // verbatim except module durations, which are read from src/data/program.ts
 // (the single source of truth) rather than hardcoded — the two already agree
 // (M1/M2 15–20, M3 20–30, M4 30–40 min), so this only prevents future drift.
@@ -250,29 +251,26 @@ export const KIRK_LEVELS: KirkLevel[] = [
   { key: 'L4', label: 'Level 4', name: 'Results', color: '#7A6B80', detail: 'Business outcomes downstream of competent use: efficiency (time-to-first-draft, revision cycles), quality (AI-error rate), transparency, and time-to-competency, run through a Phillips ROI model (191% in the conservative worked example)' },
 ];
 
-// ─── Admin / analytics infrastructure (hidden from learners) ───────────
+// ─── Analytics infrastructure (hidden from learners) ───────────────────
 
 export interface InfraComponent {
   component: string;
   title: string;
   detail: string;
-  note: string;
 }
 
 export const INFRA_COMPONENTS: InfraComponent[] = [
   {
-    component: '4D · Admin Analytics Dashboard',
+    component: '4D · Analytics Dashboard',
     title: 'Per-learner progress tracking, module completion rates, practice activity engagement metrics, and time-on-task data.',
     detail:
-      'Hidden admin-only overlay reachable via Cmd/Ctrl+Shift+A. Surfaces the practice-activity and KC data that feeds Kirkpatrick Levels 2 and 3.',
-    note: 'Cmd/Ctrl+Shift+A',
+      'Portfolio-mode analytics dashboard at /#/dashboard (Ctrl/Cmd+Shift+A enters portfolio mode). Surfaces the practice-activity and KC data that feeds Kirkpatrick Levels 2 and 3.',
   },
   {
     component: '4E · Platform Shell',
     title: 'Sidebar navigation, the 90% scroll-completion sentinel, hash router, theme system, and the learner-progress and analytics contexts.',
     detail:
       'Wraps every module: every section renders inside the shell’s SectionContainer and consumes its shared progress and analytics providers.',
-    note: 'SectionContainer',
   },
 ];
 

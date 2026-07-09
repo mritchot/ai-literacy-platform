@@ -16,7 +16,7 @@
 // (SERIES_ACCENT) is the one deliberate non-token color, reserved for the
 // ROI emphasis and the figure's term chips.
 
-import { useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Overline } from '../../components/shared/Overline';
 import { SERIES_ACCENT } from './config';
 
@@ -394,7 +394,10 @@ export function RoiCalculator(): JSX.Element {
           </div>
           <div
             className="mt-1 font-mono font-semibold"
-            style={{ fontSize: 40, lineHeight: 1.2, color: SERIES_ACCENT }}
+            // Theme-adaptive: the static series accent measures 2.77:1
+            // on the dark surface — under even the 3:1 large-text
+            // minimum. SERIES_ACCENT stays on the decorative rules.
+            style={{ fontSize: 40, lineHeight: 1.2, color: 'rgb(var(--discernment-text))' }}
           >
             {fmtPct(roi)}
           </div>
@@ -433,9 +436,23 @@ function InputField({
 }): JSX.Element {
   const id = `roi-${def.key}`;
 
+  // Local text mirror of the committed number. Binding the input straight
+  // to `value` made a cleared field snap to 0 (parseFloat('') → NaN → 0),
+  // so it couldn't be blanked to retype. While the field has focus the
+  // text is the learner's; valid parses commit upward (where they're
+  // clamped) and blur snaps the text back to the committed value.
+  const [text, setText] = useState(String(value));
+  const focusedRef = useRef(false);
+  useEffect(() => {
+    // External changes (the reset-to-defaults control) re-sync the text;
+    // mid-edit clamping must not fight the keystroke, hence the guard.
+    if (!focusedRef.current) setText(String(value));
+  }, [value]);
+
   const handle = (raw: string): void => {
+    setText(raw);
     const parsed = Number.parseFloat(raw);
-    onChange(Number.isFinite(parsed) ? parsed : 0);
+    if (Number.isFinite(parsed)) onChange(parsed);
   };
 
   return (
@@ -453,8 +470,15 @@ function InputField({
           min={def.min}
           max={def.max}
           step={def.step}
-          value={value}
+          value={text}
           onChange={(e) => handle(e.target.value)}
+          onFocus={() => {
+            focusedRef.current = true;
+          }}
+          onBlur={() => {
+            focusedRef.current = false;
+            setText(String(value));
+          }}
           className="w-32 rounded-md px-2.5 py-1.5 font-mono text-body-sm text-ink [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))' }}
         />

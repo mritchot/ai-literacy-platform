@@ -27,23 +27,56 @@ export function PlatformShell(): JSX.Element {
   const collapsed = explicitCollapsed ?? defaultCollapsed;
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  // Hamburger button — the focus-restore target for every drawer-close
+  // path (a ref, not a selector lookup, so a label change can't silently
+  // break the restore).
+  const menuButtonRef = useRef<HTMLButtonElement | null>(null);
+  // Wraps the overlay + drawer; the Tab trap scopes its focusable query
+  // to this subtree.
+  const drawerRef = useRef<HTMLDivElement | null>(null);
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+    menuButtonRef.current?.focus();
+  };
 
   // Close the mobile overlay if the viewport grows past mobile.
   useEffect(() => {
     if (viewport !== 'mobile') setMobileMenuOpen(false);
   }, [viewport]);
 
-  // Mobile drawer keyboard contract: Escape closes it, and focus
-  // returns to the hamburger button so the keyboard user isn't dropped
-  // behind the (now removed) overlay. The drawer's close button takes
-  // focus on open (see Sidebar).
+  // Mobile drawer keyboard contract (modal dialog pattern): Escape
+  // closes it and returns focus to the hamburger; Tab wraps within the
+  // overlay + drawer so keyboard focus can't land on the page content
+  // behind the modal surface (WCAG 2.4.3). The drawer's close button
+  // takes focus on open (see Sidebar); the focusable list is re-queried
+  // per keystroke, mirroring ReferencePanel's trap.
   useEffect(() => {
     if (!mobileMenuOpen) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key !== 'Escape') return;
-      e.preventDefault();
-      setMobileMenuOpen(false);
-      (document.querySelector('[aria-label="Open program menu"]') as HTMLElement | null)?.focus();
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setMobileMenuOpen(false);
+        menuButtonRef.current?.focus();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      const root = drawerRef.current;
+      if (!root) return;
+      const focusables = root.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0]!;
+      const last = focusables[focusables.length - 1]!;
+      const active = document.activeElement;
+      const inside = active instanceof Node && root.contains(active);
+      if (e.shiftKey && (active === first || !inside)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (active === last || !inside)) {
+        e.preventDefault();
+        first.focus();
+      }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -98,23 +131,25 @@ export function PlatformShell(): JSX.Element {
 
       {viewport === 'mobile' ? (
         <>
-          <TopBar onOpenMenu={() => setMobileMenuOpen(true)} />
+          <TopBar onOpenMenu={() => setMobileMenuOpen(true)} menuButtonRef={menuButtonRef} />
           {mobileMenuOpen && (
-            <>
+            // Layout-neutral wrapper (children are position:fixed) that
+            // scopes the Tab trap to the overlay + drawer subtree.
+            <div ref={drawerRef}>
               <button
                 type="button"
                 aria-label="Close menu overlay"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={closeMobileMenu}
                 className="fixed inset-0 z-40"
                 style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
               />
               <Sidebar
                 collapsed={false}
                 isMobile
-                onToggleCollapse={() => setMobileMenuOpen(false)}
-                onCloseMobile={() => setMobileMenuOpen(false)}
+                onToggleCollapse={closeMobileMenu}
+                onCloseMobile={closeMobileMenu}
               />
-            </>
+            </div>
           )}
         </>
       ) : (

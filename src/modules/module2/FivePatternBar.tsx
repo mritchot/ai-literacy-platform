@@ -37,7 +37,6 @@ interface PatternMeta {
   key: string;
   label: string;
   color: string;
-  textColor: string;
 }
 
 export function FivePatternBar({ categories }: FivePatternBarProps): JSX.Element {
@@ -45,11 +44,11 @@ export function FivePatternBar({ categories }: FivePatternBarProps): JSX.Element
 
   const meta: PatternMeta[] = useMemo(
     () => [
-      { key: 'taskIteration', label: categories[0]?.pattern ?? '', color: DELEGATION_COLORS[0], textColor: '#FFFFFF' },
-      { key: 'learning', label: categories[1]?.pattern ?? '', color: DELEGATION_COLORS[1], textColor: '#3D4A35' },
-      { key: 'validation', label: categories[2]?.pattern ?? '', color: DELEGATION_COLORS[2], textColor: '#3D4A35' },
-      { key: 'directive', label: categories[3]?.pattern ?? '', color: DISCERNMENT_COLORS[0], textColor: '#FFFFFF' },
-      { key: 'feedbackLoop', label: categories[4]?.pattern ?? '', color: DISCERNMENT_COLORS[1], textColor: '#354A57' },
+      { key: 'taskIteration', label: categories[0]?.pattern ?? '', color: DELEGATION_COLORS[0] },
+      { key: 'learning', label: categories[1]?.pattern ?? '', color: DELEGATION_COLORS[1] },
+      { key: 'validation', label: categories[2]?.pattern ?? '', color: DELEGATION_COLORS[2] },
+      { key: 'directive', label: categories[3]?.pattern ?? '', color: DISCERNMENT_COLORS[0] },
+      { key: 'feedbackLoop', label: categories[4]?.pattern ?? '', color: DISCERNMENT_COLORS[1] },
     ],
     [categories],
   );
@@ -128,7 +127,7 @@ export function FivePatternBar({ categories }: FivePatternBarProps): JSX.Element
 
       <FivePatternLegend meta={meta} categories={categories} />
 
-      <BracketAnnotation augTotal={augTotal} autoTotal={autoTotal} categories={categories} />
+      <BracketAnnotation augTotal={augTotal} autoTotal={autoTotal} />
 
       <figcaption
         className="mt-3 font-mono text-caption text-muted"
@@ -171,7 +170,6 @@ function BracketAnnotation({
 }: {
   augTotal: number;
   autoTotal: number;
-  categories: CollaborationCategory[];
 }): JSX.Element {
   const augPct = Math.round(augTotal);
   const autoPct = Math.round(autoTotal);
@@ -184,7 +182,7 @@ function BracketAnnotation({
         style={{
           flexBasis: `${augWidth}%`,
           letterSpacing: '0.08em',
-          color: '#3D4A35',
+          color: 'rgb(var(--delegation-text))',
           fontWeight: 700,
           borderTop: '1px solid #B5C4AB',
           paddingTop: 4,
@@ -198,7 +196,7 @@ function BracketAnnotation({
         style={{
           flexBasis: `${autoWidth}%`,
           letterSpacing: '0.08em',
-          color: '#354A57',
+          color: 'rgb(var(--discernment-text))',
           fontWeight: 700,
           borderTop: '1px solid #A8BCCA',
           paddingTop: 4,

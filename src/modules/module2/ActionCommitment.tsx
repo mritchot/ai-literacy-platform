@@ -4,7 +4,7 @@
 // LearnerProgressContext as reflections under section 5 with promptIds
 // "p4_task1" / "p4_task2".
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { Overline } from '../../components/shared/Overline';
@@ -25,15 +25,25 @@ export function ActionCommitment(): JSX.Element {
 
   const [task1, setTask1] = useState(stored1);
   const [task2, setTask2] = useState(stored2);
-  const [savedAt, setSavedAt] = useState<number | null>(null);
   const [engaged1, setEngaged1] = useState(false);
   const [engaged2, setEngaged2] = useState(false);
+
+  // "Saved ✓" badge: set by the save handler, cleared by its own timer.
+  // (The previous `Date.now() - savedAt < 3000` render check had no timer
+  // behind it, so the badge stuck until an unrelated re-render.)
+  const [showSavedBadge, setShowSavedBadge] = useState(false);
+  const badgeTimerRef = useRef<number | null>(null);
+  useEffect(
+    () => () => {
+      if (badgeTimerRef.current !== null) window.clearTimeout(badgeTimerRef.current);
+    },
+    [],
+  );
 
   useEffect(() => setTask1(stored1), [stored1]);
   useEffect(() => setTask2(stored2), [stored2]);
 
   const hasSaved = stored1.length >= MIN_CHARS && stored2.length >= MIN_CHARS;
-  const showSavedBadge = savedAt !== null && Date.now() - savedAt < 3000;
   const canSave = task1.trim().length >= MIN_CHARS && task2.trim().length >= MIN_CHARS;
 
   const onSave = () => {
@@ -46,7 +56,9 @@ export function ActionCommitment(): JSX.Element {
       sectionId: 5,
       payload: { task1Chars: task1.length, task2Chars: task2.length },
     });
-    setSavedAt(Date.now());
+    setShowSavedBadge(true);
+    if (badgeTimerRef.current !== null) window.clearTimeout(badgeTimerRef.current);
+    badgeTimerRef.current = window.setTimeout(() => setShowSavedBadge(false), 3000);
   };
 
   const onFocus1 = () => {

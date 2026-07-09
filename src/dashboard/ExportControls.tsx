@@ -3,7 +3,7 @@
 // (demo or live) so the downloaded file matches what the dashboard shows.
 // Reset opens a styled `ConfirmModal` (not browser `confirm()`).
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Icon } from '../components/shared/Icon';
 import type { AnalyticsEvent } from '../contexts/AnalyticsContext';
 import type { LearnerProgressState } from '../contexts/LearnerProgressContext';
@@ -28,7 +28,7 @@ interface AnalyticsExport {
   dataSource: DataSource;
   progress: LearnerProgressState;
   analytics: { events: AnalyticsEvent[] };
-  platform: { version: string; exportedBy: 'admin-dashboard' };
+  platform: { version: string; exportedBy: 'analytics-dashboard' };
 }
 
 interface XAPIStatement {
@@ -59,14 +59,15 @@ function categorizeForXAPI(eventType: string): keyof typeof VERB_MAP {
   return 'generic';
 }
 
-function eventToXAPI(event: AnalyticsEvent, index: number): XAPIStatement {
+function eventToXAPI(event: AnalyticsEvent): XAPIStatement {
   const cat = categorizeForXAPI(event.type);
   const verb = VERB_MAP[cat];
   const objectId = event.moduleId
     ? `https://ai-literacy.example.com/module/${event.moduleId}${event.sectionId ? `/section/${event.sectionId}` : ''}`
     : `https://ai-literacy.example.com/event/${event.type}`;
   return {
-    id: `urn:uuid:demo-${index.toString().padStart(6, '0')}`,
+    // Spec-conformant statement id — a strict LRS validates the UUID.
+    id: `urn:uuid:${crypto.randomUUID()}`,
     actor: { mbox: 'mailto:learner@example.com', name: 'Portfolio Learner' },
     verb: { id: verb.id, display: { 'en-US': verb.display } },
     object: {
@@ -92,8 +93,12 @@ function downloadFile(filename: string, content: string, mime: string): void {
   URL.revokeObjectURL(url);
 }
 
+// Local calendar day (not UTC) so a late-evening export in a
+// negative-UTC timezone isn't stamped with tomorrow's date.
 function dateStamp(): string {
-  return new Date().toISOString().slice(0, 10);
+  const d = new Date();
+  const pad = (n: number): string => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 
 export function ExportControls({
@@ -104,7 +109,6 @@ export function ExportControls({
 }: ExportControlsProps): JSX.Element {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [announcement, setAnnouncement] = useState('');
-  const resetTriggerRef = useRef<HTMLButtonElement | null>(null);
 
   const handleJSON = () => {
     const payload: AnalyticsExport = {
@@ -112,7 +116,7 @@ export function ExportControls({
       dataSource,
       progress,
       analytics: { events },
-      platform: { version: PLATFORM_VERSION, exportedBy: 'admin-dashboard' },
+      platform: { version: PLATFORM_VERSION, exportedBy: 'analytics-dashboard' },
     };
     downloadFile(
       `analytics-export-${dateStamp()}.json`,
@@ -123,12 +127,12 @@ export function ExportControls({
   };
 
   const handleXAPI = () => {
-    const statements = events.map((e, i) => eventToXAPI(e, i));
+    const statements = events.map((e) => eventToXAPI(e));
     const payload = {
       exportTimestamp: new Date().toISOString(),
       dataSource,
       statementCount: statements.length,
-      platform: { version: PLATFORM_VERSION, exportedBy: 'admin-dashboard' },
+      platform: { version: PLATFORM_VERSION, exportedBy: 'analytics-dashboard' },
       statements,
     };
     downloadFile(
@@ -179,7 +183,6 @@ export function ExportControls({
           Export xAPI
         </button>
         <button
-          ref={resetTriggerRef}
           type="button"
           onClick={handleResetClick}
           aria-label="Reset all live learner data"

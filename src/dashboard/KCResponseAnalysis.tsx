@@ -19,11 +19,14 @@ interface KCResponseAnalysisProps {
   progress: LearnerProgressState;
 }
 
+// Theme-adaptive competency text tokens — the previous hardcoded
+// light-mode tints (#3D4A35 family) sat near-invisible on the dark
+// canvas (same fix as the module overline at the IC block below).
 const MODULE_OVERLINE: Record<ModuleId, { label: string; color: string }> = {
-  1: { label: 'Module 1 — Context', color: '#3D4A35' },
-  2: { label: 'Module 2 — Evidence', color: '#5A4A37' },
-  3: { label: 'Module 3 — Mechanism', color: '#354A57' },
-  4: { label: 'Module 4 — Application', color: '#4A3557' },
+  1: { label: 'Module 1 — Context', color: 'rgb(var(--delegation-text))' },
+  2: { label: 'Module 2 — Evidence', color: 'rgb(var(--description-text))' },
+  3: { label: 'Module 3 — Mechanism', color: 'rgb(var(--discernment-text))' },
+  4: { label: 'Module 4 — Application', color: 'rgb(var(--diligence-text))' },
 };
 
 interface ResponseRow {
@@ -214,7 +217,7 @@ function ResponseCard({
             className="font-sans text-[12.5px] font-semibold"
             style={{ color: row.feedbackTone ? TONE_COLOR[row.feedbackTone] : undefined }}
           >
-            {row.isPreferred ? '✓ Preferred' : `✗ ${row.feedbackTone ?? 'caution'}`}
+            {row.isPreferred ? '✓ Preferred' : '✗ Not preferred'}
           </span>
         ) : (
           <span className="font-mono text-[11px] text-muted">Not attempted</span>

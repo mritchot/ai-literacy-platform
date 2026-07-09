@@ -76,7 +76,9 @@ export function CompletionSummary(): JSX.Element {
         .filter((sec) => !(mod.id === 4 && sec.id === 10))
         .every((sec) => isSectionComplete(mod.id, sec.id)),
     );
-  }, [state.scrolledSections, state.interactionCompleteSections, isSectionComplete]);
+    // isSectionComplete's identity tracks every state change, so it is
+    // the only dependency the memo needs.
+  }, [isSectionComplete]);
 
   // Fire the view event once when the complete profile first renders.
   // The ref guard prevents re-fires on every state change in the
@@ -97,7 +99,7 @@ export function CompletionSummary(): JSX.Element {
   // timestamp in state, falling back to today. Timestamps live on
   // KnowledgeCheckResult objects; reflections don't carry per-field
   // timestamps, so KCs are the primary signal.
-  const completionDate = useMemo(() => formatCompletionDate(state), []);
+  const completionDate = useMemo(() => formatCompletionDate(state), [state]);
 
   // Pre/post assessment growth — aggregate per-block correct counts
   // from the recorded responses. Returns undefined when either side
@@ -233,7 +235,7 @@ export function CompletionSummary(): JSX.Element {
           hiding it on the placeholder. ReferenceTabRail uses fixed
           positioning, so its DOM placement here is fine. */}
       <ReferenceTabRail>
-        <R7Trigger variant="tab" label="Policy Starter" />
+        <R7Trigger label="Policy Starter" />
       </ReferenceTabRail>
       {/* ProfileHeader leads the page — it's the document title block
           (program name, completion date, Download PDF action). Putting
@@ -363,7 +365,7 @@ function ProfileHeader({
       <div>
         <Overline
           className="mb-1"
-          style={{ color: COLORS.diligence, letterSpacing: '0.1em' }}
+          style={{ color: 'rgb(var(--diligence-text))', letterSpacing: '0.1em' }}
         >
           Competency Profile
         </Overline>
@@ -396,12 +398,17 @@ function ProfileHeader({
 
 function CompetencyCard({
   accent,
+  accentText,
   label,
   heading,
   children,
   footerNote,
 }: {
+  /** Brand hex for the decorative left rule (theme-invariant). */
   accent: string;
+  /** Theme-adaptive text token for the overline — the brand hex sits
+   *  at ~3:1 on the dark card surface, below AA. */
+  accentText: string;
   label: string;
   heading: string;
   children: React.ReactNode;
@@ -422,7 +429,7 @@ function CompetencyCard({
         minWidth: 0,
       }}
     >
-      <Overline className="mb-1.5" style={{ color: accent, letterSpacing: '0.1em' }}>
+      <Overline className="mb-1.5" style={{ color: accentText, letterSpacing: '0.1em' }}>
         {label}
       </Overline>
       <h3 className="m-0 mb-3 font-sans text-h4 font-semibold text-ink">{heading}</h3>
@@ -442,6 +449,7 @@ function DelegationCard({ task1, task2 }: { task1: string; task2: string }): JSX
   return (
     <CompetencyCard
       accent={COLORS.delegation}
+      accentText="rgb(var(--delegation-text))"
       label="Delegation"
       heading="What you committed to changing"
       footerNote="From Module 2: Action Commitment"
@@ -475,6 +483,7 @@ function DescriptionCard({
   return (
     <CompetencyCard
       accent={COLORS.description}
+      accentText="rgb(var(--description-text))"
       label="Description"
       heading="How you specified the task"
       footerNote="From Module 4: Prompt Reformulation"
@@ -518,6 +527,7 @@ function DiscernmentCard({
   return (
     <CompetencyCard
       accent={COLORS.discernment}
+      accentText="rgb(var(--discernment-text))"
       label="Discernment"
       heading="How you evaluated AI output"
       footerNote="From Module 4: Output Verification + Iterative Refinement"
@@ -550,6 +560,7 @@ function DiligenceCard({ statement }: { statement: string }): JSX.Element {
   return (
     <CompetencyCard
       accent={COLORS.diligence}
+      accentText="rgb(var(--diligence-text))"
       label="Diligence"
       heading="Your AI practices, documented"
       footerNote="From Module 4: Diligence Statement"
@@ -707,7 +718,7 @@ function MilestoneTable({
     >
       <Overline
         className="mb-4"
-        style={{ color: COLORS.diligence, letterSpacing: '0.1em' }}
+        style={{ color: 'rgb(var(--diligence-text))', letterSpacing: '0.1em' }}
       >
         30 / 60 / 90 day milestones
       </Overline>

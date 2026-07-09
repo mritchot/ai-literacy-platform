@@ -79,11 +79,9 @@ export interface ReferenceTriggerProps {
   refId: ReferenceId;
   /** Override the registry's default trigger label. */
   label?: string;
-  /** Visual variant — 'tab' for use inside `<ReferenceTabRail>`. */
-  variant?: 'tab';
 }
 
-export function ReferenceTrigger({ refId, label, variant }: ReferenceTriggerProps): JSX.Element {
+export function ReferenceTrigger({ refId, label }: ReferenceTriggerProps): JSX.Element {
   const meta = REFERENCE_ITEMS[refId];
   const [open, setOpen] = useState(false);
   return (
@@ -92,7 +90,6 @@ export function ReferenceTrigger({ refId, label, variant }: ReferenceTriggerProp
         refId={refId}
         label={label ?? meta.defaultLabel}
         onClick={() => setOpen(true)}
-        variant={variant}
       />
       <ReferencePanel
         isOpen={open}

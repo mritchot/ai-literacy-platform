@@ -1,7 +1,7 @@
 // P9 PromptComparison — three-phase prompt reformulation with side-by-side
 // output comparison (4B spec §5).
 
-import { useState, type KeyboardEvent } from 'react';
+import { useRef, useState, type KeyboardEvent } from 'react';
 import { BottleneckCallout } from '../../components/shared/BottleneckCallout';
 import { Icon } from '../../components/shared/Icon';
 import { Overline } from '../../components/shared/Overline';
@@ -38,6 +38,9 @@ const MIN_CHARS = 10;
 export function PromptComparison(): JSX.Element {
   const { state, saveReflection, markEngaged } = useLearnerProgress();
   const { track } = useAnalytics();
+  // Reformulate step — focus target after the "Now you try" button
+  // unmounts on phase advance.
+  const reformulateRef = useRef<HTMLDivElement>(null);
 
   const stored = {
     product: state.reflections['4.3.p9_product'] ?? '',
@@ -66,6 +69,10 @@ export function PromptComparison(): JSX.Element {
 
   const onContinueToReformulate = () => {
     setPhase('reformulate');
+    // The "Now you try" button unmounts on advance; hand keyboard focus
+    // to the reformulate step so SR/keyboard users aren't dropped to
+    // <body>. rAF so the step exists first.
+    window.requestAnimationFrame(() => reformulateRef.current?.focus());
   };
 
   const onSubmitReformulation = () => {
@@ -93,7 +100,7 @@ export function PromptComparison(): JSX.Element {
       {/* R3 supports D5 + D6 (Description sub-components). The three
           input fields below mirror R3's three sections exactly. */}
       <ReferenceTabRail>
-        <R3Trigger variant="tab" label="Prompt Template" />
+        <R3Trigger label="Prompt Template" />
       </ReferenceTabRail>
 
       <section
@@ -118,6 +125,7 @@ export function PromptComparison(): JSX.Element {
       )}
 
       {phase === 'reformulate' && (
+        <div ref={reformulateRef} tabIndex={-1} className="focus:outline-none">
         <PhaseReformulate
           product={product}
           processField={processField}
@@ -137,6 +145,7 @@ export function PromptComparison(): JSX.Element {
           allFieldsMet={allFieldsMet}
           onSubmit={onSubmitReformulation}
         />
+        </div>
       )}
 
       {phase === 'compare' && (
@@ -429,7 +438,7 @@ function PhaseCompare({
           moduleId={4}
           sectionId={3}
           promptId="p9_reflection"
-          accentColor={DESCRIPTION}
+          accent="description"
           engagedEvent="p9_reflection_engaged"
           savedEvent="p9_reflection_saved"
           promptText={P9_REFLECTION}
