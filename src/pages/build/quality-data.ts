@@ -3,8 +3,7 @@
 // dashboard.
 //
 // Source: Phase 4 Component 7E Quality Assurance Documentation
-// (planning corpus, outside the repo: ~/Downloads/course-info/content/
-// 04_phase-04/07e_quality-assurance-documentation.docx),
+// (planning corpus, outside the repo),
 // §2–§6. Counts are transcribed from the document.
 
 export interface QaPass {

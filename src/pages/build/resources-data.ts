@@ -3,8 +3,7 @@
 // rationale.
 //
 // Source: Phase 4 Component 7D Resource Planning Summary
-// (planning corpus, outside the repo: ~/Downloads/course-info/content/
-// 04_phase-04/07d_resource-planning.docx), §2–§4. The
+// (planning corpus, outside the repo), §2–§4. The
 // practitioner-labor figure uses the RECONCILED canonical value (~150–160
 // focused hours). Solo costs reflect the actual spend (Claude Pro then Max 5x,
 // plus Google AI Pro for NotebookLM). Org salaries are fully loaded (base ×1.4).

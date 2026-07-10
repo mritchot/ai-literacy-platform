@@ -2,8 +2,7 @@
 // roles, plus the role and R/A/C/I definitions.
 //
 // Source: Phase 4 Component 7B RACI Matrix
-// (planning corpus, outside the repo: ~/Downloads/course-info/content/
-// 04_phase-04/07b_raci-matrix.docx), §1–§2. The
+// (planning corpus, outside the repo), §1–§2. The
 // assignment cells are transcribed verbatim from that document's table. NOTE:
 // the table contains 32 activity rows and 14 L&D-Manager "Accountable" marks;
 // 07b's prose says "31 activities" and "Accountable for 19 of 31." The grid

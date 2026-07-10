@@ -3,8 +3,7 @@
 // lane, and the three-tier assessment architecture.
 //
 // Source: Phase 2 "Visual Learning Architecture" prototype
-// (planning corpus, outside the repo: ~/Downloads/course-info/content/
-// 02_phase-02/03b_learning-architecture.jsx). Ported
+// (planning corpus, outside the repo). Ported
 // verbatim except module durations, which are read from src/data/program.ts
 // (the single source of truth) rather than hardcoded — the two already agree
 // (M1/M2 15–20, M3 20–30, M4 30–40 min), so this only prevents future drift.
