@@ -57,7 +57,7 @@ export function SidebarFooter({
               onClick={onCloseMobile}
               aria-label="Analytics dashboard"
               aria-current={dashboardActive ? 'page' : undefined}
-              className="flex h-8 w-8 items-center justify-center rounded-md no-underline hover:bg-surface"
+              className="flex h-8 w-8 items-center justify-center no-underline hover:bg-surface"
               style={{
                 color: dashboardActive ? 'rgb(var(--action))' : 'rgb(var(--tertiary))',
                 background: dashboardActive ? 'rgb(var(--white))' : 'transparent',
@@ -71,7 +71,7 @@ export function SidebarFooter({
               to="/dashboard"
               onClick={onCloseMobile}
               aria-current={dashboardActive ? 'page' : undefined}
-              className="flex flex-1 items-center gap-2.5 rounded-md no-underline hover:bg-surface"
+              className="flex flex-1 items-center gap-2.5 no-underline hover:bg-surface"
               style={{
                 padding: '8px 8px',
                 background: dashboardActive ? 'rgb(var(--white))' : 'transparent',
@@ -111,7 +111,7 @@ export function SidebarFooter({
               onClick={onCycleTheme}
               aria-label={meta.label}
               title={meta.label}
-              className="flex h-8 w-8 items-center justify-center rounded-md text-tertiary hover:bg-surface hover:text-ink"
+              className="flex h-8 w-8 items-center justify-center text-tertiary hover:bg-surface hover:text-ink"
             >
               <Icon name={meta.icon} size={16} />
             </button>
@@ -121,7 +121,7 @@ export function SidebarFooter({
           type="button"
           onClick={onToggleCollapse}
           aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          className="flex h-8 w-8 items-center justify-center rounded-md text-tertiary hover:bg-surface hover:text-ink"
+          className="flex h-8 w-8 items-center justify-center text-tertiary hover:bg-surface hover:text-ink"
         >
           <Icon name="panelLeft" size={16} />
         </button>
@@ -171,7 +171,7 @@ function CitationToggle(): JSX.Element {
       onClick={handleClick}
       aria-label={label}
       title={label}
-      className="flex h-8 w-8 items-center justify-center rounded-md text-tertiary hover:bg-surface hover:text-ink"
+      className="flex h-8 w-8 items-center justify-center text-tertiary hover:bg-surface hover:text-ink"
     >
       <Icon name={iconName} size={16} />
     </button>
@@ -208,7 +208,7 @@ function ModeIndicator({ collapsed }: { collapsed: boolean }): JSX.Element | nul
           onClick={resetMode}
           aria-label={`${label} active — exit to learner mode`}
           title={`${label} — click to exit`}
-          className="flex h-7 w-7 items-center justify-center rounded-md font-mono text-[11px] font-bold text-secondary hover:bg-[rgb(var(--white))] hover:text-ink"
+          className="flex h-7 w-7 items-center justify-center font-mono text-[11px] font-bold text-secondary hover:bg-[rgb(var(--white))] hover:text-ink"
           style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border))' }}
         >
           {short}
@@ -220,7 +220,7 @@ function ModeIndicator({ collapsed }: { collapsed: boolean }): JSX.Element | nul
   return (
     <div className="border-b border-border-light" style={{ padding: '8px 12px' }}>
       <div
-        className="flex items-center justify-between gap-2 rounded-md"
+        className="flex items-center justify-between gap-2"
         style={{
           background: 'rgb(var(--surface))',
           border: '1px solid rgb(var(--border))',
@@ -238,7 +238,7 @@ function ModeIndicator({ collapsed }: { collapsed: boolean }): JSX.Element | nul
           onClick={resetMode}
           aria-label={`Exit ${label}`}
           title={`Exit ${label}`}
-          className="inline-flex items-center gap-1 rounded font-mono text-[10px] font-semibold uppercase text-tertiary hover:bg-[rgb(var(--white))] hover:text-ink"
+          className="inline-flex items-center gap-1 font-mono text-[10px] font-semibold uppercase text-tertiary hover:bg-[rgb(var(--white))] hover:text-ink"
           style={{ padding: '3px 6px', letterSpacing: '0.06em' }}
         >
           <Icon name="close" size={11} />

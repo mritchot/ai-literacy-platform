@@ -231,13 +231,13 @@ export function AssessmentPage({ kind }: AssessmentPageProps): JSX.Element {
               disabled={!selectedOptionId}
               aria-disabled={!selectedOptionId}
               className={[
-                'inline-flex items-center gap-2 rounded-md px-5 py-2.5 font-sans text-[13.5px] font-semibold transition-colors duration-150',
+                'inline-flex items-center gap-2 px-5 py-2.5 font-sans text-[13.5px] font-semibold transition-colors duration-[160ms]',
                 selectedOptionId
-                  ? 'bg-action text-[rgb(var(--white))] hover:bg-action-hover'
+                  ? 'bg-action text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover'
                   : 'cursor-not-allowed bg-ghost text-muted',
               ].join(' ')}
               style={{
-                border: selectedOptionId ? '1.5px solid rgb(var(--action))' : '1.5px solid rgb(var(--border))',
+                border: selectedOptionId ? '1px solid rgb(var(--action))' : '1px solid rgb(var(--border))',
               }}
             >
               <span>

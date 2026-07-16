@@ -384,7 +384,7 @@ function ContinueButton({
       className={[
         'group flex min-w-0 flex-1 items-center justify-end gap-2',
         'font-sans text-[13.5px] font-semibold no-underline',
-        'transition-colors duration-150',
+        'transition-colors duration-[160ms]',
         disabled
           ? 'cursor-not-allowed text-muted'
           : 'cursor-pointer text-action hover:text-action-hover',

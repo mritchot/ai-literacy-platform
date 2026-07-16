@@ -3,7 +3,7 @@
 // route component that lives inside PlatformShell.
 //
 // Changes from the prototype, all to fit the platform: the Google-Fonts
-// <link> is dropped (the platform self-hosts DM fonts via @fontsource — no
+// <link> is dropped (the platform self-hosts its fonts via @fontsource — no
 // outbound requests), the full-bleed 100vh wrapper and its own page header
 // are replaced by the shared artifact chrome, and the behavior grid uses a
 // responsive Tailwind column count. The behavior metadata (gap traces,

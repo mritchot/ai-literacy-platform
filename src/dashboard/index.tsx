@@ -190,7 +190,6 @@ export default function AnalyticsDashboard(): JSX.Element {
 function LiveEmptyState({ onSwitchToDemo }: { onSwitchToDemo: () => void }): JSX.Element {
   return (
     <article
-      className="rounded-xl"
       style={{
         background: 'rgb(var(--surface-warm))',
         border: '1px solid rgb(var(--border))',
@@ -215,10 +214,10 @@ function LiveEmptyState({ onSwitchToDemo }: { onSwitchToDemo: () => void }): JSX
       <button
         type="button"
         onClick={onSwitchToDemo}
-        className="inline-flex items-center gap-2 rounded-md font-sans text-[13px] font-semibold text-action"
+        className="inline-flex items-center gap-2 font-sans text-[13px] font-semibold text-action"
         style={{
           padding: '9px 16px',
-          border: '1.5px solid rgb(var(--action))',
+          border: '1px solid rgb(var(--action))',
           background: 'transparent',
         }}
       >

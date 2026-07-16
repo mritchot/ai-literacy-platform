@@ -37,8 +37,8 @@ function EffortBar({ label, note, hoursLabel, widthPct, accent }: { label: strin
         <span className="font-sans text-body-sm font-semibold text-ink">{label}</span>
         <span className="font-mono text-body-sm font-semibold text-ink">{hoursLabel}</span>
       </div>
-      <div className="h-3 w-full overflow-hidden rounded-full" style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border-light))' }}>
-        <div className="h-full rounded-full" style={{ width: `${widthPct}%`, background: accent }} />
+      <div className="h-3 w-full overflow-hidden" style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border-light))' }}>
+        <div className="h-full" style={{ width: `${widthPct}%`, background: accent }} />
       </div>
       <div className="mt-1 font-sans text-caption text-tertiary">{note}</div>
     </div>
@@ -50,7 +50,7 @@ function EffortComparison(): JSX.Element {
   return (
     <section
       aria-label="Effort comparison"
-      className="mt-8 rounded-xl"
+      className="mt-8"
       style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', borderTop: `3px solid ${SERIES_ACCENT}`, padding: '22px 24px' }}
     >
       <Overline className="mb-4">Effort · not calendar</Overline>
@@ -87,7 +87,7 @@ function GanttLegend(): JSX.Element {
     <div className="mb-4 flex flex-wrap gap-x-4 gap-y-1.5">
       {Object.values(STAGES).map((s) => (
         <span key={s.label} className="inline-flex items-center gap-1.5 font-sans text-[11px] text-tertiary">
-          <span aria-hidden="true" className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />
+          <span aria-hidden="true" className="h-2.5 w-2.5" style={{ background: s.color }} />
           {s.label}
         </span>
       ))}
@@ -141,16 +141,16 @@ function GanttRow({ phase, id, open, onToggle }: { phase: Phase; id: string; ope
         aria-expanded={open}
         aria-controls={`${id}-d`}
         aria-label={`${phase.name}, ${phase.when}, stage: ${stage.label}`}
-        className="flex w-full items-center gap-2 rounded transition-colors hover:bg-surface"
+        className="flex w-full items-center gap-2 transition-colors duration-[160ms] hover:bg-surface"
         style={{ padding: '5px 0' }}
       >
         <span className="shrink-0 font-sans text-[11px] font-semibold text-ink" style={{ width: LABEL_W, lineHeight: 1.25 }}>
           {phase.name}
         </span>
-        <span className="relative h-5 flex-1 overflow-hidden rounded-sm" style={{ background: 'rgb(var(--surface))' }}>
+        <span className="relative h-5 flex-1 overflow-hidden" style={{ background: 'rgb(var(--surface))' }}>
           <Gridlines />
           <span
-            className="absolute top-1/2 h-3.5 -translate-y-1/2 rounded-sm"
+            className="absolute top-1/2 h-3.5 -translate-y-1/2"
             style={{ left: `${left}%`, width: `${width}%`, minWidth: 6, background: stage.color }}
           />
         </span>

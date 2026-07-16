@@ -79,7 +79,7 @@ export function DirectiveTrendSparkline({ series }: DirectiveTrendSparklineProps
                       y={cy - 12}
                       textAnchor="middle"
                       fontSize={12}
-                      fontFamily='"DM Sans", system-ui, -apple-system, sans-serif'
+                      fontFamily='"IBM Plex Sans", system-ui, -apple-system, sans-serif'
                       fontWeight={600}
                       fill={tokens.ink}
                     >

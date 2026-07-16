@@ -152,7 +152,7 @@ function FivePatternLegend({
         <div key={m.key} className="flex items-center gap-2">
           <span
             aria-hidden="true"
-            className="inline-block flex-shrink-0 rounded-sm"
+            className="inline-block flex-shrink-0"
             style={{ width: 10, height: 10, background: m.color }}
           />
           <span className="font-sans text-secondary">
@@ -231,14 +231,13 @@ function FivePatternMobile({
               key={m.key}
               onMouseEnter={() => setHovered(m.key)}
               onMouseLeave={() => setHovered(null)}
-              className="rounded-md"
               style={{ padding: '6px 8px', background: hovered === m.key ? 'rgb(var(--surface))' : 'transparent' }}
             >
               <div className="mb-1 flex items-center justify-between text-[12.5px]">
                 <span className="font-sans font-semibold text-ink">{m.label}</span>
                 <span className="font-mono text-tertiary">{cat.pct}%</span>
               </div>
-              <div className="overflow-hidden rounded-sm" style={{ height: 10, background: 'rgb(var(--border-light))' }}>
+              <div className="overflow-hidden" style={{ height: 10, background: 'rgb(var(--border-light))' }}>
                 <div style={{ width: `${cat.pct}%`, height: '100%', background: m.color, transition: 'width 400ms' }} />
               </div>
             </li>

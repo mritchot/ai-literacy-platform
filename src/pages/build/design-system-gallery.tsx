@@ -34,7 +34,7 @@ type Mode = 'light' | 'dark';
 function Swatch({ token, mode }: { token: TokenSpec; mode: Mode }): JSX.Element {
   const triple = token[mode];
   return (
-    <div className="overflow-hidden rounded-md" style={{ border: '1px solid rgb(var(--border))', background: 'rgb(var(--white))' }}>
+    <div className="overflow-hidden" style={{ border: '1px solid rgb(var(--border))', background: 'rgb(var(--white))' }}>
       <div className="h-11" style={{ background: `rgb(${triple})` }} />
       <div style={{ padding: '8px 10px' }}>
         <div className="font-mono text-[11px] font-semibold text-ink">--{token.name}</div>
@@ -65,14 +65,14 @@ function CompetencyRow({ spec, mode }: { spec: CompetencySpec; mode: Mode }): JS
     { label: 'text', hex: spec.textHex[mode] },
   ];
   return (
-    <div className="rounded-lg" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', padding: '14px 16px' }}>
+    <div style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', padding: '14px 16px' }}>
       <div className="mb-3">
         <CompetencyDot competency={spec.key} />
       </div>
       <div className="grid grid-cols-4 gap-2">
         {tints.map((t) => (
           <div key={t.label}>
-            <div className="h-9 rounded-sm" style={{ background: t.hex, border: '1px solid rgb(var(--border-light))' }} />
+            <div className="h-9" style={{ background: t.hex, border: '1px solid rgb(var(--border-light))' }} />
             <div className="mt-1 font-mono text-[9.5px] font-semibold text-secondary">{t.label}</div>
             <div className="font-mono text-[9px] text-tertiary">{t.hex.toUpperCase()}</div>
           </div>
@@ -87,7 +87,6 @@ function CompetencyRow({ spec, mode }: { spec: CompetencySpec; mode: Mode }): JS
 function CompetencyConstraint(): JSX.Element {
   return (
     <div
-      className="rounded-lg"
       style={{ background: 'rgb(var(--surface-warm))', border: '1px solid rgb(var(--border))', borderLeft: '3px solid rgb(var(--info))', padding: '16px 20px' }}
     >
       <Overline className="mb-2" style={{ color: 'rgb(var(--info))' }}>
@@ -114,7 +113,7 @@ function CompetencyConstraint(): JSX.Element {
           </span>
           <span
             aria-hidden="true"
-            className="rounded-md font-sans text-[12px] font-semibold text-white"
+            className="font-sans text-[12px] font-semibold text-white"
             style={{ background: '#6B7F5E', padding: '8px 16px', opacity: 0.55 }}
           >
             Continue
@@ -149,10 +148,10 @@ function PillSpecimens(): JSX.Element {
         return (
           <span
             key={c.key}
-            className="rounded-full font-sans text-[12px] font-semibold"
+            className="font-sans text-[12px] font-semibold"
             style={{
               padding: '5px 14px',
-              border: `1.5px solid ${c.bg}`,
+              border: `1px solid ${c.bg}`,
               background: active ? c.bg : 'transparent',
               color: active ? '#fff' : `rgb(var(--${c.key}-text))`,
               letterSpacing: '0.02em',
@@ -169,9 +168,9 @@ function PillSpecimens(): JSX.Element {
 
 function CardSpecimens(): JSX.Element {
   const cards: { label: string; radius: string; pad: string; bg: string }[] = [
-    { label: 'Large card · rounded-xl', radius: '14px', pad: '20px 24px', bg: 'rgb(var(--white))' },
-    { label: 'Medium card · rounded-lg', radius: '10px', pad: '16px', bg: 'rgb(var(--surface))' },
-    { label: 'Small card · rounded-md', radius: '8px', pad: '12px 16px', bg: 'rgb(var(--surface))' },
+    { label: 'Large card ·', radius: '14px', pad: '20px 24px', bg: 'rgb(var(--white))' },
+    { label: 'Medium card ·', radius: '10px', pad: '16px', bg: 'rgb(var(--surface))' },
+    { label: 'Small card ·', radius: '8px', pad: '12px 16px', bg: 'rgb(var(--surface))' },
   ];
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -192,21 +191,21 @@ function ButtonSpecimens(): JSX.Element {
     <div className="flex flex-wrap items-center gap-3">
       <button
         type="button"
-        className="rounded-md bg-action font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover"
+        className="bg-action font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover"
         style={{ padding: '10px 24px' }}
       >
         Primary
       </button>
       <button
         type="button"
-        className="rounded-md font-sans text-[12.5px] font-semibold text-ink hover:bg-surface"
+        className="font-sans text-[12.5px] font-semibold text-ink hover:bg-surface"
         style={{ background: 'transparent', border: '1px solid rgb(var(--border))', padding: '10px 24px' }}
       >
         Secondary
       </button>
       <button
         type="button"
-        className="rounded-md font-sans text-[12.5px] font-semibold text-tertiary hover:bg-surface hover:text-secondary"
+        className="font-sans text-[12.5px] font-semibold text-tertiary hover:bg-surface hover:text-secondary"
         style={{ background: 'transparent', padding: '8px 16px' }}
       >
         Ghost
@@ -283,7 +282,7 @@ export function DesignSystemGallery(): JSX.Element {
         <div
           role="group"
           aria-label="Preview color mode"
-          className="inline-flex overflow-hidden rounded-md"
+          className="inline-flex overflow-hidden"
           style={{ border: '1px solid rgb(var(--border))' }}
         >
           {(['light', 'dark'] as const).map((m) => (
@@ -292,7 +291,7 @@ export function DesignSystemGallery(): JSX.Element {
               type="button"
               onClick={() => setMode(m)}
               aria-pressed={mode === m}
-              className="font-sans text-[12px] font-semibold capitalize transition-colors"
+              className="font-sans text-[12px] font-semibold capitalize transition-colors duration-[160ms]"
               style={{
                 padding: '6px 16px',
                 background: mode === m ? 'rgb(var(--action))' : 'transparent',
@@ -307,7 +306,7 @@ export function DesignSystemGallery(): JSX.Element {
 
       {/* The themed preview surface. */}
       <div
-        className="ds-preview rounded-xl"
+        className="ds-preview"
         data-theme={mode}
         aria-label={`Design system preview in ${mode} mode`}
         style={{ border: '1px solid rgb(var(--border))', padding: '24px 26px' }}
@@ -335,7 +334,7 @@ export function DesignSystemGallery(): JSX.Element {
           <SwatchGrid tokens={ACTION_TOKENS} mode={mode} />
         </GallerySection>
 
-        <GallerySection label="Typography" note="DM Serif Display for the two top heading levels; DM Sans for everything functional; DM Mono for anything countable or codified.">
+        <GallerySection label="Typography" note="Source Serif 4 for the two top heading levels; IBM Plex Sans for everything functional; IBM Plex Mono for anything countable or codified.">
           <div>
             {TYPE_SPECS.map((s) => (
               <TypeSpecimen key={s.token} spec={s} />

@@ -2,59 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Design system tokens — Section 1.3 (neutrals), 1.4 (feedback), 1.6 (action).
+/* Design system tokens — neutrals, feedback, action, 4D competency.
    Stored as space-separated RGB triples so Tailwind's `rgb(var(--token) / <alpha>)`
-   pattern can apply opacity at the utility level. */
+   pattern can apply opacity at the utility level.
+
+   The palette is aligned to ritchot.me: a washi paper ground in light
+   mode, sumi ink in dark, warm ink-scale neutrals throughout. Values
+   are WCAG 2.2 AA verified against the grounds they actually sit on;
+   treat them as authoritative rather than nudging them for taste. */
 @layer base {
   :root {
-    /* Warm neutrals (Section 1.3).
-       Note: `tertiary` and `muted` were tightened to a shared darker value
-       in the 3B-8 WCAG 2.1 AA pass. The original spec had `tertiary` at
-       #888 (3.54:1 on white) and `muted` at #999 (2.85:1 on white) — both
-       failed normal-text contrast even before factoring the warm canvas
-       background. To pass 4.5:1 on white *and* on `canvas` (#F5F3EF) the
-       value cannot be lighter than ~#6E6E6E. The two tokens still carry
-       distinct semantic meaning (low-emphasis vs. very low-emphasis text)
-       but visual hierarchy at the bottom of the scale now derives from
-       font-size and weight rather than shade. `subtle` is unused in the
-       platform; left at the original value for future decorative cases.
-       `ghost` was bumped from #BBB → #949494 so the radio-bullet rings
-       and other lightweight UI strokes meet 3:1 against white. */
-    --ink: 45 45 45;
-    --ink-secondary: 58 58 58;
-    --body: 85 85 85;
-    --secondary: 102 102 102;
-    --tertiary: 110 110 110;
-    --muted: 110 110 110;
-    --subtle: 170 170 170;
-    --ghost: 148 148 148;
-    --border: 232 230 225;
-    --border-light: 224 221 215;
-    --surface: 250 250 247;
-    --surface-warm: 250 248 245;
-    --canvas: 245 243 239;
-    --white: 255 255 255;
+    /* Warm ink-scale neutrals. `tertiary` and `muted` share a value:
+       they still carry distinct semantic meaning (low-emphasis vs.
+       very low-emphasis text), but hierarchy at the bottom of the
+       scale derives from size and weight rather than shade. `subtle`
+       is decorative and currently unused. `ghost` is a non-text stroke
+       color (3.39:1 on canvas) for radio-bullet rings and similar
+       lightweight UI. `white` is a raised card surface, not pure
+       white — nothing in the platform renders #FFF. */
+    --ink: 30 28 25; /* #1e1c19 */
+    --ink-secondary: 46 43 39; /* #2e2b27 */
+    --body: 87 83 75; /* #57534b */
+    --secondary: 99 94 85; /* #635e55 */
+    --tertiary: 107 102 92; /* #6b665c */
+    --muted: 107 102 92; /* #6b665c */
+    --subtle: 179 173 162; /* #b3ada2 — decorative, unused */
+    --ghost: 138 132 120; /* #8a8478 — 3.39:1 non-text on canvas */
+    --border: 217 211 199; /* #d9d3c7 */
+    --border-light: 227 221 210; /* #e3ddd2 */
+    --surface: 238 234 225; /* #eeeae1 — recessed; also the hover dip */
+    --surface-warm: 243 240 233; /* #f3f0e9 */
+    --canvas: 247 244 239; /* #f7f4ef — washi page ground */
+    --white: 253 251 247; /* #fdfbf7 — raised card */
 
-    /* Feedback (Section 1.4) — darkened in 3B-8 to clear 4.5:1 against
-       both their paired `*-light` background and pure white. */
+    /* Feedback — each clears 4.5:1 against its paired `*-light`
+       background and against the raised card surface. `caution` is
+       deepened relative to the other three so it also passes on the
+       recessed `surface`. */
     --success: 71 118 85;
     --success-light: 232 240 234;
-    --caution: 133 106 40;
+    --caution: 122 97 36; /* #7a6124 */
     --caution-light: 245 240 224;
     --error: 139 74 74;
     --error-light: 245 232 232;
     --info: 90 108 123;
     --info-light: 228 235 240;
 
-    /* Action (Section 1.6) */
-    --action: 61 90 78;
-    --action-hover: 52 80 73;
-    --action-active: 43 70 64;
+    /* Action — the site's signal teal. */
+    --action: 12 107 118; /* #0c6b76 */
+    --action-hover: 10 90 99; /* #0a5a63 */
+    --action-active: 8 77 85; /* #084d55 */
+
+    /* Focus — vermilion, deliberately off the action hue so a focus
+       ring never reads as a hover state. */
+    --focus: 199 59 39; /* #c73b27 */
+
+    /* 4D competency accents. Surfaced as variables (rather than literal
+       hexes in the Tailwind config) so the `.dark` block below can flip
+       them — a literal cannot. */
+    --delegation: 92 112 80; /* #5c7050 */
+    --description: 122 99 73; /* #7a6349 */
+    --discernment: 80 101 121; /* #506579 */
+    --diligence: 108 91 116; /* #6c5b74 */
 
     /* 4D competency tinted backgrounds (the light "wash" surfaces used
-       behind annotation boxes, P9 prompt fields, etc.). Light-mode hexes
-       are #E8EDE4 / #F0EAE0 / #E4EBF0 / #EDE4F0. Surfaced as variables so
-       the dark-mode `.dark` overrides below can swap them. */
+       behind annotation boxes, P9 prompt fields, etc.). */
     --delegation-light: 232 237 228;
     --description-light: 240 234 224;
     --discernment-light: 228 235 240;
@@ -68,73 +80,70 @@
     --discernment-text: 53 74 87;
     --diligence-text: 74 53 87;
 
-    /* Sidebar background — warm tint that grounds the sidebar against
-       the cream canvas body. Mockup-authoritative (#F5F2ED). */
-    --sidebar-bg: 245 242 237;
-
-    /* Motion */
+    /* Sidebar background — the recessed surface, grounding the sidebar
+       against the washi canvas body. */
+    --sidebar-bg: 238 234 225; /* #eeeae1 */
   }
 
   .dark {
-    /* Dark neutrals (Section 10.2) — warm, no cold blue-grays.
-       `tertiary` and `muted` lightened in 3B-8 to clear 4.5:1 against
-       the dark `white` (#2D2B27), `canvas` (#1A1917) and `sidebar-bg`
-       (#242220). Original tertiary #8A847C only passed on `canvas`
-       (4.75:1) and failed on white (3.82:1) and sidebar (4.28:1). */
-    --ink: 232 229 224;
-    --ink-secondary: 213 208 200;
-    --body: 192 186 176;
-    --secondary: 168 162 154;
-    --tertiary: 150 145 137;
-    --muted: 149 145 139;
-    --subtle: 86 80 72;
-    /* Lightened from 70 64 56 (~1.4:1 vs the dark card surface — the
-       radio-bullet rings were near-invisible) to ~3.1:1, matching the
-       3:1 non-text minimum the light-mode ghost was already raised
-       to meet. */
-    --ghost: 128 122 112;
-    --border: 61 58 53;
-    --border-light: 51 48 43;
-    --surface: 37 35 32;
-    --surface-warm: 42 40 37;
-    --canvas: 26 25 23;
-    --white: 45 43 39;
+    /* Sumi dark mode, adopted from the site. This supersedes the
+       earlier "warm dark" treatment: the ground is a near-neutral
+       ink rather than a warm brown, and the neutrals above it stay
+       warm to keep text from reading cold against it. */
+    --ink: 230 226 217; /* #e6e2d9 */
+    --ink-secondary: 210 206 196; /* #d2cec4 */
+    --body: 179 174 162; /* #b3aea2 */
+    --secondary: 164 159 147; /* #a49f93 */
+    --tertiary: 148 143 131; /* #948f83 */
+    --muted: 148 143 131;
+    --subtle: 86 82 72;
+    --ghost: 110 106 96; /* #6e6a60 — 3.52:1 on canvas */
+    --border: 44 44 52; /* #2c2c34 */
+    --border-light: 38 38 45; /* #26262d */
+    --surface: 23 23 29; /* #17171d — recessed */
+    --surface-warm: 26 26 33; /* #1a1a21 */
+    --canvas: 16 16 20; /* #101014 — sumi */
+    --white: 29 29 36; /* #1d1d24 — raised card */
 
-    /* Feedback dark adaptations (Section 10.4) — `success` and `error`
-       lightened in 3B-8 to clear 4.5:1 against `*-light` backgrounds and
-       dark `white`. */
-    --success: 105 158 118;
+    /* Feedback dark adaptations. */
+    --success: 127 174 142; /* #7fae8e */
     --success-light: 30 43 34;
-    --caution: 184 148 58;
+    --caution: 193 154 69; /* #c19a45 */
     --caution-light: 43 38 24;
-    --error: 189 131 131;
+    --error: 201 143 143; /* #c98f8f */
     --error-light: 45 30 30;
-    --info: 122 150 168;
+    --info: 140 170 191; /* #8caabf */
     --info-light: 30 38 44;
 
-    /* Action — lighter teal for dark surface contrast (Section 10.5) */
-    --action: 139 184 168;
-    --action-hover: 127 170 155;
-    --action-active: 115 156 142;
+    /* Action — light teal for dark-surface contrast. Note that fills
+       using this color take a DARK label (`--canvas`), not a light one. */
+    --action: 76 195 208; /* #4cc3d0 */
+    --action-hover: 99 205 216; /* #63cdd8 */
+    --action-active: 118 212 222; /* #76d4de */
 
-    /* 4D competency tinted backgrounds (dark mode). Per design system
-       Section 10.3: dark variants of the competency washes are deep,
-       desaturated tones of the same hue family. Light-on-tinted text
+    --focus: 224 85 67; /* #e05543 */
+
+    /* 4D competency accents (dark). */
+    --delegation: 168 188 154; /* #a8bc9a */
+    --description: 196 169 127; /* #c4a97f */
+    --discernment: 147 176 198; /* #93b0c6 */
+    --diligence: 181 152 194; /* #b598c2 */
+
+    /* 4D competency tinted backgrounds (dark mode) — deep, desaturated
+       tones of the same hue family. Light-on-tinted text
        (--{competency}-text in dark mode) reads on these. */
-    --delegation-light: 42 48 37;   /* #2A3025 */
-    --description-light: 48 42 34;  /* #302A22 */
-    --discernment-light: 37 44 50;  /* #252C32 */
-    --diligence-light: 44 37 48;    /* #2C2530 */
+    --delegation-light: 42 48 37; /* #2A3025 */
+    --description-light: 48 42 34; /* #302A22 */
+    --discernment-light: 37 44 50; /* #252C32 */
+    --diligence-light: 44 37 48; /* #2C2530 */
 
-    /* Light competency text colors for dark mode. Match the values
-       already declared in CompetencyDot.textDark so the same hue family
-       reads consistently across the platform. */
-    --delegation-text: 181 196 171;  /* #B5C4AB */
+    /* Light competency text colors for dark mode. */
+    --delegation-text: 181 196 171; /* #B5C4AB */
     --description-text: 201 185 158; /* #C9B99E */
     --discernment-text: 168 188 202; /* #A8BCCA */
-    --diligence-text: 190 168 201;   /* #BEA8C9 */
+    --diligence-text: 190 168 201; /* #BEA8C9 */
 
-    --sidebar-bg: 36 34 32;
+    --sidebar-bg: 23 23 29; /* #17171d */
   }
 
   html,
@@ -160,7 +169,7 @@
   body {
     background-color: rgb(var(--canvas));
     color: rgb(var(--ink));
-    font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+    font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
     font-size: 16px;
     line-height: 1.65;
     -webkit-font-smoothing: antialiased;
@@ -185,11 +194,13 @@
     box-sizing: border-box;
   }
 
-  /* Visible keyboard focus on every interactive element (Section 9.2) */
+  /* Visible keyboard focus on every interactive element. Vermilion
+     rather than ink: the ring is the one place the interface raises its
+     voice, and it must not be mistakable for a hover or active state.
+     Square — the ring follows the platform's shape language. */
   :focus-visible {
-    outline: 2px solid rgb(var(--ink));
+    outline: 2px solid rgb(var(--focus));
     outline-offset: 2px;
-    border-radius: 2px;
   }
 
   /* Respect reduced-motion preference (Section 8 of design system) */
@@ -206,8 +217,8 @@
      a ~3 px track and tiny thumb that's hard to see and harder to
      touch — the M3 S5 NextTokenDemo temperature slider was reported as
      "next to not observable" on mobile. Bumping the track to 6 px and
-     the thumb to 22 px (with a white border + subtle shadow so it
-     stands clearly off the track) makes the control visible and
+     the thumb to 22 px (with a 2 px card-colored border separating
+     it from the track) makes the control visible and
      comfortably tappable while preserving the `accent-color` token
      that drives the fill color in modern browsers. Applied globally —
      the platform only has one slider (the temperature control), and
@@ -234,7 +245,6 @@
     border-radius: 50%;
     background: rgb(var(--action));
     border: 2px solid rgb(var(--white));
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
     /* Recenter the thumb vertically on the 6 px track:
        margin-top = (track-height - thumb-height) / 2 = (6 - 22) / 2. */
     margin-top: -8px;
@@ -250,22 +260,21 @@
     border-radius: 50%;
     background: rgb(var(--action));
     border: 2px solid rgb(var(--white));
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   }
   input[type='range']:focus-visible {
     outline: none;
   }
+  /* The thumb is a circle, so the square global `:focus-visible`
+     outline would sit awkwardly around it — this is the one control
+     that carries its ring as a box-shadow instead. Vermilion at 25%
+     to match the global focus color. */
   input[type='range']:focus-visible::-webkit-slider-thumb {
-    box-shadow:
-      0 0 0 3px rgb(var(--action) / 0.25),
-      0 1px 3px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 0 3px rgb(var(--focus) / 0.25);
   }
   /* Firefox equivalent — outline:none above would otherwise leave
      keyboard focus on the slider with no visible indicator. */
   input[type='range']:focus-visible::-moz-range-thumb {
-    box-shadow:
-      0 0 0 3px rgb(var(--action) / 0.25),
-      0 1px 3px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 0 3px rgb(var(--focus) / 0.25);
   }
 }
 

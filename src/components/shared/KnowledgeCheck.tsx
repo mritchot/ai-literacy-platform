@@ -131,7 +131,7 @@ export function KnowledgeCheck({
   return (
     <section
       aria-labelledby={`kc-${item.id}-stem`}
-      className="rounded-lg bg-[rgb(var(--white))]"
+      className="bg-[rgb(var(--white))]"
       style={{
         borderLeft: `3px solid ${TIER1}`,
         border: '1px solid rgb(var(--border))',
@@ -197,7 +197,7 @@ export function KnowledgeCheck({
                   tabIndex={isSelected || (selected === null && optIdx === 0) ? 0 : -1}
                   onKeyDown={(e) => onRadioKey(e, optIdx)}
                   onClick={() => !submitted && setSelected(opt.id)}
-                  className="flex w-full items-start gap-3 rounded-md text-left transition-colors duration-150"
+                  className="flex w-full items-start gap-3 text-left transition-colors duration-[160ms]"
                   style={{
                     background: isSelected ? 'rgb(var(--surface))' : 'rgb(var(--white))',
                     // Border width and padding stay constant across states.
@@ -230,7 +230,7 @@ export function KnowledgeCheck({
                     style={{
                       width: 18,
                       height: 18,
-                      border: isSelected ? `5px solid ${SELECTED_STROKE}` : '1.5px solid rgb(var(--ghost))',
+                      border: isSelected ? `5px solid ${SELECTED_STROKE}` : '1px solid rgb(var(--ghost))',
                       background: isSelected ? 'rgb(var(--white))' : 'transparent',
                       boxSizing: 'border-box',
                     }}
@@ -252,7 +252,7 @@ export function KnowledgeCheck({
                     {opt.isPreferred && submitted && (
                       <span
                         title="Recommended answer"
-                        className="self-end flex-shrink-0 rounded-full font-mono text-[9.5px] font-bold uppercase sm:self-auto"
+                        className="self-end flex-shrink-0 font-mono text-[9.5px] font-bold uppercase sm:self-auto"
                         style={{
                           color: 'rgb(var(--action))',
                           border: '1px solid rgb(var(--action))',
@@ -279,7 +279,7 @@ export function KnowledgeCheck({
             onClick={submit}
             disabled={!selected}
             aria-disabled={!selected}
-            className="rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] transition-colors duration-150 hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
+            className="bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] transition-colors duration-[160ms] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
           >
             Submit response
           </button>
@@ -298,7 +298,7 @@ export function KnowledgeCheck({
       {submitted && selectedOption && (
         <div
           ref={feedbackRef}
-          className="mt-4 rounded-md"
+          className="mt-4"
           style={{
             background: TONE_BG[selectedOption.feedbackTone],
             borderLeft: `3px solid ${TONE_BORDER[selectedOption.feedbackTone]}`,
@@ -314,7 +314,7 @@ export function KnowledgeCheck({
 
       {submitted && preferredOption && !selectedOption?.isPreferred && (
         <div
-          className="mt-3 rounded-md"
+          className="mt-3"
           style={{
             background: 'rgb(var(--success-light))',
             borderLeft: `3px solid rgb(var(--success))`,
@@ -349,7 +349,6 @@ export function KnowledgeCheck({
               {item.options.map((opt) => (
                 <li
                   key={`all-${opt.id}`}
-                  className="rounded-md"
                   style={{
                     background: 'rgb(var(--surface))',
                     border: '1px solid rgb(var(--border-light))',

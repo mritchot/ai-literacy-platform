@@ -13,7 +13,7 @@ import type { AssessmentItem as AssessmentItemData } from '../../data/pre-assess
 import { renderMarkdownLite } from '../../modules/module4/render-markdown-lite';
 import { nextRadioIndex } from '../shared/radio-group-nav';
 
-const ASSESSMENT_ACCENT = '#5E7080'; // matches the discernment color family
+const ASSESSMENT_ACCENT = 'rgb(var(--discernment))'; // matches the discernment color family
 
 interface AssessmentItemProps {
   item: AssessmentItemData;
@@ -41,7 +41,7 @@ export function AssessmentItem({
     <section
       aria-labelledby={`item-${item.id}-heading`}
       aria-describedby={`item-${item.id}-stem`}
-      className="rounded-lg bg-[rgb(var(--white))]"
+      className="bg-[rgb(var(--white))]"
       style={{
         borderLeft: `3px solid ${ASSESSMENT_ACCENT}`,
         border: '1px solid rgb(var(--border))',
@@ -109,7 +109,7 @@ export function AssessmentItem({
                     document.getElementById(`item-${item.id}-opt-${nextOpt.id}`)?.focus();
                   }}
                   onClick={() => onSelect(opt.id)}
-                  className="flex w-full items-start gap-3 rounded-md text-left transition-colors duration-150"
+                  className="flex w-full items-start gap-3 text-left transition-colors duration-[160ms]"
                   style={{
                     background: isSelected ? 'rgb(var(--surface))' : 'rgb(var(--white))',
                     // Border width and padding stay constant across states.
@@ -119,7 +119,7 @@ export function AssessmentItem({
                     // space). The earlier 1px↔2px border + 16px↔15px padding
                     // swap was mathematically size-preserving at the start
                     // and end states, but sub-pixel rounding during the
-                    // `transition-all` animation caused a visible 1px
+                    // unscoped property animation caused a visible 1px
                     // wobble in the option text. Reported by user as
                     // "selecting a choice causes the text to shift slightly."
                     border: `1px solid ${
@@ -141,7 +141,7 @@ export function AssessmentItem({
                       height: 18,
                       border: isSelected
                         ? `5px solid ${ASSESSMENT_ACCENT}`
-                        : '1.5px solid rgb(var(--ghost))',
+                        : '1px solid rgb(var(--ghost))',
                       background: isSelected ? 'rgb(var(--white))' : 'transparent',
                       boxSizing: 'border-box',
                     }}

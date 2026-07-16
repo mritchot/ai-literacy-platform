@@ -20,7 +20,7 @@
 //     a constant identity signal across both pages.
 //   • Warm-cream page background (#FAFAF7) gives the document a
 //     "paper" feel distinct from the in-app screen.
-//   • Card-based layout: white fill, 6pt rounded corners, 3pt left
+//   • Card-based layout: white fill, 6pt corners, 3pt left
 //     rule in the relevant 4D color for the competency cards (and
 //     for the milestones card on page 2).
 //   • Surface-warm-tinted "field" boxes inside each card hold the
@@ -32,11 +32,11 @@
 // Typography — the real DM fonts (Sans, Serif Display, Mono) are
 // embedded via the font-loader module. Without them the PDF would
 // fall back to Helvetica and look generic; with them, headings get
-// DM Serif Display's editorial weight, body and labels use DM Sans,
-// and tracked overlines use DM Mono.
+// Source Serif 4's editorial weight, body and labels use IBM Plex Sans,
+// and tracked overlines use IBM Plex Mono.
 //
 // Constraints still in play
-//   • DM Mono only ships up to Medium (500), so what reads as "bold
+//   • IBM Plex Mono only ships up to Medium (500), so what reads as "bold
 //     mono" in the design is actually Medium — registered as the
 //     normal style of the DMMono family.
 //   • Gradient R8 tag is rendered as four flat-edged colored

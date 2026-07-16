@@ -38,7 +38,7 @@ export function DataSourceToggle({ value, onChange }: DataSourceToggleProps): JS
       <div
         role="radiogroup"
         aria-label="Data source"
-        className="inline-flex overflow-hidden rounded-full"
+        className="inline-flex overflow-hidden"
         style={{
           border: '1px solid rgb(var(--border))',
           background: 'rgb(var(--surface))',
@@ -59,12 +59,11 @@ export function DataSourceToggle({ value, onChange }: DataSourceToggleProps): JS
               tabIndex={active ? 0 : -1}
               onClick={() => onChange(opt.id)}
               onKeyDown={(e) => handleKey(e, opt.id)}
-              className="font-sans text-[14px] font-medium transition-colors duration-150"
+              className="font-sans text-[14px] font-medium transition-colors duration-[160ms]"
               style={{
                 width: 72,
                 color: active ? 'rgb(var(--white))' : 'rgb(var(--secondary))',
                 background: active ? 'rgb(var(--ink))' : 'transparent',
-                borderRadius: 0,
               }}
             >
               {opt.label}

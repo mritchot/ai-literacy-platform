@@ -10,7 +10,7 @@ export const TOOLTIP_STYLE: CSSProperties = {
   borderRadius: 8,
   padding: '8px 12px',
   fontSize: 13,
-  fontFamily: '"DM Sans", system-ui, -apple-system, sans-serif',
+  fontFamily: '"IBM Plex Sans", system-ui, -apple-system, sans-serif',
   boxShadow: '0 2px 8px rgba(0, 0, 0, 0.07)',
   color: 'rgb(var(--ink))',
 };
@@ -40,7 +40,7 @@ export const TOOLTIP_LABEL_STYLE: CSSProperties = {
 // so this needs to be SVGProps-compatible — not a generic CSSProperties bag.
 export const AXIS_TICK_STYLE: SVGProps<SVGTextElement> = {
   fontSize: 12,
-  fontFamily: '"DM Sans", system-ui, -apple-system, sans-serif',
+  fontFamily: '"IBM Plex Sans", system-ui, -apple-system, sans-serif',
   fill: 'rgb(var(--tertiary))',
 };
 

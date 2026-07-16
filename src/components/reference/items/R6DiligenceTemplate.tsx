@@ -14,7 +14,7 @@ import type { ReactNode } from 'react';
 // Constants
 // ─────────────────────────────────────────────────────────────────────
 
-const DILIGENCE = '#7A6B80';
+const DILIGENCE = 'rgb(var(--diligence))';
 
 // ─────────────────────────────────────────────────────────────────────
 // Scaffold data — four numbered sections matching P12's structure
@@ -167,7 +167,7 @@ export function R6DiligenceTemplate(): JSX.Element {
 function StatementStructure(): JSX.Element {
   return (
     <article
-      className="rounded-lg overflow-hidden"
+      className="overflow-hidden"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -301,7 +301,6 @@ function ScaffoldRow({
 function FillInBox({ text }: { text: string }): JSX.Element {
   return (
     <div
-      className="rounded-md"
       style={{
         background: 'rgb(var(--diligence-light))',
         borderLeft: `3px solid ${DILIGENCE}`,
@@ -339,7 +338,7 @@ function FillInBox({ text }: { text: string }): JSX.Element {
 function ExampleACard(): JSX.Element {
   return (
     <article
-      className="mt-6 rounded-lg overflow-hidden"
+      className="mt-6 overflow-hidden"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -391,7 +390,7 @@ function ExampleACard(): JSX.Element {
 function ExampleBCard(): JSX.Element {
   return (
     <article
-      className="mt-4 rounded-lg overflow-hidden"
+      className="mt-4 overflow-hidden"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',

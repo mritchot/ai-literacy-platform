@@ -15,9 +15,10 @@
 //    inks, warm grays) now resolves through the design-system tokens in
 //    src/styles/index.css, so the map follows dark mode like the rest of
 //    the platform, and the #888/#999 metadata text picks up the
-//    WCAG-corrected `--tertiary` value. The four quadrant accent hexes
-//    (and the accent-tinted strokes/shadows derived from them) stay
-//    literal — they are brand colors used identically in both themes.
+//    WCAG-corrected `--tertiary` value. The four quadrant accents resolve
+//    the same way: they carry distinct light and dark values, so their
+//    tinted chips and strokes are alpha channels off the token rather
+//    than hex-alpha suffixes.
 
 import { useCallback, useMemo, useState, type ReactNode } from 'react';
 import { renderInline } from '../../components/shared/render-markdown';
@@ -43,7 +44,7 @@ function Pill({
   active,
   onClick,
   small,
-  activeText = '#fff',
+  activeText = 'rgb(var(--white))',
   inactiveText,
 }: {
   label: string;
@@ -51,14 +52,13 @@ function Pill({
   active: boolean;
   onClick: () => void;
   small?: boolean;
-  // Text color when active (sitting on `color`). Defaults to white, which
-  // is correct for the theme-invariant quadrant accents; pills whose
-  // `color` is a theme token pass `rgb(var(--white))` so the active label
-  // inverts with the theme.
+  // Text color when active (sitting on `color`). Defaults to the card
+  // token, which inverts with the theme — dark ink on the light accents
+  // dark mode gives the quadrants.
   activeText?: string;
   // Text color when inactive (sitting on the adaptive page surface).
   // Defaults to `color`; quadrant pills pass the adaptive `--*-text`
-  // token because their brand-hex `color` fails AA on the dark canvas.
+  // token because the accent itself fails AA as text on the canvas.
   inactiveText?: string | undefined;
 }): JSX.Element {
   return (
@@ -67,12 +67,11 @@ function Pill({
       onClick={onClick}
       style={{
         padding: small ? '3px 10px' : '5px 14px',
-        borderRadius: 20,
-        border: `1.5px solid ${color}`,
+        border: `1px solid ${color}`,
         background: active ? color : 'transparent',
         color: active ? activeText : (inactiveText ?? color),
         fontSize: small ? 11 : 12,
-        fontFamily: "'DM Sans', sans-serif",
+        fontFamily: "'IBM Plex Sans', sans-serif",
         fontWeight: 600,
         cursor: 'pointer',
         transition: 'all 0.2s ease',
@@ -85,18 +84,17 @@ function Pill({
   );
 }
 
-function Tag({ label, color }: { label: string; color: string }): JSX.Element {
+function Tag({ label, color, wash }: { label: string; color: string; wash: string }): JSX.Element {
   return (
     <span
       style={{
         display: 'inline-block',
         padding: '2px 8px',
-        borderRadius: 4,
-        background: color + '22',
+        background: wash,
         color,
         fontSize: 10,
         fontWeight: 600,
-        fontFamily: "'DM Sans', sans-serif",
+        fontFamily: "'IBM Plex Sans', sans-serif",
         letterSpacing: '0.03em',
       }}
     >
@@ -160,12 +158,10 @@ function BehaviorCard({
         WebkitAppearance: 'none',
         appearance: 'none',
         padding: isActive ? '16px 18px' : '10px 14px',
-        borderRadius: 10,
         background: isActive ? 'rgb(var(--white))' : isHighlighted ? c.light : 'rgb(var(--surface))',
-        border: `1.5px solid ${isActive ? c.bg : isHighlighted ? c.mid : 'rgb(var(--border))'}`,
+        border: `1px solid ${isActive ? c.bg : isHighlighted ? c.mid : 'rgb(var(--border))'}`,
         cursor: 'pointer',
         transition: 'all 0.25s ease',
-        boxShadow: isActive ? `0 4px 20px ${c.bg}25` : 'none',
         opacity: isHighlighted === false ? 0.4 : 1,
       }}
     >
@@ -177,12 +173,11 @@ function BehaviorCard({
             justifyContent: 'center',
             minWidth: 28,
             height: 20,
-            borderRadius: 4,
             background: c.bg,
-            color: '#fff',
+            color: 'rgb(var(--white))',
             fontSize: 10,
             fontWeight: 700,
-            fontFamily: "'DM Mono', monospace",
+            fontFamily: "'IBM Plex Mono', monospace",
             letterSpacing: '0.05em',
           }}
         >
@@ -194,7 +189,7 @@ function BehaviorCard({
             fontWeight: 500,
             color: 'rgb(var(--ink))',
             lineHeight: 1.4,
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "'IBM Plex Sans', sans-serif",
           }}
         >
           {b.short}
@@ -208,7 +203,7 @@ function BehaviorCard({
             fontSize: 12.5,
             lineHeight: 1.6,
             color: 'rgb(var(--body))',
-            fontFamily: "'DM Sans', sans-serif",
+            fontFamily: "'IBM Plex Sans', sans-serif",
           }}
         >
           <span style={{ display: 'block', margin: '0 0 12px', fontStyle: 'italic', color: 'rgb(var(--secondary))', fontSize: 12 }}>
@@ -231,10 +226,10 @@ function BehaviorCard({
           )}
           <span style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 10 }}>
             {b.builds.map((p) => (
-              <Tag key={p} label={p} color="#5E7080" />
+              <Tag key={p} label={p} color={COLORS.discernment.text} wash={COLORS.discernment.wash} />
             ))}
             {b.refs.map((r) => (
-              <Tag key={r} label={r} color="#7A6B80" />
+              <Tag key={r} label={r} color={COLORS.diligence.text} wash={COLORS.diligence.wash} />
             ))}
           </span>
         </span>
@@ -312,12 +307,12 @@ export function InteractiveMap(): JSX.Element {
 
   return (
     <div
-      className="my-7 overflow-hidden rounded-xl"
+      className="my-7 overflow-hidden"
       style={{
         background: 'rgb(var(--surface-warm))',
         border: '1px solid rgb(var(--border-light))',
         color: 'rgb(var(--ink))',
-        fontFamily: "'DM Sans', sans-serif",
+        fontFamily: "'IBM Plex Sans', sans-serif",
       }}
     >
       <div style={{ padding: '24px 22px 32px' }}>
@@ -341,7 +336,7 @@ export function InteractiveMap(): JSX.Element {
               textTransform: 'uppercase',
               color: 'rgb(var(--tertiary))',
               marginRight: 4,
-              fontFamily: "'DM Mono', monospace",
+              fontFamily: "'IBM Plex Mono', monospace",
             }}
           >
             Filter
@@ -382,25 +377,31 @@ export function InteractiveMap(): JSX.Element {
         <div
           style={{
             background: 'rgb(var(--white))',
-            borderRadius: 14,
             padding: '24px 26px',
-            border: '2px solid #6B7F5E',
+            border: '2px solid rgb(var(--delegation))',
             marginBottom: 28,
-            boxShadow: '0 2px 12px rgba(107,127,94,0.08)',
             position: 'relative',
             overflow: 'hidden',
           }}
         >
+          {/* 4D strip: four flat segments tiled edge to edge. Each
+              competency owns a quarter of the rule outright rather than
+              fading into the next. */}
           <div
+            aria-hidden="true"
             style={{
               position: 'absolute',
               top: 0,
               left: 0,
               right: 0,
               height: 4,
-              background: `linear-gradient(90deg, ${COLORS.delegation.bg}, ${COLORS.description.bg}, ${COLORS.discernment.bg}, ${COLORS.diligence.bg})`,
+              display: 'flex',
             }}
-          />
+          >
+            {(['delegation', 'description', 'discernment', 'diligence'] as const).map((k) => (
+              <span key={k} style={{ flex: 1, background: COLORS[k].bg }} />
+            ))}
+          </div>
           <div
             style={{
               fontSize: 10,
@@ -409,7 +410,7 @@ export function InteractiveMap(): JSX.Element {
               textTransform: 'uppercase',
               color: 'rgb(var(--delegation-text))',
               marginBottom: 10,
-              fontFamily: "'DM Mono', monospace",
+              fontFamily: "'IBM Plex Mono', monospace",
             }}
           >
             Center — Measurable Business Goal
@@ -425,9 +426,9 @@ export function InteractiveMap(): JSX.Element {
           {[
             // dot: brand hex (decorative swatch, theme-invariant);
             // text: adaptive token (the hex fails AA on the dark canvas).
-            { label: 'Ring 1 — Observable Behaviors', dot: '#6B7F5E', text: 'rgb(var(--delegation-text))' },
-            { label: 'Ring 2 — Practice Activities', dot: '#5E7080', text: 'rgb(var(--discernment-text))' },
-            { label: 'Ring 3 — Reference Information', dot: '#7A6B80', text: 'rgb(var(--diligence-text))' },
+            { label: 'Ring 1 — Observable Behaviors', dot: 'rgb(var(--delegation))', text: 'rgb(var(--delegation-text))' },
+            { label: 'Ring 2 — Practice Activities', dot: 'rgb(var(--discernment))', text: 'rgb(var(--discernment-text))' },
+            { label: 'Ring 3 — Reference Information', dot: 'rgb(var(--diligence))', text: 'rgb(var(--diligence-text))' },
           ].map((r) => (
             <div
               key={r.label}
@@ -438,11 +439,11 @@ export function InteractiveMap(): JSX.Element {
                 fontSize: 11,
                 fontWeight: 600,
                 color: r.text,
-                fontFamily: "'DM Mono', monospace",
+                fontFamily: "'IBM Plex Mono', monospace",
                 letterSpacing: '0.04em',
               }}
             >
-              <div style={{ width: 10, height: 10, borderRadius: 3, background: r.dot }} />
+              <div style={{ width: 10, height: 10, background: r.dot }} />
               {r.label}
             </div>
           ))}
@@ -460,9 +461,8 @@ export function InteractiveMap(): JSX.Element {
               <div
                 key={q.key}
                 style={{
-                  borderRadius: 14,
                   overflow: 'hidden',
-                  border: `1.5px solid ${activeQuadrant === q.key ? c.bg : 'rgb(var(--border-light))'}`,
+                  border: `1px solid ${activeQuadrant === q.key ? c.bg : 'rgb(var(--border-light))'}`,
                   background: 'rgb(var(--white))',
                   transition: 'all 0.3s ease',
                 }}
@@ -498,8 +498,8 @@ export function InteractiveMap(): JSX.Element {
                           margin: 0,
                           fontSize: 16,
                           fontWeight: 700,
-                          color: activeQuadrant === q.key ? '#fff' : c.text,
-                          fontFamily: "'DM Serif Display', serif",
+                          color: activeQuadrant === q.key ? 'rgb(var(--white))' : c.text,
+                          fontFamily: "'Source Serif 4', serif",
                         }}
                       >
                         {q.label}
@@ -510,7 +510,7 @@ export function InteractiveMap(): JSX.Element {
                           margin: '4px 0 0',
                           fontSize: 11.5,
                           lineHeight: 1.4,
-                          color: activeQuadrant === q.key ? 'rgba(255,255,255,0.8)' : c.textSub,
+                          color: activeQuadrant === q.key ? 'rgb(var(--white) / 0.8)' : c.textSub,
                           maxWidth: 400,
                         }}
                       >
@@ -522,14 +522,14 @@ export function InteractiveMap(): JSX.Element {
                         width: 28,
                         height: 28,
                         borderRadius: '50%',
-                        background: activeQuadrant === q.key ? 'rgba(255,255,255,0.2)' : c.bg + '15',
+                        background: activeQuadrant === q.key ? 'rgb(var(--white) / 0.2)' : c.wash,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         fontSize: 14,
                         fontWeight: 700,
-                        color: activeQuadrant === q.key ? '#fff' : c.bg,
-                        fontFamily: "'DM Mono', monospace",
+                        color: activeQuadrant === q.key ? 'rgb(var(--white))' : c.bg,
+                        fontFamily: "'IBM Plex Mono', monospace",
                       }}
                     >
                       {behaviors.length}
@@ -560,9 +560,8 @@ export function InteractiveMap(): JSX.Element {
         <div
           style={{
             background: 'rgb(var(--white))',
-            borderRadius: 14,
             padding: '20px 22px',
-            border: '1.5px solid #C8D5DE',
+            border: '1px solid #C8D5DE',
             marginBottom: 20,
           }}
         >
@@ -574,13 +573,13 @@ export function InteractiveMap(): JSX.Element {
               textTransform: 'uppercase',
               color: 'rgb(var(--discernment-text))',
               marginBottom: 14,
-              fontFamily: "'DM Mono', monospace",
+              fontFamily: "'IBM Plex Mono', monospace",
               display: 'flex',
               alignItems: 'center',
               gap: 8,
             }}
           >
-            <div style={{ width: 10, height: 10, borderRadius: 3, background: '#5E7080' }} />
+            <div style={{ width: 10, height: 10, background: 'rgb(var(--discernment))' }} />
             Ring 2 — Practice Activities ({filteredActivities.length})
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 10 }}>
@@ -598,7 +597,6 @@ export function InteractiveMap(): JSX.Element {
                   onBlur={() => setHoveredActivity(null)}
                   style={{
                     padding: '10px 14px',
-                    borderRadius: 8,
                     background:
                       isHL === true
                         ? 'rgb(var(--discernment-light))'
@@ -607,14 +605,14 @@ export function InteractiveMap(): JSX.Element {
                           : hoveredActivity === a.id
                             ? 'rgb(var(--discernment-light) / 0.65)'
                             : 'rgb(var(--surface))',
-                    border: `1px solid ${isHL === true ? '#5E7080' : 'rgb(var(--border))'}`,
+                    border: `1px solid ${isHL === true ? 'rgb(var(--discernment))' : 'rgb(var(--border))'}`,
                     opacity: isHL === false ? 0.35 : 1,
                     transition: 'all 0.2s ease',
                     cursor: 'default',
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 4 }}>
-                    <span style={{ fontSize: 10, fontWeight: 700, color: 'rgb(var(--discernment-text))', fontFamily: "'DM Mono', monospace", minWidth: 24 }}>{a.id}</span>
+                    <span style={{ fontSize: 10, fontWeight: 700, color: 'rgb(var(--discernment-text))', fontFamily: "'IBM Plex Mono', monospace", minWidth: 24 }}>{a.id}</span>
                     <span style={{ fontSize: 12.5, fontWeight: 600, color: 'rgb(var(--ink))' }}>{a.short}</span>
                   </div>
                   <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -632,7 +630,7 @@ export function InteractiveMap(): JSX.Element {
         </div>
 
         {/* Ring 3: Reference Information */}
-        <div style={{ background: 'rgb(var(--white))', borderRadius: 14, padding: '20px 22px', border: '1.5px solid #D1C4D9' }}>
+        <div style={{ background: 'rgb(var(--white))', padding: '20px 22px', border: '1px solid #D1C4D9' }}>
           <div
             style={{
               fontSize: 10,
@@ -641,13 +639,13 @@ export function InteractiveMap(): JSX.Element {
               textTransform: 'uppercase',
               color: 'rgb(var(--diligence-text))',
               marginBottom: 14,
-              fontFamily: "'DM Mono', monospace",
+              fontFamily: "'IBM Plex Mono', monospace",
               display: 'flex',
               alignItems: 'center',
               gap: 8,
             }}
           >
-            <div style={{ width: 10, height: 10, borderRadius: 3, background: '#7A6B80' }} />
+            <div style={{ width: 10, height: 10, background: 'rgb(var(--diligence))' }} />
             Ring 3 — Reference Information ({filteredRefs.length})
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 10 }}>
@@ -665,7 +663,6 @@ export function InteractiveMap(): JSX.Element {
                   onBlur={() => setHoveredRef(null)}
                   style={{
                     padding: '10px 14px',
-                    borderRadius: 8,
                     background:
                       isHL === true
                         ? 'rgb(var(--diligence-light))'
@@ -674,14 +671,14 @@ export function InteractiveMap(): JSX.Element {
                           : hoveredRef === r.id
                             ? 'rgb(var(--diligence-light) / 0.8)'
                             : 'rgb(var(--surface))',
-                    border: `1px solid ${isHL === true ? '#7A6B80' : 'rgb(var(--border))'}`,
+                    border: `1px solid ${isHL === true ? 'rgb(var(--diligence))' : 'rgb(var(--border))'}`,
                     opacity: isHL === false ? 0.35 : 1,
                     transition: 'all 0.2s ease',
                     cursor: 'default',
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
-                    <span style={{ fontSize: 10, fontWeight: 700, color: 'rgb(var(--diligence-text))', fontFamily: "'DM Mono', monospace", minWidth: 20 }}>{r.id}</span>
+                    <span style={{ fontSize: 10, fontWeight: 700, color: 'rgb(var(--diligence-text))', fontFamily: "'IBM Plex Mono', monospace", minWidth: 20 }}>{r.id}</span>
                     <span style={{ fontSize: 12.5, fontWeight: 600, color: 'rgb(var(--ink))' }}>{r.short}</span>
                   </div>
                   {(showAll || showMeta) && (
@@ -698,7 +695,6 @@ export function InteractiveMap(): JSX.Element {
           style={{
             marginTop: 28,
             padding: '16px 20px',
-            borderRadius: 10,
             background: 'rgb(var(--surface))',
             border: '1px solid rgb(var(--border))',
             fontSize: 11.5,

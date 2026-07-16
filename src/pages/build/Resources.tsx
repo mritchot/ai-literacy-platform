@@ -34,7 +34,7 @@ const SECTIONS = REST.map((part) => {
 function CostContrast(): JSX.Element {
   return (
     <section aria-label="Cost contrast" className="mt-8 grid gap-4 sm:grid-cols-2">
-      <div className="rounded-xl" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', borderTop: `3px solid ${SERIES_ACCENT}`, padding: '20px 22px' }}>
+      <div style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', borderTop: `3px solid ${SERIES_ACCENT}`, padding: '20px 22px' }}>
         <Overline className="mb-1">Solo direct cost</Overline>
         <div className="font-mono font-bold" style={{ fontSize: 40, lineHeight: 1.1, color: SERIES_ACCENT }}>
           {SOLO_TOTAL}
@@ -43,7 +43,7 @@ function CostContrast(): JSX.Element {
           Out-of-pocket only. The ~150–160 hours of labor is an approximate opportunity cost of roughly $7,500. Everything but the AI subscriptions ran on free tiers.
         </p>
       </div>
-      <div className="rounded-xl" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', borderTop: '3px solid rgb(var(--border))', padding: '20px 22px' }}>
+      <div style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', borderTop: '3px solid rgb(var(--border))', padding: '20px 22px' }}>
         <Overline className="mb-1">Organizational estimate</Overline>
         <div className="font-mono font-bold text-ink" style={{ fontSize: 40, lineHeight: 1.1 }}>
           {BUDGET_TOTAL.low}–{BUDGET_TOTAL.high}
@@ -74,7 +74,7 @@ function DataRow({ label, value, note, emphasis }: { label: string; value: strin
 
 function DataCard({ label, children }: { label: string; children: React.ReactNode }): JSX.Element {
   return (
-    <div className="rounded-lg" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', padding: '16px 20px' }}>
+    <div style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', padding: '16px 20px' }}>
       <Overline className="mb-3">{label}</Overline>
       {children}
     </div>
@@ -85,7 +85,7 @@ function CustomVsArticulate(): JSX.Element {
   const [open, setOpen] = useState(false);
   return (
     <section
-      className="mt-10 overflow-hidden rounded-lg"
+      className="mt-10 overflow-hidden"
       style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', borderLeft: `3px solid ${SERIES_ACCENT}` }}
     >
       <button

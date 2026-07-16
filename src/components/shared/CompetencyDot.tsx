@@ -20,7 +20,7 @@ export function CompetencyDot({ competency, size = 9 }: CompetencyDotProps): JSX
   const c = HEX[competency];
   return (
     <span
-      className="inline-flex items-center gap-1.5 rounded-full font-mono text-[10.5px] font-medium"
+      className="inline-flex items-center gap-1.5 font-mono text-[10.5px] font-medium"
       style={{
         backgroundColor: `${c.bg}1F`,
         padding: '4px 10px 4px 8px',

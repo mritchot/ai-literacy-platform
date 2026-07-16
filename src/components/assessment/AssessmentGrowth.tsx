@@ -13,7 +13,7 @@ import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { Overline } from '../shared/Overline';
 import { AssessmentResults } from './AssessmentResults';
 
-const ASSESSMENT_ACCENT = '#5E7080';
+const ASSESSMENT_ACCENT = 'rgb(var(--discernment))';
 
 export function AssessmentGrowth(): JSX.Element {
   const { isAssessmentComplete } = useLearnerProgress();
@@ -24,7 +24,6 @@ export function AssessmentGrowth(): JSX.Element {
   return (
     <section
       aria-label="Pre and post assessment comparison"
-      className="rounded-lg"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',

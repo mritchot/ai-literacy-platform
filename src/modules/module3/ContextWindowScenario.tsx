@@ -106,7 +106,6 @@ export function ContextWindowScenario(): JSX.Element {
 
       <section
         aria-label="Context window scenario"
-        className="rounded-xl"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
@@ -151,7 +150,7 @@ export function ContextWindowScenario(): JSX.Element {
               // dropped to <body>. rAF so the block exists first.
               window.requestAnimationFrame(() => verificationRef.current?.focus());
             }}
-            className="inline-flex items-center gap-2 rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover"
+            className="inline-flex items-center gap-2 bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover"
           >
             Begin verification
             <Icon name="arrowRight" size={14} />
@@ -232,7 +231,7 @@ function DocumentPanels({
                   document.getElementById(`p7-doctab-${next}`)?.focus();
                 }
               }}
-              className="font-sans text-[13px] transition-colors duration-150"
+              className="font-sans text-[13px] transition-colors duration-[160ms]"
               style={{
                 padding: '12px 18px',
                 background: active ? 'rgb(var(--white))' : 'transparent',
@@ -282,7 +281,7 @@ function SourcePanel(): JSX.Element {
     <section
       role="region"
       aria-label="Source document excerpts"
-      className="flex flex-col rounded-lg"
+      className="flex flex-col"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -331,7 +330,7 @@ function SummaryPanel(): JSX.Element {
     <section
       role="region"
       aria-label="AI-generated summary"
-      className="flex flex-col rounded-lg"
+      className="flex flex-col"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -409,7 +408,6 @@ function VerificationItemCard({
   return (
     <div
       ref={ref}
-      className="rounded-lg"
       style={{
         background: 'rgb(var(--surface))',
         border: '1px solid rgb(var(--border))',
@@ -440,7 +438,7 @@ function VerificationItemCard({
                   type="button"
                   onClick={() => !isSubmitted && setSelected(opt.id)}
                   aria-pressed={isSelected}
-                  className="flex w-full items-start gap-3 rounded-md text-left"
+                  className="flex w-full items-start gap-3 text-left"
                   style={{
                     background: 'rgb(var(--white))',
                     // Border width and padding stay constant across states.
@@ -468,7 +466,7 @@ function VerificationItemCard({
                       height: 16,
                       border: isSelected
                         ? '5px solid rgb(var(--ink))'
-                        : '1.5px solid rgb(var(--ghost))',
+                        : '1px solid rgb(var(--ghost))',
                       background: isSelected ? 'rgb(var(--white))' : 'transparent',
                       boxSizing: 'border-box',
                     }}
@@ -494,7 +492,7 @@ function VerificationItemCard({
             }}
             disabled={!selected}
             aria-disabled={!selected}
-            className="rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
+            className="bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
           >
             Submit
           </button>
@@ -505,7 +503,7 @@ function VerificationItemCard({
         <div
           ref={feedbackRef}
           aria-live="polite"
-          className="mt-4 rounded-md"
+          className="mt-4"
           style={{
             background:
               feedback.tone === 'success'
@@ -575,7 +573,7 @@ function DebriefBlock({ scrollOnMount }: { scrollOnMount: boolean }): JSX.Elemen
   );
 }
 
-// P7 reflection accent is Delegation (#6B7F5E) per spec §10.4 — the
+// P7 reflection accent is Delegation per spec §10.4 — the
 // prompt asks about delegation judgment ("how would you verify the
 // model processed the information you needed it to use?"), not
 // diligence per se.

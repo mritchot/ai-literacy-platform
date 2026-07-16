@@ -22,8 +22,13 @@ import {
 } from './module4-content';
 import { renderMarkdownLite } from './render-markdown-lite';
 
-const DILIGENCE = '#7A6B80';
-const DILIGENCE_HOVER = '#6D5F73';
+const DILIGENCE = 'rgb(var(--diligence))';
+// Hover has to move *away* from the page ground, the same way
+// --action-hover does: darker on washi, lighter on sumi. A fixed hex
+// can't do that now the accent flips, and an alpha step moves toward
+// the ground in both themes — so mix toward --ink, which inverts with
+// the theme for free.
+const DILIGENCE_HOVER = 'color-mix(in srgb, rgb(var(--diligence)) 88%, rgb(var(--ink)))';
 
 const SECTION = 8;
 const MIN_CHARS = 50;
@@ -33,25 +38,25 @@ const MIN_CHARS = 50;
 const SCAFFOLD: { label: string; color: string; prompt: string }[] = [
   {
     label: 'Delegation',
-    color: '#6B7F5E',
+    color: 'rgb(var(--delegation))',
     prompt:
       'Which components of the deliverable were AI-generated, AI-assisted, or human-authored?',
   },
   {
     label: 'Description',
-    color: '#8B7355',
+    color: 'rgb(var(--description))',
     prompt:
       'How was the AI task specified? What constraints, format, or quality standards were included in the prompt?',
   },
   {
     label: 'Discernment',
-    color: '#5E7080',
+    color: 'rgb(var(--discernment))',
     prompt:
       'What verification was performed on the AI-generated content? What was found and corrected?',
   },
   {
     label: 'Diligence',
-    color: '#7A6B80',
+    color: 'rgb(var(--diligence))',
     prompt:
       'What limitations remain in the final deliverable? What should the reader be aware of?',
   },
@@ -186,10 +191,9 @@ export function DiligenceStatement(): JSX.Element {
       </BottleneckCallout>
 
       <article
-        className="rounded-xl"
         style={{
           background: 'rgb(var(--white))',
-          border: '1.5px solid rgb(var(--border))',
+          border: '1px solid rgb(var(--border))',
           borderTop: `3px solid ${DILIGENCE}`,
           padding: '24px 26px',
         }}
@@ -213,7 +217,6 @@ export function DiligenceStatement(): JSX.Element {
             {SCAFFOLD.map((s) => (
               <li
                 key={s.label}
-                className="rounded-md"
                 style={{
                   background: 'rgb(var(--surface))',
                   border: '1px solid rgb(var(--border))',
@@ -252,7 +255,7 @@ export function DiligenceStatement(): JSX.Element {
           aria-describedby="p12-section-delegation p12-section-description p12-section-discernment p12-section-diligence"
           rows={8}
           placeholder="Write your diligence statement here. Use the four sections above as a guide, but write in your own voice — this should read as a professional document you'd actually append to a deliverable."
-          className="block w-full resize-y rounded-md border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
+          className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
           style={{ minHeight: 200, lineHeight: 1.55 }}
         />
 
@@ -262,7 +265,7 @@ export function DiligenceStatement(): JSX.Element {
             onClick={onSave}
             disabled={!canSave}
             aria-disabled={!canSave}
-            className="rounded-md font-sans text-[13px] font-semibold text-[rgb(var(--white))] transition-colors duration-150 disabled:cursor-not-allowed"
+            className="font-sans text-[13px] font-semibold text-[rgb(var(--white))] transition-colors duration-[160ms] disabled:cursor-not-allowed"
             style={{
               padding: '10px 22px',
               background: showSavedBadge
@@ -274,8 +277,8 @@ export function DiligenceStatement(): JSX.Element {
                 ? 'rgb(var(--success))'
                 : !canSave
                   ? 'rgb(var(--muted))'
-                  : '#FFFFFF',
-              border: showSavedBadge ? '1.5px solid rgb(var(--success))' : 'none',
+                  : 'rgb(var(--white))',
+              border: showSavedBadge ? '1px solid rgb(var(--success))' : 'none',
             }}
             onMouseEnter={(e) => {
               if (canSave && !showSavedBadge) {
@@ -340,7 +343,7 @@ function ExemplarComparison({ statement }: { statement: string }): JSX.Element {
       <article
         role="region"
         aria-label="Your diligence statement"
-        className="flex h-full flex-col rounded-lg"
+        className="flex h-full flex-col"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
@@ -356,7 +359,7 @@ function ExemplarComparison({ statement }: { statement: string }): JSX.Element {
       <article
         role="region"
         aria-label="Exemplar diligence statement"
-        className="flex h-full flex-col rounded-lg"
+        className="flex h-full flex-col"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
@@ -378,7 +381,6 @@ function EffectivenessCallout(): JSX.Element {
   return (
     <aside
       role="note"
-      className="rounded-lg"
       style={{
         background: 'rgb(var(--surface-warm))',
         border: '1px solid rgb(var(--border))',

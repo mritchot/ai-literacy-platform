@@ -13,15 +13,16 @@ import { MODULES as PROGRAM_MODULES, type CompetencyKey } from '../../data/progr
 export type { CompetencyKey } from '../../data/program';
 
 // ─── 4D competency palette (design system §1.1) ────────────────────────
-// Mirrors the tokens in tailwind.config.js / CompetencyDot; `bg` and `mid`
-// are unchanged in dark mode, so they are safe as literal fills. `light`
-// and `text` tints flip via CSS variables and are consumed through the
-// shared CompetencyDot component rather than these literals.
+// Mirrors the tokens in tailwind.config.js / CompetencyDot. `bg` resolves
+// through the competency token so it follows the theme — the accents now
+// carry distinct light and dark values. `light` / `mid` / `text` are the
+// light-mode tint values, kept for reference; nothing reads them (the
+// shared CompetencyDot owns those surfaces).
 export const COMPETENCY_HEX: Record<CompetencyKey, { bg: string; light: string; mid: string; text: string }> = {
-  delegation: { bg: '#6B7F5E', light: '#E8EDE4', mid: '#B5C4AB', text: '#3D4A35' },
-  description: { bg: '#8B7355', light: '#F0EAE0', mid: '#C9B99E', text: '#5A4A37' },
-  discernment: { bg: '#5E7080', light: '#E4EBF0', mid: '#A8BCCA', text: '#354A57' },
-  diligence: { bg: '#7A6B80', light: '#EDE4F0', mid: '#BEA8C9', text: '#4A3557' },
+  delegation: { bg: 'rgb(var(--delegation))', light: '#E8EDE4', mid: '#B5C4AB', text: '#3D4A35' },
+  description: { bg: 'rgb(var(--description))', light: '#F0EAE0', mid: '#C9B99E', text: '#5A4A37' },
+  discernment: { bg: 'rgb(var(--discernment))', light: '#E4EBF0', mid: '#A8BCCA', text: '#354A57' },
+  diligence: { bg: 'rgb(var(--diligence))', light: '#EDE4F0', mid: '#BEA8C9', text: '#4A3557' },
 };
 
 // ─── Dual-platform identity (design system §1.2) ───────────────────────
@@ -38,14 +39,14 @@ export interface PlatformIdentity {
 
 export const PLATFORMS: Record<'custom' | 'articulate', PlatformIdentity> = {
   custom: {
-    color: '#5E7080',
+    color: 'rgb(var(--discernment))',
     label: 'Custom Platform',
     component: 'Component 4',
     legend:
       'React-based learning environment. Interactive dashboards, tokenizer playground, AI interaction sandbox, learning analytics. Primary technical differentiator.',
   },
   articulate: {
-    color: '#8B7355',
+    color: 'rgb(var(--description))',
     label: 'Articulate Platform',
     component: 'Component 5',
     legend:
@@ -240,14 +241,18 @@ export interface KirkLevel {
   label: string;
   name: string;
   color: string;
+  /** Tinted fill behind the level marker. A companion field rather than
+   *  `${color}1F`: hex-alpha can't be appended to a `rgb(var(...))`
+   *  expression, and `color` is a token now that the accents flip. */
+  wash: string;
   detail: string;
 }
 
 export const KIRK_LEVELS: KirkLevel[] = [
-  { key: 'L1', label: 'Level 1', name: 'Reaction', color: '#8B7355', detail: 'Post-program survey across four actionable dimensions: perceived relevance, confidence change, content quality, and intent to apply, plus a standard NPS item' },
-  { key: 'L2', label: 'Level 2', name: 'Learning', color: '#5E7080', detail: 'Ten-item scenario-based pre/post assessment, parallel-form to resist gaming, measuring knowledge gain across usage patterns, failure modes, mechanics, and evaluation' },
-  { key: 'L3', label: 'Level 3', name: 'Behavior', color: '#6B7F5E', detail: 'Manager evidence review and participant self-assessment at 30/60/90 days, rating twelve 4D-mapped behavioral indicators; objectives 2.3 and 4.5 produce the trackable artifacts' },
-  { key: 'L4', label: 'Level 4', name: 'Results', color: '#7A6B80', detail: 'Business outcomes downstream of competent use: efficiency (time-to-first-draft, revision cycles), quality (AI-error rate), transparency, and time-to-competency, run through a Phillips ROI model (191% in the conservative worked example)' },
+  { key: 'L1', label: 'Level 1', name: 'Reaction', color: 'rgb(var(--description))', wash: 'rgb(var(--description) / 0.12)', detail: 'Post-program survey across four actionable dimensions: perceived relevance, confidence change, content quality, and intent to apply, plus a standard NPS item' },
+  { key: 'L2', label: 'Level 2', name: 'Learning', color: 'rgb(var(--discernment))', wash: 'rgb(var(--discernment) / 0.12)', detail: 'Ten-item scenario-based pre/post assessment, parallel-form to resist gaming, measuring knowledge gain across usage patterns, failure modes, mechanics, and evaluation' },
+  { key: 'L3', label: 'Level 3', name: 'Behavior', color: 'rgb(var(--delegation))', wash: 'rgb(var(--delegation) / 0.12)', detail: 'Manager evidence review and participant self-assessment at 30/60/90 days, rating twelve 4D-mapped behavioral indicators; objectives 2.3 and 4.5 produce the trackable artifacts' },
+  { key: 'L4', label: 'Level 4', name: 'Results', color: 'rgb(var(--diligence))', wash: 'rgb(var(--diligence) / 0.12)', detail: 'Business outcomes downstream of competent use: efficiency (time-to-first-draft, revision cycles), quality (AI-error rate), transparency, and time-to-competency, run through a Phillips ROI model (191% in the conservative worked example)' },
 ];
 
 // ─── Analytics infrastructure (hidden from learners) ───────────────────

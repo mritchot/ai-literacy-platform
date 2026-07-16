@@ -177,11 +177,11 @@ function MobileSkillsList({
               </span>
             </div>
             <div
-              className="h-2 w-full overflow-hidden rounded-full"
+              className="h-2 w-full overflow-hidden"
               style={{ background: 'rgb(var(--border-light))' }}
             >
               <div
-                className="h-full rounded-full transition-all duration-300"
+                className="h-full transition-[width] duration-300"
                 style={{
                   width: `${widthPct}%`,
                   background: isTop ? tokens.action : tokens.secondary,
@@ -211,7 +211,7 @@ function SkillInstabilityCallout({
   ];
   return (
     <aside
-      className="mt-4 rounded-lg bg-surface-warm"
+      className="mt-4 bg-surface-warm"
       style={{
         border: '1px solid rgb(var(--border))',
         padding: '14px 18px',

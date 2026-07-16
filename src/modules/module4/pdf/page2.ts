@@ -231,7 +231,7 @@ function drawKnowledgeCard(doc: jsPDF, data: CompletionProfileData): void {
   setTextHex(doc, C.ink);
   doc.text(safe('Across all modules'), x + padX, y + padY + 18);
 
-  // Big stat — DM Serif Display for both numerator and denominator.
+  // Big stat — Source Serif 4 for both numerator and denominator.
   // "14" at 36pt; " / 16" at 22pt, baseline-aligned.
   const numStr = String(data.kcCorrect);
   doc.setFont(FONT.serif, 'normal');
@@ -263,8 +263,8 @@ function drawKnowledgeCard(doc: jsPDF, data: CompletionProfileData): void {
  * (Option A). Origin (464, 124), 288 × 348 pt. The card uses the new
  * 5th-accent "Assessment" palette (#44556B + light/mid/text variants).
  *
- * Score numerals render in DM Serif Display rather than Helvetica
- * (the handoff allows either; DM Serif keeps visual consistency with
+ * Score numerals render in Source Serif 4 rather than Helvetica
+ * (the handoff allows either; Source Serif 4 keeps visual consistency with
  * the existing big-number treatment on the prior KC card).
  */
 function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
@@ -367,7 +367,7 @@ function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
     doc.text(safe(cell.label), cellCenter - labelW / 2, stripY + 16);
     resetTracking(doc);
 
-    // Numeral — DM Serif Display 26 pt. For Pre/Post, render numerator
+    // Numeral — Source Serif 4 26 pt. For Pre/Post, render numerator
     // and " / 10" as two text calls (different sizes/colors) baseline-
     // aligned. Center the COMBINED string in the cell.
     doc.setFont(FONT.serif, 'normal');
@@ -608,7 +608,7 @@ function drawClosingCard(doc: jsPDF, compact: boolean): void {
     resetTracking(doc);
   }
 
-  // Closing text — DM Serif Display italic, off-white, centered.
+  // Closing text — Source Serif 4 italic, off-white, centered.
   doc.setFont(FONT.serif, 'italic');
   doc.setFontSize(bodySize);
   doc.setTextColor(250, 248, 245);

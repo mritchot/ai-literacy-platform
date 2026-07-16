@@ -37,10 +37,10 @@ import {
 // 4D competency hex colors — matched to the on-screen accent treatment
 // used throughout the platform (R1 Quick Reference, KC tone borders).
 const COLORS = {
-  delegation: '#6B7F5E',
-  description: '#8B7355',
-  discernment: '#5E7080',
-  diligence: '#7A6B80',
+  delegation: 'rgb(var(--delegation))',
+  description: 'rgb(var(--description))',
+  discernment: 'rgb(var(--discernment))',
+  diligence: 'rgb(var(--diligence))',
 };
 
 // All KC keys across the program. Used for the aggregate "X of Y
@@ -149,7 +149,7 @@ export function CompletionSummary(): JSX.Element {
   if (!allModulesComplete) {
     return (
       <div
-        className="rounded-lg font-sans"
+        className="font-sans"
         style={{
           background: 'rgb(var(--surface))',
           border: '1px solid rgb(var(--border))',
@@ -349,7 +349,6 @@ function ProfileHeader({
 }): JSX.Element {
   return (
     <header
-      className="rounded-lg"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -380,7 +379,7 @@ function ProfileHeader({
       <button
         type="button"
         onClick={onDownload}
-        className="inline-flex items-center gap-2 rounded-md font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:opacity-90"
+        className="inline-flex items-center gap-2 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:opacity-90"
         style={{
           background: COLORS.diligence,
           padding: '10px 16px',
@@ -404,7 +403,7 @@ function CompetencyCard({
   children,
   footerNote,
 }: {
-  /** Brand hex for the decorative left rule (theme-invariant). */
+  /** Brand accent for the decorative left rule. */
   accent: string;
   /** Theme-adaptive text token for the overline — the brand hex sits
    *  at ~3:1 on the dark card surface, below AA. */
@@ -416,7 +415,7 @@ function CompetencyCard({
 }): JSX.Element {
   return (
     <article
-      className="flex h-full flex-col rounded-lg"
+      className="flex h-full flex-col"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -567,7 +566,7 @@ function DiligenceCard({ statement }: { statement: string }): JSX.Element {
     >
       {statement.trim().length > 0 ? (
         <div
-          className="rounded-md font-sans text-body-sm text-body"
+          className="font-sans text-body-sm text-body"
           style={{
             background: 'rgb(var(--surface))',
             border: '1px solid rgb(var(--border-light))',
@@ -602,7 +601,7 @@ function QuotedBlock({ label, value }: { label: string; value: string }): JSX.El
       </div>
       {value.trim().length > 0 ? (
         <div
-          className="rounded-md font-sans text-body-sm text-body"
+          className="font-sans text-body-sm text-body"
           style={{
             background: 'rgb(var(--surface))',
             border: '1px solid rgb(var(--border-light))',
@@ -631,7 +630,7 @@ function KCSummaryBar({
 }): JSX.Element {
   return (
     <div
-      className="rounded-md font-sans"
+      className="font-sans"
       style={{
         background: 'rgb(var(--surface))',
         border: '1px solid rgb(var(--border-light))',
@@ -708,7 +707,6 @@ function MilestoneTable({
   return (
     <section
       aria-label="30, 60, and 90 day milestones"
-      className="rounded-lg"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -743,7 +741,7 @@ function MilestoneTable({
             }}
           >
             <span
-              className="inline-flex items-center justify-center rounded-full font-mono text-[11px] font-bold uppercase text-[rgb(var(--white))]"
+              className="inline-flex items-center justify-center font-mono text-[11px] font-bold uppercase text-[rgb(var(--white))]"
               style={{
                 background: COLORS.diligence,
                 padding: '6px 10px',
