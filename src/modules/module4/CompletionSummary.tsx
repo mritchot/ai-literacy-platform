@@ -744,6 +744,7 @@ function MilestoneTable({
               className="inline-flex items-center justify-center font-mono text-[11px] font-bold uppercase text-[rgb(var(--white))]"
               style={{
                 background: COLORS.diligence,
+                border: `1px solid ${COLORS.diligence}`,
                 padding: '6px 10px',
                 letterSpacing: '0.05em',
                 whiteSpace: 'nowrap',

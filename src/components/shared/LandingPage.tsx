@@ -115,7 +115,7 @@ function Hero({
       </Overline>
       <h1
         id="program-title"
-        className="m-0 mb-4 max-w-[780px] font-display text-display font-normal text-ink"
+        className="m-0 mb-4 max-w-[780px] font-display text-display font-semibold text-ink"
       >
         AI Literacy for the Modern Workforce
       </h1>
@@ -431,7 +431,7 @@ function SummaryBar({
         <div key={it.label} className="flex items-center sm:flex-1">
           <div className="flex flex-1 items-baseline gap-2.5">
             <span
-              className="font-display text-[22px] sm:text-[28px]"
+              className="font-display text-[22px] font-semibold sm:text-[28px]"
               style={{
                 lineHeight: 1,
                 color: it.emphasized ? 'rgb(var(--action))' : 'rgb(var(--ink))',

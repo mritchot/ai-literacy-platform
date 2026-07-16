@@ -45,7 +45,7 @@ export function DataSourceToggle({ value, onChange }: DataSourceToggleProps): JS
           height: 36,
         }}
       >
-        {OPTIONS.map((opt) => {
+        {OPTIONS.map((opt, i) => {
           const active = value === opt.id;
           return (
             <button
@@ -62,8 +62,12 @@ export function DataSourceToggle({ value, onChange }: DataSourceToggleProps): JS
               className="font-sans text-[14px] font-medium transition-colors duration-[160ms]"
               style={{
                 width: 72,
-                color: active ? 'rgb(var(--white))' : 'rgb(var(--secondary))',
-                background: active ? 'rgb(var(--ink))' : 'transparent',
+                // Active segment sits on the raised card color against the
+                // recessed track, so selection reads as a lift rather than
+                // an ink fill.
+                color: active ? 'rgb(var(--ink))' : 'rgb(var(--tertiary))',
+                background: active ? 'rgb(var(--white))' : 'transparent',
+                borderLeft: i > 0 ? '1px solid rgb(var(--border))' : undefined,
               }}
             >
               {opt.label}

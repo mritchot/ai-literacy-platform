@@ -54,7 +54,7 @@ function ProseSection({ heading, body }: { heading: string; body: string }): JSX
   return (
     <section className="mt-10">
       <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{heading}</h2>
-      <div className="max-w-reading">{renderMarkdown(body)}</div>
+      <div className="prose-longform max-w-reading">{renderMarkdown(body)}</div>
     </section>
   );
 }
@@ -73,7 +73,7 @@ export default function ActionMap(): JSX.Element {
       </p>
 
       {/* Framing line + dual-platform delivery note, verbatim from the md. */}
-      <div className="max-w-reading">{renderMarkdown(INTRO_MD)}</div>
+      <div className="prose-longform max-w-reading">{renderMarkdown(INTRO_MD)}</div>
 
       <InteractiveMap />
 

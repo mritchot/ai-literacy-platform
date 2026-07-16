@@ -128,7 +128,7 @@ export default function Resources(): JSX.Element {
       <h1 className="m-0 mb-2 font-display text-display font-normal text-ink">Resource &amp; Budget Plan</h1>
       <p className="m-0 mb-6 font-sans text-h3 font-normal text-secondary">AI Literacy for the Modern Workforce</p>
 
-      <div className="max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
+      <div className="prose-longform max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
 
       <CostContrast />
 
@@ -165,7 +165,7 @@ export default function Resources(): JSX.Element {
       {SECTIONS.map((s) => (
         <section key={s.heading} className="mt-10">
           <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{s.heading}</h2>
-          <div className="max-w-reading">{renderMarkdown(s.body)}</div>
+          <div className="prose-longform max-w-reading">{renderMarkdown(s.body)}</div>
         </section>
       ))}
 

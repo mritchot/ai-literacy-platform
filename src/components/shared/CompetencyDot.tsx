@@ -1,31 +1,45 @@
-// CompetencyDot — pill showing a 4D dimension (label + colored dot).
-// Background tinted at ~12% opacity over the competency `bg` color;
-// text uses the competency `text` token (light) and `mid` token (dark).
+// CompetencyDot — a 4D dimension rendered as a square swatch plus its
+// label. The pill it used to live in (tinted capsule, rounded dot) is
+// retired: the swatch is a hard 8px square in the competency accent, the
+// label is tracked mono uppercase in the competency `-text` token, and
+// the two sit in a bare inline-flex with no background of their own.
+// Both colors resolve through CSS variables, so the mark follows the
+// theme without this component needing to know which one is active.
 
 import type { CompetencyKey } from '../../data/program';
 
-const HEX: Record<CompetencyKey, { bg: string; text: string; textDark: string; label: string }> = {
-  delegation: { bg: '#6B7F5E', text: '#3D4A35', textDark: '#B5C4AB', label: 'Delegation' },
-  description: { bg: '#8B7355', text: '#5A4A37', textDark: '#C9B99E', label: 'Description' },
-  discernment: { bg: '#5E7080', text: '#354A57', textDark: '#A8BCCA', label: 'Discernment' },
-  diligence: { bg: '#7A6B80', text: '#4A3557', textDark: '#BEA8C9', label: 'Diligence' },
+const LABEL: Record<CompetencyKey, string> = {
+  delegation: 'Delegation',
+  description: 'Description',
+  discernment: 'Discernment',
+  diligence: 'Diligence',
+};
+
+// Dark-mode competency text colors. These duplicate the `.dark`
+// `--{competency}-text` values in index.css, and exist only to back the
+// `--competency-text-*` custom properties the landing page's legend
+// reads. CompetencyDot itself uses the index.css tokens directly.
+const TEXT_DARK: Record<CompetencyKey, string> = {
+  delegation: '#B5C4AB',
+  description: '#C9B99E',
+  discernment: '#A8BCCA',
+  diligence: '#BEA8C9',
 };
 
 interface CompetencyDotProps {
   competency: CompetencyKey;
+  /** Swatch edge in px. 8 is the system default; callers rendering the
+   *  mark inside dense rows step it down to sit on the text baseline. */
   size?: number;
 }
 
-export function CompetencyDot({ competency, size = 9 }: CompetencyDotProps): JSX.Element {
-  const c = HEX[competency];
+export function CompetencyDot({ competency, size = 8 }: CompetencyDotProps): JSX.Element {
   return (
     <span
-      className="inline-flex items-center gap-1.5 font-mono text-[10.5px] font-medium"
+      className="inline-flex items-center gap-1.5 font-mono text-[10.5px] font-medium uppercase"
       style={{
-        backgroundColor: `${c.bg}1F`,
-        padding: '4px 10px 4px 8px',
         letterSpacing: '0.02em',
-        color: `var(--competency-text-${competency}, ${c.text})`,
+        color: `rgb(var(--${competency}-text))`,
       }}
     >
       <span
@@ -33,12 +47,11 @@ export function CompetencyDot({ competency, size = 9 }: CompetencyDotProps): JSX
         style={{
           width: size,
           height: size,
-          borderRadius: '50%',
-          backgroundColor: c.bg,
+          backgroundColor: `rgb(var(--${competency}))`,
           flexShrink: 0,
         }}
       />
-      {c.label}
+      {LABEL[competency]}
     </span>
   );
 }
@@ -49,10 +62,10 @@ export function CompetencyDarkStyles(): JSX.Element {
   return (
     <style>{`
       .dark {
-        --competency-text-delegation: ${HEX.delegation.textDark};
-        --competency-text-description: ${HEX.description.textDark};
-        --competency-text-discernment: ${HEX.discernment.textDark};
-        --competency-text-diligence: ${HEX.diligence.textDark};
+        --competency-text-delegation: ${TEXT_DARK.delegation};
+        --competency-text-description: ${TEXT_DARK.description};
+        --competency-text-discernment: ${TEXT_DARK.discernment};
+        --competency-text-diligence: ${TEXT_DARK.diligence};
       }
     `}</style>
   );

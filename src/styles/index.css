@@ -278,6 +278,28 @@
   }
 }
 
+@layer components {
+  /* Long-form prose scope — the write-up artifacts (needs-analysis,
+     evaluation, and the build series). Their body copy is meant to be
+     read at length rather than scanned, so it sets in Source Serif 4 at
+     a slightly larger size than the UI's 16px sans.
+
+     Scoped to paragraphs and list items only: headings, tables, and the
+     surrounding chrome keep the sans/mono treatment they get elsewhere,
+     so this is a wrapper class on the prose container rather than an
+     edit at every element.
+
+     `:is(p, li)` lands at 0,1,1 specificity, which beats the `text-body`
+     utility (0,1,0) the markdown renderer puts on each paragraph —
+     Tailwind's @layer is an ordering directive, not a native cascade
+     layer, so specificity still decides this. */
+  .prose-longform :is(p, li) {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 17.5px;
+    line-height: 1.65;
+  }
+}
+
 @layer utilities {
   /* Visually hidden but available to screen readers.
      `clip-path: inset(50%)` is the critical iOS-Safari fix: the legacy

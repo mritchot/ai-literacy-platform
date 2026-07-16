@@ -92,7 +92,7 @@ export function SkillDemandBar({ skills, instability }: SkillDemandBarProps): JS
                 dataKey="netIncrease"
                 isAnimationActive
                 animationDuration={400}
-                radius={[0, 3, 3, 0]}
+               
               >
                 {top.map((row) => (
                   <Cell

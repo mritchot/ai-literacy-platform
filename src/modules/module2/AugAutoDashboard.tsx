@@ -6,7 +6,6 @@
 import { useEffect, useState, type KeyboardEvent } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
-import { TOKEN_HEX } from '../../utils/chart-config';
 import { useChartTokens } from '../../hooks/useChartTokens';
 import { AugAutoViewA } from './AugAutoViewA';
 import { AugAutoViewB } from './AugAutoViewB';
@@ -69,14 +68,13 @@ export function AugAutoDashboard(props: AugAutoDashboardProps): JSX.Element {
   const { markTabViewed } = useLearnerProgress();
   const tokens = useChartTokens();
 
-  // Active-tab underline accents. The neutral View A underline flips
-  // with the theme; the Delegation/Discernment underlines stay on the
-  // static 4D brand hexes — mid-tones that read on both canvases (same
-  // convention as CompetencyDot and the reference-item accents).
+  // Active-tab underline accents. All three follow the theme: these are
+  // CSS borders, so the competency accents can come straight off their
+  // tokens rather than the static hexes the SVG charts have to use.
   const tabAccent: Record<TabId, string> = {
     adoption: tokens.secondary,
-    patterns: TOKEN_HEX.delegation,
-    'self-report': TOKEN_HEX.discernment,
+    patterns: 'rgb(var(--delegation))',
+    'self-report': 'rgb(var(--discernment))',
   };
 
   // Fire view-tracking event whenever a tab becomes active.

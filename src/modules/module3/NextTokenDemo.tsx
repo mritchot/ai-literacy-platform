@@ -11,7 +11,6 @@ import { ReflectionPrompt } from '../../components/shared/ReflectionPrompt';
 import { Overline } from '../../components/shared/Overline';
 import { R5Trigger } from '../../components/reference/R5Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
-import { TOKEN_HEX } from '../../utils/chart-config';
 import { useChartTokens } from '../../hooks/useChartTokens';
 import { TokenChip } from './TokenChip';
 import { useViewport } from '../../hooks/useViewport';
@@ -203,11 +202,11 @@ export function NextTokenDemo(): JSX.Element {
                 background: active ? 'rgb(var(--white))' : 'transparent',
                 color: active ? 'rgb(var(--ink))' : 'rgb(var(--secondary))',
                 fontWeight: active ? 600 : 500,
-                // Static Discernment brand accent on the underline —
-                // intentionally NOT theme-flipped (mid-tone reads on both
-                // canvases; same convention as the dashboard tab accents).
+                // Discernment accent on the underline, straight off the
+                // token: it's a CSS border, so it can follow the theme
+                // without the hex round-trip the charts need.
                 borderBottom: active
-                  ? `2px solid ${TOKEN_HEX.discernment}`
+                  ? '2px solid rgb(var(--discernment))'
                   : '2px solid transparent',
                 marginBottom: '-1px',
                 cursor: 'pointer',

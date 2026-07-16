@@ -107,7 +107,7 @@ export function AdoptionTrendChart({
         <div style={{ width: '100%', height: 280 }}>
           <ResponsiveContainer>
             <BarChart data={collabData} margin={{ top: 16, right: 24, bottom: 8, left: 24 }} barCategoryGap="22%">
-              <CartesianGrid stroke="rgb(var(--border-light))" strokeDasharray="2 2" vertical={false} />
+              <CartesianGrid stroke="rgb(var(--border-light))" vertical={false} />
               <XAxis
                 dataKey="waveLabel"
                 tick={AXIS_TICK_STYLE}
@@ -130,12 +130,12 @@ export function AdoptionTrendChart({
                   name === 'augmentation' ? 'Augmentation' : 'Automation',
                 ]}
               />
-              <Bar dataKey="augmentation" isAnimationActive animationDuration={400} radius={[3, 3, 0, 0]}>
+              <Bar dataKey="augmentation" isAnimationActive animationDuration={400}>
                 {collabData.map((d) => (
                   <Cell key={`aug-${d.wave}`} fill={tokens.secondary} />
                 ))}
               </Bar>
-              <Bar dataKey="automation" isAnimationActive animationDuration={400} radius={[3, 3, 0, 0]}>
+              <Bar dataKey="automation" isAnimationActive animationDuration={400}>
                 {collabData.map((d) => (
                   <Cell key={`auto-${d.wave}`} fill={tokens.tertiary} />
                 ))}

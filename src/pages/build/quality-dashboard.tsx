@@ -108,7 +108,7 @@ function TripleValidation(): JSX.Element {
                   {f.content}
                 </td>
                 <td className="border-b border-border-light px-3 py-2.5 align-top">
-                  <span className="inline-flex items-center gap-1.5 whitespace-nowrap font-mono text-[10.5px] font-semibold" style={{ background: 'rgb(var(--success-light))', color: 'rgb(var(--success))', padding: '3px 9px' }}>
+                  <span className="inline-flex items-center gap-1.5 whitespace-nowrap font-mono text-[10.5px] font-semibold" style={{ background: 'rgb(var(--success-light))', color: 'rgb(var(--success))', border: '1px solid rgb(var(--success))', padding: '3px 9px' }}>
                     <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full" style={{ background: 'rgb(var(--success))' }} />
                     {f.status}
                   </span>

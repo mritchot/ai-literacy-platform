@@ -199,7 +199,7 @@ export function createArtifactSeries(series: SeriesConfig): {
         <SeriesEyebrow label={series.readingEyebrow} />
         {/* The document's own H1/H2 carry the title; the renderer zeroes the
             first heading's top margin so it sits flush under the eyebrow. */}
-        <article>{renderMarkdown(markdown)}</article>
+        <article className="prose-longform">{renderMarkdown(markdown)}</article>
         <ArtifactFooter currentSlug={pdfSlug} />
       </div>
     );

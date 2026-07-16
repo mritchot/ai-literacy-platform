@@ -335,7 +335,7 @@ export function GDPCorrelationScatter({
         <div style={{ width: '100%', height: isMobile ? 600 : 460 }}>
           <ResponsiveContainer>
             <ScatterChart margin={{ top: 16, right: 24, bottom: 48, left: 36 }}>
-              <CartesianGrid stroke="rgb(var(--border-light))" strokeDasharray="2 3" />
+              <CartesianGrid stroke="rgb(var(--border-light))" />
               <XAxis
                 type="number"
                 dataKey="lnGdp"
@@ -508,7 +508,7 @@ export function GDPCorrelationScatter({
                             y2={ny}
                             stroke="rgb(var(--border))"
                             strokeWidth={1}
-                            strokeDasharray="2 3"
+                           
                           />
                           <text
                             x={midX + 8}

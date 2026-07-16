@@ -140,10 +140,17 @@ export function EventTimeline({ events }: EventTimelineProps): JSX.Element {
         >
           Filter:
         </span>
-        <div role="radiogroup" aria-label="Filter by module" className="flex flex-wrap gap-1">
+        <div
+          role="radiogroup"
+          aria-label="Filter by module"
+          className="inline-flex flex-wrap"
+          style={{ border: '1px solid rgb(var(--border))', background: 'rgb(var(--surface))' }}
+        >
           {MODULE_FILTER_OPTIONS.map(([id, label], idx) => (
             <FilterPill
               key={id}
+              segment
+              first={idx === 0}
               id={`evt-filter-m${id}`}
               role="radio"
               active={filters.module === id}
@@ -328,6 +335,10 @@ interface FilterPillProps {
   id?: string;
   tabIndex?: number;
   onKeyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void;
+  /** Rendered as one segment of a joined strip rather than a lone toggle. */
+  segment?: boolean;
+  /** First segment in the strip — draws no left divider. */
+  first?: boolean;
 }
 
 function FilterPill({
@@ -338,6 +349,8 @@ function FilterPill({
   id,
   tabIndex,
   onKeyDown,
+  segment,
+  first,
 }: FilterPillProps): JSX.Element {
   return (
     <button
@@ -351,9 +364,13 @@ function FilterPill({
       className="font-sans text-[12px] font-medium transition-colors duration-[160ms]"
       style={{
         padding: '4px 12px',
-        background: active ? 'rgb(var(--ink))' : 'rgb(var(--surface))',
-        color: active ? 'rgb(var(--white))' : 'rgb(var(--secondary))',
-        border: `1px solid ${active ? 'rgb(var(--ink))' : 'rgb(var(--border))'}`,
+        background: active ? 'rgb(var(--white))' : 'transparent',
+        color: active ? 'rgb(var(--ink))' : 'rgb(var(--tertiary))',
+        // Inside the module strip the container owns the outer border and
+        // each segment past the first draws its own divider. The standalone
+        // "KCs only" toggle isn't part of a strip, so it keeps a full box.
+        border: segment ? undefined : '1px solid rgb(var(--border))',
+        borderLeft: segment && !first ? '1px solid rgb(var(--border))' : undefined,
       }}
     >
       {children}

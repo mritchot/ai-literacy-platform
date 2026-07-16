@@ -239,8 +239,13 @@ function ModePills({
     { id: 'byTier', label: 'By Tier' },
   ];
   return (
-    <div role="group" aria-label="Range filter" className="flex flex-wrap gap-2">
-      {opts.map((opt) => {
+    <div
+      role="group"
+      aria-label="Range filter"
+      className="inline-flex flex-wrap"
+      style={{ border: '1px solid rgb(var(--border))', background: 'rgb(var(--surface))' }}
+    >
+      {opts.map((opt, i) => {
         const active = mode === opt.id;
         return (
           <button
@@ -259,9 +264,9 @@ function ModePills({
             className="font-sans text-[12.5px] transition-colors duration-[160ms]"
             style={{
               padding: '5px 14px',
-              border: `1px solid ${active ? 'rgb(var(--ink))' : 'rgb(var(--border))'}`,
-              background: active ? 'rgb(var(--ink))' : 'rgb(var(--white))',
-              color: active ? 'rgb(var(--white))' : 'rgb(var(--secondary))',
+              borderLeft: i > 0 ? '1px solid rgb(var(--border))' : undefined,
+              background: active ? 'rgb(var(--white))' : 'transparent',
+              color: active ? 'rgb(var(--ink))' : 'rgb(var(--tertiary))',
               fontWeight: active ? 600 : 500,
             }}
           >
@@ -546,7 +551,7 @@ function BarChartFigure({
                   }) as any}
                   labelFormatter={(label) => label}
                 />
-                <Bar dataKey="aui" isAnimationActive={animate} animationDuration={400} radius={[0, 3, 3, 0]}>
+                <Bar dataKey="aui" isAnimationActive={animate} animationDuration={400}>
                   {rows.map((c) => (
                     <Cell key={c.iso3} fill={tierColor[c.tier as TierName] ?? tierColor.Emerging} />
                   ))}
@@ -748,7 +753,7 @@ export function CensusEnterpriseInset({
               cursor={{ fill: 'rgba(0,0,0,0.04)' }}
               formatter={(value: number) => [`${value}%`, 'Adoption rate']}
             />
-            <Bar dataKey="pct" fill={tokens.secondary} radius={[3, 3, 0, 0]} isAnimationActive animationDuration={400}>
+            <Bar dataKey="pct" fill={tokens.secondary} isAnimationActive animationDuration={400}>
               {data.map((d) => (
                 <Cell key={d.period} fill={tokens.secondary} />
               ))}

@@ -337,7 +337,7 @@ function BriefingDocument({
               }
             }}
             style={{
-              background: 'rgba(155, 123, 46, 0.18)',
+              background: 'rgb(var(--caution) / 0.18)',
               borderBottom: '2px dotted rgb(var(--caution))',
               padding: '0 2px',
               cursor: 'pointer',
@@ -444,7 +444,7 @@ function VerificationCard({
       className="transition-opacity duration-300"
       style={{
         background: 'rgb(var(--surface))',
-        border: `1px solid ${unlocked ? 'rgb(var(--border))' : 'rgba(232, 230, 225, 0.4)'}`,
+        border: `1px solid ${unlocked ? 'rgb(var(--border))' : 'rgb(var(--border) / 0.4)'}`,
         padding: '18px 20px',
         opacity: unlocked ? 1 : 0.4,
         pointerEvents: unlocked ? 'auto' : 'none',
@@ -591,8 +591,9 @@ function VerificationCard({
               <span
                 className="font-mono text-[10.5px] font-semibold"
                 style={{
-                  background: 'rgba(94, 112, 128, 0.15)',
+                  background: 'rgb(var(--discernment) / 0.15)',
                   color: 'rgb(var(--info))',
+                  border: '1px solid rgb(var(--info))',
                   padding: '2px 8px',
                   letterSpacing: '0.04em',
                 }}
