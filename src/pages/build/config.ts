@@ -112,10 +112,11 @@ export const ARTIFACT_PDFS: Record<string, string> = {
   'quality': 'build/quality.pdf',
 };
 
-// Long-form series-finale blog post ("behind the build") on ritchot.me.
-// Empty until Maverick sets it at publish (same pattern as
-// EVALUATION_WRITEUP_URL); while empty the hub's write-up link is hidden.
-export const BUILD_WRITEUP_URL = '';
+// Long-form series-finale blog post ("behind the build") on ritchot.me. The
+// separate finale post was folded into the single consolidated write-up that
+// all three series hubs point at; while empty the hub's write-up link is hidden.
+export const BUILD_WRITEUP_URL =
+  'https://ritchot.me/writing/i-built-an-ai-literacy-course/';
 
 // Series accent — Description bronze from the 4D palette. Each behind-the-
 // scenes series carries one quiet 4D accent used only as a thin decorative
