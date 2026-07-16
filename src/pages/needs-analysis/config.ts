@@ -63,10 +63,11 @@ export const ARTIFACT_PDFS: Record<string, string> = {
 };
 
 // Long-form blog post that frames the needs-analysis series on ritchot.me.
-// Emptied 08-07-2026: the individual series posts were retired pending one
-// consolidated write-up. Repopulate with the combined post URL when it is live;
-// the hub's write-up link stays hidden while empty.
-export const NEEDS_ANALYSIS_WRITEUP_URL = '';
+// The individual series posts were retired 08-07-2026 in favor of a single
+// consolidated write-up, which all three series hubs now point at. The hub's
+// write-up link stays hidden while this is empty.
+export const NEEDS_ANALYSIS_WRITEUP_URL =
+  'https://ritchot.me/writing/i-built-an-ai-literacy-course/';
 
 // Series accent — the diligence purple already used on the thank-you page's
 // "artifact" cards. The needs analysis is part of the same behind-the-scenes
