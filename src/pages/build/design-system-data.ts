@@ -107,22 +107,22 @@ export interface TypeSpec {
   token: string;
   /** Tailwind class stack for the specimen line. */
   className: string;
-  family: 'DM Serif Display' | 'DM Sans' | 'DM Mono';
+  family: 'Source Serif 4' | 'IBM Plex Sans' | 'IBM Plex Mono';
   spec: string;
   sample: string;
 }
 
 export const TYPE_SPECS: TypeSpec[] = [
-  { token: 'display', className: 'font-display text-display font-normal text-ink', family: 'DM Serif Display', spec: '32 / 1.2 / -0.01em', sample: 'AI Literacy for the Modern Workforce' },
-  { token: 'title', className: 'font-display text-title font-normal text-ink', family: 'DM Serif Display', spec: '26 / 1.25 / -0.005em', sample: 'Evaluating AI outputs and working responsibly' },
-  { token: 'h2', className: 'font-sans text-h2 font-semibold text-ink', family: 'DM Sans', spec: '22 / 1.3 / 600', sample: 'How AI is actually being used at work' },
-  { token: 'h3', className: 'font-sans text-h3 font-semibold text-ink', family: 'DM Sans', spec: '18 / 1.35 / 600', sample: 'Component headers and card titles' },
-  { token: 'h4', className: 'font-sans text-h4 font-semibold text-ink-secondary', family: 'DM Sans', spec: '16 / 1.4 / 600', sample: 'Sub-component and sidebar module titles' },
-  { token: 'body', className: 'font-sans text-body text-body', family: 'DM Sans', spec: '16 / 1.65 / 400', sample: 'Main reading text, capped at a 680px measure for a comfortable line length.' },
-  { token: 'body-sm', className: 'font-sans text-body-sm text-body', family: 'DM Sans', spec: '14 / 1.55 / 400', sample: 'Secondary text, captions, and sidebar section labels.' },
-  { token: 'label', className: 'font-sans text-label font-semibold uppercase text-secondary', family: 'DM Sans', spec: '12 / 1.4 / 600 / 0.02em', sample: 'Pill text · Tag labels · Button text' },
-  { token: 'caption', className: 'font-mono text-caption text-tertiary', family: 'DM Mono', spec: '11 / 1.5 / 400', sample: 'Data annotations · chart axis labels · timestamps' },
-  { token: 'overline', className: 'font-mono text-overline font-bold uppercase text-tertiary', family: 'DM Mono', spec: '10 / 1.4 / 700 / 0.1em', sample: 'Section dividers · ring labels' },
+  { token: 'display', className: 'font-display text-display font-normal text-ink', family: 'Source Serif 4', spec: '32 / 1.2 / -0.01em', sample: 'AI Literacy for the Modern Workforce' },
+  { token: 'title', className: 'font-display text-title font-normal text-ink', family: 'Source Serif 4', spec: '26 / 1.25 / -0.005em', sample: 'Evaluating AI outputs and working responsibly' },
+  { token: 'h2', className: 'font-sans text-h2 font-semibold text-ink', family: 'IBM Plex Sans', spec: '22 / 1.3 / 600', sample: 'How AI is actually being used at work' },
+  { token: 'h3', className: 'font-sans text-h3 font-semibold text-ink', family: 'IBM Plex Sans', spec: '18 / 1.35 / 600', sample: 'Component headers and card titles' },
+  { token: 'h4', className: 'font-sans text-h4 font-semibold text-ink-secondary', family: 'IBM Plex Sans', spec: '16 / 1.4 / 600', sample: 'Sub-component and sidebar module titles' },
+  { token: 'body', className: 'font-sans text-body text-body', family: 'IBM Plex Sans', spec: '16 / 1.65 / 400', sample: 'Main reading text, capped at a 680px measure for a comfortable line length.' },
+  { token: 'body-sm', className: 'font-sans text-body-sm text-body', family: 'IBM Plex Sans', spec: '14 / 1.55 / 400', sample: 'Secondary text, captions, and sidebar section labels.' },
+  { token: 'label', className: 'font-sans text-label font-semibold uppercase text-secondary', family: 'IBM Plex Sans', spec: '12 / 1.4 / 600 / 0.02em', sample: 'Pill text · Tag labels · Button text' },
+  { token: 'caption', className: 'font-mono text-caption text-tertiary', family: 'IBM Plex Mono', spec: '11 / 1.5 / 400', sample: 'Data annotations · chart axis labels · timestamps' },
+  { token: 'overline', className: 'font-mono text-overline font-bold uppercase text-tertiary', family: 'IBM Plex Mono', spec: '10 / 1.4 / 700 / 0.1em', sample: 'Section dividers · ring labels' },
 ];
 
 // ─── Preview-scope CSS ─────────────────────────────────────────────────

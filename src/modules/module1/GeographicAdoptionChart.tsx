@@ -256,10 +256,10 @@ function ModePills({
               });
             }}
             aria-pressed={active}
-            className="rounded-full font-sans text-[12.5px] transition-colors duration-150"
+            className="font-sans text-[12.5px] transition-colors duration-[160ms]"
             style={{
               padding: '5px 14px',
-              border: `1.5px solid ${active ? 'rgb(var(--ink))' : 'rgb(var(--border))'}`,
+              border: `1px solid ${active ? 'rgb(var(--ink))' : 'rgb(var(--border))'}`,
               background: active ? 'rgb(var(--ink))' : 'rgb(var(--white))',
               color: active ? 'rgb(var(--white))' : 'rgb(var(--secondary))',
               fontWeight: active ? 600 : 500,
@@ -284,7 +284,7 @@ function SearchInput({
 }): JSX.Element {
   return (
     <div
-      className="flex items-center rounded-full"
+      className="flex items-center"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -312,7 +312,7 @@ function SearchInput({
           type="button"
           onClick={() => onChange('')}
           aria-label="Clear search"
-          className="flex h-6 w-6 items-center justify-center rounded-full text-tertiary hover:bg-surface hover:text-ink"
+          className="flex h-6 w-6 items-center justify-center text-tertiary hover:bg-surface hover:text-ink"
           style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
         >
           <svg
@@ -351,7 +351,7 @@ function TierLegend({
           <span key={tier} className="inline-flex items-center gap-1.5">
             <span
               aria-hidden="true"
-              className="inline-block rounded-sm"
+              className="inline-block"
               style={{ width: 10, height: 10, background: tierColor[tier] }}
             />
             <span>
@@ -405,11 +405,11 @@ function MobileGeoList({
               </span>
             </div>
             <div
-              className="h-2 w-full overflow-hidden rounded-full"
+              className="h-2 w-full overflow-hidden"
               style={{ background: 'rgb(var(--border-light))' }}
             >
               <div
-                className="h-full rounded-full transition-all duration-300"
+                className="h-full transition-[width] duration-300"
                 style={{ width: `${widthPct}%`, background: color }}
               />
             </div>
@@ -441,7 +441,7 @@ function BarChartFigure({
   if (rows.length === 0) {
     return (
       <figure
-        className="m-0 rounded-md"
+        className="m-0"
         aria-label="No countries match the current search."
         style={{
           background: 'rgb(var(--white))',
@@ -469,7 +469,7 @@ function BarChartFigure({
   if (viewport === 'mobile') {
     return (
       <figure
-        className="m-0 rounded-md"
+        className="m-0"
         aria-label={ariaLabel}
         style={{
           background: 'rgb(var(--white))',
@@ -492,7 +492,7 @@ function BarChartFigure({
   return (
     <>
       <figure
-        className="m-0 rounded-md"
+        className="m-0"
         aria-label={ariaLabel}
         style={{
           background: 'rgb(var(--white))',
@@ -608,7 +608,6 @@ function ByTierGroups({
         return (
           <section
             key={tier}
-            className="rounded-md"
             style={{
               background: 'rgb(var(--white))',
               border: '1px solid rgb(var(--border))',
@@ -638,7 +637,7 @@ function ByTierGroups({
                 </span>
                 <span
                   aria-hidden="true"
-                  className="inline-block rounded-sm"
+                  className="inline-block"
                   style={{
                     width: 10,
                     height: 10,
@@ -716,7 +715,7 @@ export function CensusEnterpriseInset({
 
   return (
     <aside
-      className="mt-2 rounded-lg"
+      className="mt-2"
       style={{
         background: 'rgb(var(--surface))',
         border: '1px solid rgb(var(--border))',

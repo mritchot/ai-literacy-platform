@@ -74,7 +74,7 @@ export function ProductivityViewB({ tasks }: ProductivityViewBProps): JSX.Elemen
           return (
             <li
               key={`${t.occupation}-${i}`}
-              className="flex flex-col rounded-lg bg-[rgb(var(--white))]"
+              className="flex flex-col bg-[rgb(var(--white))]"
               style={{
                 border: '1px solid rgb(var(--border))',
                 borderLeft: cardAccent ? `3px solid ${cardAccent}` : '1px solid rgb(var(--border))',
@@ -133,7 +133,7 @@ function SavingsBar({ value, accent }: { value: number; accent: string | null })
   return (
     <div className="flex items-center gap-3">
       <div
-        className="relative flex-1 overflow-hidden rounded-sm"
+        className="relative flex-1 overflow-hidden"
         style={{ height: 8, background: 'rgb(var(--border-light))' }}
       >
         <div

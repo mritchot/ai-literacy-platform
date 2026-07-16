@@ -193,7 +193,7 @@ export function EventTimeline({ events }: EventTimelineProps): JSX.Element {
       <div
         role="log"
         aria-label="Analytics event timeline"
-        className="overflow-hidden rounded-lg"
+        className="overflow-hidden"
         style={{
           border: '1px solid rgb(var(--border))',
           background: 'rgb(var(--white))',
@@ -230,7 +230,7 @@ export function EventTimeline({ events }: EventTimelineProps): JSX.Element {
           <button
             type="button"
             onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
-            className="rounded-md font-sans text-[12.5px] font-semibold text-action hover:bg-surface"
+            className="font-sans text-[12.5px] font-semibold text-action hover:bg-surface"
             style={{
               padding: '6px 12px',
               border: '1px solid rgb(var(--border))',
@@ -270,7 +270,7 @@ function EventRow({ event }: { event: AnalyticsEvent }): JSX.Element {
       )}
       {moduleId !== undefined && (
         <span
-          className="font-mono text-[10px] font-bold uppercase rounded"
+          className="font-mono text-[10px] font-bold uppercase"
           style={{
             background: MODULE_PILL_BG[moduleId],
             color: MODULE_PILL_TEXT[moduleId],
@@ -348,7 +348,7 @@ function FilterPill({
       tabIndex={tabIndex}
       onKeyDown={onKeyDown}
       onClick={onClick}
-      className="rounded-full font-sans text-[12px] font-medium transition-colors duration-150"
+      className="font-sans text-[12px] font-medium transition-colors duration-[160ms]"
       style={{
         padding: '4px 12px',
         background: active ? 'rgb(var(--ink))' : 'rgb(var(--surface))',

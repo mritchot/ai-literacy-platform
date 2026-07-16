@@ -98,13 +98,12 @@ export function ConfirmModal({
       />
       {/* Card */}
       <div
-        className="relative rounded-xl bg-[rgb(var(--white))]"
+        className="relative bg-[rgb(var(--white))]"
         style={{
           maxWidth: 400,
           width: '100%',
           padding: 24,
           border: '1px solid rgb(var(--border))',
-          boxShadow: '0 16px 36px rgba(0, 0, 0, 0.18)',
         }}
       >
         <h2
@@ -126,7 +125,7 @@ export function ConfirmModal({
             ref={cancelRef}
             type="button"
             onClick={onCancel}
-            className="rounded-md px-4 py-2 font-sans text-[13px] font-semibold text-secondary hover:bg-surface"
+            className="px-4 py-2 font-sans text-[13px] font-semibold text-secondary hover:bg-surface"
           >
             {cancelLabel}
           </button>
@@ -134,7 +133,7 @@ export function ConfirmModal({
             ref={confirmRef}
             type="button"
             onClick={onConfirm}
-            className="rounded-md px-4 py-2 font-sans text-[13px] font-semibold text-[rgb(var(--white))]"
+            className="px-4 py-2 font-sans text-[13px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))]"
             style={{
               background:
                 tone === 'danger' ? 'rgb(var(--error))' : 'rgb(var(--action))',

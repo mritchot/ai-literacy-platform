@@ -1,7 +1,7 @@
 // font-loader.ts — runtime loader for the DM font family used by the
 // S10 Competency Profile PDF. jsPDF only ships Helvetica/Times/Courier
-// in its base; to render the R8 design with its actual DM Serif
-// Display titles, DM Sans body, and DM Mono overlines, we need to
+// in its base; to render the R8 design with its actual Source Serif 4
+// Display titles, IBM Plex Sans body, and IBM Plex Mono overlines, we need to
 // register the TTF binaries with jsPDF's virtual file system.
 //
 // Approach:
@@ -31,7 +31,7 @@ import dmMonoMediumUrl from './fonts/DMMono-Medium.ttf?url';
 
 /** Logical family names that the PDF generator uses to switch fonts. */
 type DMFamily = 'DMSans' | 'DMSerif' | 'DMMono';
-/** jsPDF font-style identifiers — note: DM Mono only has up to
+/** jsPDF font-style identifiers — note: IBM Plex Mono only has up to
  *  Medium (500), so a "bold" style request would fall back to the
  *  Medium TTF registered as 'normal'. */
 type DMStyle = 'normal' | 'bold' | 'italic';
@@ -49,7 +49,7 @@ const FONTS: FontSpec[] = [
   { url: dmSansItalicUrl, vfsName: 'DMSans-Italic.ttf', family: 'DMSans', style: 'italic' },
   { url: dmSerifRegularUrl, vfsName: 'DMSerif-Regular.ttf', family: 'DMSerif', style: 'normal' },
   { url: dmSerifItalicUrl, vfsName: 'DMSerif-Italic.ttf', family: 'DMSerif', style: 'italic' },
-  // DM Mono only ships up to Medium (500) — registered as 'normal'
+  // IBM Plex Mono only ships up to Medium (500) — registered as 'normal'
   // since it's the workhorse weight for our tracked overlines.
   { url: dmMonoMediumUrl, vfsName: 'DMMono-Medium.ttf', family: 'DMMono', style: 'normal' },
 ];

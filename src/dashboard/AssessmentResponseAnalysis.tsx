@@ -137,7 +137,6 @@ export function AssessmentResponseAnalysis({
   if (!hasAnyData) {
     return (
       <article
-        className="rounded-md"
         style={{
           background: 'rgb(var(--surface))',
           border: '1px solid rgb(var(--border-light))',
@@ -229,7 +228,7 @@ function ScoreSummaryBar({
 
   return (
     <div
-      className="grid grid-cols-1 gap-3 rounded-md sm:grid-cols-3"
+      className="grid grid-cols-1 gap-3 sm:grid-cols-3"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -314,7 +313,6 @@ function ConstructCard({ row }: { row: AssessmentPairRow }): JSX.Element {
 
   return (
     <article
-      className="rounded-md"
       style={{
         background: accent.dashed
           ? 'rgb(var(--surface))'
@@ -335,7 +333,7 @@ function ConstructCard({ row }: { row: AssessmentPairRow }): JSX.Element {
           {row.constructName}
         </span>
         <span
-          className="font-mono text-[10px] font-bold uppercase rounded"
+          className="font-mono text-[10px] font-bold uppercase"
           style={{
             background: blockMeta.bg,
             color: blockMeta.text,

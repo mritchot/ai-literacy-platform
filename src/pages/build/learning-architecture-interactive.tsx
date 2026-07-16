@@ -5,10 +5,10 @@
 // distribution.
 //
 // Changes from the prototype, all to fit the platform: every hardcoded
-// neutral hex is replaced with a design-system token so the diagram themes in
-// dark mode for free; the competency `bg`/`mid` fills (unchanged in dark) stay
-// as literals and competency tags render through the shared CompetencyDot;
-// the onClick <div> toggles become real <button>s with aria-expanded/controls
+// hex is replaced with a design-system token so the diagram themes in dark
+// mode for free — including the competency fills, which now carry distinct
+// light and dark values; competency tags render through the shared
+// CompetencyDot; the onClick <div> toggles become real <button>s with aria-expanded/controls
 // and keyboard support; and inactive filter-pill / metadata text uses the
 // AA-contrast competency `text` token (design system §9.1) rather than the
 // mid-tone `bg`. Data lives in ./learning-architecture-data.
@@ -70,12 +70,27 @@ function SectionRule({ label, hint }: { label: string; hint?: string }): JSX.Ele
   );
 }
 
+// Accent rule made of flat color segments tiled edge to edge, one per
+// competency, replacing the blended ramp the card used to carry. Each
+// competency owns a discrete share of the rule rather than bleeding into
+// its neighbor — the same treatment the completion PDF uses for its
+// tiled tag.
+function SegmentBar({ colors }: { colors: string[] }): JSX.Element {
+  return (
+    <div aria-hidden="true" className="flex h-1">
+      {colors.map((c, i) => (
+        <span key={i} className="flex-1" style={{ background: c }} />
+      ))}
+    </div>
+  );
+}
+
 // Small assessment-tier tag: the fill glyph carries the tier (never
 // color-only), the "T{n}" text stays in a neutral token for AA contrast.
 function TierTag({ tier }: { tier: AssessmentTier }): JSX.Element {
   return (
     <span
-      className="inline-flex items-center gap-1 rounded font-mono text-[9px] font-semibold text-secondary"
+      className="inline-flex items-center gap-1 font-mono text-[9px] font-semibold text-secondary"
       style={{ padding: '1px 7px', border: `1px solid ${tier.color}`, background: `${tier.color}1F` }}
     >
       <span aria-hidden="true" style={{ color: tier.color }}>
@@ -118,7 +133,7 @@ function PlatformCell({
         }}
       />
       <div className="mb-1 flex items-center gap-1.5">
-        <span aria-hidden="true" className="h-[7px] w-[7px] rounded-sm" style={{ background: platform.color }} />
+        <span aria-hidden="true" className="h-[7px] w-[7px]" style={{ background: platform.color }} />
         <span
           className="font-mono text-[9px] font-bold uppercase text-secondary"
           style={{ letterSpacing: '0.08em' }}
@@ -143,7 +158,6 @@ function ObjectiveRow({ objective }: { objective: ArchObjective }): JSX.Element 
   const tier = ASSESSMENT_TIERS.find((t) => t.tier === objective.tier)!;
   return (
     <div
-      className="rounded-md"
       style={{
         background: 'rgb(var(--surface))',
         borderLeft: `3px solid ${COMPETENCY_HEX[primary].bg}`,
@@ -169,8 +183,8 @@ function ObjectiveRow({ objective }: { objective: ArchObjective }): JSX.Element 
             <span className="font-mono text-[9.5px] text-muted">{objective.assessment}</span>
             {objective.feedsL3 && (
               <span
-                className="rounded font-mono text-[9px] font-bold"
-                style={{ padding: '1px 7px', background: '#6B7F5E1F', color: 'rgb(var(--delegation-text))' }}
+                className="font-mono text-[9px] font-bold"
+                style={{ padding: '1px 7px', background: 'rgb(var(--delegation) / 0.12)', color: 'rgb(var(--delegation-text))' }}
               >
                 → L3
               </span>
@@ -184,11 +198,11 @@ function ObjectiveRow({ objective }: { objective: ArchObjective }): JSX.Element 
 
 function ActivityRow({ activity }: { activity: { id: string; short: string; type: string } }): JSX.Element {
   return (
-    <div className="rounded-md" style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border))', padding: '8px 12px' }}>
+    <div style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border))', padding: '8px 12px' }}>
       <div className="flex items-center gap-2">
         <span
-          className="inline-flex h-[18px] min-w-[26px] items-center justify-center rounded font-mono text-[9px] font-bold text-[rgb(var(--white))]"
-          style={{ background: '#5E7080' }}
+          className="inline-flex h-[18px] min-w-[26px] items-center justify-center font-mono text-[9px] font-bold text-[rgb(var(--white))]"
+          style={{ background: 'rgb(var(--discernment))' }}
         >
           {activity.id}
         </span>
@@ -212,25 +226,19 @@ function ModuleCard({
 }): JSX.Element {
   const panelId = useId();
   const emph = module.emphasis.map((d) => COMPETENCY_HEX[d].bg);
-  const gradBar =
-    emph.length === 4
-      ? `linear-gradient(90deg, ${emph.join(', ')})`
-      : emph.length === 2
-        ? `linear-gradient(90deg, ${emph[0]} 0%, ${emph[0]} 50%, ${emph[1]} 50%)`
-        : emph[0];
 
   const fObj = module.objectives;
   const fAct = module.activities;
 
   return (
     <div
-      className="overflow-hidden rounded-xl"
+      className="overflow-hidden"
       style={{
         background: 'rgb(var(--white))',
-        border: `1.5px solid ${expanded ? emph[0] : 'rgb(var(--border-light))'}`,
+        border: `1px solid ${expanded ? emph[0] : 'rgb(var(--border-light))'}`,
       }}
     >
-      <div aria-hidden="true" className="h-1" style={{ background: gradBar }} />
+      <SegmentBar colors={emph} />
 
       {/* Header toggle */}
       <button
@@ -238,12 +246,12 @@ function ModuleCard({
         onClick={onToggle}
         aria-expanded={expanded}
         aria-controls={panelId}
-        className="flex w-full items-start gap-4 text-left transition-colors hover:bg-surface"
+        className="flex w-full items-start gap-4 text-left transition-colors duration-[160ms] hover:bg-surface"
         style={{ padding: '18px 22px 16px' }}
       >
         <span className="flex min-w-[44px] flex-col items-center gap-1">
           <span
-            className="flex h-10 w-10 items-center justify-center rounded-full font-mono text-[18px] font-bold text-[rgb(var(--white))]"
+            className="flex h-10 w-10 items-center justify-center font-mono text-[18px] font-bold text-[rgb(var(--white))]"
             style={{ background: emph[0] }}
           >
             {module.id}
@@ -301,7 +309,7 @@ function ModuleCard({
             style={{ padding: '14px 18px', borderRight: '1px solid rgb(var(--border-light))' }}
           >
             <div className="mb-2.5 flex items-center gap-1.5">
-              <span aria-hidden="true" className="h-2 w-2 rounded-sm" style={{ background: '#5E7080' }} />
+              <span aria-hidden="true" className="h-2 w-2" style={{ background: 'rgb(var(--discernment))' }} />
               <span className="font-mono text-[9px] font-bold uppercase text-secondary" style={{ letterSpacing: '0.1em' }}>
                 Practice Activities ({fAct.length})
               </span>
@@ -314,7 +322,7 @@ function ModuleCard({
           </div>
           <div className="flex-[2_1_400px]" style={{ padding: '14px 18px' }}>
             <div className="mb-2.5 flex items-center gap-1.5">
-              <span aria-hidden="true" className="h-2 w-2 rounded-sm" style={{ background: '#6B7F5E' }} />
+              <span aria-hidden="true" className="h-2 w-2" style={{ background: 'rgb(var(--delegation))' }} />
               <span className="font-mono text-[9px] font-bold uppercase text-secondary" style={{ letterSpacing: '0.1em' }}>
                 Performance Objectives ({fObj.length})
               </span>
@@ -336,18 +344,14 @@ function ModuleCard({
 function KirkpatrickLane({ expanded, onToggle }: { expanded: boolean; onToggle: () => void }): JSX.Element {
   const panelId = useId();
   return (
-    <div className="overflow-hidden rounded-xl" style={{ background: 'rgb(var(--white))', border: '1.5px solid rgb(var(--border))' }}>
-      <div
-        aria-hidden="true"
-        className="h-1"
-        style={{ background: `linear-gradient(90deg, ${KIRK_LEVELS.map((k) => k.color).join(', ')})` }}
-      />
+    <div className="overflow-hidden" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))' }}>
+      <SegmentBar colors={KIRK_LEVELS.map((k) => k.color)} />
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={expanded}
         aria-controls={panelId}
-        className="flex w-full items-center justify-between text-left transition-colors hover:bg-surface"
+        className="flex w-full items-center justify-between text-left transition-colors duration-[160ms] hover:bg-surface"
         style={{ padding: '14px 22px' }}
       >
         <span className="font-mono text-overline font-bold uppercase text-tertiary" style={{ letterSpacing: '0.1em' }}>
@@ -368,8 +372,8 @@ function KirkpatrickLane({ expanded, onToggle }: { expanded: boolean; onToggle: 
             }}
           >
             <div
-              className="mx-auto mb-2 flex h-9 w-9 items-center justify-center rounded-full font-mono text-[11px] font-bold"
-              style={{ background: `${k.color}1F`, border: `2px solid ${k.color}`, color: `rgb(var(--${kirkTextVar(k.key)}))` }}
+              className="mx-auto mb-2 flex h-9 w-9 items-center justify-center font-mono text-[11px] font-bold"
+              style={{ background: k.wash, border: `2px solid ${k.color}`, color: `rgb(var(--${kirkTextVar(k.key)}))` }}
             >
               {k.key}
             </div>
@@ -387,7 +391,7 @@ function KirkpatrickLane({ expanded, onToggle }: { expanded: boolean; onToggle: 
               style={{ padding: '12px 22px', borderBottom: i < KIRK_LEVELS.length - 1 ? '1px solid rgb(var(--border-light))' : undefined }}
             >
               <span
-                className="inline-flex h-[22px] min-w-[30px] items-center justify-center rounded font-mono text-[10px] font-bold text-[rgb(var(--white))]"
+                className="inline-flex h-[22px] min-w-[30px] items-center justify-center font-mono text-[10px] font-bold text-[rgb(var(--white))]"
                 style={{ background: k.color }}
               >
                 {k.key}
@@ -423,7 +427,6 @@ function AssessmentTiers(): JSX.Element {
         return (
           <div
             key={t.tier}
-            className="rounded-lg"
             style={{ background: 'rgb(var(--white))', border: `1px solid ${t.color}55`, borderTop: `3px solid ${t.color}`, padding: '14px 16px' }}
           >
             <div className="mb-1.5 flex items-center gap-1.5">
@@ -448,12 +451,12 @@ function AssessmentTiers(): JSX.Element {
 function L3Callout(): JSX.Element {
   return (
     <div
-      className="flex items-start gap-3.5 rounded-lg"
-      style={{ background: 'rgb(var(--white))', border: '1.5px solid #B5C4AB', padding: '16px 20px' }}
+      className="flex items-start gap-3.5"
+      style={{ background: 'rgb(var(--white))', border: '1px solid #B5C4AB', padding: '16px 20px' }}
     >
       <span
-        className="flex h-8 min-w-[32px] items-center justify-center rounded-full font-mono text-[11px] font-bold"
-        style={{ background: '#6B7F5E1F', border: '2px solid #6B7F5E', color: 'rgb(var(--delegation-text))' }}
+        className="flex h-8 min-w-[32px] items-center justify-center font-mono text-[11px] font-bold"
+        style={{ background: 'rgb(var(--delegation) / 0.12)', border: '2px solid rgb(var(--delegation))', color: 'rgb(var(--delegation-text))' }}
       >
         L3
       </span>
@@ -478,16 +481,15 @@ function InfraCards(): JSX.Element {
       {INFRA_COMPONENTS.map((c) => (
         <div
           key={c.component}
-          className="rounded-lg"
           style={{
             background: 'rgb(var(--surface-warm))',
-            border: `1.5px dashed ${PLATFORMS.custom.color}`,
+            border: `1px dashed ${PLATFORMS.custom.color}`,
             borderLeft: `3px solid ${PLATFORMS.custom.color}`,
             padding: '14px 16px',
           }}
         >
           <div className="mb-1.5 flex items-center gap-1.5">
-            <span aria-hidden="true" className="h-2 w-2 rounded-sm" style={{ background: PLATFORMS.custom.color }} />
+            <span aria-hidden="true" className="h-2 w-2" style={{ background: PLATFORMS.custom.color }} />
             <span className="font-mono text-[10px] font-bold uppercase text-secondary" style={{ letterSpacing: '0.06em' }}>
               {c.component}
             </span>
@@ -506,7 +508,7 @@ function InfraCards(): JSX.Element {
 
 function PracticeDensity(): JSX.Element {
   return (
-    <div className="rounded-lg" style={{ background: 'rgb(var(--white))', border: '1.5px solid rgb(var(--border-light))', padding: '20px 24px' }}>
+    <div style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border-light))', padding: '20px 24px' }}>
       <Overline className="mb-4">Practice Activity Distribution</Overline>
       <div className="grid grid-cols-4 items-end gap-4" role="img" aria-label={distributionLabel()}>
         {ARCH_MODULES.map((m) => {
@@ -519,8 +521,8 @@ function PracticeDensity(): JSX.Element {
                 {count}
               </span>
               <div
-                className="w-3/5 max-w-[72px] rounded-sm"
-                style={{ height: barH, background: `linear-gradient(180deg, ${hex}BB, ${hex})` }}
+                className="w-3/5 max-w-[72px]"
+                style={{ height: barH, background: hex }}
               />
               <div className="text-center">
                 <div className="font-mono text-[11px] font-semibold text-secondary">Module {m.id}</div>
@@ -572,7 +574,7 @@ export function LearningArchitectureDiagram(): JSX.Element {
   return (
     <div className="mt-8">
       {/* Header stats */}
-      <div className="mb-6 flex flex-wrap gap-x-6 gap-y-3 rounded-xl" style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border-light))', padding: '18px 22px' }}>
+      <div className="mb-6 flex flex-wrap gap-x-6 gap-y-3" style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border-light))', padding: '18px 22px' }}>
         {stats.map((s) => (
           <div key={s.l} className="flex items-baseline gap-1.5">
             <span className="font-mono text-[20px] font-bold" style={{ color: 'rgb(var(--discernment-text))' }}>
@@ -592,12 +594,12 @@ export function LearningArchitectureDiagram(): JSX.Element {
           return (
             <div
               key={key}
-              className="relative min-w-[240px] flex-1 overflow-hidden rounded-lg"
-              style={{ background: 'rgb(var(--surface-warm))', border: '1.5px solid rgb(var(--border))', padding: '12px 16px' }}
+              className="relative min-w-[240px] flex-1 overflow-hidden"
+              style={{ background: 'rgb(var(--surface-warm))', border: '1px solid rgb(var(--border))', padding: '12px 16px' }}
             >
               <span aria-hidden="true" className="absolute bottom-0 left-0 top-0 w-[3px]" style={{ background: p.color }} />
               <div className="mb-1 flex items-center gap-1.5 pl-1">
-                <span aria-hidden="true" className="h-2 w-2 rounded-sm" style={{ background: p.color }} />
+                <span aria-hidden="true" className="h-2 w-2" style={{ background: p.color }} />
                 <span className="font-mono text-[10px] font-bold uppercase text-secondary" style={{ letterSpacing: '0.06em' }}>
                   {p.label} — {p.component}
                 </span>

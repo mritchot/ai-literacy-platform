@@ -20,10 +20,10 @@ import { Overline } from './Overline';
 import { ProgressBar } from './ProgressBar';
 
 const COMPETENCY_BG: Record<CompetencyKey, string> = {
-  delegation: '#6B7F5E',
-  description: '#8B7355',
-  discernment: '#5E7080',
-  diligence: '#7A6B80',
+  delegation: 'rgb(var(--delegation))',
+  description: 'rgb(var(--description))',
+  discernment: 'rgb(var(--discernment))',
+  diligence: 'rgb(var(--diligence))',
 };
 
 export function LandingPage(): JSX.Element {
@@ -128,8 +128,8 @@ function Hero({
         {preCtaActive ? (
           <Link
             to="/pre-assessment"
-            className="inline-flex items-center gap-2.5 rounded-md bg-action px-5 py-3 font-sans text-[14px] font-semibold text-[rgb(var(--white))] no-underline transition-colors duration-150 hover:bg-action-hover"
-            style={{ border: '1.5px solid rgb(var(--action))' }}
+            className="inline-flex items-center gap-2.5 bg-action px-5 py-3 font-sans text-[14px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] no-underline transition-colors duration-[160ms] hover:bg-action-hover"
+            style={{ border: '1px solid rgb(var(--action))' }}
           >
             Begin with the pre-assessment
             <Icon name="arrowRight" size={15} />
@@ -138,8 +138,8 @@ function Hero({
           resumeTarget && (
             <Link
               to={resumeTarget.to}
-              className="inline-flex items-center gap-2.5 rounded-md bg-action px-5 py-3 font-sans text-[14px] font-semibold text-[rgb(var(--white))] no-underline transition-colors duration-150 hover:bg-action-hover"
-              style={{ border: '1.5px solid rgb(var(--action))' }}
+              className="inline-flex items-center gap-2.5 bg-action px-5 py-3 font-sans text-[14px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] no-underline transition-colors duration-[160ms] hover:bg-action-hover"
+              style={{ border: '1px solid rgb(var(--action))' }}
             >
               {resumeTarget.label}
               <Icon name="arrowRight" size={15} />
@@ -175,7 +175,7 @@ function CompetencyLegend(): JSX.Element {
   return (
     <section
       aria-label="The 4D competency framework"
-      className="mb-10 overflow-hidden rounded-lg border border-border bg-[rgb(var(--white))]"
+      className="mb-10 overflow-hidden border border-border bg-[rgb(var(--white))]"
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {COMPETENCIES.map((c, i) => (
@@ -269,7 +269,7 @@ function ModuleCard({
   gating: ModuleGating;
 }): JSX.Element {
   const cardClass = [
-    'flex min-h-[268px] flex-col rounded-xl bg-[rgb(var(--white))] transition-all duration-200',
+    'flex min-h-[268px] flex-col bg-[rgb(var(--white))] transition-colors duration-[160ms]',
     locked ? 'opacity-60' : 'hover:bg-surface',
   ].join(' ');
 
@@ -296,7 +296,7 @@ function ModuleCard({
     <article
       className={cardClass}
       style={{
-        border: '1.5px solid rgb(var(--border))',
+        border: '1px solid rgb(var(--border))',
         padding: '24px 26px 22px',
       }}
     >
@@ -369,10 +369,10 @@ function ModuleCard({
         </div>
         {locked ? (
           <span
-            className="inline-flex items-center gap-2 rounded-md font-sans text-[13.5px] font-semibold text-muted"
+            className="inline-flex items-center gap-2 font-sans text-[13.5px] font-semibold text-muted"
             style={{
               padding: '9px 16px',
-              border: '1.5px solid rgb(var(--border))',
+              border: '1px solid rgb(var(--border))',
             }}
           >
             <Icon name="lock" size={14} />
@@ -381,8 +381,8 @@ function ModuleCard({
         ) : (
           <Link
             to={ctaTarget}
-            className="inline-flex items-center gap-2 rounded-md font-sans text-[13.5px] font-semibold text-action no-underline transition-colors duration-150 hover:bg-[rgb(var(--action)/0.08)]"
-            style={{ padding: '9px 16px', border: '1.5px solid rgb(var(--action))' }}
+            className="inline-flex items-center gap-2 font-sans text-[13.5px] font-semibold text-action no-underline transition-colors duration-[160ms] hover:bg-[rgb(var(--action)/0.08)]"
+            style={{ padding: '9px 16px', border: '1px solid rgb(var(--action))' }}
             aria-label={`${ctaLabel}: module ${module.id}, ${module.title}`}
           >
             {isComplete ? (
@@ -425,7 +425,7 @@ function SummaryBar({
   return (
     <section
       aria-label="Program summary"
-      className="grid grid-cols-2 gap-y-3.5 rounded-xl border border-border bg-[rgb(var(--white))] p-4 sm:flex sm:items-center sm:gap-y-0 sm:px-7 sm:py-[18px]"
+      className="grid grid-cols-2 gap-y-3.5 border border-border bg-[rgb(var(--white))] p-4 sm:flex sm:items-center sm:gap-y-0 sm:px-7 sm:py-[18px]"
     >
       {items.map((it, i) => (
         <div key={it.label} className="flex items-center sm:flex-1">

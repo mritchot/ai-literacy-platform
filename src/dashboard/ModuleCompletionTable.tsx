@@ -24,10 +24,10 @@ const MODULE_TITLES: Record<ModuleId, string> = {
 };
 
 const MODULE_ACCENT: Record<ModuleId, string> = {
-  1: '#6B7F5E', // delegation olive
-  2: '#8B7355', // description amber
-  3: '#5E7080', // discernment blue-gray
-  4: '#7A6B80', // diligence purple
+  1: 'rgb(var(--delegation))', // delegation olive
+  2: 'rgb(var(--description))', // description amber
+  3: 'rgb(var(--discernment))', // discernment blue-gray
+  4: 'rgb(var(--diligence))', // diligence purple
 };
 
 interface ArtifactRef {
@@ -150,7 +150,7 @@ export function ModuleCompletionTable({
     <>
       <section aria-label="Module completion table">
         <div
-          className="overflow-hidden rounded-lg"
+          className="overflow-hidden"
           style={{
             border: '1px solid rgb(var(--border))',
             background: 'rgb(var(--white))',
@@ -269,7 +269,6 @@ function StatusBar({ pct, accent }: { pct: number; accent: string }): JSX.Elemen
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={Math.round(pct * 100)}
-      className="rounded-full"
       style={{
         background: 'rgb(var(--border-light))',
         height: 6,
@@ -345,7 +344,7 @@ function ModuleRowDesktop({
             aria-expanded={expanded}
             aria-controls={detailId}
             aria-label={`${expanded ? 'Collapse' : 'Expand'} Module ${stats.moduleId} detail`}
-            className="inline-flex h-7 w-7 items-center justify-center rounded-md text-tertiary hover:bg-surface hover:text-ink"
+            className="inline-flex h-7 w-7 items-center justify-center text-tertiary hover:bg-surface hover:text-ink"
           >
             <Icon name={expanded ? 'chevronDown' : 'chevronRight'} size={16} />
           </button>
@@ -483,7 +482,7 @@ function ModuleDetail({
                 <button
                   type="button"
                   onClick={() => onArtifactClick(a)}
-                  className="block w-full rounded-md text-left transition-colors duration-150 hover:bg-[rgb(var(--white))]"
+                  className="block w-full text-left transition-colors duration-[160ms] hover:bg-[rgb(var(--white))]"
                   style={{
                     border: '1px solid rgb(var(--border-light))',
                     padding: '8px 10px',
@@ -526,7 +525,7 @@ function CheckIcon({ done }: { done: boolean }): JSX.Element {
       className="inline-block h-5 w-5 rounded-full"
       aria-label="Not complete"
       style={{
-        border: '1.5px solid rgb(var(--ghost))',
+        border: '1px solid rgb(var(--ghost))',
       }}
     />
   );

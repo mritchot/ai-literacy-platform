@@ -151,7 +151,6 @@ export function NextTokenDemo(): JSX.Element {
 
       <section
         aria-label="Next-token prediction demonstration"
-        className="rounded-xl"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
@@ -198,7 +197,7 @@ export function NextTokenDemo(): JSX.Element {
               tabIndex={active ? 0 : -1}
               onClick={() => setActiveStem(id)}
               onKeyDown={(e) => onTabKey(e, i + 1)}
-              className="font-sans text-[13px] transition-colors duration-150 sm:text-left text-center"
+              className="font-sans text-[13px] transition-colors duration-[160ms] sm:text-left text-center"
               style={{
                 padding: isMobile ? '12px 8px' : '12px 18px',
                 background: active ? 'rgb(var(--white))' : 'transparent',
@@ -306,7 +305,7 @@ function StandardStemPanel({
           onClick={onGenerate}
           disabled={tokensExhausted}
           aria-disabled={tokensExhausted}
-          className="rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
+          className="bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
         >
           Generate next token
         </button>
@@ -314,7 +313,7 @@ function StandardStemPanel({
           <button
             type="button"
             onClick={onReset}
-            className="rounded-md font-sans text-[12.5px] font-semibold text-tertiary hover:text-secondary"
+            className="font-sans text-[12.5px] font-semibold text-tertiary hover:text-secondary"
             style={{ padding: '10px 14px' }}
           >
             Reset
@@ -331,7 +330,7 @@ function StandardStemPanel({
 
       {generatedTokens.length > 0 && (
         <article
-          className="mt-6 rounded-md transition-opacity duration-200"
+          className="mt-6 transition-opacity duration-200"
           style={{
             background: 'rgb(var(--surface-warm))',
             border: '1px solid rgb(var(--border))',
@@ -355,7 +354,7 @@ function SentenceDisplay({
   return (
     <div
       aria-live="polite"
-      className="mb-5 rounded-md font-sans text-body text-ink"
+      className="mb-5 font-sans text-body text-ink"
       style={{
         background: 'rgb(var(--surface))',
         border: '1px solid rgb(var(--border))',
@@ -406,7 +405,7 @@ function ProbabilityPanel({
   return (
     <section
       aria-label="Probability panel"
-      className="mb-5 rounded-lg"
+      className="mb-5"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -465,11 +464,11 @@ function ProbabilityBar({ pct }: { pct: number }): JSX.Element {
   return (
     <div
       aria-hidden="true"
-      className="overflow-hidden rounded-sm"
+      className="overflow-hidden"
       style={{ height: 14, background: 'rgb(var(--border-light))' }}
     >
       <div
-        className="h-full rounded-sm transition-[width] duration-300 ease-out"
+        className="h-full transition-[width] duration-300 ease-out"
         style={{ width: `${width}%`, background: tokens.info }}
       />
     </div>
@@ -536,7 +535,7 @@ function Stem3Panel({
   return (
     <>
       <div
-        className="mb-5 rounded-md font-sans text-body text-ink"
+        className="mb-5 font-sans text-body text-ink"
         style={{
           background: 'rgb(var(--surface))',
           border: '1px solid rgb(var(--border))',
@@ -556,7 +555,7 @@ function Stem3Panel({
         onClick={onGenerate}
         disabled={generated}
         aria-disabled={generated}
-        className="mb-5 rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
+        className="mb-5 bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
       >
         {generated ? 'Generated at all three temperatures' : 'Generate at all three temperatures'}
       </button>
@@ -568,7 +567,6 @@ function Stem3Panel({
         {STEM_3_OUTPUTS.map((out, i) => (
           <article
             key={out.label}
-            className="rounded-lg"
             style={{
               background: 'rgb(var(--white))',
               border: '1px solid rgb(var(--border))',
@@ -593,7 +591,7 @@ function Stem3Panel({
 
       {generated && (
         <article
-          className="mt-6 rounded-md"
+          className="mt-6"
           style={{
             background: 'rgb(var(--surface-warm))',
             border: '1px solid rgb(var(--border))',

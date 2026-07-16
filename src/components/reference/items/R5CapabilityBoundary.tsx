@@ -11,13 +11,13 @@ import type { ReactNode } from 'react';
 import { useViewport } from '../../../hooks/useViewport';
 
 // ─────────────────────────────────────────────────────────────────────
-// Brand colors — kept inline (not via CSS var) because these are the
-// same hex in both light and dark mode by design system spec; only the
-// surrounding surface tints adapt per theme.
+// Brand accents, resolved through the competency tokens so they follow
+// the theme — the 4D accents now carry distinct light and dark values
+// rather than a single hex used on both grounds.
 // ─────────────────────────────────────────────────────────────────────
 
-const DELEGATION = '#6B7F5E';
-const DISCERNMENT = '#5E7080';
+const DELEGATION = 'rgb(var(--delegation))';
+const DISCERNMENT = 'rgb(var(--discernment))';
 
 // ─────────────────────────────────────────────────────────────────────
 // Reliable section — 7 task types, each with "Why it works" + "Notes".
@@ -224,7 +224,7 @@ function ReliableSection(): JSX.Element {
   return (
     <section
       aria-label="Where AI is reliable"
-      className="rounded-lg overflow-hidden"
+      className="overflow-hidden"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -365,16 +365,12 @@ function FailsSection(): JSX.Element {
     >
       {/* Section header */}
       <header
-        className="rounded-t-lg"
         style={{
           padding: '14px 16px 8px',
           borderTop: `3px solid ${DISCERNMENT}`,
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
           borderBottom: 'none',
-          // Round only the top corners — the cards below extend visually.
-          borderTopLeftRadius: 8,
-          borderTopRightRadius: 8,
         }}
       >
         <div
@@ -398,12 +394,10 @@ function FailsSection(): JSX.Element {
 
       {/* Three sub-category cards */}
       <div
-        className="rounded-b-lg overflow-hidden"
+        className="overflow-hidden"
         style={{
           border: '1px solid rgb(var(--border))',
           borderTop: 'none',
-          borderBottomLeftRadius: 8,
-          borderBottomRightRadius: 8,
           background: 'rgb(var(--white))',
         }}
       >
@@ -575,10 +569,10 @@ function CoreDistinctionStrip(): JSX.Element {
   return (
     <aside
       role="note"
-      className="mt-6 rounded-lg"
+      className="mt-6"
       style={{
         background: 'rgb(var(--discernment-light))',
-        border: `1.5px solid ${DISCERNMENT}`,
+        border: `1px solid ${DISCERNMENT}`,
         padding: '14px 18px',
       }}
     >

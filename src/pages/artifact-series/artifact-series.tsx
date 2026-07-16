@@ -53,7 +53,7 @@ export interface SeriesConfig {
 }
 
 export const TEXT_LINK =
-  'inline-flex items-center gap-1.5 font-sans text-[13px] font-medium text-secondary no-underline transition-colors hover:text-ink';
+  'inline-flex items-center gap-1.5 font-sans text-[13px] font-medium text-secondary no-underline transition-colors duration-[160ms] hover:text-ink';
 
 /** Distinct artifact groups in first-seen order (empty when none are grouped). */
 function orderedGroups(artifacts: ArtifactMeta[]): string[] {
@@ -96,8 +96,8 @@ export function createArtifactSeries(series: SeriesConfig): {
         href={href}
         download
         aria-label={ariaLabel}
-        className="inline-flex items-center gap-2 rounded-md font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
-        style={{ background: 'transparent', border: '1.5px solid rgb(var(--border))', padding: '8px 16px' }}
+        className="inline-flex items-center gap-2 font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
+        style={{ background: 'transparent', border: '1px solid rgb(var(--border))', padding: '8px 16px' }}
       >
         Download PDF
         <span aria-hidden="true">↓</span>
@@ -124,7 +124,7 @@ export function createArtifactSeries(series: SeriesConfig): {
       <div className="mb-5 flex items-center gap-2.5">
         <span
           aria-hidden="true"
-          className="block h-[3px] w-8 rounded-full"
+          className="block h-[3px] w-8"
           style={{ background: series.accent }}
         />
         <span
@@ -150,7 +150,7 @@ export function createArtifactSeries(series: SeriesConfig): {
     // footer: short labels on mobile keep prev/next on one line; full titles
     // on wider screens. min-w-0 + truncate guards the longest titles.
     const linkBase =
-      'flex min-w-0 flex-1 items-center gap-1.5 font-sans text-[13px] font-medium text-secondary no-underline transition-colors hover:text-ink';
+      'flex min-w-0 flex-1 items-center gap-1.5 font-sans text-[13px] font-medium text-secondary no-underline transition-colors duration-[160ms] hover:text-ink';
     return (
       <nav
         aria-label="Series navigation"
@@ -225,7 +225,7 @@ export function createArtifactSeries(series: SeriesConfig): {
 
     return (
       <article
-        className="flex h-full flex-col rounded-lg bg-[rgb(var(--white))] transition-colors hover:bg-surface"
+        className="flex h-full flex-col bg-[rgb(var(--white))] transition-colors duration-[160ms] hover:bg-surface"
         style={{ border: '1px solid rgb(var(--border))', borderTop: `3px solid ${series.accent}`, padding: '20px 22px' }}
       >
         <div className="mb-2 flex items-center gap-2.5">
@@ -281,7 +281,7 @@ export function createArtifactSeries(series: SeriesConfig): {
         <div className="mb-5 flex items-center gap-2.5">
           <span
             aria-hidden="true"
-            className="block h-[3px] w-8 rounded-full"
+            className="block h-[3px] w-8"
             style={{ background: series.accent }}
           />
           <span
@@ -302,8 +302,8 @@ export function createArtifactSeries(series: SeriesConfig): {
               href={writeupUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-md font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
-              style={{ background: 'transparent', border: '1.5px solid rgb(var(--border))', padding: '9px 18px' }}
+              className="inline-flex items-center gap-2 font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
+              style={{ background: 'transparent', border: '1px solid rgb(var(--border))', padding: '9px 18px' }}
             >
               Read the write-up <span aria-hidden="true">→</span>
             </a>

@@ -66,7 +66,7 @@ export const EVALUATION_WRITEUP_URL =
 // Series accent — Discernment slate from the 4D palette. Evaluation is the
 // discernment work of the project, so it carries its own quiet accent while
 // staying in the same behind-the-scenes home as the needs analysis.
-export const SERIES_ACCENT = '#5E7080';
+export const SERIES_ACCENT = 'rgb(var(--discernment))';
 
 // Bound series configuration consumed by ./chrome (which re-exports the
 // shared artifact-series components with this series baked in).

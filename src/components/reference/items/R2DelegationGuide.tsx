@@ -24,8 +24,8 @@ type CategoryKey = 'fully_delegable' | 'ai_assisted' | 'human_only';
 interface CategorySpec {
   key: CategoryKey;
   name: string;
-  /** Hex used for the chip border and the reference card's left rule.
-   *  Same hex in both modes — these are brand colors, not adaptive tones. */
+  /** Accent for the chip border and the reference card's left rule.
+   *  A competency token, so it follows the theme. */
   hex: string;
   /** Competency CSS-variable family that supplies the soft tint and text
    *  color (with a dark-mode equivalent in src/styles/index.css). */
@@ -40,7 +40,7 @@ const CATEGORIES: Record<CategoryKey, CategorySpec> = {
   fully_delegable: {
     key: 'fully_delegable',
     name: 'Fully Delegable',
-    hex: '#5E7080',
+    hex: 'rgb(var(--discernment))',
     cssVar: 'discernment',
     meaning: 'AI produces the output; you spot-check the result.',
     typical:
@@ -49,7 +49,7 @@ const CATEGORIES: Record<CategoryKey, CategorySpec> = {
   ai_assisted: {
     key: 'ai_assisted',
     name: 'AI-Assisted with Review',
-    hex: '#8B7355',
+    hex: 'rgb(var(--description))',
     cssVar: 'description',
     meaning:
       'AI produces a draft or structure; you direct, evaluate, and revise using your expertise.',
@@ -59,7 +59,7 @@ const CATEGORIES: Record<CategoryKey, CategorySpec> = {
   human_only: {
     key: 'human_only',
     name: 'Human-Only',
-    hex: '#6B7F5E',
+    hex: 'rgb(var(--delegation))',
     cssVar: 'delegation',
     meaning:
       'You produce the output. AI may assist with sub-components, but the core judgment stays with you.',
@@ -70,7 +70,7 @@ const CATEGORIES: Record<CategoryKey, CategorySpec> = {
 
 // Diamond stroke = Delegation brand color (the governing competency for
 // this guide). Same hex in light + dark mode by spec.
-const DIAMOND_STROKE = '#6B7F5E';
+const DIAMOND_STROKE = 'rgb(var(--delegation))';
 
 // ─────────────────────────────────────────────────────────────────────
 // Flowchart data — four questions, each with two exits. An exit either
@@ -201,7 +201,7 @@ export function R2DelegationGuide(): JSX.Element {
       <aside
         role="note"
         aria-label="One task, multiple components"
-        className="mt-6 rounded-lg"
+        className="mt-6"
         style={{
           background: 'rgb(var(--surface-warm))',
           border: '1px solid rgb(var(--border))',
@@ -237,7 +237,7 @@ export function R2DelegationGuide(): JSX.Element {
       <aside
         role="note"
         aria-label="The data gate"
-        className="mt-4 rounded-lg"
+        className="mt-4"
         style={{
           background: 'rgb(var(--surface-warm))',
           border: '1px solid rgb(var(--border))',
@@ -434,17 +434,17 @@ function Diamond({
         <polygon
           points={points}
           fill="rgb(var(--white))"
-          stroke={DIAMOND_STROKE}
+          style={{ stroke: DIAMOND_STROKE }}
           strokeWidth={1.5}
           strokeLinejoin="round"
         />
-        {/* Q identifier (DM Mono small caps) — switched from olive to
+        {/* Q identifier (IBM Plex Mono small caps) — switched from olive to
             ink so it reads against the dark hexagon fill in dark mode. */}
         <text
           x={DIAMOND_W / 2}
           y={28}
           textAnchor="middle"
-          fontFamily="DM Mono, ui-monospace, monospace"
+          fontFamily="IBM Plex Mono, ui-monospace, monospace"
           fontSize={10}
           fontWeight={700}
           letterSpacing={1.4}
@@ -452,12 +452,12 @@ function Diamond({
         >
           {qid}
         </text>
-        {/* Pillar (DM Sans bold uppercase) */}
+        {/* Pillar (IBM Plex Sans bold uppercase) */}
         <text
           x={DIAMOND_W / 2}
           y={56}
           textAnchor="middle"
-          fontFamily="DM Sans, system-ui, sans-serif"
+          fontFamily="IBM Plex Sans, system-ui, sans-serif"
           fontSize={15}
           fontWeight={700}
           letterSpacing={0.6}
@@ -480,10 +480,9 @@ function ExitChip({ exit }: { exit: FlowExit }): JSX.Element {
     const cat = CATEGORIES[exit.category];
     return (
       <div
-        className="rounded-md"
         style={{
           background: `rgb(var(--${cat.cssVar}-light))`,
-          border: `1.5px solid ${cat.hex}`,
+          border: `1px solid ${cat.hex}`,
           padding: '10px 12px',
           textAlign: 'center',
         }}
@@ -521,10 +520,9 @@ function ExitChip({ exit }: { exit: FlowExit }): JSX.Element {
   // borders fade against the dark surface.
   return (
     <div
-      className="rounded-md"
       style={{
         background: 'rgb(var(--surface))',
-        border: '1.5px solid rgb(var(--border))',
+        border: '1px solid rgb(var(--border))',
         padding: '10px 12px',
         textAlign: 'center',
       }}
@@ -600,13 +598,13 @@ function Connector({ continueOnRight }: { continueOnRight: boolean }): JSX.Eleme
             markerHeight="7"
             orient="auto"
           >
-            <path d="M0,0 L10,5 L0,10 z" fill={DIAMOND_STROKE} />
+            <path d="M0,0 L10,5 L0,10 z" style={{ fill: DIAMOND_STROKE }} />
           </marker>
         </defs>
         <path
           d={`M ${startX} ${startY} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${endX} ${endY}`}
           fill="none"
-          stroke={DIAMOND_STROKE}
+          style={{ stroke: DIAMOND_STROKE }}
           strokeWidth={2.5}
           strokeLinecap="round"
           markerEnd="url(#r2-arrow-head)"
@@ -623,7 +621,7 @@ function Connector({ continueOnRight }: { continueOnRight: boolean }): JSX.Eleme
 function Q4Note(): JSX.Element {
   return (
     <p
-      className="m-0 mt-5 rounded-md text-body-sm"
+      className="m-0 mt-5 text-body-sm"
       style={{
         color: 'rgb(var(--secondary))',
         background: 'rgb(var(--surface))',
@@ -648,7 +646,6 @@ function Q4Note(): JSX.Element {
 function CategoryCard({ cat }: { cat: CategorySpec }): JSX.Element {
   return (
     <article
-      className="rounded-lg"
       style={{
         background: `rgb(var(--${cat.cssVar}-light))`,
         border: '1px solid rgb(var(--border))',

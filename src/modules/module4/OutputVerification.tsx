@@ -21,7 +21,7 @@ import {
   type VerificationElement,
 } from './module4-content';
 
-const DISCERNMENT = '#5E7080';
+const DISCERNMENT = 'rgb(var(--discernment))';
 
 const CLASSIFICATION_META: Record<
   Classification,
@@ -164,7 +164,6 @@ export function OutputVerification(): JSX.Element {
 
       <section
         aria-label="Output verification scenario"
-        className="rounded-xl"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
@@ -199,7 +198,7 @@ export function OutputVerification(): JSX.Element {
       <aside
         role="note"
         aria-label="Triage decision criteria"
-        className="mt-6 rounded-lg"
+        className="mt-6"
         style={{
           background: 'rgb(var(--surface-warm))',
           border: '1px solid rgb(var(--border))',
@@ -281,7 +280,7 @@ export function OutputVerification(): JSX.Element {
       {allSubmitted && (
         <aside
           role="note"
-          className="mt-8 rounded-lg"
+          className="mt-8"
           style={{
             background: 'rgb(var(--surface-warm))',
             border: '1px solid rgb(var(--border))',
@@ -358,10 +357,9 @@ function BriefingDocument({
 
   return (
     <article
-      className="rounded-xl"
       style={{
         background: 'rgb(var(--white))',
-        border: '1.5px solid rgb(var(--border))',
+        border: '1px solid rgb(var(--border))',
         padding: '24px 26px',
       }}
     >
@@ -395,7 +393,7 @@ function MarkerBadge({ n }: { n: number }): JSX.Element {
         borderRadius: '50%',
         background: 'rgb(var(--caution))',
         color: 'rgb(var(--white))',
-        fontFamily: '"DM Mono", "Courier New", monospace',
+        fontFamily: '"IBM Plex Mono", "Courier New", monospace',
         fontSize: 10.5,
         fontWeight: 700,
         marginRight: 4,
@@ -443,7 +441,7 @@ function VerificationCard({
     <article
       aria-label={`Element ${index} of ${total}`}
       aria-disabled={!unlocked}
-      className="rounded-lg transition-opacity duration-300"
+      className="transition-opacity duration-300"
       style={{
         background: 'rgb(var(--surface))',
         border: `1px solid ${unlocked ? 'rgb(var(--border))' : 'rgba(232, 230, 225, 0.4)'}`,
@@ -471,7 +469,7 @@ function VerificationCard({
       </div>
 
       <p
-        className="m-0 mb-4 rounded-md font-sans text-body italic text-ink"
+        className="m-0 mb-4 font-sans text-body italic text-ink"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border-light))',
@@ -519,11 +517,11 @@ function VerificationCard({
                 aria-checked={isSelected}
                 aria-label={`${meta.label}: ${meta.risk}`}
                 onClick={() => !submitted && setPendingChoice(c)}
-                className="flex items-center justify-center gap-2 rounded-md font-sans text-[13px] transition-colors duration-150"
+                className="flex items-center justify-center gap-2 font-sans text-[13px] transition-colors duration-[160ms]"
                 style={{
                   padding: '10px 14px',
                   background: colors.bg,
-                  border: `1.5px solid ${colors.border}`,
+                  border: `1px solid ${colors.border}`,
                   color: colors.text,
                   fontWeight: 500,
                   cursor: submitted ? 'default' : 'pointer',
@@ -565,7 +563,7 @@ function VerificationCard({
             onClick={onSubmit}
             disabled={!pendingChoice || !unlocked}
             aria-disabled={!pendingChoice || !unlocked}
-            className="rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
+            className="bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
           >
             Submit Classification
           </button>
@@ -575,7 +573,7 @@ function VerificationCard({
       {submitted && feedback && (
         <div
           aria-live="polite"
-          className="mt-4 rounded-md transition-opacity duration-200"
+          className="mt-4 transition-opacity duration-200"
           style={{
             background: TONE_BG[feedback.tone],
             borderLeft: `3px solid ${TONE_BORDER[feedback.tone]}`,
@@ -591,7 +589,7 @@ function VerificationCard({
             </span>
             {element.diagnosticPair && (
               <span
-                className="rounded-full font-mono text-[10.5px] font-semibold"
+                className="font-mono text-[10.5px] font-semibold"
                 style={{
                   background: 'rgba(94, 112, 128, 0.15)',
                   color: 'rgb(var(--info))',
@@ -633,7 +631,6 @@ function VerificationCard({
                 return (
                   <li
                     key={`all-${element.id}-${c}`}
-                    className="rounded-md"
                     style={{
                       background: 'rgb(var(--surface))',
                       border: '1px solid rgb(var(--border-light))',

@@ -225,10 +225,10 @@ export function AugAutoViewB({
               type="button"
               onClick={() => handleSegmentClick(c.pattern)}
               aria-pressed={active}
-              className="rounded-full font-sans text-[12px] transition-all duration-150"
+              className="font-sans text-[12px] transition-colors duration-[160ms]"
               style={{
                 padding: '5px 14px',
-                border: `1.5px solid ${accent}`,
+                border: `1px solid ${accent}`,
                 background: active ? accent : 'transparent',
                 color: active ? '#FFFFFF' : accent,
                 fontWeight: 600,
@@ -244,7 +244,7 @@ export function AugAutoViewB({
       {expandedCat && expandedColor && (
         <article
           aria-live="polite"
-          className="rounded-lg bg-[rgb(var(--white))]"
+          className="bg-[rgb(var(--white))]"
           style={{
             border: '1px solid rgb(var(--border))',
             borderLeft: `3px solid ${expandedColor}`,
@@ -271,7 +271,7 @@ export function AugAutoViewB({
       )}
 
       {/* Job zone panel */}
-      <section className="rounded-lg" style={{ border: '1px solid rgb(var(--border))', padding: 0 }}>
+      <section style={{ border: '1px solid rgb(var(--border))', padding: 0 }}>
         <button
           type="button"
           onClick={() => setZonesOpen((v) => !v)}
@@ -440,11 +440,11 @@ function MobileJobZoneList({ zones }: { zones: JobZone[] }): JSX.Element {
               </span>
             </div>
             <div
-              className="h-2 w-full overflow-hidden rounded-full"
+              className="h-2 w-full overflow-hidden"
               style={{ background: 'rgb(var(--border-light))' }}
             >
               <div
-                className="h-full rounded-full"
+                className="h-full"
                 style={{
                   width: `${widthPct}%`,
                   background: isHighlight ? tokens.action : tokens.secondary,

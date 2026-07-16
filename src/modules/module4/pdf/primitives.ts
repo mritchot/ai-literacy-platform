@@ -175,7 +175,7 @@ export function drawHeader(
   doc.text(safe(opts.eyebrow.toUpperCase()), MARGIN_LEFT, top);
   resetTracking(doc);
 
-  // Display title — DM Serif Display gives the document its
+  // Display title — Source Serif 4 gives the document its
   // editorial weight. Bumped to 26pt to match the spec's display
   // size now that we're rendering with a real serif.
   doc.setFont(FONT.serif, 'normal');
@@ -250,7 +250,7 @@ export function drawCardBase(
   doc.roundedRect(x, y, w, h, 6, 6, 'FD');
   if (leftAccent) {
     setFillHex(doc, leftAccent);
-    // 3pt left rule, inset slightly from rounded corners.
+    // 3pt left rule, inset slightly from corners.
     doc.rect(x, y + 6, 3, h - 12, 'F');
   }
 }

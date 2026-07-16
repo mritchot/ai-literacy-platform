@@ -51,7 +51,7 @@ export function TopBar({ onOpenMenu, menuButtonRef }: TopBarProps): JSX.Element 
         type="button"
         onClick={onOpenMenu}
         aria-label="Open program menu"
-        className="flex h-11 w-11 items-center justify-center rounded-md text-ink hover:bg-surface"
+        className="flex h-11 w-11 items-center justify-center text-ink hover:bg-surface"
       >
         <Icon name="menu" size={22} />
       </button>
@@ -88,7 +88,7 @@ export function TopBar({ onOpenMenu, menuButtonRef }: TopBarProps): JSX.Element 
         onClick={onCycleTheme}
         aria-label={themeMeta.label}
         title={themeMeta.label}
-        className="flex h-11 w-11 items-center justify-center rounded-md text-ink hover:bg-surface"
+        className="flex h-11 w-11 items-center justify-center text-ink hover:bg-surface"
       >
         <Icon name={themeMeta.icon} size={20} />
       </button>

@@ -11,14 +11,14 @@ interface BottleneckCalloutProps {
 
 export function BottleneckCallout({
   title,
-  accentColor = '#5E7080', // --info
+  accentColor = 'rgb(var(--discernment))', // --info
   children,
 }: BottleneckCalloutProps): JSX.Element {
   return (
     <aside
       role="note"
       aria-label={`Key concept: ${title}`}
-      className="rounded-lg border border-border bg-surface-warm"
+      className="border border-border bg-surface-warm"
       style={{
         borderLeft: `3px solid ${accentColor}`,
         padding: '16px 20px',

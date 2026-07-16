@@ -167,7 +167,6 @@ export function ReferencePanel({
           width: 'min(560px, 100vw)',
           background: 'rgb(var(--white))',
           borderLeft: '1px solid rgb(var(--border))',
-          boxShadow: '-12px 0 36px rgba(0, 0, 0, 0.18)',
         }}
       >
         {/* Header */}
@@ -195,7 +194,7 @@ export function ReferencePanel({
             type="button"
             onClick={onClose}
             aria-label={`Close ${title}`}
-            className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-md text-tertiary hover:bg-surface hover:text-ink"
+            className="flex h-9 w-9 flex-shrink-0 items-center justify-center text-tertiary hover:bg-surface hover:text-ink"
           >
             <Icon name="close" size={18} />
           </button>
@@ -241,7 +240,7 @@ export function ReferencePanel({
           <a
             href={pdfPath}
             download={pdfFilename}
-            className="inline-flex items-center gap-2 rounded-md font-sans text-[12.5px] font-semibold text-ink hover:bg-[rgb(var(--white))]"
+            className="inline-flex items-center gap-2 font-sans text-[12.5px] font-semibold text-ink hover:bg-[rgb(var(--white))]"
             style={{
               padding: '8px 14px',
               background: 'rgb(var(--white))',

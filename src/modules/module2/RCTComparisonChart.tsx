@@ -207,7 +207,6 @@ function RangeTrack({
           height: ROW_HEIGHT,
           background: `rgb(var(${colorVar}) / 0.25)`,
           border: `1px solid rgb(var(${colorVar}) / 0.5)`,
-          borderRadius: 5,
         }}
       />
 
@@ -235,7 +234,7 @@ function RangeTrack({
               height: 9,
               transform: 'translate(-50%, -50%) rotate(45deg)',
               background: `rgb(var(${colorVar}))`,
-              border: '1.5px solid rgb(var(--white))',
+              border: '1px solid rgb(var(--white))',
             }}
           />
           {/* `translate(calc(-100% - 8px), -50%)` anchors the
@@ -275,7 +274,7 @@ function RangeTrack({
             transform: 'translate(-50%, -50%)',
             borderRadius: '50%',
             background: `rgb(var(${colorVar}))`,
-            border: '1.5px solid rgb(var(--white))',
+            border: '1px solid rgb(var(--white))',
           }}
         />
       ))}
@@ -293,12 +292,10 @@ function RangeTrack({
             transform: 'translateX(-50%)',
             background: 'rgb(var(--white))',
             border: '1px solid rgb(var(--border))',
-            borderRadius: 6,
             padding: '8px 10px',
             fontSize: 12,
             color: 'rgb(var(--ink))',
             maxWidth: 320,
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
             zIndex: 5,
             pointerEvents: 'none',
           }}

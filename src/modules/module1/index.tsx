@@ -391,7 +391,6 @@ function FourDList(): JSX.Element {
       {FOUR_DS.map((d) => (
         <li
           key={d.name}
-          className="rounded-lg"
           style={{
             background: 'rgb(var(--white))',
             border: '1px solid rgb(var(--border))',

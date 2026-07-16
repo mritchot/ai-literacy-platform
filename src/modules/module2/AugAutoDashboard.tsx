@@ -115,7 +115,7 @@ export function AugAutoDashboard(props: AugAutoDashboardProps): JSX.Element {
   return (
     <section
       aria-label="Augmentation vs. Automation dashboard"
-      className="rounded-xl bg-[rgb(var(--white))]"
+      className="bg-[rgb(var(--white))]"
       style={{ border: '1px solid rgb(var(--border))', overflow: 'hidden' }}
     >
       <div
@@ -137,7 +137,7 @@ export function AugAutoDashboard(props: AugAutoDashboardProps): JSX.Element {
               tabIndex={active ? 0 : -1}
               onClick={() => setActiveTab(tab.id)}
               onKeyDown={(e) => onTabKeyDown(e, idx)}
-              className="flex-1 font-sans text-[13px] transition-colors duration-150"
+              className="flex-1 font-sans text-[13px] transition-colors duration-[160ms]"
               style={{
                 padding: '14px 18px',
                 background: active ? 'rgb(var(--white))' : 'transparent',

@@ -37,7 +37,7 @@ import { Overline } from './Overline';
 // Visual tokens — match the assessment-surface slate accent so this
 // review block reads as part of the same "review past responses"
 // family as AssessmentResults / AssessmentGrowth.
-const ACCENT = '#5E7080';
+const ACCENT = 'rgb(var(--discernment))';
 const SUCCESS = 'rgb(var(--success))';
 const SUCCESS_LIGHT = 'rgb(var(--success-light))';
 const ERROR = 'rgb(var(--error))';
@@ -154,7 +154,6 @@ export function KCReview(): JSX.Element {
   return (
     <section
       aria-label="Knowledge check review"
-      className="rounded-lg"
       style={{
         background: WHITE,
         border: '1px solid rgb(var(--border))',
@@ -188,7 +187,6 @@ export function KCReview(): JSX.Element {
           return (
             <li
               key={group.moduleId}
-              className="rounded-lg"
               style={{
                 background: WHITE,
                 border: '1px solid rgb(var(--border))',
@@ -200,7 +198,7 @@ export function KCReview(): JSX.Element {
                 type="button"
                 onClick={() => toggleModule(group.moduleId)}
                 aria-expanded={isModuleOpen}
-                className="flex w-full items-center gap-3 rounded-lg text-left hover:bg-[rgb(var(--surface))]"
+                className="flex w-full items-center gap-3 text-left hover:bg-[rgb(var(--surface))]"
                 style={{ padding: '14px 18px', cursor: 'pointer' }}
               >
                 <span
@@ -255,7 +253,7 @@ function ScoreBadge({ correct, total }: { correct: number; total: number }): JSX
       : SURFACE;
   return (
     <span
-      className="inline-flex items-center gap-1 rounded-md font-mono text-[11px] font-bold uppercase"
+      className="inline-flex items-center gap-1 font-mono text-[11px] font-bold uppercase"
       style={{
         background: bg,
         color,
@@ -289,7 +287,6 @@ function KCItemRow({
 
   return (
     <li
-      className="rounded-md"
       style={{
         background: SURFACE,
         border: '1px solid rgb(var(--border-light))',
@@ -300,7 +297,7 @@ function KCItemRow({
         type="button"
         onClick={onToggle}
         aria-expanded={expanded}
-        className="flex w-full items-center gap-3 rounded-md text-left hover:bg-[rgb(var(--white))]"
+        className="flex w-full items-center gap-3 text-left hover:bg-[rgb(var(--white))]"
         style={{ padding: '10px 14px', cursor: 'pointer' }}
       >
         <span
@@ -347,7 +344,6 @@ function KCItemRow({
               return (
                 <li
                   key={opt.id}
-                  className="rounded-md"
                   style={{
                     background: bg,
                     border: `1px solid ${borderColor}`,
@@ -394,7 +390,7 @@ function KCItemRow({
                   </div>
                   {isSelected && (
                     <div
-                      className="mt-2 rounded-md font-sans text-body-sm text-body"
+                      className="mt-2 font-sans text-body-sm text-body"
                       style={{
                         background: WHITE,
                         border: '1px solid rgb(var(--border-light))',
@@ -428,7 +424,6 @@ function KCItemRow({
               preferred one) or when no response was recorded. */}
           {result && !result.isPreferred && preferredOption && (
             <div
-              className="rounded-md"
               style={{
                 background: SUCCESS_LIGHT,
                 border: `1px solid ${SUCCESS}`,
@@ -474,7 +469,7 @@ function ResponsePill({
   if (!optionId) {
     return (
       <span
-        className="inline-flex items-center gap-1 rounded-md font-mono text-[10px] font-bold uppercase"
+        className="inline-flex items-center gap-1 font-mono text-[10px] font-bold uppercase"
         style={{
           background: SURFACE,
           color: 'rgb(var(--muted))',
@@ -493,7 +488,7 @@ function ResponsePill({
   const bg = ok ? SUCCESS_LIGHT : ERROR_LIGHT;
   return (
     <span
-      className="inline-flex items-center gap-1.5 rounded-md font-mono text-[10px] font-bold uppercase"
+      className="inline-flex items-center gap-1.5 font-mono text-[10px] font-bold uppercase"
       style={{
         background: bg,
         color,

@@ -175,7 +175,7 @@ export function GDPCorrelationScatter({
               x={cx + 6}
               y={cy + 3}
               fontSize={10}
-              fontFamily='"DM Mono", ui-monospace, monospace'
+              fontFamily='"IBM Plex Mono", ui-monospace, monospace'
               fontWeight={600}
               fill={tokens.ink}
             >
@@ -201,12 +201,10 @@ export function GDPCorrelationScatter({
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
-          borderRadius: 6,
           padding: '8px 10px',
           fontSize: 12,
           color: 'rgb(var(--ink))',
           maxWidth: 280,
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
         }}
       >
         <div className="font-sans font-semibold" style={{ marginBottom: 2 }}>
@@ -274,7 +272,7 @@ export function GDPCorrelationScatter({
         ref={(el) => {
           figureRef.current = el;
         }}
-        className="m-0 rounded-md"
+        className="m-0"
         aria-label={ariaLabel}
         style={{
           background: 'rgb(var(--white))',
@@ -299,7 +297,6 @@ export function GDPCorrelationScatter({
               padding: '8px 12px',
               background: 'rgb(var(--white) / 0.92)',
               border: '1px solid rgb(var(--border-light))',
-              borderRadius: 6,
               backdropFilter: 'blur(4px)',
               WebkitBackdropFilter: 'blur(4px)',
               maxWidth: 320,
@@ -360,7 +357,7 @@ export function GDPCorrelationScatter({
                         position: 'insideBottom',
                         offset: -16,
                         style: {
-                          fontFamily: '"DM Sans", system-ui, sans-serif',
+                          fontFamily: '"IBM Plex Sans", system-ui, sans-serif',
                           fontSize: 11.5,
                           fontWeight: 500,
                           fill: tokens.secondary,
@@ -385,7 +382,7 @@ export function GDPCorrelationScatter({
                         position: 'insideLeft',
                         offset: 4,
                         style: {
-                          fontFamily: '"DM Sans", system-ui, sans-serif',
+                          fontFamily: '"IBM Plex Sans", system-ui, sans-serif',
                           fontSize: 11.5,
                           fontWeight: 500,
                           fill: tokens.secondary,
@@ -458,7 +455,7 @@ export function GDPCorrelationScatter({
                           x={x2 - 8}
                           y={yUpper2 - 6}
                           fontSize={10}
-                          fontFamily='"DM Sans", system-ui, sans-serif'
+                          fontFamily='"IBM Plex Sans", system-ui, sans-serif'
                           fontStyle="italic"
                           textAnchor="end"
                           fill={tokens.tertiary}
@@ -517,7 +514,7 @@ export function GDPCorrelationScatter({
                             x={midX + 8}
                             y={midY - 4}
                             fontSize={10}
-                            fontFamily='"DM Sans", system-ui, sans-serif'
+                            fontFamily='"IBM Plex Sans", system-ui, sans-serif'
                             fill={tokens.tertiary}
                           >
                             Comparable income —
@@ -526,7 +523,7 @@ export function GDPCorrelationScatter({
                             x={midX + 8}
                             y={midY + 8}
                             fontSize={10}
-                            fontFamily='"DM Sans", system-ui, sans-serif'
+                            fontFamily='"IBM Plex Sans", system-ui, sans-serif'
                             fill={tokens.tertiary}
                           >
                             New Zealand adopts at 2× Japan's rate
@@ -548,7 +545,7 @@ export function GDPCorrelationScatter({
                             x={gx + 12}
                             y={gy + 18}
                             fontSize={10}
-                            fontFamily='"DM Sans", system-ui, sans-serif'
+                            fontFamily='"IBM Plex Sans", system-ui, sans-serif'
                             fill={tokens.tertiary}
                           >
                             High income, below-predicted adoption
@@ -569,7 +566,7 @@ export function GDPCorrelationScatter({
                             x={ex - 4}
                             y={ey - 14}
                             fontSize={10}
-                            fontFamily='"DM Sans", system-ui, sans-serif'
+                            fontFamily='"IBM Plex Sans", system-ui, sans-serif'
                             fill={tokens.tertiary}
                             textAnchor="end"
                           >
@@ -667,7 +664,7 @@ export function GDPCorrelationScatter({
 function ScatterAnnotation(): JSX.Element {
   return (
     <div
-      className="mb-3 rounded-md"
+      className="mb-3"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border-light))',
@@ -705,7 +702,7 @@ function ScatterOutlierList({
 }): JSX.Element {
   return (
     <div
-      className="mt-4 rounded-md"
+      className="mt-4"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',

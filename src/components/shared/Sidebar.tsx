@@ -92,7 +92,6 @@ export function Sidebar({
         left: 0,
         zIndex: isMobile ? 50 : 40,
         overflow: 'hidden',
-        boxShadow: isMobile ? '0 2px 8px rgba(0, 0, 0, 0.07)' : 'none',
       }}
     >
       <SidebarHeader
@@ -160,7 +159,7 @@ function SidebarHeader({
             to="/"
             aria-label="AI Literacy program — home"
             onClick={onCloseMobile}
-            className="flex h-9 w-9 items-center justify-center rounded-md bg-action font-mono text-[13px] font-bold tracking-wider text-[rgb(var(--white))]"
+            className="flex h-9 w-9 items-center justify-center bg-action font-mono text-[13px] font-bold tracking-wider text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))]"
           >
             AI
           </Link>
@@ -192,7 +191,7 @@ function SidebarHeader({
               type="button"
               onClick={onCloseMobile}
               aria-label="Close menu"
-              className="flex h-8 w-8 items-center justify-center rounded-md text-tertiary hover:bg-surface hover:text-ink"
+              className="flex h-8 w-8 items-center justify-center text-tertiary hover:bg-surface hover:text-ink"
             >
               <Icon name="close" size={18} />
             </button>
@@ -237,7 +236,7 @@ function ModuleItem({
       <li style={{ marginBottom: 6 }}>
         <ConditionalLink to={linkTo} disabled={locked} onNavigate={onCloseMobile}>
           <span
-            className="flex h-9 w-9 items-center justify-center rounded-md font-mono text-[14px] font-bold"
+            className="flex h-9 w-9 items-center justify-center font-mono text-[14px] font-bold"
             style={{
               backgroundColor: active ? 'rgb(var(--action))' : 'rgb(var(--white))',
               color: active
@@ -279,7 +278,7 @@ function ModuleItem({
         aria-expanded={!locked && expanded}
         aria-controls={sectionListId}
         className={[
-          'group flex w-full items-start gap-2.5 rounded-md text-left transition-colors duration-150',
+          'group flex w-full items-start gap-2.5 text-left transition-colors duration-[160ms]',
           active ? 'bg-[rgb(var(--white))]' : 'hover:bg-surface',
           locked ? 'cursor-not-allowed opacity-60' : 'cursor-pointer',
         ].join(' ')}
@@ -432,7 +431,7 @@ function SectionRow({
       <span
         aria-disabled="true"
         aria-label={`Module ${moduleId}, Section ${s.id}: ${s.title} (locked)`}
-        className="flex cursor-not-allowed items-start gap-2.5 rounded-[6px] opacity-40"
+        className="flex cursor-not-allowed items-start gap-2.5 opacity-40"
         style={{ padding: '6px 10px', marginBottom: 1, pointerEvents: 'none' }}
       >
         <SectionIndicator state={s.state} />
@@ -453,7 +452,7 @@ function SectionRow({
       // viewing).
       aria-current={isViewing ? 'page' : undefined}
       aria-label={`Module ${moduleId}, Section ${s.id}: ${s.title}${stateSuffix}`}
-      className="flex items-start gap-2.5 rounded-[6px] no-underline transition-colors duration-150 hover:bg-surface"
+      className="flex items-start gap-2.5 no-underline transition-colors duration-[160ms] hover:bg-surface"
       style={{
         padding: '6px 10px',
         marginBottom: 1,

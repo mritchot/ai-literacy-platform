@@ -13,7 +13,7 @@ export function SectionIndicator({ state }: SectionIndicatorProps): JSX.Element 
   if (state === 'done') {
     return (
       <span
-        className="mt-0.5 inline-flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-action text-[rgb(var(--white))]"
+        className="mt-0.5 inline-flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-action text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))]"
         aria-label="Completed"
       >
         <Icon name="check" size={10} />
@@ -28,7 +28,7 @@ export function SectionIndicator({ state }: SectionIndicatorProps): JSX.Element 
       >
         <span
           className="absolute inset-0 rounded-full opacity-40"
-          style={{ border: '1.5px solid rgb(var(--action))' }}
+          style={{ border: '1px solid rgb(var(--action))' }}
         />
         <span
           className="block rounded-full bg-action"
@@ -40,7 +40,7 @@ export function SectionIndicator({ state }: SectionIndicatorProps): JSX.Element 
   return (
     <span
       className="mt-0.5 inline-block h-4 w-4 flex-shrink-0 rounded-full"
-      style={{ border: '1.5px solid rgb(var(--ghost))' }}
+      style={{ border: '1px solid rgb(var(--ghost))' }}
       aria-label="Not started"
     />
   );

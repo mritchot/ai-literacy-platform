@@ -28,7 +28,7 @@ import { renderMarkdownLite } from './render-markdown-lite';
 // CSS variables `--description-light` (bg wash) and `--description-text`
 // (label color), which are defined in `src/styles/index.css` for both
 // `:root` and `.dark`.
-const DESCRIPTION = '#8B7355';
+const DESCRIPTION = 'rgb(var(--description))';
 
 type Phase = 'read' | 'reformulate' | 'compare';
 type CompareTab = 'before' | 'after';
@@ -105,7 +105,6 @@ export function PromptComparison(): JSX.Element {
 
       <section
         aria-label="Prompt reformulation comparison"
-        className="rounded-xl"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
@@ -171,7 +170,6 @@ function PhaseRead({ onContinue }: { onContinue: () => void }): JSX.Element {
       </BottleneckCallout>
 
       <article
-        className="rounded-lg"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
@@ -188,7 +186,7 @@ function PhaseRead({ onContinue }: { onContinue: () => void }): JSX.Element {
         {P9_ANNOTATIONS.map((ann, i) => (
           <article
             key={i}
-            className="rounded-md transition-opacity duration-300"
+            className="transition-opacity duration-300"
             style={{
               background: 'rgb(var(--description-light))',
               borderLeft: `3px solid ${DESCRIPTION}`,
@@ -214,7 +212,7 @@ function PhaseRead({ onContinue }: { onContinue: () => void }): JSX.Element {
         <button
           type="button"
           onClick={onContinue}
-          className="inline-flex items-center gap-2 rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover"
+          className="inline-flex items-center gap-2 bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover"
         >
           Now you try
           <Icon name="arrowRight" size={14} />
@@ -248,7 +246,6 @@ function PhaseReformulate({
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
       <aside
-        className="rounded-md"
         style={{
           background: 'rgb(var(--surface))',
           border: '1px solid rgb(var(--border))',
@@ -302,7 +299,7 @@ function PhaseReformulate({
             onClick={onSubmit}
             disabled={!allFieldsMet}
             aria-disabled={!allFieldsMet}
-            className="rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
+            className="bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
           >
             See the Improved Output
           </button>
@@ -330,9 +327,9 @@ function PromptField({
       <label
         htmlFor={id}
         className="mb-1.5 block font-mono text-overline font-bold uppercase"
-        // Use the theme-aware description-text variable so the label
-        // remains legible in dark mode (where the original #8B7355 falls
-        // to ~3.57:1 against the dark card surface).
+        // Use the description-text variable rather than the accent: the
+        // accent is tuned for fills and rules, and lands below AA as
+        // label text on the card surface.
         style={{ color: 'rgb(var(--description-text))', letterSpacing: '0.1em' }}
       >
         {label}
@@ -343,7 +340,7 @@ function PromptField({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         rows={3}
-        className="block w-full resize-y rounded-md border border-border bg-[rgb(var(--white))] p-3 font-sans text-body-sm text-ink placeholder:text-muted focus:border-ink"
+        className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body-sm text-ink placeholder:text-muted focus:border-ink"
         style={{ minHeight: 80, lineHeight: 1.55 }}
       />
     </div>
@@ -373,7 +370,6 @@ function PhaseCompare({
         <aside
           role="note"
           aria-label="The original prompt"
-          className="rounded-lg"
           style={{
             background: 'rgb(var(--surface))',
             border: '1px solid rgb(var(--border))',
@@ -390,7 +386,6 @@ function PhaseCompare({
         <aside
           role="note"
           aria-label="Example reformulated prompt"
-          className="rounded-lg"
           style={{
             background: 'rgb(var(--description-light))',
             border: '1px solid rgb(var(--border))',
@@ -464,7 +459,6 @@ function LearnerReformulationCard({
     <aside
       role="note"
       aria-label="Your reformulation"
-      className="rounded-lg"
       style={{
         background: 'rgb(var(--surface))',
         border: '1px solid rgb(var(--border))',
@@ -542,7 +536,7 @@ function CompareTabs({
             tabIndex={active ? 0 : -1}
             onClick={() => onTabChange(t.id)}
             onKeyDown={onKey}
-            className="font-sans text-[13px] transition-colors duration-150"
+            className="font-sans text-[13px] transition-colors duration-[160ms]"
             style={{
               padding: '12px 18px',
               background: active ? 'rgb(var(--white))' : 'transparent',
@@ -577,7 +571,7 @@ function ComparisonColumn({
     <article
       role="region"
       aria-label={ariaLabel}
-      className={`flex h-full flex-col rounded-lg ${visibleOnMobile ? 'block' : 'hidden lg:flex'}`}
+      className={`flex h-full flex-col ${visibleOnMobile ? 'block' : 'hidden lg:flex'}`}
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
