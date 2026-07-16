@@ -98,7 +98,7 @@ export function AugAutoViewC({
           <div style={{ width: '100%', height: 280 }}>
             <ResponsiveContainer>
               <BarChart data={data} margin={{ top: 16, right: 24, bottom: 8, left: 24 }} barCategoryGap="22%">
-                <CartesianGrid stroke="rgb(var(--border-light))" strokeDasharray="2 2" vertical={false} />
+                <CartesianGrid stroke="rgb(var(--border-light))" vertical={false} />
                 <XAxis
                   dataKey="label"
                   tick={AXIS_TICK_STYLE}
@@ -118,12 +118,12 @@ export function AugAutoViewC({
                   cursor={{ fill: 'rgba(0,0,0,0.04)' }}
                   formatter={(value: number, name) => [`${value}%`, name === 'augmentation' ? 'Augmentation' : 'Automation']}
                 />
-                <Bar dataKey="augmentation" isAnimationActive={false} radius={[3, 3, 0, 0]}>
+                <Bar dataKey="augmentation" isAnimationActive={false}>
                   {data.map((d, i) => (
                     <Cell key={`aug-${i}`} fill={d.fill} />
                   ))}
                 </Bar>
-                <Bar dataKey="automation" isAnimationActive={false} radius={[3, 3, 0, 0]}>
+                <Bar dataKey="automation" isAnimationActive={false}>
                   {data.map((d, i) => (
                     <Cell key={`auto-${i}`} fill={d.fill} fillOpacity={0.4} />
                   ))}

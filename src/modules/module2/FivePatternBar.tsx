@@ -104,7 +104,7 @@ export function FivePatternBar({ categories }: FivePatternBarProps): JSX.Element
               }}
               labelFormatter={() => ''}
             />
-            {meta.map((m, i) => (
+            {meta.map((m) => (
               <Bar
                 key={m.key}
                 dataKey={m.key}
@@ -112,13 +112,6 @@ export function FivePatternBar({ categories }: FivePatternBarProps): JSX.Element
                 fill={m.color}
                 isAnimationActive
                 animationDuration={400}
-                radius={
-                  i === 0
-                    ? [4, 0, 0, 4]
-                    : i === meta.length - 1
-                      ? [0, 4, 4, 0]
-                      : [0, 0, 0, 0]
-                }
               />
             ))}
           </BarChart>

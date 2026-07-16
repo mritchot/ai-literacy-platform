@@ -28,7 +28,7 @@ function ProseSection({ heading, body }: { heading: string; body: string }): JSX
   return (
     <section className="mt-10">
       <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{heading}</h2>
-      <div className="max-w-reading">{renderMarkdown(body)}</div>
+      <div className="prose-longform max-w-reading">{renderMarkdown(body)}</div>
     </section>
   );
 }
@@ -42,7 +42,7 @@ export default function LearningArchitecture(): JSX.Element {
       <h1 className="m-0 mb-2 font-display text-display font-normal text-ink">Learning Architecture</h1>
       <p className="m-0 mb-6 font-sans text-h3 font-normal text-secondary">AI Literacy for the Modern Workforce</p>
 
-      <div className="max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
+      <div className="prose-longform max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
 
       {SECTIONS.map((s) => (
         <ProseSection key={s.heading} heading={s.heading} body={s.body} />

@@ -36,7 +36,7 @@ function StatusBadge({ label, tone }: { label: string; tone: StatusTone }): JSX.
   return (
     <span
       className="inline-flex items-center gap-1.5 whitespace-nowrap font-mono text-[10.5px] font-semibold"
-      style={{ background: t.bg, color: t.color, padding: '3px 10px' }}
+      style={{ background: t.bg, color: t.color, border: `1px solid ${t.color}`, padding: '3px 10px' }}
     >
       <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full" style={{ background: t.color }} />
       {label}
@@ -172,7 +172,7 @@ export default function Communications(): JSX.Element {
       <h1 className="m-0 mb-2 font-display text-display font-normal text-ink">Stakeholder Communications</h1>
       <p className="m-0 mb-6 font-sans text-h3 font-normal text-secondary">AI Literacy for the Modern Workforce</p>
 
-      <div className="max-w-reading">{renderMarkdown(INTRO_MD)}</div>
+      <div className="prose-longform max-w-reading">{renderMarkdown(INTRO_MD)}</div>
 
       <div className="mt-8 space-y-3">
         <StatusUpdate />

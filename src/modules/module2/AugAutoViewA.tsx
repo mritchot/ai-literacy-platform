@@ -77,8 +77,17 @@ export function AugAutoViewA({
         where AI usage is near zero despite substantial workforce shares.
       </p>
 
-      <div role="group" aria-label="Sort order" className="flex flex-wrap gap-2">
-        {SORT_OPTIONS.map((opt) => {
+      {/* Segmented control. `flex-wrap` is retained deliberately: the three
+          labels are long, the platform clips horizontal overflow rather
+          than scrolling it, and a fixed strip would put the third option
+          off-screen and out of reach on a phone. */}
+      <div
+        role="group"
+        aria-label="Sort order"
+        className="inline-flex flex-wrap"
+        style={{ border: '1px solid rgb(var(--border))', background: 'rgb(var(--surface))' }}
+      >
+        {SORT_OPTIONS.map((opt, i) => {
           const active = sortKey === opt.id;
           return (
             <button
@@ -92,9 +101,9 @@ export function AugAutoViewA({
               className="font-sans text-[12.5px] transition-colors duration-[160ms]"
               style={{
                 padding: '5px 14px',
-                border: `1px solid ${active ? 'rgb(var(--ink))' : 'rgb(var(--border))'}`,
-                background: active ? 'rgb(var(--ink))' : 'rgb(var(--white))',
-                color: active ? 'rgb(var(--white))' : 'rgb(var(--secondary))',
+                borderLeft: i > 0 ? '1px solid rgb(var(--border))' : undefined,
+                background: active ? 'rgb(var(--white))' : 'transparent',
+                color: active ? 'rgb(var(--ink))' : 'rgb(var(--tertiary))',
                 fontWeight: active ? 600 : 500,
               }}
             >

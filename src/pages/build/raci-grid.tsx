@@ -98,10 +98,15 @@ export function RaciGrid(): JSX.Element {
         <span className="mr-1 font-mono text-[11px] font-semibold uppercase text-tertiary" style={{ letterSpacing: '0.08em' }}>
           Phase
         </span>
-        <FilterChip label="All" active={phaseFilter === null} onClick={() => setPhaseFilter(null)} />
-        {PHASES.map((p) => (
-          <FilterChip key={p} label={p} active={phaseFilter === p} onClick={() => setPhaseFilter((prev) => (prev === p ? null : p))} />
-        ))}
+        <div
+          className="inline-flex flex-wrap"
+          style={{ border: '1px solid rgb(var(--border))', background: 'rgb(var(--surface))' }}
+        >
+          <FilterChip label="All" active={phaseFilter === null} onClick={() => setPhaseFilter(null)} first />
+          {PHASES.map((p) => (
+            <FilterChip key={p} label={p} active={phaseFilter === p} onClick={() => setPhaseFilter((prev) => (prev === p ? null : p))} />
+          ))}
+        </div>
       </div>
 
       {/* Grid */}
@@ -193,7 +198,20 @@ export function RaciGrid(): JSX.Element {
   );
 }
 
-function FilterChip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }): JSX.Element {
+// One segment of the phase segmented control. The strip's border lives on
+// the parent; each segment past the first draws the hairline that divides
+// it from its neighbor.
+function FilterChip({
+  label,
+  active,
+  onClick,
+  first,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+  first?: boolean;
+}): JSX.Element {
   return (
     <button
       type="button"
@@ -202,9 +220,9 @@ function FilterChip({ label, active, onClick }: { label: string; active: boolean
       className="font-sans text-[12px] font-semibold transition-colors duration-[160ms]"
       style={{
         padding: '4px 12px',
-        background: active ? 'rgb(var(--action))' : 'transparent',
-        color: active ? 'rgb(var(--white))' : 'rgb(var(--secondary))',
-        border: '1px solid ' + (active ? 'rgb(var(--action))' : 'rgb(var(--border))'),
+        background: active ? 'rgb(var(--white))' : 'transparent',
+        color: active ? 'rgb(var(--ink))' : 'rgb(var(--tertiary))',
+        borderLeft: first ? undefined : '1px solid rgb(var(--border))',
       }}
     >
       {label}

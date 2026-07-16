@@ -234,12 +234,12 @@ function RoundIndicator({
                     : 'rgb(var(--border))'
               }`,
               background: isCurrent
-                ? 'rgb(var(--ink))'
-                : completed
-                  ? 'rgba(61, 90, 78, 0.08)'
-                  : 'rgb(var(--white))',
-              color: isCurrent
                 ? 'rgb(var(--white))'
+                : completed
+                  ? 'rgb(var(--action) / 0.08)'
+                  : 'transparent',
+              color: isCurrent
+                ? 'rgb(var(--ink))'
                 : completed
                   ? 'rgb(var(--action))'
                   : disabled
