@@ -102,7 +102,7 @@ export const BEHAVIORS: Record<QuadrantKey, Behavior[]> = {
       short: 'Define task goals and appropriate AI components',
       full: 'Before using AI, the participant defines the task goal, identifies which components require human judgment, and determines which are appropriate for AI assistance.',
       subComp: 'Problem Awareness → Task Delegation',
-      gap: `Misreading the augmentation/automation boundary (Persona — 65% self-report vs. 57% behavioral; participants don't recognize when they've shifted from collaboration to full delegation; [Handa et al. 2025, p. 3](https://bear-images.sfo2.cdn.digitaloceanspaces.com/ritchot/04761v1.pdf))`,
+      gap: `Misreading the augmentation/automation boundary (Persona — 65% self-report vs. 57% behavioral; participants don't recognize when they've shifted from collaboration to full delegation; [Handa et al. 2025, p. 3](https://ritchot.me/docs/04761v1.pdf))`,
       module: `Module 2 (Live Data Dashboard — augmentation vs. automation aggregate data with self-reflection prompts that surface the documented behavioral discrepancy) → Module 4 (AI Interaction Sandbox — structured task decomposition exercises where the participant practices the delegation decision before prompting)`,
       builds: ['P1', 'P3', 'P8'],
       refs: ['R1', 'R2'],
