@@ -212,7 +212,7 @@ export function CompletionSummary(): JSX.Element {
     growth,
   };
 
-  // PDF generation is async because the DM font TTFs need to be
+  // PDF generation is async because the font TTFs need to be
   // fetched (from inlined data: URLs in production) and registered
   // with jsPDF before rendering. The first click incurs the font
   // load; subsequent clicks reuse the cached binaries.
