@@ -59,7 +59,7 @@ function SwatchGrid({ tokens, mode }: { tokens: TokenSpec[]; mode: Mode }): JSX.
 
 function CompetencyRow({ spec, mode }: { spec: CompetencySpec; mode: Mode }): JSX.Element {
   const tints: { label: string; hex: string }[] = [
-    { label: 'bg', hex: spec.bg },
+    { label: 'accent', hex: spec.bgHex[mode] },
     { label: 'light', hex: spec.lightHex[mode] },
     { label: 'mid', hex: spec.mid },
     { label: 'text', hex: spec.textHex[mode] },
@@ -93,11 +93,11 @@ function CompetencyConstraint(): JSX.Element {
         The one rule
       </Overline>
       <p className="m-0 mb-4 max-w-reading font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
-        The 4D competency colors are reserved for competency tagging — pills, dots, tags, and
+        The 4D competency colors are reserved for competency tagging — swatches, tags, and
         competency-scoped accents. They are <strong className="text-ink">never</strong> used for
         general UI: buttons, links, and navigation use the dedicated <span className="font-mono">--action</span>{' '}
-        teal instead. This is what keeps the colors semantic: when a learner sees olive, it always means
-        Delegation.
+        teal instead. This is what keeps the colors semantic: when a learner sees the olive, it always
+        means Delegation.
       </p>
       <div className="flex flex-wrap items-center gap-6">
         <div className="flex items-center gap-2">
@@ -113,8 +113,13 @@ function CompetencyConstraint(): JSX.Element {
           </span>
           <span
             aria-hidden="true"
-            className="font-sans text-[12px] font-semibold text-white"
-            style={{ background: '#6B7F5E', padding: '8px 16px', opacity: 0.55 }}
+            className="font-sans text-[12px] font-semibold"
+            style={{
+              background: 'rgb(var(--delegation))',
+              color: 'rgb(var(--white))',
+              padding: '8px 16px',
+              opacity: 0.55,
+            }}
           >
             Continue
           </span>
@@ -140,45 +145,54 @@ function TypeSpecimen({ spec }: { spec: TypeSpec }): JSX.Element {
 
 // ─── Component specimens ───────────────────────────────────────────────
 
-function PillSpecimens(): JSX.Element {
+// The segmented control that replaced the platform's filter and toggle
+// pills. Static — a specimen, not a live control.
+function SegmentedControlSpecimen(): JSX.Element {
+  const segments = ['Top 14', 'All countries', 'By tier'];
   return (
-    <div className="flex flex-wrap items-center gap-2.5">
-      {COMPETENCY_SWATCHES.map((c, i) => {
-        const active = i === 0; // show the first as the active state
+    <div
+      aria-hidden="true"
+      className="inline-flex"
+      style={{ border: '1px solid rgb(var(--border))', background: 'rgb(var(--surface))' }}
+    >
+      {segments.map((s, i) => {
+        const active = i === 0;
         return (
           <span
-            key={c.key}
-            className="font-sans text-[12px] font-semibold"
+            key={s}
+            className="font-sans text-[12.5px]"
             style={{
               padding: '5px 14px',
-              border: `1px solid ${c.bg}`,
-              background: active ? c.bg : 'transparent',
-              color: active ? '#fff' : `rgb(var(--${c.key}-text))`,
-              letterSpacing: '0.02em',
+              borderLeft: i > 0 ? '1px solid rgb(var(--border))' : undefined,
+              background: active ? 'rgb(var(--white))' : 'transparent',
+              color: active ? 'rgb(var(--ink))' : 'rgb(var(--tertiary))',
+              fontWeight: active ? 600 : 500,
             }}
           >
-            {c.label}
+            {s}
           </span>
         );
       })}
-      <span className="ml-1 font-sans text-[11px] text-muted">(first = active)</span>
     </div>
   );
 }
 
+// Square, hairline-bordered surfaces at three densities. The system has no
+// radius scale left to specimen: corners are square everywhere except a
+// handful of true circles (radio bullets, state dots).
 function CardSpecimens(): JSX.Element {
-  const cards: { label: string; radius: string; pad: string; bg: string }[] = [
-    { label: 'Large card ·', radius: '14px', pad: '20px 24px', bg: 'rgb(var(--white))' },
-    { label: 'Medium card ·', radius: '10px', pad: '16px', bg: 'rgb(var(--surface))' },
-    { label: 'Small card ·', radius: '8px', pad: '12px 16px', bg: 'rgb(var(--surface))' },
+  const cards: { label: string; pad: string; bg: string; note: string }[] = [
+    { label: 'Raised card', pad: '20px 24px', bg: 'rgb(var(--white))', note: 'Sits above the page ground. The card color, not a shadow, is what lifts it.' },
+    { label: 'Recessed surface', pad: '16px', bg: 'rgb(var(--surface))', note: 'Sits below the ground: insets, segmented-control tracks, hover dips.' },
+    { label: 'Dense surface', pad: '12px 16px', bg: 'rgb(var(--surface))', note: 'Same recess at table and list density. One hairline, one weight, everywhere.' },
   ];
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
       {cards.map((c) => (
-        <div key={c.label} style={{ background: c.bg, border: '1px solid rgb(var(--border))', borderRadius: c.radius, padding: c.pad }}>
+        <div key={c.label} style={{ background: c.bg, border: '1px solid rgb(var(--border))', padding: c.pad }}>
           <div className="font-sans text-[12.5px] font-semibold text-ink">{c.label}</div>
           <div className="mt-1 font-sans text-[11.5px] text-body" style={{ lineHeight: 1.5 }}>
-            Bordered surface, no shadow. Elevation comes from borders and surface color, not drop shadows.
+            {c.note}
           </div>
         </div>
       ))}
@@ -218,24 +232,24 @@ function ButtonSpecimens(): JSX.Element {
 const DEMO_KC: KnowledgeCheckItemData = {
   id: 'ds-demo',
   objectiveRef: 'DS',
-  stem: 'A reviewer opens the platform in dark mode and notices the four competency colors look identical to their light-mode values. What is the best explanation?',
+  stem: 'A reviewer toggles the preview above to dark and notices the four competency accents shift to lighter values rather than holding the hues they carry in light mode. What is the best explanation?',
   options: [
     {
       id: 'a',
-      text: 'The competency bg and mid values are mid-tone by design and hold contrast on both light and dark surfaces, so they are intentionally unchanged; only the light wash and text tints flip.',
+      text: 'An accent has to hold contrast against the ground it sits on, and no single value clears that bar on both washi paper and sumi ink — so each competency carries a light-mode value and a dark-mode value of the same hue.',
       isPreferred: true,
-      feedbackTitle: 'Correct: this is the design decision',
+      feedbackTitle: 'Correct: contrast is measured against a ground',
       feedbackText:
-        'Exactly. The palette was chosen so the primary and border tints stay stable across modes, which keeps a competency’s color recognizable everywhere. Only the wash surfaces and on-tint text shift.',
+        'Exactly. A mid-tone that reads on paper goes muddy on sumi. Each accent keeps its hue — olive stays olive — while its lightness inverts, so a competency stays recognizable without any of the four dropping below AA. This is why the accents are CSS variables rather than literal hexes: a literal cannot flip.',
       feedbackTone: 'success',
     },
     {
       id: 'b',
-      text: 'It is a rendering bug: every color should shift in dark mode.',
+      text: 'It is a rendering bug: the competency accents are brand colors and should be identical in both modes.',
       isPreferred: false,
-      feedbackTitle: 'Not a bug',
+      feedbackTitle: 'That was the old rule',
       feedbackText:
-        'Shifting the competency primaries would break recognition across modes. The stable bg/mid values are deliberate; the tokens that do need to change (washes, text) already do.',
+        'The palette did once hold the accents fixed across modes, on the reasoning that a brand color is theme-invariant. The problem is that contrast is not a property of a color — it is a property of a color against a ground. Holding one value fixed meant accepting a failing ratio on one of the two.',
       feedbackTone: 'error',
     },
     {
@@ -244,7 +258,7 @@ const DEMO_KC: KnowledgeCheckItemData = {
       isPreferred: false,
       feedbackTitle: 'Partly, but not quite',
       feedbackText:
-        'Feedback colors and the action color do shift in dark mode for legibility. It is specifically the competency bg/mid that stay fixed, while their light/text tints adapt.',
+        'Nearly every semantic family shifts: feedback, action, and the competency accents all carry a value per mode. What stays fixed is the meaning attached to each hue, not the hue’s lightness.',
       feedbackTone: 'caution',
     },
   ],
@@ -282,10 +296,10 @@ export function DesignSystemGallery(): JSX.Element {
         <div
           role="group"
           aria-label="Preview color mode"
-          className="inline-flex overflow-hidden"
-          style={{ border: '1px solid rgb(var(--border))' }}
+          className="inline-flex"
+          style={{ border: '1px solid rgb(var(--border))', background: 'rgb(var(--surface))' }}
         >
-          {(['light', 'dark'] as const).map((m) => (
+          {(['light', 'dark'] as const).map((m, i) => (
             <button
               key={m}
               type="button"
@@ -294,8 +308,9 @@ export function DesignSystemGallery(): JSX.Element {
               className="font-sans text-[12px] font-semibold capitalize transition-colors duration-[160ms]"
               style={{
                 padding: '6px 16px',
-                background: mode === m ? 'rgb(var(--action))' : 'transparent',
-                color: mode === m ? 'rgb(var(--white))' : 'rgb(var(--secondary))',
+                borderLeft: i > 0 ? '1px solid rgb(var(--border))' : undefined,
+                background: mode === m ? 'rgb(var(--white))' : 'transparent',
+                color: mode === m ? 'rgb(var(--ink))' : 'rgb(var(--tertiary))',
               }}
             >
               {m}
@@ -311,7 +326,7 @@ export function DesignSystemGallery(): JSX.Element {
         aria-label={`Design system preview in ${mode} mode`}
         style={{ border: '1px solid rgb(var(--border))', padding: '24px 26px' }}
       >
-        <GallerySection label="Color · 4D competency" note="The platform's primary semantic palette. bg and mid are stable across modes; light and text flip.">
+        <GallerySection label="Color · 4D competency" note="The platform's primary semantic palette. Each accent keeps its hue across modes and inverts its lightness, so contrast holds against whichever ground it sits on.">
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             {COMPETENCY_SWATCHES.map((c) => (
               <CompetencyRow key={c.key} spec={c} mode={mode} />
@@ -322,7 +337,7 @@ export function DesignSystemGallery(): JSX.Element {
           </div>
         </GallerySection>
 
-        <GallerySection label="Color · Neutrals" note="Warm neutrals: no pure grays. Every value carries the same warm undertone in both modes.">
+        <GallerySection label="Color · Neutrals" note="A warm ink scale: no pure grays, and no pure white — the lightest surface is washi paper, and the page ground is a shade under it.">
           <SwatchGrid tokens={NEUTRAL_TOKENS} mode={mode} />
         </GallerySection>
 
@@ -330,7 +345,7 @@ export function DesignSystemGallery(): JSX.Element {
           <SwatchGrid tokens={FEEDBACK_TOKENS} mode={mode} />
         </GallerySection>
 
-        <GallerySection label="Color · Action" note="A dedicated interactive teal, outside the 4D palette, so competency colors never do double duty as buttons.">
+        <GallerySection label="Color · Action & focus" note="A dedicated interactive teal, outside the 4D palette, so competency colors never do double duty as buttons — and a vermilion focus ring, off both, so a focus state can never be mistaken for a hover.">
           <SwatchGrid tokens={ACTION_TOKENS} mode={mode} />
         </GallerySection>
 
@@ -342,28 +357,28 @@ export function DesignSystemGallery(): JSX.Element {
           </div>
         </GallerySection>
 
-        <GallerySection label="Components · Pills & tags">
+        <GallerySection label="Components · Tags & controls" note="The capsule is retired. A competency reads as a square swatch against its label, and a choice between views reads as one segmented control rather than a row of loose pills.">
           <div className="space-y-5">
             <div>
               <div className="mb-2 font-mono text-[10px] font-bold uppercase text-tertiary" style={{ letterSpacing: '0.1em' }}>
-                Pills (competency filters)
+                Competency tag (CompetencyDot)
               </div>
-              <PillSpecimens />
-            </div>
-            <div>
-              <div className="mb-2 font-mono text-[10px] font-bold uppercase text-tertiary" style={{ letterSpacing: '0.1em' }}>
-                Tags (CompetencyDot)
-              </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-4">
                 {COMPETENCY_SWATCHES.map((c) => (
                   <CompetencyDot key={c.key} competency={c.key} />
                 ))}
               </div>
             </div>
+            <div>
+              <div className="mb-2 font-mono text-[10px] font-bold uppercase text-tertiary" style={{ letterSpacing: '0.1em' }}>
+                Segmented control
+              </div>
+              <SegmentedControlSpecimen />
+            </div>
           </div>
         </GallerySection>
 
-        <GallerySection label="Components · Cards">
+        <GallerySection label="Components · Cards" note="Square, hairline-bordered. Depth is carried by the surface color against the ground — there are no drop shadows in the system.">
           <CardSpecimens />
         </GallerySection>
 
