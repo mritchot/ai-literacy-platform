@@ -31,8 +31,14 @@ import DILIGENCE_MARKDOWN from '../../DILIGENCE.md?raw';
 const STRIPE_TIP_URL = '';
 
 // External blog URL — surface for future-course notifications and
-// posts on learning design, AI literacy, and adjacent topics.
-const BLOG_URL = 'https://ritchot.me/';
+// posts on learning design, AI literacy, and adjacent topics. Points at
+// the writing index, not the site root: the root is a landing page, and
+// the post stream lives under /writing/.
+const BLOG_URL = 'https://ritchot.me/writing/';
+
+// Feed subscription page. The site offers full-text RSS and Atom only —
+// there is no email list, so the copy below must not promise one.
+const SUBSCRIBE_URL = 'https://ritchot.me/subscribe/';
 
 // Additional social channels surfaced in the blog card as a small
 // "find me elsewhere" line. Treated as quiet secondary links rather
@@ -81,6 +87,7 @@ export default function ThankYou(): JSX.Element {
 
   const onTipClick = () => track({ type: 'tip_link_clicked' });
   const onBlogClick = () => track({ type: 'blog_link_clicked' });
+  const onSubscribeClick = () => track({ type: 'subscribe_link_clicked' });
   const onLinkedInClick = () => track({ type: 'linkedin_link_clicked' });
   const onXClick = () => track({ type: 'x_link_clicked' });
   const onWriteupClick = () => track({ type: 'writeup_link_clicked' });
@@ -97,6 +104,7 @@ export default function ThankYou(): JSX.Element {
         showCourseHub={showWriteup}
         onCourseHubClick={onWriteupClick}
         onBlogClick={onBlogClick}
+        onSubscribeClick={onSubscribeClick}
         onLinkedInClick={onLinkedInClick}
         onXClick={onXClick}
         onEmailClick={onEmailClick}
@@ -435,6 +443,7 @@ function BlogCard({
   showCourseHub,
   onCourseHubClick,
   onBlogClick,
+  onSubscribeClick,
   onLinkedInClick,
   onXClick,
   onEmailClick,
@@ -442,6 +451,7 @@ function BlogCard({
   showCourseHub: boolean;
   onCourseHubClick: () => void;
   onBlogClick: () => void;
+  onSubscribeClick: () => void;
   onLinkedInClick: () => void;
   onXClick: () => void;
   onEmailClick: () => void;
@@ -471,9 +481,9 @@ function BlogCard({
         style={{ lineHeight: 1.6 }}
       >
         I'm building more courses. The next one is in development — if you want to know when it
-        ships, subscribe to my blog. I write about life, learning, research, and technology,
-        mostly AI lately. You'll get posts when I have something worth saying, not spam or
-        marketing emails.
+        ships, the blog is where I'll say so. I write about life, learning, research, and
+        technology, mostly AI lately. New posts go up when I have something worth saying, not on
+        a schedule.
       </p>
       <a
         href={BLOG_URL}
@@ -493,7 +503,18 @@ function BlogCard({
         className="m-0 mt-3 font-sans text-caption text-tertiary"
         style={{ lineHeight: 1.5 }}
       >
-        Email subscription available on the blog — you'll get notified when new posts go live.
+        Everything I publish goes out over full-text{' '}
+        <a
+          href={SUBSCRIBE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={onSubscribeClick}
+          className="font-medium text-secondary no-underline hover:text-ink hover:underline"
+        >
+          RSS and Atom
+        </a>
+        . Point a feed reader at either and new posts arrive as they land — no email list, no
+        tracking.
       </p>
       {/* Course hub — secondary affordance under the blog CTA. Same
           outlined-button treatment as "Read the blog"; the two sit as
