@@ -50,7 +50,7 @@ const FONTS: FontSpec[] = [
   // Source Serif 4 carries the display title and the big score numerals.
   // It registers at 600 under the 'bold' style: the platform's display
   // type moved to 600 in the ritchot.me alignment, and Source Serif 4 at
-  // 400 sets markedly lighter than the DM Serif Display it replaced.
+  // 400 sets markedly lighter than the display face it replaced.
   {
     url: sourceSerifSemiBoldUrl,
     vfsName: 'SourceSerif4-SemiBold.ttf',
