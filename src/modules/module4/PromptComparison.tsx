@@ -19,7 +19,7 @@ import {
   P9_WEAK_OUTPUT,
   P9_WEAK_PROMPT,
 } from './module4-content';
-import { renderMarkdownLite } from './render-markdown-lite';
+import { renderMarkdownLite } from '../../components/shared/render-markdown-lite';
 
 // Static hex for the 3px left-border accent (the saturated "amber" hue)
 // — the bg color is fine on both light and dark surfaces because it's

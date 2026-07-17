@@ -20,7 +20,7 @@ import {
   P12_REFLECTION,
   P12_SCENARIO,
 } from './module4-content';
-import { renderMarkdownLite } from './render-markdown-lite';
+import { renderMarkdownLite } from '../../components/shared/render-markdown-lite';
 
 const DILIGENCE = 'rgb(var(--diligence))';
 // Hover has to move *away* from the page ground, the same way

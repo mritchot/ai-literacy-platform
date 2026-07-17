@@ -21,7 +21,7 @@ import { Link } from 'react-router-dom';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { PRE_ASSESSMENT_ITEMS, type AssessmentItem } from '../../data/pre-assessment';
 import { POST_ASSESSMENT_ITEMS, type PostAssessmentItem } from '../../data/post-assessment';
-import { renderMarkdownLite } from '../../modules/module4/render-markdown-lite';
+import { renderMarkdownLite } from '../shared/render-markdown-lite';
 import { Icon } from '../shared/Icon';
 import { Overline } from '../shared/Overline';
 
