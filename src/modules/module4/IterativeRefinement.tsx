@@ -28,7 +28,7 @@ import {
   P11_TURN3_EXAMPLE_REFINEMENT_FOR_DRAFT_3,
   P11_TURN3_REFINEMENT_PROMPT,
 } from './module4-content';
-import { renderMarkdownLite } from './render-markdown-lite';
+import { renderMarkdownLite } from '../../components/shared/render-markdown-lite';
 
 // Description-accent hex used for the example-refinement callout in Turn 3 —
 // matches the accent treatment used by the P9 reformulated-prompt callout

@@ -1,8 +1,10 @@
-// Lightweight markdown renderer for Module 4's pre-written outputs.
-// Handles only the constructs the content actually uses: paragraph
+// Lightweight markdown renderer for short pre-written copy: Module 4's
+// sample outputs, assessment stems/feedback, and the thank-you page.
+// Handles only the constructs that content actually uses: paragraph
 // breaks (blank line), **bold** runs, and bullet/numbered list lines
 // starting with `- ` or `1. `. No nested lists, no code, no headings —
-// the content document doesn't need them.
+// the content doesn't need them. (The artifact pages use the fuller
+// render-markdown.tsx next door.)
 
 import { type ReactNode } from 'react';
 
