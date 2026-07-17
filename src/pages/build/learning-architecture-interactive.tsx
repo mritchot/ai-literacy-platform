@@ -15,7 +15,10 @@
 
 import { useId, useState } from 'react';
 import { CompetencyDot } from '../../components/shared/CompetencyDot';
+import { DisclosureChevron } from '../../components/shared/DisclosureChevron';
+import { ExpandAllToggle } from '../../components/shared/ExpandAllToggle';
 import { Overline } from '../../components/shared/Overline';
+import { useExpandableSet } from '../../hooks/useExpandableSet';
 import {
   ARCH_MODULES,
   ASSESSMENT_TIERS,
@@ -286,13 +289,7 @@ function ModuleCard({
             </span>
           </span>
         </span>
-        <span
-          aria-hidden="true"
-          className="pt-1 text-tertiary transition-transform"
-          style={{ transform: expanded ? 'rotate(180deg)' : 'none' }}
-        >
-          ▾
-        </span>
+        <DisclosureChevron expanded={expanded} className="pt-1" />
       </button>
 
       {/* Platform split — always visible */}
@@ -357,9 +354,7 @@ function KirkpatrickLane({ expanded, onToggle }: { expanded: boolean; onToggle: 
         <span className="font-mono text-overline font-bold uppercase text-tertiary" style={{ letterSpacing: '0.1em' }}>
           Kirkpatrick Evaluation Framework
         </span>
-        <span aria-hidden="true" className="text-tertiary transition-transform" style={{ transform: expanded ? 'rotate(180deg)' : 'none' }}>
-          ▾
-        </span>
+        <DisclosureChevron expanded={expanded} />
       </button>
       <div className="grid grid-cols-2 sm:grid-cols-4" style={{ borderTop: '1px solid rgb(var(--border-light))' }}>
         {KIRK_LEVELS.map((k, i) => (
@@ -547,18 +542,11 @@ function distributionLabel(): string {
 // ─── Main ──────────────────────────────────────────────────────────────
 
 export function LearningArchitectureDiagram(): JSX.Element {
-  const [expandedModules, setExpandedModules] = useState<Set<number>>(new Set());
+  const modules = useExpandableSet(ARCH_MODULES.map((m) => m.id));
   const [kirkExpanded, setKirkExpanded] = useState(false);
-  const allExpanded = expandedModules.size === ARCH_MODULES.length && kirkExpanded;
-  const toggleModule = (id: number): void =>
-    setExpandedModules((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+  const allExpanded = modules.allOpen && kirkExpanded;
   const setAll = (v: boolean): void => {
-    setExpandedModules(v ? new Set(ARCH_MODULES.map((m) => m.id)) : new Set());
+    modules.setAll(v);
     setKirkExpanded(v);
   };
 
@@ -615,13 +603,7 @@ export function LearningArchitectureDiagram(): JSX.Element {
       <SectionRule label="Learning Progression" hint="Context → Evidence → Mechanism → Application" />
 
       <div className="-mt-2 mb-3 flex justify-end">
-        <button
-          type="button"
-          onClick={() => setAll(!allExpanded)}
-          className="font-sans text-[12px] font-semibold text-action hover:text-action-hover"
-        >
-          {allExpanded ? 'Collapse all' : 'Expand all'}
-        </button>
+        <ExpandAllToggle allOpen={allExpanded} onToggle={setAll} />
       </div>
 
       {/* Module flow */}
@@ -630,8 +612,8 @@ export function LearningArchitectureDiagram(): JSX.Element {
           <div key={m.id}>
             <ModuleCard
               module={m}
-              expanded={expandedModules.has(m.id)}
-              onToggle={() => toggleModule(m.id)}
+              expanded={modules.isOpen(m.id)}
+              onToggle={() => modules.toggle(m.id)}
             />
             {i < ARCH_MODULES.length - 1 && <VConnector />}
           </div>

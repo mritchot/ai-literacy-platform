@@ -4,6 +4,7 @@
 import { Fragment, useMemo, useState, type KeyboardEvent } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { formatCurrency, formatPercent } from '../../utils/chart-config';
+import { useExpandableSet } from '../../hooks/useExpandableSet';
 import { useChartTokens } from '../../hooks/useChartTokens';
 
 interface OccupationRow {
@@ -70,15 +71,7 @@ export function ProductivityViewA({ rows }: ProductivityViewAProps): JSX.Element
   // Click-to-expand state per row. Multi-row open is allowed so a learner
   // can compare task lists across occupations (e.g. Construction vs.
   // Management) without toggling repeatedly.
-  const [expanded, setExpanded] = useState<Set<string>>(new Set());
-  const toggleExpanded = (occ: string) => {
-    setExpanded((prev) => {
-      const next = new Set(prev);
-      if (next.has(occ)) next.delete(occ);
-      else next.add(occ);
-      return next;
-    });
-  };
+  const { isOpen: isRowExpanded, toggle: toggleExpanded } = useExpandableSet<string>();
 
   const sorted = useMemo(() => {
     const copy = [...rows];
@@ -187,7 +180,7 @@ export function ProductivityViewA({ rows }: ProductivityViewAProps): JSX.Element
           </thead>
           <tbody>
             {sorted.map((row, i) => {
-              const isExpanded = expanded.has(row.occupation);
+              const isExpanded = isRowExpanded(row.occupation);
               const hasTasks = (row.representative_tasks?.length ?? 0) > 0;
               const tasksId = `tasks-${rowSlug(row.occupation)}`;
               const isLast = i === sorted.length - 1;
