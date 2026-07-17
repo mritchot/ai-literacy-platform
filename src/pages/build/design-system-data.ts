@@ -100,13 +100,6 @@ export const COMPETENCY_SWATCHES: CompetencySpec[] = [
   { key: 'diligence', label: 'Diligence', bgHex: { light: '#6C5B74', dark: '#B598C2' }, mid: '#BEA8C9', lightHex: { light: '#EDE4F0', dark: '#2C2530' }, textHex: { light: '#4A3557', dark: '#BEA8C9' } },
 ];
 
-// Dark-mode competency text hex vars consumed by CompetencyDot's fallback var.
-// Derived from COMPETENCY_SWATCHES so the two can't drift. The cast is safe:
-// the swatch array enumerates exactly the four CompetencyKey values.
-const COMPETENCY_TEXT_HEX = Object.fromEntries(
-  COMPETENCY_SWATCHES.map((s) => [s.key, s.textHex]),
-) as Record<CompetencyKey, { light: string; dark: string }>;
-
 // ─── Typography scale (design system §2.2) ─────────────────────────────
 
 export interface TypeSpec {
@@ -151,9 +144,7 @@ export function previewScopeCss(): string {
   const all = [...NEUTRAL_TOKENS, ...FEEDBACK_TOKENS, ...ACTION_TOKENS, ...COMPETENCY_SCOPE_TOKENS];
   const decl = (mode: 'light' | 'dark'): string => {
     const vars = all.map((t) => `--${t.name}: ${t[mode]};`).join(' ');
-    // CompetencyDot reads the hex fallback var `--competency-text-{c}`.
-    const compHex = COMPETENCY_SWATCHES.map((c) => `--competency-text-${c.key}: ${COMPETENCY_TEXT_HEX[c.key][mode]};`).join(' ');
-    return `.ds-preview[data-theme="${mode}"] { ${vars} ${compHex} background: rgb(var(--canvas)); color: rgb(var(--ink)); }`;
+    return `.ds-preview[data-theme="${mode}"] { ${vars} background: rgb(var(--canvas)); color: rgb(var(--ink)); }`;
   };
   return `${decl('light')}\n${decl('dark')}`;
 }
