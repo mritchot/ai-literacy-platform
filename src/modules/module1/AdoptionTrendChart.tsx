@@ -124,7 +124,7 @@ export function AdoptionTrendChart({
                 contentStyle={TOOLTIP_STYLE}
                 itemStyle={TOOLTIP_ITEM_STYLE}
                 labelStyle={TOOLTIP_LABEL_STYLE}
-                cursor={{ fill: 'rgba(0,0,0,0.04)' }}
+                cursor={{ fill: tokens.cursorFill }}
                 formatter={(value: number, name) => [
                   `${value}%`,
                   name === 'augmentation' ? 'Augmentation' : 'Automation',

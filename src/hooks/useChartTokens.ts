@@ -7,7 +7,7 @@
 //
 // This hook returns the appropriate hex palette for the current resolved
 // theme. Each chart component calls it once and uses the returned values
-// in place of the previous hardcoded `TOKEN_HEX.*` references.
+// in place of the hardcoded light-mode hexes charts used to carry.
 
 import { useTheme } from './useTheme';
 
@@ -40,6 +40,10 @@ interface ChartTokens {
   // `--{competency}` variable directly instead of coming through here.
   delegation: string;
   discernment: string;
+  // Tooltip hover-band fill (Recharts `cursor`). An ink-toned wash per
+  // theme: the old static rgba(0,0,0,0.04) disappeared on the sumi
+  // ground, so dark mode washes with light ink instead.
+  cursorFill: string;
 }
 
 // Both palettes are the resolved hex values of the CSS tokens in
@@ -67,6 +71,7 @@ const LIGHT: ChartTokens = {
   info: '#5a6c7b',
   delegation: '#5c7050',
   discernment: '#506579',
+  cursorFill: 'rgba(30, 28, 25, 0.05)', // --ink at 5%
 };
 
 const DARK: ChartTokens = {
@@ -94,6 +99,7 @@ const DARK: ChartTokens = {
   // fills against the sumi canvas.
   delegation: '#a8bc9a',
   discernment: '#93b0c6',
+  cursorFill: 'rgba(230, 226, 217, 0.08)', // --ink (dark) at 8%
 };
 
 export function useChartTokens(): ChartTokens {

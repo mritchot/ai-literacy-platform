@@ -3,12 +3,11 @@
 //
 // Source: Phase 4 Component 7B RACI Matrix
 // (planning corpus, outside the repo), §1–§2. The
-// assignment cells are transcribed verbatim from that document's table. NOTE:
-// the table contains 32 activity rows and 14 L&D-Manager "Accountable" marks;
-// 07b's prose says "31 activities" and "Accountable for 19 of 31." The grid
-// and its annotations are computed from the cells below (the source of truth
-// for what is actually displayed), so they stay internally consistent — the
-// prose discrepancy is flagged for correction at the source.
+// assignment cells are transcribed verbatim from that document's table: 32
+// activity rows, 14 L&D-Manager "Accountable" marks. (The source document's
+// prose originally said 31 / 19-of-31; it was corrected to match its own
+// grid, 07-07-2026.) The grid and its annotations are computed from the
+// cells below, so what is displayed stays internally consistent.
 
 export type Assignment = 'R' | 'A' | 'C' | 'I' | '—';
 

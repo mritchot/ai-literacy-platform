@@ -129,7 +129,7 @@ export function AugAutoViewB({
                 contentStyle={TOOLTIP_STYLE}
                 itemStyle={TOOLTIP_ITEM_STYLE}
                 labelStyle={TOOLTIP_LABEL_STYLE}
-                cursor={{ fill: 'rgba(0,0,0,0.04)' }}
+                cursor={{ fill: tokens.cursorFill }}
                 formatter={(value: number, name: string) => {
                   const idx = meta.findIndex((m) => m.key === name);
                   const c = categories[idx];
@@ -312,7 +312,7 @@ export function AugAutoViewB({
                       contentStyle={TOOLTIP_STYLE}
                       itemStyle={TOOLTIP_ITEM_STYLE}
                       labelStyle={TOOLTIP_LABEL_STYLE}
-                      cursor={{ fill: 'rgba(0,0,0,0.04)' }}
+                      cursor={{ fill: tokens.cursorFill }}
                       formatter={(value: number) => [`${value}× representation`, 'Ratio']}
                       labelFormatter={(label, payload) => {
                         const p = payload[0]?.payload as JobZone | undefined;

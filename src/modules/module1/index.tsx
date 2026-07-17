@@ -5,10 +5,8 @@
 
 import { useEffect } from 'react';
 import { useSectionParam } from '../../hooks/useSectionParam';
-import {
-  SectionContainer,
-  getModuleOrThrow,
-} from '../../components/shared/SectionContainer';
+import { SectionContainer } from '../../components/shared/SectionContainer';
+import { getModuleOrThrow } from '../../data/program';
 import { Citation } from '../../components/shared/Citation';
 import { R1Trigger } from '../../components/reference/R1Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';

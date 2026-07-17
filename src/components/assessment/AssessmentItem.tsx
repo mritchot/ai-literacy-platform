@@ -10,7 +10,7 @@
 
 import { useEffect, useRef, type KeyboardEvent } from 'react';
 import type { AssessmentItem as AssessmentItemData } from '../../data/pre-assessment';
-import { renderMarkdownLite } from '../../modules/module4/render-markdown-lite';
+import { renderMarkdownLite } from '../shared/render-markdown-lite';
 import { nextRadioIndex } from '../shared/radio-group-nav';
 
 const ASSESSMENT_ACCENT = 'rgb(var(--discernment))'; // matches the discernment color family

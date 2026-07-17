@@ -15,7 +15,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useAnalytics } from '../contexts/AnalyticsContext';
-import { renderMarkdownLite } from '../modules/module4/render-markdown-lite';
+import { renderMarkdownLite } from '../components/shared/render-markdown-lite';
 
 // The full diligence-statement prose lives in DILIGENCE.md at the repo
 // root (rendered on GitHub for public visibility) and is loaded here via

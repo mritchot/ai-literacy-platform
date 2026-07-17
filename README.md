@@ -26,7 +26,7 @@ The curriculum grew out of my M.Ed. in Education Technology and Instructional De
 
 - **Framework:** React 18 + TypeScript (strict mode)
 - **Build:** Vite 5 with `vite-plugin-singlefile` — produces a single `index.html` (no server required; works via `file://`)
-- **Styling:** Tailwind CSS 3 with a custom design system (DM Sans / DM Serif Display / DM Mono typography, 4D competency color palette, CSS-variable-driven dark mode)
+- **Styling:** Tailwind CSS 3 with a custom design system aligned to [ritchot.me](https://ritchot.me) — Source Serif 4 / IBM Plex Sans / IBM Plex Mono typography, warm washi light mode and sumi dark mode on CSS-variable tokens, square hairline geometry, 4D competency color palette
 - **Charts:** Recharts (interactive data visualizations across Modules 1–2, the analytics dashboard, and the Behind-the-Build pages)
 - **Routing:** React Router v6 HashRouter (compatible with static hosting and `file://`)
 - **State:** React Context (`LearnerProgressContext`) with localStorage persistence
@@ -77,7 +77,8 @@ src/
 ├── data/             JSON datasets, citation registry, program structure,
 │                     pre/post assessment item banks
 ├── hooks/            Custom hooks (useTheme, usePlatformMode, useCitations,
-│                     useChartTokens, useSectionParam, useViewport)
+│                     useChartTokens, useExpandableSet, useLocalStorage,
+│                     useSectionParam, useViewport)
 ├── modules/
 │   ├── module1/      Data narratives, geographic scatter, adoption charts
 │   ├── module2/      Augmentation/automation dashboard, productivity dashboard
@@ -92,7 +93,7 @@ src/
 
 ## Design decisions
 
-**Single-file build.** The platform must work when opened directly from disk (`file://` protocol) — this enables offline distribution and removes hosting as a dependency for portfolio reviewers. The tradeoff is ~585 KB of inlined font binaries and no lazy-loading of route chunks.
+**Single-file build.** The platform must work when opened directly from disk (`file://` protocol) — this enables offline distribution and removes hosting as a dependency for portfolio reviewers. The tradeoff is ~700 KB of inlined font binaries (the self-hosted web faces plus the PDF exporter's TTF subsets) and no lazy-loading of route chunks.
 
 **No backend.** All state lives in localStorage. Analytics events are captured client-side and exportable as JSON/xAPI from the analytics dashboard. This keeps deployment to a single static file with zero ongoing infrastructure cost.
 
@@ -111,7 +112,7 @@ Content traces to specific findings from:
 - WEF Future of Jobs Report (2025) — skill demand projections
 - Hardman — transfer research and practice-based methods
 
-This is the v1 minimum-viable corpus. Additional research will be added in future iterations of the course.
+These are the anchor sources; the in-module citation registry and the artifact pages' linked bibliographies extend the set (Lee et al. CHI 2025, Mollick 2012, the Anthropic Economic Index reports, and others).
 
 ## License
 

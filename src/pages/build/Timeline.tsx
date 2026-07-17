@@ -6,10 +6,11 @@
 // colors across the two tracks. Data lives in ./timeline-data; prose is sliced
 // from the co-located markdown (via ?raw).
 
-import { useState } from 'react';
 import TL_MD from './content/04_timeline.md?raw';
 import { renderMarkdown } from '../../components/shared/render-markdown';
+import { ExpandAllToggle } from '../../components/shared/ExpandAllToggle';
 import { Overline } from '../../components/shared/Overline';
+import { useExpandableSet } from '../../hooks/useExpandableSet';
 import { EFFORT, ORG_PHASES, SOLO_PHASES, STAGES, TIMELINE_MAX_WEEKS, type Phase } from './timeline-data';
 import { SERIES_ACCENT } from './config';
 import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
@@ -169,7 +170,7 @@ function GanttRow({ phase, id, open, onToggle }: { phase: Phase; id: string; ope
   );
 }
 
-function Swimlane({ title, total, phases, prefix, open, toggle }: { title: string; total: string; phases: Phase[]; prefix: string; open: Set<string>; toggle: (id: string) => void }): JSX.Element {
+function Swimlane({ title, total, phases, prefix, isOpen, toggle }: { title: string; total: string; phases: Phase[]; prefix: string; isOpen: (id: string) => boolean; toggle: (id: string) => void }): JSX.Element {
   return (
     <div className="mt-5">
       <div className="mb-1.5 flex items-baseline gap-2 border-b border-border-light pb-1">
@@ -180,7 +181,7 @@ function Swimlane({ title, total, phases, prefix, open, toggle }: { title: strin
       </div>
       {phases.map((p, i) => {
         const id = `${prefix}-${i}`;
-        return <GanttRow key={id} id={id} phase={p} open={open.has(id)} onToggle={() => toggle(id)} />;
+        return <GanttRow key={id} id={id} phase={p} open={isOpen(id)} onToggle={() => toggle(id)} />;
       })}
     </div>
   );
@@ -188,34 +189,20 @@ function Swimlane({ title, total, phases, prefix, open, toggle }: { title: strin
 
 function GanttChart(): JSX.Element {
   const allIds = [...SOLO_PHASES.map((_, i) => `solo-${i}`), ...ORG_PHASES.map((_, i) => `org-${i}`)];
-  const [open, setOpen] = useState<Set<string>>(() => new Set());
-  const allOpen = open.size === allIds.length;
-  const toggle = (id: string): void =>
-    setOpen((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+  const { isOpen, toggle, allOpen, setAll } = useExpandableSet(allIds);
 
   return (
     <div className="mt-10">
       <div className="mb-4 flex items-center justify-between">
         <Overline as="span">Dual-track Gantt</Overline>
-        <button
-          type="button"
-          onClick={() => setOpen(allOpen ? new Set() : new Set(allIds))}
-          className="font-sans text-[12px] font-semibold text-action hover:text-action-hover"
-        >
-          {allOpen ? 'Collapse all' : 'Expand all'}
-        </button>
+        <ExpandAllToggle allOpen={allOpen} onToggle={setAll} />
       </div>
       <GanttLegend />
       <div className="overflow-x-auto">
         <div style={{ minWidth: 560 }}>
           <WeekAxis />
-          <Swimlane title="Solo build" total={EFFORT.soloCalendar} phases={SOLO_PHASES} prefix="solo" open={open} toggle={toggle} />
-          <Swimlane title="Organizational deployment" total={EFFORT.orgCalendar} phases={ORG_PHASES} prefix="org" open={open} toggle={toggle} />
+          <Swimlane title="Solo build" total={EFFORT.soloCalendar} phases={SOLO_PHASES} prefix="solo" isOpen={isOpen} toggle={toggle} />
+          <Swimlane title="Organizational deployment" total={EFFORT.orgCalendar} phases={ORG_PHASES} prefix="org" isOpen={isOpen} toggle={toggle} />
         </div>
       </div>
       <p className="m-0 mt-4 font-sans text-caption text-tertiary" style={{ lineHeight: 1.5 }}>

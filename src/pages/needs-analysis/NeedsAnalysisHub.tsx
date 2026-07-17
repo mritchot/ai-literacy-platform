@@ -5,7 +5,6 @@
 // reached directly from the blog after deploy.
 
 import { ArtifactHub } from './chrome';
-import { NEEDS_ANALYSIS_WRITEUP_URL } from './config';
 
 export default function NeedsAnalysisHub(): JSX.Element {
   return (
@@ -21,8 +20,6 @@ export default function NeedsAnalysisHub(): JSX.Element {
           reproduced here as they informed the build, evidence and citations intact.
         </p>
       }
-      writeupUrl={NEEDS_ANALYSIS_WRITEUP_URL}
-      writeupBlurb="A longer piece on how the series came together."
     />
   );
 }
