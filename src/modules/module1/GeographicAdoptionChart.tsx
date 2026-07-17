@@ -442,6 +442,7 @@ function BarChartFigure({
   animate?: boolean;
 }): JSX.Element {
   const viewport = useViewport();
+  const tokens = useChartTokens();
 
   if (rows.length === 0) {
     return (
@@ -538,7 +539,7 @@ function BarChartFigure({
                   contentStyle={TOOLTIP_STYLE}
                   itemStyle={TOOLTIP_ITEM_STYLE}
                   labelStyle={TOOLTIP_LABEL_STYLE}
-                  cursor={{ fill: 'rgba(0,0,0,0.04)' }}
+                  cursor={{ fill: tokens.cursorFill }}
                   // Recharts boundary: the Formatter generic doesn't model the
                   // per-entry `payload` shape, so the callback params are typed
                   // loosely and matched to the prop with `as any` (same pattern
@@ -750,7 +751,7 @@ export function CensusEnterpriseInset({
               contentStyle={TOOLTIP_STYLE}
               itemStyle={TOOLTIP_ITEM_STYLE}
               labelStyle={TOOLTIP_LABEL_STYLE}
-              cursor={{ fill: 'rgba(0,0,0,0.04)' }}
+              cursor={{ fill: tokens.cursorFill }}
               formatter={(value: number) => [`${value}%`, 'Adoption rate']}
             />
             <Bar dataKey="pct" fill={tokens.secondary} isAnimationActive animationDuration={400}>
