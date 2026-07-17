@@ -7,7 +7,6 @@
 // reached from the series-finale blog post after deploy.
 
 import { ArtifactHub } from './chrome';
-import { BUILD_WRITEUP_URL } from './config';
 
 export default function BuildHub(): JSX.Element {
   return (
@@ -26,8 +25,6 @@ export default function BuildHub(): JSX.Element {
           responsibilities, budget, stakeholder communications, and QA.
         </p>
       }
-      writeupUrl={BUILD_WRITEUP_URL}
-      writeupBlurb="The series-finale write-up on how the course and its platform came together."
     />
   );
 }
