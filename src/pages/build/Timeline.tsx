@@ -1,6 +1,6 @@
 // Project Timeline — interactive artifact page (`/#/build/timeline`). Leads on
-// the effort comparison (≈150–160 focused hours vs a ~735-hour baseline, a
-// 4.6–4.9× reduction, the reconciled canonical figures), then a two-swimlane
+// the effort comparison (≈210 focused hours vs a ~735-hour baseline, a
+// 3.5× reduction, the reconciled canonical figures), then a two-swimlane
 // Gantt of the ~8-week solo build against the 24–33-week organizational plan on
 // a shared week axis, with dated, click-to-expand phases sharing lifecycle
 // colors across the two tracks. Data lives in ./timeline-data; prose is sliced
@@ -58,7 +58,7 @@ function EffortComparison(): JSX.Element {
         <div
           className="space-y-4"
           role="img"
-          aria-label={`Focused solo effort about 150 to 160 hours, against a roughly 735-hour Chapman Alliance (2010) baseline for comparable Level-3 e-learning, a 4.6 to 4.9 times reduction.`}
+          aria-label={`Focused solo effort about 210 hours, against a roughly 735-hour Chapman Alliance (2010) baseline for comparable Level-3 e-learning, a 3.5 times reduction.`}
         >
           <EffortBar label="Focused solo effort" note={EFFORT.soloNote} hoursLabel={EFFORT.soloHoursLabel} widthPct={soloPct} accent={SERIES_ACCENT} />
           <EffortBar label="Conventional baseline" note={EFFORT.baselineNote} hoursLabel={EFFORT.baselineLabel} widthPct={100} accent="rgb(var(--ghost))" />

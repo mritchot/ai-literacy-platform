@@ -40,7 +40,7 @@ function CostContrast(): JSX.Element {
           {SOLO_TOTAL}
         </div>
         <p className="m-0 mt-1.5 font-sans text-caption text-tertiary" style={{ lineHeight: 1.5 }}>
-          Out-of-pocket only. The ~150–160 hours of labor is an approximate opportunity cost of roughly $7,500. Everything but the AI subscriptions ran on free tiers.
+          Out-of-pocket only. The ~210 hours of labor is an approximate opportunity cost of roughly $10,500. Everything but the AI subscriptions ran on free tiers.
         </p>
       </div>
       <div style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', borderTop: '3px solid rgb(var(--border))', padding: '20px 22px' }}>
