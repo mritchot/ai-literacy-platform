@@ -2,10 +2,8 @@
 //
 // These are public portfolio documents reached from the blog and from the
 // thank-you page. The registry below drives the hub index cards and gives
-// each reading page its title and PDF slug; the constants gate the
-// "Download PDF" buttons and the hub's blog write-up link until those
-// resources exist (same conditional-render pattern as STRIPE_TIP_URL /
-// WRITEUP_URL in ThankYou.tsx).
+// each reading page its title and PDF slug; the PDF map gates the
+// "Download PDF" buttons until those resources exist.
 
 import type { ArtifactMeta, SeriesConfig } from '../artifact-series/artifact-series';
 
@@ -61,13 +59,6 @@ export const ARTIFACT_PDFS: Record<string, string> = {
   'learner-persona': 'needs-analysis/learner-persona.pdf',
   'action-map': 'needs-analysis/action-map.pdf',
 };
-
-// Long-form blog post that frames the needs-analysis series on ritchot.me.
-// The individual series posts were retired 08-07-2026 in favor of a single
-// consolidated write-up, which all three series hubs now point at. The hub's
-// write-up link stays hidden while this is empty.
-export const NEEDS_ANALYSIS_WRITEUP_URL =
-  'https://ritchot.me/writing/i-built-an-ai-literacy-course/';
 
 // Series accent — the diligence purple already used on the thank-you page's
 // "artifact" cards. The needs analysis is part of the same behind-the-scenes

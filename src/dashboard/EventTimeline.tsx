@@ -80,7 +80,7 @@ const MODULE_PILL_BG: Record<number, string> = {
   1: '#E8EDE4',
   2: '#F0EAE0',
   3: '#E4EBF0',
-  4: '#EBE6EE',
+  4: '#EDE4F0',
 };
 const MODULE_PILL_TEXT: Record<number, string> = {
   1: '#3D4A35',

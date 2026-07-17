@@ -71,10 +71,6 @@ export interface ArtifactHubProps {
   title: string;
   /** Series-specific intro copy (one or more <p className="m-0 max-w-reading">). */
   intro: ReactNode;
-  /** Blog write-up URL; the link block is hidden while this is empty. */
-  writeupUrl: string;
-  /** Caption under the write-up link. */
-  writeupBlurb: string;
 }
 
 export function createArtifactSeries(series: SeriesConfig): {
@@ -268,8 +264,7 @@ export function createArtifactSeries(series: SeriesConfig): {
   // The series landing page: frames the artifacts and links to each one
   // (and to its PDF, when available). Standalone page inside PlatformShell,
   // reachable in every platform mode.
-  function ArtifactHub({ eyebrow, title, intro, writeupUrl, writeupBlurb }: ArtifactHubProps): JSX.Element {
-    const showWriteup = writeupUrl.trim().length > 0;
+  function ArtifactHub({ eyebrow, title, intro }: ArtifactHubProps): JSX.Element {
     return (
       <div className="mx-auto max-w-[820px] px-4 py-12 sm:px-8 lg:px-16 lg:py-14">
         <div className="mb-8 border-b border-border-light pb-5">
@@ -295,23 +290,6 @@ export function createArtifactSeries(series: SeriesConfig): {
         <h1 className="m-0 mb-4 font-display text-display font-normal text-ink">{title}</h1>
 
         <div className="space-y-4 font-sans text-body text-body">{intro}</div>
-
-        {showWriteup && (
-          <div className="mt-7">
-            <a
-              href={writeupUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
-              style={{ background: 'transparent', border: '1px solid rgb(var(--border))', padding: '9px 18px' }}
-            >
-              Read the write-up <span aria-hidden="true">→</span>
-            </a>
-            <p className="m-0 mt-2.5 font-sans text-caption text-tertiary" style={{ lineHeight: 1.5 }}>
-              {writeupBlurb}
-            </p>
-          </div>
-        )}
 
         {(() => {
           const groups = orderedGroups(series.artifacts);

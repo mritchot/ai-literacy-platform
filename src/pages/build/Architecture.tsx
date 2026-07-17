@@ -5,10 +5,13 @@
 // is fully keyboard-navigable. Records live in ./architecture-data; prose is
 // sliced from the co-located markdown (via ?raw).
 
-import { useId, useState } from 'react';
+import { useId } from 'react';
 import ARCH_MD from './content/03_architecture.md?raw';
 import { renderMarkdown } from '../../components/shared/render-markdown';
+import { DisclosureChevron } from '../../components/shared/DisclosureChevron';
+import { ExpandAllToggle } from '../../components/shared/ExpandAllToggle';
 import { Overline } from '../../components/shared/Overline';
+import { useExpandableSet } from '../../hooks/useExpandableSet';
 import { ADRS, type Adr } from './architecture-data';
 import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
 
@@ -58,9 +61,7 @@ function AdrCard({ adr, expanded, onToggle }: { adr: Adr; expanded: boolean; onT
           </span>
         </span>
         <StatusBadge status={adr.status} />
-        <span aria-hidden="true" className="text-tertiary transition-transform" style={{ transform: expanded ? 'rotate(180deg)' : 'none' }}>
-          ▾
-        </span>
+        <DisclosureChevron expanded={expanded} />
       </button>
       {expanded && (
         <div id={panelId} className="border-t border-border-light" style={{ padding: '16px 20px' }}>
@@ -76,17 +77,7 @@ function AdrCard({ adr, expanded, onToggle }: { adr: Adr; expanded: boolean; onT
 }
 
 function ArchitectureBrowser(): JSX.Element {
-  const [open, setOpen] = useState<Set<string>>(new Set());
-  const allOpen = open.size === ADRS.length;
-
-  const toggle = (id: string): void =>
-    setOpen((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  const setAll = (v: boolean): void => setOpen(v ? new Set(ADRS.map((a) => a.id)) : new Set());
+  const { isOpen, toggle, allOpen, setAll } = useExpandableSet(ADRS.map((a) => a.id));
 
   const adopted = ADRS.filter((a) => a.status === 'adopted');
   const declined = ADRS.filter((a) => a.status === 'declined');
@@ -95,18 +86,12 @@ function ArchitectureBrowser(): JSX.Element {
     <div className="mt-8">
       <div className="mb-4 flex items-center justify-between">
         <span className="font-mono text-[11px] text-muted">{ADRS.length} decisions</span>
-        <button
-          type="button"
-          onClick={() => setAll(!allOpen)}
-          className="font-sans text-[12px] font-semibold text-action hover:text-action-hover"
-        >
-          {allOpen ? 'Collapse all' : 'Expand all'}
-        </button>
+        <ExpandAllToggle allOpen={allOpen} onToggle={setAll} />
       </div>
 
       <div className="space-y-2.5">
         {adopted.map((a) => (
-          <AdrCard key={a.id} adr={a} expanded={open.has(a.id)} onToggle={() => toggle(a.id)} />
+          <AdrCard key={a.id} adr={a} expanded={isOpen(a.id)} onToggle={() => toggle(a.id)} />
         ))}
       </div>
 
@@ -116,7 +101,7 @@ function ArchitectureBrowser(): JSX.Element {
       </div>
       <div className="space-y-2.5">
         {declined.map((a) => (
-          <AdrCard key={a.id} adr={a} expanded={open.has(a.id)} onToggle={() => toggle(a.id)} />
+          <AdrCard key={a.id} adr={a} expanded={isOpen(a.id)} onToggle={() => toggle(a.id)} />
         ))}
       </div>
     </div>

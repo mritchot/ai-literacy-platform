@@ -18,6 +18,7 @@ import {
   TOOLTIP_LABEL_STYLE,
   TOOLTIP_STYLE,
 } from '../../utils/chart-config';
+import { useChartTokens } from '../../hooks/useChartTokens';
 import { useViewport } from '../../hooks/useViewport';
 
 interface CollaborationCategory {
@@ -41,6 +42,7 @@ interface PatternMeta {
 
 export function FivePatternBar({ categories }: FivePatternBarProps): JSX.Element {
   const viewport = useViewport();
+  const tokens = useChartTokens();
 
   const meta: PatternMeta[] = useMemo(
     () => [
@@ -91,7 +93,7 @@ export function FivePatternBar({ categories }: FivePatternBarProps): JSX.Element
               contentStyle={{ ...TOOLTIP_STYLE, marginTop: 56 }}
               itemStyle={TOOLTIP_ITEM_STYLE}
               labelStyle={TOOLTIP_LABEL_STYLE}
-              cursor={{ fill: 'rgba(0,0,0,0.04)' }}
+              cursor={{ fill: tokens.cursorFill }}
               // Allow vertical overflow past the chart's view box so the
               // pushed-down tooltip isn't clipped against the 80px bar
               // chart wrapper.

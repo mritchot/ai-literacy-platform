@@ -7,6 +7,7 @@
 import { useState } from 'react';
 import RES_MD from './content/06_resources.md?raw';
 import { renderMarkdown } from '../../components/shared/render-markdown';
+import { DisclosureChevron } from '../../components/shared/DisclosureChevron';
 import { Overline } from '../../components/shared/Overline';
 import {
   BUDGET_LINES,
@@ -97,9 +98,7 @@ function CustomVsArticulate(): JSX.Element {
         style={{ padding: '16px 20px' }}
       >
         <span className="font-sans text-h4 font-semibold text-ink">Why a custom platform, not Articulate?</span>
-        <span aria-hidden="true" className="text-tertiary transition-transform" style={{ transform: open ? 'rotate(180deg)' : 'none' }}>
-          ▾
-        </span>
+        <DisclosureChevron expanded={open} />
       </button>
       {open && (
         <div id="custom-articulate-panel" className="border-t border-border-light" style={{ padding: '18px 20px' }}>

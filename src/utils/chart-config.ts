@@ -54,42 +54,6 @@ export const DELEGATION_COLORS = ['#5c7050', '#B5C4AB', '#E8EDE4'] as const;
 // Automation pattern fills (Discernment shades) — categories[3..4].
 export const DISCERNMENT_COLORS = ['#506579', '#A8BCCA'] as const;
 
-// Plain hex shorthands for tokens that Recharts would reference as fills
-// or strokes — Recharts cannot read CSS variables, so we expose hex copies.
-//
-// NOTE: these are static LIGHT-mode hexes. Chart fills, strokes, and
-// inline value text must NOT reference them directly — use the
-// theme-resolved `useChartTokens()` hook instead, or dark mode keeps
-// light-mode shades on the sumi canvas.
-//
-// This table currently has no consumers: the last two (the AugAutoDashboard
-// and NextTokenDemo tab underlines) moved onto `rgb(var(--…))` directly,
-// since they are CSS borders and don't need the hex round-trip that SVG
-// paint does. Kept as the canonical light-mode reference for the chart
-// layer; delete it if nothing claims it.
-// Regenerated from the retuned light-mode tokens. Each entry mirrors its
-// own base rather than a neighbour's: `info` previously carried the old
-// discernment accent rather than --info, so it now moves to the real
-// --info value.
-export const TOKEN_HEX = {
-  action: '#0c6b76',
-  success: '#477655',
-  caution: '#7a6124',
-  error: '#8b4a4a',
-  info: '#5a6c7b',
-  delegation: '#5c7050',
-  description: '#7a6349',
-  discernment: '#506579',
-  diligence: '#6c5b74',
-  ink: '#1e1c19',
-  body: '#57534b',
-  secondary: '#635e55',
-  tertiary: '#6b665c',
-  muted: '#6b665c',
-  ghost: '#8a8478',
-  borderLight: '#e3ddd2',
-} as const;
-
 export function formatPercent(value: number, digits = 0): string {
   return `${value.toFixed(digits)}%`;
 }

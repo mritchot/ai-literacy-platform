@@ -5,7 +5,6 @@
 // also reached directly from the blog after deploy.
 
 import { ArtifactHub } from './chrome';
-import { EVALUATION_WRITEUP_URL } from './config';
 
 export default function EvaluationHub(): JSX.Element {
   return (
@@ -22,8 +21,6 @@ export default function EvaluationHub(): JSX.Element {
           awaiting a first deployment cohort.
         </p>
       }
-      writeupUrl={EVALUATION_WRITEUP_URL}
-      writeupBlurb="A longer piece on how the framework came together."
     />
   );
 }

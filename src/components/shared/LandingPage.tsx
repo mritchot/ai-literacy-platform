@@ -196,7 +196,7 @@ function CompetencyLegend(): JSX.Element {
               className="mb-1 mt-1 font-mono text-[10px] font-bold uppercase"
               style={{
                 letterSpacing: '0.14em',
-                color: `var(--competency-text-${c.key}, ${competencyTextHex(c.key)})`,
+                color: `rgb(var(--${c.key}-text))`,
               }}
             >
               {c.label}
@@ -209,16 +209,6 @@ function CompetencyLegend(): JSX.Element {
       </div>
     </section>
   );
-}
-
-function competencyTextHex(key: CompetencyKey): string {
-  return key === 'delegation'
-    ? '#3D4A35'
-    : key === 'description'
-      ? '#5A4A37'
-      : key === 'discernment'
-        ? '#354A57'
-        : '#4A3557';
 }
 
 function ModuleGrid({

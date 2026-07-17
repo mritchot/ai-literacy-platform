@@ -5,10 +5,8 @@
 
 import { useEffect } from 'react';
 import { useSectionParam } from '../../hooks/useSectionParam';
-import {
-  SectionContainer,
-  getModuleOrThrow,
-} from '../../components/shared/SectionContainer';
+import { SectionContainer } from '../../components/shared/SectionContainer';
+import { getModuleOrThrow } from '../../data/program';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { BottleneckCallout } from '../../components/shared/BottleneckCallout';

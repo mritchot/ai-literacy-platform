@@ -6,10 +6,8 @@ import { useEffect } from 'react';
 import { useSectionParam } from '../../hooks/useSectionParam';
 import { Citation } from '../../components/shared/Citation';
 import { KnowledgeCheck } from '../../components/shared/KnowledgeCheck';
-import {
-  SectionContainer,
-  getModuleOrThrow,
-} from '../../components/shared/SectionContainer';
+import { SectionContainer } from '../../components/shared/SectionContainer';
+import { getModuleOrThrow } from '../../data/program';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 

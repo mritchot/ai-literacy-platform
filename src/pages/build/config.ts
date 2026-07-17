@@ -32,7 +32,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     route: 'build/design-system',
     title: 'Design System',
     blurb:
-      'The living style guide rendered from the platform’s own tokens: 4D competency, neutral, feedback, and action swatches, the DM type scale, and a component gallery in both light and dark modes.',
+      'The living style guide rendered from the platform’s own tokens: 4D competency, neutral, feedback, and action swatches, the Source Serif 4 / IBM Plex type scale, and a component gallery in both light and dark modes.',
     type: 'Interactive',
     group: 'Design',
     openLabel: 'Open',
@@ -111,12 +111,6 @@ export const ARTIFACT_PDFS: Record<string, string> = {
   'communications': 'build/communications.pdf',
   'quality': 'build/quality.pdf',
 };
-
-// Long-form series-finale blog post ("behind the build") on ritchot.me. The
-// separate finale post was folded into the single consolidated write-up that
-// all three series hubs point at; while empty the hub's write-up link is hidden.
-export const BUILD_WRITEUP_URL =
-  'https://ritchot.me/writing/i-built-an-ai-literacy-course/';
 
 // Series accent — Description bronze from the 4D palette. Each behind-the-
 // scenes series carries one quiet 4D accent used only as a thin decorative
