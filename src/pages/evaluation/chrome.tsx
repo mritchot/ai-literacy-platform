@@ -5,7 +5,6 @@
 import { createArtifactSeries } from '../artifact-series/artifact-series';
 import { SERIES } from './config';
 
-export { TEXT_LINK } from '../artifact-series/artifact-series';
 export const {
   ArtifactTopBar,
   SeriesEyebrow,

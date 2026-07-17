@@ -32,7 +32,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     route: 'build/design-system',
     title: 'Design System',
     blurb:
-      'The living style guide rendered from the platform’s own tokens: 4D competency, neutral, feedback, and action swatches, the DM type scale, and a component gallery in both light and dark modes.',
+      'The living style guide rendered from the platform’s own tokens: 4D competency, neutral, feedback, and action swatches, the Source Serif 4 / IBM Plex type scale, and a component gallery in both light and dark modes.',
     type: 'Interactive',
     group: 'Design',
     openLabel: 'Open',

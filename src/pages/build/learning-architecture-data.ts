@@ -10,7 +10,6 @@
 
 import { MODULES as PROGRAM_MODULES, type CompetencyKey } from '../../data/program';
 
-export type { CompetencyKey } from '../../data/program';
 
 // ─── 4D competency palette (design system §1.1) ────────────────────────
 // Mirrors the tokens in tailwind.config.js / CompetencyDot. `bg` resolves
