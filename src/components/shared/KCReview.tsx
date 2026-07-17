@@ -381,7 +381,7 @@ function KCItemRow({
                               className="font-mono text-[9.5px] font-bold uppercase"
                               style={{ color: SUCCESS, letterSpacing: '0.1em' }}
                             >
-                              ★ Preferred
+                              Preferred
                             </span>
                           )}
                         </div>
@@ -435,7 +435,7 @@ function KCItemRow({
                 className="mb-1 font-mono text-[9.5px] font-bold uppercase"
                 style={{ color: SUCCESS, letterSpacing: '0.1em' }}
               >
-                ★ Preferred response · option {preferredOption.id.toUpperCase()}
+                Preferred response · option {preferredOption.id.toUpperCase()}
               </div>
               <div
                 className="mb-1.5 font-sans text-body-sm font-semibold text-ink"

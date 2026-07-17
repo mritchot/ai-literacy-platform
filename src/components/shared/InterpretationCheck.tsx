@@ -269,7 +269,7 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
               className="mb-1 font-mono text-[10px] font-bold uppercase"
               style={{ letterSpacing: '0.1em', color: 'rgb(var(--success))' }}
             >
-              ★ Best response
+              Best response
             </div>
             <div className="mb-1 font-sans text-body-sm font-semibold text-ink">
               {preferredOption.text}
