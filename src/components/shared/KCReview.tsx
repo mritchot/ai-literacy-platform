@@ -23,6 +23,7 @@
 
 import { useState } from 'react';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { useExpandableSet } from '../../hooks/useExpandableSet';
 import { MODULE_1_KC_ITEMS } from '../../modules/module1/knowledge-check-items';
 import { MODULE_2_KC_ITEMS } from '../../modules/module2/knowledge-check-items';
 import { MODULE_3_KC_ITEMS } from '../../modules/module3/knowledge-check-items';
@@ -135,21 +136,14 @@ export function KCReview(): JSX.Element {
   // items within the open module can be expanded simultaneously
   // (useful for comparing two adjacent KCs).
   const [openModuleId, setOpenModuleId] = useState<number | null>(null);
-  const [openItemKeys, setOpenItemKeys] = useState<Set<string>>(() => new Set());
+  const items = useExpandableSet<string>();
 
   const toggleModule = (moduleId: number) => {
     setOpenModuleId((prev) => (prev === moduleId ? null : moduleId));
-    setOpenItemKeys(new Set()); // collapse any open items when switching modules
+    items.clear(); // collapse any open items when switching modules
   };
 
-  const toggleItem = (key: string) => {
-    setOpenItemKeys((prev) => {
-      const next = new Set(prev);
-      if (next.has(key)) next.delete(key);
-      else next.add(key);
-      return next;
-    });
-  };
+  const toggleItem = items.toggle;
 
   return (
     <section
@@ -225,7 +219,7 @@ export function KCReview(): JSX.Element {
                         key={entry.storageKey}
                         entry={entry}
                         result={state.knowledgeChecks[entry.storageKey]}
-                        expanded={openItemKeys.has(entry.storageKey)}
+                        expanded={items.isOpen(entry.storageKey)}
                         onToggle={() => toggleItem(entry.storageKey)}
                       />
                     ))}
