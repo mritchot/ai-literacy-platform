@@ -10,7 +10,7 @@
 // This is intentional: the learner sees the same visual language in the
 // practice activity (P8) and the portable job aid (R2).
 
-import type { ReactNode } from 'react';
+import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 
 // ─────────────────────────────────────────────────────────────────────
 // Categories — terminal recommendations from the flowchart, also rendered
@@ -24,8 +24,8 @@ type CategoryKey = 'fully_delegable' | 'ai_assisted' | 'human_only';
 interface CategorySpec {
   key: CategoryKey;
   name: string;
-  /** Hex used for the chip border and the reference card's left rule.
-   *  Same hex in both modes — these are brand colors, not adaptive tones. */
+  /** Accent for the chip border and the reference card's left rule.
+   *  A competency token, so it follows the theme. */
   hex: string;
   /** Competency CSS-variable family that supplies the soft tint and text
    *  color (with a dark-mode equivalent in src/styles/index.css). */
@@ -40,7 +40,7 @@ const CATEGORIES: Record<CategoryKey, CategorySpec> = {
   fully_delegable: {
     key: 'fully_delegable',
     name: 'Fully Delegable',
-    hex: '#5E7080',
+    hex: 'rgb(var(--discernment))',
     cssVar: 'discernment',
     meaning: 'AI produces the output; you spot-check the result.',
     typical:
@@ -49,7 +49,7 @@ const CATEGORIES: Record<CategoryKey, CategorySpec> = {
   ai_assisted: {
     key: 'ai_assisted',
     name: 'AI-Assisted with Review',
-    hex: '#8B7355',
+    hex: 'rgb(var(--description))',
     cssVar: 'description',
     meaning:
       'AI produces a draft or structure; you direct, evaluate, and revise using your expertise.',
@@ -59,7 +59,7 @@ const CATEGORIES: Record<CategoryKey, CategorySpec> = {
   human_only: {
     key: 'human_only',
     name: 'Human-Only',
-    hex: '#6B7F5E',
+    hex: 'rgb(var(--delegation))',
     cssVar: 'delegation',
     meaning:
       'You produce the output. AI may assist with sub-components, but the core judgment stays with you.',
@@ -70,7 +70,7 @@ const CATEGORIES: Record<CategoryKey, CategorySpec> = {
 
 // Diamond stroke = Delegation brand color (the governing competency for
 // this guide). Same hex in light + dark mode by spec.
-const DIAMOND_STROKE = '#6B7F5E';
+const DIAMOND_STROKE = 'rgb(var(--delegation))';
 
 // ─────────────────────────────────────────────────────────────────────
 // Flowchart data — four questions, each with two exits. An exit either
@@ -201,7 +201,7 @@ export function R2DelegationGuide(): JSX.Element {
       <aside
         role="note"
         aria-label="One task, multiple components"
-        className="mt-6 rounded-lg"
+        className="mt-6"
         style={{
           background: 'rgb(var(--surface-warm))',
           border: '1px solid rgb(var(--border))',
@@ -237,7 +237,7 @@ export function R2DelegationGuide(): JSX.Element {
       <aside
         role="note"
         aria-label="The data gate"
-        className="mt-4 rounded-lg"
+        className="mt-4"
         style={{
           background: 'rgb(var(--surface-warm))',
           border: '1px solid rgb(var(--border))',
@@ -309,7 +309,7 @@ function FlowStep({
   isLast: boolean;
 }): JSX.Element {
   // Which exit is the "continue" path? We need this so the connector
-  // arrow can be positioned under that column (right column for Q1–Q3,
+  // line can be positioned under that column (right column for Q1–Q3,
   // never present for Q4 since both exits terminate).
   const continueExitIdx = q.exits.findIndex((e) => e.kind === 'continue');
 
@@ -366,8 +366,8 @@ function FlowStep({
           the flow), and the right exit is the "continue" route — except
           on Q4 where both exits are terminals (Human-Only / AI-Assisted). */}
       <div
-        className="mt-3 grid gap-3"
-        style={{ gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}
+        className="mt-3 grid"
+        style={{ gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: EXIT_GAP }}
       >
         {q.exits.map((exit, exitIdx) => (
           <ExitChip key={exitIdx} exit={exit} />
@@ -375,7 +375,7 @@ function FlowStep({
       </div>
 
       {/* Connector to next Q — only when there is a "continue" exit.
-          Drawn as a routing arrow that begins above the continue chip
+          Drawn as a routing line that begins above the continue chip
           and lands centered under the next diamond, so the routing is
           geometrically explicit. */}
       {!isLast && continueExitIdx >= 0 && (
@@ -395,6 +395,12 @@ function FlowStep({
 // ─────────────────────────────────────────────────────────────────────
 
 const DIAMOND_W = 320;
+
+// Gutter between the two exit chips. Shared with the Connector, which
+// anchors its tail to a chip's column-center and so needs the same gap
+// the grid actually renders — a hardcoded `gap-3` on one side and a
+// guess on the other is how the tail drifted off the chip before.
+const EXIT_GAP = 12;
 const DIAMOND_H = 84;
 const DIAMOND_INSET = 28; // horizontal inset of the flat top/bottom
 
@@ -434,17 +440,17 @@ function Diamond({
         <polygon
           points={points}
           fill="rgb(var(--white))"
-          stroke={DIAMOND_STROKE}
+          style={{ stroke: DIAMOND_STROKE }}
           strokeWidth={1.5}
           strokeLinejoin="round"
         />
-        {/* Q identifier (DM Mono small caps) — switched from olive to
+        {/* Q identifier (IBM Plex Mono small caps) — switched from olive to
             ink so it reads against the dark hexagon fill in dark mode. */}
         <text
           x={DIAMOND_W / 2}
           y={28}
           textAnchor="middle"
-          fontFamily="DM Mono, ui-monospace, monospace"
+          fontFamily="IBM Plex Mono, ui-monospace, monospace"
           fontSize={10}
           fontWeight={700}
           letterSpacing={1.4}
@@ -452,12 +458,12 @@ function Diamond({
         >
           {qid}
         </text>
-        {/* Pillar (DM Sans bold uppercase) */}
+        {/* Pillar (IBM Plex Sans bold uppercase) */}
         <text
           x={DIAMOND_W / 2}
           y={56}
           textAnchor="middle"
-          fontFamily="DM Sans, system-ui, sans-serif"
+          fontFamily="IBM Plex Sans, system-ui, sans-serif"
           fontSize={15}
           fontWeight={700}
           letterSpacing={0.6}
@@ -480,10 +486,9 @@ function ExitChip({ exit }: { exit: FlowExit }): JSX.Element {
     const cat = CATEGORIES[exit.category];
     return (
       <div
-        className="rounded-md"
         style={{
           background: `rgb(var(--${cat.cssVar}-light))`,
-          border: `1.5px solid ${cat.hex}`,
+          border: `1px solid ${cat.hex}`,
           padding: '10px 12px',
           textAlign: 'center',
         }}
@@ -521,10 +526,9 @@ function ExitChip({ exit }: { exit: FlowExit }): JSX.Element {
   // borders fade against the dark surface.
   return (
     <div
-      className="rounded-md"
       style={{
         background: 'rgb(var(--surface))',
-        border: '1.5px solid rgb(var(--border))',
+        border: '1px solid rgb(var(--border))',
         padding: '10px 12px',
         textAlign: 'center',
       }}
@@ -554,25 +558,60 @@ function ExitChip({ exit }: { exit: FlowExit }): JSX.Element {
 }
 
 // ─────────────────────────────────────────────────────────────────────
-// Connector — routing arrow between flowchart steps. Drawn as a single
+// Connector — routing line between flowchart steps. Drawn as a single
 // SVG path that begins above the continue-chip column (offset right or
 // left from center, matching where that exit lives) and curves down to
 // land centered under the next hexagon. This makes the routing
 // geometrically explicit instead of relying on the chip text alone.
 // Stroke is delegation olive so it reads in both light and dark mode.
+// No arrowhead: the line already carries the routing, and the chip it
+// hangs from names the destination.
 // ─────────────────────────────────────────────────────────────────────
 
-const CONNECTOR_W = 320; // matches DIAMOND_W so the arrow tail centers correctly under it
 const CONNECTOR_H = 56;
 
 function Connector({ continueOnRight }: { continueOnRight: boolean }): JSX.Element {
-  // Top x-coord of the path: column-center of the continue chip. The
-  // exit grid has 2 equal columns; their centers sit at 25% and 75% of
-  // the row's width. We approximate this by mapping to the connector's
-  // own viewBox: 25% of CONNECTOR_W = 80, 75% = 240. Bottom of the path
-  // always lands at center (CONNECTOR_W / 2 = 160).
-  const startX = continueOnRight ? CONNECTOR_W * 0.75 : CONNECTOR_W * 0.25;
-  const endX = CONNECTOR_W / 2;
+  // The line has to start above the *continue chip*, so its coordinate
+  // space must be the exit row's, not a box of its own. It previously
+  // drew into a fixed 320-wide viewBox (sized to DIAMOND_W) that
+  // `mx-auto`-centered inside the full-width exit row, and took its start
+  // as 75% of that inner box — which is only the chip's column-center
+  // when the row happens to be exactly 320 wide. In the 560px panel the
+  // row measures ~515, and the tail landed ~51px inside the chip it was
+  // meant to hang from. The end point never showed the fault because both
+  // it and the box are centered, so the two errors cancel.
+  //
+  // So: span the row, and map the viewBox 1:1 onto CSS pixels. A 1:1 map
+  // is what holds the stroke at a fixed weight instead of scaling it with
+  // the panel, which a percentage-width viewBox would do.
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [rowW, setRowW] = useState(0);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const measure = () => {
+      const w = el.getBoundingClientRect().width;
+      if (w > 0) setRowW(w);
+    };
+    // Measure synchronously, before paint: a ResizeObserver alone would
+    // leave the first frame with no width to draw into, and it only
+    // delivers on the rendering lifecycle — which is suspended while the
+    // tab is backgrounded. rAF-independent measurement here means the
+    // arrow is right on the first paint and the observer only has to
+    // handle later resizes (panel open on mobile vs. desktop widths).
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  // Two equal columns separated by EXIT_GAP, so each column is
+  // (rowW - gap) / 2 wide and the left one centers at half of that. The
+  // gap matters: dropping it is what left the old math 3px out even at
+  // the one width where the rest of it worked.
+  const colCenter = (rowW - EXIT_GAP) / 4;
+  const startX = continueOnRight ? rowW - colCenter : colCenter;
+  const endX = rowW / 2;
   const startY = 4;
   const endY = CONNECTOR_H - 8;
   // Cubic Bezier control points keep the curve gentle — straight at the
@@ -583,33 +622,21 @@ function Connector({ continueOnRight }: { continueOnRight: boolean }): JSX.Eleme
   const c2y = startY + (endY - startY) * 0.55;
 
   return (
-    <div className="mx-auto" style={{ width: CONNECTOR_W, maxWidth: '100%' }}>
+    <div ref={ref} style={{ width: '100%' }}>
       <svg
         width="100%"
-        viewBox={`0 0 ${CONNECTOR_W} ${CONNECTOR_H}`}
+        height={CONNECTOR_H}
+        viewBox={`0 0 ${rowW || 1} ${CONNECTOR_H}`}
+        preserveAspectRatio="xMidYMid meet"
         aria-hidden="true"
         style={{ display: 'block', margin: '4px auto' }}
       >
-        <defs>
-          <marker
-            id="r2-arrow-head"
-            viewBox="0 0 10 10"
-            refX="9"
-            refY="5"
-            markerWidth="7"
-            markerHeight="7"
-            orient="auto"
-          >
-            <path d="M0,0 L10,5 L0,10 z" fill={DIAMOND_STROKE} />
-          </marker>
-        </defs>
         <path
           d={`M ${startX} ${startY} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${endX} ${endY}`}
           fill="none"
-          stroke={DIAMOND_STROKE}
+          style={{ stroke: DIAMOND_STROKE }}
           strokeWidth={2.5}
           strokeLinecap="round"
-          markerEnd="url(#r2-arrow-head)"
         />
       </svg>
     </div>
@@ -623,7 +650,7 @@ function Connector({ continueOnRight }: { continueOnRight: boolean }): JSX.Eleme
 function Q4Note(): JSX.Element {
   return (
     <p
-      className="m-0 mt-5 rounded-md text-body-sm"
+      className="m-0 mt-5 text-body-sm"
       style={{
         color: 'rgb(var(--secondary))',
         background: 'rgb(var(--surface))',
@@ -648,7 +675,6 @@ function Q4Note(): JSX.Element {
 function CategoryCard({ cat }: { cat: CategorySpec }): JSX.Element {
   return (
     <article
-      className="rounded-lg"
       style={{
         background: `rgb(var(--${cat.cssVar}-light))`,
         border: '1px solid rgb(var(--border))',

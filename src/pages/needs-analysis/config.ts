@@ -73,7 +73,7 @@ export const NEEDS_ANALYSIS_WRITEUP_URL =
 // "artifact" cards. The needs analysis is part of the same behind-the-scenes
 // home, so it carries the same quiet accent to tie the set together. Used
 // only as a thin decorative rule/border, never as a competency tag.
-export const SERIES_ACCENT = '#7A6B80';
+export const SERIES_ACCENT = 'rgb(var(--diligence))';
 
 // Bound series configuration consumed by ./chrome (which re-exports the
 // shared artifact-series components with this series baked in).

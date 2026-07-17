@@ -52,7 +52,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     route: 'build/timeline',
     title: 'Project Timeline',
     blurb:
-      'The ~8-week solo build set against a 24–33-week five-person organizational plan, led by effort: ~150–160 focused hours against a ~735-hour industry baseline for comparable e-learning.',
+      'The ~8-week solo build set against a 24–33-week five-person organizational plan, led by effort: ~210 focused hours against a ~735-hour industry baseline for comparable e-learning.',
     type: 'Interactive',
     group: 'Project Management',
     openLabel: 'View',
@@ -124,7 +124,7 @@ export const BUILD_WRITEUP_URL =
 // Discernment slate, needs-analysis uses Diligence purple, and the build
 // series uses Description bronze — the "specify it precisely" competency,
 // fitting for the design-and-project-management work of the build.
-export const SERIES_ACCENT = '#8B7355';
+export const SERIES_ACCENT = 'rgb(var(--description))';
 
 // Bound series configuration consumed by ./chrome (which re-exports the
 // shared artifact-series components with this series baked in).

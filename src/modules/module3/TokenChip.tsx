@@ -34,7 +34,6 @@ export function TokenChip({ text, index, animate = false, style }: TokenChipProp
         background: palette.bg,
         color: palette.fg,
         padding: '3px 6px',
-        borderRadius: 4,
         fontSize: 13,
         margin: '3px',
         // Subtle border so chips read as bounded units even when the

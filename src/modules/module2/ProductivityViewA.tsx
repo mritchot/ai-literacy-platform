@@ -132,7 +132,7 @@ export function ProductivityViewA({ rows }: ProductivityViewAProps): JSX.Element
         representative AI-assisted tasks for that category.
       </p>
 
-      <div className="overflow-x-auto rounded-md" style={{ border: '1px solid rgb(var(--border))' }}>
+      <div className="overflow-x-auto" style={{ border: '1px solid rgb(var(--border))' }}>
         <table className="w-full border-collapse" role="table">
           <caption className="sr-only">
             Time savings, wages, and labor cost with and without AI by occupation. Click a column
@@ -312,7 +312,7 @@ function SavingsBar({ value }: { value: number }): JSX.Element {
   const tokens = useChartTokens();
   const pct = Math.max(0, Math.min(100, value));
   return (
-    <div className="relative h-5 overflow-hidden rounded-sm" style={{ background: 'rgb(var(--border-light))' }}>
+    <div className="relative h-5 overflow-hidden" style={{ background: 'rgb(var(--border-light))' }}>
       <div
         aria-hidden="true"
         className="absolute inset-y-0 left-0 transition-[width] duration-300"

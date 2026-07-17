@@ -1,7 +1,7 @@
 // R1QuickReference — body content for the 4D Competency Quick-Reference Card.
 // Rendered inside `ReferencePanel`. Mirrors the finalized PDF's structure
 // (header text + two-loop visual + four quadrant tables + footer) but uses
-// the platform's design tokens (DM Serif Display / DM Sans / DM Mono) and
+// the platform's design tokens (Source Serif 4 / IBM Plex Sans / IBM Plex Mono) and
 // adapts to dark mode via the `--{competency}-light` and `--{competency}-text`
 // CSS variables added during 3B-8.
 
@@ -12,6 +12,18 @@ const HEADER_TEXT =
 
 type CompetencyKey = 'delegation' | 'description' | 'discernment' | 'diligence';
 
+// Competency accents as tokens rather than hexes, so the diagram follows
+// the theme. Consumed via the CSS `fill` / `stroke` *properties*, never
+// the same-named SVG attributes — attributes are parsed as SVG paint and
+// reject var(), while the CSS properties resolve it normally.
+// Declared above QUADRANTS: that array reads it at module-evaluation time.
+const COMP_COLOR = {
+  delegation: 'rgb(var(--delegation))',
+  description: 'rgb(var(--description))',
+  discernment: 'rgb(var(--discernment))',
+  diligence: 'rgb(var(--diligence))',
+} as const;
+
 interface SubComponent {
   name: string;
   meaning: string;
@@ -21,10 +33,9 @@ interface SubComponent {
 interface QuadrantData {
   key: CompetencyKey;
   label: string;
-  // A solid hex used for the tinted quadrant header. Matches the 4D `bg`
-  // values from the design system. Kept inline (not via CSS var) because
-  // it is the same hex in both light and dark mode by spec — the dark
-  // mode shifts the surrounding wash, not the brand color itself.
+  // Solid fill for the quadrant header, from the 4D competency tokens.
+  // The accents carry distinct light and dark values, so the header text
+  // over this has to invert with the theme too.
   bg: string;
   definition: string;
   subs: SubComponent[];
@@ -34,7 +45,7 @@ const QUADRANTS: QuadrantData[] = [
   {
     key: 'delegation',
     label: 'Delegation',
-    bg: '#6B7F5E',
+    bg: COMP_COLOR.delegation,
     definition: 'Deciding what work is appropriate for you, for AI, or for both.',
     subs: [
       {
@@ -62,7 +73,7 @@ const QUADRANTS: QuadrantData[] = [
   {
     key: 'description',
     label: 'Description',
-    bg: '#8B7355',
+    bg: COMP_COLOR.description,
     definition: 'Communicating what you need from AI clearly enough to get a useful result.',
     subs: [
       {
@@ -88,7 +99,7 @@ const QUADRANTS: QuadrantData[] = [
   {
     key: 'discernment',
     label: 'Discernment',
-    bg: '#5E7080',
+    bg: COMP_COLOR.discernment,
     definition: 'Evaluating what AI gives you back before you use it.',
     subs: [
       {
@@ -114,7 +125,7 @@ const QUADRANTS: QuadrantData[] = [
   {
     key: 'diligence',
     label: 'Diligence',
-    bg: '#7A6B80',
+    bg: COMP_COLOR.diligence,
     definition: 'Taking responsibility for what you do with AI and how you do it.',
     subs: [
       {
@@ -203,7 +214,7 @@ export function R1QuickReference(): JSX.Element {
 function QuadrantCard({ q }: { q: QuadrantData }): JSX.Element {
   return (
     <article
-      className="flex flex-col rounded-lg overflow-hidden"
+      className="flex flex-col overflow-hidden"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -224,13 +235,13 @@ function QuadrantCard({ q }: { q: QuadrantData }): JSX.Element {
       >
         <div
           className="font-mono text-[10px] font-bold uppercase"
-          style={{ color: 'rgba(255, 255, 255, 0.78)', letterSpacing: '0.12em' }}
+          style={{ color: 'rgb(var(--white) / 0.78)', letterSpacing: '0.12em' }}
         >
           {q.label}
         </div>
         <p
           className="m-0 mt-1 font-sans text-[12.5px]"
-          style={{ color: '#FFFFFF', lineHeight: 1.4, fontWeight: 500 }}
+          style={{ color: 'rgb(var(--white))', lineHeight: 1.4, fontWeight: 500 }}
         >
           {q.definition}
         </p>
@@ -351,13 +362,6 @@ function Detail({
 // whose column centers line up with the circle centers (25% and 75% of
 // the locked 380px diagram width).
 
-const COMP_HEX = {
-  delegation: '#6B7F5E',
-  description: '#8B7355',
-  discernment: '#5E7080',
-  diligence: '#7A6B80',
-} as const;
-
 // Diagram canvas geometry (kept in module scope so the captions row can
 // match the SVG width and circle x-positions exactly).
 const DIAGRAM_WIDTH = 380;
@@ -370,7 +374,7 @@ const CIRCLE_R = 60;
 function TwoLoopDiagram(): JSX.Element {
   return (
     <figure
-      className="m-0 rounded-lg"
+      className="m-0"
       style={{
         background: 'rgb(var(--surface-warm))',
         border: '1px solid rgb(var(--border-light))',
@@ -391,21 +395,9 @@ function TwoLoopDiagram(): JSX.Element {
           style={{ display: 'block' }}
         >
           <defs>
-            {/* Vertical gradient on the left loop: olive (Delegation) at
-                the top, purple (Diligence) at the bottom. */}
-            <linearGradient id="r1-grad-left" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={COMP_HEX.delegation} />
-              <stop offset="100%" stopColor={COMP_HEX.diligence} />
-            </linearGradient>
-            {/* Vertical gradient on the right loop: amber (Description) at
-                the top, blue-gray (Discernment) at the bottom. */}
-            <linearGradient id="r1-grad-right" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={COMP_HEX.description} />
-              <stop offset="100%" stopColor={COMP_HEX.discernment} />
-            </linearGradient>
             {/* Arrowheads use the *top* color of their respective loop
-                because the arc terminates near 3 o'clock — at the gradient's
-                upper region. */}
+                because the arc terminates near 3 o'clock — inside the
+                upper half's stroke. */}
             <marker
               id="r1-arrow-left"
               viewBox="0 0 10 10"
@@ -415,7 +407,7 @@ function TwoLoopDiagram(): JSX.Element {
               markerHeight="5"
               orient="auto"
             >
-              <path d="M0,0 L10,5 L0,10 z" fill={COMP_HEX.delegation} />
+              <path d="M0,0 L10,5 L0,10 z" style={{ fill: COMP_COLOR.delegation }} />
             </marker>
             <marker
               id="r1-arrow-right"
@@ -426,7 +418,7 @@ function TwoLoopDiagram(): JSX.Element {
               markerHeight="5"
               orient="auto"
             >
-              <path d="M0,0 L10,5 L0,10 z" fill={COMP_HEX.description} />
+              <path d="M0,0 L10,5 L0,10 z" style={{ fill: COMP_COLOR.description }} />
             </marker>
           </defs>
 
@@ -435,12 +427,11 @@ function TwoLoopDiagram(): JSX.Element {
             cx={LEFT_CX}
             cy={CIRCLE_CY}
             r={CIRCLE_R}
-            gradientId="r1-grad-left"
             markerId="r1-arrow-left"
             topLabel="Delegation"
-            topColor={COMP_HEX.delegation}
+            topColor={COMP_COLOR.delegation}
             bottomLabel="Diligence"
-            bottomColor={COMP_HEX.diligence}
+            bottomColor={COMP_COLOR.diligence}
           />
 
           {/* Right loop — Description (top) / Discernment (bottom) */}
@@ -448,12 +439,11 @@ function TwoLoopDiagram(): JSX.Element {
             cx={RIGHT_CX}
             cy={CIRCLE_CY}
             r={CIRCLE_R}
-            gradientId="r1-grad-right"
             markerId="r1-arrow-right"
             topLabel="Description"
-            topColor={COMP_HEX.description}
+            topColor={COMP_COLOR.description}
             bottomLabel="Discernment"
-            bottomColor={COMP_HEX.discernment}
+            bottomColor={COMP_COLOR.discernment}
           />
         </svg>
 
@@ -495,7 +485,6 @@ function Loop({
   cx,
   cy,
   r,
-  gradientId,
   markerId,
   topLabel,
   topColor,
@@ -505,7 +494,6 @@ function Loop({
   cx: number;
   cy: number;
   r: number;
-  gradientId: string;
   markerId: string;
   topLabel: string;
   topColor: string;
@@ -516,20 +504,34 @@ function Loop({
   // is inverted relative to math). Start at 20° (just below 3 o'clock),
   // sweep clockwise through 90° (bottom), 180° (left), 270° (top) to end
   // at -20° (340°, just above 3 o'clock). Gap at 3 o'clock = 40°.
-  const startRad = (20 * Math.PI) / 180;
-  const endRad = (-20 * Math.PI) / 180;
-  const startX = cx + r * Math.cos(startRad);
-  const startY = cy + r * Math.sin(startRad);
-  const endX = cx + r * Math.cos(endRad);
-  const endY = cy + r * Math.sin(endRad);
-  const d = `M ${startX} ${startY} A ${r} ${r} 0 1 1 ${endX} ${endY}`;
+  //
+  // The loop used to be one path carrying a vertical gradient. It is now
+  // two flat strokes meeting at the sweep's midpoint — 9 o'clock, exactly
+  // halfway through the 320° sweep — so each competency owns its half of
+  // the ring outright. The first half travels through 6 o'clock and is the
+  // bottom color; the second travels through 12 o'clock and is the top.
+  const pt = (deg: number) => {
+    const rad = (deg * Math.PI) / 180;
+    return `${cx + r * Math.cos(rad)} ${cy + r * Math.sin(rad)}`;
+  };
+  // Each half sweeps 160°, so large-arc-flag stays 0; sweep-flag is 1
+  // (clockwise) for both.
+  const bottomHalf = `M ${pt(20)} A ${r} ${r} 0 0 1 ${pt(180)}`;
+  const topHalf = `M ${pt(180)} A ${r} ${r} 0 0 1 ${pt(340)}`;
 
   return (
     <g>
       <path
-        d={d}
+        d={bottomHalf}
         fill="none"
-        stroke={`url(#${gradientId})`}
+        style={{ stroke: bottomColor }}
+        strokeWidth="2.5"
+        strokeLinecap="round"
+      />
+      <path
+        d={topHalf}
+        fill="none"
+        style={{ stroke: topColor }}
         strokeWidth="2.5"
         strokeLinecap="round"
         markerEnd={`url(#${markerId})`}
@@ -539,11 +541,10 @@ function Loop({
         x={cx}
         y={cy - 6}
         textAnchor="middle"
-        fontFamily="DM Sans, system-ui, sans-serif"
+        fontFamily="IBM Plex Sans, system-ui, sans-serif"
         fontSize="12"
         fontWeight="700"
-        fill={topColor}
-        style={{ textTransform: 'uppercase', letterSpacing: '0.06em' }}
+        style={{ fill: topColor, textTransform: "uppercase", letterSpacing: "0.06em" }}
       >
         {topLabel}
       </text>
@@ -552,7 +553,7 @@ function Loop({
         x={cx}
         y={cy + 8}
         textAnchor="middle"
-        fontFamily="DM Mono, monospace"
+        fontFamily="IBM Plex Mono, monospace"
         fontSize="11"
         fill="rgb(var(--tertiary))"
       >
@@ -563,11 +564,10 @@ function Loop({
         x={cx}
         y={cy + 22}
         textAnchor="middle"
-        fontFamily="DM Sans, system-ui, sans-serif"
+        fontFamily="IBM Plex Sans, system-ui, sans-serif"
         fontSize="12"
         fontWeight="700"
-        fill={bottomColor}
-        style={{ textTransform: 'uppercase', letterSpacing: '0.06em' }}
+        style={{ fill: bottomColor, textTransform: "uppercase", letterSpacing: "0.06em" }}
       >
         {bottomLabel}
       </text>

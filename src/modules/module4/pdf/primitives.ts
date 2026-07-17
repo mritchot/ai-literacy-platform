@@ -75,10 +75,26 @@ export function resetTracking(doc: jsPDF): void {
 // jsPDF's built-in Helvetica is WinAnsi-only. Replace common Unicode
 // punctuation with safe equivalents so they render correctly. Em-dash,
 // en-dash, smart quotes, and ellipsis are all in WinAnsi.
+//
+// The embedded faces are latin subsets, whose coverage stops short of a
+// few characters this document reaches for. A codepoint the face lacks
+// draws as nothing at all — jsPDF has no per-glyph fallback the way a
+// browser does — so the substitutions below are what keep a missing
+// glyph from silently deleting itself:
+//
+//   → (U+2192)  outside the latin range in every embedded face.
+//
+// Δ (U+0394) has the same problem and is deliberately NOT mapped here:
+// it heads the assessment-growth change column, where no ASCII stand-in
+// reads as "delta", and it was absent from the previous faces too — so
+// that header has always drawn blank. Fixing it means either a wider
+// subset (built from a complete face rather than the latin cut) or a
+// worded header; both are calls to make with the design, not here.
 export function safe(text: string): string {
   return text
     .replace(/[‘’]/g, "'")
-    .replace(/[“”]/g, '"');
+    .replace(/[“”]/g, '"')
+    .replace(/→/g, '->');
 }
 
 // ─── Page-level primitives ────────────────────────────────────────
@@ -175,10 +191,10 @@ export function drawHeader(
   doc.text(safe(opts.eyebrow.toUpperCase()), MARGIN_LEFT, top);
   resetTracking(doc);
 
-  // Display title — DM Serif Display gives the document its
+  // Display title — Source Serif 4 gives the document its
   // editorial weight. Bumped to 26pt to match the spec's display
   // size now that we're rendering with a real serif.
-  doc.setFont(FONT.serif, 'normal');
+  doc.setFont(FONT.serif, 'bold');
   doc.setFontSize(26);
   setTextHex(doc, C.ink);
   doc.text(safe(opts.title), MARGIN_LEFT, top + 30);
@@ -247,10 +263,10 @@ export function drawCardBase(
   setFillHex(doc, C.white);
   setStrokeHex(doc, C.border);
   doc.setLineWidth(0.75);
-  doc.roundedRect(x, y, w, h, 6, 6, 'FD');
+  doc.rect(x, y, w, h, 'FD');
   if (leftAccent) {
     setFillHex(doc, leftAccent);
-    // 3pt left rule, inset slightly from rounded corners.
+    // 3pt left rule, inset slightly from corners.
     doc.rect(x, y + 6, 3, h - 12, 'F');
   }
 }
@@ -279,7 +295,7 @@ export function drawField(
   setFillHex(doc, C.surfaceWarm);
   setStrokeHex(doc, C.borderLight);
   doc.setLineWidth(0.5);
-  doc.roundedRect(rect.x, rect.y, rect.w, rect.h, 5, 5, 'FD');
+  doc.rect(rect.x, rect.y, rect.w, rect.h, 'FD');
 
   const padX = 10;
   const innerX = rect.x + padX;
@@ -433,7 +449,7 @@ export function drawStatLine(
   const boxH = 9.5 + padY * 2 + 4;
 
   setFillHex(doc, light);
-  doc.roundedRect(x, y, boxW, boxH, 4, 4, 'F');
+  doc.rect(x, y, boxW, boxH, 'F');
 
   let cx = x + padX;
   const baseY = y + padY + 10;
@@ -476,7 +492,7 @@ export function drawDiligenceStatement(
   setFillHex(doc, C.surfaceWarm);
   setStrokeHex(doc, C.borderLight);
   doc.setLineWidth(0.5);
-  doc.roundedRect(x, y, w, h, 5, 5, 'FD');
+  doc.rect(x, y, w, h, 'FD');
 
   const padX = 11;
   const innerX = x + padX;

@@ -1,63 +1,81 @@
-// font-loader.ts — runtime loader for the DM font family used by the
-// S10 Competency Profile PDF. jsPDF only ships Helvetica/Times/Courier
-// in its base; to render the R8 design with its actual DM Serif
-// Display titles, DM Sans body, and DM Mono overlines, we need to
-// register the TTF binaries with jsPDF's virtual file system.
+// font-loader.ts — runtime loader for the typefaces used by the S10
+// Competency Profile PDF. jsPDF only ships Helvetica/Times/Courier in its
+// base; to render the R8 design with its actual Source Serif 4 titles,
+// IBM Plex Sans body, and IBM Plex Mono overlines, we need to register the
+// TTF binaries with jsPDF's virtual file system.
 //
 // Approach:
 //   • Vite imports each TTF via `?url`, which resolves to a real URL
 //     in dev and (with viteSingleFile) to a base64 data URI in the
 //     production bundle.
-//   • At first PDF generation, fetch all six font URLs in parallel,
-//     decode the ArrayBuffers into byte-string form (jsPDF's expected
-//     input for `addFileToVFS`), and cache the result on a module-
-//     level promise so subsequent generations reuse the binaries.
+//   • At first PDF generation, fetch the font URLs in parallel, decode the
+//     ArrayBuffers into byte-string form (jsPDF's expected input for
+//     `addFileToVFS`), and cache the result on a module-level promise so
+//     subsequent generations reuse the binaries.
 //   • For each new jsPDF document instance we still call
 //     `addFileToVFS` + `addFont` — registrations are per-document.
 //
-// Bundle impact: ~437 KB of TTF data gets inlined into dist/index.html
-// as base64 data URIs. That's a one-time cost; the fonts are only
-// fetched when the learner clicks Download PDF, but the bytes ride
-// along in the single-file bundle regardless.
+// The TTFs are the same latin subsets the web bundle loads through
+// @fontsource, decompressed out of woff2 (which jsPDF cannot parse), so
+// the PDF and the platform render the same faces from the same versions.
+//
+// Only the six (family, style) pairs the document actually calls are
+// registered. Every byte here is inlined into dist/index.html as base64
+// whether or not the learner ever clicks Download, so an unused weight is
+// a permanent tax on first paint. A `setFont` pair missing from this table
+// falls back to Helvetica silently — add the face here as well as calling it.
 
 import type { jsPDF } from 'jspdf';
 
-import dmSansRegularUrl from './fonts/DMSans-Regular.ttf?url';
-import dmSansBoldUrl from './fonts/DMSans-Bold.ttf?url';
-import dmSansItalicUrl from './fonts/DMSans-Italic.ttf?url';
-import dmSerifRegularUrl from './fonts/DMSerifDisplay-Regular.ttf?url';
-import dmSerifItalicUrl from './fonts/DMSerifDisplay-Italic.ttf?url';
-import dmMonoMediumUrl from './fonts/DMMono-Medium.ttf?url';
+import sourceSerifSemiBoldUrl from './fonts/SourceSerif4-SemiBold.ttf?url';
+import sourceSerifItalicUrl from './fonts/SourceSerif4-Italic.ttf?url';
+import plexSansRegularUrl from './fonts/PlexSans-Regular.ttf?url';
+import plexSansBoldUrl from './fonts/PlexSans-Bold.ttf?url';
+import plexSansItalicUrl from './fonts/PlexSans-Italic.ttf?url';
+import plexMonoMediumUrl from './fonts/PlexMono-Medium.ttf?url';
 
 /** Logical family names that the PDF generator uses to switch fonts. */
-type DMFamily = 'DMSans' | 'DMSerif' | 'DMMono';
-/** jsPDF font-style identifiers — note: DM Mono only has up to
- *  Medium (500), so a "bold" style request would fall back to the
- *  Medium TTF registered as 'normal'. */
-type DMStyle = 'normal' | 'bold' | 'italic';
+type PdfFamily = 'PlexSans' | 'SourceSerif4' | 'PlexMono';
+/** jsPDF font-style identifiers. */
+type PdfStyle = 'normal' | 'bold' | 'italic';
 
 interface FontSpec {
   url: string;
   vfsName: string; // Filename used inside jsPDF's virtual FS
-  family: DMFamily;
-  style: DMStyle;
+  family: PdfFamily;
+  style: PdfStyle;
 }
 
 const FONTS: FontSpec[] = [
-  { url: dmSansRegularUrl, vfsName: 'DMSans-Regular.ttf', family: 'DMSans', style: 'normal' },
-  { url: dmSansBoldUrl, vfsName: 'DMSans-Bold.ttf', family: 'DMSans', style: 'bold' },
-  { url: dmSansItalicUrl, vfsName: 'DMSans-Italic.ttf', family: 'DMSans', style: 'italic' },
-  { url: dmSerifRegularUrl, vfsName: 'DMSerif-Regular.ttf', family: 'DMSerif', style: 'normal' },
-  { url: dmSerifItalicUrl, vfsName: 'DMSerif-Italic.ttf', family: 'DMSerif', style: 'italic' },
-  // DM Mono only ships up to Medium (500) — registered as 'normal'
-  // since it's the workhorse weight for our tracked overlines.
-  { url: dmMonoMediumUrl, vfsName: 'DMMono-Medium.ttf', family: 'DMMono', style: 'normal' },
+  // Source Serif 4 carries the display title and the big score numerals.
+  // It registers at 600 under the 'bold' style: the platform's display
+  // type moved to 600 in the ritchot.me alignment, and Source Serif 4 at
+  // 400 sets markedly lighter than the display face it replaced.
+  {
+    url: sourceSerifSemiBoldUrl,
+    vfsName: 'SourceSerif4-SemiBold.ttf',
+    family: 'SourceSerif4',
+    style: 'bold',
+  },
+  // Editorial italics (the framing line, the closing card) stay at 400.
+  {
+    url: sourceSerifItalicUrl,
+    vfsName: 'SourceSerif4-Italic.ttf',
+    family: 'SourceSerif4',
+    style: 'italic',
+  },
+  { url: plexSansRegularUrl, vfsName: 'PlexSans-Regular.ttf', family: 'PlexSans', style: 'normal' },
+  { url: plexSansBoldUrl, vfsName: 'PlexSans-Bold.ttf', family: 'PlexSans', style: 'bold' },
+  { url: plexSansItalicUrl, vfsName: 'PlexSans-Italic.ttf', family: 'PlexSans', style: 'italic' },
+  // Medium (500) registers as 'normal' — it is the workhorse weight for
+  // the tracked overlines, and matches the weight they carried before.
+  { url: plexMonoMediumUrl, vfsName: 'PlexMono-Medium.ttf', family: 'PlexMono', style: 'normal' },
 ];
 
 interface LoadedFont {
   vfsName: string;
-  family: DMFamily;
-  style: DMStyle;
+  family: PdfFamily;
+  style: PdfStyle;
   binary: string;
 }
 
@@ -100,8 +118,8 @@ async function loadAllBinaries(): Promise<LoadedFont[]> {
   return cachedBinaries;
 }
 
-/** Register all DM fonts (Sans/Serif/Mono) with a fresh jsPDF doc. */
-export async function registerDMFonts(doc: jsPDF): Promise<void> {
+/** Register the PDF's typefaces (Sans/Serif/Mono) with a fresh jsPDF doc. */
+export async function registerPdfFonts(doc: jsPDF): Promise<void> {
   const fonts = await loadAllBinaries();
   for (const f of fonts) {
     doc.addFileToVFS(f.vfsName, f.binary);

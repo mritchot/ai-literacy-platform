@@ -18,7 +18,7 @@ import { useState, type ReactNode } from 'react';
 // Constants
 // ─────────────────────────────────────────────────────────────────────
 
-const DILIGENCE = '#7A6B80';
+const DILIGENCE = 'rgb(var(--diligence))';
 
 // ─────────────────────────────────────────────────────────────────────
 // Discussion area data — 4 numbered sections matching the PDF
@@ -262,7 +262,6 @@ export function R7PolicyStarter(): JSX.Element {
 function HowToUse(): JSX.Element {
   return (
     <div
-      className="rounded-md"
       style={{
         background: 'rgb(var(--surface))',
         border: '1px solid rgb(var(--border-light))',
@@ -320,7 +319,7 @@ function AreaCard({
   const panelId = `r7-area-${area.id}`;
   return (
     <article
-      className="rounded-lg overflow-hidden"
+      className="overflow-hidden"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -363,7 +362,7 @@ function AreaCard({
         </div>
         <span
           aria-hidden="true"
-          className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md"
+          className="flex h-7 w-7 flex-shrink-0 items-center justify-center"
           style={{
             color: 'rgb(var(--diligence-text))',
             background: 'rgb(var(--surface))',
@@ -516,10 +515,9 @@ function ConversationFrames(): JSX.Element {
 function FrameCard({ frame }: { frame: ConversationFrame }): JSX.Element {
   return (
     <article
-      className="rounded-lg"
       style={{
         background: 'rgb(var(--diligence-light))',
-        border: `1.5px solid ${DILIGENCE}`,
+        border: `1px solid ${DILIGENCE}`,
         padding: '12px 16px',
       }}
     >

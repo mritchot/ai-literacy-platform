@@ -20,7 +20,7 @@
 //     a constant identity signal across both pages.
 //   • Warm-cream page background (#FAFAF7) gives the document a
 //     "paper" feel distinct from the in-app screen.
-//   • Card-based layout: white fill, 6pt rounded corners, 3pt left
+//   • Card-based layout: white fill, 6pt corners, 3pt left
 //     rule in the relevant 4D color for the competency cards (and
 //     for the milestones card on page 2).
 //   • Surface-warm-tinted "field" boxes inside each card hold the
@@ -29,16 +29,18 @@
 //   • Dark inverted closing card on page 2 — the only block that
 //     flips the warm-paper convention.
 //
-// Typography — the real DM fonts (Sans, Serif Display, Mono) are
-// embedded via the font-loader module. Without them the PDF would
-// fall back to Helvetica and look generic; with them, headings get
-// DM Serif Display's editorial weight, body and labels use DM Sans,
-// and tracked overlines use DM Mono.
+// Typography — the platform's real typefaces are embedded via the
+// font-loader module. Without them the PDF would fall back to Helvetica
+// and look generic; with them, headings get Source Serif 4's editorial
+// weight, body and labels use IBM Plex Sans, and tracked overlines use
+// IBM Plex Mono.
 //
 // Constraints still in play
-//   • DM Mono only ships up to Medium (500), so what reads as "bold
-//     mono" in the design is actually Medium — registered as the
-//     normal style of the DMMono family.
+//   • Only the six (family, style) pairs this document calls are
+//     embedded. `setFont` with an unregistered pair falls back to
+//     Helvetica silently, so a new pair means a new face in font-loader.
+//   • What reads as "bold mono" in the design is Medium (500),
+//     registered as the normal style of the PlexMono family.
 //   • Gradient R8 tag is rendered as four flat-edged colored
 //     rectangles tiled side-by-side (no native gradients).
 //   • No alpha — the faded eyebrow on the dark closing card uses a
@@ -52,7 +54,7 @@
 //   profile retains the full responses.
 
 import { jsPDF } from 'jspdf';
-import { registerDMFonts } from './font-loader';
+import { registerPdfFonts } from './font-loader';
 import { drawPage1 } from './pdf/page1';
 import { drawPage2 } from './pdf/page2';
 import { drawPageFooter } from './pdf/primitives';
@@ -111,9 +113,9 @@ export interface CompletionProfileData {
 export async function generateCompletionPDF(data: CompletionProfileData): Promise<void> {
   const doc = new jsPDF({ unit: 'pt', format: 'letter', orientation: 'landscape' });
 
-  // Embed the DM font family — this is what makes the PDF look like
-  // the R8 design rather than a generic Helvetica fallback.
-  await registerDMFonts(doc);
+  // Embed the typefaces — this is what makes the PDF look like the R8
+  // design rather than a generic Helvetica fallback.
+  await registerPdfFonts(doc);
 
   drawPage1(doc, data);
   doc.addPage();

@@ -71,7 +71,7 @@ const EMAIL = 'michael@ritchot.me';
 // Diligence accent — the page's primary identity color. The tip card
 // uses it as a top border, matching the "artifact / takeaway" treatment
 // used elsewhere (S10 profile header, milestone block).
-const DILIGENCE = '#7A6B80';
+const DILIGENCE = 'rgb(var(--diligence))';
 
 export default function ThankYou(): JSX.Element {
   const { track } = useAnalytics();
@@ -151,7 +151,7 @@ function DiligenceStatement(): JSX.Element {
     <section
       aria-label="AI Diligence Statement"
       id="diligence-statement"
-      className="mt-10 rounded-lg"
+      className="mt-10"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -203,7 +203,7 @@ function OriginStory(): JSX.Element {
             Ritchot's Corner"). The ノ is a waving hand, so it pairs
             naturally with the greeting. Rendered in mono so the
             middle-dot katakana characters fall back to a font that
-            handles them cleanly (DM Sans is Latin-only). */}
+            handles them cleanly (IBM Plex Sans is Latin-only). */}
         <span
           className="font-mono text-secondary"
           style={{ marginRight: '0.4em', fontWeight: 400 }}
@@ -266,7 +266,7 @@ function NeedsAnalysisBlock(): JSX.Element {
   return (
     <section
       aria-label="The needs analysis"
-      className="mt-10 rounded-lg"
+      className="mt-10"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -287,8 +287,8 @@ function NeedsAnalysisBlock(): JSX.Element {
       </p>
       <a
         href="#/needs-analysis"
-        className="inline-flex items-center gap-2 rounded-md font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
-        style={{ background: 'transparent', border: '1.5px solid rgb(var(--border))', padding: '9px 18px' }}
+        className="inline-flex items-center gap-2 font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
+        style={{ background: 'transparent', border: '1px solid rgb(var(--border))', padding: '9px 18px' }}
       >
         Read the needs analysis →
       </a>
@@ -310,7 +310,7 @@ function EvaluationBlock(): JSX.Element {
   return (
     <section
       aria-label="The evaluation framework"
-      className="mt-6 rounded-lg"
+      className="mt-6"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -331,8 +331,8 @@ function EvaluationBlock(): JSX.Element {
       </p>
       <a
         href="#/evaluation"
-        className="inline-flex items-center gap-2 rounded-md font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
-        style={{ background: 'transparent', border: '1.5px solid rgb(var(--border))', padding: '9px 18px' }}
+        className="inline-flex items-center gap-2 font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
+        style={{ background: 'transparent', border: '1px solid rgb(var(--border))', padding: '9px 18px' }}
       >
         Read the evaluation framework →
       </a>
@@ -356,7 +356,7 @@ function BuildBlock(): JSX.Element {
   return (
     <section
       aria-label="Behind the build"
-      className="mt-6 rounded-lg"
+      className="mt-6"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -378,8 +378,8 @@ function BuildBlock(): JSX.Element {
       </p>
       <a
         href="#/build"
-        className="inline-flex items-center gap-2 rounded-md font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
-        style={{ background: 'transparent', border: '1.5px solid rgb(var(--border))', padding: '9px 18px' }}
+        className="inline-flex items-center gap-2 font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
+        style={{ background: 'transparent', border: '1px solid rgb(var(--border))', padding: '9px 18px' }}
       >
         Go behind the build →
       </a>
@@ -393,7 +393,7 @@ function TipCard({ onClick }: { onClick: () => void }): JSX.Element {
   return (
     <section
       aria-label="Support this work"
-      className="mt-10 rounded-lg"
+      className="mt-10"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -419,7 +419,7 @@ function TipCard({ onClick }: { onClick: () => void }): JSX.Element {
         target="_blank"
         rel="noopener noreferrer"
         onClick={onClick}
-        className="inline-flex items-center gap-2 rounded-md font-sans text-[13px] font-semibold text-[rgb(var(--white))] no-underline hover:opacity-90"
+        className="inline-flex items-center gap-2 font-sans text-[13px] font-semibold text-[rgb(var(--white))] no-underline hover:opacity-90"
         style={{
           background: DILIGENCE,
           padding: '10px 18px',
@@ -459,7 +459,7 @@ function BlogCard({
   return (
     <section
       aria-label="Stay connected"
-      className="mt-10 rounded-lg"
+      className="mt-10"
       style={{
         background: 'rgb(var(--white))',
         // Neutral top border — this card isn't tied to a specific 4D
@@ -490,10 +490,10 @@ function BlogCard({
         target="_blank"
         rel="noopener noreferrer"
         onClick={onBlogClick}
-        className="inline-flex items-center gap-2 rounded-md font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
+        className="inline-flex items-center gap-2 font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
         style={{
           background: 'transparent',
-          border: '1.5px solid rgb(var(--border))',
+          border: '1px solid rgb(var(--border))',
           padding: '9px 18px',
         }}
       >
@@ -527,10 +527,10 @@ function BlogCard({
             target="_blank"
             rel="noopener noreferrer"
             onClick={onCourseHubClick}
-            className="inline-flex items-center gap-2 rounded-md font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
+            className="inline-flex items-center gap-2 font-sans text-[13px] font-semibold text-ink no-underline hover:bg-surface"
             style={{
               background: 'transparent',
-              border: '1.5px solid rgb(var(--border))',
+              border: '1px solid rgb(var(--border))',
               padding: '9px 18px',
             }}
           >

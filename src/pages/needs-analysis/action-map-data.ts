@@ -14,6 +14,8 @@ export type QuadrantKey = 'delegation' | 'description' | 'discernment' | 'dilige
 
 export interface ColorSet {
   bg: string;
+  /** Faint tint of `bg`, for chips sitting on a card surface. */
+  wash: string;
   light: string;
   mid: string;
   text: string;
@@ -47,40 +49,44 @@ export interface Reference {
 
 // ─── Data ──────────────────────────────────────────────────────────────
 
-// `bg` and `mid` are the 4D competency accent hexes — brand colors used
-// identically in light and dark themes across the platform. They stay
-// literal both because accent identity is theme-invariant and because they
-// feed hex-alpha compositing (`c.bg + '15'`, `${c.bg}25`), which requires
-// raw hex strings. `light` / `text` resolve through the theme-aware
-// competency tokens in src/styles/index.css — their light-mode values are
-// identical to the original prototype hexes (#E8EDE4 / #3D4A35 etc.), and
-// the `.dark` overrides let the map follow dark mode. `textSub` replaces
-// the prototype's `c.text + 'AA'` hex-alpha trick (0xAA ≈ 67% alpha),
-// which can't be appended to a `rgb(var(...))` expression.
+// Every entry resolves through the theme-aware competency tokens in
+// src/styles/index.css. `bg` used to stay literal on the grounds that
+// accent identity was theme-invariant; it isn't any more — the 4D accents
+// now carry distinct light and dark values, so a literal here would strand
+// the map's quadrants in their light-mode shades on the sumi canvas.
+//
+// `wash` and `textSub` exist because hex-alpha can't be appended to a
+// `rgb(var(...))` expression: they replace the prototype's `c.bg + '15'`
+// and `c.text + 'AA'` compositing tricks with real alpha channels.
+// `mid` is a light-mode tint value used only as a hairline on the wash.
 export const COLORS: Record<QuadrantKey, ColorSet> = {
   delegation: {
-    bg: '#6B7F5E',
+    bg: 'rgb(var(--delegation))',
+    wash: 'rgb(var(--delegation) / 0.08)',
     light: 'rgb(var(--delegation-light))',
     mid: '#B5C4AB',
     text: 'rgb(var(--delegation-text))',
     textSub: 'rgb(var(--delegation-text) / 0.67)',
   },
   description: {
-    bg: '#8B7355',
+    bg: 'rgb(var(--description))',
+    wash: 'rgb(var(--description) / 0.08)',
     light: 'rgb(var(--description-light))',
     mid: '#C9B99E',
     text: 'rgb(var(--description-text))',
     textSub: 'rgb(var(--description-text) / 0.67)',
   },
   discernment: {
-    bg: '#5E7080',
+    bg: 'rgb(var(--discernment))',
+    wash: 'rgb(var(--discernment) / 0.08)',
     light: 'rgb(var(--discernment-light))',
     mid: '#A8BCCA',
     text: 'rgb(var(--discernment-text))',
     textSub: 'rgb(var(--discernment-text) / 0.67)',
   },
   diligence: {
-    bg: '#7A6B80',
+    bg: 'rgb(var(--diligence))',
+    wash: 'rgb(var(--diligence) / 0.08)',
     light: 'rgb(var(--diligence-light))',
     mid: '#BEA8C9',
     text: 'rgb(var(--diligence-text))',

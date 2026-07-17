@@ -27,7 +27,7 @@ import { Overline } from '../shared/Overline';
 
 // Accents reused from the program palette so the assessment surface
 // reads as native to the rest of the platform.
-const ASSESSMENT_ACCENT = '#5E7080';
+const ASSESSMENT_ACCENT = 'rgb(var(--discernment))';
 const SUCCESS = 'rgb(var(--success))';
 const SUCCESS_LIGHT = 'rgb(var(--success-light))';
 const ERROR = 'rgb(var(--error))';
@@ -156,8 +156,8 @@ function ResultsFooter(): JSX.Element {
       </p>
       <Link
         to="/module/4/section/10"
-        className="inline-flex items-center gap-2.5 rounded-md bg-action px-5 py-3 font-sans text-[14px] font-semibold text-[rgb(var(--white))] no-underline transition-colors duration-150 hover:bg-action-hover"
-        style={{ border: '1.5px solid rgb(var(--action))' }}
+        className="inline-flex items-center gap-2.5 bg-action px-5 py-3 font-sans text-[14px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] no-underline transition-colors duration-[160ms] hover:bg-action-hover"
+        style={{ border: '1px solid rgb(var(--action))' }}
       >
         See your competency profile
         <Icon name="arrowRight" size={14} />
@@ -189,7 +189,6 @@ function ScoreHeader({
   return (
     <section
       aria-label="Assessment score summary"
-      className="rounded-lg"
       style={{
         background: WHITE,
         border: '1px solid rgb(var(--border))',
@@ -210,7 +209,7 @@ function ScoreHeader({
         <ScoreCell label="Pre-assessment" value={`${preCorrect} / ${total}`} sub="Baseline" />
         <ScoreCell label="Post-assessment" value={`${postCorrect} / ${total}`} sub="After Module 4" />
         <div
-          className="flex flex-col justify-center rounded-md"
+          className="flex flex-col justify-center"
           style={{
             background: deltaBg,
             border: `1px solid ${deltaColor === 'rgb(var(--muted))' ? 'rgb(var(--border-light))' : deltaColor}`,
@@ -255,7 +254,7 @@ function ScoreCell({
 }): JSX.Element {
   return (
     <div
-      className="flex flex-col justify-center rounded-md"
+      className="flex flex-col justify-center"
       style={{
         background: SURFACE,
         border: '1px solid rgb(var(--border-light))',
@@ -312,7 +311,6 @@ function BlockBreakdown({
   return (
     <section
       aria-label="Score by block"
-      className="rounded-lg"
       style={{
         background: WHITE,
         border: '1px solid rgb(var(--border))',
@@ -328,7 +326,6 @@ function BlockBreakdown({
           return (
             <div
               key={block}
-              className="rounded-md"
               style={{
                 background: SURFACE,
                 border: '1px solid rgb(var(--border-light))',
@@ -423,7 +420,6 @@ function ConstructCard({
 
   return (
     <li
-      className="rounded-lg"
       style={{
         background: WHITE,
         border: '1px solid rgb(var(--border))',
@@ -437,7 +433,7 @@ function ConstructCard({
         type="button"
         onClick={() => setExpanded((v) => !v)}
         aria-expanded={expanded}
-        className="flex w-full items-start gap-3 rounded-lg text-left hover:bg-[rgb(var(--surface))]"
+        className="flex w-full items-start gap-3 text-left hover:bg-[rgb(var(--surface))]"
         style={{ padding: '14px 18px', cursor: 'pointer' }}
       >
         <span
@@ -525,7 +521,7 @@ function ResponsePill({
   const bg = ok ? SUCCESS_LIGHT : wrong ? ERROR_LIGHT : SURFACE;
   return (
     <span
-      className="inline-flex items-center gap-1.5 rounded-md font-mono text-[11px] font-bold uppercase"
+      className="inline-flex items-center gap-1.5 font-mono text-[11px] font-bold uppercase"
       style={{
         background: bg,
         color,
@@ -569,7 +565,6 @@ function ComparisonSide({
   const accent = isCorrect ? SUCCESS : chosenOption ? ERROR : 'rgb(var(--muted))';
   return (
     <div
-      className="rounded-md"
       style={{
         background: SURFACE,
         border: '1px solid rgb(var(--border-light))',
@@ -614,7 +609,6 @@ function ComparisonSide({
             overflowWrap: 'anywhere',
             background: WHITE,
             border: '1px solid rgb(var(--border-light))',
-            borderRadius: 6,
             padding: '10px 12px',
           }}
         >
@@ -638,7 +632,7 @@ function ComparisonSide({
             </div>
             {showFeedback && (
               <div
-                className="mt-2 rounded-md font-sans text-body-sm text-body"
+                className="mt-2 font-sans text-body-sm text-body"
                 style={{
                   background: WHITE,
                   border: '1px solid rgb(var(--border-light))',
@@ -660,7 +654,6 @@ function ComparisonSide({
             baseline and we honor the "no answer reveal" framing. */}
         {showFeedback && chosenOption && !chosenOption.isCorrect && correctOption && (
           <div
-            className="rounded-md"
             style={{
               background: SUCCESS_LIGHT,
               border: `1px solid ${SUCCESS}`,
@@ -714,7 +707,7 @@ function IncompletePlaceholder({
 }): JSX.Element {
   return (
     <div
-      className="rounded-lg font-sans"
+      className="font-sans"
       style={{
         background: SURFACE,
         border: '1px solid rgb(var(--border))',

@@ -65,7 +65,7 @@ const UNCOMMON_EXAMPLE = {
 export function StickerAnalogyDiagram(): JSX.Element {
   return (
     <figure
-      className="m-0 rounded-lg"
+      className="m-0"
       aria-label="How a fixed vocabulary of tokens covers different text"
       style={{
         background: 'rgb(var(--white))',
@@ -170,7 +170,7 @@ function ExampleRow({
   // visually rhyme.
   const sourceBox = (
     <div
-      className="rounded-md font-sans text-body text-ink"
+      className="font-sans text-body text-ink"
       style={{
         background: 'rgb(var(--surface-warm))',
         border: '1px solid rgb(var(--border-light))',

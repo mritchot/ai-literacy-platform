@@ -1,7 +1,7 @@
 // ReferenceTriggerButton — shared button used by ReferenceTrigger.
 // Renders the folder-tab handle used inside `<ReferenceTabRail>`: a
-// rounded-left card flush against the right viewport edge, sticking
-// out as a "pull tab" affordance. (An 'inline' variant existed for the
+// card flush against the right viewport edge, sticking out as a
+// "pull tab" affordance. (An 'inline' variant existed for the
 // pre-tab-rail layout; it had no remaining call sites and was removed.)
 //
 // All trigger buttons share the same content: book icon + reference
@@ -57,7 +57,7 @@ function TabHandle({
       type="button"
       onClick={onClick}
       aria-label={`Open ${label} reference panel`}
-      className="group inline-flex flex-col items-center transition-all duration-200 hover:translate-x-[-4px]"
+      className="group inline-flex flex-col items-center transition-transform duration-200 hover:translate-x-[-4px]"
       style={{
         // Restore pointer events — the parent rail has
         // `pointer-events: none` so its empty space lets clicks through
@@ -73,11 +73,6 @@ function TabHandle({
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
         borderRight: 'none',
-        borderTopLeftRadius: 10,
-        borderBottomLeftRadius: 10,
-        borderTopRightRadius: 0,
-        borderBottomRightRadius: 0,
-        boxShadow: '-3px 2px 10px rgba(0, 0, 0, 0.08)',
         cursor: 'pointer',
         gap: 8,
       }}

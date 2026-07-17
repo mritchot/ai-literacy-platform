@@ -16,11 +16,11 @@ export function ProgressBar({ value, height = 3, label }: ProgressBarProps): JSX
       aria-valuemin={0}
       aria-valuemax={100}
       aria-label={label ?? 'Module progress'}
-      className="overflow-hidden rounded-full bg-border-light"
+      className="overflow-hidden bg-border-light"
       style={{ height }}
     >
       <div
-        className="h-full rounded-full bg-action transition-[width] duration-300"
+        className="h-full bg-action transition-[width] duration-300"
         style={{ width: `${clamped * 100}%` }}
       />
     </div>

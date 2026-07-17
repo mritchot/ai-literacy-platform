@@ -88,7 +88,6 @@ const KC_2_2: KnowledgeCheckItemData = {
         className="my-3 w-full border-collapse font-sans text-body-sm"
         style={{
           border: '1px solid rgb(var(--border))',
-          borderRadius: 6,
           tableLayout: 'fixed',
           lineHeight: 1.5,
         }}

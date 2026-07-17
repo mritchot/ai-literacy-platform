@@ -8,10 +8,10 @@
 //
 // Color palette: Description amber throughout. The 4D system marks this
 // as the "how to communicate to the model" pillar, and R3 is the portable
-// version of that competency. Borders + overlines use the static brand
-// hex (#8B7355) so they read on both light and dark surfaces; row tints
-// use the `--description-light` CSS var which adapts to dark mode
-// automatically.
+// version of that competency. Borders + overlines use the `--description`
+// token, which now carries a distinct dark-mode value, so they read on
+// both grounds; row tints use `--description-light`, which adapts the
+// same way.
 
 import { useState, type ReactNode } from 'react';
 import { Icon } from '../../shared/Icon';
@@ -20,7 +20,7 @@ import { Icon } from '../../shared/Icon';
 // Constants
 // ─────────────────────────────────────────────────────────────────────
 
-const DESCRIPTION = '#8B7355';
+const DESCRIPTION = 'rgb(var(--description))';
 
 interface SpecRow {
   /** Left column — the dimension to specify. Bold sentence-case. */
@@ -234,7 +234,7 @@ function SectionCard({
   const panelId = `r3-section-${section.id}`;
   return (
     <article
-      className="rounded-lg overflow-hidden"
+      className="overflow-hidden"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -282,7 +282,7 @@ function SectionCard({
             (ready to collapse), and rotated -90° when closed. */}
         <span
           aria-hidden="true"
-          className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md"
+          className="flex h-7 w-7 flex-shrink-0 items-center justify-center"
           style={{
             color: 'rgb(var(--description-text))',
             background: 'rgb(var(--surface))',
@@ -438,7 +438,7 @@ function LoopStrip(): JSX.Element {
   return (
     <section
       aria-label="After the first output: the Description-Discernment loop"
-      className="mt-6 rounded-lg"
+      className="mt-6"
       style={{
         background: 'rgb(var(--surface-warm))',
         border: '1px solid rgb(var(--border))',
@@ -484,7 +484,6 @@ function LoopRow({
 }): JSX.Element {
   return (
     <li
-      className="rounded-md"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border-light))',

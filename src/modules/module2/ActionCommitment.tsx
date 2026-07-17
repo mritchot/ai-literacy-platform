@@ -78,9 +78,9 @@ export function ActionCommitment(): JSX.Element {
   return (
     <section
       aria-label="Action commitment: two tasks to reconsider"
-      className="rounded-xl bg-[rgb(var(--white))]"
+      className="bg-[rgb(var(--white))]"
       style={{
-        border: '1.5px solid rgb(var(--border))',
+        border: '1px solid rgb(var(--border))',
         borderTop: '3px solid rgb(var(--action))',
         padding: '24px 24px 22px',
       }}
@@ -121,12 +121,12 @@ export function ActionCommitment(): JSX.Element {
           onClick={onSave}
           disabled={!canSave}
           aria-disabled={!canSave}
-          className="rounded-md font-sans text-[13px] font-semibold transition-colors duration-150 disabled:cursor-not-allowed"
+          className="font-sans text-[13px] font-semibold transition-colors duration-[160ms] disabled:cursor-not-allowed"
           style={{
             padding: '10px 22px',
             background: showSavedBadge ? 'transparent' : !canSave ? 'rgb(var(--ghost))' : 'rgb(var(--action))',
             color: showSavedBadge ? 'rgb(var(--success))' : !canSave ? 'rgb(var(--muted))' : 'rgb(var(--white))',
-            border: showSavedBadge ? '1.5px solid rgb(var(--success))' : 'none',
+            border: showSavedBadge ? '1px solid rgb(var(--success))' : 'none',
           }}
         >
           {showSavedBadge ? 'Saved ✓' : hasSaved ? 'Update commitment' : 'Save commitment'}
@@ -160,7 +160,6 @@ function CommitmentField({
   const fieldId = `commitment-task-${idx}`;
   return (
     <div
-      className="rounded-lg"
       style={{
         background: 'rgb(var(--surface))',
         border: '1px solid rgb(var(--border))',
@@ -180,7 +179,7 @@ function CommitmentField({
         onFocus={onFocus}
         rows={4}
         aria-label={`${label} response`}
-        className="block w-full resize-y rounded-md border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
+        className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
         style={{ minHeight: 100, lineHeight: 1.55 }}
         placeholder="Type your response here…"
       />

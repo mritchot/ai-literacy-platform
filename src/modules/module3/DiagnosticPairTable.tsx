@@ -68,7 +68,7 @@ export function DiagnosticPairTable(): JSX.Element {
   const isMobile = viewport === 'mobile';
   return (
     <figure
-      className="m-0 rounded-lg"
+      className="m-0"
       aria-label="Diagnostic pair reference table"
       style={{
         background: 'rgb(var(--white))',
@@ -179,7 +179,6 @@ function MobilePairCard({
   const dim = variant === 'extension';
   return (
     <div
-      className="rounded-md"
       style={{
         background: dim ? 'rgb(var(--surface))' : 'rgb(var(--white))',
         border: '1px solid rgb(var(--border-light))',

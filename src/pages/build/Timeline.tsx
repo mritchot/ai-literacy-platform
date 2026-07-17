@@ -1,6 +1,6 @@
 // Project Timeline — interactive artifact page (`/#/build/timeline`). Leads on
-// the effort comparison (≈150–160 focused hours vs a ~735-hour baseline, a
-// 4.6–4.9× reduction, the reconciled canonical figures), then a two-swimlane
+// the effort comparison (≈210 focused hours vs a ~735-hour baseline, a
+// 3.5× reduction, the reconciled canonical figures), then a two-swimlane
 // Gantt of the ~8-week solo build against the 24–33-week organizational plan on
 // a shared week axis, with dated, click-to-expand phases sharing lifecycle
 // colors across the two tracks. Data lives in ./timeline-data; prose is sliced
@@ -37,8 +37,8 @@ function EffortBar({ label, note, hoursLabel, widthPct, accent }: { label: strin
         <span className="font-sans text-body-sm font-semibold text-ink">{label}</span>
         <span className="font-mono text-body-sm font-semibold text-ink">{hoursLabel}</span>
       </div>
-      <div className="h-3 w-full overflow-hidden rounded-full" style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border-light))' }}>
-        <div className="h-full rounded-full" style={{ width: `${widthPct}%`, background: accent }} />
+      <div className="h-3 w-full overflow-hidden" style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border-light))' }}>
+        <div className="h-full" style={{ width: `${widthPct}%`, background: accent }} />
       </div>
       <div className="mt-1 font-sans text-caption text-tertiary">{note}</div>
     </div>
@@ -50,7 +50,7 @@ function EffortComparison(): JSX.Element {
   return (
     <section
       aria-label="Effort comparison"
-      className="mt-8 rounded-xl"
+      className="mt-8"
       style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', borderTop: `3px solid ${SERIES_ACCENT}`, padding: '22px 24px' }}
     >
       <Overline className="mb-4">Effort · not calendar</Overline>
@@ -58,7 +58,7 @@ function EffortComparison(): JSX.Element {
         <div
           className="space-y-4"
           role="img"
-          aria-label={`Focused solo effort about 150 to 160 hours, against a roughly 735-hour Chapman Alliance (2010) baseline for comparable Level-3 e-learning, a 4.6 to 4.9 times reduction.`}
+          aria-label={`Focused solo effort about 210 hours, against a roughly 735-hour Chapman Alliance (2010) baseline for comparable Level-3 e-learning, a 3.5 times reduction.`}
         >
           <EffortBar label="Focused solo effort" note={EFFORT.soloNote} hoursLabel={EFFORT.soloHoursLabel} widthPct={soloPct} accent={SERIES_ACCENT} />
           <EffortBar label="Conventional baseline" note={EFFORT.baselineNote} hoursLabel={EFFORT.baselineLabel} widthPct={100} accent="rgb(var(--ghost))" />
@@ -87,7 +87,7 @@ function GanttLegend(): JSX.Element {
     <div className="mb-4 flex flex-wrap gap-x-4 gap-y-1.5">
       {Object.values(STAGES).map((s) => (
         <span key={s.label} className="inline-flex items-center gap-1.5 font-sans text-[11px] text-tertiary">
-          <span aria-hidden="true" className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} />
+          <span aria-hidden="true" className="h-2.5 w-2.5" style={{ background: s.color }} />
           {s.label}
         </span>
       ))}
@@ -141,16 +141,16 @@ function GanttRow({ phase, id, open, onToggle }: { phase: Phase; id: string; ope
         aria-expanded={open}
         aria-controls={`${id}-d`}
         aria-label={`${phase.name}, ${phase.when}, stage: ${stage.label}`}
-        className="flex w-full items-center gap-2 rounded transition-colors hover:bg-surface"
+        className="flex w-full items-center gap-2 transition-colors duration-[160ms] hover:bg-surface"
         style={{ padding: '5px 0' }}
       >
         <span className="shrink-0 font-sans text-[11px] font-semibold text-ink" style={{ width: LABEL_W, lineHeight: 1.25 }}>
           {phase.name}
         </span>
-        <span className="relative h-5 flex-1 overflow-hidden rounded-sm" style={{ background: 'rgb(var(--surface))' }}>
+        <span className="relative h-5 flex-1 overflow-hidden" style={{ background: 'rgb(var(--surface))' }}>
           <Gridlines />
           <span
-            className="absolute top-1/2 h-3.5 -translate-y-1/2 rounded-sm"
+            className="absolute top-1/2 h-3.5 -translate-y-1/2"
             style={{ left: `${left}%`, width: `${width}%`, minWidth: 6, background: stage.color }}
           />
         </span>
@@ -237,7 +237,7 @@ export default function Timeline(): JSX.Element {
       <h1 className="m-0 mb-2 font-display text-display font-normal text-ink">Project Timeline</h1>
       <p className="m-0 mb-6 font-sans text-h3 font-normal text-secondary">AI Literacy for the Modern Workforce</p>
 
-      <div className="max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
+      <div className="prose-longform max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
 
       <EffortComparison />
       <GanttChart />
@@ -245,7 +245,7 @@ export default function Timeline(): JSX.Element {
       {SECTIONS.map((s) => (
         <section key={s.heading} className="mt-10">
           <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{s.heading}</h2>
-          <div className="max-w-reading">{renderMarkdown(s.body)}</div>
+          <div className="prose-longform max-w-reading">{renderMarkdown(s.body)}</div>
         </section>
       ))}
 

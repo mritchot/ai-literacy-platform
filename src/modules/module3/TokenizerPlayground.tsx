@@ -105,7 +105,7 @@ export function TokenizerPlayground(): JSX.Element {
           sm: restores the original 24/26 for desktop reading comfort. */}
       <section
         aria-label="Tokenizer playground"
-        className="rounded-xl py-[18px] px-4 sm:py-6 sm:px-[26px]"
+        className="py-[18px] px-4 sm:py-6 sm:px-[26px]"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
@@ -223,10 +223,10 @@ function RoundIndicator({
             aria-label={ariaLabel}
             aria-current={isCurrent ? 'step' : undefined}
             disabled={disabled}
-            className="flex items-center gap-2 rounded-full font-mono text-[12px] transition-colors duration-150"
+            className="flex items-center gap-2 font-mono text-[12px] transition-colors duration-[160ms]"
             style={{
               padding: '5px 12px',
-              border: `1.5px solid ${
+              border: `1px solid ${
                 isCurrent
                   ? 'rgb(var(--ink))'
                   : completed
@@ -234,12 +234,12 @@ function RoundIndicator({
                     : 'rgb(var(--border))'
               }`,
               background: isCurrent
-                ? 'rgb(var(--ink))'
-                : completed
-                  ? 'rgba(61, 90, 78, 0.08)'
-                  : 'rgb(var(--white))',
-              color: isCurrent
                 ? 'rgb(var(--white))'
+                : completed
+                  ? 'rgb(var(--action) / 0.08)'
+                  : 'transparent',
+              color: isCurrent
+                ? 'rgb(var(--ink))'
                 : completed
                   ? 'rgb(var(--action))'
                   : disabled
@@ -254,7 +254,7 @@ function RoundIndicator({
               className="inline-flex h-3 w-3 items-center justify-center rounded-full"
               style={{
                 background: completed ? 'rgb(var(--action))' : 'transparent',
-                border: completed ? 'none' : `1.5px solid currentColor`,
+                border: completed ? 'none' : `1px solid currentColor`,
               }}
             >
               {completed && <Icon name="check" size={8} />}
@@ -314,7 +314,6 @@ function GuidedRound({
   return (
     <article
       aria-label={`Round ${stageId}: ${round.title}`}
-      className="rounded-lg"
       style={{
         background: 'rgb(var(--surface))',
         border: '1px solid rgb(var(--border))',
@@ -326,14 +325,14 @@ function GuidedRound({
       </Overline>
 
       <div
-        className="mb-4 rounded-md font-sans text-body"
+        className="mb-4 font-sans text-body"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
           padding: '12px 14px',
           color: 'rgb(var(--ink))',
           whiteSpace: 'pre-wrap',
-          fontFamily: stageId === 4 ? '"DM Mono", "Courier New", monospace' : undefined,
+          fontFamily: stageId === 4 ? '"IBM Plex Mono", "Courier New", monospace' : undefined,
           fontSize: stageId === 4 ? 14 : 16,
         }}
       >
@@ -402,7 +401,7 @@ function PredictionInput({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           aria-label="Your prediction: number of tokens"
-          className="rounded-md border border-border bg-[rgb(var(--white))] px-3 py-2 font-mono text-[14px] text-ink focus:border-ink"
+          className="border border-border bg-[rgb(var(--white))] px-3 py-2 font-mono text-[14px] text-ink focus:border-ink"
           style={{ width: 80 }}
         />
         <span className="font-sans text-body-sm text-secondary">tokens</span>
@@ -411,7 +410,7 @@ function PredictionInput({
           onClick={onLock}
           disabled={!isValid}
           aria-disabled={!isValid}
-          className="rounded-md bg-action px-4 py-2 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
+          className="bg-action px-4 py-2 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
         >
           Lock prediction
         </button>
@@ -470,7 +469,7 @@ function RevealPanel({
       </div>
 
       <div
-        className="rounded-md transition-opacity duration-300"
+        className="transition-opacity duration-300"
         style={{
           background: 'rgb(var(--surface-warm))',
           border: '1px solid rgb(var(--border))',
@@ -484,7 +483,7 @@ function RevealPanel({
         <button
           type="button"
           onClick={onAdvance}
-          className="inline-flex items-center gap-2 rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover"
+          className="inline-flex items-center gap-2 bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover"
         >
           {isLast ? 'Continue to free exploration' : 'Next round'}
           <Icon name="arrowRight" size={14} />
@@ -530,7 +529,6 @@ function FreeMode(): JSX.Element {
   return (
     <article
       aria-label="Free exploration mode"
-      className="rounded-lg"
       style={{
         background: 'rgb(var(--surface))',
         border: '1px solid rgb(var(--border))',
@@ -557,7 +555,7 @@ function FreeMode(): JSX.Element {
         rows={4}
         aria-label="Text to tokenize"
         placeholder="Paste or type any text…"
-        className="block w-full resize-y rounded-md border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
+        className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
         style={{ minHeight: 80, lineHeight: 1.55 }}
       />
 
@@ -567,7 +565,7 @@ function FreeMode(): JSX.Element {
           onClick={tokenize}
           disabled={!text.trim()}
           aria-disabled={!text.trim()}
-          className="rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
+          className="bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
         >
           Tokenize
         </button>
@@ -582,7 +580,7 @@ function FreeMode(): JSX.Element {
             key={sample.label}
             type="button"
             onClick={() => onQuickLoad(sample)}
-            className="rounded-md text-left font-sans text-[12.5px] font-semibold text-secondary transition-colors duration-150 hover:bg-surface-warm hover:text-ink"
+            className="text-left font-sans text-[12.5px] font-semibold text-secondary transition-colors duration-[160ms] hover:bg-surface-warm hover:text-ink"
             style={{
               border: '1px solid rgb(var(--border))',
               padding: '8px 12px',

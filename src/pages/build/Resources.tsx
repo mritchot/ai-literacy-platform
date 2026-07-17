@@ -34,16 +34,16 @@ const SECTIONS = REST.map((part) => {
 function CostContrast(): JSX.Element {
   return (
     <section aria-label="Cost contrast" className="mt-8 grid gap-4 sm:grid-cols-2">
-      <div className="rounded-xl" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', borderTop: `3px solid ${SERIES_ACCENT}`, padding: '20px 22px' }}>
+      <div style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', borderTop: `3px solid ${SERIES_ACCENT}`, padding: '20px 22px' }}>
         <Overline className="mb-1">Solo direct cost</Overline>
         <div className="font-mono font-bold" style={{ fontSize: 40, lineHeight: 1.1, color: SERIES_ACCENT }}>
           {SOLO_TOTAL}
         </div>
         <p className="m-0 mt-1.5 font-sans text-caption text-tertiary" style={{ lineHeight: 1.5 }}>
-          Out-of-pocket only. The ~150–160 hours of labor is an approximate opportunity cost of roughly $7,500. Everything but the AI subscriptions ran on free tiers.
+          Out-of-pocket only. The ~210 hours of labor is an approximate opportunity cost of roughly $10,500. Everything but the AI subscriptions ran on free tiers.
         </p>
       </div>
-      <div className="rounded-xl" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', borderTop: '3px solid rgb(var(--border))', padding: '20px 22px' }}>
+      <div style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', borderTop: '3px solid rgb(var(--border))', padding: '20px 22px' }}>
         <Overline className="mb-1">Organizational estimate</Overline>
         <div className="font-mono font-bold text-ink" style={{ fontSize: 40, lineHeight: 1.1 }}>
           {BUDGET_TOTAL.low}–{BUDGET_TOTAL.high}
@@ -74,7 +74,7 @@ function DataRow({ label, value, note, emphasis }: { label: string; value: strin
 
 function DataCard({ label, children }: { label: string; children: React.ReactNode }): JSX.Element {
   return (
-    <div className="rounded-lg" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', padding: '16px 20px' }}>
+    <div style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', padding: '16px 20px' }}>
       <Overline className="mb-3">{label}</Overline>
       {children}
     </div>
@@ -85,7 +85,7 @@ function CustomVsArticulate(): JSX.Element {
   const [open, setOpen] = useState(false);
   return (
     <section
-      className="mt-10 overflow-hidden rounded-lg"
+      className="mt-10 overflow-hidden"
       style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', borderLeft: `3px solid ${SERIES_ACCENT}` }}
     >
       <button
@@ -128,7 +128,7 @@ export default function Resources(): JSX.Element {
       <h1 className="m-0 mb-2 font-display text-display font-normal text-ink">Resource &amp; Budget Plan</h1>
       <p className="m-0 mb-6 font-sans text-h3 font-normal text-secondary">AI Literacy for the Modern Workforce</p>
 
-      <div className="max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
+      <div className="prose-longform max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
 
       <CostContrast />
 
@@ -165,7 +165,7 @@ export default function Resources(): JSX.Element {
       {SECTIONS.map((s) => (
         <section key={s.heading} className="mt-10">
           <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{s.heading}</h2>
-          <div className="max-w-reading">{renderMarkdown(s.body)}</div>
+          <div className="prose-longform max-w-reading">{renderMarkdown(s.body)}</div>
         </section>
       ))}
 

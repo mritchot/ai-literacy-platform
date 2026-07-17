@@ -77,8 +77,17 @@ export function AugAutoViewA({
         where AI usage is near zero despite substantial workforce shares.
       </p>
 
-      <div role="group" aria-label="Sort order" className="flex flex-wrap gap-2">
-        {SORT_OPTIONS.map((opt) => {
+      {/* Segmented control. `flex-wrap` is retained deliberately: the three
+          labels are long, the platform clips horizontal overflow rather
+          than scrolling it, and a fixed strip would put the third option
+          off-screen and out of reach on a phone. */}
+      <div
+        role="group"
+        aria-label="Sort order"
+        className="inline-flex flex-wrap"
+        style={{ border: '1px solid rgb(var(--border))', background: 'rgb(var(--surface))' }}
+      >
+        {SORT_OPTIONS.map((opt, i) => {
           const active = sortKey === opt.id;
           return (
             <button
@@ -89,12 +98,12 @@ export function AugAutoViewA({
                 track({ type: 'p3_view_a_sorted', moduleId: 2, sectionId: 3, payload: { sortKey: opt.id } });
               }}
               aria-pressed={active}
-              className="rounded-full font-sans text-[12.5px] transition-colors duration-150"
+              className="font-sans text-[12.5px] transition-colors duration-[160ms]"
               style={{
                 padding: '5px 14px',
-                border: `1.5px solid ${active ? 'rgb(var(--ink))' : 'rgb(var(--border))'}`,
-                background: active ? 'rgb(var(--ink))' : 'rgb(var(--white))',
-                color: active ? 'rgb(var(--white))' : 'rgb(var(--secondary))',
+                borderLeft: i > 0 ? '1px solid rgb(var(--border))' : undefined,
+                background: active ? 'rgb(var(--white))' : 'transparent',
+                color: active ? 'rgb(var(--ink))' : 'rgb(var(--tertiary))',
                 fontWeight: active ? 600 : 500,
               }}
             >
@@ -155,7 +164,7 @@ export function AugAutoViewA({
 
       <aside
         role="note"
-        className="rounded-lg bg-surface-warm"
+        className="bg-surface-warm"
         style={{
           // `border` shorthand must come first — it resets all four
           // sides, so the accent override has to follow it (the
@@ -249,7 +258,7 @@ function DumbbellChart({
 
   return (
     <div
-      className="relative w-full overflow-hidden rounded-md"
+      className="relative w-full overflow-hidden"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -437,7 +446,6 @@ function MobileOccupationList({
         return (
           <div
             key={row.occupation}
-            className="rounded-md"
             style={{
               background: 'rgb(var(--white))',
               border: '1px solid rgb(var(--border))',
@@ -468,11 +476,11 @@ function MobileOccupationList({
                 </span>
               </div>
               <div
-                className="h-2 w-full overflow-hidden rounded-full"
+                className="h-2 w-full overflow-hidden"
                 style={{ background: 'rgb(var(--border-light))' }}
               >
                 <div
-                  className="h-full rounded-full"
+                  className="h-full"
                   style={{ width: `${claudeBarPct}%`, background: tokens.action }}
                 />
               </div>
@@ -495,11 +503,11 @@ function MobileOccupationList({
                 </span>
               </div>
               <div
-                className="h-2 w-full overflow-hidden rounded-full"
+                className="h-2 w-full overflow-hidden"
                 style={{ background: 'rgb(var(--border-light))' }}
               >
                 <div
-                  className="h-full rounded-full"
+                  className="h-full"
                   style={{ width: `${workforceBarPct}%`, background: tokens.tertiaryChart }}
                 />
               </div>

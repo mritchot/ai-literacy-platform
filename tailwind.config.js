@@ -5,14 +5,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        // 4D competency palette (Section 1.1). Only the DEFAULT accents
-        // are consumed as Tailwind classes — the light/mid/text tints
-        // live as CSS variables in src/styles/index.css (which is what
-        // lets dark mode flip them; a literal hex here can't).
-        delegation: '#6B7F5E',
-        description: '#8B7355',
-        discernment: '#5E7080',
-        diligence: '#7A6B80',
+        // 4D competency palette (Section 1.1). Variable-driven, like
+        // every other color here — these were literal hexes, which is
+        // precisely why dark mode could not flip them.
+        delegation: 'rgb(var(--delegation) / <alpha-value>)',
+        description: 'rgb(var(--description) / <alpha-value>)',
+        discernment: 'rgb(var(--discernment) / <alpha-value>)',
+        diligence: 'rgb(var(--diligence) / <alpha-value>)',
 
         // Warm neutrals (Section 1.3) — exposed as CSS variables so dark mode flips them
         ink: 'rgb(var(--ink) / <alpha-value>)',
@@ -54,12 +53,15 @@ export default {
           hover: 'rgb(var(--action-hover) / <alpha-value>)',
           active: 'rgb(var(--action-active) / <alpha-value>)',
         },
+
+        // Focus — vermilion keyboard-focus ring (Section 9.2)
+        focus: 'rgb(var(--focus) / <alpha-value>)',
       },
 
       fontFamily: {
-        display: ['"DM Serif Display"', 'Georgia', 'serif'],
-        sans: ['"DM Sans"', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['"DM Mono"', '"Courier New"', 'monospace'],
+        display: ['"Source Serif 4"', 'Georgia', 'serif'],
+        sans: ['"IBM Plex Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['"IBM Plex Mono"', 'ui-monospace', 'Menlo', 'monospace'],
       },
 
       fontSize: {
@@ -74,19 +76,6 @@ export default {
         label: ['12px', { lineHeight: '1.4', letterSpacing: '0.02em' }],
         caption: ['11px', { lineHeight: '1.5', letterSpacing: '0.01em' }],
         overline: ['10px', { lineHeight: '1.4', letterSpacing: '0.1em' }],
-      },
-
-      borderRadius: {
-        sm: '6px',
-        md: '8px',
-        lg: '10px',
-        xl: '14px',
-      },
-
-      boxShadow: {
-        sm: '0 1px 3px rgba(0, 0, 0, 0.04)',
-        md: '0 2px 8px rgba(0, 0, 0, 0.07)',
-        lg: '0 4px 16px rgba(0, 0, 0, 0.09)',
       },
 
       maxWidth: {

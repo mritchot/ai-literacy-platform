@@ -12,7 +12,7 @@ import { scrollBehavior } from '../../utils/motion';
 import { Icon } from '../../components/shared/Icon';
 import { Overline } from '../../components/shared/Overline';
 
-const DELEGATION = '#6B7F5E';
+const DELEGATION = 'rgb(var(--delegation))';
 
 interface StigmaReflectionProps {
   // Element to smooth-scroll to when the learner clicks Continue. Defaults
@@ -74,7 +74,6 @@ export function StigmaReflection({ scrollTargetId }: StigmaReflectionProps): JSX
     <article
       ref={articleRef}
       aria-label="Private reflection prompt"
-      className="rounded-lg"
       style={{
         background: 'rgb(var(--surface))',
         border: '1px solid rgb(var(--border))',
@@ -108,7 +107,7 @@ export function StigmaReflection({ scrollTargetId }: StigmaReflectionProps): JSX
         rows={5}
         aria-label="Private reflection text area"
         placeholder="Your reflection (private, not submitted)"
-        className="block w-full resize-y rounded-md border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
+        className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
         style={{ minHeight: 120, lineHeight: 1.55 }}
       />
 
@@ -119,7 +118,7 @@ export function StigmaReflection({ scrollTargetId }: StigmaReflectionProps): JSX
         <button
           type="button"
           onClick={onContinue}
-          className="inline-flex items-center gap-2 rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] transition-colors duration-150 hover:bg-action-hover"
+          className="inline-flex items-center gap-2 bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] transition-colors duration-[160ms] hover:bg-action-hover"
         >
           Continue
           <Icon name="arrowRight" size={14} />

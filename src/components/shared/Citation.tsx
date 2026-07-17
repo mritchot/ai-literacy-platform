@@ -342,8 +342,6 @@ const CitationPopover = forwardRef<HTMLDivElement, CitationPopoverProps>(
       zIndex: 50,
       background: 'rgb(var(--white))',
       border: '1px solid rgb(var(--border))',
-      borderRadius: 8,
-      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)',
       padding: '12px 14px',
     };
 
@@ -391,7 +389,7 @@ const CitationPopover = forwardRef<HTMLDivElement, CitationPopoverProps>(
           type="button"
           onClick={onClose}
           aria-label="Close citation details"
-          className="inline-flex h-6 w-6 items-center justify-center rounded text-tertiary hover:bg-surface hover:text-ink"
+          className="inline-flex h-6 w-6 items-center justify-center text-tertiary hover:bg-surface hover:text-ink"
           style={{
             position: 'absolute',
             top: 6,

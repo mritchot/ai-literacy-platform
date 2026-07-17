@@ -49,7 +49,7 @@ export function renderInline(text: string, keyBase = 'i'): ReactNode {
           key={key}
           href={safeHref}
           {...(isInternal ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
-          className="font-medium text-action underline decoration-1 underline-offset-2 transition-colors hover:text-action-hover"
+          className="font-medium text-action underline decoration-1 underline-offset-2 transition-colors duration-[160ms] hover:text-action-hover"
         >
           {renderInline(m[1], key)}
         </a>,
@@ -218,7 +218,7 @@ export function renderMarkdown(raw: string): ReactNode[] {
       blocks.push(
         <blockquote
           key={qid}
-          className="my-5 rounded-r-md border-l-2 border-border bg-surface px-4 py-3 text-body-sm text-secondary"
+          className="my-5 border-l-2 border-border bg-surface px-4 py-3 text-body-sm text-secondary"
         >
           {renderInline(quote.join(' '), `bq${qid}`)}
         </blockquote>,
