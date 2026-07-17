@@ -98,7 +98,7 @@ export function AugAutoViewC({
           <div style={{ width: '100%', height: 280 }}>
             <ResponsiveContainer>
               <BarChart data={data} margin={{ top: 16, right: 24, bottom: 8, left: 24 }} barCategoryGap="22%">
-                <CartesianGrid stroke="rgb(var(--border-light))" strokeDasharray="2 2" vertical={false} />
+                <CartesianGrid stroke="rgb(var(--border-light))" vertical={false} />
                 <XAxis
                   dataKey="label"
                   tick={AXIS_TICK_STYLE}
@@ -118,12 +118,12 @@ export function AugAutoViewC({
                   cursor={{ fill: 'rgba(0,0,0,0.04)' }}
                   formatter={(value: number, name) => [`${value}%`, name === 'augmentation' ? 'Augmentation' : 'Automation']}
                 />
-                <Bar dataKey="augmentation" isAnimationActive={false} radius={[3, 3, 0, 0]}>
+                <Bar dataKey="augmentation" isAnimationActive={false}>
                   {data.map((d, i) => (
                     <Cell key={`aug-${i}`} fill={d.fill} />
                   ))}
                 </Bar>
-                <Bar dataKey="automation" isAnimationActive={false} radius={[3, 3, 0, 0]}>
+                <Bar dataKey="automation" isAnimationActive={false}>
                   {data.map((d, i) => (
                     <Cell key={`auto-${i}`} fill={d.fill} fillOpacity={0.4} />
                   ))}
@@ -136,15 +136,15 @@ export function AugAutoViewC({
 
       <div className="flex flex-wrap gap-x-5 gap-y-1.5 font-mono text-[11px] text-tertiary">
         <span className="inline-flex items-center gap-1.5">
-          <span aria-hidden="true" className="inline-block rounded-sm" style={{ width: 10, height: 10, background: tokens.secondary }} />
+          <span aria-hidden="true" className="inline-block" style={{ width: 10, height: 10, background: tokens.secondary }} />
           Self-reported (Anthropic Interviewer, Dec 2025)
         </span>
         <span className="inline-flex items-center gap-1.5">
-          <span aria-hidden="true" className="inline-block rounded-sm" style={{ width: 10, height: 10, background: tokens.delegation }} />
+          <span aria-hidden="true" className="inline-block" style={{ width: 10, height: 10, background: tokens.delegation }} />
           Behavioral (Handa et al., Feb 2025)
         </span>
         <span className="inline-flex items-center gap-1.5">
-          <span aria-hidden="true" className="inline-block rounded-sm" style={{ width: 10, height: 10, background: tokens.discernment }} />
+          <span aria-hidden="true" className="inline-block" style={{ width: 10, height: 10, background: tokens.discernment }} />
           Behavioral (Nov 2025)
         </span>
       </div>
@@ -152,14 +152,14 @@ export function AugAutoViewC({
       {/* Gap annotations */}
       <div className="flex flex-wrap gap-3" aria-label="Augmentation gaps between self-report and behavioral data">
         <span
-          className="inline-flex items-center gap-2 rounded-md font-mono text-[11px]"
+          className="inline-flex items-center gap-2 font-mono text-[11px]"
           style={{ padding: '6px 10px', background: 'rgb(var(--error-light))', color: tokens.error, border: `1px solid ${tokens.error}` }}
         >
           <strong className="font-bold">{v1Gap}pp gap</strong>
           <span>self-report vs. Jan 2025 behavioral</span>
         </span>
         <span
-          className="inline-flex items-center gap-2 rounded-md font-mono text-[11px]"
+          className="inline-flex items-center gap-2 font-mono text-[11px]"
           style={{ padding: '6px 10px', background: 'rgb(var(--error-light))', color: tokens.error, border: `1px solid ${tokens.error}` }}
         >
           <strong className="font-bold">{latestGap}pp gap</strong>
@@ -168,7 +168,7 @@ export function AugAutoViewC({
       </div>
 
       {/* Methodology note (collapsible) */}
-      <section className="rounded-md" style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border-light))' }}>
+      <section style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border-light))' }}>
         <button
           type="button"
           onClick={() => {
@@ -228,7 +228,6 @@ function ReflectionRecallCard({ text }: { text: string }): JSX.Element {
   return (
     <article
       aria-label="Your earlier reflection response"
-      className="rounded-md"
       style={{
         background: 'rgb(var(--surface))',
         border: '1px solid rgb(var(--border))',
@@ -270,7 +269,6 @@ function MobileSelfReportList({ rows }: { rows: SeriesRow[] }): JSX.Element {
         return (
           <div
             key={row.label}
-            className="rounded-md"
             style={{
               background: 'rgb(var(--white))',
               border: '1px solid rgb(var(--border))',
@@ -300,11 +298,11 @@ function MobileSelfReportList({ rows }: { rows: SeriesRow[] }): JSX.Element {
                 </span>
               </div>
               <div
-                className="h-2 w-full overflow-hidden rounded-full"
+                className="h-2 w-full overflow-hidden"
                 style={{ background: 'rgb(var(--border-light))' }}
               >
                 <div
-                  className="h-full rounded-full"
+                  className="h-full"
                   style={{ width: `${augWidth}%`, background: row.fill }}
                 />
               </div>
@@ -326,11 +324,11 @@ function MobileSelfReportList({ rows }: { rows: SeriesRow[] }): JSX.Element {
                 </span>
               </div>
               <div
-                className="h-2 w-full overflow-hidden rounded-full"
+                className="h-2 w-full overflow-hidden"
                 style={{ background: 'rgb(var(--border-light))' }}
               >
                 <div
-                  className="h-full rounded-full"
+                  className="h-full"
                   style={{ width: `${autoWidth}%`, background: row.fill, opacity: 0.4 }}
                 />
               </div>

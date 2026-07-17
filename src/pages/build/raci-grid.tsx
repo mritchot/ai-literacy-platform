@@ -26,7 +26,7 @@ function Legend(): JSX.Element {
       {RACI.map((d) => (
         <div key={d.letter} className="flex items-baseline gap-2">
           <span
-            className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded font-mono text-[11px] font-bold"
+            className="inline-flex h-5 w-5 shrink-0 items-center justify-center font-mono text-[11px] font-bold"
             style={{ background: CELL[d.letter].bg, color: CELL[d.letter].color }}
           >
             {d.letter}
@@ -50,7 +50,7 @@ export function RaciGrid(): JSX.Element {
   return (
     <div className="mt-8">
       {/* Accountability / role panel */}
-      <div className="mb-6 rounded-lg" style={{ background: 'rgb(var(--surface-warm))', border: '1px solid rgb(var(--border))', padding: '16px 20px' }}>
+      <div className="mb-6" style={{ background: 'rgb(var(--surface-warm))', border: '1px solid rgb(var(--border))', padding: '16px 20px' }}>
         {selectedRole === null ? (
           <>
             <Overline className="mb-1.5">Accountability</Overline>
@@ -75,7 +75,7 @@ export function RaciGrid(): JSX.Element {
               {RACI.map((d) => (
                 <span
                   key={d.letter}
-                  className="rounded-md font-mono text-[11px] font-semibold"
+                  className="font-mono text-[11px] font-semibold"
                   style={{ background: CELL[d.letter].bg, color: CELL[d.letter].color, padding: '3px 9px' }}
                 >
                   {d.letter} · {countFor(selectedRole, d.letter)}
@@ -98,10 +98,15 @@ export function RaciGrid(): JSX.Element {
         <span className="mr-1 font-mono text-[11px] font-semibold uppercase text-tertiary" style={{ letterSpacing: '0.08em' }}>
           Phase
         </span>
-        <FilterChip label="All" active={phaseFilter === null} onClick={() => setPhaseFilter(null)} />
-        {PHASES.map((p) => (
-          <FilterChip key={p} label={p} active={phaseFilter === p} onClick={() => setPhaseFilter((prev) => (prev === p ? null : p))} />
-        ))}
+        <div
+          className="inline-flex flex-wrap"
+          style={{ border: '1px solid rgb(var(--border))', background: 'rgb(var(--surface))' }}
+        >
+          <FilterChip label="All" active={phaseFilter === null} onClick={() => setPhaseFilter(null)} first />
+          {PHASES.map((p) => (
+            <FilterChip key={p} label={p} active={phaseFilter === p} onClick={() => setPhaseFilter((prev) => (prev === p ? null : p))} />
+          ))}
+        </div>
       </div>
 
       {/* Grid */}
@@ -125,7 +130,7 @@ export function RaciGrid(): JSX.Element {
                       onClick={() => setSelectedRole((prev) => (prev === i ? null : i))}
                       aria-pressed={on}
                       title={`${r.name}: ${r.definition}`}
-                      className="w-full rounded-md font-mono text-[12px] font-bold transition-colors"
+                      className="w-full font-mono text-[12px] font-bold transition-colors duration-[160ms]"
                       style={{
                         padding: '8px 4px',
                         background: on ? 'rgb(var(--action))' : 'transparent',
@@ -168,7 +173,7 @@ export function RaciGrid(): JSX.Element {
                       return (
                         <td key={ROLES[ri]!.abbr} className="text-center" style={{ padding: '5px 6px', borderBottom: '1px solid rgb(var(--border-light))', opacity: dim ? 0.4 : 1 }}>
                           <span
-                            className="inline-flex h-7 w-7 items-center justify-center rounded font-mono text-[12px]"
+                            className="inline-flex h-7 w-7 items-center justify-center font-mono text-[12px]"
                             style={{ background: s.bg, color: s.color, fontWeight: s.weight }}
                             aria-label={as === '—' ? 'not involved' : as}
                           >
@@ -186,25 +191,38 @@ export function RaciGrid(): JSX.Element {
       </div>
 
       {/* Legend */}
-      <div className="mt-6 rounded-lg" style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border-light))', padding: '14px 18px' }}>
+      <div className="mt-6" style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border-light))', padding: '14px 18px' }}>
         <Legend />
       </div>
     </div>
   );
 }
 
-function FilterChip({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }): JSX.Element {
+// One segment of the phase segmented control. The strip's border lives on
+// the parent; each segment past the first draws the hairline that divides
+// it from its neighbor.
+function FilterChip({
+  label,
+  active,
+  onClick,
+  first,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+  first?: boolean;
+}): JSX.Element {
   return (
     <button
       type="button"
       onClick={onClick}
       aria-pressed={active}
-      className="rounded-full font-sans text-[12px] font-semibold transition-colors"
+      className="font-sans text-[12px] font-semibold transition-colors duration-[160ms]"
       style={{
         padding: '4px 12px',
-        background: active ? 'rgb(var(--action))' : 'transparent',
-        color: active ? 'rgb(var(--white))' : 'rgb(var(--secondary))',
-        border: '1px solid ' + (active ? 'rgb(var(--action))' : 'rgb(var(--border))'),
+        background: active ? 'rgb(var(--white))' : 'transparent',
+        color: active ? 'rgb(var(--ink))' : 'rgb(var(--tertiary))',
+        borderLeft: first ? undefined : '1px solid rgb(var(--border))',
       }}
     >
       {label}

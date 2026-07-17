@@ -126,7 +126,7 @@ function ModuleGroup({
       {ic.length > 0 && (
         <>
           {/* `--discernment-text` flips for dark mode; the raw
-              #5E7080 (discernment DEFAULT) stayed dark and lost
+              rgb(var(--discernment)) (discernment DEFAULT) stayed dark and lost
               contrast on the dark dashboard surface. */}
           <Overline
             className="mb-3 mt-5"
@@ -169,7 +169,7 @@ function ResponseCard({
 
   // For IC display, the spec says use --info as left accent (4D §9.6) regardless
   // of the response tone.
-  const leftAccent = kind === 'ic' ? '#5E7080' : accent;
+  const leftAccent = kind === 'ic' ? 'rgb(var(--discernment))' : accent;
 
   // Format the item ID label: kc_1_1 → "KC-1.1"; ic_1_1 → "IC-1.1"
   const idLabel = row.meta.id
@@ -190,7 +190,6 @@ function ResponseCard({
 
   return (
     <article
-      className="rounded-md"
       style={{
         background: isAttempted ? 'rgb(var(--white))' : 'rgb(var(--surface))',
         borderTop: sideStyle,

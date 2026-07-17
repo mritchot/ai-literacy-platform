@@ -58,7 +58,7 @@ const PANELS: PanelData[] = [
 export function TokenComparisonDiagram(): JSX.Element {
   return (
     <figure
-      className="m-0 rounded-lg"
+      className="m-0"
       aria-label="Token comparison diagram: what you type vs. what the model processes"
       style={{
         background: 'rgb(var(--white))',
@@ -80,9 +80,9 @@ export function TokenComparisonDiagram(): JSX.Element {
           letterSpacing: '0.02em',
         }}
       >
-        <span style={{ background: 'rgb(var(--surface))', padding: '1px 4px', borderRadius: 3, border: '1px solid rgb(var(--border))' }}>⎵</span>
+        <span style={{ background: 'rgb(var(--surface))', padding: '1px 4px', border: '1px solid rgb(var(--border))' }}>⎵</span>
         {' = space character. Spaces are often bundled into the start of the next token (like '}
-        <span style={{ background: 'rgb(var(--surface))', padding: '1px 4px', borderRadius: 3, border: '1px solid rgb(var(--border))' }}>⎵quarterly</span>
+        <span style={{ background: 'rgb(var(--surface))', padding: '1px 4px', border: '1px solid rgb(var(--border))' }}>⎵quarterly</span>
         {') rather than standing alone. When they appear as separate tokens, the model processes them as their own unit.'}
       </div>
 
@@ -138,7 +138,7 @@ function ComparisonPanel({
         What you type
       </div>
       <div
-        className="mb-3 rounded-md font-sans text-body text-ink"
+        className="mb-3 font-sans text-body text-ink"
         style={{
           background: 'rgb(var(--surface-warm))',
           border: '1px solid rgb(var(--border-light))',

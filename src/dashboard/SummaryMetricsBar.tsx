@@ -262,7 +262,6 @@ function MetricCard({
   const pct = progress == null ? null : Math.max(0, Math.min(1, progress));
   return (
     <article
-      className="rounded-lg"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -286,7 +285,6 @@ function MetricCard({
       </div>
       {pct != null && !hideProgress && (
         <div
-          className="rounded-full"
           style={{
             background: 'rgb(var(--border-light))',
             height: 4,

@@ -158,7 +158,7 @@ export function ExportControls({
           type="button"
           onClick={handleJSON}
           aria-label={`Export analytics as JSON (${dataSource} data)`}
-          className="inline-flex items-center gap-2 rounded-md font-sans text-[13px] font-semibold text-ink hover:bg-surface"
+          className="inline-flex items-center gap-2 font-sans text-[13px] font-semibold text-ink hover:bg-surface"
           style={{
             padding: '8px 14px',
             background: 'rgb(var(--surface))',
@@ -172,7 +172,7 @@ export function ExportControls({
           type="button"
           onClick={handleXAPI}
           aria-label={`Export analytics as xAPI (${dataSource} data)`}
-          className="inline-flex items-center gap-2 rounded-md font-sans text-[13px] font-semibold text-ink hover:bg-surface"
+          className="inline-flex items-center gap-2 font-sans text-[13px] font-semibold text-ink hover:bg-surface"
           style={{
             padding: '8px 14px',
             background: 'rgb(var(--surface))',
@@ -186,7 +186,7 @@ export function ExportControls({
           type="button"
           onClick={handleResetClick}
           aria-label="Reset all live learner data"
-          className="rounded-md font-sans text-[13px] font-semibold transition-colors duration-150"
+          className="font-sans text-[13px] font-semibold transition-colors duration-[160ms]"
           style={{
             padding: '8px 14px',
             color: 'rgb(var(--error))',

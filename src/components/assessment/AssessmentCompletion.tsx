@@ -28,7 +28,7 @@ export function AssessmentCompletion({
       </h1>
 
       <div
-        className="rounded-lg bg-[rgb(var(--white))] p-5 sm:p-6"
+        className="bg-[rgb(var(--white))] p-5 sm:p-6"
         style={{ border: '1px solid rgb(var(--border))' }}
       >
         <p
@@ -51,8 +51,8 @@ export function AssessmentCompletion({
       <div className="mt-6 flex flex-wrap items-center justify-end gap-3">
         <Link
           to="/module/1/section/1"
-          className="inline-flex items-center gap-2.5 rounded-md bg-action px-5 py-3 font-sans text-[14px] font-semibold text-[rgb(var(--white))] no-underline transition-colors duration-150 hover:bg-action-hover"
-          style={{ border: '1.5px solid rgb(var(--action))' }}
+          className="inline-flex items-center gap-2.5 bg-action px-5 py-3 font-sans text-[14px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] no-underline transition-colors duration-[160ms] hover:bg-action-hover"
+          style={{ border: '1px solid rgb(var(--action))' }}
         >
           Begin Module 1
           <Icon name="arrowRight" size={14} />

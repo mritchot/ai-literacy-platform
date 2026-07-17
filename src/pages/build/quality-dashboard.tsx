@@ -73,9 +73,9 @@ function TripleValidation(): JSX.Element {
     <div>
       <div className="grid gap-3 sm:grid-cols-3">
         {VALIDATION_PASSES.map((p) => (
-          <div key={p.n} className="rounded-lg" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', padding: '14px 16px' }}>
+          <div key={p.n} style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', padding: '14px 16px' }}>
             <div className="mb-1.5 flex items-center gap-2">
-              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full font-mono text-[11px] font-bold" style={{ background: 'rgb(var(--info-light))', color: 'rgb(var(--info))' }}>
+              <span className="inline-flex h-6 w-6 items-center justify-center font-mono text-[11px] font-bold" style={{ background: 'rgb(var(--info-light))', color: 'rgb(var(--info))' }}>
                 {p.n}
               </span>
               <span className="font-sans text-[13px] font-semibold text-ink">{p.name}</span>
@@ -108,7 +108,7 @@ function TripleValidation(): JSX.Element {
                   {f.content}
                 </td>
                 <td className="border-b border-border-light px-3 py-2.5 align-top">
-                  <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full font-mono text-[10.5px] font-semibold" style={{ background: 'rgb(var(--success-light))', color: 'rgb(var(--success))', padding: '3px 9px' }}>
+                  <span className="inline-flex items-center gap-1.5 whitespace-nowrap font-mono text-[10.5px] font-semibold" style={{ background: 'rgb(var(--success-light))', color: 'rgb(var(--success))', border: '1px solid rgb(var(--success))', padding: '3px 9px' }}>
                     <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full" style={{ background: 'rgb(var(--success))' }} />
                     {f.status}
                   </span>
@@ -126,7 +126,7 @@ function CheckTypeBadge({ type }: { type: CapabilityCheck['type'] }): JSX.Elemen
   const token = type === 'Capability' ? 'info' : 'caution';
   return (
     <span
-      className="inline-flex shrink-0 items-center rounded font-mono text-[9.5px] font-bold uppercase"
+      className="inline-flex shrink-0 items-center font-mono text-[9.5px] font-bold uppercase"
       style={{ background: `rgb(var(--${token}-light))`, color: `rgb(var(--${token}))`, padding: '2px 7px', letterSpacing: '0.06em' }}
     >
       {type}
@@ -138,7 +138,7 @@ function CapabilityFramework(): JSX.Element {
   return (
     <div className="grid gap-3 sm:grid-cols-2">
       {CAPABILITY_CHECKS.map((c) => (
-        <div key={c.check} className="rounded-lg" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', padding: '13px 16px' }}>
+        <div key={c.check} style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', padding: '13px 16px' }}>
           <div className="mb-1.5 flex items-start justify-between gap-2">
             <span className="font-sans text-[13px] font-semibold text-ink">{c.check}</span>
             <CheckTypeBadge type={c.type} />

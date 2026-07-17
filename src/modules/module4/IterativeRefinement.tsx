@@ -34,7 +34,7 @@ import { renderMarkdownLite } from './render-markdown-lite';
 // matches the accent treatment used by the P9 reformulated-prompt callout
 // in Phase 3 so the "this is a refinement prompt" visual signal is
 // consistent across both prompt-related practice activities.
-const DESCRIPTION_HEX = '#8B7355';
+const DESCRIPTION_HEX = 'rgb(var(--description))';
 const MIN_REFINEMENT_CHARS = 20;
 const SECTION = 6;
 
@@ -250,7 +250,6 @@ export function IterativeRefinement(): JSX.Element {
 
       <section
         aria-label="Iterative refinement exercise"
-        className="rounded-xl"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
@@ -474,7 +473,7 @@ function Turn1({
             onClick={onSubmit}
             disabled={!allEvalsFilled}
             aria-disabled={!allEvalsFilled}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-action px-5 py-2.5 text-center font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted sm:w-auto sm:justify-start sm:text-left"
+            className="inline-flex w-full items-center justify-center gap-2 bg-action px-5 py-2.5 text-center font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted sm:w-auto sm:justify-start sm:text-left"
           >
             Continue → See a Refinement and Draft 2
             <Icon name="arrowRight" size={14} />
@@ -524,7 +523,6 @@ function Turn2({
       <aside
         role="note"
         aria-label={P11_TURN2_EXAMPLE_LABEL_FOR_DRAFT_2}
-        className="rounded-lg"
         style={{
           background: 'rgb(var(--description-light))',
           border: '1px solid rgb(var(--border))',
@@ -576,7 +574,7 @@ function Turn2({
             onClick={onSubmit}
             disabled={!bothEvalsFilled}
             aria-disabled={!bothEvalsFilled}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-action px-5 py-2.5 text-center font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted sm:w-auto sm:justify-start sm:text-left"
+            className="inline-flex w-full items-center justify-center gap-2 bg-action px-5 py-2.5 text-center font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted sm:w-auto sm:justify-start sm:text-left"
           >
             Continue → Write Your Own Refinement
             <Icon name="arrowRight" size={14} />
@@ -650,7 +648,7 @@ function Turn3({
             onClick={onSubmitRefinement}
             disabled={refinement.trim().length < MIN_REFINEMENT_CHARS}
             aria-disabled={refinement.trim().length < MIN_REFINEMENT_CHARS}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-action px-5 py-2.5 text-center font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted sm:w-auto sm:justify-start sm:text-left"
+            className="inline-flex w-full items-center justify-center gap-2 bg-action px-5 py-2.5 text-center font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted sm:w-auto sm:justify-start sm:text-left"
           >
             Submit Refinement → See Draft 3 and Compare
             <Icon name="arrowRight" size={14} />
@@ -667,7 +665,6 @@ function Turn3({
           <aside
             role="note"
             aria-label={P11_TURN3_EXAMPLE_LABEL_FOR_DRAFT_3}
-            className="rounded-lg"
             style={{
               background: 'rgb(var(--description-light))',
               border: '1px solid rgb(var(--border))',
@@ -708,7 +705,6 @@ function Turn3({
 function DraftCard({ label, body }: { label: string; body: string }): JSX.Element {
   return (
     <article
-      className="rounded-lg"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -755,7 +751,7 @@ function EvaluationField({
         onChange={(e) => onChange(e.target.value)}
         onBlur={onBlur}
         rows={2}
-        className="block w-full resize-y rounded-md border border-border bg-[rgb(var(--white))] p-2.5 font-sans text-body-sm text-ink focus:border-ink"
+        className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-2.5 font-sans text-body-sm text-ink focus:border-ink"
         style={{ minHeight: 60, lineHeight: 1.5 }}
       />
     </div>
@@ -784,7 +780,7 @@ function RefinementTextarea({
       rows={4}
       aria-label="Your refined prompt"
       placeholder="Write your refined prompt here…"
-      className="block w-full resize-y rounded-md border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
+      className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
       style={{ minHeight, lineHeight: 1.55 }}
     />
   );

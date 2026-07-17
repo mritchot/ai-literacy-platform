@@ -16,7 +16,7 @@ import type { ReactNode } from 'react';
 // Constants
 // ─────────────────────────────────────────────────────────────────────
 
-const DISCERNMENT = '#5E7080';
+const DISCERNMENT = 'rgb(var(--discernment))';
 
 // ─────────────────────────────────────────────────────────────────────
 // Checklist data
@@ -216,7 +216,7 @@ function ChecklistCard({
 }): JSX.Element {
   return (
     <article
-      className="rounded-lg overflow-hidden"
+      className="overflow-hidden"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -317,13 +317,13 @@ function Checkbox({
       aria-checked={checked}
       aria-label={ariaLabel}
       onClick={onChange}
-      className="flex flex-shrink-0 items-center justify-center rounded"
+      className="flex flex-shrink-0 items-center justify-center"
       style={{
         width: 18,
         height: 18,
         marginTop: 1,
         background: checked ? DISCERNMENT : 'transparent',
-        border: `1.5px solid ${DISCERNMENT}`,
+        border: `1px solid ${DISCERNMENT}`,
         cursor: 'pointer',
         transition: 'background 150ms ease',
       }}
@@ -334,7 +334,11 @@ function Checkbox({
           height="11"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#FFFFFF"
+          // Set via `style`, not the `stroke` attribute: SVG paint
+          // attributes don't resolve var(), but the CSS property does.
+          // The tick has to invert with the theme now that the
+          // discernment fill under it is light in dark mode.
+          style={{ stroke: 'rgb(var(--white))' }}
           strokeWidth="3"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -356,7 +360,7 @@ function VerificationFramework(): JSX.Element {
   return (
     <section
       aria-label="Verification Decision Framework"
-      className="mt-6 rounded-lg overflow-hidden"
+      className="mt-6 overflow-hidden"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -494,7 +498,7 @@ function ToneDot({ tone }: { tone: Tone }): JSX.Element {
 
 // ─────────────────────────────────────────────────────────────────────
 // Diagnostic Pairs — 3-row table connecting mechanical pairs from
-// Module 3 to verification actions. Pair names rendered in DM Mono so
+// Module 3 to verification actions. Pair names rendered in IBM Plex Mono so
 // they read as code-like identifiers (matching Module 3's treatment).
 // ─────────────────────────────────────────────────────────────────────
 
@@ -502,7 +506,7 @@ function DiagnosticPairsCard(): JSX.Element {
   return (
     <section
       aria-label="Diagnostic Pairs"
-      className="mt-4 rounded-lg overflow-hidden"
+      className="mt-4 overflow-hidden"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',

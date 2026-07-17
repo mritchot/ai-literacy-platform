@@ -16,7 +16,7 @@ import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { P8_CARDS, P8_REFLECTION, P8_SCENARIO, P8_SUMMARY, type P8Category, type TaskCard } from './module4-content';
 
-const DELEGATION = '#6B7F5E';
+const DELEGATION = 'rgb(var(--delegation))';
 
 function isP8Category(v: unknown): v is P8Category {
   return v === 'human' || v === 'assisted' || v === 'delegated';
@@ -36,11 +36,26 @@ const CATEGORY_DESCRIPTIONS: Record<P8Category, string> = {
 };
 
 // Per-category visual treatment for the segmented control's active state
-// (spec §4.2 — Delegation olive / Description amber / Discernment blue-gray).
+// (spec §4.2 — Delegation / Description / Discernment). All three parts
+// of each triplet resolve through the competency tokens so they flip
+// together: the wash and the count sit on each other, so a literal wash
+// under a theme-flipping count would strand light text on a light tint.
 const CATEGORY_PALETTE: Record<P8Category, { bg: string; text: string; count: string }> = {
-  human: { bg: '#E8EDE4', text: '#3D4A35', count: '#6B7F5E' },
-  assisted: { bg: '#F0EAE0', text: '#5A4A37', count: '#8B7355' },
-  delegated: { bg: '#E4EBF0', text: '#354A57', count: '#5E7080' },
+  human: {
+    bg: 'rgb(var(--delegation-light))',
+    text: 'rgb(var(--delegation-text))',
+    count: 'rgb(var(--delegation))',
+  },
+  assisted: {
+    bg: 'rgb(var(--description-light))',
+    text: 'rgb(var(--description-text))',
+    count: 'rgb(var(--description))',
+  },
+  delegated: {
+    bg: 'rgb(var(--discernment-light))',
+    text: 'rgb(var(--discernment-text))',
+    count: 'rgb(var(--discernment))',
+  },
 };
 
 const TONE_BORDER: Record<'success' | 'caution' | 'error', string> = {
@@ -139,7 +154,6 @@ export function TaskDecomposition(): JSX.Element {
 
       <section
         aria-label="Task decomposition exercise"
-        className="rounded-xl"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
@@ -184,7 +198,7 @@ export function TaskDecomposition(): JSX.Element {
             onClick={onSubmit}
             disabled={!allAssigned}
             aria-disabled={!allAssigned}
-            className="rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
+            className="bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
           >
             See Results
           </button>
@@ -222,7 +236,7 @@ function CategorySummaryStrip({ counts }: { counts: Record<P8Category, number> }
   ];
   return (
     <div
-      className="flex flex-wrap items-center gap-x-6 gap-y-2 rounded-md"
+      className="flex flex-wrap items-center gap-x-6 gap-y-2"
       style={{
         background: 'rgb(var(--surface))',
         border: '1px solid rgb(var(--border-light))',
@@ -276,7 +290,6 @@ function CardItem({
 
   return (
     <li
-      className="rounded-lg"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -296,7 +309,7 @@ function CardItem({
       {feedback && (
         <div
           aria-live="polite"
-          className="mt-3 rounded-md transition-opacity duration-200"
+          className="mt-3 transition-opacity duration-200"
           style={{
             background: TONE_BG[feedback.tone],
             borderLeft: `3px solid ${TONE_BORDER[feedback.tone]}`,
@@ -339,7 +352,6 @@ function CardItem({
                 return (
                   <li
                     key={`all-${card.id}-${cat}`}
-                    className="rounded-md"
                     style={{
                       background: 'rgb(var(--surface))',
                       border: '1px solid rgb(var(--border-light))',
@@ -395,7 +407,6 @@ function SegmentedControl({
       style={{
         gridTemplateColumns: 'repeat(3, 1fr)',
         border: '1px solid rgb(var(--border))',
-        borderRadius: 8,
         overflow: 'hidden',
       }}
     >
@@ -411,7 +422,7 @@ function SegmentedControl({
             aria-label={`${CATEGORY_LABELS[cat]} — ${CATEGORY_DESCRIPTIONS[cat]}`}
             disabled={disabled}
             onClick={() => onChange(cat)}
-            className="font-sans text-[12px] font-medium transition-colors duration-150"
+            className="font-sans text-[12px] font-medium transition-colors duration-[160ms]"
             style={{
               padding: '10px 12px',
               background: active ? palette.bg : 'transparent',
@@ -434,7 +445,6 @@ function SummaryCallout(): JSX.Element {
     <aside
       role="note"
       aria-label="Decomposition pattern summary"
-      className="rounded-lg"
       style={{
         background: 'rgb(var(--surface-warm))',
         border: '1px solid rgb(var(--border))',

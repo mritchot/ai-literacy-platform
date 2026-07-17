@@ -195,7 +195,6 @@ function StoryShell({
     <article
       ref={articleRef}
       data-story-index={storyNumber}
-      className="rounded-xl"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',

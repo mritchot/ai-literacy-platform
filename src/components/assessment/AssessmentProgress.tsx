@@ -38,11 +38,11 @@ export function AssessmentProgress({
         </span>
       </div>
       <div
-        className="h-1 w-full overflow-hidden rounded-full bg-border-light"
+        className="h-1 w-full overflow-hidden bg-border-light"
         aria-hidden="true"
       >
         <div
-          className="h-full rounded-full bg-action transition-[width] duration-300 ease-out"
+          className="h-full bg-action transition-[width] duration-300 ease-out"
           style={{ width: `${pct * 100}%` }}
         />
       </div>

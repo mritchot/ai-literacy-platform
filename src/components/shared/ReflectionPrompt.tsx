@@ -29,10 +29,10 @@ const BADGE_MS = 4000;
 // both themes); the label text uses the theme-adaptive `--*-text` token —
 // the static hex lands at ~3:1 on the dark card surface, below AA.
 const ACCENT_HEX: Record<CompetencyKey, string> = {
-  delegation: '#6B7F5E',
-  description: '#8B7355',
-  discernment: '#5E7080',
-  diligence: '#7A6B80',
+  delegation: 'rgb(var(--delegation))',
+  description: 'rgb(var(--description))',
+  discernment: 'rgb(var(--discernment))',
+  diligence: 'rgb(var(--diligence))',
 };
 
 export function ReflectionPrompt({
@@ -88,7 +88,7 @@ export function ReflectionPrompt({
 
   return (
     <section
-      className="mt-8 rounded-lg bg-[rgb(var(--white))]"
+      className="mt-8 bg-[rgb(var(--white))]"
       style={{
         borderLeft: `3px solid ${ACCENT_HEX[accent]}`,
         border: '1px solid rgb(var(--border))',
@@ -112,7 +112,7 @@ export function ReflectionPrompt({
         onBlur={persist}
         rows={5}
         aria-label={`Reflection text area for prompt ${promptId}`}
-        className="block w-full resize-y rounded-md border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
+        className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
         style={{ minHeight: 120, lineHeight: 1.55 }}
         placeholder="Type your response here. Saved privately to your progress."
       />
@@ -122,7 +122,7 @@ export function ReflectionPrompt({
           onClick={persist}
           disabled={draft.trim().length < MIN_CHARS || draft === stored}
           aria-disabled={draft.trim().length < MIN_CHARS || draft === stored}
-          className="rounded-md font-sans text-[12.5px] font-semibold text-tertiary disabled:cursor-not-allowed disabled:opacity-50 hover:text-ink"
+          className="font-sans text-[12.5px] font-semibold text-tertiary disabled:cursor-not-allowed disabled:opacity-50 hover:text-ink"
           style={{ padding: '6px 12px' }}
         >
           {showSavedBadge ? 'Saved ✓' : 'Save'}

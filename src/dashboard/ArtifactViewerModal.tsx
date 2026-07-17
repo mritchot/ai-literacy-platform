@@ -80,14 +80,13 @@ export function ArtifactViewerModal({
         style={{ background: 'rgba(0, 0, 0, 0.3)', cursor: 'default' }}
       />
       <div
-        className="relative flex flex-col rounded-xl bg-[rgb(var(--white))]"
+        className="relative flex flex-col bg-[rgb(var(--white))]"
         style={{
           maxWidth: 560,
           width: '100%',
           maxHeight: '70vh',
           padding: 24,
           border: '1px solid rgb(var(--border))',
-          boxShadow: '0 16px 36px rgba(0, 0, 0, 0.18)',
         }}
       >
         <div className="mb-3 flex items-start justify-between gap-3">
@@ -103,7 +102,7 @@ export function ArtifactViewerModal({
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="-mr-2 -mt-2 flex h-9 w-9 items-center justify-center rounded-md text-tertiary hover:bg-surface hover:text-ink"
+            className="-mr-2 -mt-2 flex h-9 w-9 items-center justify-center text-tertiary hover:bg-surface hover:text-ink"
           >
             <Icon name="close" size={18} />
           </button>
@@ -129,7 +128,7 @@ export function ArtifactViewerModal({
             ref={closeRef}
             type="button"
             onClick={onClose}
-            className="rounded-md px-4 py-2 font-sans text-[13px] font-semibold text-secondary hover:bg-surface"
+            className="px-4 py-2 font-sans text-[13px] font-semibold text-secondary hover:bg-surface"
           >
             Close
           </button>

@@ -1,12 +1,12 @@
 // Geometry and color constants for the S10 Competency Profile PDF
 // (see ../generate-completion-pdf.ts for the full layout spec).
 
-// Font-family identifiers registered by `registerDMFonts(doc)`.
+// Font-family identifiers registered by `registerPdfFonts(doc)`.
 // Used in `doc.setFont(family, style)` throughout.
 export const FONT = {
-  sans: 'DMSans',
-  serif: 'DMSerif',
-  mono: 'DMMono',
+  sans: 'PlexSans',
+  serif: 'SourceSerif4',
+  mono: 'PlexMono',
 } as const;
 
 // ─── Geometry constants ───────────────────────────────────────────
@@ -60,12 +60,15 @@ export const TRACKING_MONO = 0.18;
 
 // ─── Colors ───────────────────────────────────────────────────────
 
+// The PDF is a fixed light-mode artifact, so these are the light-mode
+// values of the platform's tokens, resolved to hex — jsPDF has no CSS to
+// read variables from. Retuned alongside them: keep the two in step.
 export const C = {
   // Competency primaries
-  delegation: '#6B7F5E',
-  description: '#8B7355',
-  discernment: '#5E7080',
-  diligence: '#7A6B80',
+  delegation: '#5c7050',
+  description: '#7a6349',
+  discernment: '#506579',
+  diligence: '#6c5b74',
   // Competency lights (badges, stat-line backgrounds)
   delegationLight: '#E8EDE4',
   descriptionLight: '#F0EAE0',
@@ -87,16 +90,20 @@ export const C = {
   assessmentText: '#29323D',
   // Delta semantic colors (Growth card change column + breakdown Δ)
   positive: '#4F7A3D', // success green
-  negative: '#9B7B2E', // caution amber (reused as "negative delta")
-  neutral: '#888888', // gray for ±0
+  negative: '#7a6124', // caution amber (reused as "negative delta")
+  neutral: '#6b665c', // warm gray for ±0
   // Neutrals
-  ink: '#2D2D2D',
-  body: '#555555',
+  ink: '#1e1c19',
+  body: '#57534b',
   secondary: '#666666',
   tertiary: '#8A8A8A',
-  border: '#E0DDD7',
+  border: '#d9d3c7',
   borderLight: '#EAE7E1',
-  surface: '#FAFAF7',
+  surface: '#f7f4ef',
   surfaceWarm: '#FAF8F5',
-  white: '#FFFFFF',
+  white: '#fdfbf7',
+  // Ground for the inverted closing card — the platform's sumi canvas,
+  // not `ink`. Ink is a type color; this is a page ground, and the two
+  // stopped being the same value in the ritchot.me alignment.
+  sumi: '#101014',
 };

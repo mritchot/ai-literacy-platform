@@ -106,7 +106,6 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
       <section
         ref={ref}
         aria-labelledby={`ic-${item.id}-stem`}
-        className="rounded-md"
         style={{
           background: 'rgb(var(--surface))',
           border: '1px solid rgb(var(--border))',
@@ -162,7 +161,7 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
                       document.getElementById(`ic-${item.id}-opt-${nextOpt.id}`)?.focus();
                     }}
                     onClick={() => !submitted && setSelected(opt.id)}
-                    className="flex w-full items-start gap-3 rounded-md text-left transition-colors duration-150"
+                    className="flex w-full items-start gap-3 text-left transition-colors duration-[160ms]"
                     style={{
                       background: 'rgb(var(--white))',
                       // Border width and padding stay constant across states.
@@ -196,7 +195,7 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
                         height: 16,
                         border: isSelected
                           ? '5px solid rgb(var(--ink))'
-                          : '1.5px solid rgb(var(--ghost))',
+                          : '1px solid rgb(var(--ghost))',
                         background: isSelected ? 'rgb(var(--white))' : 'transparent',
                         boxSizing: 'border-box',
                       }}
@@ -218,7 +217,7 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
               onClick={submit}
               disabled={!selected}
               aria-disabled={!selected}
-              className="rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] transition-colors duration-150 hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
+              className="bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] transition-colors duration-[160ms] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
             >
               Submit
             </button>
@@ -235,7 +234,7 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
         {submitted && selectedOption && (
           <div
             ref={feedbackRef}
-            className="mt-4 rounded-md transition-opacity duration-200"
+            className="mt-4 transition-opacity duration-200"
             style={{
               background: TONE_BG[selectedOption.feedbackTone],
               borderLeft: `3px solid ${TONE_BORDER[selectedOption.feedbackTone]}`,
@@ -259,7 +258,7 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
 
         {submitted && preferredOption && !selectedOption?.isPreferred && (
           <div
-            className="mt-3 rounded-md transition-opacity duration-200"
+            className="mt-3 transition-opacity duration-200"
             style={{
               background: 'rgb(var(--success-light))',
               borderLeft: `3px solid rgb(var(--success))`,
@@ -270,7 +269,7 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
               className="mb-1 font-mono text-[10px] font-bold uppercase"
               style={{ letterSpacing: '0.1em', color: 'rgb(var(--success))' }}
             >
-              ★ Best response
+              Best response
             </div>
             <div className="mb-1 font-sans text-body-sm font-semibold text-ink">
               {preferredOption.text}
@@ -297,7 +296,6 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
                 {item.options.map((opt) => (
                   <li
                     key={`all-${opt.id}`}
-                    className="rounded-md"
                     style={{
                       background: 'rgb(var(--white))',
                       border: '1px solid rgb(var(--border-light))',

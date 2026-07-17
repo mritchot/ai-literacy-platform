@@ -123,7 +123,7 @@ export function PlatformShell(): JSX.Element {
       <button
         type="button"
         onClick={() => document.getElementById('main-content')?.focus()}
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-action focus:px-4 focus:py-2.5 focus:font-sans focus:text-[13px] focus:font-semibold focus:text-[rgb(var(--white))]"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-action focus:px-4 focus:py-2.5 focus:font-sans focus:text-[13px] focus:font-semibold focus:text-[rgb(var(--white))] dark:focus:text-[rgb(var(--canvas))]"
       >
         Skip to main content
       </button>

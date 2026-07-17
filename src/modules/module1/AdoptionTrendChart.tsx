@@ -4,7 +4,7 @@
 //
 // Color rule: Story 3 uses neutral --secondary / --tertiary for the bars,
 // NOT the 4D olive/blue-gray, because the 4D framework hasn't been
-// introduced yet at this point in the narrative. Action color (#3D5A4E)
+// introduced yet at this point in the narrative. The action color
 // is used for the directive sparkline because it's an editorial signal,
 // not a 4D one (see 4C spec §18.2 rationale).
 
@@ -107,7 +107,7 @@ export function AdoptionTrendChart({
         <div style={{ width: '100%', height: 280 }}>
           <ResponsiveContainer>
             <BarChart data={collabData} margin={{ top: 16, right: 24, bottom: 8, left: 24 }} barCategoryGap="22%">
-              <CartesianGrid stroke="rgb(var(--border-light))" strokeDasharray="2 2" vertical={false} />
+              <CartesianGrid stroke="rgb(var(--border-light))" vertical={false} />
               <XAxis
                 dataKey="waveLabel"
                 tick={AXIS_TICK_STYLE}
@@ -130,12 +130,12 @@ export function AdoptionTrendChart({
                   name === 'augmentation' ? 'Augmentation' : 'Automation',
                 ]}
               />
-              <Bar dataKey="augmentation" isAnimationActive animationDuration={400} radius={[3, 3, 0, 0]}>
+              <Bar dataKey="augmentation" isAnimationActive animationDuration={400}>
                 {collabData.map((d) => (
                   <Cell key={`aug-${d.wave}`} fill={tokens.secondary} />
                 ))}
               </Bar>
-              <Bar dataKey="automation" isAnimationActive animationDuration={400} radius={[3, 3, 0, 0]}>
+              <Bar dataKey="automation" isAnimationActive animationDuration={400}>
                 {collabData.map((d) => (
                   <Cell key={`auto-${d.wave}`} fill={tokens.tertiary} />
                 ))}
@@ -148,7 +148,7 @@ export function AdoptionTrendChart({
           <span className="inline-flex items-center gap-1.5">
             <span
               aria-hidden="true"
-              className="inline-block rounded-sm"
+              className="inline-block"
               style={{ width: 10, height: 10, background: tokens.secondary }}
             />
             Augmentation
@@ -156,7 +156,7 @@ export function AdoptionTrendChart({
           <span className="inline-flex items-center gap-1.5">
             <span
               aria-hidden="true"
-              className="inline-block rounded-sm"
+              className="inline-block"
               style={{ width: 10, height: 10, background: tokens.tertiary }}
             />
             Automation
@@ -222,7 +222,7 @@ export function AdoptionTrendChart({
                           y={cy - 12}
                           textAnchor="middle"
                           fontSize={12}
-                          fontFamily='"DM Sans", system-ui, -apple-system, sans-serif'
+                          fontFamily='"IBM Plex Sans", system-ui, -apple-system, sans-serif'
                           fontWeight={600}
                           fill={tokens.ink}
                         >
@@ -239,7 +239,7 @@ export function AdoptionTrendChart({
         </div>
       </figure>
 
-      <section className="rounded-md" style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border-light))' }}>
+      <section style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border-light))' }}>
         <button
           type="button"
           onClick={() => setCaveatOpen((v) => !v)}

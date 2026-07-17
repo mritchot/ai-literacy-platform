@@ -1,22 +1,29 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-// Self-hosted DM font family (WOFF2 via @fontsource). Replaces the
-// Google Fonts CDN links that used to live in index.html — those made
-// every page load ping fonts.googleapis.com / fonts.gstatic.com,
-// leaking visitor IP + User-Agent to Google. The WOFF2 files get
-// inlined into the single-file bundle by vite-plugin-singlefile, so
-// the platform self-hosts the fonts entirely with no external requests.
-// Weights match what the Google Fonts URL used to request: DM Sans
-// 400/500/600/700, DM Serif Display 400, DM Mono 400/500 (DM Mono
-// doesn't ship a 700 — the closest available weight is used).
-import '@fontsource/dm-sans/400.css';
-import '@fontsource/dm-sans/500.css';
-import '@fontsource/dm-sans/600.css';
-import '@fontsource/dm-sans/700.css';
-import '@fontsource/dm-serif-display/400.css';
-import '@fontsource/dm-mono/400.css';
-import '@fontsource/dm-mono/500.css';
+// Self-hosted type (WOFF2 via @fontsource), matching ritchot.me:
+// Source Serif 4 for display and long-form prose, IBM Plex Sans for UI,
+// IBM Plex Mono for labels and data. Self-hosting replaces the Google
+// Fonts CDN links that used to live in index.html — those made every
+// page load ping fonts.googleapis.com / fonts.gstatic.com, leaking
+// visitor IP + User-Agent to Google. The WOFF2 files get inlined into
+// the single-file bundle by vite-plugin-singlefile, so the platform
+// ships the fonts entirely with no external requests.
+//
+// Latin subsets only, and only the weights actually rendered — the
+// bundle inlines every byte imported here, so an unused weight is a
+// permanent tax on first paint.
+import '@fontsource/source-serif-4/latin-400.css';
+import '@fontsource/source-serif-4/latin-400-italic.css';
+import '@fontsource/source-serif-4/latin-600.css';
+import '@fontsource/ibm-plex-sans/latin-400.css';
+import '@fontsource/ibm-plex-sans/latin-400-italic.css';
+import '@fontsource/ibm-plex-sans/latin-500.css';
+import '@fontsource/ibm-plex-sans/latin-600.css';
+import '@fontsource/ibm-plex-sans/latin-700.css';
+import '@fontsource/ibm-plex-mono/latin-400.css';
+import '@fontsource/ibm-plex-mono/latin-500.css';
+import '@fontsource/ibm-plex-mono/latin-700.css';
 
 import './styles/index.css';
 import App from './App';

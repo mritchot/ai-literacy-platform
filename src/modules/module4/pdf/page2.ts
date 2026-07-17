@@ -153,7 +153,7 @@ function drawMilestonesCard(doc: jsPDF, data: CompletionProfileData): void {
     setFillHex(doc, C.diligenceLight);
     setStrokeHex(doc, C.diligenceMid);
     doc.setLineWidth(0.5);
-    doc.roundedRect(badgeX, badgeY, badgeW, badgeH, 3, 3, 'FD');
+    doc.rect(badgeX, badgeY, badgeW, badgeH, 'FD');
 
     doc.setFont(FONT.sans, 'bold');
     doc.setFontSize(16);
@@ -231,16 +231,16 @@ function drawKnowledgeCard(doc: jsPDF, data: CompletionProfileData): void {
   setTextHex(doc, C.ink);
   doc.text(safe('Across all modules'), x + padX, y + padY + 18);
 
-  // Big stat — DM Serif Display for both numerator and denominator.
+  // Big stat — Source Serif 4 for both numerator and denominator.
   // "14" at 36pt; " / 16" at 22pt, baseline-aligned.
   const numStr = String(data.kcCorrect);
-  doc.setFont(FONT.serif, 'normal');
+  doc.setFont(FONT.serif, 'bold');
   doc.setFontSize(36);
   setTextHex(doc, C.ink);
   doc.text(numStr, x + padX, y + padY + 70);
   const numW = doc.getTextWidth(numStr);
 
-  doc.setFont(FONT.serif, 'normal');
+  doc.setFont(FONT.serif, 'bold');
   doc.setFontSize(22);
   setTextHex(doc, C.tertiary);
   doc.text(` / ${data.kcTotal}`, x + padX + numW, y + padY + 70);
@@ -263,8 +263,8 @@ function drawKnowledgeCard(doc: jsPDF, data: CompletionProfileData): void {
  * (Option A). Origin (464, 124), 288 × 348 pt. The card uses the new
  * 5th-accent "Assessment" palette (#44556B + light/mid/text variants).
  *
- * Score numerals render in DM Serif Display rather than Helvetica
- * (the handoff allows either; DM Serif keeps visual consistency with
+ * Score numerals render in Source Serif 4 rather than Helvetica
+ * (the handoff allows either; Source Serif 4 keeps visual consistency with
  * the existing big-number treatment on the prior KC card).
  */
 function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
@@ -281,7 +281,7 @@ function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
   setFillHex(doc, C.white);
   setStrokeHex(doc, C.border);
   doc.setLineWidth(0.6);
-  doc.roundedRect(x, y, w, h, 6, 6, 'FD');
+  doc.rect(x, y, w, h, 'FD');
   setFillHex(doc, C.assessment);
   doc.rect(x, y, 3, h, 'F');
 
@@ -313,7 +313,7 @@ function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
   setFillHex(doc, C.assessmentLight);
   setStrokeHex(doc, C.assessmentMid);
   doc.setLineWidth(1);
-  doc.roundedRect(stripX, stripY, stripW, stripH, 5, 5, 'FD');
+  doc.rect(stripX, stripY, stripW, stripH, 'FD');
 
   // Two vertical dividers split the strip into thirds.
   const cellW = stripW / 3;
@@ -367,10 +367,10 @@ function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
     doc.text(safe(cell.label), cellCenter - labelW / 2, stripY + 16);
     resetTracking(doc);
 
-    // Numeral — DM Serif Display 26 pt. For Pre/Post, render numerator
+    // Numeral — Source Serif 4 26 pt. For Pre/Post, render numerator
     // and " / 10" as two text calls (different sizes/colors) baseline-
     // aligned. Center the COMBINED string in the cell.
-    doc.setFont(FONT.serif, 'normal');
+    doc.setFont(FONT.serif, 'bold');
     doc.setFontSize(26);
     const numW = doc.getTextWidth(cell.numText);
     let denomW = 0;
@@ -410,7 +410,7 @@ function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
   setFillHex(doc, C.surfaceWarm);
   setStrokeHex(doc, C.borderLight);
   doc.setLineWidth(0.5);
-  doc.roundedRect(tableX, tableY, tableW, tableH, 5, 5, 'FD');
+  doc.rect(tableX, tableY, tableW, tableH, 'FD');
 
   // Column geometry — Block label takes ~half the width, the three
   // numeric columns split the rest. All numeric values right-align
@@ -580,8 +580,8 @@ function drawClosingCard(doc: jsPDF, compact: boolean): void {
   const bodySize = compact ? 13 : 14;
   const bodyLineH = compact ? 16 : 19;
 
-  setFillHex(doc, C.ink);
-  doc.roundedRect(x, y, w, h, 6, 6, 'F');
+  setFillHex(doc, C.sumi);
+  doc.rect(x, y, w, h, 'F');
 
   const closing = safe(
     'This profile is a snapshot of where you are now. The milestones above are where the practice goes next.',
@@ -608,7 +608,7 @@ function drawClosingCard(doc: jsPDF, compact: boolean): void {
     resetTracking(doc);
   }
 
-  // Closing text — DM Serif Display italic, off-white, centered.
+  // Closing text — Source Serif 4 italic, off-white, centered.
   doc.setFont(FONT.serif, 'italic');
   doc.setFontSize(bodySize);
   doc.setTextColor(250, 248, 245);

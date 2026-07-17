@@ -140,10 +140,17 @@ export function EventTimeline({ events }: EventTimelineProps): JSX.Element {
         >
           Filter:
         </span>
-        <div role="radiogroup" aria-label="Filter by module" className="flex flex-wrap gap-1">
+        <div
+          role="radiogroup"
+          aria-label="Filter by module"
+          className="inline-flex flex-wrap"
+          style={{ border: '1px solid rgb(var(--border))', background: 'rgb(var(--surface))' }}
+        >
           {MODULE_FILTER_OPTIONS.map(([id, label], idx) => (
             <FilterPill
               key={id}
+              segment
+              first={idx === 0}
               id={`evt-filter-m${id}`}
               role="radio"
               active={filters.module === id}
@@ -193,7 +200,7 @@ export function EventTimeline({ events }: EventTimelineProps): JSX.Element {
       <div
         role="log"
         aria-label="Analytics event timeline"
-        className="overflow-hidden rounded-lg"
+        className="overflow-hidden"
         style={{
           border: '1px solid rgb(var(--border))',
           background: 'rgb(var(--white))',
@@ -230,7 +237,7 @@ export function EventTimeline({ events }: EventTimelineProps): JSX.Element {
           <button
             type="button"
             onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
-            className="rounded-md font-sans text-[12.5px] font-semibold text-action hover:bg-surface"
+            className="font-sans text-[12.5px] font-semibold text-action hover:bg-surface"
             style={{
               padding: '6px 12px',
               border: '1px solid rgb(var(--border))',
@@ -270,7 +277,7 @@ function EventRow({ event }: { event: AnalyticsEvent }): JSX.Element {
       )}
       {moduleId !== undefined && (
         <span
-          className="font-mono text-[10px] font-bold uppercase rounded"
+          className="font-mono text-[10px] font-bold uppercase"
           style={{
             background: MODULE_PILL_BG[moduleId],
             color: MODULE_PILL_TEXT[moduleId],
@@ -328,6 +335,10 @@ interface FilterPillProps {
   id?: string;
   tabIndex?: number;
   onKeyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void;
+  /** Rendered as one segment of a joined strip rather than a lone toggle. */
+  segment?: boolean;
+  /** First segment in the strip — draws no left divider. */
+  first?: boolean;
 }
 
 function FilterPill({
@@ -338,6 +349,8 @@ function FilterPill({
   id,
   tabIndex,
   onKeyDown,
+  segment,
+  first,
 }: FilterPillProps): JSX.Element {
   return (
     <button
@@ -348,12 +361,16 @@ function FilterPill({
       tabIndex={tabIndex}
       onKeyDown={onKeyDown}
       onClick={onClick}
-      className="rounded-full font-sans text-[12px] font-medium transition-colors duration-150"
+      className="font-sans text-[12px] font-medium transition-colors duration-[160ms]"
       style={{
         padding: '4px 12px',
-        background: active ? 'rgb(var(--ink))' : 'rgb(var(--surface))',
-        color: active ? 'rgb(var(--white))' : 'rgb(var(--secondary))',
-        border: `1px solid ${active ? 'rgb(var(--ink))' : 'rgb(var(--border))'}`,
+        background: active ? 'rgb(var(--white))' : 'transparent',
+        color: active ? 'rgb(var(--ink))' : 'rgb(var(--tertiary))',
+        // Inside the module strip the container owns the outer border and
+        // each segment past the first draws its own divider. The standalone
+        // "KCs only" toggle isn't part of a strip, so it keeps a full box.
+        border: segment ? undefined : '1px solid rgb(var(--border))',
+        borderLeft: segment && !first ? '1px solid rgb(var(--border))' : undefined,
       }}
     >
       {children}

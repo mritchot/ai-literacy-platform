@@ -28,7 +28,7 @@ function StatusBadge({ status }: { status: Adr['status'] }): JSX.Element {
   const token = adopted ? 'success' : 'error';
   return (
     <span
-      className="inline-flex shrink-0 items-center gap-1.5 rounded-full font-mono text-[9.5px] font-bold uppercase"
+      className="inline-flex shrink-0 items-center gap-1.5 font-mono text-[9.5px] font-bold uppercase"
       style={{ padding: '2px 9px', border: `1px solid rgb(var(--${token}))`, color: `rgb(var(--${token}))`, letterSpacing: '0.08em' }}
     >
       <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full" style={{ background: `rgb(var(--${token}))` }} />
@@ -40,13 +40,13 @@ function StatusBadge({ status }: { status: Adr['status'] }): JSX.Element {
 function AdrCard({ adr, expanded, onToggle }: { adr: Adr; expanded: boolean; onToggle: () => void }): JSX.Element {
   const panelId = useId();
   return (
-    <div className="overflow-hidden rounded-lg" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))' }}>
+    <div className="overflow-hidden" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))' }}>
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={expanded}
         aria-controls={panelId}
-        className="flex w-full items-center gap-3 text-left transition-colors hover:bg-surface"
+        className="flex w-full items-center gap-3 text-left transition-colors duration-[160ms] hover:bg-surface"
         style={{ padding: '15px 20px' }}
       >
         <span className="flex-1">
@@ -132,14 +132,14 @@ export default function Architecture(): JSX.Element {
       <h1 className="m-0 mb-2 font-display text-display font-normal text-ink">Architecture Decisions</h1>
       <p className="m-0 mb-6 font-sans text-h3 font-normal text-secondary">AI Literacy for the Modern Workforce</p>
 
-      <div className="max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
+      <div className="prose-longform max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
 
       <ArchitectureBrowser />
 
       {SECTIONS.map((s) => (
         <section key={s.heading} className="mt-10">
           <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{s.heading}</h2>
-          <div className="max-w-reading">{renderMarkdown(s.body)}</div>
+          <div className="prose-longform max-w-reading">{renderMarkdown(s.body)}</div>
         </section>
       ))}
 

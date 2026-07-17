@@ -20,9 +20,9 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@fontsource/dm-mono": "^5.2.7",
-    "@fontsource/dm-sans": "^5.2.8",
-    "@fontsource/dm-serif-display": "^5.2.8",
+    "@fontsource/ibm-plex-mono": "^5.2.7",
+    "@fontsource/ibm-plex-sans": "^5.2.8",
+    "@fontsource/source-serif-4": "^5.2.9",
     "gpt-tokenizer": "^3.4.0",
     "jspdf": "^4.2.1",
     "react": "^18.3.1",

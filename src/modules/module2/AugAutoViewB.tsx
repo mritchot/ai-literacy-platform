@@ -157,13 +157,6 @@ export function AugAutoViewB({
                     isAnimationActive={false}
                     onClick={() => handleSegmentClick(c.pattern)}
                     style={{ cursor: 'pointer' }}
-                    radius={
-                      i === 0
-                        ? [4, 0, 0, 4]
-                        : i === meta.length - 1
-                          ? [0, 4, 4, 0]
-                          : [0, 0, 0, 0]
-                    }
                   >
                     <Cell
                       fill={m.color}
@@ -211,28 +204,31 @@ export function AugAutoViewB({
         </div>
       </div>
 
-      {/* Pattern selector buttons (alternative for keyboard / non-mouse users).
-          Inactive pills dim further when *any* pill is selected, so the active
-          pill's contrast stays consistent across light and dark mode. */}
-      <div className="flex flex-wrap gap-2" role="group" aria-label="Pattern detail selector">
+      {/* Pattern selector (alternative for keyboard / non-mouse users),
+          rendered as a segmented control. The per-pattern accent that used
+          to color each pill now appears only on the expanded panel below,
+          which carries it as a left rule and heading color. */}
+      <div
+        className="inline-flex flex-wrap"
+        role="group"
+        aria-label="Pattern detail selector"
+        style={{ border: '1px solid rgb(var(--border))', background: 'rgb(var(--surface))' }}
+      >
         {categories.map((c, i) => {
           const active = expanded === c.pattern;
-          const hasAnySelection = expanded !== null;
-          const accent = meta[i]?.color ?? tokens.tertiaryChart;
           return (
             <button
               key={c.pattern}
               type="button"
               onClick={() => handleSegmentClick(c.pattern)}
               aria-pressed={active}
-              className="rounded-full font-sans text-[12px] transition-all duration-150"
+              className="font-sans text-[12px] transition-colors duration-[160ms]"
               style={{
                 padding: '5px 14px',
-                border: `1.5px solid ${accent}`,
-                background: active ? accent : 'transparent',
-                color: active ? '#FFFFFF' : accent,
+                borderLeft: i > 0 ? '1px solid rgb(var(--border))' : undefined,
+                background: active ? 'rgb(var(--white))' : 'transparent',
+                color: active ? 'rgb(var(--ink))' : 'rgb(var(--tertiary))',
                 fontWeight: 600,
-                opacity: !hasAnySelection || active ? 1 : 0.4,
               }}
             >
               {c.pattern} · {c.pct}%
@@ -244,7 +240,7 @@ export function AugAutoViewB({
       {expandedCat && expandedColor && (
         <article
           aria-live="polite"
-          className="rounded-lg bg-[rgb(var(--white))]"
+          className="bg-[rgb(var(--white))]"
           style={{
             border: '1px solid rgb(var(--border))',
             borderLeft: `3px solid ${expandedColor}`,
@@ -271,7 +267,7 @@ export function AugAutoViewB({
       )}
 
       {/* Job zone panel */}
-      <section className="rounded-lg" style={{ border: '1px solid rgb(var(--border))', padding: 0 }}>
+      <section style={{ border: '1px solid rgb(var(--border))', padding: 0 }}>
         <button
           type="button"
           onClick={() => setZonesOpen((v) => !v)}
@@ -323,7 +319,7 @@ export function AugAutoViewB({
                         return p ? `Zone ${p.zone} · ${p.example_occupations}` : String(label);
                       }}
                     />
-                    <Bar dataKey="representation_ratio" radius={[0, 3, 3, 0]} isAnimationActive={false}>
+                    <Bar dataKey="representation_ratio" isAnimationActive={false}>
                       {jobZones.map((z) => (
                         <Cell
                           key={z.zone}
@@ -440,11 +436,11 @@ function MobileJobZoneList({ zones }: { zones: JobZone[] }): JSX.Element {
               </span>
             </div>
             <div
-              className="h-2 w-full overflow-hidden rounded-full"
+              className="h-2 w-full overflow-hidden"
               style={{ background: 'rgb(var(--border-light))' }}
             >
               <div
-                className="h-full rounded-full"
+                className="h-full"
                 style={{
                   width: `${widthPct}%`,
                   background: isHighlight ? tokens.action : tokens.secondary,

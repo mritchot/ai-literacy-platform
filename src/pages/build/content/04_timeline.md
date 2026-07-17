@@ -1,6 +1,6 @@
 Two timelines for the same deliverable set. The first is the retrospective record of a solo, AI-accelerated build, reconstructed from a dated process journal. The second estimates how a five-person L&D team might schedule the same scope with conventional methods; it is a simple exemplar, since organizations vary widely in workflow and staffing, so treat the five-person structure as one illustration rather than a template. The comparison is not an argument for replacing teams with AI; it is a demonstration of what AI-augmented development compresses, and what it does not.
 
-The meaningful figure is roughly 150–160 focused hours against a ~735-hour industry baseline for comparable Level-3 e-learning, a 4.6–4.9× reduction. The eight-week calendar span overstates the working time: the early phases were part-time, and illness plus a physical injury near the start cost roughly two to three weeks of calendar time without adding to the hours.
+The meaningful figure is roughly 210 focused hours against a ~735-hour industry baseline for comparable Level-3 e-learning, a 3.5× reduction. The figure includes iterative review and improvement passes beyond the launch build — work the baseline does not measure, which keeps the comparison conservative. The eight-week calendar span to launch overstates the working time: the early phases were part-time, and illness plus a physical injury near the start cost roughly two to three weeks of calendar time without adding to the hours.
 
 ## Where the compression comes from
 

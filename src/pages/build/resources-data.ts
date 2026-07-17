@@ -4,7 +4,7 @@
 //
 // Source: Phase 4 Component 7D Resource Planning Summary
 // (planning corpus, outside the repo), §2–§4. The
-// practitioner-labor figure uses the RECONCILED canonical value (~150–160
+// practitioner-labor figure uses the RECONCILED canonical value (~210
 // focused hours). Solo costs reflect the actual spend (Claude Pro then Max 5x,
 // plus Google AI Pro for NotebookLM). Org salaries are fully loaded (base ×1.4).
 // All monetary figures in US dollars.
@@ -44,7 +44,7 @@ export const SOLO_COSTS: CostLine[] = [
   { item: 'Design tools (Claude Design)', cost: '$0', note: 'Included with the subscription; used for high-fidelity mockups and reference PDF redesigns.' },
   { item: 'Research sources', cost: '$0', note: 'All source papers are publicly available (WEF, Anthropic Economic Index, Anthropic Interviewer).' },
   { item: 'Authoring tools (Articulate)', cost: '$0', note: 'Deferred indefinitely; a 360 license is ~$1,399/year, not justified for a portfolio piece.' },
-  { item: 'Practitioner labor (opportunity cost)', cost: '≈$7,500', note: 'Approximate opportunity cost of roughly 150–160 focused hours. Not an out-of-pocket cost and not in the direct total; in any funded project this is the dominant cost.' },
+  { item: 'Practitioner labor (opportunity cost)', cost: '≈$10,500', note: 'Approximate opportunity cost of roughly 210 focused hours. Not an out-of-pocket cost and not in the direct total; in any funded project this is the dominant cost.' },
 ];
 
 export const FTE_ALLOC: FteLine[] = [

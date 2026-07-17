@@ -34,11 +34,11 @@ export default function Level4Results(): JSX.Element {
     <div className="mx-auto max-w-interactive px-4 py-12 sm:px-8 lg:px-16 lg:py-14">
       <ArtifactTopBar pdfSlug="level-4-results" />
       <SeriesEyebrow label="Evaluation framework · Interactive" />
-      <article className="max-w-reading">{renderMarkdown(partA)}</article>
+      <article className="prose-longform max-w-reading">{renderMarkdown(partA)}</article>
       <RoiFormulaFigure />
       <RoiCalculator />
       {partB.length > 0 && (
-        <article className="mt-10 max-w-reading">{renderMarkdown(partB)}</article>
+        <article className="prose-longform mt-10 max-w-reading">{renderMarkdown(partB)}</article>
       )}
       <ArtifactFooter currentSlug="level-4-results" />
     </div>

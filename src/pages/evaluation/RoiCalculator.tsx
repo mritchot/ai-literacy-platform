@@ -198,7 +198,7 @@ export function RoiFormulaFigure(): JSX.Element {
   return (
     <figure
       aria-label="The ROI model, term by term"
-      className="m-0 mt-10 rounded-xl bg-surface"
+      className="m-0 mt-10 bg-surface"
       style={{ border: '1px solid rgb(var(--border-light))', padding: '20px 22px' }}
     >
       <Overline className="mb-4">The ROI model · term by term</Overline>
@@ -249,7 +249,7 @@ export function RoiFormulaFigure(): JSX.Element {
 function Sym({ children }: { children: ReactNode }): JSX.Element {
   return (
     <span
-      className="inline-block whitespace-nowrap rounded px-1.5 py-0.5 font-mono text-[13px] font-semibold text-ink"
+      className="inline-block whitespace-nowrap px-1.5 py-0.5 font-mono text-[13px] font-semibold text-ink"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border-light))',
@@ -301,7 +301,7 @@ export function RoiCalculator(): JSX.Element {
   return (
     <section
       aria-label="Interactive ROI calculator"
-      className="mt-6 rounded-xl"
+      className="mt-6"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -337,7 +337,7 @@ export function RoiCalculator(): JSX.Element {
         <button
           type="button"
           onClick={() => setInputs(DEFAULTS)}
-          className="rounded-md bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] hover:bg-action-hover"
+          className="bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover"
         >
           Reset to conservative defaults
         </button>
@@ -362,7 +362,7 @@ export function RoiCalculator(): JSX.Element {
         <FlowConnector glyphs="↘ ↙" />
 
         <div
-          className="rounded-lg bg-surface"
+          className="bg-surface"
           style={{ border: '1px solid rgb(var(--border-light))', padding: '16px 20px' }}
         >
           <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -378,7 +378,7 @@ export function RoiCalculator(): JSX.Element {
         <FlowConnector glyphs="↓" />
 
         <div
-          className="rounded-lg text-center"
+          className="text-center"
           style={{
             background: 'rgb(var(--white))',
             border: '1px solid rgb(var(--border))',
@@ -479,7 +479,7 @@ function InputField({
             focusedRef.current = false;
             setText(String(value));
           }}
-          className="w-32 rounded-md px-2.5 py-1.5 font-mono text-body-sm text-ink [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+          className="w-32 px-2.5 py-1.5 font-mono text-body-sm text-ink [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
           style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))' }}
         />
         {def.unit === 'pct' && <span className="font-mono text-body-sm text-tertiary">%</span>}
@@ -502,7 +502,7 @@ function StreamCard({
 }): JSX.Element {
   return (
     <div
-      className="rounded-lg bg-surface"
+      className="bg-surface"
       style={{ border: '1px solid rgb(var(--border-light))', padding: '16px 20px' }}
     >
       <div

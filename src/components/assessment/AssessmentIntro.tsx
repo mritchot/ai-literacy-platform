@@ -43,7 +43,7 @@ export function AssessmentIntro({
       </h1>
 
       <div
-        className="rounded-lg bg-[rgb(var(--white))] p-5 sm:p-6"
+        className="bg-[rgb(var(--white))] p-5 sm:p-6"
         style={{ border: '1px solid rgb(var(--border))' }}
       >
         {isPre ? <PreFraming itemCount={itemCount} /> : <PostFraming itemCount={itemCount} />}
@@ -67,8 +67,8 @@ export function AssessmentIntro({
           <button
             type="button"
             onClick={onBegin}
-            className="inline-flex shrink-0 items-center justify-center gap-2.5 rounded-md bg-action px-5 py-3 font-sans text-[14px] font-semibold text-[rgb(var(--white))] transition-colors duration-150 hover:bg-action-hover"
-            style={{ border: '1.5px solid rgb(var(--action))' }}
+            className="inline-flex shrink-0 items-center justify-center gap-2.5 bg-action px-5 py-3 font-sans text-[14px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] transition-colors duration-[160ms] hover:bg-action-hover"
+            style={{ border: '1px solid rgb(var(--action))' }}
           >
             {isPre ? 'Begin pre-assessment' : 'Begin post-assessment'}
             <Icon name="arrowRight" size={14} />
@@ -106,7 +106,7 @@ function PreFraming({ itemCount }: { itemCount: number }): JSX.Element {
         </li>
       </ul>
       <p
-        className="m-0 rounded-md font-sans text-body-sm text-secondary"
+        className="m-0 font-sans text-body-sm text-secondary"
         style={{
           background: 'rgb(var(--surface))',
           border: '1px solid rgb(var(--border-light))',
@@ -154,7 +154,7 @@ function AlreadyCompleteNotice({ kind }: { kind: 'pre' | 'post' }): JSX.Element 
   const isPre = kind === 'pre';
   return (
     <div
-      className="mt-6 rounded-lg"
+      className="mt-6"
       style={{
         background: 'rgb(var(--surface))',
         border: '1px solid rgb(var(--border))',
