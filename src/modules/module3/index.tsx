@@ -11,10 +11,8 @@ import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
 import { BottleneckCallout } from '../../components/shared/BottleneckCallout';
 import { Citation } from '../../components/shared/Citation';
 import { KnowledgeCheck } from '../../components/shared/KnowledgeCheck';
-import {
-  SectionContainer,
-  getModuleOrThrow,
-} from '../../components/shared/SectionContainer';
+import { SectionContainer } from '../../components/shared/SectionContainer';
+import { getModuleOrThrow } from '../../data/program';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { ContextWindowScenario } from './ContextWindowScenario';

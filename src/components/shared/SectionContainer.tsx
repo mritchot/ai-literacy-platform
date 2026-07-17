@@ -18,7 +18,7 @@
 
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
-import { getModule, MODULES, type ModuleMeta } from '../../data/program';
+import { MODULES, type ModuleMeta } from '../../data/program';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { usePlatformMode } from '../../hooks/usePlatformMode';
 import { useViewport } from '../../hooks/useViewport';
@@ -399,10 +399,4 @@ function ContinueButton({
       <Icon name="arrowRight" size={14} />
     </button>
   );
-}
-
-export function getModuleOrThrow(id: number): ModuleMeta {
-  const m = getModule(id);
-  if (!m) throw new Error(`Module ${id} not found`);
-  return m;
 }
