@@ -5,8 +5,8 @@
 // Source: Phase 4 Component 7A Project Timeline
 // (planning corpus, outside the repo). The effort
 // figures use the RECONCILED canonical values, not 07a's superseded ones:
-// ~150–160 focused hours against a ~735-hour Chapman Alliance baseline for
-// comparable Level-3 e-learning, a 4.6–4.9× reduction. The comparison leads on
+// ~210 focused hours against a ~735-hour Chapman Alliance baseline for
+// comparable Level-3 e-learning, a 3.5× reduction. The comparison leads on
 // effort, not calendar. Solo bar positions come from the dated process journal;
 // the organizational bar positions are an illustrative schedule derived from
 // the phase durations (the org track is an exemplar, not a fixed plan).
@@ -49,11 +49,11 @@ export const TIMELINE_MAX_WEEKS = 30;
 // Effort comparison — the headline. Numeric anchors drive the bar widths;
 // the ranges are the displayed labels.
 export const EFFORT = {
-  soloHoursLabel: '≈150–160 hrs',
-  soloHoursAnchor: 155,
+  soloHoursLabel: '≈210 hrs',
+  soloHoursAnchor: 210,
   baselineLabel: '≈735 hrs',
   baselineAnchor: 735,
-  reductionLabel: '4.6–4.9×',
+  reductionLabel: '3.5×',
   baselineNote: 'Chapman Alliance (2010) baseline for comparable Level-3 e-learning',
   soloNote: 'Focused solo effort, AI-accelerated',
   // Calendar is secondary context, never the compression figure.

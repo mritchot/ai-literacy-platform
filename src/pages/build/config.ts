@@ -52,7 +52,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     route: 'build/timeline',
     title: 'Project Timeline',
     blurb:
-      'The ~8-week solo build set against a 24–33-week five-person organizational plan, led by effort: ~150–160 focused hours against a ~735-hour industry baseline for comparable e-learning.',
+      'The ~8-week solo build set against a 24–33-week five-person organizational plan, led by effort: ~210 focused hours against a ~735-hour industry baseline for comparable e-learning.',
     type: 'Interactive',
     group: 'Project Management',
     openLabel: 'View',
