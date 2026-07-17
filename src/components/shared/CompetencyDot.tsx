@@ -15,17 +15,6 @@ const LABEL: Record<CompetencyKey, string> = {
   diligence: 'Diligence',
 };
 
-// Dark-mode competency text colors. These duplicate the `.dark`
-// `--{competency}-text` values in index.css, and exist only to back the
-// `--competency-text-*` custom properties the landing page's legend
-// reads. CompetencyDot itself uses the index.css tokens directly.
-const TEXT_DARK: Record<CompetencyKey, string> = {
-  delegation: '#B5C4AB',
-  description: '#C9B99E',
-  discernment: '#A8BCCA',
-  diligence: '#BEA8C9',
-};
-
 interface CompetencyDotProps {
   competency: CompetencyKey;
   /** Swatch edge in px. 8 is the system default; callers rendering the
@@ -53,20 +42,5 @@ export function CompetencyDot({ competency, size = 8 }: CompetencyDotProps): JSX
       />
       {LABEL[competency]}
     </span>
-  );
-}
-
-// Single inline rule that flips all four competency text colors in dark mode.
-// Rendered once at the top of the App so each dot is a pure component.
-export function CompetencyDarkStyles(): JSX.Element {
-  return (
-    <style>{`
-      .dark {
-        --competency-text-delegation: ${TEXT_DARK.delegation};
-        --competency-text-description: ${TEXT_DARK.description};
-        --competency-text-discernment: ${TEXT_DARK.discernment};
-        --competency-text-diligence: ${TEXT_DARK.diligence};
-      }
-    `}</style>
   );
 }

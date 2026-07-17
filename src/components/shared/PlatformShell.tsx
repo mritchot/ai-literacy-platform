@@ -8,7 +8,6 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { STORAGE_KEYS } from '../../constants/storage-keys';
 import { useViewport } from '../../hooks/useViewport';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
-import { CompetencyDarkStyles } from './CompetencyDot';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
 
@@ -127,7 +126,6 @@ export function PlatformShell(): JSX.Element {
       >
         Skip to main content
       </button>
-      <CompetencyDarkStyles />
 
       {viewport === 'mobile' ? (
         <>
