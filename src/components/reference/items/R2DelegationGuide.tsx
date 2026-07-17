@@ -10,7 +10,7 @@
 // This is intentional: the learner sees the same visual language in the
 // practice activity (P8) and the portable job aid (R2).
 
-import type { ReactNode } from 'react';
+import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 
 // ─────────────────────────────────────────────────────────────────────
 // Categories — terminal recommendations from the flowchart, also rendered
@@ -366,8 +366,8 @@ function FlowStep({
           the flow), and the right exit is the "continue" route — except
           on Q4 where both exits are terminals (Human-Only / AI-Assisted). */}
       <div
-        className="mt-3 grid gap-3"
-        style={{ gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }}
+        className="mt-3 grid"
+        style={{ gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: EXIT_GAP }}
       >
         {q.exits.map((exit, exitIdx) => (
           <ExitChip key={exitIdx} exit={exit} />
@@ -395,6 +395,12 @@ function FlowStep({
 // ─────────────────────────────────────────────────────────────────────
 
 const DIAMOND_W = 320;
+
+// Gutter between the two exit chips. Shared with the Connector, which
+// anchors its tail to a chip's column-center and so needs the same gap
+// the grid actually renders — a hardcoded `gap-3` on one side and a
+// guess on the other is how the tail drifted off the chip before.
+const EXIT_GAP = 12;
 const DIAMOND_H = 84;
 const DIAMOND_INSET = 28; // horizontal inset of the flat top/bottom
 
@@ -560,17 +566,50 @@ function ExitChip({ exit }: { exit: FlowExit }): JSX.Element {
 // Stroke is delegation olive so it reads in both light and dark mode.
 // ─────────────────────────────────────────────────────────────────────
 
-const CONNECTOR_W = 320; // matches DIAMOND_W so the arrow tail centers correctly under it
 const CONNECTOR_H = 56;
 
 function Connector({ continueOnRight }: { continueOnRight: boolean }): JSX.Element {
-  // Top x-coord of the path: column-center of the continue chip. The
-  // exit grid has 2 equal columns; their centers sit at 25% and 75% of
-  // the row's width. We approximate this by mapping to the connector's
-  // own viewBox: 25% of CONNECTOR_W = 80, 75% = 240. Bottom of the path
-  // always lands at center (CONNECTOR_W / 2 = 160).
-  const startX = continueOnRight ? CONNECTOR_W * 0.75 : CONNECTOR_W * 0.25;
-  const endX = CONNECTOR_W / 2;
+  // The arrow has to start above the *continue chip*, so its coordinate
+  // space must be the exit row's, not a box of its own. It previously
+  // drew into a fixed 320-wide viewBox (sized to DIAMOND_W) that
+  // `mx-auto`-centered inside the full-width exit row, and took its start
+  // as 75% of that inner box — which is only the chip's column-center
+  // when the row happens to be exactly 320 wide. In the 560px panel the
+  // row measures ~515, and the tail landed ~51px inside the chip it was
+  // meant to hang from. The end point never showed the fault because both
+  // it and the box are centered, so the two errors cancel.
+  //
+  // So: span the row, and map the viewBox 1:1 onto CSS pixels. A 1:1 map
+  // is what keeps the stroke and arrowhead at a fixed size instead of
+  // scaling with the panel, which a percentage-width viewBox would do.
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [rowW, setRowW] = useState(0);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const measure = () => {
+      const w = el.getBoundingClientRect().width;
+      if (w > 0) setRowW(w);
+    };
+    // Measure synchronously, before paint: a ResizeObserver alone would
+    // leave the first frame with no width to draw into, and it only
+    // delivers on the rendering lifecycle — which is suspended while the
+    // tab is backgrounded. rAF-independent measurement here means the
+    // arrow is right on the first paint and the observer only has to
+    // handle later resizes (panel open on mobile vs. desktop widths).
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  // Two equal columns separated by EXIT_GAP, so each column is
+  // (rowW - gap) / 2 wide and the left one centers at half of that. The
+  // gap matters: dropping it is what left the old math 3px out even at
+  // the one width where the rest of it worked.
+  const colCenter = (rowW - EXIT_GAP) / 4;
+  const startX = continueOnRight ? rowW - colCenter : colCenter;
+  const endX = rowW / 2;
   const startY = 4;
   const endY = CONNECTOR_H - 8;
   // Cubic Bezier control points keep the curve gentle — straight at the
@@ -581,10 +620,12 @@ function Connector({ continueOnRight }: { continueOnRight: boolean }): JSX.Eleme
   const c2y = startY + (endY - startY) * 0.55;
 
   return (
-    <div className="mx-auto" style={{ width: CONNECTOR_W, maxWidth: '100%' }}>
+    <div ref={ref} style={{ width: '100%' }}>
       <svg
         width="100%"
-        viewBox={`0 0 ${CONNECTOR_W} ${CONNECTOR_H}`}
+        height={CONNECTOR_H}
+        viewBox={`0 0 ${rowW || 1} ${CONNECTOR_H}`}
+        preserveAspectRatio="xMidYMid meet"
         aria-hidden="true"
         style={{ display: 'block', margin: '4px auto' }}
       >

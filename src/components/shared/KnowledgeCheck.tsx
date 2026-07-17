@@ -261,7 +261,7 @@ export function KnowledgeCheck({
                           whiteSpace: 'nowrap',
                         }}
                       >
-                        ★ Recommended
+                        Recommended
                       </span>
                     )}
                   </div>
@@ -322,7 +322,7 @@ export function KnowledgeCheck({
           }}
         >
           <Overline className="mb-1.5" style={{ color: 'rgb(var(--success))' }}>
-            ★ Recommended response
+            Recommended response
           </Overline>
           <div className="mb-1.5 font-sans text-body-sm font-semibold text-ink">
             {preferredOption.text}

@@ -520,7 +520,7 @@ function VerificationItemCard({
               color: feedback.tone === 'success' ? 'rgb(var(--success))' : 'rgb(var(--error))',
             }}
           >
-            {feedback.tone === 'success' ? '★ Correct identification' : 'Reconsider'}
+            {feedback.tone === 'success' ? 'Correct identification' : 'Reconsider'}
           </div>
           <div className="font-sans text-body-sm leading-relaxed text-body">{feedback.text}</div>
         </div>
