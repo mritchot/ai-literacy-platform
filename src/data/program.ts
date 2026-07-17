@@ -142,3 +142,11 @@ export const TOTAL_ACTIVITIES = MODULES.reduce((acc, m) => acc + m.activities, 0
 export function getModule(id: number): ModuleMeta | undefined {
   return MODULES.find((m) => m.id === id);
 }
+
+// Throwing variant for the module route roots, where a missing id is a
+// routing bug, not a recoverable state.
+export function getModuleOrThrow(id: number): ModuleMeta {
+  const m = getModule(id);
+  if (!m) throw new Error(`Module ${id} not found`);
+  return m;
+}

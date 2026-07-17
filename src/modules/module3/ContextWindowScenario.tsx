@@ -63,8 +63,10 @@ export function ContextWindowScenario(): JSX.Element {
   const [docTab, setDocTab] = useState<DocTab>('source');
   // True when the section mounted with the debrief already reached — the
   // debrief block suppresses its scroll-into-view then, so a restored
-  // re-entry doesn't fight SectionContainer's heading focus.
-  const restoredToDebrief = useRef(initialPhase === 'debrief');
+  // re-entry doesn't fight SectionContainer's heading focus. Frozen at
+  // mount via a never-set state so it is render-safe (refs may not be
+  // read during render).
+  const [restoredToDebrief] = useState(() => initialPhase === 'debrief');
   // Verification block — focus target after the "Begin verification"
   // button unmounts on phase advance.
   const verificationRef = useRef<HTMLDivElement>(null);
@@ -189,7 +191,7 @@ export function ContextWindowScenario(): JSX.Element {
         </div>
       )}
 
-      {phase === 'debrief' && <DebriefBlock scrollOnMount={!restoredToDebrief.current} />}
+      {phase === 'debrief' && <DebriefBlock scrollOnMount={!restoredToDebrief} />}
       </section>
     </div>
   );
