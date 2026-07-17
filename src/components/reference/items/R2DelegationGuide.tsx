@@ -309,7 +309,7 @@ function FlowStep({
   isLast: boolean;
 }): JSX.Element {
   // Which exit is the "continue" path? We need this so the connector
-  // arrow can be positioned under that column (right column for Q1–Q3,
+  // line can be positioned under that column (right column for Q1–Q3,
   // never present for Q4 since both exits terminate).
   const continueExitIdx = q.exits.findIndex((e) => e.kind === 'continue');
 
@@ -375,7 +375,7 @@ function FlowStep({
       </div>
 
       {/* Connector to next Q — only when there is a "continue" exit.
-          Drawn as a routing arrow that begins above the continue chip
+          Drawn as a routing line that begins above the continue chip
           and lands centered under the next diamond, so the routing is
           geometrically explicit. */}
       {!isLast && continueExitIdx >= 0 && (
@@ -558,18 +558,20 @@ function ExitChip({ exit }: { exit: FlowExit }): JSX.Element {
 }
 
 // ─────────────────────────────────────────────────────────────────────
-// Connector — routing arrow between flowchart steps. Drawn as a single
+// Connector — routing line between flowchart steps. Drawn as a single
 // SVG path that begins above the continue-chip column (offset right or
 // left from center, matching where that exit lives) and curves down to
 // land centered under the next hexagon. This makes the routing
 // geometrically explicit instead of relying on the chip text alone.
 // Stroke is delegation olive so it reads in both light and dark mode.
+// No arrowhead: the line already carries the routing, and the chip it
+// hangs from names the destination.
 // ─────────────────────────────────────────────────────────────────────
 
 const CONNECTOR_H = 56;
 
 function Connector({ continueOnRight }: { continueOnRight: boolean }): JSX.Element {
-  // The arrow has to start above the *continue chip*, so its coordinate
+  // The line has to start above the *continue chip*, so its coordinate
   // space must be the exit row's, not a box of its own. It previously
   // drew into a fixed 320-wide viewBox (sized to DIAMOND_W) that
   // `mx-auto`-centered inside the full-width exit row, and took its start
@@ -580,8 +582,8 @@ function Connector({ continueOnRight }: { continueOnRight: boolean }): JSX.Eleme
   // it and the box are centered, so the two errors cancel.
   //
   // So: span the row, and map the viewBox 1:1 onto CSS pixels. A 1:1 map
-  // is what keeps the stroke and arrowhead at a fixed size instead of
-  // scaling with the panel, which a percentage-width viewBox would do.
+  // is what holds the stroke at a fixed weight instead of scaling it with
+  // the panel, which a percentage-width viewBox would do.
   const ref = useRef<HTMLDivElement | null>(null);
   const [rowW, setRowW] = useState(0);
   useLayoutEffect(() => {
@@ -629,26 +631,12 @@ function Connector({ continueOnRight }: { continueOnRight: boolean }): JSX.Eleme
         aria-hidden="true"
         style={{ display: 'block', margin: '4px auto' }}
       >
-        <defs>
-          <marker
-            id="r2-arrow-head"
-            viewBox="0 0 10 10"
-            refX="9"
-            refY="5"
-            markerWidth="7"
-            markerHeight="7"
-            orient="auto"
-          >
-            <path d="M0,0 L10,5 L0,10 z" style={{ fill: DIAMOND_STROKE }} />
-          </marker>
-        </defs>
         <path
           d={`M ${startX} ${startY} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${endX} ${endY}`}
           fill="none"
           style={{ stroke: DIAMOND_STROKE }}
           strokeWidth={2.5}
           strokeLinecap="round"
-          markerEnd="url(#r2-arrow-head)"
         />
       </svg>
     </div>
