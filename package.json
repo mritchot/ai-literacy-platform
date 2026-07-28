@@ -14,7 +14,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/verify-sitemap.mjs",
+    "verify:crawl": "node scripts/verify-sitemap.mjs",
     "preview": "vite preview",
     "typecheck": "tsc -b",
     "lint": "eslint ."
