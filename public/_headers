@@ -1,0 +1,27 @@
+# Cloudflare Pages custom response headers.
+#
+# The seven reference PDFs are course collateral — the job aids a learner
+# downloads while working through the modules — not portfolio pieces meant
+# to be found cold in a search result. A PDF has no <head>, so there is no
+# meta tag to mark them with; the only way to keep them out of the index is
+# this response header.
+#
+# Two things follow from that, and both matter if anyone edits the crawl
+# config later:
+#
+#   1. These paths are deliberately NOT in sitemap.xml. Submitting a URL
+#      that is also marked noindex earns a "Submitted URL marked 'noindex'"
+#      error in Search Console — it would trade the buckets we are clearing
+#      for a new one.
+#   2. robots.txt deliberately does NOT disallow /reference/. A disallowed
+#      path is never fetched, so Googlebot would never see the header below
+#      and the URLs could still surface as bare links. Crawlable-but-noindex
+#      is the combination that actually removes them.
+#
+# The needs-analysis, evaluation and build PDFs are the behind-the-build
+# portfolio work and stay indexable — they are the only crawlable form of
+# that content, since the app is hash-routed and its artifact pages sit
+# behind fragments Google ignores.
+
+/reference/*
+  X-Robots-Tag: noindex
