@@ -1,0 +1,8 @@
+# /reference/ is intentionally left crawlable. Those PDFs are marked
+# noindex via X-Robots-Tag in _headers, and a header can only be honoured
+# on a URL the crawler is allowed to fetch. Adding a Disallow rule here
+# would hide the header and let the URLs linger as bare search results.
+User-agent: *
+Allow: /
+
+Sitemap: https://ai-literacy.ritchot.me/sitemap.xml

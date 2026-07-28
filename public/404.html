@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- The presence of this file is the fix, not just its contents.
+         Cloudflare Pages treats a missing top-level 404.html as the signal
+         that a deployment is a single-page application, and answers every
+         unmatched path with index.html at status 200. That is what put
+         /util, /U, /*, /h, /test, /null, /-- and friends into Search
+         Console's "Crawled — currently not indexed" bucket: Google pulled
+         URL-shaped substrings out of the inlined bundle, requested them,
+         and got a 200 every time. This file makes those paths 404, which
+         is what they always were. The app is hash-routed (createHashRouter),
+         so every real route lives behind '#' and never reaches the server —
+         nothing here can break in-app navigation. -->
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Page not found — AI Literacy for the Modern Workforce</title>
+    <style>
+      /* Design tokens lifted from src/styles/index.css. This page cannot
+         import the bundle (vite-plugin-singlefile inlines all CSS into
+         index.html), so the handful of values it needs are duplicated here.
+         The app flips themes with a `.dark` class set from JS; a static
+         page has no JS, so it follows the OS preference instead. */
+      :root {
+        --canvas: #f7f4ef;
+        --white: #fdfbf7;
+        --ink: #1e1c19;
+        --body: #57534b;
+        --tertiary: #6b665c;
+        --border: #d9d3c7;
+        --action: #0c6b76;
+        --action-hover: #0a5a63;
+        --focus: #c73b27;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --canvas: #101014;
+          --white: #1d1d24;
+          --ink: #e6e2d9;
+          --body: #b3aea2;
+          --tertiary: #948f83;
+          --border: #2c2c34;
+          --action: #4cc3d0;
+          --action-hover: #63cdd8;
+          --focus: #e05543;
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: var(--canvas);
+        color: var(--body);
+        /* IBM Plex Sans ships inlined inside the app bundle and is not
+           reachable as a standalone file, so this resolves to the system
+           stack here. Named first anyway for the case where it is cached. */
+        font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+        font-size: 16px;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+      }
+      main {
+        max-width: 680px;
+        width: 100%;
+        background: var(--white);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 48px 32px;
+      }
+      .code {
+        font-family: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+        font-size: 10px;
+        line-height: 1.4;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--tertiary);
+        margin: 0 0 16px;
+      }
+      h1 {
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-size: 32px;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        font-weight: 600;
+        color: var(--ink);
+        margin: 0 0 16px;
+      }
+      p {
+        margin: 0 0 24px;
+      }
+      a {
+        display: inline-block;
+        color: var(--action);
+        font-weight: 500;
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 2px;
+        transition: color 160ms cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      a:hover {
+        color: var(--action-hover);
+      }
+      a:focus-visible {
+        outline: 2px solid var(--focus);
+        outline-offset: 2px;
+      }
+      @media (min-width: 768px) {
+        main {
+          padding: 64px 48px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="code">Error 404</p>
+      <h1>Page not found</h1>
+      <p>
+        That address doesn't match anything on this site. The program, its
+        modules, and the behind-the-build artifacts are all reachable from the
+        home page.
+      </p>
+      <a href="/">Return to AI Literacy for the Modern Workforce</a>
+    </main>
+  </body>
+</html>
