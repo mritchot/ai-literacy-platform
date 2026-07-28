@@ -14,6 +14,16 @@
     <meta property="og:title" content="AI Literacy for the Modern Workforce" />
     <meta property="og:description" content="A research-grounded program for mid-career professionals building judgment-level AI competency." />
     <meta property="og:url" content="https://ai-literacy.ritchot.me" />
+    <!-- Canonical. The app is hash-routed, so every real route is a fragment
+         the server never sees — the origin only ever serves this one document.
+         Declaring the root as canonical folds any stray path that still
+         resolves here into the homepage instead of letting Google file it as
+         a separate duplicate. (Search Console filed one such malformed path
+         on Jul 7, 2026; it traced to a BPE token in the gpt-tokenizer
+         vocabulary that vite-plugin-singlefile inlines into this document.
+         The literal string is deliberately not repeated here — it is exactly
+         the kind of URL-shaped substring the crawler picks up.) -->
+    <link rel="canonical" href="https://ai-literacy.ritchot.me/" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="AI Literacy for the Modern Workforce" />
     <meta name="twitter:description" content="A research-grounded program for mid-career professionals building judgment-level AI competency." />
