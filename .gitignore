@@ -27,5 +27,8 @@ ARCHIVE.md
 TODO.md
 TODOARCHIVE.md
 
+# Local planning artifacts — never in the tracked tree
+cc-prompts/
+
 # Audit working notes (session-scoped, never committed)
 BEHIND-THE-BUILD-audit.md
