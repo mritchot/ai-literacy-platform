@@ -106,7 +106,9 @@ function Section1({ module }: ModuleProp): JSX.Element {
           managers.
         </p>
         <p className="m-0">
-          All four competencies converge here. Delegation determines what to hand to AI.
+          All four competencies converge here
+         <Citation ids="dakan-feller-2025" pageKey="four-ds" />. Delegation determines what to
+          hand to AI.
           Description determines how to specify the task. Discernment determines how to evaluate
           what comes back. Diligence determines how to document the process and take
           accountability for the result. In Modules 1 through 3, these operated as separate
@@ -145,6 +147,17 @@ function Section2({ module }: ModuleProp): JSX.Element {
         assistance but requiring your active direction. Most workplace tasks are not single
         activities; they are bundles of sub-tasks with different reliability profiles.
       </p>
+      <p className="m-0 mb-4 font-sans text-body text-body">
+        Expert users decompose the same way. When Anthropic interviewed 53 of its engineers, one
+        rule of thumb was to hand off a component only when it is decoupled enough from the rest
+        to stand alone, and another was to delegate where checking the result costs less than
+        producing it<Citation ids="huang-2025" pageKey="delegation-criteria" />. Even so, more
+        than half of those engineers said they could fully delegate only a fifth of their work or
+        less, and the authors note that “fully delegate” itself ranged from no verification to
+        light oversight<Citation ids="huang-2025" pageKey="full-delegation-share" />.
+        Decomposition is not a route to handing everything off. It is how you find the few
+        components that can go and the many that need you.
+      </p>
       <p className="m-0 mb-6 font-sans text-body text-body">
         One thing to watch for as you work through the exercise below: your choices interact.
         How you categorize one component can change the right answer for another. A step you
@@ -177,10 +190,22 @@ function Section3({ module }: ModuleProp): JSX.Element {
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         You’ve decided what to delegate. The next judgment is how to describe it. Description
-        breaks down into three dimensions: <em>product</em> (what you want), <em>process</em>{' '}
-        (how the AI should approach the task), and <em>performance</em> (how the AI should
-        behave). Most underspecified prompts fail on all three at once. Read the weak prompt
-        and its output, then rewrite it across all three dimensions.
+        breaks down into three dimensions
+       <Citation ids="dakan-feller-2025" pageKey="description" />: <em>product</em> (what you
+        want), <em>process</em> (how the AI should approach the task, and how you work through it
+        together), and <em>performance</em> (how the AI should behave). Most underspecified
+        prompts fail on all three at once. This is the skill knowledge workers most often report
+        lacking. In one survey of 319, 72 said they could see that an output was wrong but could
+        not revise the query or steer the model to a better one
+       <Citation ids="lee-2025" pageKey="inhibitors" />. Others described the effort of turning
+        an intention into a query as the main new cost of AI-assisted work
+       <Citation ids="lee-2025" pageKey="effort-shift-stewardship" />. The three dimensions below
+        give that effort a structure. The behavioral data supports the premise. Across a million
+        conversations, the sophistication of the model's response tracked the sophistication of
+        the prompt almost one-for-one, and the model answered at an expert level mainly when asked
+        at one
+       <Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />.
+        Read the weak prompt and its output, then rewrite it across all three dimensions.
       </p>
       <PromptComparison />
     </SectionContainer>
@@ -290,7 +315,10 @@ function Section6({ module }: ModuleProp): JSX.Element {
         Description. The output verification practiced Discernment. This exercise puts the last
         two together in the cycle Module 3 named but didn’t practice: the Description-Discernment
         loop. Three structured turns on a single drafting task. The scaffolding makes the loop
-        visible.
+        visible. The same data shows why the loop matters: multi-turn conversations held their
+        success rate on long tasks far better than single-shot requests, which the researchers
+        attribute to users breaking work into steps and correcting course each turn
+       <Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />.
       </p>
       <IterativeRefinement />
     </SectionContainer>
@@ -401,7 +429,7 @@ function Section9({ module }: ModuleProp): JSX.Element {
           facts, which means fluent text and accurate text are independent properties. And the
           adoption data says 69% of professionals mention the social stigma that comes with
           using AI at work
-          <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" />, which means the
+         <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" />, which means the
           fastest-growing capability in the modern workforce is developing in isolation, without
           shared standards, without peer learning, and without organizational visibility.
         </p>
@@ -420,12 +448,29 @@ function Section9({ module }: ModuleProp): JSX.Element {
           One caution belongs in this closing. Research on knowledge workers using generative AI
           has documented a pattern worth naming: the more confident people become in the tool,
           the less critical thinking they report applying to its output
-          <Citation ids="lee-2025" pageKey="confidence-critical-thinking" />. Confidence is the
-          intended product of a program like this one — but the confidence this program built is
-          confidence in your evaluation process, not in the tool's output. The moment the
+         <Citation ids="lee-2025" pageKey="confidence-critical-thinking" />. The same study
+          found the reverse for a different kind of confidence. Workers who felt confident in
+          their own ability to do the task, or to evaluate the AI's answer, reported more critical
+          thinking, not less
+         <Citation ids="lee-2025" pageKey="self-confidence-more-critical-thinking" />. The study
+          is a survey, so it shows association rather than cause
+         <Citation ids="lee-2025" pageKey="correlational-caveat" />. Still, the direction
+          matters. Confidence is the intended product of a program like this one, and the
+          confidence this program built is confidence in your evaluation process, not in the
+          tool's output. That is the kind the research links to more scrutiny. The moment the
           verification workflow starts to feel unnecessary is the moment it is doing the most
           work. If your Discernment practice fades as the outputs keep looking clean, you have
           not become better at using AI; you have become a faster route for unverified content.
+          There is a second reason to keep verifying routine outputs, beyond catching errors.
+          Evaluation is a skill, and skills decay without practice. The knowledge-worker survey
+          warns that reserving critical thinking for high-stakes tasks is risky, because
+          low-stakes work is where the skill stays exercised
+         <Citation ids="lee-2025" pageKey="practice-decay" />. Anthropic's own engineers describe
+          the same trap as a paradox of supervision: using AI well requires the skills that heavy
+          AI use can erode<Citation ids="huang-2025" pageKey="paradox-of-supervision" />. Some of
+          them solve a problem without AI now and then, on purpose, to stay sharp
+         <Citation ids="huang-2025" pageKey="deliberate-practice" />. Treat one routine task a
+          week as a full-verification exercise, even when the output looks fine.
         </p>
         <p className="m-0">
           The diligence statement is the artifact that outlasts the program. The action commitment

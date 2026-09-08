@@ -154,7 +154,7 @@ export function DiligenceStatement(): JSX.Element {
         <p className="m-0" style={{ marginBottom: '0.85em' }}>
           Module 1 opened with a number: 69% of professionals mention the social stigma that
           comes with using AI at work
-          <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" />, and for many of
+         <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" />, and for many of
           them it keeps their use undisclosed. Not because they reject the tool, but because
           they fear how colleagues and managers will perceive them for using it. The result is the concealment dynamic:
           individuals getting faster while the institution stays blind.
@@ -164,11 +164,17 @@ export function DiligenceStatement(): JSX.Element {
           Delegation gives you language for which tasks you assigned to AI and why. Description
           gives you language for how you specified the task. Discernment gives you language for
           how you evaluated the output. What remains is the competency that converts private
-          practice into visible, accountable professional behavior: Diligence.
+          practice into visible, accountable professional behavior: Diligence. The people who
+          wrote the framework did this themselves. Their overview document ends with a diligence
+          statement naming the model they used and taking full responsibility for the result
+         <Citation ids="dakan-feller-2025" pageKey="diligence-statement" />.
         </p>
         <p className="m-0" style={{ marginBottom: '0.85em' }}>
           A diligence statement is a structured document (appended to a deliverable or included
-          in a project record) that makes your AI practices legible. It can be as brief as a
+          in a project record) that makes your AI practices legible. Institutions have started to
+          require one. MIT's 2026 AI policy mandates a statement of AI use in every thesis and
+          bars listing AI as a co-author
+         <Citation ids="mit-2026" pageKey="thesis-statement" />. It can be as brief as a
           single paragraph for a low-stakes internal draft or as detailed as a full-page
           disclosure for a client-facing report or published analysis. Length scales with the
           stakes and complexity of the deliverable, not with a fixed word count. It does not ask

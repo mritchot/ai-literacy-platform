@@ -79,7 +79,7 @@ const KC_4_2: KnowledgeCheckItemData = {
       feedbackTitle: 'Misattributes the problem',
       feedbackTone: 'error',
       feedbackText:
-        'The output quality issue lies in the input’s specificity, not the model’s capability. A different model receiving the same underspecified prompt will produce a different set of generic posts, not a better set of targeted ones. The idea that a “better” tool would infer brand-specific requirements from a prompt that doesn’t contain them misunderstands the steerability principle from Module 3. The fix is in the Description, not the tool.',
+        'The output quality issue lies in the input’s specificity, not the model’s capability. A different model receiving the same underspecified prompt will produce a different set of generic posts, not a better set of targeted ones. On general-purpose benchmarks the leading labs score within a few percent of each other (LMArena and Artificial Analysis, October 2025, as reproduced by Evans, November 2025, slide 35). For a general writing task, the choice of model moves output quality far less than the choice of words in the prompt. The idea that a “better” tool would infer brand-specific requirements from a prompt that doesn’t contain them misunderstands the steerability principle from Module 3. The fix is in the Description, not the tool.',
     },
     {
       id: 'b',
@@ -199,7 +199,7 @@ const KC_4_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Misapplies the model’s capabilities',
       feedbackTone: 'error',
       feedbackText:
-        'Asking the model to self-evaluate for accuracy misunderstands source amnesia from Module 3: the model cannot distinguish information it generated from information it received. When prompted to “check for unsupported claims,” it will either affirm the existing output (sycophancy) or generate plausible-sounding caveats that may or may not correspond to actual gaps. The root cause gap exists because the model lacks the vendor delay information. Asking it to identify what it doesn’t know requires the exact capability it doesn’t have. Discernment is a human competency in this framework, not a task to delegate back to the model.',
+        'Asking the model to self-evaluate for accuracy misunderstands source amnesia from Module 3: the model cannot distinguish information it generated from information it received. When prompted to “check for unsupported claims,” it will either affirm the existing output (sycophancy) or generate plausible-sounding caveats that may or may not correspond to actual gaps. The root cause gap exists because the model lacks the vendor delay information. Asking it to identify what it doesn’t know requires the exact capability it doesn’t have. Discernment is a human competency in this framework, not a task to delegate back to the model. The framework’s authors define all four competencies as human skills, knowledge, and values (Dakan & Feller, 2025, p. 3).',
     },
     {
       id: 'c',

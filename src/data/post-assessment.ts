@@ -38,7 +38,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'The manager\'s characterization is accurate, since single-turn interactions can still be collaborative if the user carefully reviews the output before using it, and the number of turns is not a meaningful indicator of whether usage is augmentative or automated.',
         isCorrect: false,
         feedbackText:
-          'The number of interaction turns is not a perfect proxy, but 80% single-turn usage is a strong behavioral signal. Single-turn interactions (one prompt, one response, no follow-up) are the defining pattern of directive, automation-oriented usage. If the team were genuinely collaborating with the tool, the logs would show iterative exchanges where users refine, redirect, and build on outputs. The manager\'s characterization doesn\'t match the behavioral evidence.',
+          'The number of interaction turns is not a perfect proxy, but 80% single-turn usage is a strong behavioral signal. Single-turn interactions (one prompt, one response, no follow-up) are the closest observable proxy for directive, automation-oriented usage, which the research defines as a task completed with minimal back-and-forth. If the team were genuinely collaborating with the tool, the logs would show iterative exchanges where users refine, redirect, and build on outputs. The manager\'s characterization doesn\'t match the behavioral evidence.',
       },
       {
         id: 'B',
@@ -54,7 +54,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'The interaction logs suggest the team\'s actual usage is predominantly directive and automation-oriented, even though the manager frames it as collaboration. This gap between self-reported and observed interaction patterns is well-documented in the behavioral research on AI adoption.',
         isCorrect: true,
         feedbackText:
-          'The behavioral research on AI adoption consistently finds a gap between how professionals describe their AI usage (collaborative and iterative) and what their interaction patterns actually show (single-turn and directive). The manager\'s framing reflects a common self-report bias, not intentional misrepresentation. The disconnect between perceived and actual interaction style is real. Recognizing this gap is the first step toward deliberately choosing augmentative practices when the task warrants them.',
+          'The behavioral research on AI adoption finds a gap between how professionals describe their AI usage (collaborative and iterative) and what their interaction patterns show (more directive than reported). The gap is not universal: when Anthropic compared its own engineers\' self-reported task mix with usage logs, the two distributions roughly aligned. It is the collaboration mode, not the task, that people misjudge. The manager\'s framing reflects a common self-report bias, not intentional misrepresentation. The disconnect between perceived and actual interaction style is real. Recognizing this gap is the first step toward deliberately choosing augmentative practices when the task warrants them.',
       },
       {
         id: 'D',

@@ -61,15 +61,15 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'Most professionals who use AI regularly engage in iterative, multi-turn collaboration: going back and forth with the tool, refining outputs together until the result meets their standards. Self-reported usage patterns reliably reflect these actual interaction styles.',
         isCorrect: false,
         feedbackText:
-          'Behavioral data tells a different story. While professionals frequently describe their AI use as collaborative, observed interaction patterns show a trend toward single-turn, directive usage: one request, one response, no iteration. The gap between how professionals describe their AI workflow and how they actually interact with these tools is one of the most consistent findings in adoption research.',
+          'Behavioral data tells a different story. While professionals frequently describe their AI use as collaborative, observed interaction patterns show directive usage (one request, one accepted response, minimal iteration) rising from about 28% to 39% of interactions before easing to 32%. The gap between how professionals describe their AI workflow and how they actually interact with these tools is a recurring finding in adoption research.',
       },
       {
         id: 'B',
         text:
-          'Most professionals interact with AI in directive, single-turn exchanges (typing a request, receiving output, using it with minimal iteration) even when they describe their usage as iterative collaboration.',
+          'Professionals delegate more than they report: directive exchanges (a complete request, an accepted result, minimal iteration) rose from about a quarter to nearly two-fifths of interactions during 2025, even as professionals describe their usage as iterative collaboration.',
         isCorrect: true,
         feedbackText:
-          'Large-scale behavioral studies show that directive, single-turn interactions have increased over time, even as professionals describe their usage as iterative collaboration. This matters because single-turn usage produces output that hasn\'t been refined through human judgment. That raises the risk of unverified or low-quality deliverables. Without awareness of this pattern, teams can\'t assess whether their actual workflow matches their intended quality standard.',
+          'Large-scale behavioral studies show that directive interactions grew over 2025 and that automation briefly overtook augmentation in August, even as professionals describe their usage as iterative collaboration. This matters because single-turn usage produces output that hasn\'t been refined through human judgment. That raises the risk of unverified or low-quality deliverables. Without awareness of this pattern, teams can\'t assess whether their actual workflow matches their intended quality standard.',
       },
       {
         id: 'C',
@@ -141,9 +141,9 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
     block: 'failure',
     objectiveRefs: ['3.2', '4.3'],
     stem:
-      'A colleague uses an AI tool to research competitors and shares a summary that includes this line: "According to McKinsey\'s 2024 Global AI Adoption Survey (p. 14), 72% of mid-market firms have deployed at least one generative AI application in customer-facing roles." The citation looks specific and credible. What is the most important thing to understand about this kind of AI-generated output?',
+      'A colleague uses an AI tool to research competitors and shares a summary that includes this line: "According to Ardenwright Advisory\'s 2024 Global AI Adoption Survey (p. 14), 72% of mid-market firms have deployed at least one generative AI application in customer-facing roles." The citation looks specific and credible. What is the most important thing to understand about this kind of AI-generated output?',
     scenarioSummary:
-      'A colleague\'s AI-generated summary cites "McKinsey\'s 2024 Global AI Adoption Survey, p. 14" with a specific percentage and credible formatting.',
+      'A colleague\'s AI-generated summary cites "Ardenwright Advisory\'s 2024 Global AI Adoption Survey, p. 14" with a specific percentage and credible formatting.',
     options: [
       {
         id: 'A',

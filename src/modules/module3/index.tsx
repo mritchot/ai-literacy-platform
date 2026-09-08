@@ -81,7 +81,7 @@ function Section1({ module }: ModuleProp): JSX.Element {
           You now know that AI productivity gains are real but unevenly distributed. You know that
           professionals overestimate how much they collaborate with AI versus how much they
           delegate to it. You know that the tasks where AI is fastest are often the tasks where
-          the output is hardest to verify. And you know that the share of directive interactions
+          the output is hardest to verify<Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />. And you know that the share of directive interactions
           (hand off the task, accept the result, move on) has been rising.
         </p>
         <p className="m-0">
@@ -97,7 +97,14 @@ function Section1({ module }: ModuleProp): JSX.Element {
           <em>reason</em> these errors occur is structural to how language models generate output.
           The architecture predicts the next token based on statistical patterns, not factual
           verification. That mechanism has gotten more reliable, but it has not changed.
-          Understanding it is what makes the failures predictable rather than surprising.
+          Understanding it is what makes the failures predictable rather than surprising. New
+          models reach production use within weeks of release and lose share as soon as they stop
+          improving<Citation ids="openrouter-a16z-2025" pageKey="turnover-weeks-11" />. Any
+          lesson tied to one model's quirks expires fast. The lesson that does not expire is the
+          one industry analysts keep returning to. There is no indication that error rates will
+          go away<Citation ids="evans-2025-11" pageKey="error-rates-64" />. The operative
+          questions are whether errors matter, whether verification can be automated, and where
+          the human sits in the loop.
         </p>
         <p className="m-0">
           This module gives you three mechanical ideas and two additional properties that together
@@ -137,14 +144,26 @@ function Section2({ module }: ModuleProp): JSX.Element {
           of text that are typically parts of words, occasionally whole words, and sometimes single
           characters. This conversion process is called <strong>tokenization</strong>, and it is
           the first mechanical idea you need to understand, because most of the errors that look
-          random to a user are predictable consequences of how this step works.
+          random to a user are predictable consequences of how this step works
+         <Citation ids="ritchot-2025" pageKey="predictable-errors" />.
         </p>
         <p className="m-0">
-          Think of the model's vocabulary as a fixed set of roughly 100,000 tokens.
-          Every input you provide must be represented using only those tokens. A common
-          English word like "report" matches a single token. An unusual term might require
-          three or four tokens placed side by side to spell it out. The model never sees
-          your original text; it only sees the token sequence.
+          Think of the model's vocabulary as a fixed set of tokens. The size depends on the
+          tokenizer. The one this module's playground uses, OpenAI's cl100k_base, has 100,277
+          entries; OpenAI's newer o200k_base has 200,019, and other labs' tokenizers differ
+          again<Citation ids="openai-tiktoken" pageKey="vocab-sizes" />. Every input you
+          provide must be represented using only those tokens. A common English word like
+          "report" matches a single token. An unusual term might require three or four tokens
+          placed side by side to spell it out. The model never sees your original text; it only
+          sees the token sequence. Tokens are also the unit the industry prices by. Vendors
+          quote cost per million tokens the way chipmakers once quoted megahertz
+         <Citation ids="evans-2025-05" pageKey="mtok-22" />. On one routing platform, the median
+          effective price across task categories was $0.73 per million tokens in 2025
+         <Citation ids="openrouter-a16z-2025" pageKey="median-cost-48" />. So everything below
+          about which inputs fragment into more tokens is also a lesson in which inputs cost
+          more. The fixed-set picture breaks down in one place. The pieces are not chosen by
+          meaning or by spelling rules, only by how often a character sequence appeared in the
+          training data. That is why the examples below look arbitrary until you know the rule.
         </p>
       </div>
 
@@ -301,7 +320,16 @@ function Section4({ module }: ModuleProp): JSX.Element {
           only one concept, it should be this: language models generate output by predicting the
           next token in a sequence, one fragment at a time, based on probability. On their own,
           language models do not retrieve information from a database, look up facts, or consult
-          a reference. Modern AI systems can be equipped with tools (web search, code
+          a reference. This is the break from every earlier kind of workplace software. A
+          spreadsheet, a database, or a payroll system is deterministic: the same input always
+          yields the same output, and it handles tasks that are easy to explain to a computer. A
+          language model is probabilistic: it handles tasks that are easy to explain to an
+          intern, and it might get the answer wrong. Industry analyst Benedict Evans describes
+          generative AI as probabilistic systems added on top of deterministic ones
+         <Citation ids="evans-2026-05" pageKey="probabilistic-52" />. The questions you can now
+          ask are questions deterministic software could never take, such as what the top
+          customer concerns were across six months of calls. Modern AI systems can be equipped
+          with tools (web search, code
           interpreters, document retrieval) that provide external information. But the language
           generation itself, the part that assembles the response you read, still operates by
           predicting the next token based on statistical patterns. The tools supply inputs; the
@@ -316,9 +344,11 @@ function Section4({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           You type a prompt. The model receives it as a sequence of tokens. It processes that
           sequence and generates a probability distribution: a ranked list of every token in its
-          vocabulary (roughly 100,000 options) with a probability attached to each one. The model
-          selects a token from this distribution, appends it to the sequence, and repeats, one
-          token at a time, until it reaches a stopping point.
+          vocabulary (about 100,000 options for the cl100k_base tokenizer used in this module,
+          about 200,000 for newer OpenAI models) with a probability attached to each one
+         <Citation ids="openai-tiktoken" pageKey="vocab-sizes" />. The model selects a token
+          from this distribution, appends it to the sequence, and repeats, one token at a time,
+          until it reaches a stopping point.
         </p>
         <h3 className="m-0 mt-2 font-sans text-h3 font-semibold text-ink">
           Fluency and accuracy are independent.
@@ -434,8 +464,22 @@ function Section6({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           This container is called the <strong>context window</strong>. It holds your prompt, any
           documents you’ve uploaded, the conversation history so far, and the model’s own output
-          as it generates, all of it measured in tokens. A typical context window today is
-          100,000–200,000 tokens.
+          as it generates, all of it measured in tokens. Advertised sizes vary widely by model. As
+          of September 2026, the flagship hosted models from Anthropic, OpenAI, and Google each
+          advertise about one million tokens
+         <Citation ids="anthropic-models-2026" pageKey="context-window" />
+         <Citation ids="openai-models-2026" pageKey="context-window" />
+         <Citation ids="google-gemini-models-2026" pageKey="input-token-limit" />. Smaller and
+          open-weight models commonly advertise 128,000 tokens, and some handle 32,000 tokens
+          natively<Citation ids="qwen3-model-card-2025" pageKey="context-length" />. This module
+          uses 200,000 tokens as its working example because that is the size of many mid-tier
+          models and a round number for the arithmetic that follows. Most requests use a small
+          fraction of that. Across one routing platform's traffic, the average prompt grew from
+          about 1,500 to more than 6,000 tokens between early 2024 and late 2025
+         <Citation ids="openrouter-a16z-2025" pageKey="prompt-length-6k" />. That fourfold rise
+          came from people pasting in more material. Coding requests routinely exceed 20,000
+          tokens. The window rarely binds on a single request. It binds over a session, which is
+          the failure mode described below.
         </p>
         <p className="m-0">
           What a 200K window actually holds depends entirely on what you put in. English prose
@@ -455,13 +499,27 @@ function Section6({ module }: ModuleProp): JSX.Element {
           hour of follow-up questions. The initial upload might fit comfortably, but each prompt
           and each generated response adds to the running total, and the conversation history
           that grows around the documents can eventually rival the documents themselves.
+          Reasoning models add a draw you do not see. When a model works through a problem in
+          steps before it answers, those steps are reasoning tokens, and they count as output.
+          Average completion length nearly tripled during 2025, from about 150 to 400 tokens,
+          mostly because of reasoning tokens
+         <Citation ids="openrouter-a16z-2025" pageKey="reasoning-tokens-completion" />. In the
+          same year, reasoning models went from a negligible share of traffic to more than half.
+          A tool that thinks longer is also a tool that fills its container faster.
         </p>
         <p className="m-0">
-          Some models advertise context windows of one million tokens or more, but research on
-          long-context performance shows that accuracy on complex tasks like summarization,
-          cross-referencing, and multi-step reasoning degrades well before the advertised limit.
-          The 100,000-to-200,000-token range is where most current models reliably process
-          demanding inputs. The window has a maximum size, and that maximum is absolute. There is
+          Most current models advertise context windows of one million tokens or more, but
+          research on long-context performance shows that accuracy on demanding tasks degrades
+          well before the advertised limit. In one benchmark of 17 models that each claimed at
+          least 32,000 tokens, only half held their accuracy at 32,000 on multi-needle retrieval,
+          multi-hop tracing, and aggregation tasks. GPT-4, which claimed 128,000 tokens, held up
+          to 64,000<Citation ids="hsieh-ruler-2024" pageKey="effective-length" />. When the
+          question and the relevant passage share no words, the drop comes far sooner. Across 13
+          models claiming at least 128,000 tokens, 11 lost more than half their short-context
+          accuracy by 32,000 tokens
+         <Citation ids="modarressi-nolima-2025" pageKey="drop-at-32k" />. The practical rule is
+          that the advertised window is a ceiling on what fits, not a promise about what the
+          model will use well. The window has a maximum size, and that maximum is absolute. There is
           no overflow mechanism, no “page two” of the model’s attention. When the input exceeds
           the window, the excess is truncated, and the model does not tell you it happened.
         </p>
@@ -486,7 +544,7 @@ function Section6({ module }: ModuleProp): JSX.Element {
           Even when your input fits inside the context window, the model does not attend to all
           positions equally. Research on long-context language models has documented a{' '}
           <strong>lost-in-the-middle effect</strong>
-          <Citation ids="liu-2024" />: material at the beginning and end of the input receives
+         <Citation ids="liu-2024" />: material at the beginning and end of the input receives
           more attention than material buried in the center. Subsequent studies have confirmed
           the pattern across newer models. If you upload a 200-page document and the critical
           clause is on page 100, the model is more likely to miss it than if the same clause
