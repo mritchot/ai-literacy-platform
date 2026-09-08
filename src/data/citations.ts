@@ -92,9 +92,9 @@ export const CITATIONS = {
       'limitations':
         'research post, "Limitations" (selection bias, demand characteristics, self-report vs. usage data, Western-based sample, non-experimental)',
       'lazy-email-quote':
-        'research post, PDF p. 4 (salesperson: colleagues regard AI-generated email as lazy)',
+        'research post, "AI’s impact in the general workforce" (library capture PDF p. 2: salesperson quotation, colleagues regard AI-generated email as lazy)',
       'conversation-only-limit':
-        'research post, PDF p. 2 (the earlier usage tool saw only inside Claude conversations, not how outputs were used afterward)',
+        'research post, introduction (library capture PDF p. 1: the earlier usage tool saw only inside Claude conversations, not how outputs were used afterward)',
     },
   },
   'handa-2025': {

@@ -353,7 +353,7 @@
         26,
         14
       ],
-      "note": "One RCT found negative time savings. These studies examined earlier model generations."
+      "note": "The report also lists a negative result among these applications (p. 13) and, separately, a recent randomized trial of end-to-end software features that found no time savings (p. 19). These studies examined earlier model generations."
     }
   },
   "example_tasks": {
@@ -443,6 +443,16 @@
     "implied_annual_tfp_growth_pct": 1.08,
     "labor_share_assumption": 0.6,
     "adoption_timeline_years": 10,
+    "update_2026": {
+      "_source": "Appel, Massenkoff & McCrory (2026), pp. 48–53; data November 13–20, 2025",
+      "replication_claude_ai_pct": 1.8,
+      "replication_api_pct": 1.8,
+      "success_adjusted_claude_ai_pct": 1.2,
+      "success_adjusted_api_pct": 1.0,
+      "ces_sensitivity": { "sigma_0_5_pct": "0.7–0.9", "sigma_0_5_success_adjusted": { "claude_ai": 0.8, "api": 0.6 }, "sigma_1_5_pct": "2.2–2.6" },
+      "task_frequency_threshold": "0.02% (chosen to replicate the 100k-sample result; without it the 1M sample implies ~5 points, a mechanical artifact, p. 53)",
+      "note": "Success adjustment multiplies each task's speedup by Claude's self-assessed success rate (p. 48)."
+    },
     "top_contributing_occupations": [
       {
         "occupation": "Software Developers",

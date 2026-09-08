@@ -12,8 +12,8 @@
       {
         "label": "V1",
         "source": "Handa et al. 'Which Economic Tasks Are Performed with AI?' February 2025.",
-        "dataCollection": "December 16–23, 2024 and January 2025",
-        "sampleSize": "4 million+ Claude.ai Free and Pro conversations",
+        "dataCollection": "December 16–23, 2024 (tasks, wages, and automation analyses); the paper's other analyses run to January 17, 2025",
+        "sampleSize": "1 million Claude.ai Free and Pro conversations per analysis (over 4 million across the paper)",
         "sampleNote": "Multiple 7-day snapshots; see Appendix E of source for exact windows per analysis."
       },
       {
@@ -24,7 +24,7 @@
       },
       {
         "label": "V4",
-        "source": "Anthropic. 'Anthropic Economic Index Report: Economic Primitives.' 2025.",
+        "source": "Appel, R., Massenkoff, M., McCrory, P., McCain, M., Heller, R., Neylon, T., & Tamkin, A. 'The Anthropic Economic Index Report: Economic Primitives.' Anthropic, January 15, 2026. https://www.anthropic.com/research/economic-index-primitives",
         "dataCollection": "November 13–20, 2025",
         "sampleSize": "1 million Claude.ai Free, Pro, and Max conversations",
         "sampleNote": "Footnote 1, p. 17. Also includes 1M 1P API transcripts analyzed separately."
@@ -32,7 +32,7 @@
     ]
   },
   "collaborationMode": {
-    "_source": "V1: Handa et al., pp. 3, 9, Figure 7; V3: Appel et al., p. 9; V4: Economic Primitives, pp. 9–10",
+    "_source": "V1: Handa et al., pp. 3, 9, Figure 7; V3: Appel et al., p. 9; V4: Appel, Massenkoff & McCrory (2026), pp. 9–10",
     "description": "How users engage with Claude — automation (task delegation) vs. augmentation (collaborative interaction) — tracked over three waves.",
     "_v1DiscrepancyNote": "V1 augmentation/automation values reconciled to the Handa et al. primary figures (57% augmentation / 43% automation; pp. 3, 9; Figure 7; sum = 100%) by author decision on 03-07-2026 so the platform teaches one V1 number everywhere (Module 2 body text and augmentation-automation.json use the same 57/43). Economic Primitives (V4) retrospectively reports the same V1 period as 56/41 (p. 9; sum = 97%, remainder unclassified) from its own classification pipeline; V3 and V4 points in this series remain from that pipeline, so the cross-wave comparison spans classifier generations — see _classifierCaveat, which the chart surfaces in its 'About this data' expandable.",
     "timeSeries": [
@@ -66,7 +66,7 @@
     "interpretation": "The trajectory is not linear. Users shifted sharply toward automation between January and August 2025, then partially reverted by November. The underlying trend favors greater automation, but the August spike was a temporary overshoot."
   },
   "directiveInteractions": {
-    "_source": "V1: Handa et al., Figure 7 (27.8% precise value from augmentation-automation.json); V3: Appel et al., p. 9; V4: Economic Primitives, p. 9",
+    "_source": "V1: Handa et al., Figure 7 (27.8% precise value from augmentation-automation.json); V3: Appel et al., p. 9; V4: Appel, Massenkoff & McCrory (2026), p. 9",
     "description": "Share of conversations classified as 'directive' — users give Claude a task and it completes it with minimal back-and-forth. This is the purest form of automation.",
     "timeSeries": [
       {
@@ -101,7 +101,8 @@
           "description": "The jump in directive usage could signal growing user confidence in delegating complete tasks to AI — a form of learning-by-doing built through repeated interaction.",
           "laborImplication": "Workers most able to adapt to AI-powered workflows see greater demand and higher wages; those with lower ability to adapt face disruption."
         },
-        "_source": "Appel et al. (V3), p. 10. Both interpretations are presented as analytically distinct with different labor market implications."
+        "_source": "Appel et al. (V3), p. 10. Both interpretations are presented as analytically distinct with different labor market implications.",
+        "laborMarketNote": "Through early 2026, workers in the most exposed occupations show no differential rise in unemployment; the only early signal is slower hiring of 22–25-year-olds into exposed roles (Massenkoff & McCrory, Mar 2026, pp. 2, 13)."
       }
     },
     "v3ToV4Change": {
@@ -173,7 +174,7 @@
       ]
     },
     "v1ToV4": {
-      "_source": "Economic Primitives (V4), p. 8",
+      "_source": "Appel, Massenkoff & McCrory (2026) (V4), p. 8",
       "period": "January 2025 → November 2025",
       "shifts": [
         {
@@ -194,7 +195,9 @@
         {
           "category": "Office and Administrative Support (API only)",
           "trend": "Rose 3pp to 13% in November 2025. Suggests businesses increasingly automating routine back-office workflows (email, document processing, CRM, scheduling)."
-        }
+        },
+        { "category": "Computer and Mathematical (Claude.ai)", "v2_mar2025_peak": 0.40, "v4": 0.34, "_source": "p. 7" },
+        { "metric": "Top-10 task share (Claude.ai)", "v1": 0.21, "v3": 0.23, "v4": 0.24, "_source": "p. 6" }
       ]
     }
   },
