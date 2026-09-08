@@ -14,7 +14,7 @@ const MIN_CHARS = 20;
 const TASK1_PROMPT = 'One task you currently perform without AI that falls into a high-productivity-gain category.';
 const TASK1_SUB = 'What is the task? Why haven\'t you used AI for it? Based on the data, what type of savings might be available?';
 const TASK2_PROMPT = 'One task you currently delegate to AI that may warrant greater human oversight.';
-const TASK2_SUB = 'What is the task? What does your current verification process look like? Based on the data, what\'s the risk if the output goes unverified?';
+const TASK2_SUB = 'What is the task? What does your current verification process look like? Based on the data, what\'s the risk if the output goes unverified? Workers who do verify most often name a concrete bad outcome: code that fails, a fact that is out of date, a formula that is wrong, a message that lands badly. Name yours.';
 
 export function ActionCommitment(): JSX.Element {
   const { saveReflection, getReflection, markEngaged } = useLearnerProgress();

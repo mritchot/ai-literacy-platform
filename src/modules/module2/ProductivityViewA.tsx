@@ -295,7 +295,7 @@ export function ProductivityViewA({ rows }: ProductivityViewAProps): JSX.Element
       </div>
 
       <p className="m-0 font-mono text-caption text-muted" style={{ letterSpacing: '0.02em' }}>
-        Source: Tamkin & McCrory, Nov 2025, Table 3, pp. 10–11.
+        Source: Tamkin & McCrory, Nov 2025, occupation table (unnumbered), p. 11.
       </p>
     </div>
   );

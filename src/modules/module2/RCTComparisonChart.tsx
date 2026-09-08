@@ -7,7 +7,7 @@
 //
 //   Row 1 (in-conversation, 20–95% with median 81%) — the
 //          self-estimated savings inside the AI conversation window.
-//   Row 2 (full work cycle, 14–56% across four RCTs) — the net
+//   Row 2 (full work cycle, 14–56% across controlled trials cited by the report) — the net
 //          savings once verification and revision are included.
 //
 // Implementation: HTML/CSS rather than Recharts. The bars are
@@ -53,7 +53,7 @@ export function RCTComparisonChart({
     `In-conversation savings range from ${IN_CONVERSATION_MIN}% (checking diagnostic images) ` +
     `to ${IN_CONVERSATION_MAX}% (compiling information from reports), with a median of ${median}% ` +
     `across 100,000 conversations. Full work-cycle savings range from ${fullCycleMin}% to ` +
-    `${fullCycleMax}% across four randomized controlled trials, measuring the complete task ` +
+    `${fullCycleMax}% across controlled trials cited by the report, measuring the complete task ` +
     `including verification and refinement.`;
 
   return (
@@ -85,7 +85,7 @@ export function RCTComparisonChart({
           min={fullCycleMin}
           max={fullCycleMax}
           dataPoints={rctFindings.map((v) => ({ value: v, label: `${v}%` }))}
-          tooltipText={`Full-cycle savings: ${fullCycleMin}%–${fullCycleMax}% range across four controlled trials. Measures the complete task including verification and refinement.`}
+          tooltipText={`Full-cycle savings: ${fullCycleMin}%–${fullCycleMax}% range across controlled trials cited by the report. Measures the complete task including verification and refinement.`}
         />
 
         {/* Axis row — empty label cell + tick row spanning the bars column */}
@@ -101,7 +101,7 @@ export function RCTComparisonChart({
         </span>
         <span className="inline-flex items-center gap-1.5">
           <CircleGlyph color="var(--info)" />
-          Full work cycle range ({fullCycleMin}–{fullCycleMax}%, four controlled trials)
+          Full work cycle range ({fullCycleMin}–{fullCycleMax}%, controlled trials cited by the report)
         </span>
       </div>
 
@@ -117,8 +117,9 @@ export function RCTComparisonChart({
         className="mt-3 font-mono text-caption text-muted"
         style={{ letterSpacing: '0.02em' }}
       >
-        Source: Tamkin &amp; McCrory, Nov 2025. In-conversation: Figure 6 (median), Figure 5
-        (task distribution). Full-cycle: RCT comparison, pp. 6–8.
+        Source: Tamkin &amp; McCrory, Nov 2025. In-conversation: Figure 6, p. 13 (task
+        distribution and median); examples pp. 12–13. Full-cycle: controlled trials cited on
+        p. 13.
       </figcaption>
     </figure>
   );

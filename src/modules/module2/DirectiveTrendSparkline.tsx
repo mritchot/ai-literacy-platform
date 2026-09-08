@@ -98,7 +98,7 @@ export function DirectiveTrendSparkline({ series }: DirectiveTrendSparklineProps
         style={{ letterSpacing: '0.02em' }}
       >
         Y-axis spans 20–45%, not 0–100%. Source: Handa et al., Feb 2025; Appel, McCrory &amp;
-        Tamkin, Sep 2025, p. 9; Economic Primitives, Nov 2025, p. 9.
+        Tamkin, Sep 2025, p. 9; Appel, Massenkoff &amp; McCrory, Jan 2026 (Nov 2025 data), p. 9.
       </figcaption>
     </figure>
   );

@@ -24,6 +24,7 @@ import {
   TOOLTIP_LABEL_STYLE,
   TOOLTIP_STYLE,
 } from '../../utils/chart-config';
+import { Citation } from '../../components/shared/Citation';
 import { useChartTokens } from '../../hooks/useChartTokens';
 import { useViewport } from '../../hooks/useViewport';
 
@@ -64,7 +65,7 @@ export function AugAutoViewC({
     () => [
       { label: 'Self-reported', augmentation: selfReportAug, automation: selfReportAuto, fill: tokens.secondary },
       { label: 'Behavioral (Jan 2025)', augmentation: v1Aug, automation: v1Auto, fill: tokens.delegation },
-      { label: 'Behavioral (Nov 2025)', augmentation: latestAug, automation: latestAuto, fill: tokens.discernment },
+      { label: 'Behavioral (Aug 2025)', augmentation: latestAug, automation: latestAuto, fill: tokens.discernment },
     ],
     [selfReportAug, selfReportAuto, v1Aug, v1Auto, latestAug, latestAuto, tokens],
   );
@@ -72,7 +73,7 @@ export function AugAutoViewC({
   const v1Gap = selfReportAug - v1Aug;
   const latestGap = selfReportAug - latestAug;
 
-  const ariaLabel = `Grouped bar chart comparing augmentation and automation rates across three sources. Self-reported: ${selfReportAug}% augmentation, ${selfReportAuto}% automation. Behavioral (Jan 2025): ${v1Aug}% augmentation, ${v1Auto}% automation. Behavioral (Nov 2025): ${latestAug}% augmentation, ${latestAuto}% automation. Self-report vs. Jan 2025 gap: ${v1Gap} percentage points. Self-report vs. Nov 2025 gap: ${latestGap} percentage points.`;
+  const ariaLabel = `Grouped bar chart comparing augmentation and automation rates across three sources. Self-reported: ${selfReportAug}% augmentation, ${selfReportAuto}% automation. Behavioral (Jan 2025): ${v1Aug}% augmentation, ${v1Auto}% automation. Behavioral (Aug 2025): ${latestAug}% augmentation, ${latestAuto}% automation. Self-report vs. Jan 2025 gap: ${v1Gap} percentage points. Self-report vs. Aug 2025 gap: ${latestGap} percentage points.`;
 
   return (
     <div className="space-y-5">
@@ -145,7 +146,7 @@ export function AugAutoViewC({
         </span>
         <span className="inline-flex items-center gap-1.5">
           <span aria-hidden="true" className="inline-block" style={{ width: 10, height: 10, background: tokens.discernment }} />
-          Behavioral (Nov 2025)
+          Behavioral (Aug 2025)
         </span>
       </div>
 
@@ -163,7 +164,7 @@ export function AugAutoViewC({
           style={{ padding: '6px 10px', background: 'rgb(var(--error-light))', color: tokens.error, border: `1px solid ${tokens.error}` }}
         >
           <strong className="font-bold">{latestGap}pp gap</strong>
-          <span>self-report vs. Nov 2025 behavioral</span>
+          <span>self-report vs. Aug 2025 behavioral</span>
         </span>
       </div>
 
@@ -187,16 +188,40 @@ export function AugAutoViewC({
           <div className="space-y-2 font-sans text-body-sm text-body" style={{ padding: '0 14px 14px' }}>
             <p className="m-0">
               Both behavioral measurements use the same approach (automated classification of real
-              AI conversations) but draw on different datasets and time periods. The Jan 2025 data
+              AI conversations) but draw on different datasets and time periods. The approach is
+              now standard across vendors. OpenAI's 2026 enterprise study classifies messages
+              automatically for the same reason, with no researcher reading individual messages
+              <Citation ids="chatterji-2026" pageKey="survey-limits" />. The Jan 2025 data
               (Handa et al., February 2025) is the standalone published study with full
-              methodology. The later figure comes from the Interviewer paper's reference to
-              an Anthropic internal analysis of November 2025 data.
+              methodology. The later figure is the August 2025 wave of the Anthropic Economic
+              Index (Appel, McCrory &amp; Tamkin, September 2025), which the Interviewer paper
+              cites as its latest analysis. One more difference matters for reading the gap. The
+              self-report figure comes from 1,250 working professionals. The behavioral figures
+              come from consumer conversations on one platform, where an occupational label does
+              not mean the user works in that occupation, novices and professionals count alike,
+              and about a quarter of conversations are not work-related. The comparison is between
+              how professionals describe their use and how a broad user base behaves, not a
+              matched sample.
             </p>
             <p className="m-0">
               The directional finding is the same in both: professionals believe they augment more
               than they do. The gap ranges from 8 to 18 percentage points depending on the
-              baseline. The November 2025 behavioral figures sum to 96%, with approximately 4% of
-              conversations unclassified by the automated analysis.
+              baseline. The August 2025 behavioral figures sum to 96%, with approximately 4% of
+              conversations unclassified by the automated analysis. The November 2025 wave moved
+              back toward augmentation (52% augmentation, 45% automation).
+            </p>
+            <p className="m-0">
+              One limit runs the other way. The conversation classifier sees only what happens
+              inside the chat. Anthropic's own researchers built the Interviewer because their
+              usage tool could not show how people used outputs afterward
+              <Citation ids="anthropic-interviewer-2025" pageKey="conversation-only-limit" />.
+              Verification often happens there: in a survey of 319 knowledge workers, 114 said
+              they cross-check AI output against external sources, and 23 said they check that
+              cited sources exist
+              <Citation ids="lee-2025" pageKey="verification-practices" />. Some of the 8 to 18
+              point gap may be oversight the behavioral data cannot observe. The gap is still
+              real, because the self-report asks about the whole task and the classifier asks
+              about the conversation, but its size is an upper bound.
             </p>
           </div>
         )}
@@ -204,8 +229,9 @@ export function AugAutoViewC({
 
       <p className="m-0 font-mono text-caption text-muted" style={{ letterSpacing: '0.02em' }}>
         Source: Handa et al., Feb 2025, pp. 13–14 (Jan 2025 behavioral); Anthropic Interviewer,
-        Dec 2025 (self-report and Nov 2025 behavioral). Classifier model differs slightly across
-        the two behavioral measurements.
+        Dec 2025 (self-report); Appel, McCrory &amp; Tamkin, Sep 2025, p. 9 and p. 11 n. 4 (Aug
+        2025 behavioral). Classifier model differs slightly across the two behavioral
+        measurements.
       </p>
 
       {/* Reflection 1 recall card */}

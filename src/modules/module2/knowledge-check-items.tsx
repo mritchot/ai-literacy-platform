@@ -40,7 +40,7 @@ const KC_2_1: KnowledgeCheckItemData = {
       feedbackTitle: 'Misidentifies the substantive contribution',
       feedbackTone: 'error',
       feedbackText:
-        'Attending meetings and taking notes is data collection, not the analytical work this task requires. The substantive intellectual contribution in a stakeholder summary is deciding which decisions matter most, what action items follow from them, and how to frame them for the audience. The AI is performing all three of those judgments. Providing raw material and checking names is not augmentation; it is automation with input provision.',
+        'Attending meetings and taking notes is data collection, not the analytical work this task requires. The substantive intellectual contribution in a stakeholder summary is deciding which decisions matter most, what action items follow from them, and how to frame them for the audience. The AI is performing all three of those judgments. Providing raw material and checking names is not augmentation; it is automation with input provision. The distinction the research draws is useful here: a request like \'translate this paragraph\' is high automation (one instruction, minimal back-and-forth) but low autonomy (the model makes few decisions). The meeting summary is the same shape. Automation describes the interaction, not how much judgment the model exercised.',
     },
     {
       id: 'c',
@@ -292,7 +292,7 @@ const KC_2_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Compounds the overestimation',
       feedbackTone: 'error',
       feedbackText:
-        'Comparing an internal self-report figure favorably against external self-report data doubles down on a measurement approach the research has documented as systematically biased. The 65% external figure is itself an overestimate; behavioral data shows actual augmentative use at 47–57% depending on the measurement period. A higher internal self-report doesn\'t indicate better practice; it may indicate a larger gap. Using biased data to validate the program that produced it creates a circular justification.',
+        'Comparing an internal self-report figure favorably against external self-report data doubles down on a measurement approach the research has documented as systematically biased. The 65% external figure (Anthropic Interviewer, 2025) is itself an overestimate; behavioral data shows actual augmentative use at 47–57% depending on the measurement period. A higher internal self-report doesn\'t indicate better practice; it may indicate a larger gap. Using biased data to validate the program that produced it creates a circular justification.',
     },
     {
       id: 'b',
@@ -301,7 +301,7 @@ const KC_2_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Overcorrects and mischaracterizes',
       feedbackTone: 'caution',
       feedbackText:
-        'The research does not show that professionals "systematically misrepresent" their AI usage; the term implies intentional deception. The self-report/behavioral gap is a calibration error, the same kind of overestimation that appears across self-assessments of any complex behavior. Dismissing all self-report data as unreliable loses a useful signal (what people believe about their practice), and the recommendation to implement direct monitoring through interaction logs and output auditing raises significant privacy, trust, and labor relations concerns that the response ignores entirely.',
+        'The research does not show that professionals "systematically misrepresent" their AI usage; the term implies intentional deception. The self-report/behavioral gap is a calibration error, the same kind of miscalibration that self-report surveys of AI use document in their own limitations. Dismissing all self-report data as unreliable loses a useful signal (what people believe about their practice), and the recommendation to implement direct monitoring through interaction logs and output auditing raises significant privacy, trust, and labor relations concerns that the response ignores entirely.',
     },
     {
       id: 'c',
@@ -319,7 +319,7 @@ const KC_2_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Misses the mechanism',
       feedbackTone: 'error',
       feedbackText:
-        'Output quality is the right ultimate concern, but the module\'s data shows precisely why interaction patterns matter for quality. Directive interactions, which constitute roughly a third of all AI usage and have been rising, produce output that receives less human evaluation before deployment. The gap between self-reported collaboration and actual behavior means that quality problems are less visible to the people producing them, not less frequent. Treating the interaction pattern as a distinction without practical consequences disconnects the measurement from the thing being measured.',
+        'Output quality is the right ultimate concern, but the module\'s data shows precisely why interaction patterns matter for quality. Directive interactions, which were 32% of conversations in November 2025 after peaking at 39% in August (Appel, Massenkoff & McCrory, 2026, p. 9), produce output that receives less human evaluation before deployment. The gap between self-reported collaboration and actual behavior means that quality problems are less visible to the people producing them, not less frequent. Treating the interaction pattern as a distinction without practical consequences disconnects the measurement from the thing being measured.',
     },
   ],
 };

@@ -108,9 +108,32 @@ function Section1({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           Incomplete in the way that self-assessments of any complex behavior tend to be
-          incomplete. Research on driving ability, investment performance, and communication skills
-          consistently shows the same pattern: people overestimate their competence in areas where
-          they have partial experience and limited feedback. AI usage is no exception. When
+          incomplete. Across 22 meta-analyses covering academic, language, medical, sports, and
+          vocational skills, self-ratings of ability correlate only moderately with measured
+          performance, and the match is weakest when the task is unfamiliar, complex, or hard to
+          score objectively
+          <Citation ids="zell-krizan-2014" pageKey="mean-r-29" />. The direction of the error is
+          usually upward. Most drivers rate themselves above the median driver
+          <Citation ids="svenson-1981" pageKey="above-median" />, and investors who trade on
+          overconfidence lower their own returns
+          <Citation ids="barber-odean-2001" pageKey="trading-returns" />. The classic finding that
+          the least skilled overestimate the most
+          <Citation ids="kruger-dunning-1999" pageKey="bottom-quartile" /> is contested as partly
+          a statistical artifact
+          <Citation ids="gignac-zajenkowski-2020" pageKey="artefact" />, but the broader gap
+          between self-report and measured performance is not. AI usage is no exception.
+          Self-confidence is often poorly calibrated against objective skill, a point the
+          critical-thinking researchers make about their own survey
+          <Citation ids="lee-2025" pageKey="self-report-limits" />. AI use adds two distortions of
+          its own. People conflate a task feeling easier with thinking less about it, and they do
+          so most when the output looks right
+          <Citation ids="lee-2025" pageKey="self-report-limits" />. And self-reported productivity
+          gains run high: Anthropic's own engineers cite a controlled study in which experienced
+          developers overestimated how much AI sped them up
+          <Citation ids="huang-2025" pageKey="self-report-limits" />. Researchers who study
+          enterprise AI from usage records say so directly: self-reported use is less detailed and
+          subject to recall and reporting bias
+          <Citation ids="chatterji-2026" pageKey="survey-limits" />. When
           researchers compared how 1,250 professionals described their AI practices against
           behavioral data from millions of actual AI conversations, the gap was substantial, and
           it ran in a consistent direction.
@@ -118,7 +141,7 @@ function Section1({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           This module makes that gap visible. You'll work with the same behavioral datasets the
           researchers used: task-level adoption patterns across occupations, productivity
-          distributions that range from 95% time savings down to almost none, and the documented
+          distributions that range from 95% time savings down to about 20%, and the documented
           discrepancy between what professionals report doing with AI and what they do.
           The point is not to prove that your self-assessment is inaccurate. It's to give you the
           data to calibrate it.
@@ -155,7 +178,20 @@ function Section2({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           The five patterns fall into two categories you encountered in Module 1: augmentation
           (where the human does the substantive intellectual work with AI assistance) and
-          automation (where AI performs the core task with minimal human involvement).
+          automation (where AI performs the core task with minimal human involvement). The 4D
+          framework draws the same line from the delegation side. In automation, AI performs a
+          task on your direct instruction; in augmentation, you and the AI define and carry out
+          the task together, turn by turn
+          <Citation ids="dakan-feller-2025" pageKey="modalities" />. Automation needs a clear task
+          definition and a quality check. Most real work moves between the two inside a single
+          deliverable.
+        </p>
+        <p className="m-0">
+          The framework names a third modality, agency: you configure an AI to carry out future
+          tasks on its own, sometimes for other people. Chatbots and tutors are its examples, and
+          the framework says it demands the deepest understanding of what AI can and cannot do
+          <Citation ids="dakan-feller-2025" pageKey="modalities" />. This program stops at the
+          first two. The judgment it builds transfers upward when you reach the third.
         </p>
       </div>
 
@@ -177,14 +213,35 @@ function Section2({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           <em>Learning</em> accounts for about a quarter of interactions. The user asks AI to
           explain, teach, or clarify, not to produce a deliverable, but to build the user's own
-          understanding. This is the pattern most people undercount in their self-reports.
+          understanding. It matters more than its share suggests, because delegation has a
+          learning cost. Anthropic's engineers describe losing the incidental learning that came
+          from debugging a problem by hand: reading the docs and code around it and building a
+          model of the system on the way
+          <Citation ids="huang-2025" pageKey="paradox-of-supervision" />. Only 13 of 319 knowledge
+          workers in one survey named skill development as a reason to think critically about AI
+          output
+          <Citation ids="lee-2025" pageKey="inhibitors" />. Asking the tool to teach is how some
+          of that learning comes back.
         </p>
         <p className="m-0">
-          <em>Validation</em> is the smallest category at under 3%. The user brings their own work
+          <em>Validation</em> is the smallest category at under 3%, and nearly all of it is
+          language translation
+          <Citation ids="handa-2025" pageKey="feedback-loop-15" />. The user brings their own work
           and asks the AI to check it. Given that verification is one of the highest-value
           applications of AI assistance, the near-absence of validation in the behavioral data is a
           significant finding. Fewer than 3 in 100 AI interactions involve the user asking the
-          tool to check <em>their</em> work rather than produce <em>its</em> work.
+          tool to check <em>their</em> work rather than produce <em>its</em> work. Read the 3%
+          carefully. It counts users asking the tool to check the user's work. It does not count
+          users checking the tool's work, which mostly happens outside the conversation. In one
+          survey of 319 knowledge workers, 114 said they verify AI output against external sources
+          and 125 said they check it against objective criteria such as whether code runs
+          <Citation ids="lee-2025" pageKey="verification-practices" />. The behavioral data shows
+          that people rarely use AI as a checker. It cannot show how often they check AI.
+          Employers are moving the other way. Between 2023 and 2025, quality assurance entered the
+          posting requirements of 87 more US occupations, and process optimization of 114 more.
+          MGI describes these as the skills used to supervise and verify AI systems
+          <Citation ids="mgi-agents-robots-us-2025" pageKey="qa-demand" />. Verification is scarce
+          in the conversation data and rising in the hiring data.
         </p>
         <h3 className="m-0 mt-6 font-sans text-h3 font-semibold text-ink">
           Automation patterns: 43% of all conversations
@@ -200,24 +257,37 @@ function Section2({ module }: ModuleProp): JSX.Element {
           <em>Feedback loop</em> interactions account for about 15%
           <Citation ids="handa-2025" pageKey="feedback-loop-15" />. These look collaborative on
           the surface (multiple exchanges, back-and-forth), but the user is not shaping the
-          output; they are reporting whether it works. This pattern is most common in coding and
-          debugging contexts.
+          output; they are reporting whether it works. Almost all feedback-loop conversations are
+          coding and debugging, where the user relays each error back to the model
+          <Citation ids="handa-2025" pageKey="feedback-loop-15" />.
         </p>
         <p className="m-0 mt-4">
-          The aggregate split (57% augmentation, 43% automation) is the behavioral baseline. It
-          describes what users actually do, measured by analyzing conversation transcripts, not
-          what they say they do when asked. That distinction matters, and the gap between the two
-          is larger than you might expect.
+          The aggregate split (57% augmentation, 43% automation) is the January 2025 behavioral
+          baseline. It describes what users actually do, measured by analyzing conversation
+          transcripts, not what they say they do when asked. The split moves: by August 2025
+          automation had edged ahead (49% to 47%), and by November 2025 augmentation led again at
+          52% to 45%, with about 3% of conversations fitting neither category
+          <Citation ids="appel-massenkoff-mccrory-2026" pageKey="aug-auto-52-45" />. The
+          five-pattern breakdown above is only published for the January wave. That distinction
+          matters, and the gap between the two is larger than you might expect. One caution on
+          the number itself. This 57% is a share of conversations on one platform. It is
+          unrelated to the 57% of US work hours that McKinsey Global Institute estimates current
+          technology could automate in theory
+          <Citation ids="mgi-agents-robots-us-2025" pageKey="not-a-forecast" />. That figure
+          measures technical feasibility, not observed use, and its authors state it is not a
+          forecast of job losses. The two numbers coincide; they do not corroborate each other.
         </p>
         <p className="m-0">
           One more thing about the behavioral data before you explore it yourself: these patterns
           are not stable. Between January and August 2025, the share of directive interactions
-          jumped from 28% to 39%. By November, it had fallen back to 32%
+          jumped from 28% to 39%
           <Citation
             ids={['handa-2025', 'appel-mccrory-tamkin-2025']}
             pageKey="directive-share-28"
           />
-          . The chart below shows how quickly that share has moved. The point is that how
+          . By November, it had fallen back to 32%
+          <Citation ids="appel-massenkoff-mccrory-2026" pageKey="directive-share-32" />. The chart
+          below shows how quickly that share has moved. The point is that how
           people use AI is evolving rapidly, and any snapshot is exactly that: a snapshot.
         </p>
       </div>
@@ -262,11 +332,23 @@ function Section3({ module }: ModuleProp): JSX.Element {
         are where this section asks for your time.
       </p>
       <p className="m-0 mb-6 font-sans text-body-sm text-secondary" style={{ lineHeight: 1.55 }}>
-        One important caveat: this dataset comes from a single AI platform whose user base
-        skews toward technical and professional roles. Actual automation rates across the broader
-        population of AI tools are likely higher than what appears here. The patterns are
-        directionally reliable, but the specific percentages reflect a particular user
-        population, not the full workforce.
+        Two caveats. First, this dataset comes from one platform's consumer tiers; business and
+        API traffic is excluded, and about a quarter of the sampled conversations are not
+        work-related. Second, the direction of any bias is uncertain. The study's authors note
+        that users may edit outputs outside the chat, so the true augmentation share may be
+        higher than 57%. Enterprise API traffic, by contrast, is about 77% automation. The
+        patterns are directionally reliable, but the specific percentages reflect a particular
+        user population, not the full workforce.
+      </p>
+      <p className="m-0 mb-6 font-sans text-body-sm text-secondary" style={{ lineHeight: 1.55 }}>
+        A second single-platform dataset shows how much the population matters. OpenRouter is a
+        developer-facing service that routes requests to hundreds of models. There, programming
+        grew from about 11% to more than half of all tokens during 2025
+        <Citation ids="openrouter-a16z-2025" pageKey="programming-share-50" />. Programming and
+        technology made up more than 80% of the traffic sent to Claude. Creative roleplay nearly
+        matched programming by volume. That study excludes enterprise and locally hosted use, so
+        it is a third population, not a correction to this one. Every usage dataset is a window
+        onto its own users.
       </p>
       <AugAutoDashboard
         occupationCategories={augmentationAutomation.occupation_usage_shares.categories}
@@ -307,11 +389,12 @@ function Section4({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           The first measures only what happens inside the AI interaction: the portion of the work
-          conducted in the conversation window. Across 100,000 real-world conversations, this
-          in-conversation time savings was 81% at the median
+          conducted in the conversation window. Across 100,000 real-world conversations mapped to
+          work tasks, the median task showed 81% in-conversation time savings
           <Citation ids="tamkin-mccrory-2025" pageKey="median-savings-81" />, meaning the
           AI-assisted portion took roughly a fifth of the time it would have taken unassisted.
-          But the range is wide. At the high end, compiling information from reports shows
+          (The median conversation, a different unit, shows 84%.) But the range is wide. At the
+          high end, compiling information from reports shows
           approximately 95% savings
           <Citation ids="tamkin-mccrory-2025" pageKey="compile-95" />. At the low end, checking
           diagnostic images shows only about 20%
@@ -321,12 +404,16 @@ function Section4({ module }: ModuleProp): JSX.Element {
           The second measurement comes from randomized controlled trials that capture the full
           work cycle: the AI interaction plus all the time users spend afterward refining,
           verifying, and correcting the output. These studies found net time savings between 14%
-          and 56%, depending on the task and the model generation tested.
+          and 56%, depending on the task and the model generation tested, and at least one found
+          no saving at all.
         </p>
         <p className="m-0">
           The gap between
-          them, from 81% down to 14–56%, is the cost of verification: the time where human
-          judgment converts AI-generated output into a reliable deliverable. Even at the
+          them, from 81% down to 14–56%, is mostly the cost of verification and refinement: the
+          time where human judgment converts AI-generated output into a reliable deliverable. The
+          report names two reasons its own figure sits higher: it cannot see work done after the
+          conversation ends, and the trials it cites tested earlier models
+          <Citation ids="tamkin-mccrory-2025" pageKey="rct-comparison" />. Even at the
           conservative end, a 14% reduction in task time across routine workflows is operationally
           significant. At the high end, 56% represents a structural change in how work time is
           allocated.
@@ -383,7 +470,25 @@ function Section5({ module }: ModuleProp): JSX.Element {
         human judgment lives. This dashboard lets you explore that gap across occupations and
         tasks; what the data doesn’t capture is equally important: the time spent
         independently verifying output, reworking errors, and catching fabricated details that
-        looked correct on first read.
+        looked correct on first read. The knowledge-worker survey puts a number on where that
+        time goes. Majorities reported less effort with AI for every kind of thinking they were
+        asked about, from recall to synthesis. Evaluation was the exception: only 55% reported
+        less effort, and it drew the most reports of more effort
+        <Citation ids="lee-2025" pageKey="effort-reduction-shares" />. Workers described the added
+        work as stewardship: turning intent into a query, steering the response, and judging
+        whether it meets the standard while staying accountable for it
+        <Citation ids="lee-2025" pageKey="effort-shift-stewardship" />.
+      </p>
+      <p className="m-0 mb-4 font-sans text-body text-body">
+        Time saved is one axis; whether the task succeeded is another. In the November 2025 wave,
+        the model judged its own output successful in 67% of consumer conversations and 49% of
+        single-shot API calls. Success falls as tasks lengthen: API calls reach a coin flip at
+        tasks a person would need about 3.5 hours to do. Multi-turn conversations degrade far more
+        slowly, which the authors attribute to users breaking tasks into steps and correcting
+        course. Two cautions apply. The success judgment is the model's own. And users choose
+        which tasks to bring, so observed success overstates what the model can do across all
+        possible tasks
+        <Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />.
       </p>
       <p className="m-0 mb-6 font-sans text-body text-body">
         <em>By Occupation</em> covers all 22
@@ -434,9 +539,15 @@ function Section6({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           The directive interaction trend makes the convergence visible. Between January and August
           2025, the share of AI interactions classified as directive (user gives a task, accepts
-          the result, moves on) rose from 28% to 39%. That is an 11 percentage point shift toward
-          the simplest form of automation in seven months. By November, the share had fallen back
-          to 32%, but it remained higher than where it started.
+          the result, moves on) rose from 28% to 39%
+          <Citation
+            ids={['handa-2025', 'appel-mccrory-tamkin-2025']}
+            pageKey="directive-share-28"
+          />
+          . That is an 11 percentage point shift toward the simplest form of automation in seven
+          months. By November, the share had fallen back to 32%
+          <Citation ids="appel-massenkoff-mccrory-2026" pageKey="directive-share-32" />, but it
+          remained higher than where it started.
         </p>
       </div>
 
@@ -446,18 +557,37 @@ function Section6({ module }: ModuleProp): JSX.Element {
 
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
-          The trend has two plausible explanations. The first is that models are getting better:
-          as AI produces higher-quality first-draft outputs, users need fewer refinement turns. The
-          second is learning-by-doing: users who gain experience with AI develop enough confidence
-          to delegate complete tasks rather than collaborating on them. Both explanations are
-          probably contributing. And both lead to the same consequence: more output is passing
-          through less human review.
+          The report that measured the trend offers two explanations
+          <Citation ids="appel-mccrory-tamkin-2025" pageKey="directive-trend-v3" />. The first is
+          that models are getting better: as AI produces higher-quality first-draft outputs, users
+          need fewer refinement turns. The capability change over the same months is documented.
+          Reasoning models work through a problem in steps before answering. Tokens routed through
+          them went from a negligible share in early 2025 to more than half by late 2025
+          <Citation ids="openrouter-a16z-2025" pageKey="reasoning-share-50" />. A new frontier
+          model now arrives every six to nine months
+          <Citation ids="evans-2026-05" pageKey="frontier-cadence-20" />. The second is
+          learning-by-doing: users who gain experience with AI develop enough confidence to
+          delegate complete tasks rather than collaborating on them. Enterprise records support
+          the learning-by-doing reading. About half of the growth in usage between mid-2025 and
+          early 2026 came from firms that had already adopted
+          <Citation ids="chatterji-2026" pageKey="adoption-not-deployment" />. The researchers
+          describe those firms as still learning where the tool belongs in their workflows. Both
+          explanations are probably contributing. The November reversal adds a third factor:
+          product features that invite collaboration, such as file creation and persistent memory,
+          may pull usage back toward augmentation
+          <Citation ids="appel-massenkoff-mccrory-2026" pageKey="aug-auto-52-45" />. And both lead
+          to the same consequence: more output is passing through less human review.
         </p>
         <p className="m-0">
-          The tasks
-          with the highest time savings (compiling information, drafting documents, preparing
-          reports) are also the tasks most amenable to directive delegation. The efficiency gain
-          is real. But so is the verification gap.
+          The tasks with the highest time savings (compiling information, drafting documents,
+          preparing reports) are also the tasks most often delegated outright: most directive
+          conversations are writing and content generation, including business email drafting
+          <Citation ids="handa-2025" pageKey="directive-share-28" />. The labor market is already
+          repricing them. Between 2023 and 2025, writing and editing dropped out of the posting
+          requirements of 134 US occupations, and general research out of 140
+          <Citation ids="mgi-agents-robots-us-2025" pageKey="declining-mentions" />. The analysts
+          note the skills remain essential for much of the workforce. The efficiency gain is real.
+          But so is the verification gap.
         </p>
       </div>
 
@@ -469,12 +599,32 @@ function Section6({ module }: ModuleProp): JSX.Element {
             A home inspector who uses AI to draft reports faster doesn't become a faster inspector;
             they become someone who spends proportionally more of their day doing physical
             inspections and proportionally less writing about them.
+            <Citation ids="tamkin-mccrory-2025" pageKey="bottleneck-tasks" />
+          </p>
+          <p className="m-0 mb-2">
+            History shows both outcomes. When Otis launched the automatic elevator in 1950, the
+            elevator attendant's whole job was one task, and it became a button. When spreadsheets
+            arrived, accountants did not disappear; the job changed. Once barcodes automated
+            inventory, grocery stores stocked five times more products
+            <Citation ids="evans-2026-05" pageKey="task-vs-job-54" />. Benedict Evans puts one
+            question to every automation: is the thing being automated the task, or the job? For
+            most knowledge work, it is the task.
+          </p>
+          <p className="m-0 mb-2">
+            The AI-accelerated task gets faster; the role doesn't disappear; it reshapes around
+            the tasks AI cannot do. Employer forecasts say the same. The WEF projects a smaller
+            human share of task time by 2030 but notes both people and machines may do more,
+            higher-value work in that time, so concern about humans 'running out of things to do'
+            would be misplaced
+            <Citation ids="wef-2025" pageKey="human-machine-frontier" />. The open question the
+            report poses is whether workers share in the value machines generate. For your own
+            practice, the bottleneck concept points to a specific question: which of your tasks
+            are reshaping right now, and are you making that decision deliberately, or is the
+            tool's speed making it for you?
           </p>
           <p className="m-0">
-            The AI-accelerated task gets faster; the role doesn't disappear; it reshapes around
-            the tasks AI cannot do. For your own practice, the bottleneck concept points to a
-            specific question: which of your tasks are reshaping right now, and are you making that
-            decision deliberately, or is the tool's speed making it for you?
+            The report borrows an economist's summary: growth is constrained not by what we are
+            good at but by what is essential and hard to improve.
           </p>
         </BottleneckCallout>
       </div>
@@ -576,8 +726,12 @@ function Section8({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           <strong className="font-semibold text-ink">Second</strong>, the productivity gains are
           real but unevenly distributed. Some task categories show 95% time savings; others show
-          almost none. And the tasks where AI is fastest are often the tasks where the output is
-          hardest to verify: speed and reliability are separate axes, not the same one.
+          closer to 20%. And the tasks where AI is fastest are often the tasks where the output is
+          hardest to verify: speed and reliability are separate axes, not the same one. The
+          November 2025 Economic Index wave measured both and found the same pattern: more complex
+          tasks gain more time and succeed less often. Tasks needing a college-level prompt showed
+          a 12× speedup but a 66% self-assessed success rate; simpler tasks showed 9× and 70%
+          <Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />.
         </p>
         <p className="m-0">
           <strong className="font-semibold text-ink">Third</strong>, the share of directive
