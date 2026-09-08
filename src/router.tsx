@@ -50,6 +50,14 @@ const Raci = lazy(() => import('./pages/build/Raci'));
 const Resources = lazy(() => import('./pages/build/Resources'));
 const Communications = lazy(() => import('./pages/build/Communications'));
 const Quality = lazy(() => import('./pages/build/Quality'));
+// Print routes — the PDF-rendering views of the 15 artifact pages and the
+// seven reference cards (scripts/render-pdfs.mjs opens each in headless
+// Chromium). They mount as top-level siblings of PlatformShell so no app
+// chrome renders around the document; see src/pages/print/PrintShell.tsx.
+// Hash routes on the single indexable document, so they never reach a
+// crawler as URLs and are kept out of the sitemap (verify-sitemap.mjs
+// asserts it).
+const PrintRoute = lazy(() => import('./pages/print/PrintRoute'));
 
 // Suspense fallback for lazy routes. Note: the production build inlines
 // every lazy chunk via vite-plugin-singlefile, so this effectively never
@@ -129,6 +137,38 @@ const routes: RouteObject[] = [
       { path: 'build/quality', element: lazyRoute(Quality) },
       { path: '*', element: <Navigate to="/" replace /> },
     ],
+  },
+  {
+    path: '/print/needs-analysis/:slug',
+    element: (
+      <Suspense fallback={null}>
+        <PrintRoute family="needs-analysis" />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/print/evaluation/:slug',
+    element: (
+      <Suspense fallback={null}>
+        <PrintRoute family="evaluation" />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/print/build/:slug',
+    element: (
+      <Suspense fallback={null}>
+        <PrintRoute family="build" />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/print/reference/:id',
+    element: (
+      <Suspense fallback={null}>
+        <PrintRoute family="reference" />
+      </Suspense>
+    ),
   },
 ];
 

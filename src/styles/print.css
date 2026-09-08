@@ -1,0 +1,134 @@
+/* Print stylesheet — one @media print block, scoped to `html.print-mode`,
+   which src/pages/print/PrintShell.tsx sets on the `#/print/...` routes.
+   Built from the design-system tokens in index.css: Source Serif 4 for
+   display, IBM Plex Sans for body, IBM Plex Mono for labels and data, and
+   the 4D accents through their CSS variables (no literal hexes here).
+
+   Page geometry is Letter with 0.75in margins. Chromium does not
+   implement the CSS `@page` margin boxes (`@bottom-center` and friends),
+   so page numbers and the running header/footer are drawn by Playwright's
+   headerTemplate/footerTemplate in scripts/render-pdfs.mjs, inside these
+   margins. Everything inside the margins is this file. */
+
+@media print {
+  @page {
+    size: Letter;
+    margin: 0.75in;
+  }
+
+  html.print-mode,
+  html.print-mode body {
+    height: auto;
+    overflow: visible;
+    background: rgb(var(--canvas));
+  }
+
+  html.print-mode * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* ─── Chrome the page components render but a document does not ─── */
+
+  /* ArtifactTopBar: the first block in every series page, holding the
+     back-to-hub link and the Download PDF button. */
+  html.print-mode .print-body > div > div:first-child:has(> a[href^='#/']) {
+    display: none;
+  }
+
+  /* SeriesEyebrow: the accent tick + label under the top bar. The label
+     moves to the running header on every page, so it is not repeated
+     in the flow. */
+  html.print-mode .print-body > div > div:nth-child(2):has(> span[aria-hidden='true']) {
+    display: none;
+  }
+
+  /* ArtifactFooter pager, download links, the Expand-all toggle, and the
+     disclosure chevrons (every disclosure is open; see PrintShell). The
+     chevron is the trailing aria-hidden span of a disclosure button —
+     DisclosureChevron on the artifact pages, the boxed Icon on R3/R7. */
+  html.print-mode nav[aria-label='Series navigation'],
+  html.print-mode a[download],
+  html.print-mode button.text-action.text-\[12px\],
+  html.print-mode span.transition-transform[aria-hidden='true'],
+  html.print-mode button[aria-expanded] > span[aria-hidden='true']:last-child {
+    display: none;
+  }
+
+  /* ─── Layout ─── */
+
+  /* The page root's reading/interactive width and viewport padding give
+     way to the page box. */
+  html.print-mode .print-body > div {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+  }
+
+  html.print-mode .print-masthead {
+    margin-bottom: 0.5in;
+  }
+
+  /* Scroll containers cannot scroll on paper. */
+  html.print-mode .overflow-x-auto,
+  html.print-mode .overflow-hidden {
+    overflow: visible !important;
+  }
+
+  /* Disclosure headers are buttons on screen; on paper they are headings. */
+  html.print-mode button[aria-expanded] {
+    cursor: default;
+  }
+
+  /* ─── Type ─── */
+
+  /* Display weight 600, matching the retired PDF set's title treatment. */
+  html.print-mode h1.font-display {
+    font-weight: 600;
+  }
+
+  html.print-mode a {
+    color: rgb(var(--action));
+  }
+
+  /* ─── Page breaks ─── */
+
+  html.print-mode :is(h1, h2, h3, h4) {
+    break-after: avoid;
+  }
+
+  /* Tables, callouts (blockquotes, asides, the labelled stat sections),
+     figures, and the small cards (ADR records, decision items, R1's
+     quadrants) stay whole. Larger cards flow across pages; only a
+     disclosure header stays with the panel it opens. */
+  html.print-mode :is(table, tr, blockquote, aside, figure, svg, [role='img']),
+  html.print-mode section[aria-label],
+  html.print-mode .print-body .space-y-2\.5 > div,
+  html.print-mode .print-body [style*='minmax(240px'] > * {
+    break-inside: avoid;
+  }
+
+  html.print-mode button[aria-expanded] {
+    break-inside: avoid;
+    break-after: avoid;
+  }
+
+  /* R1's quadrant grid is designed 2×2; auto-fit would give it three
+     columns at the print layout width. */
+  html.print-mode .print-body [style*='minmax(240px'] {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  html.print-mode thead {
+    display: table-header-group;
+  }
+
+  html.print-mode .print-colophon {
+    margin-top: 0.4in;
+    border-top: 1px solid rgb(var(--border-light));
+    padding-top: 0.12in;
+    break-inside: avoid;
+  }
+}
