@@ -1,6 +1,7 @@
 // Story 3: AdoptionTrendChart — augmentation/automation balance over three
 // waves (V1, V3, V4) plus a directive-interaction sparkline (4C spec §3.5).
-// Source: Handa et al. (V1); Appel, McCrory & Tamkin (V3); Economic Primitives (V4).
+// Source: Handa et al. (V1); Appel, McCrory & Tamkin (V3); Appel, Massenkoff & McCrory,
+// Jan 2026 (Nov 2025 data) (V4).
 //
 // Color rule: Story 3 uses neutral --secondary / --tertiary for the bars,
 // NOT the 4D olive/blue-gray, because the 4D framework hasn't been
@@ -259,7 +260,7 @@ export function AdoptionTrendChart({
 
       <p className="m-0 font-mono text-caption text-muted" style={{ letterSpacing: '0.02em' }}>
         Source: Handa et al., Feb 2025, pp. 3, 9; Appel, McCrory &amp; Tamkin, Sep 2025, p. 9;
-        Economic Primitives, Nov 2025, pp. 5, 9.
+        Appel, Massenkoff &amp; McCrory, Jan 2026 (Nov 2025 data), pp. 5, 9.
       </p>
     </div>
   );

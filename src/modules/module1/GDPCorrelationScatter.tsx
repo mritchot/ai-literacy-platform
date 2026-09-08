@@ -11,9 +11,9 @@
 //   • Axis labels read "Income per working-age person (log scale)" /
 //     "AI adoption rate (log scale)" — not raw `ln(...)` notation.
 //   • The annotation box opens with prose: "Income explains about 70%
-//     of adoption variation. The remaining 30% comes from other
-//     factors." Statistical notation (β, R², p) sits below in muted
-//     mono as a footnote.
+//     of adoption variation across countries. The remaining 30% comes
+//     from other factors." plus the within-US contrast. Statistical
+//     notation (β, R², p) sits below in muted mono as a footnote.
 //   • A reading guide explains how to interpret position relative to
 //     the regression line — so the learner doesn't need to know what a
 //     residual is to understand the chart.
@@ -306,9 +306,11 @@ export function GDPCorrelationScatter({
               className="font-sans text-body-sm text-ink"
               style={{ lineHeight: 1.4, marginBottom: 4 }}
             >
-              Income explains about 70% of adoption variation.
+              Income explains about 70% of adoption variation across countries.
               <br />
-              The remaining 30% comes from other factors.
+              The remaining 30% comes from other factors. Within the United States, income
+              explains less than half of state-level variation; the share of computer and
+              mathematical workers explains nearly two-thirds.
             </div>
             <div
               className="font-mono text-caption text-muted"
@@ -647,7 +649,7 @@ export function GDPCorrelationScatter({
       <p className="m-0 mt-2 font-mono text-caption text-muted" style={{ letterSpacing: '0.02em' }}>
         Income and AI Usage Index by country. Axes are log-transformed. Source: Appel, McCrory
         &amp; Tamkin, Sep 2025, Figure 2.4, p. 17; Anthropic Economic Index open dataset (MIT
-        license).
+        license). New Zealand AUI 4.05 and Japan 1.86 from Figure 2.2 and p. 16.
       </p>
     </div>
   );
@@ -675,9 +677,11 @@ function ScatterAnnotation(): JSX.Element {
         className="font-sans text-body-sm text-ink"
         style={{ lineHeight: 1.4, marginBottom: 4 }}
       >
-        Income explains about 70% of adoption variation. The remaining 30% comes from other
-        factors — see the outlier list below for the countries that depart most from what income
-        alone would predict.
+        Income explains about 70% of adoption variation across countries. The remaining 30%
+        comes from other factors. Within the United States, income explains less than half of
+        state-level variation; the share of computer and mathematical workers explains nearly
+        two-thirds. See the outlier list below for the countries that depart most from what
+        income alone would predict.
       </div>
       <div
         className="font-mono text-caption text-muted"

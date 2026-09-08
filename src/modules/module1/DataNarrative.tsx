@@ -45,9 +45,33 @@ interface DirectivePoint {
   directiveShare: number;
 }
 
+interface CoreSkillRow {
+  rank: number;
+  skill: string;
+  share: number;
+}
+
+interface CoreSkills2030 {
+  coreIn2030: string[];
+  emerging: string[];
+  steady: string[];
+}
+
+interface Instability {
+  prior2016: number;
+  prior2018: number;
+  prior2020: number;
+  prior2023: number;
+  current: number;
+}
+
 interface DataNarrativeProps {
   skills: SkillRow[];
-  instability: { prior2020: number; prior2023: number; current: number };
+  /** Full 26-skill core-share list, WEF 2025 Figure 3.3 (`coreSkills2025.skills`). */
+  coreSkills: CoreSkillRow[];
+  /** Figure 3.6 quadrants (`coreSkills2030`). */
+  coreSkills2030: CoreSkills2030;
+  instability: Instability;
   /** Full Anthropic Economic Index country dataset (>=200 obs filter
    *  applied). Sourced from `src/data/geographic-adoption-full.json`. */
   countries: GeoCountry[];
@@ -88,7 +112,12 @@ export function DataNarrative(props: DataNarrativeProps): JSX.Element {
         ic={MODULE_1_IC_ITEMS[0] ?? null}
         debrief={ic1Submitted ? MODULE_1_DEBRIEFS['ic_1_1'] ?? null : null}
       >
-        <Story1Body skills={props.skills} instability={props.instability} />
+        <Story1Body
+          skills={props.skills}
+          coreSkills={props.coreSkills}
+          coreSkills2030={props.coreSkills2030}
+          instability={props.instability}
+        />
       </StoryShell>
 
       <StoryShell
@@ -247,10 +276,14 @@ function StoryShell({
 
 function Story1Body({
   skills,
+  coreSkills,
+  coreSkills2030,
   instability,
 }: {
   skills: SkillRow[];
-  instability: { prior2020: number; prior2023: number; current: number };
+  coreSkills: CoreSkillRow[];
+  coreSkills2030: CoreSkills2030;
+  instability: Instability;
 }): JSX.Element {
   return (
     <>
@@ -258,26 +291,40 @@ function Story1Body({
         <p className="m-0">
           The World Economic Forum regularly surveys over a thousand employers across 55 economies
           about the skills they expect to need most in the coming years. The 2025 report identifies
-          a familiar pattern with one important shift: AI and big data literacy now ranks as the
-          single fastest-growing skill demand in the global workforce, ahead of cybersecurity,
-          creative thinking, and leadership.
+          a familiar pattern with one important shift: AI and big data now ranks as the single
+          fastest-growing skill in the global workforce, ahead of networks and cybersecurity,
+          technological literacy, and creative thinking
+          <Citation ids="wef-2025" pageKey="fastest-growing-skills" />. Job postings say the same
+          thing from the hiring side. Between mid-2023 and mid-2025, US workers in occupations
+          whose postings ask for AI fluency rose nearly sevenfold, from about one million to
+          seven million. No other skill grew faster. Ten European economies show a fivefold rise
+          over the same period.
         </p>
         <p className="m-0">
           That ranking reflects more than enthusiasm. Eighty-five percent of surveyed employers
-          plan to upskill their workforce in AI-related competencies by 2030. But the same
-          employers identify a persistent obstacle: the workforce doesn’t have the skills yet, and
-          this gap, not technology access or budgets or regulation, is the factor most
-          employers cite as the primary barrier to their AI transformation.
+          plan to upskill their workforce over the 2025–2030 period
+          <Citation ids="wef-2025" pageKey="upskill-85" />. Asked about AI specifically, 77% plan
+          to reskill existing staff to work alongside it, the top AI strategy in 45 of 55
+          economies<Citation ids="wef-2025" pageKey="ai-reskill-77" />. But the same employers
+          identify a persistent obstacle: the workforce doesn’t have the skills yet. Sixty-three
+          percent name this gap, not budgets or regulation, as the primary barrier to
+          transforming their business<Citation ids="wef-2025" pageKey="skill-gap-63" />.
         </p>
         <p className="m-0">
           The chart below shows the top rising skills. Below it, a callout tracks how quickly the
           required skills are turning over — a measure called skills instability that captures the
-          share of core workforce skills expected to change over a five-year window.
+          share of core workforce skills expected to change over a five-year window
+          <Citation ids="wef-2025" pageKey="skills-instability-39" />.
         </p>
       </div>
 
       <div className="my-6">
-        <SkillDemandBar skills={skills} instability={instability} />
+        <SkillDemandBar
+          skills={skills}
+          coreSkills={coreSkills}
+          coreSkills2030={coreSkills2030}
+          instability={instability}
+        />
       </div>
     </>
   );
@@ -298,15 +345,17 @@ function Story2Body({
         <p className="m-0">
           AI adoption isn’t uniform. Where you sit geographically and institutionally shapes
           whether AI is available to you and how it gets used. The data you’re about to explore
-          comes from an analysis of one million AI conversations, measuring usage rates relative
-          to working-age population across countries.
+          comes from an analysis of one million AI conversations sampled over one week in August
+          2025, measuring each country’s share of usage against its share of working-age
+          population<Citation ids="appel-mccrory-tamkin-2025" pageKey="aui-method" />.
         </p>
         <p className="m-0">
           What stands out is less about how much AI gets used than about how. Countries with high
           adoption rates tend to use AI across a wider range of tasks, including creative,
-          analytical, and operational work. Countries with lower adoption concentrate
-          overwhelmingly on a single use case: coding. The pattern suggests that adoption breadth,
-          not volume alone, is a sign of maturity.
+          analytical, and operational work. Countries with lower adoption concentrate on a single
+          use case: coding, which is over half of all usage in India against about a third
+          globally<Citation ids="appel-mccrory-tamkin-2025" pageKey="task-mix-by-country" />. The
+          pattern suggests that adoption breadth, not volume alone, is a sign of maturity.
         </p>
       </div>
 
@@ -316,14 +365,23 @@ function Story2Body({
         <p className="m-0 font-sans text-body text-body">
           The relationship between income and adoption is real, but it is not the whole story.
           Countries with comparable GDP per capita can have sharply different adoption rates. The
-          research identifies several factors that contribute beyond income: digital
-          infrastructure maturity, the proportion of knowledge work in a country’s economy,
-          regulatory environments around technology, and organizational norms about AI use. For
+          research identifies five factors that contribute beyond income: digital infrastructure,
+          economic structure, regulatory environment, awareness and access, and trust and comfort
+          with the tools. For
           organizations operating across regions, this means that providing AI access does not
           automatically produce AI adoption. The institutional context shapes whether and how
           tools get used.
         </p>
         <CensusEnterpriseInset adoption={censusAdoption} />
+        <p className="m-0 font-sans text-body text-body">
+          The firms that do report AI use are not a random sample. Among U.S. public companies,
+          early enterprise adopters had a median workforce of 2,934 against 424 for non-adopters
+          <Citation ids="chatterji-2026" pageKey="adopter-profile" />. The difference survives
+          controls for industry and size. Adoption tracks prior investment in R&amp;D, software,
+          and organizational capability, not access alone
+          <Citation ids="chatterji-2026" pageKey="complements" />. Those estimates describe large
+          public firms. They say nothing about small private firms or startups.
+        </p>
         <p
           className="m-0 font-mono text-caption text-muted"
           style={{ letterSpacing: '0.02em' }}
@@ -358,8 +416,10 @@ function Story3Body({
           periods spanning twelve months. Two patterns stand out. First, the share of purely
           directive interactions (where a user hands a complete task to the model and accepts
           the result with minimal back-and-forth) rose sharply from 28% to 39% between January
-          and August 2025, then partially fell back to 32% by November
-          <Citation ids={['handa-2025', 'appel-mccrory-tamkin-2025']} pageKey="directive-share-28" />.
+          and August 2025
+          <Citation ids={['handa-2025', 'appel-mccrory-tamkin-2025']} pageKey="directive-share-28" />,
+          then partially fell back to 32% by November
+          <Citation ids="appel-massenkoff-mccrory-2026" pageKey="directive-share-32" />.
           Second, the balance between augmentation (using AI to enhance your own thinking) and
           automation (delegating tasks to AI entirely) shifted meaningfully during the same
           period.

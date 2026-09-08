@@ -34,10 +34,10 @@ interface CompetencyMeta {
 }
 
 export const COMPETENCIES: CompetencyMeta[] = [
-  { key: 'delegation', label: 'Delegation', description: 'Choosing what to send to AI' },
+  { key: 'delegation', label: 'Delegation', description: 'Deciding whether and how to use AI' },
   { key: 'description', label: 'Description', description: 'Specifying the task clearly' },
   { key: 'discernment', label: 'Discernment', description: 'Judging what comes back' },
-  { key: 'diligence', label: 'Diligence', description: 'Verifying before you ship' },
+  { key: 'diligence', label: 'Diligence', description: 'Owning and disclosing what you ship' },
 ];
 
 export const MODULES: ModuleMeta[] = [

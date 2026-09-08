@@ -763,7 +763,9 @@ export function CensusEnterpriseInset({
         </ResponsiveContainer>
       </div>
       <p className="m-0 mt-1 font-sans text-body-sm italic text-body">
-        Even in a leading adoption country, fewer than 1 in 10 firms formally report using AI.
+        Even in a leading adoption country, fewer than 1 in 10 firms report using AI to produce
+        goods or services in the prior two weeks (Census Bureau BTOS, early August 2025, via
+        Appel, McCrory &amp; Tamkin, Sep 2025, pp. 31, 44).
       </p>
     </aside>
   );
