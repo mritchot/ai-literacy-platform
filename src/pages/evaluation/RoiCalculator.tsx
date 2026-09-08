@@ -101,7 +101,8 @@ const FIELDS: FieldDef[] = [
     min: 0,
     max: 100,
     step: 1,
-    rationale: 'Against 57% AI-touched (Handa et al.); 25% = practical, not merely possible.',
+    rationale:
+      'MGI puts agents at 44% of US work hours as technical potential and about 27% automated by 2030 in its midpoint scenario (Yee et al., 2025); 25% sits at the adoption end. Handa et al.\u2019s 57% is a share of conversations, not hours, and is not used here.',
   },
   {
     key: 'timeSavings',
