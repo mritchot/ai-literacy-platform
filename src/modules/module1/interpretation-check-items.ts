@@ -15,7 +15,7 @@ const IC_1_1: InterpretationCheckItemData = {
       feedbackTitle: 'Partially correct, but misleading',
       feedbackTone: 'caution',
       feedbackText:
-        'The skill instability rate is declining, but this doesn’t reduce the urgency. It means the target is becoming clearer, not smaller. AI literacy has moved from a broad “future skill” category to the single most demanded competency. A declining instability rate with a rising specific demand means the window for preparation is narrowing, not expanding.',
+        'The skill instability rate is declining, but this doesn’t reduce the urgency. It means the target is becoming clearer, not smaller. AI literacy has moved from a broad “future skill” category to the single most demanded competency. Job-posting data agree: demand for AI fluency grew nearly sevenfold in two years. The analysts who track it class AI fluency as a skill that keeps changing in application rather than fading. A declining instability rate with a rising specific demand means the window for preparation is narrowing, not expanding.',
     },
     {
       id: 'b',
@@ -33,7 +33,7 @@ const IC_1_1: InterpretationCheckItemData = {
       feedbackTitle: 'Flawed reasoning',
       feedbackTone: 'error',
       feedbackText:
-        'The 85% planning figure describes intent, not execution. The same report shows that the skill gap remains the largest cited barrier, meaning most organizations intend to upskill but have not yet succeeded. Following the market assumes someone else has solved the problem. The data suggests otherwise.',
+        'The 85% planning figure describes intent, not execution. The same report shows that the skill gap remains the largest cited barrier, meaning most organizations intend to upskill but have not yet succeeded. Following the market assumes someone else has solved the problem. The data suggests otherwise. Executive surveys show the same gap in a different population. In September 2025, about a quarter of CIOs had put an LLM project into production. About 40% planned none before 2026 or later (Morgan Stanley CIO Survey, as reproduced by Evans, November 2025, slide 57). Plans are cheap. Deployment and skill are not.',
     },
     {
       id: 'd',
@@ -42,7 +42,7 @@ const IC_1_1: InterpretationCheckItemData = {
       feedbackTitle: 'Legitimate concern, wrong conclusion',
       feedbackTone: 'caution',
       feedbackText:
-        'Skepticism about projections is reasonable. However, this data does not stand alone. It converges with task-level adoption data (which you’ll explore in Module 2) and documented productivity gains. The WEF survey captures employer intent and barrier perception, which are validated by behavioral data from other sources.',
+        'Skepticism about projections is reasonable, and it is worth knowing what the survey is: 1,043 responses from C-suite officers at firms with 500 or more employees, reporting intentions for 2025–2030. That is expectation, not outcome, and it excludes small firms. However, this data does not stand alone. It converges with task-level adoption data (which you’ll explore in Module 2), with job-posting data on skill demand, and with documented productivity gains. The WEF survey captures employer intent and barrier perception; behavioral data from other sources shows the same direction.',
     },
   ],
 };
@@ -59,16 +59,16 @@ const IC_1_2: InterpretationCheckItemData = {
       feedbackTitle: 'Oversimplified',
       feedbackTone: 'caution',
       feedbackText:
-        'GDP does correlate with adoption: a 1% increase in GDP per capita is associated with a 0.7% increase in AI usage per capita globally. But correlation is not explanation, and the research explicitly notes that income differences explain less than half the variation across countries. Access matters, but it’s not sufficient.',
+        'GDP does correlate with adoption: a 1% increase in GDP per capita is associated with a 0.7% increase in AI usage per capita across countries, and the November 2025 wave reproduced that 0.7 elasticity. Income explains about 70% of cross-country variation, so the remaining 30% comes from other factors. Within the United States, income explains less than half of the variation across states. Access matters, but it is not sufficient.',
     },
     {
       id: 'b',
-      text: '“It’s partially right, but incomplete. GDP correlates with adoption, but income explains less than half the variation. Institutional context, like digital infrastructure, regulatory environment, and organizational norms, accounts for the rest.”',
+      text: '“It’s partially right, but incomplete. GDP correlates with adoption and explains most of the cross-country variation, but not all of it. Digital infrastructure, regulatory environment, awareness and access, and trust in the tools account for the rest.”',
       isPreferred: true,
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer captures the nuance: income is a factor, but not the dominant one. The data shows that countries with similar GDP levels can have very different adoption rates, pointing to institutional and contextual factors that access alone doesn’t address: digital infrastructure maturity, regulatory environments, organizational norms around technology adoption, and awareness and access patterns. For your own organization, this means providing AI tools is necessary but not sufficient for adoption.',
+        'This answer captures the nuance: income is a factor, but not the dominant one. The data shows that countries with similar GDP levels can have very different adoption rates, pointing to institutional and contextual factors that access alone doesn’t address: digital infrastructure, economic structure, regulatory environment, awareness and access, and trust and comfort with the tools. For your own organization, this means providing AI tools is necessary but not sufficient for adoption.',
     },
     {
       id: 'c',
@@ -103,7 +103,7 @@ const IC_1_3: InterpretationCheckItemData = {
       feedbackTitle: 'Plausible framing, wrong conclusion',
       feedbackTone: 'caution',
       feedbackText:
-        'Invoking seasonal variation sounds analytical, but the claim is ad hoc. The data provides no basis for attributing the November shift to seasonality rather than other factors. More importantly, even if the August peak was the real ceiling, the November automation share (45%) was only modestly above January (41%). The trajectory is real but not as decisive as this framing suggests, and "comfort" is not the only variable shaping the balance. Organizational context, task type, and judgment skill all contribute.',
+        'Invoking seasonal variation sounds analytical, but the claim is ad hoc. The data provides no basis for attributing the November shift to seasonality rather than other factors. The report itself offers a different explanation: product changes such as file creation, persistent memory, and workflow skills may have pushed usage back toward collaboration. More importantly, even if the August peak was the real ceiling, the November automation share (45%) was only modestly above January (41% when the same classifier re-scored the January data; the original study reported 43%). The trajectory is real but not as decisive as this framing suggests, and "comfort" is not the only variable shaping the balance. Organizational context, task type, and judgment skill all contribute.',
     },
     {
       id: 'b',
@@ -112,7 +112,7 @@ const IC_1_3: InterpretationCheckItemData = {
       feedbackTitle: 'Reasonable caution, wrong threshold',
       feedbackTone: 'caution',
       feedbackText:
-        'Methodological caution is appropriate, and three time points is genuinely limited. However, each wave represents analysis of a million or more conversations. The sample sizes are not small, and the magnitude of the shifts (11 percentage points for directive interactions between January and August) substantially exceeds what random variation would produce. The correct response is cautious interpretation, not suspension of judgment. Waiting for "significantly more data" before acting is itself a workforce planning decision, one that this data suggests would widen existing capability gaps.',
+        'Methodological caution is appropriate, and three time points is genuinely limited. However, each wave analyzes a random sample of one million conversations (Handa et al., 2025; Appel, McCrory & Tamkin, 2025; Appel, Massenkoff & McCrory, 2026). The sample sizes are not small, and the magnitude of the shifts (11 to 12 percentage points for directive interactions between January and August, depending on rounding of the January figure) substantially exceeds what random variation would produce. The correct response is cautious interpretation, not suspension of judgment. Waiting for "significantly more data" before acting is itself a workforce planning decision, one that this data suggests would widen existing capability gaps.',
     },
     {
       id: 'c',
@@ -121,7 +121,7 @@ const IC_1_3: InterpretationCheckItemData = {
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer acknowledges the directional trend (greater automation over the full period), recognizes the non-linearity (the August spike and November correction), and correctly identifies that the outcome depends on systemic factors, including tool capabilities, organizational norms, and the judgment skills of the people using the tools. The last factor is where this program focuses.',
+        'This answer acknowledges the directional trend (greater automation over the full period), recognizes the non-linearity (the August spike and November correction), and correctly identifies that the outcome depends on systemic factors, including tool capabilities, organizational norms, and the judgment skills of the people using the tools. The last factor is where this program focuses. Two further cautions apply. The report reads the August spike as overstating the pace of automation. And about four points of the August rise are classifier-dependent: re-running the August data with the earlier classifier gave 45% automation instead of 49%.',
     },
     {
       id: 'd',
@@ -130,7 +130,7 @@ const IC_1_3: InterpretationCheckItemData = {
       feedbackTitle: 'Selective reading',
       feedbackTone: 'caution',
       feedbackText:
-        'Augmentation did recover dominance by November, so this answer gets the endpoint right. But it draws the wrong inference by treating the recovery as a return to baseline. November\'s automation share (45%) was meaningfully higher than January\'s (41%); the equilibrium shifted, even if augmentation remains the larger category. Calling collaborative use the "stable equilibrium" understates how much the balance depends on evolving factors: tool capabilities, organizational norms, and the judgment skills of the people using the tools.',
+        'Augmentation did recover dominance by November, so this answer gets the endpoint right. But it draws the wrong inference by treating the recovery as a return to baseline. November\'s automation share (45%) was higher than January\'s (41% on a like-for-like re-scoring; 43% in the original study); the equilibrium shifted, even if augmentation remains the larger category. Calling collaborative use the "stable equilibrium" understates how much the balance depends on evolving factors: tool capabilities, organizational norms, and the judgment skills of the people using the tools.',
     },
   ],
 };
@@ -141,7 +141,7 @@ export const MODULE_1_DEBRIEFS: Record<string, string> = {
   ic_1_1:
     'The demand signal is clear, but so is the gap between recognizing AI as a priority and closing the competency deficit. The next story looks at where adoption is happening, and where it isn’t.',
   ic_1_2:
-    'Access is necessary but not sufficient. The gap between having AI tools and using them productively is shaped by institutional context, including, as the enterprise data shows, whether organizations create the conditions for visible, supported use. The final story looks at how usage is changing over time.',
+    'Access is necessary but not sufficient. The January 2026 Economic Index report reaches the same conclusion: expanding access alone will not suffice, because the skills needed to use AI well are themselves unevenly distributed, and higher-usage countries use AI more collaboratively rather than delegating more (Appel, Massenkoff & McCrory, 2026, p. 6). The gap between having AI tools and using them productively is shaped by institutional context, including, as the enterprise data shows, whether organizations create the conditions for visible, supported use. Vendor-side usage records reach the same conclusion: buying the tool is the start of deployment, not the end (Chatterji et al., 2026). The final story looks at how usage is changing over time.',
   ic_1_3:
     'Where you sit on the augmentation–automation spectrum isn’t fixed. It’s shaped by how you think about each task, what judgment you apply, and whether your organization has the vocabulary to discuss the difference. That’s the focus of the rest of this program, starting with a finding you may recognize from your own experience.',
 };
