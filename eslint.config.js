@@ -49,7 +49,9 @@ export default tseslint.config(
     // 16-line series binders exist to export route/config wiring, not
     // components — fast-refresh semantics don't apply to them, and the
     // rule was contributing 34 of the lint run's warnings as pure noise.
-    files: ['src/router.tsx', 'src/pages/*/chrome.tsx'],
+    // print-documents.tsx is the print-route registry: it co-exports the
+    // manifest and resolver with the lazy page components it maps to.
+    files: ['src/router.tsx', 'src/pages/*/chrome.tsx', 'src/pages/print/print-documents.tsx'],
     rules: {
       'react-refresh/only-export-components': 'off',
     },
