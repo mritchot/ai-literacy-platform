@@ -216,8 +216,8 @@ function OriginStory(): JSX.Element {
 
       <p className="m-0">
         This course started as part of my M.Ed. in Education Technology and Instructional
-        Design, where I designed a curriculum that taught AI through its mechanics
-        (tokenization, next-token prediction, context windows), not just its outputs. I was
+        Design, where I designed a module that taught AI through its mechanics (tokenization,
+        and the context-window and subword effects that follow from it), not just its outputs. I was
         teaching high school students at an international school in Macao at the time, though I
         built it with working professionals in mind too — the reasons these tools fail don't
         change much between a teenager's history essay and a manager's quarterly report. None of

@@ -186,7 +186,9 @@ export function R3PromptTemplate(): JSX.Element {
         style={{ lineHeight: 1.55 }}
       >
         Use this template to structure any AI prompt. Organized by the three Description
-        sub-components. Most underspecified prompts fail on all three simultaneously.{' '}
+        sub-components. Most underspecified prompts fail on all three simultaneously. Workers who
+        can spot a flawed output often cannot steer the model to a better one (72 of 319 in Lee et
+        al., CHI 2025, p. 11); the scaffold below is for that step.{' '}
         <em>Use it as a structural scaffold for any task, not a prompt library.</em>
       </p>
 
@@ -211,8 +213,8 @@ export function R3PromptTemplate(): JSX.Element {
         className="m-0 mt-6 text-caption text-tertiary"
         style={{ lineHeight: 1.5, fontStyle: 'italic' }}
       >
-        Framework: Anthropic 4D AI Fluency Framework, Description competency (Dakan, Feller, and
-        Anthropic, 2025).
+        Framework: 4D AI Fluency Framework, Description competency (Dakan &amp; Feller, 2025,
+        pp. 4–5), as taught in Anthropic&rsquo;s AI Fluency course.
       </p>
     </div>
   );

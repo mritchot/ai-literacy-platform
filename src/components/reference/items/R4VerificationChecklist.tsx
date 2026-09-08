@@ -168,7 +168,12 @@ export function R4VerificationChecklist({
         style={{ lineHeight: 1.55 }}
       >
         Use before any AI-assisted output is shared, submitted, or published. Apply the same
-        review standard you would to work from a junior colleague.
+        review standard you would to work from a junior colleague. The industry shorthand is that
+        AI gives you infinite interns (Evans, May 2026, slide 60). Tasks easy to explain to an
+        intern, done at any volume, with an intern&rsquo;s error rate. The comparison is not
+        loose: a security engineer at Anthropic described a model proposal as smart in the
+        dangerous way a talented junior engineer can be, the kind only experience catches (Huang
+        et al., Dec 2025).
       </p>
 
       {/* Three checklist sections, vertically stacked. */}
@@ -194,8 +199,8 @@ export function R4VerificationChecklist({
         className="m-0 mt-6 text-caption text-tertiary"
         style={{ lineHeight: 1.5, fontStyle: 'italic' }}
       >
-        Framework: Anthropic 4D AI Fluency Framework, Discernment competency (Dakan, Feller, and
-        Anthropic, 2025).
+        Framework: 4D AI Fluency Framework, Discernment competency (Dakan &amp; Feller, 2025,
+        pp. 5–6), as taught in Anthropic&rsquo;s AI Fluency course.
       </p>
     </div>
   );

@@ -11,7 +11,7 @@ Best viewed on desktop. Mobile is fully functional, but the data dashboards and 
 
 ## Program structure
 
-The curriculum grew out of my M.Ed. in Education Technology and Instructional Design, where I built a program that teaches AI through its mechanics — tokenization, next-token prediction, context windows — not just its outputs. The four modules:
+The curriculum grew out of my M.Ed. in Education Technology and Instructional Design, where I built a module that teaches AI through one of its mechanics, tokenization, and the errors it predicts, not just its outputs. The four modules:
 
 | Module | Focus | Sections | Duration |
 |--------|-------|----------|----------|
@@ -108,11 +108,35 @@ Content traces to specific findings from:
 - Handa et al. (2025) — task-level AI adoption patterns
 - Appel, McCrory & Tamkin (2025) — geographic adoption disparities
 - Tamkin & McCrory (2025) — productivity gains measurement
-- Anthropic Interviewer (2025) — professional attitudes and stigma
-- WEF Future of Jobs Report (2025) — skill demand projections
+- Appel, Massenkoff & McCrory (2026) — Economic Primitives: task complexity, success rates, and the November 2025 adoption wave
+- Massenkoff & McCrory (2026) — observed AI exposure and early labor-market evidence
+- Handa et al., Dec 2025 — Anthropic Interviewer: professional attitudes and stigma
+- Huang et al. (Dec 2025) — How AI Is Transforming Work at Anthropic: what its engineers delegate and what stays human
+- WEF Future of Jobs Report (2025) — skill demand projections, employer transformation barriers, AI workforce strategies, and GenAI substitution capacity
+- Tinkoff et al., McKinsey (2026) — The state of AI in 2026: enterprise adoption, returns, and impact measurement
+- Yee et al., McKinsey Global Institute (2025) — Agents, robots, and us: skill partnerships in the age of AI (United States)
+- Johansson et al., McKinsey Global Institute (2026) — Agents, robots, and us: how AI reshapes work and skills in Europe
+- Chatterji et al., OpenAI (2026) — How Organizations Use AI: enterprise adoption evidence from ChatGPT
+- MIT Ad Hoc Committee (2026) — AI use in teaching, learning, and research training: institutional policy, disclosure, and acceptable-use precedent
+- Aubakirova et al., OpenRouter and a16z (2025) — routed-usage telemetry: prompt length, reasoning-model share, programming share
+- Evans (2025–2026) — *AI eats the world* slide decks; analyst commentary used for industry framing, with each chart's primary source named in the citation registry
+- Ritchot (2025) — Token-Level Abstraction: the WGU capstone module this program grew from
+- Dakan & Feller (2025) — Framework for AI Fluency, Version 1.1, as taught in Anthropic's AI Fluency: Framework & Foundations course
+- Reuters/UBS (Feb 2023) — ChatGPT's early user-growth estimate
+- Bick, Blandin & Deming (NBER 2024) — The Rapid Adoption of Generative AI: workforce adoption survey
+- Hsieh et al. (2024) — RULER: effective versus claimed context length
+- Modarressi et al. (2025) — NoLiMa: long-context evaluation beyond literal matching
+- OpenAI tiktoken documentation — tokenizer reference for Module 3
+- Zell & Krizan (2014) — metasynthesis of self-insight into one's own abilities
+- Kruger & Dunning (1999) — overestimation by the least skilled
+- Gignac & Zajenkowski (2020) — the Dunning–Kruger effect as a statistical artifact
+- Svenson (1981) — the better-than-average driver finding
+- Barber & Odean (2001) — overconfidence in common stock investment
+- Vendor model documentation (Anthropic, OpenAI, Google, 2026) — current model and context-window specifications
+- Qwen Team (2025) — Qwen3-8B model card
 - Hardman — transfer research and practice-based methods
 
-These are the anchor sources; the in-module citation registry and the artifact pages' linked bibliographies extend the set (Lee et al. CHI 2025, Mollick 2012, the Anthropic Economic Index reports, and others).
+These are the anchor sources; the in-module citation registry and the artifact pages' linked bibliographies extend the set (Lee et al. CHI 2025, Mollick 2012, the Anthropic Economic Index reports, McKinsey's State of AI 2026, the MGI Agents, robots, and us reports, Chatterji et al. 2026 on enterprise adoption, and others).
 
 ## License
 
@@ -121,7 +145,7 @@ This project uses a dual license:
 - **Code** (`LICENSE`): MIT License
 - **Content** (`licenses/LICENSE-CONTENT`): CC BY-NC-SA 4.0
 
-The competency taxonomy is adapted from Anthropic's 4D AI Fluency Framework, licensed under CC BY-NC-SA 4.0. Commercial use of course content requires a separate agreement — contact michael@ritchot.me.
+The competency taxonomy is adapted from the [4D AI Fluency Framework](https://ringling.libguides.com/ai/framework) by Dakan and Feller (2025, CC BY-NC-ND 4.0), as taught in Anthropic's [AI Fluency: Framework & Foundations](https://anthropic.skilljar.com/ai-fluency-framework-foundations) course (2025, CC BY-NC-SA 4.0). Commercial use of course content requires a separate agreement — contact michael@ritchot.me.
 
 ## Author
 

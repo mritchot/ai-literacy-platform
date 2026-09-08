@@ -494,17 +494,25 @@ function AttributionFooter(): JSX.Element {
         .
       </p>
       <p className="m-0">
-        Competency taxonomy adapted from Anthropic&rsquo;s 4D AI Fluency Framework
-        (Dakan, Feller &amp; Anthropic, 2025), licensed under{' '}
+        Competency taxonomy adapted from the{' '}
         <a
-          href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+          href="https://ringling.libguides.com/ai/framework"
           target="_blank"
           rel="noopener noreferrer"
           className="text-tertiary underline hover:text-secondary"
         >
-          CC BY-NC-SA 4.0
-        </a>
-        .
+          4D AI Fluency Framework
+        </a>{' '}
+        (Dakan &amp; Feller, 2025, CC BY-NC-ND 4.0), as taught in Anthropic&rsquo;s{' '}
+        <a
+          href="https://anthropic.skilljar.com/ai-fluency-framework-foundations"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-tertiary underline hover:text-secondary"
+        >
+          AI Fluency: Framework &amp; Foundations
+        </a>{' '}
+        (2025, CC BY-NC-SA 4.0).
       </p>
       <p className="m-0">
         Built with AI assistance. See the{' '}

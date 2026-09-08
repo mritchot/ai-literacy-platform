@@ -136,7 +136,15 @@ export function R6DiligenceTemplate(): JSX.Element {
       >
         Append to any deliverable that involved AI assistance. A diligence statement makes your
         AI practices legible. It does not ask for permission. It does not apologize. It states
-        what happened. <em>Length scales with stakes.</em>
+        what happened. <em>Length scales with stakes.</em> The framework&rsquo;s authors close
+        their own document with one: it names the model used, affirms human vetting, and claims
+        full responsibility in five sentences (Dakan &amp; Feller, 2025, p. 7). The form is
+        becoming standard. MIT&rsquo;s 2026 institutional policy requires a statement of AI use in
+        every thesis and holds the author responsible for all submitted content. It treats AI as a
+        tool under the direction of a human who verifies its output (MIT Ad Hoc Committee, 2026,
+        pp. 16, 22). Accountability for the deliverable stays with you even when production was
+        delegated; the statement records how you exercised it. Source: Lee et al., CHI 2025,
+        p. 15.
       </p>
 
       {/* Section: Statement structure (4 numbered scaffolds) */}
@@ -153,8 +161,8 @@ export function R6DiligenceTemplate(): JSX.Element {
         className="m-0 mt-6 text-caption text-tertiary"
         style={{ lineHeight: 1.5, fontStyle: 'italic' }}
       >
-        Framework: Anthropic 4D AI Fluency Framework, Diligence competency (Dakan, Feller, and
-        Anthropic, 2025).
+        Framework: 4D AI Fluency Framework, Diligence competency (Dakan &amp; Feller, 2025,
+        p. 6), as taught in Anthropic&rsquo;s AI Fluency course.
       </p>
     </div>
   );
@@ -379,6 +387,20 @@ function ExampleACard(): JSX.Element {
           </p>
         ))}
       </div>
+
+      {/* Source credit for the example */}
+      <p
+        className="m-0 text-caption text-tertiary"
+        style={{
+          lineHeight: 1.5,
+          fontStyle: 'italic',
+          padding: '8px 18px',
+          borderTop: '1px solid rgb(var(--border-light))',
+        }}
+      >
+        Modeled on the Diligence Statement that closes Dakan &amp; Feller&rsquo;s framework
+        document (2025, p. 7).
+      </p>
     </article>
   );
 }

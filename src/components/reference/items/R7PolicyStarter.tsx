@@ -27,6 +27,8 @@ const DILIGENCE = 'rgb(var(--diligence))';
 interface AreaTopic {
   topic: string;
   prompt: string;
+  /** Optional one-line note rendered beneath the prompt. */
+  note?: string;
 }
 
 interface DiscussionArea {
@@ -35,6 +37,8 @@ interface DiscussionArea {
   overline: string; // "Delegation Norms"
   question: string; // "What tasks are appropriate for AI use on this team?"
   topics: AreaTopic[];
+  /** Optional note rendered beneath the topic table. */
+  note?: string;
   yourInput: string;
 }
 
@@ -48,12 +52,12 @@ const AREAS: DiscussionArea[] = [
       {
         topic: 'Appropriate tasks',
         prompt:
-          'Which types benefit from AI? (drafting, data compilation, research, brainstorming, formatting…)',
+          'Which types benefit from AI? (drafting, summarizing, calculation checks, translation, data compilation, brainstorming, formatting…)',
       },
       {
         topic: 'Off-limits tasks',
         prompt:
-          'Where should AI not be used? (client-confidential, regulatory, personnel decisions…)',
+          'Where should AI not be used? (client-confidential, regulatory, personnel decisions, work that turns on empathy or in-person judgment…)',
       },
       {
         topic: 'Data boundaries',
@@ -65,6 +69,7 @@ const AREAS: DiscussionArea[] = [
         prompt: 'Which AI tools are approved or preferred?',
       },
     ],
+    note: "Expect disagreement at the boundary. In MIT's 2026 community survey, most respondents accepted AI for spelling and grammar, research, and code. Most rejected it for peer review or drafting paragraphs from notes. The committee found that people disagree on what 'support' means, so it recommends naming allowed uses explicitly (MIT Ad Hoc Committee, 2026, pp. 30, 33).",
     yourInput: 'I currently use AI for ___. I avoid it for ___. I’d like clarity on ___.',
   },
   {
@@ -87,7 +92,8 @@ const AREAS: DiscussionArea[] = [
       },
       {
         topic: 'Format',
-        prompt: 'Diligence statement, footnote, verbal note, or team documentation?',
+        prompt:
+          "Diligence statement, footnote, verbal note, or team documentation? (Precedent: MIT's 2026 policy requires every thesis to state how AI was used and bars AI as a co-author. It asks anyone presenting AI-generated content or using AI in evaluation to disclose how and why. MIT Ad Hoc Committee, 2026, pp. 20, 22.)",
       },
     ],
     yourInput: 'I currently disclose by ___. I’m unsure about disclosure for ___.',
@@ -110,6 +116,7 @@ const AREAS: DiscussionArea[] = [
       {
         topic: 'Accountability',
         prompt: 'Who’s accountable for errors — delegator, reviewer, or both?',
+        note: "Some workers skip verification because they see it as someone else's job (11 of 319 in one survey), and some because a quota leaves no time (44 of 319). A norm has to answer both. Source: Lee et al., CHI 2025, p. 11.",
       },
       {
         topic: 'Escalation',
@@ -130,11 +137,13 @@ const AREAS: DiscussionArea[] = [
       },
       {
         topic: 'Learning sharing',
-        prompt: 'How do members share effective practices? (channel, retros, docs)',
+        prompt:
+          'How do members share effective practices? (channel, retros, docs) Framing verification as skill-building rather than a per-task audit is the framing researchers recommend for keeping it alive (Lee et al., CHI 2025, p. 15).',
       },
       {
         topic: 'Improvement',
-        prompt: 'How to evaluate whether AI improves quality, not just speed?',
+        prompt:
+          'How to evaluate whether AI improves quality, not just speed? (Organizations reporting significant AI returns are twice as likely to have a defined process for this.)',
       },
     ],
     yourInput: 'I’d find it helpful if our team ___ to share what’s working.',
@@ -210,7 +219,12 @@ export function R7PolicyStarter(): JSX.Element {
         69% of professionals mention the social stigma that comes with using AI at work, and
         many conceal their use from colleagues. This scaffold
         helps you initiate a conversation about shared AI use norms. You are proposing shared
-        standards, not asking for permission.
+        standards, not asking for permission. The shape is deliberate. When MIT set
+        institution-wide AI policy in 2026, its committee rejected a single rule as too permissive
+        for some units and too restrictive for others. It recommended instead a shared framework:
+        a policy menu, disclosure expectations, and accountability standards that each department
+        adapts (MIT Ad Hoc Committee, 2026, p. 7). The four areas below are that framework at team
+        scale.
       </p>
 
       {/* How to use — compact strip */}
@@ -240,7 +254,11 @@ export function R7PolicyStarter(): JSX.Element {
         }}
       >
         <strong>The goal is to replace private, uncoordinated AI use with visible, accountable
-        team practice</strong>, not to create bureaucracy.
+        team practice</strong>, not to create bureaucracy. Attach a reason to each norm.
+        MIT&rsquo;s 2026 policy review found that rules stated without a rationale confused people
+        and that policing unauthorized use damaged working relationships. It recommends that every
+        AI policy explain why use is required, permitted, or restricted (MIT Ad Hoc Committee,
+        2026, pp. 5, 16–17).
       </p>
 
       {/* Attribution footer */}
@@ -248,8 +266,10 @@ export function R7PolicyStarter(): JSX.Element {
         className="m-0 mt-6 text-caption text-tertiary"
         style={{ lineHeight: 1.5, fontStyle: 'italic' }}
       >
-        Framework: Anthropic 4D AI Fluency Framework, Diligence competency (Transparency
-        sub-component; Dakan, Feller, and Anthropic, 2025).
+        Framework: 4D AI Fluency Framework, Diligence competency, Transparency sub-component
+        (Dakan &amp; Feller, 2025, p. 6), as taught in Anthropic&rsquo;s AI Fluency course.
+        Impact-measurement figure: McKinsey, The state of AI in 2026, p. 19. Task examples: WEF
+        Future of Jobs Report 2025, Box 3.1, p. 44.
       </p>
     </div>
   );
@@ -426,9 +446,29 @@ function AreaCard({
                 }}
               >
                 {t.prompt}
+                {t.note && (
+                  <div className="mt-1" style={{ color: 'rgb(var(--secondary))' }}>
+                    {t.note}
+                  </div>
+                )}
               </div>
             </div>
           ))}
+
+          {/* Optional area-level note beneath the topic table */}
+          {area.note && (
+            <p
+              className="m-0 font-sans text-[12px]"
+              style={{
+                color: 'rgb(var(--secondary))',
+                lineHeight: 1.5,
+                padding: '10px 16px',
+                borderTop: '1px solid rgb(var(--border-light))',
+              }}
+            >
+              {area.note}
+            </p>
+          )}
 
           {/* "Your input" preparation prompt — distinct treatment with
               diligence-light bg + purple left accent bar so it reads

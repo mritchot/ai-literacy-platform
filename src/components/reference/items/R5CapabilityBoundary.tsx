@@ -179,9 +179,11 @@ export function R5CapabilityBoundary(): JSX.Element {
         className="m-0 mb-5 text-body-sm text-body"
         style={{ lineHeight: 1.55 }}
       >
-        Know what the tool does well and where it systematically fails before you delegate.
-        Organized by task type, not technical architecture. Each entry connects to Module 3’s
-        mechanical framework.
+        Know what the tool does well and where it systematically fails before you delegate. The
+        framework calls this Platform Awareness and makes it a condition of delegation:
+        automation needs a clear task definition and a quality check (Dakan &amp; Feller, 2025,
+        pp. 2, 4). Organized by task type, not technical architecture. Each entry connects to
+        Module 3’s mechanical framework.
       </p>
 
       {/* Section 1: Reliable */}
@@ -198,9 +200,9 @@ export function R5CapabilityBoundary(): JSX.Element {
         className="m-0 mt-6 text-caption text-tertiary"
         style={{ lineHeight: 1.5, fontStyle: 'italic' }}
       >
-        Framework: Anthropic 4D AI Fluency Framework, Delegation (Platform Awareness) and
-        Discernment competencies (Dakan, Feller, and Anthropic, 2025). Mechanical explanations
-        from Module 3.
+        Framework: 4D AI Fluency Framework, Delegation (Platform Awareness) and Discernment
+        competencies (Dakan &amp; Feller, 2025, pp. 4–6), as taught in Anthropic&rsquo;s AI
+        Fluency course. Mechanical explanations from Module 3.
       </p>
     </div>
   );
@@ -594,7 +596,11 @@ function CoreDistinctionStrip(): JSX.Element {
         }}
       >
         The model generates text rather than retrieving facts. Fluent output and accurate output
-        are independent properties.
+        are independent properties. Old software automated anything you could describe in logical
+        steps and gave the same answer every time. This software automates anything with enough
+        training data and anything where verification scales, and it can be wrong (Evans, May
+        2026, slide 52). The Reliable list above is where those two conditions hold. The Fails
+        list is where one of them breaks.
       </p>
     </aside>
   );

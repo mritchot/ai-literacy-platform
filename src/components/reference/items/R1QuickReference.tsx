@@ -8,7 +8,7 @@
 import type { ReactNode } from 'react';
 
 const HEADER_TEXT =
-  "The 4Ds describe four competencies for effective, responsible AI use at work. They operate in two loops: the Delegation–Diligence loop governs whether and when to use AI (strategic decisions); the Description–Discernment loop governs how to work with AI effectively (operational workflow).";
+  "The 4Ds describe four competencies for effective, responsible AI use at work. They operate in two loops: the Delegation–Diligence loop governs whether and when to use AI (strategic decisions); the Description–Discernment loop governs how to work with AI effectively (operational workflow). The pairings follow the two cross-links in the source's competency diagram (Dakan & Feller, 2025, Fig. 1); the strategic and operational labels are this program's.";
 
 type CompetencyKey = 'delegation' | 'description' | 'discernment' | 'diligence';
 
@@ -59,7 +59,7 @@ const QUADRANTS: QuadrantData[] = [
         name: 'Platform Awareness',
         meaning: 'Understanding the capabilities and limitations of the AI tool you are using.',
         action:
-          'Identify what the tool generates reliably vs. where it systematically fails, before delegating.',
+          "Identify what the tool generates reliably vs. where it systematically fails, before delegating. Check that the tool fits your organization's operational and regulatory rules for the task.",
       },
       {
         name: 'Task Delegation',
@@ -86,7 +86,7 @@ const QUADRANTS: QuadrantData[] = [
         name: 'Process Description',
         meaning: 'Guiding how the AI should approach the task.',
         action:
-          'Provide methods, steps, constraints, and reasoning sequence. Give context, not single-turn directives.',
+          'Provide methods, steps, constraints, and reasoning sequence. Break a complex task into a series of smaller prompts and work through them in dialogue. Give context, not single-turn directives.',
       },
       {
         name: 'Performance Description',
@@ -110,9 +110,10 @@ const QUADRANTS: QuadrantData[] = [
       },
       {
         name: 'Process Discernment',
-        meaning: "Evaluating whether the AI's reasoning is sound.",
+        meaning:
+          "Evaluating whether the AI's reasoning is sound and whether the way you are working with it is producing results.",
         action:
-          'Check for logical gaps, unsupported assumptions, and circular reasoning. Trace the reasoning, not just the conclusion.',
+          'Check for logical gaps, unsupported assumptions, and circular reasoning. Trace the reasoning, not just the conclusion. When outputs keep missing, change the approach: more context, smaller steps, or a different tool.',
       },
       {
         name: 'Performance Discernment',
@@ -131,16 +132,16 @@ const QUADRANTS: QuadrantData[] = [
       {
         name: 'Creation Diligence',
         meaning:
-          'Being thoughtful about which AI systems you use and how you interact with them.',
+          'Using AI responsibly: within ethical and legal limits, aware of bias, flaws, and who is affected.',
         action:
-          'Select appropriate tools for the task. Understand how your interaction patterns affect output quality.',
+          'Check outputs for bias and ethical risk before you build on them. Stay within legal and organizational rules for the data and the use.',
       },
       {
         name: 'Transparency Diligence',
         meaning:
           "Being honest about AI's role in your work with everyone who needs to know.",
         action:
-          'Document which components were AI-generated, AI-assisted, or human-authored. Discuss practices openly.',
+          'Document which components were AI-generated, AI-assisted, or human-authored. Know what your audience, your industry, and the law expect about disclosure. Discuss practices openly.',
       },
       {
         name: 'Deployment Diligence',
@@ -202,8 +203,11 @@ export function R1QuickReference(): JSX.Element {
         className="m-0 mt-6 text-caption text-tertiary"
         style={{ lineHeight: 1.5, fontStyle: 'italic' }}
       >
-        Framework: Anthropic 4D AI Fluency Framework (Dakan, Feller, and Anthropic, 2025).
-        Action verbs adapted for workplace application.
+        Framework: the 4D AI Fluency Framework (Dakan &amp; Feller, 2025,
+        ringling.libguides.com/ai/framework), as taught in Anthropic&rsquo;s AI Fluency:
+        Framework &amp; Foundations (2025). Sub-component names follow the course; the source
+        document names the first Delegation sub-component Goal and Task Awareness. Action verbs
+        and the two Performance sub-components are adapted for conversational workplace use.
       </p>
     </div>
   );
