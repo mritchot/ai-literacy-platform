@@ -158,17 +158,18 @@ const QUADRANTS: QuadrantData[] = [
 // each block:
 //   • name: 36px covers two-line wraps (e.g. "Performance Discernment"
 //     wrapping at ~190px column width)
-//   • meaning: 92px covers a 4-line wrap of the longest meaning text
-//     (~112 chars at ~12px / 30 chars-per-line)
-//   • action: 180px covers a 8-line wrap of the longest action text
-//     (~216 chars; the 09-09-2026 literature pass lengthened several actions)
+//   • meaning: 70px covers the longest meaning text (~112 chars) at the
+//     grid's 240px minimum column width (measured 09-09-2026)
+//   • action: 144px covers the longest action text (~216 chars, Process
+//     Discernment, lengthened by the 09-09-2026 literature pass) at the
+//     same width, measured in the browser with the floor removed (140px)
 // With these floors, every sub-row in every card occupies the same
 // vertical real estate, so the three sub-rows of adjacent cards line up
 // across the 2x2 grid regardless of which one happens to have the
 // longest text in any given block.
 const SUB_NAME_MIN_HEIGHT = 36;
-const SUB_MEANING_MIN_HEIGHT = 92;
-const SUB_ACTION_MIN_HEIGHT = 180;
+const SUB_MEANING_MIN_HEIGHT = 70;
+const SUB_ACTION_MIN_HEIGHT = 144;
 
 export function R1QuickReference(): JSX.Element {
   return (
@@ -328,7 +329,10 @@ function Detail({
   minHeight: number;
 }): JSX.Element {
   return (
-    <div style={{ minHeight, marginTop: 6 }}>
+    // `r1-detail` lets print.css drop the alignment floor on paper, where the
+    // quadrants render at full page width and the floors would only add blank
+    // space (and push a card past the page edge).
+    <div className="r1-detail" style={{ minHeight, marginTop: 6 }}>
       <div
         className="font-mono text-[9px] font-bold uppercase"
         style={{

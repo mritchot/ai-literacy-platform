@@ -94,6 +94,13 @@
     break-after: avoid;
   }
 
+  /* R1's sub-row alignment floors (see SUB_*_MIN_HEIGHT in R1QuickReference)
+     are sized for the narrow web panel; at print width they only add blank
+     space, so each quadrant flows at its natural height. */
+  html.print-mode .r1-detail {
+    min-height: 0 !important;
+  }
+
   /* R1's quadrant grid is designed 2×2; auto-fit would give it three
      columns at the print layout width. */
   html.print-mode .print-body [style*='minmax(240px'] {
