@@ -230,13 +230,17 @@ function Section2({ module }: ModuleProp): JSX.Element {
           and asks the AI to check it. Given that verification is one of the highest-value
           applications of AI assistance, the near-absence of validation in the behavioral data is a
           significant finding. Fewer than 3 in 100 AI interactions involve the user asking the
-          tool to check <em>their</em> work rather than produce <em>its</em> work. Read the 3%
-          carefully. It counts users asking the tool to check the user's work. It does not count
+          tool to check <em>their</em> work rather than produce <em>its</em> work.
+        </p>
+        <p className="m-0">
+          Read the 3% carefully. It counts users asking the tool to check the user's work. It does not count
           users checking the tool's work, which mostly happens outside the conversation. In one
           survey of 319 knowledge workers, 114 said they verify AI output against external sources
           and 125 said they check it against objective criteria such as whether code runs
           <Citation ids="lee-2025" pageKey="verification-practices" />. The behavioral data shows
           that people rarely use AI as a checker. It cannot show how often they check AI.
+        </p>
+        <p className="m-0">
           Employers are moving the other way. Between 2023 and 2025, quality assurance entered the
           posting requirements of 87 more US occupations, and process optimization of 114 more.
           MGI describes these as the skills used to supervise and verify AI systems

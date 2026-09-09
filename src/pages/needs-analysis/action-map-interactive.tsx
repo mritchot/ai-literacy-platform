@@ -556,6 +556,15 @@ export function InteractiveMap(): JSX.Element {
           })}
         </div>
 
+        {/* Source line for the four quadrant captions (needs-analysis/04_action-map.md, Ring 1). */}
+        <p
+          className="font-mono text-[10px] text-tertiary"
+          style={{ margin: '-16px 0 28px', letterSpacing: '0.02em' }}
+        >
+          Competency definitions after Dakan &amp; Feller (2025, pp. 3–6), in the form used by
+          Anthropic&rsquo;s AI Fluency course.
+        </p>
+
         {/* Ring 2: Practice Activities */}
         <div
           style={{

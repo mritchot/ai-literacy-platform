@@ -42,7 +42,9 @@ function stripTrailingRule(s: string): string {
 // Intro = the framing line + the dual-platform delivery note (the blockquote
 // under the document subtitle). Traceability / Scope / Sources are their own
 // H2 sections.
-const INTRO_MD = stripTrailingRule(AM_SECTIONS['AI Literacy for the Modern Workforce'] ?? '');
+// The framing line and delivery note sit before the first `## ` heading,
+// so their key is the document's H1 line (`# Action Map`).
+const INTRO_MD = stripTrailingRule(AM_SECTIONS['# Action Map'] ?? '');
 const TRACEABILITY_MD = stripTrailingRule(AM_SECTIONS['Traceability Summary'] ?? '');
 const SCOPE_MD = stripTrailingRule(AM_SECTIONS['Scope and Feasibility Notes'] ?? '');
 const SOURCES_MD = stripTrailingRule(AM_SECTIONS['Sources'] ?? '');

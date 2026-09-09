@@ -158,17 +158,17 @@ const QUADRANTS: QuadrantData[] = [
 // each block:
 //   • name: 36px covers two-line wraps (e.g. "Performance Discernment"
 //     wrapping at ~190px column width)
-//   • meaning: 70px covers a 3-line wrap of the longest meaning text
-//     (~78 chars at ~12px / 30 chars-per-line)
-//   • action: 110px covers a 5-line wrap of the longest action text
-//     (~130 chars)
+//   • meaning: 92px covers a 4-line wrap of the longest meaning text
+//     (~112 chars at ~12px / 30 chars-per-line)
+//   • action: 180px covers a 8-line wrap of the longest action text
+//     (~216 chars; the 09-09-2026 literature pass lengthened several actions)
 // With these floors, every sub-row in every card occupies the same
 // vertical real estate, so the three sub-rows of adjacent cards line up
 // across the 2x2 grid regardless of which one happens to have the
 // longest text in any given block.
 const SUB_NAME_MIN_HEIGHT = 36;
-const SUB_MEANING_MIN_HEIGHT = 70;
-const SUB_ACTION_MIN_HEIGHT = 110;
+const SUB_MEANING_MIN_HEIGHT = 92;
+const SUB_ACTION_MIN_HEIGHT = 180;
 
 export function R1QuickReference(): JSX.Element {
   return (

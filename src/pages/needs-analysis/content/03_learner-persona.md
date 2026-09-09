@@ -66,7 +66,7 @@ They already use AI tools (ChatGPT, Claude, Gemini, or enterprise-licensed equiv
 | Overestimates augmentation; underestimates automation | 65% self-report vs. 57% behavioral data (Handa et al.) | Build Delegation and Discernment competencies explicitly; make the gap visible |
 | Overconfidence suppresses verification | Lee et al. (CHI 2025) | Scenario-based practice that surfaces errors under confident conditions |
 | Social stigma limits visible application | 69% concealment (Anthropic Interviewer) | Build shared vocabulary (4D framework) as a normalization instrument |
-| Motivated by career relevance and output quality | 48% career transition consideration (Anthropic Interviewer) | Frame every module in terms of professional identity and output quality |
+| Motivated by career relevance and output quality | 48% career transition consideration (Handa et al., Dec 2025) | Frame every module in terms of professional identity and output quality |
 | Time-pressured; asynchronous; browser-based | Scale of need: 59 of 100 workers need training by 2030 and 11 will not get access (WEF 2025, p. 47); modality is a design inference, not a surveyed preference | 15–30 minute modules; mobile-responsive; no live session dependency |
 | Underuse in complex tasks (inferred) | Augmentation/automation behavioral data (Handa et al.) | Module 4 scope includes appropriate delegation identification, not only output verification |
 
@@ -86,7 +86,7 @@ They already use AI tools (ChatGPT, Claude, Gemini, or enterprise-licensed equiv
 - **Appel, R., McCrory, P. & Tamkin, A.** — [*Anthropic Economic Index Report: Uneven Geographic and Enterprise AI Adoption*](https://www.anthropic.com/research/anthropic-economic-index-september-2025-report) (Sep 2025)
 - **Chatterji, A., Holtz, D., Rakholia, N., Tambe, P. & Weeratunga, G.** — [*How Organizations Use AI: Evidence from ChatGPT*](https://arxiv.org/abs/2608.12236) (OpenAI working paper, Aug 2026)
 - **Dakan, R. & Feller, J.** — [*Framework for AI Fluency: Practical Overview Document*](https://ringling.libguides.com/ai/framework), Version 1.1 (Jan 2025)
-- **Evans, B.** — [*AI eats the world*](https://www.ben-evans.com/presentations) [slide deck; analyst commentary reproducing third-party charts] (November 2025, slide 38; May 2026, slide 32). Primary data on the cited slides: Deloitte (June 2025) and Gallup (2025).
+- **Evans, B.** — *AI eats the world* [slide deck; analyst commentary reproducing third-party charts] ([November 2025](https://www.ben-evans.com/s/2025-Autumn-AI.pdf), slide 38; [May 2026](https://www.ben-evans.com/s/2026-Spring-AI.pdf), slide 32). Primary data on the cited slides: Deloitte (June 2025) and Gallup (2025).
 - **Handa, K. et al.** — [*Which Economic Tasks Are Performed with AI? Evidence from Millions of Claude Conversations*](https://ritchot.me/docs/04761v1.pdf) (Feb 2025)
 - **Lee, H. et al.** — [*The Impact of Generative AI on Critical Thinking: Self-Reported Reductions in Cognitive Effort and Confidence Effects From a Survey of Knowledge Workers*](https://doi.org/10.1145/3706598.3713778), CHI 2025
 - **MIT Ad Hoc Committee on AI Use in Teaching, Learning, and Research Training** — [*Report of MIT's Ad Hoc Committee on AI Use in Teaching, Learning, and Research Training*](https://sites.mit.edu/ai-use/files/2026/08/AI-Committee-Final-Report-Aug-13.pdf) (MIT, Aug 2026)

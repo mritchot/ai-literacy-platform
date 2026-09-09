@@ -79,7 +79,7 @@ export function StickerAnalogyDiagram(): JSX.Element {
         className="font-mono text-caption text-tertiary"
         style={{ letterSpacing: '0.02em', marginBottom: 6 }}
       >
-        A small sample from the model&apos;s ~100,000 tokens
+        A small sample from cl100k_base&apos;s ~100,000 tokens
       </div>
       <ol
         aria-label="Sample vocabulary tokens"
@@ -131,7 +131,7 @@ export function StickerAnalogyDiagram(): JSX.Element {
         className="mt-3 font-mono text-caption text-muted"
         style={{ letterSpacing: '0.02em' }}
       >
-        A real model&apos;s vocabulary contains roughly 100,000 tokens built from the most common
+        The cl100k_base tokenizer this module uses has a vocabulary of roughly 100,000 tokens built from the most common
         text patterns in its training data. The examples above use actual token boundaries from
         the cl100k_base tokenizer.
       </figcaption>

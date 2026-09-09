@@ -30,6 +30,7 @@ import {
   type FocusEvent as ReactFocusEvent,
   type KeyboardEvent,
 } from 'react';
+import { createPortal } from 'react-dom';
 import { getCitation, type CitationMeta } from '../../data/citations';
 import { useCitations } from '../../hooks/useCitations';
 
@@ -289,7 +290,10 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
         ({displayLabel})
       </button>
 
-      {open && pos !== null && (
+      {/* The popover is viewport-fixed and portalled to <body>: chips sit
+          inside <p> elements, and a <div> rendered in place would be an
+          invalid descendant of <p> (React warns; browsers may re-parent). */}
+      {open && pos !== null && createPortal(
         <CitationPopover
           ref={popoverRef}
           id={popoverId}
@@ -307,7 +311,8 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
             closeNow();
             chipRef.current?.focus();
           }}
-        />
+        />,
+        document.body,
       )}
     </>
   );
