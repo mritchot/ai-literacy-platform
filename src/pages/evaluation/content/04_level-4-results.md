@@ -116,7 +116,7 @@ Populated, the chain reads as a single argument: participants rated the program 
 
 - **Kirkpatrick Partners** — [*The Kirkpatrick Model*](https://www.kirkpatrickpartners.com/the-kirkpatrick-model/)
 - **Phillips, J. J. / ROI Institute** — [*The ROI Methodology*](https://roiinstitute.net/roi-methodology/) (the five-level model extending Kirkpatrick to financial ROI; the formula, isolation step, and conservative Guiding Principles this model follows)
-- **Training Industry** — [*Glossary: Return on Investment (ROI)*](https://trainingindustry.com/glossary/phillips-roi-methodology/) (the corporate L&D costing convention cited alongside the Phillips methodology)
+- **Training Industry** — [*Glossary: Phillips ROI Methodology*](https://trainingindustry.com/glossary/phillips-roi-methodology/) (the corporate L&D costing convention cited alongside the Phillips methodology)
 - **Fortune** — [*Uber's AI budget burn*](https://fortune.com/2026/05/26/uber-coo-ai-spending-tokens-claude-code/) and [*Tokenmaxxing is over*](https://fortune.com/2026/05/28/tokenmaxxing-is-dead-companies-didnt-get-the-roi-from-ai-they-wanted-to-see/) (May 2026)
 - **Tamkin, A. & McCrory, P.** — [*Estimating AI Productivity Gains from Claude Conversations*](https://www.anthropic.com/research/estimating-productivity-gains) (Nov 2025)
 - **Handa, K. et al.** — [*Which Economic Tasks Are Performed with AI? Evidence from Millions of Claude Conversations*](https://arxiv.org/abs/2503.04761) (Feb 2025) (augmentation-automation split)
