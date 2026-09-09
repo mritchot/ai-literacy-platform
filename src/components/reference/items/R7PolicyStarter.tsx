@@ -13,6 +13,7 @@
 // are the two "transparency" tools the learner can reach for at P12.
 
 import { useState, type ReactNode } from 'react';
+import { usePrintMode } from '../../../contexts/PrintModeContext';
 
 // ─────────────────────────────────────────────────────────────────────
 // Constants
@@ -205,6 +206,8 @@ export function R7PolicyStarter(): JSX.Element {
   const toggle = (id: string) => {
     setOpenMap((prev) => ({ ...prev, [id]: !prev[id] }));
   };
+  // The print route renders every area open, whatever the map says.
+  const printMode = usePrintMode();
 
   return (
     <div className="font-sans">
@@ -236,7 +239,7 @@ export function R7PolicyStarter(): JSX.Element {
           <AreaCard
             key={a.id}
             area={a}
-            isOpen={openMap[a.id] ?? true}
+            isOpen={printMode || (openMap[a.id] ?? true)}
             onToggle={() => toggle(a.id)}
           />
         ))}
@@ -337,6 +340,7 @@ function AreaCard({
   onToggle: () => void;
 }): JSX.Element {
   const panelId = `r7-area-${area.id}`;
+  const printMode = usePrintMode();
   return (
     <article
       className="overflow-hidden"
@@ -380,18 +384,21 @@ function AreaCard({
             {area.question}
           </p>
         </div>
-        <span
-          aria-hidden="true"
-          className="flex h-7 w-7 flex-shrink-0 items-center justify-center"
-          style={{
-            color: 'rgb(var(--diligence-text))',
-            background: 'rgb(var(--surface))',
-            transform: isOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
-            transition: 'transform 180ms ease',
-          }}
-        >
-          <Chevron />
-        </span>
+        {/* Omitted on the print route, where the header reads as a heading. */}
+        {!printMode && (
+          <span
+            aria-hidden="true"
+            className="flex h-7 w-7 flex-shrink-0 items-center justify-center"
+            style={{
+              color: 'rgb(var(--diligence-text))',
+              background: 'rgb(var(--surface))',
+              transform: isOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
+              transition: 'transform 180ms ease',
+            }}
+          >
+            <Chevron />
+          </span>
+        )}
       </button>
 
       {/* Body — topic table + "Your input". Kept mounted and toggled

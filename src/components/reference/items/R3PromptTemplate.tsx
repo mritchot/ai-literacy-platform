@@ -14,6 +14,7 @@
 // same way.
 
 import { useState, type ReactNode } from 'react';
+import { usePrintMode } from '../../../contexts/PrintModeContext';
 import { Icon } from '../../shared/Icon';
 
 // ─────────────────────────────────────────────────────────────────────
@@ -177,6 +178,8 @@ export function R3PromptTemplate(): JSX.Element {
   const toggle = (id: SectionSpec['id']) => {
     setOpenMap((prev) => ({ ...prev, [id]: !prev[id] }));
   };
+  // The print route renders every section open, whatever the map says.
+  const printMode = usePrintMode();
 
   return (
     <div className="font-sans">
@@ -198,7 +201,7 @@ export function R3PromptTemplate(): JSX.Element {
           <SectionCard
             key={s.id}
             section={s}
-            isOpen={openMap[s.id]}
+            isOpen={printMode || openMap[s.id]}
             onToggle={() => toggle(s.id)}
           />
         ))}
@@ -234,6 +237,7 @@ function SectionCard({
   onToggle: () => void;
 }): JSX.Element {
   const panelId = `r3-section-${section.id}`;
+  const printMode = usePrintMode();
   return (
     <article
       className="overflow-hidden"
@@ -281,19 +285,22 @@ function SectionCard({
           </p>
         </div>
         {/* Chevron rotates with state — chevronDown points down when open
-            (ready to collapse), and rotated -90° when closed. */}
-        <span
-          aria-hidden="true"
-          className="flex h-7 w-7 flex-shrink-0 items-center justify-center"
-          style={{
-            color: 'rgb(var(--description-text))',
-            background: 'rgb(var(--surface))',
-            transform: isOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
-            transition: 'transform 180ms ease',
-          }}
-        >
-          <Icon name="chevronDown" size={16} />
-        </span>
+            (ready to collapse), and rotated -90° when closed. Omitted on
+            the print route, where the header reads as a heading. */}
+        {!printMode && (
+          <span
+            aria-hidden="true"
+            className="flex h-7 w-7 flex-shrink-0 items-center justify-center"
+            style={{
+              color: 'rgb(var(--description-text))',
+              background: 'rgb(var(--surface))',
+              transform: isOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
+              transition: 'transform 180ms ease',
+            }}
+          >
+            <Icon name="chevronDown" size={16} />
+          </span>
+        )}
       </button>
 
       {/* Body — table + fill-in. Kept mounted and toggled with `hidden`

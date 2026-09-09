@@ -4,16 +4,22 @@
    display, IBM Plex Sans for body, IBM Plex Mono for labels and data, and
    the 4D accents through their CSS variables (no literal hexes here).
 
-   Page geometry is Letter with 0.75in margins. Chromium does not
-   implement the CSS `@page` margin boxes (`@bottom-center` and friends),
-   so page numbers and the running header/footer are drawn by Playwright's
-   headerTemplate/footerTemplate in scripts/render-pdfs.mjs, inside these
-   margins. Everything inside the margins is this file. */
+   Page geometry is Letter, 0.75in side margins, 0.95in top and 0.85in
+   bottom. Chromium does not implement the CSS `@page` margin boxes
+   (`@bottom-center` and friends), so page numbers and the running
+   header/footer are drawn by Playwright's headerTemplate/footerTemplate
+   in scripts/render-pdfs.mjs, inside the top and bottom bands; the
+   margins here and the script's page.pdf() margins must agree.
+   Everything inside the margins is this file.
+
+   Page chrome (top bar, eyebrow, pager, download links, Expand-all, the
+   disclosure chevrons) is not hidden here: the components read
+   PrintModeContext and render nothing on the print routes. */
 
 @media print {
   @page {
     size: Letter;
-    margin: 0.75in;
+    margin: 0.95in 0.75in 0.85in;
   }
 
   html.print-mode,
@@ -28,33 +34,6 @@
     print-color-adjust: exact;
     transition: none !important;
     animation: none !important;
-  }
-
-  /* ─── Chrome the page components render but a document does not ─── */
-
-  /* ArtifactTopBar: the first block in every series page, holding the
-     back-to-hub link and the Download PDF button. */
-  html.print-mode .print-body > div > div:first-child:has(> a[href^='#/']) {
-    display: none;
-  }
-
-  /* SeriesEyebrow: the accent tick + label under the top bar. The label
-     moves to the running header on every page, so it is not repeated
-     in the flow. */
-  html.print-mode .print-body > div > div:nth-child(2):has(> span[aria-hidden='true']) {
-    display: none;
-  }
-
-  /* ArtifactFooter pager, download links, the Expand-all toggle, and the
-     disclosure chevrons (every disclosure is open; see PrintShell). The
-     chevron is the trailing aria-hidden span of a disclosure button —
-     DisclosureChevron on the artifact pages, the boxed Icon on R3/R7. */
-  html.print-mode nav[aria-label='Series navigation'],
-  html.print-mode a[download],
-  html.print-mode button.text-action.text-\[12px\],
-  html.print-mode span.transition-transform[aria-hidden='true'],
-  html.print-mode button[aria-expanded] > span[aria-hidden='true']:last-child {
-    display: none;
   }
 
   /* ─── Layout ─── */

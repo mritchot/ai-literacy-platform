@@ -9,6 +9,7 @@ import RES_MD from './content/06_resources.md?raw';
 import { renderMarkdown } from '../../components/shared/render-markdown';
 import { DisclosureChevron } from '../../components/shared/DisclosureChevron';
 import { Overline } from '../../components/shared/Overline';
+import { usePrintMode } from '../../contexts/PrintModeContext';
 import {
   BUDGET_LINES,
   BUDGET_TOTAL,
@@ -83,7 +84,9 @@ function DataCard({ label, children }: { label: string; children: React.ReactNod
 }
 
 function CustomVsArticulate(): JSX.Element {
-  const [open, setOpen] = useState(false);
+  const [expanded, setOpen] = useState(false);
+  // Forced open on the print route, where the panel is part of the document.
+  const open = usePrintMode() || expanded;
   return (
     <section
       className="mt-10 overflow-hidden"

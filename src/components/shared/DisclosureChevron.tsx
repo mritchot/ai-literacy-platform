@@ -1,6 +1,9 @@
 // The ▾ disclosure marker on expandable-card toggle buttons. Decorative
 // (the button's aria-expanded carries the state); rotates to point up
-// while the panel is open.
+// while the panel is open. Omitted in print mode, where every panel is
+// open and the header reads as a heading.
+
+import { usePrintMode } from '../../contexts/PrintModeContext';
 
 interface DisclosureChevronProps {
   expanded: boolean;
@@ -9,7 +12,8 @@ interface DisclosureChevronProps {
   className?: string;
 }
 
-export function DisclosureChevron({ expanded, className }: DisclosureChevronProps): JSX.Element {
+export function DisclosureChevron({ expanded, className }: DisclosureChevronProps): JSX.Element | null {
+  if (usePrintMode()) return null;
   return (
     <span
       aria-hidden="true"

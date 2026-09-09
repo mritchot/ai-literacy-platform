@@ -8,9 +8,15 @@
 // tsc step is a separate concern), serves dist/ with `vite preview` on a
 // free port, opens `#/print/<family>/<param>` for each entry in
 // src/pages/print/print-manifest.json in headless Chromium, waits for the
-// print shell's `data-print-ready="true"` marker (set after every
-// disclosure is open and `document.fonts.ready` has resolved), and writes
+// print shell's `data-print-ready="true"` marker (set once the content has
+// committed and `document.fonts.ready` has resolved), and writes
 // page.pdf() to the manifest's `public/<pdf>` path. Any failure exits 1.
+//
+// Disclosures: the shell renders the page inside PrintModeContext, which
+// forces every expandable card open and hides the page chrome. The
+// render still asserts that no `button[aria-expanded="false"]
+// [aria-controls]` is left, so a disclosure that does not read the
+// context fails the document instead of printing collapsed.
 //
 // Baseline for --check: the first render copies the pre-existing PDFs to
 // a baseline folder before overwriting anything, and later renders leave
@@ -26,8 +32,12 @@
 // Page numbers: Chromium does not implement the CSS `@page` margin boxes,
 // so the running header (series label, title) and footer (course name,
 // attribution, "Page n of N") are Playwright header/footer templates drawn
-// inside the 0.75in page margins, with IBM Plex Mono embedded from
-// node_modules so the templates match the page's type.
+// inside the top and bottom margin bands (MARGIN below; the same values
+// as the `@page` rule in src/styles/print.css, which must stay in step),
+// with IBM Plex Mono embedded from node_modules so the templates match
+// the page's type. The header text sits HEADER_TOP from the page's top
+// edge and the footer text FOOTER_BOTTOM from its bottom edge, leaving
+// clear separation from the body on continuation pages.
 //
 // Flags: --check, --refresh-baseline, --no-build (reuse dist/),
 // --only=<substring of family/param> (render a subset while iterating).
@@ -194,6 +204,20 @@ async function serve() {
   return { server, url };
 }
 
+// ─── Page geometry ─────────────────────────────────────────────────────
+
+// Letter page margins — keep equal to `@page { margin }` in print.css.
+// Sides 0.75in; the top and bottom bands are deeper so the running
+// header and footer clear the body text.
+const MARGIN = { top: '0.95in', right: '0.75in', bottom: '0.85in', left: '0.75in' };
+// Template padding that sets the header text off the page's top edge and
+// the footer text off its bottom edge. Chromium adds an inset of about
+// 0.26in of its own before this padding (measured: padding 0 puts the
+// text at 0.26in), so the text lands near 0.46in from either edge, with
+// roughly 0.45in clear above the body and 0.35in below it.
+const HEADER_TOP = '0.2in';
+const FOOTER_BOTTOM = '0.2in';
+
 // ─── Header / footer templates ─────────────────────────────────────────
 
 function templateFont() {
@@ -211,7 +235,7 @@ function templates({ title, label, colors }) {
     <style>
       ${TEMPLATE_FONT}
       * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .rh { width: 100%; box-sizing: border-box; padding: 0 0.75in; margin: 0;
+      .rh { width: 100%; box-sizing: border-box; padding: 0 ${MARGIN.left}; margin: 0;
             font-family: 'IBM Plex Mono', ui-monospace, Menlo, monospace; font-weight: 500;
             font-size: 7pt; letter-spacing: 0.1em; text-transform: uppercase;
             color: ${colors.tertiary}; display: flex; justify-content: space-between; align-items: center; }
@@ -220,12 +244,12 @@ function templates({ title, label, colors }) {
       .rule { border-top: 0.5pt solid ${colors.border}; }
     </style>`;
   const header = `${base}
-    <div class="rh" style="padding-top: 0.32in;">
+    <div class="rh" style="padding-top: ${HEADER_TOP};">
       <span><span class="accent"></span>${esc(label)}</span>
       <span>${esc(title)}</span>
     </div>`;
   const footer = `${base}
-    <div class="rh" style="padding-bottom: 0.32in;">
+    <div class="rh" style="padding-bottom: ${FOOTER_BOTTOM};">
       <span>AI Literacy for the Modern Workforce · © Michael Ritchot</span>
       <span>Page <span class="pageNumber"></span> of <span class="totalPages"></span></span>
     </div>`;
@@ -245,10 +269,11 @@ async function render() {
   const failures = [];
   try {
     const context = await browser.newContext({
-      // Letter at 0.75in margins is a 7in (672px) content box. The layout
-      // is laid out at 840px and scaled to 0.8 in page.pdf() below, so the
-      // screen viewport matches that width for any JS-measured layout
-      // (R2's arrow, useViewport) and Tailwind's `sm:` (768px) rules apply.
+      // Letter at 0.75in side margins is a 7in (672px) content box. The
+      // layout is laid out at 840px and scaled to 0.8 in page.pdf() below,
+      // so the screen viewport matches that width for any JS-measured
+      // layout (R2's arrow, useViewport) and Tailwind's `sm:` (768px)
+      // rules apply.
       viewport: { width: 840, height: 1088 },
       colorScheme: 'light',
       deviceScaleFactor: 1,
@@ -325,7 +350,7 @@ async function render() {
           displayHeaderFooter: true,
           headerTemplate: header,
           footerTemplate: footer,
-          margin: { top: '0.75in', right: '0.75in', bottom: '0.75in', left: '0.75in' },
+          margin: MARGIN,
           scale: 0.8,
         });
         const { pages } = pdfInfo(out);

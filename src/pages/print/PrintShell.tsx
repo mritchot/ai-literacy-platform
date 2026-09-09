@@ -7,50 +7,33 @@
 // numbers is drawn by Playwright's header/footer templates, fed from the
 // data attributes this shell exposes on its root.
 //
-// State forcing, without touching the shared components:
+// State forcing:
 //   - Light theme: the theme store applies `.dark` to <html>; the shell
 //     removes it, stamps `data-theme="light"`, and adds `.print-mode`,
 //     which scopes every rule in src/styles/print.css.
-//   - Disclosures expanded: the expandable cards (ADR records, Gantt
-//     phases, learning-architecture modules, R3/R7 sections, the
-//     Resources rationale panel) all render a real <button> with
-//     `aria-expanded` + `aria-controls`; useExpandableSet keeps their state
-//     per page with no external control. The shell clicks every collapsed
-//     one after mount, repeating until none remain (nested cards open on a
-//     later pass). Selection toggles that carry `aria-expanded` without
-//     `aria-controls` (the action map's quadrants) are left alone, so
-//     interactive diagrams keep their static state.
-//   - Readiness: after the disclosures are open and `document.fonts.ready`
+//   - Print mode: the children render inside PrintModeProvider
+//     (src/contexts/PrintModeContext.tsx). The artifact-series chrome
+//     (top bar, eyebrow, pager, download links, Expand-all) renders
+//     nothing, useExpandableSet and the page-local disclosure flags (ADR
+//     records, Gantt phases, learning-architecture modules, R3/R7
+//     sections, the Resources rationale panel) report every panel open,
+//     and the disclosure chevrons are omitted. The render script still
+//     asserts that no `button[aria-expanded="false"][aria-controls]`
+//     remains, so a disclosure that does not read the context fails the
+//     render rather than printing collapsed. Selection toggles without
+//     `aria-controls` (the action map's quadrants) are not disclosures.
+//   - Readiness: once the content has committed and `document.fonts.ready`
 //     resolves, the root gets `data-print-ready="true"`; the render script
 //     waits for that marker before calling page.pdf(). A resolver failure
 //     sets it to "error" with the reason in `data-print-error` so the
 //     script fails loudly rather than printing a blank page.
 
 import { Suspense, useEffect, useLayoutEffect, useRef, type ReactNode } from 'react';
+import { PrintModeProvider } from '../../contexts/PrintModeContext';
 import '../../styles/print.css';
-
-const DISCLOSURE = 'button[aria-expanded="false"][aria-controls]';
-const MAX_PASSES = 12;
 
 function nextFrame(): Promise<void> {
   return new Promise((resolve) => requestAnimationFrame(() => resolve()));
-}
-
-// Clicks are dispatched from inside a React effect, so the resulting
-// state updates flush after this task, not inside the click. Each pass
-// therefore yields a frame before re-querying; without the yield a second
-// pass would re-click the same still-collapsed buttons and toggle them
-// shut again.
-async function expandDisclosures(root: HTMLElement): Promise<number> {
-  let clicked = 0;
-  for (let pass = 0; pass < MAX_PASSES; pass++) {
-    const buttons = root.querySelectorAll<HTMLButtonElement>(DISCLOSURE);
-    if (buttons.length === 0) break;
-    buttons.forEach((b) => b.click());
-    clicked += buttons.length;
-    await nextFrame();
-  }
-  return clicked;
 }
 
 // Rendered as the last sibling inside the Suspense boundary so its effect
@@ -61,12 +44,8 @@ function ReadyMarker({ rootRef }: { rootRef: React.RefObject<HTMLDivElement> }):
     const root = rootRef.current;
     if (!root) return;
     (async () => {
-      await expandDisclosures(root);
       await document.fonts.ready;
-      await nextFrame();
-      // A second pass catches panels whose children mounted their own
-      // disclosures on the first open.
-      await expandDisclosures(root);
+      // One frame so layout reflects the web-font swap before the marker.
       await nextFrame();
       if (!cancelled) root.setAttribute('data-print-ready', 'true');
     })();
@@ -125,10 +104,12 @@ export function PrintShell({ title, label, accent, selfTitled, children }: Print
         </header>
       )}
       <main className="print-body">
-        <Suspense fallback={null}>
-          {children}
-          <ReadyMarker rootRef={rootRef} />
-        </Suspense>
+        <PrintModeProvider>
+          <Suspense fallback={null}>
+            {children}
+            <ReadyMarker rootRef={rootRef} />
+          </Suspense>
+        </PrintModeProvider>
       </main>
       {/* Attribution — the landing page's AttributionFooter, as a colophon. */}
       <footer className="print-colophon font-sans text-caption text-tertiary">

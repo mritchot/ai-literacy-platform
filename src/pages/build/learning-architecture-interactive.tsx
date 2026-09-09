@@ -18,6 +18,7 @@ import { CompetencyDot } from '../../components/shared/CompetencyDot';
 import { DisclosureChevron } from '../../components/shared/DisclosureChevron';
 import { ExpandAllToggle } from '../../components/shared/ExpandAllToggle';
 import { Overline } from '../../components/shared/Overline';
+import { usePrintMode } from '../../contexts/PrintModeContext';
 import { useExpandableSet } from '../../hooks/useExpandableSet';
 import {
   ARCH_MODULES,
@@ -543,7 +544,10 @@ function distributionLabel(): string {
 
 export function LearningArchitectureDiagram(): JSX.Element {
   const modules = useExpandableSet(ARCH_MODULES.map((m) => m.id));
-  const [kirkExpanded, setKirkExpanded] = useState(false);
+  const [kirkOpen, setKirkExpanded] = useState(false);
+  // The module cards read print mode through useExpandableSet; the
+  // Kirkpatrick lane keeps its own flag, so it is forced open here.
+  const kirkExpanded = usePrintMode() || kirkOpen;
   const allExpanded = modules.allOpen && kirkExpanded;
   const setAll = (v: boolean): void => {
     modules.setAll(v);

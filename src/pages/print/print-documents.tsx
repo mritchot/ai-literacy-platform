@@ -10,10 +10,12 @@
 // labels are derived from the same config so they match each page's eyebrow
 // ("Needs Analysis · Reading", "Behind the build · Design", …).
 //
-// Reference documents render the `items/R*.tsx` body components directly.
-// Their titles are duplicated here from ReferenceTrigger.tsx's private
-// registry (and R4Trigger.tsx), which is not exported; if those titles
-// change, this table must follow.
+// Reference documents render the `items/R*.tsx` body components directly,
+// with the title and PDF path from ReferenceTrigger.tsx's REFERENCE_ITEMS
+// (R4_META for R4, whose checklist state keeps it out of that registry).
+// The manifest's `pdf` must equal the registry's `pdfPath` — the resolver
+// throws on a mismatch so the render fails loudly instead of writing a
+// PDF the in-app download link cannot find.
 
 import { lazy, type ComponentType, type LazyExoticComponent } from 'react';
 import manifest from './print-manifest.json';
@@ -21,13 +23,9 @@ import { SERIES as NEEDS_ANALYSIS } from '../needs-analysis/config';
 import { SERIES as EVALUATION } from '../evaluation/config';
 import { SERIES as BUILD } from '../build/config';
 import type { ArtifactMeta, SeriesConfig } from '../artifact-series/artifact-series';
-import { R1QuickReference } from '../../components/reference/items/R1QuickReference';
-import { R2DelegationGuide } from '../../components/reference/items/R2DelegationGuide';
-import { R3PromptTemplate } from '../../components/reference/items/R3PromptTemplate';
+import { REFERENCE_ITEMS, type ReferenceId } from '../../components/reference/ReferenceTrigger';
+import { R4_META } from '../../components/reference/R4Trigger';
 import { R4VerificationChecklist } from '../../components/reference/items/R4VerificationChecklist';
-import { R5CapabilityBoundary } from '../../components/reference/items/R5CapabilityBoundary';
-import { R6DiligenceTemplate } from '../../components/reference/items/R6DiligenceTemplate';
-import { R7PolicyStarter } from '../../components/reference/items/R7PolicyStarter';
 
 export type PrintFamily = 'needs-analysis' | 'evaluation' | 'build' | 'reference';
 
@@ -115,15 +113,20 @@ function R4Print(): JSX.Element {
   return <R4VerificationChecklist checked={{}} onToggle={() => undefined} />;
 }
 
-const REFERENCE_ITEMS: Record<string, { title: string; Component: ComponentType }> = {
-  r1: { title: '4D Competency Quick-Reference Card', Component: R1QuickReference },
-  r2: { title: 'Task Delegation Decision Guide', Component: R2DelegationGuide },
-  r3: { title: 'Prompt Structure Template', Component: R3PromptTemplate },
-  r4: { title: 'Output Verification Checklist', Component: R4Print },
-  r5: { title: 'AI Capability Boundary Reference', Component: R5CapabilityBoundary },
-  r6: { title: 'AI Diligence Statement Template', Component: R6DiligenceTemplate },
-  r7: { title: 'Organizational AI Use Policy Starter', Component: R7PolicyStarter },
-};
+interface ReferencePrintItem {
+  title: string;
+  pdfPath: string;
+  Component: ComponentType;
+}
+
+// Keyed by the lower-case route param ("r1"); the registry uses "R1".
+function referenceItem(param: string): ReferencePrintItem | null {
+  if (param === 'r4') return { ...R4_META, Component: R4Print };
+  const id = param.toUpperCase();
+  if (!(id in REFERENCE_ITEMS)) return null;
+  const meta = REFERENCE_ITEMS[id as ReferenceId];
+  return { title: meta.title, pdfPath: meta.pdfPath, Component: meta.Content };
+}
 
 // ─── Resolver ──────────────────────────────────────────────────────────
 
@@ -136,12 +139,17 @@ export function resolvePrintDocument(family: PrintFamily, param: string): PrintD
   if (!entry) return null;
 
   if (family === 'reference') {
-    const item = REFERENCE_ITEMS[param];
+    const item = referenceItem(param);
     if (!item) return null;
+    if (item.pdfPath !== entry.pdf) {
+      throw new Error(
+        `print-manifest.json lists ${entry.pdf} for ${param}, but the reference registry's pdfPath is ${item.pdfPath}`,
+      );
+    }
     return {
       family,
       param,
-      pdf: entry.pdf,
+      pdf: item.pdfPath,
       title: item.title,
       label: `Reference · ${param.toUpperCase()}`,
       accent: 'rgb(var(--action))',

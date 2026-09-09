@@ -7,6 +7,7 @@
 
 import type { ReactNode } from 'react';
 import { renderMarkdown } from '../../components/shared/render-markdown';
+import { usePrintMode } from '../../contexts/PrintModeContext';
 import { useViewport } from '../../hooks/useViewport';
 
 export type ArtifactType = 'Reading' | 'Interactive';
@@ -73,10 +74,13 @@ export interface ArtifactHubProps {
   intro: ReactNode;
 }
 
+// The top bar, eyebrow, footer pager, and download links are page chrome:
+// in print mode (src/contexts/PrintModeContext.tsx) each renders nothing,
+// since the PDF's running header carries the series label and title.
 export function createArtifactSeries(series: SeriesConfig): {
-  ArtifactTopBar: (props: { pdfSlug: string }) => JSX.Element;
-  SeriesEyebrow: (props: { label: string }) => JSX.Element;
-  ArtifactFooter: (props: { currentSlug: string }) => JSX.Element;
+  ArtifactTopBar: (props: { pdfSlug: string }) => JSX.Element | null;
+  SeriesEyebrow: (props: { label: string }) => JSX.Element | null;
+  ArtifactFooter: (props: { currentSlug: string }) => JSX.Element | null;
   ReadingArtifact: (props: { markdown: string; pdfSlug: string }) => JSX.Element;
   ArtifactHub: (props: ArtifactHubProps) => JSX.Element;
 } {
@@ -85,8 +89,9 @@ export function createArtifactSeries(series: SeriesConfig): {
   // disambiguates the link on hub pages, where several cards would
   // otherwise expose identical "Download PDF" accessible names.
   function PdfDownload({ slug, ariaLabel }: { slug: string; ariaLabel?: string | undefined }): JSX.Element | null {
+    const printMode = usePrintMode();
     const href = series.pdfs[slug];
-    if (!href || href.trim().length === 0) return null;
+    if (printMode || !href || href.trim().length === 0) return null;
     return (
       <a
         href={href}
@@ -102,7 +107,8 @@ export function createArtifactSeries(series: SeriesConfig): {
   }
 
   // Top bar: back-to-hub link on the left, PDF download on the right.
-  function ArtifactTopBar({ pdfSlug }: { pdfSlug: string }): JSX.Element {
+  function ArtifactTopBar({ pdfSlug }: { pdfSlug: string }): JSX.Element | null {
+    if (usePrintMode()) return null;
     return (
       <div className="mb-8 flex items-center justify-between gap-4 border-b border-border-light pb-5">
         <a href={`#/${series.hubRoute}`} className={TEXT_LINK}>
@@ -115,7 +121,8 @@ export function createArtifactSeries(series: SeriesConfig): {
 
   // Accent tick + category label. The tick uses the series accent only as
   // a thin decorative rule (never a competency tag).
-  function SeriesEyebrow({ label }: { label: string }): JSX.Element {
+  function SeriesEyebrow({ label }: { label: string }): JSX.Element | null {
+    if (usePrintMode()) return null;
     return (
       <div className="mb-5 flex items-center gap-2.5">
         <span
@@ -137,8 +144,10 @@ export function createArtifactSeries(series: SeriesConfig): {
   // previous artifact, falling back to the series hub on the first one;
   // right goes to the next artifact, falling back to "Back to the course"
   // on the last as a deliberate end-of-series capstone.
-  function ArtifactFooter({ currentSlug }: { currentSlug: string }): JSX.Element {
+  function ArtifactFooter({ currentSlug }: { currentSlug: string }): JSX.Element | null {
+    const printMode = usePrintMode();
     const isMobile = useViewport() === 'mobile';
+    if (printMode) return null;
     const idx = series.artifacts.findIndex((a) => a.slug === currentSlug);
     const prev = idx > 0 ? series.artifacts[idx - 1] : undefined;
     const next = idx >= 0 ? series.artifacts[idx + 1] : undefined;
