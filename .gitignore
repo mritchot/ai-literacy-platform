@@ -21,6 +21,7 @@ dist-ssr
 # Cognitive offload files — local-only project management and AI context.
 # Not part of the codebase or deployed bundle.
 CLAUDE.md
+AGENTS.md
 MEMORY.md
 MEMORYARCHIVE.md
 ARCHIVE.md
