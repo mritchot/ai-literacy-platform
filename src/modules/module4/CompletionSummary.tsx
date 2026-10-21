@@ -1,7 +1,9 @@
 // S10 CompletionSummary — personalized competency profile rendering
 // the learner's authored artifacts back into a structured profile
-// organized by the four 4D competencies. Includes a 30/60/90-day
-// behavioral milestone table and a client-side PDF export.
+// organized by the four 4D competencies. Includes a "Where to focus
+// next" panel built from post-assessment misses, a 30/60/90-day
+// behavioral milestone table with calendar check-in reminders, and a
+// client-side PDF export.
 //
 // Gating: the profile shows substantive content only when all four
 // modules are complete. An incomplete-state placeholder directs the
@@ -9,8 +11,9 @@
 //
 // Data flow: all artifacts are read from LearnerProgressContext via
 // the storage keys established by P4 (M2 action commitment, revised in
-// M4 S9), P8 (task decomposition placement), P9 (prompt reformulation), P10 (output verification — KC results),
-// P11 (iterative refinement — Turn 3 authored prompt), and P12
+// M4 S9), P8 (task decomposition placement), P9 (prompt
+// reformulation), P10 (output verification — KC results), P11
+// (iterative refinement — Turn 3 authored prompt), and P12
 // (diligence statement). Module completion is derived from the
 // program's MODULES metadata + state.completedSections (there is no
 // dedicated `completedModules` field in the context state).
