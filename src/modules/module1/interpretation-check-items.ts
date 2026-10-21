@@ -54,7 +54,7 @@ const IC_1_2: InterpretationCheckItemData = {
   options: [
     {
       id: 'a',
-      text: '“That’s essentially correct. Income and infrastructure are the primary drivers. The data shows a clear correlation between GDP and AI usage.”',
+      text: '“That’s essentially correct. Income and infrastructure are the primary drivers: the data shows a clear correlation between GDP and AI usage, so expanding access should close most of the gap over time.”',
       isPreferred: false,
       feedbackTitle: 'Oversimplified',
       feedbackTone: 'caution',
@@ -72,7 +72,7 @@ const IC_1_2: InterpretationCheckItemData = {
     },
     {
       id: 'c',
-      text: '“It’s wrong. The data shows no correlation between GDP and adoption. The gap is entirely about cultural differences.”',
+      text: '“It’s wrong. The data shows no meaningful correlation between GDP and adoption, so the gap is entirely about cultural differences in how willing people are to try new tools.”',
       isPreferred: false,
       feedbackTitle: 'Incorrect',
       feedbackTone: 'error',
@@ -81,7 +81,7 @@ const IC_1_2: InterpretationCheckItemData = {
     },
     {
       id: 'd',
-      text: '“It’s impossible to tell from this data. Country-level usage rates don’t tell us anything about why adoption varies.”',
+      text: '“It’s impossible to tell from this data. Country-level usage rates show where adoption is high, but they don’t tell us anything about why it varies, so any explanation is a guess.”',
       isPreferred: false,
       feedbackTitle: 'Overly cautious',
       feedbackTone: 'caution',
@@ -141,7 +141,7 @@ export const MODULE_1_DEBRIEFS: Record<string, string> = {
   ic_1_1:
     'The demand signal is clear, but so is the gap between recognizing AI as a priority and closing the competency deficit. The next story looks at where adoption is happening, and where it isn’t.',
   ic_1_2:
-    'Access is necessary but not sufficient. The January 2026 Economic Index report reaches the same conclusion: expanding access alone will not suffice. It finds that higher-usage countries use AI more collaboratively rather than delegating more, which suggests the skills needed to use AI well may themselves be unevenly distributed (Appel, Massenkoff & McCrory, 2026, pp. 35–36, 55). The gap between having AI tools and using them productively is shaped by institutional context, including, as the enterprise data shows, whether organizations create the conditions for visible, supported use. OpenAI’s enterprise usage records point the same way: buying the tool is the start of deployment, not the end (Chatterji et al., 2026, p. 23). The final story looks at how usage is changing over time.',
+    'Access is necessary but not sufficient. The January 2026 Economic Index report reaches the same conclusion: expanding access alone will not suffice. It finds that higher-usage countries use AI more collaboratively rather than delegating more, which suggests the skills needed to use AI well may themselves be unevenly distributed (Appel, Massenkoff & McCrory, 2026, pp. 35–36, 55). The gap between having AI tools and using them productively is shaped by institutional context, including, as the enterprise data shows, whether organizations create the conditions for visible, supported use. The final story looks at how usage is changing over time.',
   ic_1_3:
     'Where you sit on the augmentation–automation spectrum isn’t fixed. It’s shaped by how you think about each task, what judgment you apply, and whether your organization has the vocabulary to discuss the difference. That’s the focus of the rest of this program, starting with a finding you may recognize from your own experience.',
 };
