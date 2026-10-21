@@ -214,25 +214,25 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'failure',
     objectiveRefs: ['3.3'],
     stem:
-      'A compliance officer pastes three separate policy documents (totaling 35 pages) into an AI tool with the instruction: "Identify any contradictions between these three documents." The AI reports two contradictions, both between Documents 1 and 2. The officer later discovers a significant contradiction between Documents 1 and 3, where Document 3 explicitly overrides a key provision in Document 1. Using your understanding of context window mechanics, what most likely happened?',
+      'A compliance officer pastes three policy documents into an AI tool, one after another: Document 1 (14 pages), Document 2 (12 pages), and Document 3 (9 pages), well within the tool\'s stated limit. Her instruction: "Identify any contradictions between these three documents." The AI reports two contradictions, both between Documents 1 and 3. The officer later discovers one it missed: a provision on page 7 of Document 2 is explicitly overridden by Document 3. What most likely happened?',
     scenarioSummary:
-      'An AI asked to find contradictions across three policy documents reports only adjacent pairs, missing a real conflict between the first and third documents.',
+      'An AI asked to find contradictions across three pasted policy documents misses a conflict involving a provision near the center of the combined input.',
     options: [
       {
         id: 'A',
         text:
-          'The AI tool\'s attention across the combined input was uneven. It processed the earlier documents with greater fidelity and progressively lost the ability to hold and cross-reference content from Document 3 against provisions established in Document 1 as the total input length increased.',
+          'The tool\'s attention across the combined input was uneven: material near the start and end of a long input gets the most weight. Page 7 of Document 2 sat near the center of the 35 pages, where a provision is most likely to be underweighted.',
         isCorrect: true,
         feedbackText:
-          'Context window mechanics explain this failure precisely. Even when all three documents fit within the model\'s context window, the model\'s attention is not uniformly distributed across the full input. As total input length increases, the model\'s ability to hold earlier content in active working memory while processing later content degrades. Cross-document contradiction work requires the model to hold a provision from Document 1 in active memory while comparing it against a provision in Document 3. Attention degradation hits that combination hardest. The model found contradictions between Documents 1 and 2 (which sit closer together in the input) but missed the Document 1-to-3 contradiction because the relevant provisions were farther apart.',
+          'Context window mechanics explain this failure. All three documents fit within the model\'s context window, but attention is not spread evenly across a long input: material near the beginning and end receives more weight than material buried in the middle, the lost-in-the-middle effect. Documents 1 and 3 sat at the edges of the combined input, and the model found the conflicts between them. Page 7 of Document 2 is page 21 of 35, near the center. Cross-document work is especially exposed, because the model has to connect a middle-zone provision to one far away. The fix is positional: check the middle sections on their own, or run the comparison on shorter inputs.',
       },
       {
         id: 'B',
         text:
-          'The AI tool compared the documents sequentially (1 vs. 2, then 2 vs. 3) rather than holistically, and because the contradiction was between Documents 1 and 3, it fell outside the pairwise comparison sequence. The tool never directly compared the two documents that conflicted.',
+          'The AI tool compared the documents as separate pairs (1 vs. 3, then 1 vs. 2) rather than holistically. Because the conflict was between Documents 2 and 3, it fell outside the comparison sequence, and the tool never directly compared the two documents that conflicted.',
         isCorrect: false,
         feedbackText:
-          'AI models don\'t process multi-document comparisons through structured pairwise passes. The model processes the entire input as a single token sequence and generates its response through next-token prediction. The failure is about the model\'s attention being unevenly distributed across the combined input, with content later in the sequence getting less effective cross-referencing against content earlier in the sequence. There is no missing comparison step to add back.',
+          'AI models don\'t process multi-document comparisons through structured pairwise passes. The model processes the entire input as a single token sequence and generates its response through next-token prediction. The failure is about the model\'s attention being unevenly distributed across the combined input, with material in the middle of the sequence getting the least weight. There is no missing comparison step to add back.',
       },
       {
         id: 'C',
@@ -240,15 +240,15 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'The AI tool determined that two contradictions was a statistically appropriate number for documents of this type and length, and stopped searching after reaching that threshold. It prioritized conciseness over completeness to avoid producing an overwhelmingly detailed response.',
         isCorrect: false,
         feedbackText:
-          'AI models don\'t have an internal threshold for "appropriate number of contradictions." The model isn\'t deciding to stop searching after finding two. It\'s generating a response based on what it can attend to across the full input, and attention degradation across 35 pages means some contradictions simply aren\'t detected. The omission is a capability limitation, not an editorial choice.',
+          'AI models don\'t have an internal threshold for "appropriate number of contradictions." The model isn\'t deciding to stop searching after finding two. It\'s generating a response based on what it can attend to across the full input, and uneven attention across 35 pages means a provision in the middle can go undetected. The omission is a capability limitation, not an editorial choice.',
       },
       {
         id: 'D',
         text:
-          'The contradiction between Documents 1 and 3 involved domain-specific legal terminology that the AI tool wasn\'t trained to recognize as contradictory. It identified the simpler contradictions between Documents 1 and 2 because they used more common language patterns.',
+          'The Document 2 provision used clause numbers and defined terms that split into unusual tokens, so tokenization kept the model from matching it against the wording in Document 3. The conflicts between Documents 1 and 3 used plainer wording that tokenized cleanly.',
         isCorrect: false,
         feedbackText:
-          'If the model could identify contradictions between Documents 1 and 2 using legal terminology, it has sufficient domain knowledge to identify contradictions using similar terminology between Documents 1 and 3. The issue is the model\'s ability to sustain attention and cross-reference across increasing input length, not domain-specific vocabulary.',
+          'Tokenization affects character-level tasks such as counting letters or comparing digit strings. It does not stop a model from recognizing that two passages make conflicting policy statements, and the same model matched provisions between Documents 1 and 3 written in the same register. What sets the missed provision apart is its position near the center of a long input, not how its words were split into tokens.',
       },
     ],
   },

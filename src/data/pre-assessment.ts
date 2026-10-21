@@ -231,9 +231,9 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
     block: 'failure',
     objectiveRefs: ['3.3'],
     stem:
-      'A legal analyst pastes a 40-page contract into an AI tool with the instruction: "Review this contract and list every clause that limits the vendor\'s liability." The AI produces a well-organized list of eight liability clauses. The analyst later discovers that three additional liability clauses appearing in the final ten pages of the contract were omitted entirely. What is the most likely explanation?',
+      'A legal analyst pastes a 40-page contract into an AI tool with the instruction: "Review this contract and list every clause that limits the vendor\'s liability." The AI produces a well-organized list of eight liability clauses, quoting language from both the first and the last pages of the contract. The tool\'s documentation says it accepts documents of several hundred pages. The analyst later discovers that three additional liability clauses, on pages 17 to 23, were omitted entirely. What is the most likely explanation?',
     scenarioSummary:
-      'A legal analyst pastes a 40-page contract and asks for every liability clause; the AI returns 8, missing 3 in the final pages.',
+      'A legal analyst pastes a 40-page contract and asks for every liability clause; the AI returns 8, missing 3 in the middle pages.',
     options: [
       {
         id: 'A',
@@ -246,26 +246,26 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'B',
         text:
-          'The AI tool has a limited working memory for processing input. As the document length increases, the model\'s ability to attend to content in all parts of the text degrades, making it more likely to miss information that appears far from the instruction or from earlier relevant content.',
+          'The AI tool does not weigh every part of a long input equally. Text near the start and end gets the most attention and text in the middle the least, so clauses in the middle of a long contract are the likeliest to be missed.',
         isCorrect: true,
         feedbackText:
-          'AI models have a finite context window: a limit on how much text they can process at once. Even when the entire document fits within that window, the model\'s ability to attend to all parts of the input is not uniform. Content that appears far from the instruction, or far from other relevant content, receives less attention during generation. For long documents, this means the model may miss relevant information, especially toward the end of the input. This failure mode is systematic: longer documents and more dispersed target information increase the probability of omission.',
+          'AI models have a finite context window: a limit on how much text they can process at once. Even when the entire document fits within that window, the model\'s ability to attend to all parts of the input is not uniform. Content near the beginning and end of the input receives more attention than content buried in the middle. For long documents, this means the model may miss relevant information in the middle sections even though it read the whole text. This failure mode is systematic: longer documents and more dispersed target information increase the probability of omission.',
       },
       {
         id: 'C',
         text:
-          'The AI tool prioritized the most legally significant liability clauses and intentionally excluded the three minor ones. It applied legal judgment to determine which clauses warranted inclusion in the summary.',
+          'The three omitted clauses used different wording ("indemnification cap," "aggregate exposure") from the instruction\'s phrase, and the AI tool searched the contract for the exact words "limits the vendor\'s liability," so clauses phrased another way never matched.',
         isCorrect: false,
         feedbackText:
-          'AI models do not apply domain-specific professional judgment to decide what to include or exclude. The model has no basis for assessing the legal significance of individual clauses relative to each other; it generates output based on pattern matching, not legal analysis. Framing the omission as intentional prioritization masks a genuine capability limitation.',
+          'The model does not run a keyword search over the document. It reads the whole input and generates its answer from learned patterns, so it can recognize an indemnification cap as a liability limit when it attends to that passage. What sets the missed clauses apart is where they sit: together, in the middle of a long input. Position, not vocabulary, explains the omission.',
       },
       {
         id: 'D',
         text:
-          'The AI tool hit a hard input limit and silently dropped the final portion of the document before processing it. The last ten pages were never received by the model, which is why those clauses don\'t appear in the output. This is a common failure with long documents that exceed the tool\'s maximum capacity.',
+          'The AI tool hit a hard input limit and silently dropped part of the document before processing it. The pages holding the missing clauses were never received by the model, which is why those clauses don\'t appear in the output. This is a common failure with long documents that exceed the tool\'s capacity.',
         isCorrect: false,
         feedbackText:
-          'Silent truncation can occur with very long inputs, and some older tools do fail this way. But modern AI tools typically indicate when input exceeds their limit, and a 40-page contract is within the capacity of most current models. The more common and harder-to-detect failure is attention degradation: the full text is received, but the model doesn\'t process all parts with equal fidelity. Silent truncation is the obvious failure mode to guard against; attention degradation is the subtle one that catches experienced users off guard.',
+          'Over-long input is a real risk, and what happens to it depends on the tool: some refuse it with an error, some drop or summarize older conversation turns without saying so, and large uploads may be searched in pieces rather than read whole. You may not be told what the model did not see. But this contract is well within the tool\'s stated limit, and the answer quotes both the first and the last pages, so the whole document was received. The harder failure to detect is uneven attention: the full text is received, but the middle is processed with less care than the edges. Truncation is the obvious failure to guard against; uneven attention is the subtle one that catches experienced users off guard.',
       },
     ],
   },
