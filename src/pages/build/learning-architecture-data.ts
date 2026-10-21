@@ -228,7 +228,7 @@ export interface AssessmentTier {
 }
 
 export const ASSESSMENT_TIERS: AssessmentTier[] = [
-  { tier: 1, label: 'Tier 1: Knowledge check', desc: 'Scenario-based knowledge checks with explanatory feedback, embedded within modules', color: '#A0AEB8', icon: '○' },
+  { tier: 1, label: 'Tier 1: Knowledge checks', desc: 'Scenario-based knowledge checks with explanatory feedback, embedded within modules', color: '#A0AEB8', icon: '○' },
   { tier: 2, label: 'Tier 2: Practice', desc: 'Learner choices and outputs within interactives, sandbox, and dashboards, assessed in-flow', color: '#7D9BAD', icon: '◐' },
   { tier: 3, label: 'Tier 3: Competency and transfer', desc: 'Competency assessment (5C) and Level 3 behavioral follow-up (6C): post-program transfer measurement', color: '#4A6D80', icon: '●' },
 ];
@@ -251,7 +251,7 @@ export const KIRK_LEVELS: KirkLevel[] = [
   { key: 'L1', label: 'Level 1', name: 'Reaction', color: 'rgb(var(--description))', wash: 'rgb(var(--description) / 0.12)', detail: 'Post-program survey across four actionable dimensions: perceived relevance, confidence change, content quality, and intent to apply, plus a standard NPS item' },
   { key: 'L2', label: 'Level 2', name: 'Learning', color: 'rgb(var(--discernment))', wash: 'rgb(var(--discernment) / 0.12)', detail: 'Twelve-item scenario-based pre/post assessment, parallel-form to resist gaming, measuring knowledge gain across usage patterns, failure modes, mechanics, and evaluation' },
   { key: 'L3', label: 'Level 3', name: 'Behavior', color: 'rgb(var(--delegation))', wash: 'rgb(var(--delegation) / 0.12)', detail: 'Manager evidence review and participant self-assessment at 30/60/90 days, rating twelve 4D-mapped behavioral indicators; objectives 2.3 and 4.5 produce the trackable artifacts' },
-  { key: 'L4', label: 'Level 4', name: 'Results', color: 'rgb(var(--diligence))', wash: 'rgb(var(--diligence) / 0.12)', detail: 'Business outcomes downstream of competent use: efficiency (time-to-first-draft, revision cycles), quality (AI-error rate), transparency, and time-to-competency, run through a Phillips ROI model (191% in the conservative worked example)' },
+  { key: 'L4', label: 'Level 4', name: 'Results', color: 'rgb(var(--diligence))', wash: 'rgb(var(--diligence) / 0.12)', detail: 'Business outcomes downstream of competent use: efficiency (time-to-first-draft, revision cycles), quality (AI-error rate), transparency, and time-to-competency, run through a Phillips ROI model (191% in the illustrative worked example)' },
 ];
 
 // ─── Analytics infrastructure (hidden from learners) ───────────────────

@@ -7,6 +7,8 @@ A four-module interactive learning platform teaching AI literacy to mid-career k
 
 Live: [ai-literacy.ritchot.me](https://ai-literacy.ritchot.me)
 
+For reviewers: the [needs analysis](https://ai-literacy.ritchot.me/#/needs-analysis) sets out the business problem and its evidence, the [evaluation framework](https://ai-literacy.ritchot.me/#/evaluation) defines how results are measured at Kirkpatrick Levels 1 to 4 (with a live ROI model), and [behind the build](https://ai-literacy.ritchot.me/#/build) records the learning architecture, budget, timeline, and QA. Open [ai-literacy.ritchot.me/?portfolio=true](https://ai-literacy.ritchot.me/?portfolio=true) to move through every module without the learner gates; the analytics dashboard is then at `/#/dashboard`.
+
 Best viewed on desktop. Mobile is fully functional, but the data dashboards and multi-panel practice activities are designed for larger screens.
 
 ## Program structure
@@ -135,6 +137,8 @@ Content traces to specific findings from:
 - Vendor model documentation (Anthropic, OpenAI, Google, 2026) — current model and context-window specifications
 - Qwen Team (2025) — Qwen3-8B model card
 - Hardman — transfer research and practice-based methods
+- Ford, Yelon & Billington (2011); Saks & Belcourt (2006); Saks & Burke (2012) — peer-reviewed evidence on training transfer: the contested 10% figure, decay over a year, and the link between evaluation and transfer
+- Phillips & Phillips, ROI Institute (2009) — the ROI Methodology's guiding principles, applied to government training programs
 
 These are the anchor sources; the in-module citation registry and the artifact pages' linked bibliographies extend the set (Lee et al. CHI 2025, Mollick 2012, the Anthropic Economic Index reports, and others).
 
