@@ -7,10 +7,15 @@
 // A sentinel element placed below each unsubmitted IC scrolls the IC back
 // into view if the learner pages past it — a one-shot per story so the
 // scroll-back doesn't fire repeatedly while the learner reads context.
+//
+// Portfolio mode promises free navigation, so there every story is
+// unlocked, the scroll-back is off, and one line explains the learner-mode
+// gate. The checks stay answerable.
 
 import { useCallback, useEffect, useRef, type ReactNode } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { usePlatformMode } from '../../hooks/usePlatformMode';
 import { scrollBehavior } from '../../utils/motion';
 import { Citation } from '../../components/shared/Citation';
 import { InterpretationCheck } from '../../components/shared/InterpretationCheck';
@@ -89,10 +94,14 @@ interface StoryShellProps {
   ic: (typeof MODULE_1_IC_ITEMS)[number] | null;
   children: ReactNode;
   debrief?: string | null;
+  /** When false, skip the scroll-back to an unsubmitted check. */
+  scrollBack?: boolean;
 }
 
 export function DataNarrative(props: DataNarrativeProps): JSX.Element {
   const { state } = useLearnerProgress();
+  const { mode } = usePlatformMode();
+  const portfolio = mode === 'portfolio';
 
   const ic1Submitted = Boolean(state.knowledgeChecks['1.3.ic_1_1']);
   const ic2Submitted = Boolean(state.knowledgeChecks['1.3.ic_1_2']);
@@ -111,6 +120,7 @@ export function DataNarrative(props: DataNarrativeProps): JSX.Element {
         unlocked
         ic={MODULE_1_IC_ITEMS[0] ?? null}
         debrief={ic1Submitted ? MODULE_1_DEBRIEFS['ic_1_1'] ?? null : null}
+        scrollBack={!portfolio}
       >
         <Story1Body
           skills={props.skills}
@@ -120,12 +130,19 @@ export function DataNarrative(props: DataNarrativeProps): JSX.Element {
         />
       </StoryShell>
 
+      {portfolio && (
+        <p className="m-0 font-sans text-body-sm text-secondary">
+          In learner mode, each story unlocks after the check above it.
+        </p>
+      )}
+
       <StoryShell
         storyNumber={2}
         headline="Geography, context, and the adoption gap"
-        unlocked={ic1Submitted}
+        unlocked={portfolio || ic1Submitted}
         ic={MODULE_1_IC_ITEMS[1] ?? null}
         debrief={ic2Submitted ? MODULE_1_DEBRIEFS['ic_1_2'] ?? null : null}
+        scrollBack={!portfolio}
       >
         <Story2Body
           countries={props.countries}
@@ -137,9 +154,10 @@ export function DataNarrative(props: DataNarrativeProps): JSX.Element {
       <StoryShell
         storyNumber={3}
         headline="Twelve months of behavioral shift"
-        unlocked={ic2Submitted}
+        unlocked={portfolio || ic2Submitted}
         ic={MODULE_1_IC_ITEMS[2] ?? null}
         debrief={ic3Submitted ? MODULE_1_DEBRIEFS['ic_1_3'] ?? null : null}
+        scrollBack={!portfolio}
       >
         <Story3Body
           collaboration={props.collaboration}
@@ -158,6 +176,7 @@ function StoryShell({
   ic,
   children,
   debrief,
+  scrollBack = true,
 }: StoryShellProps): JSX.Element {
   const articleRef = useRef<HTMLElement>(null);
   const icRef = useRef<HTMLDivElement>(null);
@@ -197,7 +216,7 @@ function StoryShell({
   // submitted, watch the sentinel below the IC. If it enters the viewport
   // (the learner scrolled past), bring the IC back into view. One-shot.
   useEffect(() => {
-    if (!unlocked || icSubmitted || !ic) return;
+    if (!scrollBack || !unlocked || icSubmitted || !ic) return;
     scrolledBackRef.current = false;
     const sentinel = sentinelRef.current;
     if (!sentinel) return;
@@ -214,7 +233,7 @@ function StoryShell({
     );
     obs.observe(sentinel);
     return () => obs.disconnect();
-  }, [unlocked, icSubmitted, ic]);
+  }, [scrollBack, unlocked, icSubmitted, ic]);
 
   const onIcSubmitted = useCallback(() => {
     scrolledBackRef.current = false;
