@@ -340,7 +340,7 @@ function PromptField({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         rows={3}
-        className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body-sm text-ink placeholder:text-muted focus:border-ink"
+        className="block w-full resize-y border border-ghost bg-[rgb(var(--white))] p-3 font-sans text-body-sm text-ink placeholder:text-muted focus:border-ink"
         style={{ minHeight: 80, lineHeight: 1.55 }}
       />
     </div>

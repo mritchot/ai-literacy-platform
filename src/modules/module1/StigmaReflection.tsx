@@ -107,7 +107,7 @@ export function StigmaReflection({ scrollTargetId }: StigmaReflectionProps): JSX
         rows={5}
         aria-label="Private reflection text area"
         placeholder="Your reflection (private, not submitted)"
-        className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
+        className="block w-full resize-y border border-ghost bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
         style={{ minHeight: 120, lineHeight: 1.55 }}
       />
 

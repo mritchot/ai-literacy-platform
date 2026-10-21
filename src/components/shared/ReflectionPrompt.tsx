@@ -111,7 +111,7 @@ export function ReflectionPrompt({
         onBlur={persist}
         rows={5}
         aria-label={`Reflection text area for prompt ${promptId}`}
-        className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
+        className="block w-full resize-y border border-ghost bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
         style={{ minHeight: 120, lineHeight: 1.55 }}
         placeholder="Type your response here. Saved privately to your progress."
       />

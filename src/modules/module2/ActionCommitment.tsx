@@ -178,7 +178,7 @@ function CommitmentField({
         onFocus={onFocus}
         rows={4}
         aria-label={`${label} response`}
-        className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
+        className="block w-full resize-y border border-ghost bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
         style={{ minHeight: 100, lineHeight: 1.55 }}
         placeholder="Type your response here…"
       />

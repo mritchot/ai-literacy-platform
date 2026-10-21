@@ -292,7 +292,7 @@ function SearchInput({
       className="flex items-center"
       style={{
         background: 'rgb(var(--white))',
-        border: '1px solid rgb(var(--border))',
+        border: '1px solid rgb(var(--ghost))',
         padding: '4px 10px',
         maxWidth: 360,
       }}

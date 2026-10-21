@@ -401,7 +401,7 @@ function PredictionInput({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           aria-label="Your prediction: number of tokens"
-          className="border border-border bg-[rgb(var(--white))] px-3 py-2 font-mono text-[14px] text-ink focus:border-ink"
+          className="border border-ghost bg-[rgb(var(--white))] px-3 py-2 font-mono text-[14px] text-ink focus:border-ink"
           style={{ width: 80 }}
         />
         <span className="font-sans text-body-sm text-secondary">tokens</span>
@@ -555,7 +555,7 @@ function FreeMode(): JSX.Element {
         rows={4}
         aria-label="Text to tokenize"
         placeholder="Paste or type any text…"
-        className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
+        className="block w-full resize-y border border-ghost bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
         style={{ minHeight: 80, lineHeight: 1.55 }}
       />
 

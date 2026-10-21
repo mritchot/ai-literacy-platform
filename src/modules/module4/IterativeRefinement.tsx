@@ -751,7 +751,7 @@ function EvaluationField({
         onChange={(e) => onChange(e.target.value)}
         onBlur={onBlur}
         rows={2}
-        className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-2.5 font-sans text-body-sm text-ink focus:border-ink"
+        className="block w-full resize-y border border-ghost bg-[rgb(var(--white))] p-2.5 font-sans text-body-sm text-ink focus:border-ink"
         style={{ minHeight: 60, lineHeight: 1.5 }}
       />
     </div>
@@ -780,7 +780,7 @@ function RefinementTextarea({
       rows={4}
       aria-label="Your refined prompt"
       placeholder="Write your refined prompt here…"
-      className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
+      className="block w-full resize-y border border-ghost bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
       style={{ minHeight, lineHeight: 1.55 }}
     />
   );
