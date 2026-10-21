@@ -91,10 +91,10 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'B',
         text:
-          'She hasn\'t benchmarked her team\'s time savings against industry averages. Without knowing whether 60% is above or below the median productivity gain for proposal drafting, she can\'t determine whether her team is using AI effectively or underperforming.',
+          'She hasn\'t checked whether proposal drafting is augmentation or automation. If her team refines each draft with the tool over several turns, that back-and-forth already reviews the content, so the proposals need no separate verification step.',
         isCorrect: false,
         feedbackText:
-          'Industry benchmarking is useful for operational optimization, but it\'s not the critical gap here. Whether 60% is above or below the industry median doesn\'t change the risk calculus. The question isn\'t whether the team is saving enough time; it\'s whether the outputs they\'re saving time on are safe to use without extensive verification.',
+          'Iterating with the tool and verifying its output are different activities. Refining a draft over several turns improves tone and structure, but a proposal refined over ten turns can still carry a fabricated statistic or an inaccurate compliance claim, and the client still receives it. Only a check against sources catches those errors. The critical gap is the missing verification assessment for a customer-facing document.',
       },
       {
         id: 'C',
@@ -145,10 +145,10 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'C',
         text:
-          'AI models tend to favor positive framing when generating competitive analysis, so even if the Gartner report exists, the model likely exaggerated the vendor\'s positioning. The vendor may have been placed in the Challengers or Visionaries quadrant rather than Leaders.',
+          'The tool\'s temperature setting let it sample a less probable continuation, so the quadrant placement drifted from the real one. Lowering the temperature and regenerating the analysis would return the accurate Gartner placement and differentiators.',
         isCorrect: false,
         feedbackText:
-          'AI models don\'t have a systematic "positive framing" bias that selectively inflates competitive positioning. The model didn\'t exaggerate. It may have generated the entire citation without any connection to a real report at all. Framing this as exaggeration implies the underlying data is real but distorted, when the data may not exist at all.',
+          'Temperature changes how much the output varies from run to run, not whether it is grounded in a source. At any setting, the model generates citation-shaped text from patterns unless it retrieved the report during this interaction. A lower temperature would produce the same kind of claim more consistently, which is not the same as producing a verified one. The only fix is to check the placement against the report itself.',
       },
       {
         id: 'D',
@@ -329,10 +329,10 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'C',
         text:
-          'The AI model applied a different translation strategy for Thai (statistical phrase matching) than for French (neural machine translation) because it automatically selects the optimal method based on the language pair. The Thai strategy is older and less accurate.',
+          'Thai text breaks into many more tokens than French, so the Thai round trip filled the model\'s context window and the end of the tagline was cut off before translation. The meaning shifted because part of the input never reached the model.',
         isCorrect: false,
         feedbackText:
-          'AI language models don\'t switch between "statistical phrase matching" and "neural machine translation" based on language pair. The model uses the same architecture (next-token prediction over a tokenized representation) for all languages. The quality difference comes from how the tokenizer handles different scripts, not from a choice between translation strategies.',
+          'The token count is right; the consequence is wrong. A product tagline runs to a few dozen tokens even in Thai, a tiny fraction of any current context window, so nothing was cut off. Heavier tokenization matters here because meaning is represented in fragments that don\'t align with Thai\'s words and syllables, not because of how much room the text takes up. Context window limits explain omissions in long documents, not a meaning shift in one sentence.',
       },
       {
         id: 'D',
