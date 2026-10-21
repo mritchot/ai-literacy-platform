@@ -51,41 +51,41 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
     block: 'usage',
     objectiveRefs: ['2.1', '2.4'],
     stem:
-      'Based on large-scale behavioral research, which of the following best describes how professionals currently work with AI tools?',
+      'A colleague tells you she uses AI "as a sparring partner. I go back and forth with it until the work is right." She shows you her chat history for the past week. Of her 30 conversations, 22 are a single request and a single response that she pasted into a document without a follow-up message. Which reading of her description and her history is most accurate?',
     scenarioSummary:
-      'How professionals actually use AI tools vs. how they describe using them.',
+      'A colleague calls her AI use back-and-forth collaboration; her chat history shows 22 of 30 conversations were one request and one response.',
     options: [
       {
         id: 'A',
         text:
-          'Most professionals who use AI regularly engage in iterative, multi-turn collaboration: going back and forth with the tool, refining outputs together until the result meets their standards. Self-reported usage patterns reliably reflect these actual interaction styles.',
+          'Her description is the better guide. She knows how she works, and a chat history leaves out the thinking she does before writing a request and while reviewing the response, so the history understates how collaborative her use is.',
         isCorrect: false,
         feedbackText:
-          'Behavioral data tells a different story. In one interview study, professionals described 65% of their AI use as augmentative, but conversation data puts augmentation at 47% to 57% depending on the measurement wave, and directive usage (a complete request, an accepted result, minimal iteration) rose from about 28% to 39% of interactions before easing to 32%. The gap between how professionals describe their AI workflow and how they actually interact with these tools is a recurring finding in adoption research.',
+          'Thinking before and after a conversation is real, but it does not change what the history shows: most exchanges ended after one response that went straight into a document. Research on AI use finds the same gap at scale. In one interview study, professionals described 65% of their AI use as augmentative, but conversation data puts augmentation at 47% to 57% depending on the measurement wave.',
       },
       {
         id: 'B',
         text:
-          'Professionals delegate more than they report: directive exchanges (a complete request, an accepted result, minimal iteration) rose from about a quarter to nearly two-fifths of interactions during 2025, even as professionals describe their usage as iterative collaboration.',
+          'Her history fits a pattern research on AI use often finds: people describe their use as more collaborative than their conversations show. Most of her work is handed off in one exchange, which her own description misses.',
         isCorrect: true,
         feedbackText:
-          'Large-scale behavioral studies show that directive interactions grew over 2025 and that automation briefly overtook augmentation in August, even as professionals describe their usage as iterative collaboration. This matters because directive exchanges hand the work to the tool with little iteration, so any refinement or checking has to happen after the chat, if it happens at all. That raises the risk of unverified or low-quality deliverables. Without awareness of this pattern, teams can\'t assess whether their actual workflow matches their intended quality standard.',
+          'Studies that set interview self-reports beside large samples of conversation data find that people describe their AI use as more collaborative than the data shows, and that one-request, one-answer exchanges make up a large share of real use. Her history fits that pattern. This matters because directive exchanges hand the work to the tool with little iteration, so any refinement or checking has to happen after the chat, if it happens at all. That raises the risk of unverified or low-quality deliverables. Without seeing the pattern, she can\'t tell whether her actual workflow matches the quality standard she intends.',
       },
       {
         id: 'C',
         text:
-          'Most professionals limit AI usage to routine administrative tasks such as data formatting, scheduling, and email sorting, and avoid using it for complex creative or analytical work.',
+          'Her history shows efficient use. Needing several rounds of follow-up is a sign of unclear requests, so single exchanges that produce usable text mean she has learned to ask well, a more advanced form of collaboration.',
         isCorrect: false,
         feedbackText:
-          'AI usage for complex tasks like drafting and analysis is widespread and growing. It extends well beyond routine administrative work.',
+          'A well-specified single request can produce good output, but it is still a hand-off: one instruction, one accepted result. Calling it collaboration repeats the gap between description and practice. Back-and-forth is where a person applies judgment to the draft, which is what her description claims and her history does not show.',
       },
       {
         id: 'D',
         text:
-          'Most professionals who describe themselves as frequent AI users actually engage with these tools far less consistently than their self-reports suggest. The gap is in usage frequency, not interaction style.',
+          'The history can\'t settle the question either way. Whether a conversation is collaborative depends on what she was trying to do, and without knowing each task, the number of turns says nothing about how she works.',
         isCorrect: false,
         feedbackText:
-          'The issue is misidentifying interaction quality, not exaggerating frequency. Professionals genuinely use AI frequently; the gap is in how they characterize the nature of that interaction.',
+          'Turn count is not a perfect measure, but 22 single exchanges out of 30, each pasted straight into a document, is a clear pattern. Saying the history "says nothing" discards the best evidence available. The useful move is to compare the description with the record.',
       },
     ],
   },
