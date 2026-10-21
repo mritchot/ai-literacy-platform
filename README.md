@@ -135,6 +135,8 @@ Content traces to specific findings from:
 - Vendor model documentation (Anthropic, OpenAI, Google, 2026) — current model and context-window specifications
 - Qwen Team (2025) — Qwen3-8B model card
 - Hardman — transfer research and practice-based methods
+- Ford, Yelon & Billington (2011); Saks & Belcourt (2006); Saks & Burke (2012) — peer-reviewed evidence on training transfer: the contested 10% figure, decay over a year, and the link between evaluation and transfer
+- Phillips & Phillips, ROI Institute (2009) — the ROI Methodology's guiding principles, applied to government training programs
 
 These are the anchor sources; the in-module citation registry and the artifact pages' linked bibliographies extend the set (Lee et al. CHI 2025, Mollick 2012, the Anthropic Economic Index reports, and others).
 
