@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { decode, encode } from 'gpt-tokenizer/encoding/cl100k_base';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { BottleneckCallout } from '../../components/shared/BottleneckCallout';
 import { Icon } from '../../components/shared/Icon';
 import { Overline } from '../../components/shared/Overline';
 import { R5Trigger } from '../../components/reference/R5Trigger';
@@ -118,11 +119,15 @@ export function TokenizerPlayground(): JSX.Element {
       >
         Tokenizer playground
       </h3>
-      <p className="m-0 mb-5 font-sans text-body text-body">
-        For each text sample, predict how many tokens it will produce — then see the result. The
-        gap between your prediction and the actual count is the point. Four guided rounds, then
-        free exploration.
-      </p>
+      <div className="mb-6">
+        <BottleneckCallout title="Your task">
+          <p className="m-0">
+            For each text sample, predict how many tokens it will produce, then see the result.
+            The gap between your prediction and the actual count is the point. Lock a prediction
+            in each of the four guided rounds; free exploration with your own text follows.
+          </p>
+        </BottleneckCallout>
+      </div>
 
       <RoundIndicator
         stage={stage}

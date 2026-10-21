@@ -14,6 +14,7 @@ import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { EvidenceNote } from '../../components/shared/EvidenceNote';
 import { KnowledgeCheck } from '../../components/shared/KnowledgeCheck';
+import { BottleneckCallout } from '../../components/shared/BottleneckCallout';
 
 import wefSkillDemand from '../../data/wef-skill-demand.json';
 import geographicAdoption from '../../data/geographic-adoption.json';
@@ -258,9 +259,17 @@ function Section3({ module }: ModuleProp): JSX.Element {
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         Below are three sequential stories. Each one combines a few paragraphs of context, a data
-        visualization, and one interpretation check. Submit each interpretation check before
-        moving on — the next story dims until you do.
+        visualization, and one interpretation check.
       </p>
+      <div className="mb-6">
+        <BottleneckCallout title="Your task">
+          <p className="m-0">
+            Read each story and submit its interpretation check before you read on. You finish
+            when all three checks are submitted; in learner mode, the next story stays dimmed
+            until you do.
+          </p>
+        </BottleneckCallout>
+      </div>
       <DataNarrative
         skills={wefSkillDemand.skillsOutlook.skillsOnTheRise.skills}
         coreSkills={wefSkillDemand.skillsOutlook.coreSkills2025.skills}
@@ -415,6 +424,12 @@ function Section5({ module }: ModuleProp): JSX.Element {
         <R1Trigger label="4D Reference" />
       </ReferenceTabRail>
 
+      {/* Plain line, not a callout: the reflection card below already
+          carries a left accent, and two stacked callouts read as one. */}
+      <p className="m-0 mb-6 font-sans text-body font-semibold text-ink">
+        Your task: answer the question below in a few private sentences, then select Continue
+        to read on.
+      </p>
       <StigmaReflection scrollTargetId="m1-s5-content-block" />
 
       <FourDVocabularyBlock />

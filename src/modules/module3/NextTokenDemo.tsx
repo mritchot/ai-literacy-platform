@@ -8,6 +8,7 @@ import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { ReflectionPrompt } from '../../components/shared/ReflectionPrompt';
+import { BottleneckCallout } from '../../components/shared/BottleneckCallout';
 import { Overline } from '../../components/shared/Overline';
 import { R5Trigger } from '../../components/reference/R5Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
@@ -171,11 +172,16 @@ export function NextTokenDemo(): JSX.Element {
       >
         Next-token prediction in action
       </h3>
-      <p className="m-0 mb-5 font-sans text-body text-body">
-        You’ve read how the model generates output, one token at a time, chosen by probability.
-        For each sentence stem, you’ll see the candidates the model considers at a single
-        prediction step, then observe what changes when you adjust the temperature.
-      </p>
+      <div className="mb-6">
+        <BottleneckCallout title="Your task">
+          <p className="m-0">
+            You’ve read how the model generates output, one token at a time, chosen by
+            probability. For each sentence stem, you’ll see the candidates the model considers at
+            a single prediction step, then observe what changes when you adjust the temperature.
+            Open all three stems, and generate at least one token on Stem 1 or Stem 2.
+          </p>
+        </BottleneckCallout>
+      </div>
 
       {/* Stem tab list. Mobile uses a 3-column grid with short labels
           ("Stem 1") so all three sit in a single row with equal width

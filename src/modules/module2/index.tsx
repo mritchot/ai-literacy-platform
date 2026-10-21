@@ -395,6 +395,15 @@ function Section3({ module }: ModuleProp): JSX.Element {
         <Citation ids="openrouter-a16z-2025" pageKey="programming-share-50" />. Every usage
         dataset is a window onto its own users.
       </p>
+      <div className="mb-6">
+        <BottleneckCallout title="Your task">
+          <p className="m-0">
+            Open at least two of the three tabs, and answer the reflection prompts in the
+            Collaboration Patterns and Self-Report tabs. You can continue once you have opened a
+            second tab.
+          </p>
+        </BottleneckCallout>
+      </div>
       <AugAutoDashboard
         occupationCategories={augmentationAutomation.occupation_usage_shares.categories}
         occupationDepthInsight={augmentationAutomation.occupation_depth.insight}
@@ -518,8 +527,17 @@ function Section5({ module }: ModuleProp): JSX.Element {
         human judgment lives. This dashboard lets you explore that gap across occupations and
         tasks; what the data doesn’t capture is equally important: the time spent
         independently verifying output, reworking errors, and catching fabricated details that
-        looked correct on first read. Before you explore the dashboard, make one prediction.
+        looked correct on first read.
       </p>
+      <div className="mb-6">
+        <BottleneckCallout title="Your task">
+          <p className="m-0">
+            Make one prediction, explore the dashboard, then name two tasks from your own work in
+            the action commitment at the end. You can continue once you start writing either
+            task.
+          </p>
+        </BottleneckCallout>
+      </div>
       <div className="mb-6">
         <KnowledgeCheck
           moduleId={2}

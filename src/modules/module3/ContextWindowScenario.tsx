@@ -121,12 +121,17 @@ export function ContextWindowScenario(): JSX.Element {
       >
         Context window scenario: the missing clause
       </h3>
-      <p className="m-0 mb-5 font-sans text-body text-body">
-        Your team lead has asked an AI tool to summarize a vendor services agreement before a
-        contract review meeting. The full agreement is 42 pages. The summary below was generated
-        from the full document. Your job: evaluate the summary for completeness and accuracy
-        before the meeting.
-      </p>
+      <div className="mb-6">
+        <BottleneckCallout title="Your task">
+          <p className="m-0">
+            Your team lead has asked an AI tool to summarize a vendor services agreement before a
+            contract review meeting. The full agreement is 42 pages. The summary below was
+            generated from the full document. Evaluate the summary for completeness and accuracy
+            before the meeting: select Begin verification, then rate all four summary claims
+            against the source excerpts.
+          </p>
+        </BottleneckCallout>
+      </div>
 
       <DocumentPanels
         docTab={docTab}
