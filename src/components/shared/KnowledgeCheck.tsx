@@ -153,7 +153,7 @@ export function KnowledgeCheck({
             previous hardcoded #4A5A66 stayed dark and went near-
             invisible on the dark card surface. */}
         <Overline style={{ color: 'rgb(var(--info))' }}>
-          Knowledge check · Tier 1 · Recall
+          Knowledge check · Applied scenario
         </Overline>
         <Overline style={{ color: 'rgb(var(--muted))' }}>
           Item {itemNumber} of {totalItems} · Obj. {item.objectiveRef}

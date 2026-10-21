@@ -801,7 +801,7 @@ function Section10({ module }: ModuleProp): JSX.Element {
       module={module}
       sectionId={10}
       sectionTitle="Knowledge check"
-      sectionLabel="Section 10 · Tier 1 assessment"
+      sectionLabel="Section 10 · Scenario questions"
       width="reading"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
