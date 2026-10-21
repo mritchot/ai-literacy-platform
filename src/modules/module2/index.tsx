@@ -11,6 +11,7 @@ import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { BottleneckCallout } from '../../components/shared/BottleneckCallout';
 import { Citation } from '../../components/shared/Citation';
+import { EvidenceNote } from '../../components/shared/EvidenceNote';
 import { KnowledgeCheck } from '../../components/shared/KnowledgeCheck';
 import { R1Trigger } from '../../components/reference/R1Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
@@ -116,31 +117,42 @@ function Section1({ module }: ModuleProp): JSX.Element {
           upward. In a 1981 study, most of the licensed drivers surveyed at universities in the
           United States and Sweden rated themselves more skillful drivers than the median driver
           in their group
-          <Citation ids="svenson-1981" pageKey="above-median" />. Investors who trade on
-          overconfidence lower their own returns
-          <Citation ids="barber-odean-2001" pageKey="trading-returns" />. The classic finding that
-          the least skilled overestimate the most
-          <Citation ids="kruger-dunning-1999" pageKey="bottom-quartile" /> is contested as mostly
-          a statistical artifact, a pattern produced by how the data are analyzed
-          <Citation ids="gignac-zajenkowski-2020" pageKey="artefact" />, but the broader gap
-          between self-report and measured performance is not. AI usage is no exception.
-          Self-confidence may not match objective skill, a caveat the
-          critical-thinking researchers attach to their own survey
-          <Citation ids="lee-2025" pageKey="self-report-limits" />. AI use adds two distortions of
-          its own. People sometimes conflate a task feeling easier with thinking less about it,
-          most often when they are satisfied with the output
+          <Citation ids="svenson-1981" pageKey="above-median" />. AI use is no exception, and it
+          adds two distortions of its own. People sometimes conflate a task feeling easier with
+          thinking less about it, most often when they are satisfied with the output
           <Citation ids="lee-2025" pageKey="self-report-limits" />. And self-reported productivity
           gains can run high: the Anthropic researchers who surveyed their own engineers cite a
           METR study in which experienced developers on familiar codebases overestimated how much
           AI sped them up
-          <Citation ids="huang-2025" pageKey="self-report-limits" />. Researchers who study
-          enterprise AI from usage records make a related point about surveys: self-reported use is typically less detailed and
-          may suffer from imperfect recall or reporting bias
-          <Citation ids="chatterji-2026" pageKey="survey-limits" />. When
+          <Citation ids="huang-2025" pageKey="self-report-limits" />. When
           researchers compared how the 1,000 general-workforce professionals in a 1,250-person study described their AI practices against
           behavioral data from millions of actual AI conversations, the gap was substantial, and
           it ran in a consistent direction.
         </p>
+        <EvidenceNote
+          id="m2-s1-self-assessment"
+          moduleId={2}
+          sectionId={1}
+          label="More on self-assessment"
+        >
+          <p className="m-0">
+            Investors who trade on overconfidence lower their own returns
+            <Citation ids="barber-odean-2001" pageKey="trading-returns" />. The classic finding
+            that the least skilled overestimate the most
+            <Citation ids="kruger-dunning-1999" pageKey="bottom-quartile" /> is contested as
+            mostly a statistical artifact, a pattern produced by how the data are analyzed
+            <Citation ids="gignac-zajenkowski-2020" pageKey="artefact" />, but the broader gap
+            between self-report and measured performance is not.
+          </p>
+          <p className="m-0">
+            The critical-thinking researchers attach the same caveat to their own survey:
+            self-confidence may not match objective skill
+            <Citation ids="lee-2025" pageKey="self-report-limits" />. Researchers who study
+            enterprise AI from usage records make a related point about surveys: self-reported
+            use is typically less detailed and may suffer from imperfect recall or reporting bias
+            <Citation ids="chatterji-2026" pageKey="survey-limits" />.
+          </p>
+        </EvidenceNote>
         <p className="m-0">
           This module makes that gap visible. You'll work with the same behavioral datasets the
           researchers used: task-level adoption patterns across occupations, productivity
