@@ -82,7 +82,8 @@ function Section1({ module }: ModuleProp): JSX.Element {
           professionals overestimate how much they collaborate with AI versus how much they
           delegate to it. You know that the tasks where AI is fastest are often the tasks where
           it succeeds less often<Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />, so that output most needs checking. And you know that the share of directive interactions
-          (hand off the task, accept the result, move on) has been rising.
+          (hand off the task, accept the result, move on) rose sharply during 2025 and has only
+          partly fallen back.
         </p>
         <p className="m-0">
           What you don’t yet know is <em>why</em> the tool produces fluent text that contains

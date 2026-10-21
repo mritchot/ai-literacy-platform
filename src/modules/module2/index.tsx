@@ -786,7 +786,8 @@ function Section8({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           <strong className="font-semibold text-ink">Third</strong>, the share of directive
-          interactions has been rising. More output is passing through less human review. Whether
+          interactions rose sharply in 2025 and has only partly fallen back. More output is
+          passing through less human review. Whether
           that trend accelerates or reverses depends on whether professionals can evaluate what the
           tool gives them back.
         </p>
