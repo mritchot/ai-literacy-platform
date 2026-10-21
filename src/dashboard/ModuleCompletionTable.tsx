@@ -64,6 +64,7 @@ function artifactLabelFromKey(key: string): string {
   if (tail === 'p4_revised_task1') return 'P4 Revised Commitment: Task 1';
   if (tail === 'p4_revised_task2') return 'P4 Revised Commitment: Task 2';
   if (tail === 'p4_revised_tell') return 'P4 Revised Commitment: Who I Will Tell';
+  if (tail.startsWith('warmup_')) return `Recall Warm-up ${tail.slice('warmup_'.length).toUpperCase()}`;
   // p3_reflection_1 → "P3 Reflection 1"; p6_reasoning → "P6 Reasoning"
   const code = tail.match(/^(p\d+)_(.+)$/);
   if (code) {

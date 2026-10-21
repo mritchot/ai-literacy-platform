@@ -12,6 +12,7 @@ import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { BottleneckCallout } from '../../components/shared/BottleneckCallout';
 import { Citation } from '../../components/shared/Citation';
 import { KnowledgeCheck } from '../../components/shared/KnowledgeCheck';
+import { RetrievalWarmup } from '../../components/shared/RetrievalWarmup';
 import { R1Trigger } from '../../components/reference/R1Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
 
@@ -88,6 +89,7 @@ function Section1({ module }: ModuleProp): JSX.Element {
       width="reading"
       autoComplete
     >
+      <RetrievalWarmup moduleId={2} />
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
           Module 1 ended with a shift in framing: from{' '}

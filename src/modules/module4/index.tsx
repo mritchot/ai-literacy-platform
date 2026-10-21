@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { useSectionParam } from '../../hooks/useSectionParam';
 import { Citation } from '../../components/shared/Citation';
 import { KnowledgeCheck } from '../../components/shared/KnowledgeCheck';
+import { RetrievalWarmup } from '../../components/shared/RetrievalWarmup';
 import { SectionContainer } from '../../components/shared/SectionContainer';
 import { getModuleOrThrow } from '../../data/program';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
@@ -72,6 +73,7 @@ function Section1({ module }: ModuleProp): JSX.Element {
       width="reading"
       autoComplete
     >
+      <RetrievalWarmup moduleId={4} />
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
           Module 3 ended with a question: <em>given what I now know about how it works, how do I
@@ -79,8 +81,8 @@ function Section1({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">This module answers it through practice rather than further explanation.</p>
         <p className="m-0">
-          You now have the mechanical vocabulary to trace any AI output failure to a specific
-          cause. You know why a fluent paragraph can contain a fabricated citation (next-token
+          Check your recall against this summary. You now have the mechanical vocabulary to trace
+          any AI output failure to a specific cause. You know why a fluent paragraph can contain a fabricated citation (next-token
           prediction meeting thin knowledge). You know why a multi-document synthesis silently
           drops material from the files you uploaded (context window limits meeting cumulative
           conversation length). You know why a calculation looks right but isn’t (tokenization
