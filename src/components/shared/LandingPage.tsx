@@ -1,5 +1,6 @@
 // Landing page — program hero, 4D competency legend strip, 2x2 module grid,
-// summary stats bar, footer note. Spatial composition follows the mockup;
+// decision-maker strip (links to the three artifact hubs), summary stats
+// bar, footer note. Spatial composition follows the mockup;
 // every color, font, radius, and spacing draws from design system tokens.
 
 import { Link } from 'react-router-dom';
@@ -32,7 +33,7 @@ export function LandingPage(): JSX.Element {
   // a module locks until the previous one is fully complete; in
   // portfolio mode nothing locks. Module 1 also waits on the
   // pre-assessment, and M4 S10 on the post-assessment.
-  const { mode } = usePlatformMode();
+  const { mode, setMode } = usePlatformMode();
   const { isAssessmentComplete } = useLearnerProgress();
   const preComplete = isAssessmentComplete('pre');
   const postComplete = isAssessmentComplete('post');
@@ -86,6 +87,9 @@ export function LandingPage(): JSX.Element {
       <Hero resumeTarget={resumeTarget} preCtaActive={preCtaActive} />
       <CompetencyLegend />
       <ModuleGrid modules={modules} gating={gating} />
+      <CaseStrip
+        onOpenPortfolio={mode === 'learner' ? () => setMode('portfolio') : undefined}
+      />
       <SummaryBar completedSections={completedSections} totalSections={totalSections} />
       <Footer />
       <AttributionFooter />
@@ -167,6 +171,15 @@ function Hero({
           </div>
         </div>
       </div>
+      <p className="m-0 mt-5 font-sans text-caption text-tertiary">
+        Evaluating this program for an organization?{' '}
+        <Link
+          to="/needs-analysis"
+          className="font-medium text-action no-underline hover:underline"
+        >
+          Start with the needs analysis →
+        </Link>
+      </p>
     </section>
   );
 }
@@ -387,6 +400,72 @@ function ModuleCard({
   );
 }
 
+// Decision-maker entry points: the three artifact hubs that carry the
+// case for the program. Placed after the module grid so the learner path
+// stays the primary action.
+const CASE_LINKS: { to: string; label: string; blurb: string }[] = [
+  {
+    to: '/needs-analysis',
+    label: 'The needs analysis',
+    blurb: 'The problem and its evidence: AI tools are available, the judgment to use them well is not.',
+  },
+  {
+    to: '/evaluation',
+    label: 'The evaluation framework',
+    blurb: 'How results are measured at all four Kirkpatrick levels, with a live ROI model.',
+  },
+  {
+    to: '/build',
+    label: 'Behind the build',
+    blurb: 'Learning architecture, budget, timeline, and QA for a 200-participant deployment.',
+  },
+];
+
+function CaseStrip({
+  onOpenPortfolio,
+}: {
+  /** Learner mode only. Kept out of the hero so the pre-assessment stays
+   *  the one hero action for learners; skipping it would cost the Level 2
+   *  pre/post data. */
+  onOpenPortfolio: (() => void) | undefined;
+}): JSX.Element {
+  return (
+    <section aria-labelledby="case-heading" className="mb-10">
+      <h2 id="case-heading" className="m-0 mb-5">
+        <Overline as="span" style={{ fontSize: 11 }}>
+          For decision-makers · the case behind the program
+        </Overline>
+      </h2>
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+        {CASE_LINKS.map((c) => (
+          <Link
+            key={c.to}
+            to={c.to}
+            className="block bg-[rgb(var(--white))] no-underline transition-colors duration-[160ms] hover:bg-surface"
+            style={{
+              border: '1px solid rgb(var(--border))',
+              borderTop: '3px solid rgb(var(--action))',
+              padding: '18px 20px',
+            }}
+          >
+            <div className="mb-1.5 font-sans text-body-sm font-semibold text-ink">{c.label} →</div>
+            <div className="font-sans text-[12.5px] leading-[1.45] text-secondary">{c.blurb}</div>
+          </Link>
+        ))}
+      </div>
+      {onOpenPortfolio && (
+        <button
+          type="button"
+          onClick={onOpenPortfolio}
+          className="mt-4 bg-transparent p-0 font-sans text-caption font-medium text-action hover:underline"
+        >
+          Reviewing this as portfolio work? Open every module
+        </button>
+      )}
+    </section>
+  );
+}
+
 function SummaryBar({
   completedSections,
   totalSections,
@@ -456,7 +535,7 @@ function Footer(): JSX.Element {
       style={{ letterSpacing: '0.02em' }}
     >
       <div>AI Literacy · v1.0 · portfolio edition</div>
-      <div>Last updated · July 2026</div>
+      <div>Last updated · October 2026</div>
     </footer>
   );
 }
