@@ -658,8 +658,8 @@ export const CITATIONS = {
     publisher: 'Claude Platform Docs (platform.claude.com)',
     date: 'accessed October 22, 2026',
     pages: {
-      overflow: 'section "Context window overflow behavior"',
-      rolling: 'section "How the context window works", footnote 1',
+      'overflow': 'section "Context window overflow behavior"',
+      'rolling': 'section "How the context window works", footnote 1',
     },
     url: 'https://platform.claude.com/docs/en/build-with-claude/context-windows',
   },
