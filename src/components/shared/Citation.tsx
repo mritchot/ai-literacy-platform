@@ -6,10 +6,13 @@
 //   • Mouse hover (devices with `(pointer: fine)`): popover opens after
 //     a 250ms delay; closes 150ms after the mouse leaves both chip and
 //     popover. The delay prevents accidental triggers while reading.
-//   • Click / tap: toggles the popover open. Click-opened popovers stay
-//     open until explicitly dismissed (Esc, outside click, or X close).
-//   • Keyboard focus (Tab): opens the popover; Esc closes; Tab moves to
-//     the next focusable element on the page.
+//   • Click / tap: pins the popover open; a second click closes it.
+//     Pinned popovers stay open until explicitly dismissed (Esc, outside
+//     click, X close, or a second click).
+//   • Keyboard focus (Tab): opens the popover; Tab moves on to the next
+//     focusable element on the page. Enter or Space pins the popover and
+//     moves focus to its close button; Esc closes it; tabbing past either
+//     end of the popover closes it and returns focus to the chip.
 //
 // Visual cue — the chip uses a dotted underline + `cursor: help` so it
 // reads as "click for more" without disrupting the reading flow.
@@ -29,6 +32,8 @@ import {
   type CSSProperties,
   type FocusEvent as ReactFocusEvent,
   type KeyboardEvent,
+  type MouseEvent as ReactMouseEvent,
+  type RefObject,
 } from 'react';
 import { createPortal } from 'react-dom';
 import { getCitation, type CitationMeta } from '../../data/citations';
@@ -70,12 +75,20 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
   const popoverId = useId();
 
   const [open, setOpen] = useState(false);
-  // Tracks whether the open was triggered by hover (so mouseleave can
-  // auto-close) vs click/focus (which require explicit dismissal).
+  // Tracks whether the open was triggered by hover or focus (so
+  // mouseleave and blur can auto-close) vs click (which requires
+  // explicit dismissal).
   const stickyRef = useRef(false);
+  // State mirror of stickyRef, so the outside-click effect re-subscribes
+  // when a click pins a popover that hover or focus already opened.
+  const [pinned, setPinned] = useState(false);
+  // Set when Enter or Space pins the popover; the effect below then
+  // moves focus into it once it has rendered.
+  const focusCloseOnPinRef = useRef(false);
 
   const chipRef = useRef<HTMLButtonElement | null>(null);
   const popoverRef = useRef<HTMLDivElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const openTimerRef = useRef<number | null>(null);
   const closeTimerRef = useRef<number | null>(null);
 
@@ -105,6 +118,7 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
   const openNow = (sticky: boolean) => {
     cancelTimers();
     stickyRef.current = sticky;
+    setPinned(sticky);
     setOpen(true);
   };
 
@@ -112,6 +126,8 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
     cancelTimers();
     setOpen(false);
     stickyRef.current = false;
+    setPinned(false);
+    focusCloseOnPinRef.current = false;
   }, [cancelTimers]);
 
   // ─── Mouse hover (open with delay; close on leave) ────────────────
@@ -144,9 +160,18 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
 
   // ─── Click / keyboard ─────────────────────────────────────────────
 
-  const handleClick = () => {
-    if (open) closeNow();
-    else openNow(true); // click → sticky open
+  const handleClick = (e: ReactMouseEvent<HTMLButtonElement>) => {
+    // Chromium focuses a button on mousedown, so handleFocus has already
+    // opened the popover when this click lands. Closing on any open state
+    // made the first click a no-op. A click pins an unpinned popover and
+    // closes a pinned one.
+    if (open && stickyRef.current) {
+      closeNow();
+      return;
+    }
+    // detail is 0 when Enter or Space activated the button.
+    focusCloseOnPinRef.current = e.detail === 0;
+    openNow(true); // click → sticky open
   };
 
   const handleFocus = () => {
@@ -179,7 +204,7 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
   // ─── Outside-click dismissal (sticky popovers only) ────────────────
 
   useEffect(() => {
-    if (!open || !stickyRef.current) return;
+    if (!open || !pinned) return;
     const handler = (e: MouseEvent) => {
       const target = e.target as Node | null;
       if (
@@ -198,7 +223,17 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
       window.clearTimeout(timer);
       document.removeEventListener('mousedown', handler);
     };
-  }, [open, closeNow]);
+  }, [open, pinned, closeNow]);
+
+  // ─── Keyboard pin: move focus into the popover ────────────────────
+  // The popover is portalled to <body>, so Tab from the chip would never
+  // reach its controls. `pos` gates the render, so wait for it.
+
+  useEffect(() => {
+    if (!pinned || pos === null || !focusCloseOnPinRef.current) return;
+    focusCloseOnPinRef.current = false;
+    closeButtonRef.current?.focus();
+  }, [pinned, pos]);
 
   // ─── Position computation (run on open + on scroll/resize while open) ─
 
@@ -275,7 +310,9 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
         onKeyDown={handleKeyDown}
         aria-expanded={open}
         aria-describedby={open ? popoverId : undefined}
-        className="inline-flex items-baseline font-mono text-caption text-muted hover:text-tertiary focus-visible:text-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-action focus-visible:ring-offset-1"
+        // The ::after inset widens the touch target past the 11px glyphs
+        // without changing line layout.
+        className="relative inline-flex items-baseline font-mono text-caption text-muted after:absolute after:-inset-x-0.5 after:-inset-y-2 hover:text-tertiary focus-visible:text-tertiary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-action focus-visible:ring-offset-1"
         style={{
           // Inherit baseline alignment from surrounding text. The dotted
           // underline + help cursor is the discoverability cue.
@@ -300,6 +337,7 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
           sources={sources}
           pageKey={pageKey}
           pos={pos}
+          closeButtonRef={closeButtonRef}
           onMouseEnter={() => {
             if (closeTimerRef.current !== null) {
               window.clearTimeout(closeTimerRef.current);
@@ -327,6 +365,7 @@ interface CitationPopoverProps {
   sources: CitationMeta[];
   pageKey?: string | undefined;
   pos: { left: number; top: number; placement: 'above' | 'below' };
+  closeButtonRef: RefObject<HTMLButtonElement>;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   onClose: () => void;
@@ -334,7 +373,7 @@ interface CitationPopoverProps {
 
 const CitationPopover = forwardRef<HTMLDivElement, CitationPopoverProps>(
   function CitationPopover(
-    { id, sources, pageKey, pos, onMouseEnter, onMouseLeave, onClose },
+    { id, sources, pageKey, pos, closeButtonRef, onMouseEnter, onMouseLeave, onClose },
     ref,
   ): JSX.Element {
     const style: CSSProperties = {
@@ -350,6 +389,26 @@ const CitationPopover = forwardRef<HTMLDivElement, CitationPopoverProps>(
       padding: '12px 14px',
     };
 
+    // The popover sits at the end of <body>, away from its chip in tab
+    // order. Leaving it by Tab in either direction closes it and hands
+    // focus back to the chip, so sequential reading resumes there.
+    const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      const controls = e.currentTarget.querySelectorAll<HTMLElement>('button, a[href]');
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      const active = document.activeElement;
+      if ((e.shiftKey && active === first) || (!e.shiftKey && active === last)) {
+        e.preventDefault();
+        onClose();
+      }
+    };
+
     return (
       <div
         ref={ref}
@@ -362,35 +421,13 @@ const CitationPopover = forwardRef<HTMLDivElement, CitationPopoverProps>(
         style={style}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
+        onKeyDown={handleKeyDown}
       >
-        {sources.length > 1 && (
-          <div
-            className="font-mono text-[10px] font-bold uppercase"
-            style={{
-              color: 'rgb(var(--tertiary))',
-              letterSpacing: '0.1em',
-              marginBottom: 8,
-            }}
-          >
-            Sources for this claim
-          </div>
-        )}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: sources.length > 1 ? 12 : 0,
-          }}
-        >
-          {sources.map((s, i) => (
-            <SourceBlock
-              key={s.id}
-              source={s}
-              pageRef={i === 0 && pageKey ? s.pages?.[pageKey] : undefined}
-            />
-          ))}
-        </div>
+        {/* First in DOM order so a keyboard pin lands on it and Tab then
+            walks the source links; it is absolutely positioned, so the
+            visual layout is unchanged. */}
         <button
+          ref={closeButtonRef}
           type="button"
           onClick={onClose}
           aria-label="Close citation details"
@@ -419,6 +456,33 @@ const CitationPopover = forwardRef<HTMLDivElement, CitationPopoverProps>(
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         </button>
+        {sources.length > 1 && (
+          <div
+            className="font-mono text-[10px] font-bold uppercase"
+            style={{
+              color: 'rgb(var(--tertiary))',
+              letterSpacing: '0.1em',
+              marginBottom: 8,
+            }}
+          >
+            Sources for this claim
+          </div>
+        )}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: sources.length > 1 ? 12 : 0,
+          }}
+        >
+          {sources.map((s, i) => (
+            <SourceBlock
+              key={s.id}
+              source={s}
+              pageRef={i === 0 && pageKey ? s.pages?.[pageKey] : undefined}
+            />
+          ))}
+        </div>
       </div>
     );
   },
@@ -458,6 +522,16 @@ function SourceBlock({
           </>
         )}
       </div>
+      {source.url && (
+        <a
+          href={source.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-1.5 inline-block font-sans text-body-sm font-semibold text-action underline hover:text-action-hover"
+        >
+          View source<span className="sr-only"> (opens in a new tab)</span>
+        </a>
+      )}
     </div>
   );
 }
