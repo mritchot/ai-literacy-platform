@@ -14,7 +14,7 @@ const Module3 = lazy(() => import('./modules/module3'));
 const Module4 = lazy(() => import('./modules/module4'));
 const AnalyticsDashboard = lazy(() => import('./dashboard'));
 const ThankYou = lazy(() => import('./pages/ThankYou'));
-// Pre/Post assessment routes are lazy-loaded — their payload (10
+// Pre/Post assessment routes are lazy-loaded — their payload (12
 // items × 4 options × consequence feedback + the comparative results
 // view) only enters the bundle when the learner reaches the
 // assessment flow.

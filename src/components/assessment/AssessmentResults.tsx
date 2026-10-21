@@ -259,8 +259,8 @@ function ScoreHeader({ summary }: { summary: GrowthSummary }): JSX.Element {
       </div>
       {summary.notInBaseline.length > 0 && (
         <p className="m-0 mt-3 font-sans text-body-sm text-secondary" style={{ lineHeight: 1.5 }}>
-          Your pre-assessment used an earlier form without{' '}
-          {summary.notInBaseline.map((o) => o.construct.toLowerCase()).join(' or ')}. Those
+          Your pre-assessment used an earlier form with no question on{' '}
+          {summary.notInBaseline.map((o) => o.construct.toLowerCase()).join(' or on ')}. Those
           constructs are not in your baseline, so the change counts only the {summary.compared}{' '}
           you answered both times.
         </p>
