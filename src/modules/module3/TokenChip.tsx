@@ -23,7 +23,7 @@ interface TokenChipProps {
 }
 
 const ODD = { bg: 'rgb(var(--surface))', fg: 'rgb(var(--ink))' };
-const EVEN = { bg: '#E4EBF0', fg: '#354A57' }; // --discernment-light / --discernment-text
+const EVEN = { bg: 'rgb(var(--discernment-light))', fg: 'rgb(var(--discernment-text))' };
 
 export function TokenChip({ text, index, animate = false, style }: TokenChipProps): JSX.Element {
   const palette = index % 2 === 0 ? ODD : EVEN;

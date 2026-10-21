@@ -88,6 +88,13 @@ const KC_RESPONSES: Record<string, KnowledgeCheckResult> = {
   '1.3.ic_1_1': kc('b', true, at(5, 22)),
   '1.3.ic_1_2': kc('b', true, at(7, 41)),
   '1.3.ic_1_3': kc('c', true, at(9, 53)),
+  // M1 S5 unscored 4D practice items. Their keys sit outside `.kc_`, so the
+  // KC aggregates ignore them. The demo learner merges the two Ds once.
+  '1.5.vocab_1': kc('c', true, at(12, 55)),
+  '1.5.vocab_2': kc('c', false, at(13, 18)),
+  // M2 S5 unscored prediction before the P4 dashboard (also outside `.kc_`).
+  // 25:40 sits in S5's nav window, before the first P4 view event.
+  '2.5.pred_2_5': kc('c', false, at(25, 40)),
 };
 
 // Confidence ratings on the eight demo KCs, kept beside KC_RESPONSES so the
@@ -316,6 +323,8 @@ const M1_EVENTS: Ev[] = [
   ev(at(11, 33), 'p2_reflection_viewed', 1, 5),
   ev(at(12, 47), 'p2_reflection_continued', 1, 5),
   ev(at(12, 47), 'p2_time_on_prompt', 1, 5, { seconds: 74 }),
+  ev(at(12, 55), 'vocab_1_submitted', 1, 5, { optionId: 'c', isPreferred: true }),
+  ev(at(13, 18), 'vocab_2_submitted', 1, 5, { optionId: 'c', isPreferred: false }),
   // KC-1.1 to KC-1.4 on S7 (10.5–13 min window; must precede
   // module_1_complete at 14:00). Timestamps mirror KC_RESPONSES.
   ev(at(11, 12), 'kc_1_1_submitted', 1, 7, { optionId: 'c', isPreferred: true }),
@@ -340,7 +349,8 @@ const M2_EVENTS: Ev[] = [
   ev(at(m1.endMin + 6, 35), 'p3_reflection_1_recalled', 2, 3, { hadContent: true }),
   ev(at(m1.endMin + 6, 48), 'p3_reflection_2_engaged', 2, 3),
   ev(at(m1.endMin + 7, 22), 'p3_reflection_2_saved', 2, 3, { chars: 401 }),
-  // P4 productivity dashboard on M2 S5.
+  // P4 productivity dashboard on M2 S5, after the unscored prediction.
+  ev(at(m1.endMin + 11, 40), 'pred_2_5_submitted', 2, 5, { optionId: 'c', isPreferred: false }),
   ev(at(m1.endMin + 12, 8), 'p4_view_a_viewed', 2, 5),
   ev(at(m1.endMin + 12, 41), 'p4_view_a_sorted', 2, 5, { column: 'speed-gain', direction: 'desc' }),
   ev(at(m1.endMin + 13, 12), 'p4_view_b_viewed', 2, 5),

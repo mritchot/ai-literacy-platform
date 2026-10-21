@@ -41,6 +41,27 @@ export interface KnowledgeCheckItemData {
   options: KnowledgeCheckOption[];
 }
 
+// 'assessed' is a Tier-1 knowledge check. 'prediction' and 'practice' reuse
+// the same interaction unscored: their storage keys sit outside the `.kc_`
+// pattern the dashboard aggregates, and the labels say so to the learner.
+export type KnowledgeCheckVariant = 'assessed' | 'prediction' | 'practice';
+
+const UNSCORED_COPY: Record<
+  Exclude<KnowledgeCheckVariant, 'assessed'>,
+  { overline: string; submit: string; groupLabel: string }
+> = {
+  prediction: {
+    overline: 'Prediction · not scored',
+    submit: 'Lock in prediction',
+    groupLabel: 'Choose your prediction.',
+  },
+  practice: {
+    overline: 'Practice · not scored',
+    submit: 'Submit response',
+    groupLabel: 'Choose your answer.',
+  },
+};
+
 interface KnowledgeCheckProps {
   moduleId: number;
   sectionId: number;
@@ -48,6 +69,7 @@ interface KnowledgeCheckProps {
   itemNumber: number;
   totalItems: number;
   onSubmitted?: () => void;
+  variant?: KnowledgeCheckVariant;
 }
 
 const TONE_BORDER: Record<KnowledgeCheckTone, string> = {
@@ -69,9 +91,11 @@ export function KnowledgeCheck({
   itemNumber,
   totalItems,
   onSubmitted,
+  variant = 'assessed',
 }: KnowledgeCheckProps): JSX.Element {
   const { recordKnowledgeCheck, getKnowledgeCheck } = useLearnerProgress();
   const { track } = useAnalytics();
+  const unscored = variant === 'assessed' ? null : UNSCORED_COPY[variant];
 
   const stored = getKnowledgeCheck(moduleId, sectionId, item.id);
   const [selected, setSelected] = useState<string | null>(stored?.selectedOptionId ?? null);
@@ -166,11 +190,13 @@ export function KnowledgeCheck({
             previous hardcoded #4A5A66 stayed dark and went near-
             invisible on the dark card surface. */}
         <Overline style={{ color: 'rgb(var(--info))' }}>
-          Knowledge check · Applied scenario
+          {unscored ? unscored.overline : 'Knowledge check · Applied scenario'}
         </Overline>
-        <Overline style={{ color: 'rgb(var(--muted))' }}>
-          Item {itemNumber} of {totalItems} · Obj. {item.objectiveRef}
-        </Overline>
+        {!unscored && (
+          <Overline style={{ color: 'rgb(var(--muted))' }}>
+            Item {itemNumber} of {totalItems} · Obj. {item.objectiveRef}
+          </Overline>
+        )}
       </div>
 
       <div
@@ -192,7 +218,11 @@ export function KnowledgeCheck({
             told SR users that selecting one deselects the others. */}
         <ul
           role="radiogroup"
-          aria-label="Choose the response that best applies the module framework."
+          aria-label={
+            unscored
+              ? unscored.groupLabel
+              : 'Choose the response that best applies the module framework.'
+          }
           className="m-0 list-none space-y-2 p-0"
         >
           {item.options.map((opt, optIdx) => {
@@ -264,7 +294,7 @@ export function KnowledgeCheck({
                     </span>
                     {opt.isPreferred && submitted && (
                       <span
-                        title="Recommended answer"
+                        title={unscored ? 'Answer' : 'Recommended answer'}
                         className="self-end flex-shrink-0 font-mono text-[9.5px] font-bold uppercase sm:self-auto"
                         style={{
                           color: 'rgb(var(--action))',
@@ -274,7 +304,7 @@ export function KnowledgeCheck({
                           whiteSpace: 'nowrap',
                         }}
                       >
-                        Recommended
+                        {unscored ? 'Answer' : 'Recommended'}
                       </span>
                     )}
                   </div>
@@ -286,8 +316,15 @@ export function KnowledgeCheck({
       </fieldset>
 
       {!submitted && (
-        <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <ConfidenceRating idBase={`kc-${item.id}`} value={confidence} onChange={setConfidence} />
+        <div
+          className={`mt-4 flex flex-col gap-3 sm:flex-row sm:items-center ${
+            unscored ? 'sm:justify-end' : 'sm:justify-between'
+          }`}
+        >
+          {/* Unscored items stay out of calibration, so they take no rating. */}
+          {!unscored && (
+            <ConfidenceRating idBase={`kc-${item.id}`} value={confidence} onChange={setConfidence} />
+          )}
           <button
             type="button"
             onClick={submit}
@@ -295,7 +332,7 @@ export function KnowledgeCheck({
             aria-disabled={!selected}
             className="self-end sm:self-auto bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] transition-colors duration-[160ms] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
           >
-            Submit response
+            {unscored ? unscored.submit : 'Submit response'}
           </button>
         </div>
       )}
@@ -348,7 +385,7 @@ export function KnowledgeCheck({
           }}
         >
           <Overline className="mb-1.5" style={{ color: 'rgb(var(--success))' }}>
-            Recommended response
+            {unscored ? 'The answer' : 'Recommended response'}
           </Overline>
           <div className="mb-1.5 font-sans text-body-sm font-semibold text-ink">
             {preferredOption.text}
