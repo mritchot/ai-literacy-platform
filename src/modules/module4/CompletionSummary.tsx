@@ -28,6 +28,12 @@ import { POST_ASSESSMENT_ITEMS } from '../../data/post-assessment';
 import { PRE_ASSESSMENT_ITEMS } from '../../data/pre-assessment';
 import { MODULES } from '../../data/program';
 import {
+  blockOutcomes,
+  constructOutcomes,
+  gainSentence,
+  summarizeGrowth,
+} from '../../utils/assessment-scoring';
+import {
   generateCompletionPDF,
   type AssessmentBlockResult,
   type AssessmentGrowthData,
@@ -115,35 +121,47 @@ export function CompletionSummary(): JSX.Element {
     ) {
       return undefined;
     }
-    // Aggregate by block. The block field on each item comes from the
-    // instrument data files, so the four canonical buckets are
-    // populated directly from the items themselves. Built as an
-    // explicit 4-tuple (no cast) — the PDF layout depends on exactly
+    // Scored by utils/assessment-scoring, the same rules as the results
+    // screen. Block item counts come from the items themselves. Built as
+    // an explicit 4-tuple (no cast) — the PDF layout depends on exactly
     // four rows, and a cast would let a fifth entry compile silently.
+    const outcomes = constructOutcomes(
+      PRE_ASSESSMENT_ITEMS,
+      POST_ASSESSMENT_ITEMS,
+      preResponses,
+      postResponses,
+    );
+    const byBlock = blockOutcomes(outcomes);
     const blockFor = (
       key: 'usage' | 'failure' | 'mechanics' | 'evaluation',
       name: AssessmentBlockResult['name'],
-      items: AssessmentBlockResult['items'],
     ): AssessmentBlockResult => {
-      const pre = PRE_ASSESSMENT_ITEMS.filter((it) => it.block === key).reduce(
-        (acc, it) => (preResponses[it.id]?.isCorrect ? acc + 1 : acc),
-        0,
-      );
-      const post = POST_ASSESSMENT_ITEMS.filter((it) => it.block === key).reduce(
-        (acc, it) => (postResponses[it.id]?.isCorrect ? acc + 1 : acc),
-        0,
-      );
-      return { name, items, pre, post };
+      const b = byBlock.find((x) => x.block === key);
+      return {
+        name,
+        items: b?.postTotal ?? 0,
+        preItems: b?.preAnswered ?? 0,
+        pre: b?.preCorrect ?? 0,
+        post: b?.postCorrect ?? 0,
+        change: b?.change ?? 0,
+      };
     };
     const blocks: AssessmentGrowthData['blocks'] = [
-      blockFor('usage', 'Usage patterns', 2),
-      blockFor('failure', 'Failure modes', 3),
-      blockFor('mechanics', 'Mechanics', 3),
-      blockFor('evaluation', 'Evaluation', 2),
+      blockFor('usage', 'Usage patterns'),
+      blockFor('failure', 'Failure modes'),
+      blockFor('mechanics', 'Mechanics'),
+      blockFor('evaluation', 'Evaluation'),
     ];
-    const preTotal = blocks.reduce((acc, b) => acc + b.pre, 0);
-    const postTotal = blocks.reduce((acc, b) => acc + b.post, 0);
-    return { preTotal, postTotal, blocks };
+    const summary = summarizeGrowth(outcomes);
+    return {
+      preTotal: summary.preCorrect,
+      preItems: summary.preAnswered,
+      postTotal: summary.postCorrect,
+      postItems: summary.postTotal,
+      change: summary.change,
+      gainText: gainSentence(summary),
+      blocks,
+    };
   }, [state.assessments]);
 
   if (!allModulesComplete) {

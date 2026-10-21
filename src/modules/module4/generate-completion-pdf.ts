@@ -66,17 +66,30 @@ import { drawPageFooter } from './pdf/primitives';
  *  `ASSESSMENT_BLOCKS` below). */
 export interface AssessmentBlockResult {
   name: 'Usage patterns' | 'Failure modes' | 'Mechanics' | 'Evaluation';
-  items: 2 | 3;
-  pre: number; // 0..items
+  /** Post items in the block. */
+  items: number;
+  /** Pre items answered in the block; fewer than `items` when the
+   *  baseline predates the twelve-item form. */
+  preItems: number;
+  pre: number; // 0..preItems
   post: number; // 0..items
+  /** Change over the block's constructs answered on both forms. */
+  change: number;
 }
 
 /** Pre/post assessment summary surfaced on page 2. Optional: when
  *  null/undefined, the PDF falls back to the prior knowledge-stat-only
  *  right column (portfolio-review case). */
 export interface AssessmentGrowthData {
-  preTotal: number; // 0..10
-  postTotal: number; // 0..10
+  preTotal: number; // correct pre responses, 0..preItems
+  preItems: number;
+  postTotal: number; // correct post responses, 0..postItems
+  postItems: number;
+  /** Change over the constructs answered on both forms. */
+  change: number;
+  /** Normalized-gain sentence from utils/assessment-scoring, or null
+   *  when it is omitted (zero or negative change). */
+  gainText: string | null;
   blocks: [
     AssessmentBlockResult,
     AssessmentBlockResult,

@@ -17,6 +17,7 @@
     "build": "tsc -b && vite build && node scripts/verify-sitemap.mjs",
     "verify:crawl": "node scripts/verify-sitemap.mjs",
     "check:items": "node scripts/check-item-balance.mjs",
+    "test": "node scripts/test-assessment.mjs",
     "preview": "vite preview",
     "typecheck": "tsc -b",
     "lint": "eslint .",

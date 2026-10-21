@@ -1,4 +1,4 @@
-// Post-Assessment instrument — 10 scenario-based items administered
+// Post-Assessment instrument — 12 scenario-based items administered
 // AFTER Module 4 completion. The options use course vocabulary
 // (tokenization, next-token prediction, context window,
 // augmentation/automation spectrum, Description competency, 4D
@@ -10,7 +10,9 @@
 // `components/assessment/AssessmentResults.tsx`.
 //
 // Source: the post-assessment instrument document (Phase 4 planning corpus).
-// Answer key distribution: A=3, B=3, C=2, D=2.
+// POST-11 and POST-12 pair with PRE-11 and PRE-12 (task decomposition,
+// disclosure); see `instrument-version.ts`.
+// Answer key distribution: A=3, B=3, C=3, D=3.
 
 import type { AssessmentItem } from './pre-assessment';
 
@@ -483,6 +485,98 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
         isCorrect: false,
         feedbackText:
           'This is better than the original (it adds the role and some categories), but it still relies on the model to fill in specifics ("specific to our company and our industry" without saying what the company or industry is). The closing "let me know if you need other information" defers specification to the model rather than providing it upfront. Compare that to option A, where every detail is in the prompt itself.',
+      },
+    ],
+  },
+  {
+    id: 'POST-11',
+    parallelPreId: 'PRE-11',
+    construct: 'Task decomposition',
+    constructKey: 'task-decomposition',
+    block: 'evaluation',
+    objectiveRefs: ['4.1'],
+    stem:
+      'A benefits manager is preparing an employee FAQ about a change of health-benefits provider. The work has four parts: (1) pulling every question employees asked at last week\'s town hall out of the meeting transcript, which she will paste in; (2) drafting answers about the new coverage terms from the provider\'s plan document, which she will also paste in; (3) deciding which questions to answer now and which to hold until employee representatives have been consulted; and (4) formatting the FAQ into the intranet template. Which plan for using AI is most sound?',
+    scenarioSummary:
+      'A benefits manager splits an employee FAQ into four parts and has to decide how much of each to hand to AI.',
+    options: [
+      {
+        id: 'A',
+        text:
+          'Fully delegate all four parts. The tool has the transcript and the plan document, so it has every source it needs, and she can review the finished FAQ once, carefully, before it is published to the whole company.',
+        isCorrect: false,
+        feedbackText:
+          'Supplying the sources does not make every part delegable. Part 3 is a judgment about timing and commitments to employee representatives, and nothing in the transcript or the plan document tells the tool what was promised. Part 1 also needs a check: a long transcript is a volume task, and questions buried in the middle are the ones most likely to be dropped. One read of a polished FAQ tends to check tone and layout, not whether a question is missing or an answer is premature.',
+      },
+      {
+        id: 'B',
+        text:
+          'Keep all four parts human-only. Benefits changes are sensitive, and employees who learn the FAQ was produced with AI will trust its answers less, however accurate those answers turn out to be.',
+        isCorrect: false,
+        feedbackText:
+          'Sensitivity raises the bar for checking. It does not make every part unsuitable for AI. Extracting questions and formatting a template are checkable tasks, and refusing help on them spends time without improving the parts that need judgment. Whether employees are told AI was used is a disclosure decision, which a diligence statement handles, not a reason to avoid the tool.',
+      },
+      {
+        id: 'C',
+        text:
+          'Fully delegate parts 2 and 3, since drafting answers from a source document and ranking questions are pattern tasks the model handles well, and keep parts 1 and 4 human-only, since a transcript and a template need exact handling by a person.',
+        isCorrect: false,
+        feedbackText:
+          'This inverts the risk. Pulling questions from a transcript and formatting a template are the parts with a clear standard to check against. Answers about coverage terms must match the plan document line by line, and deciding what to answer now depends on consultation commitments the tool cannot see. The model will produce answers and a ranking that look right whether or not they are, which is why those two parts need the most human control.',
+      },
+      {
+        id: 'D',
+        text:
+          'Delegate parts 1 and 4, then check that no town-hall question is missing. Use AI to draft part 2 and check each answer against the plan document. Keep part 3 human-only: it turns on commitments the tool knows nothing about.',
+        isCorrect: true,
+        feedbackText:
+          'This plan makes the decision component by component. Parts 1 and 4 have a clear standard, the transcript and the template, so they can be delegated with a check; for part 1 the check is completeness, because questions in the middle of a long transcript are the easiest to lose. Part 2 works from a pasted source, so AI can draft and she verifies each answer against the plan. Part 3 depends on context only she has, so it stays human-only.',
+      },
+    ],
+  },
+  {
+    id: 'POST-12',
+    parallelPreId: 'PRE-12',
+    construct: 'Disclosure and accountability',
+    constructKey: 'disclosure-accountability',
+    block: 'evaluation',
+    objectiveRefs: ['4.5'],
+    stem:
+      'A training manager used AI to prepare a quarterly report on the company\'s onboarding program for the executive team. The tool turned her survey export into charts, drafted a summary of 140 open-ended comments, and suggested three improvements. She checked the charts against the export, read all 140 comments to confirm the summary, rejected one suggested improvement, and rewrote the other two from her own observations. Her company asks staff to note AI use in their deliverables. Which note is most appropriate to attach to the report?',
+    scenarioSummary:
+      'A training manager used AI for charts, a comment summary, and suggestions in an executive report, and has to decide how to note it.',
+    options: [
+      {
+        id: 'A',
+        text:
+          '"AI assistance was used in preparing this report, in line with company policy. All of its content has been reviewed for accuracy and approved by the program owner, and the report reflects the onboarding team\'s current view of the program."',
+        isCorrect: false,
+        feedbackText:
+          'This acknowledges AI use without saying what it did. The executive team cannot tell whether the charts, the comment summary, or the recommendations came from the tool, or what "reviewed" covered. A diligence statement earns trust by being specific: which parts AI produced, what was checked, and what the author changed.',
+      },
+      {
+        id: 'B',
+        text:
+          '"The charts, the comment summary, and the improvement ideas were generated by AI. Because the analysis is the tool\'s, the executive team should treat these conclusions as provisional until a second reviewer confirms them."',
+        isCorrect: false,
+        feedbackText:
+          'This understates her own work and hands accountability away. She checked the charts and the comments, rejected one suggestion, and rewrote two, so the conclusions are hers. Telling the executive team to wait for a second reviewer shifts a responsibility she has already carried out.',
+      },
+      {
+        id: 'C',
+        text:
+          '"AI built the charts and drafted the comment summary; I checked both against the export and all 140 comments. Of three AI-suggested improvements, I rejected one and rewrote two from my own observations. I stand behind the report."',
+        isCorrect: true,
+        feedbackText:
+          'This statement does what the Diligence competency asks. It separates AI-generated work (charts, comment summary) from human judgment (the rejected and rewritten improvements), names the checks and what they covered, and closes with accountability. It is short enough to append to the report, and a reader can weigh each part on what was done to it.',
+      },
+      {
+        id: 'D',
+        text:
+          '"No AI note is needed. The report went through the same review as any other deliverable, and naming the tool would only invite the executive team to discount findings that have already been checked."',
+        isCorrect: false,
+        feedbackText:
+          'Leaving the note out treats disclosure as a risk to the findings rather than evidence for them. The organization\'s practice is to disclose, and the silence it replaces is what keeps teams from learning which AI practices work. A specific note that the output was checked makes the findings easier to trust, not harder.',
       },
     ],
   },

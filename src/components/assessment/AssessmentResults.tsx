@@ -5,12 +5,17 @@
 // learner can see exactly how their reasoning shifted.
 //
 // Composition:
-//   1. ScoreHeader   — pre N/T, post N/T, delta chip
+//   1. ScoreHeader   — pre N/T, post N/T, change chip, normalized gain
 //   2. BlockBreakdown — 4 blocks × {pre count, post count}
-//   3. ConstructList — 10 expandable cards (one per construct pair).
+//   3. ConstructList — one expandable card per construct pair.
 //      Collapsed: construct name + pre/post option pills + ✓/✗.
 //      Expanded: full pre stem + learner's pre answer; full post stem
 //      + learner's post answer + post item's feedback for that option.
+//   4. ResultsSharePanel — the results code the learner can give their
+//      organization.
+//
+// Scores come from utils/assessment-scoring, the same rules the
+// dashboard and the completion PDF use.
 //
 // The component is read-only — it's rendered both inline at the end
 // of the post-assessment flow and (via AssessmentGrowth) inside M4 S10
@@ -21,9 +26,19 @@ import { Link } from 'react-router-dom';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { PRE_ASSESSMENT_ITEMS, type AssessmentItem } from '../../data/pre-assessment';
 import { POST_ASSESSMENT_ITEMS, type PostAssessmentItem } from '../../data/post-assessment';
+import {
+  blockOutcomes,
+  constructOutcomes,
+  gainSentence,
+  heldLabel,
+  summarizeGrowth,
+  type ConstructOutcome,
+  type GrowthSummary,
+} from '../../utils/assessment-scoring';
 import { renderMarkdownLite } from '../shared/render-markdown-lite';
 import { Icon } from '../shared/Icon';
 import { Overline } from '../shared/Overline';
+import { ResultsSharePanel } from './ResultsSharePanel';
 
 // Accents reused from the program palette so the assessment surface
 // reads as native to the rest of the platform.
@@ -97,25 +112,25 @@ export function AssessmentResults({ variant }: AssessmentResultsProps): JSX.Elem
   const preResponses = getAssessmentResponses('pre');
   const postResponses = getAssessmentResponses('post');
 
-  // Per-item correctness for the score header + block breakdown.
-  const preScore = countCorrect(PRE_ASSESSMENT_ITEMS, preResponses);
-  const postScore = countCorrect(POST_ASSESSMENT_ITEMS, postResponses);
-  const total = pairs.length;
+  const outcomes = constructOutcomes(
+    PRE_ASSESSMENT_ITEMS,
+    POST_ASSESSMENT_ITEMS,
+    preResponses,
+    postResponses,
+  );
+  const summary = summarizeGrowth(outcomes);
 
   return (
     <div className="space-y-6">
       {variant === 'standalone' && <ResultsHero />}
-      <ScoreHeader preCorrect={preScore} postCorrect={postScore} total={total} />
-      <BlockBreakdown
-        pairs={pairs}
-        preResponses={preResponses}
-        postResponses={postResponses}
-      />
+      <ScoreHeader summary={summary} />
+      <BlockBreakdown outcomes={outcomes} />
       <ConstructList
         pairs={pairs}
         preResponses={preResponses}
         postResponses={postResponses}
       />
+      <ResultsSharePanel />
       {variant === 'standalone' && <ResultsFooter />}
     </div>
   );
@@ -168,16 +183,8 @@ function ResultsFooter(): JSX.Element {
 
 // ─── Score header ────────────────────────────────────────────────
 
-function ScoreHeader({
-  preCorrect,
-  postCorrect,
-  total,
-}: {
-  preCorrect: number;
-  postCorrect: number;
-  total: number;
-}): JSX.Element {
-  const delta = postCorrect - preCorrect;
+function ScoreHeader({ summary }: { summary: GrowthSummary }): JSX.Element {
+  const delta = summary.change;
   // U+2212 minus so a score drop reads as "−2", not a bare "2" whose
   // only regression cue was the error color.
   const deltaSign = delta > 0 ? '+' : delta < 0 ? '−' : '±';
@@ -185,6 +192,8 @@ function ScoreHeader({
     delta > 0 ? SUCCESS : delta < 0 ? ERROR : 'rgb(var(--muted))';
   const deltaBg =
     delta > 0 ? SUCCESS_LIGHT : delta < 0 ? ERROR_LIGHT : SURFACE;
+  const gain = gainSentence(summary);
+  const stalled = summary.comparedPreCorrect < summary.compared;
 
   return (
     <section
@@ -206,8 +215,16 @@ function ScoreHeader({
           `minmax(0, 1fr)` semantics through Tailwind's grid-cols
           utilities to prevent the delta chip from forcing the layout. */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <ScoreCell label="Pre-assessment" value={`${preCorrect} / ${total}`} sub="Baseline" />
-        <ScoreCell label="Post-assessment" value={`${postCorrect} / ${total}`} sub="After Module 4" />
+        <ScoreCell
+          label="Pre-assessment"
+          value={`${summary.preCorrect} / ${summary.preAnswered}`}
+          sub="Baseline"
+        />
+        <ScoreCell
+          label="Post-assessment"
+          value={`${summary.postCorrect} / ${summary.postTotal}`}
+          sub="After Module 4"
+        />
         <div
           className="flex flex-col justify-center"
           style={{
@@ -235,10 +252,19 @@ function ScoreHeader({
               ? `${delta} more preferred response${delta === 1 ? '' : 's'}`
               : delta < 0
                 ? `${Math.abs(delta)} fewer preferred response${Math.abs(delta) === 1 ? '' : 's'}`
-                : 'No change in score'}
+                : `${heldLabel(summary)}${stalled ? ': see the constructs below' : ''}`}
           </div>
+          {gain && <div className="mt-1 font-sans text-[12px] text-secondary">{gain}.</div>}
         </div>
       </div>
+      {summary.notInBaseline.length > 0 && (
+        <p className="m-0 mt-3 font-sans text-body-sm text-secondary" style={{ lineHeight: 1.5 }}>
+          Your pre-assessment used an earlier form without{' '}
+          {summary.notInBaseline.map((o) => o.construct.toLowerCase()).join(' or ')}. Those
+          constructs are not in your baseline, so the change counts only the {summary.compared}{' '}
+          you answered both times.
+        </p>
+      )}
     </section>
   );
 }
@@ -281,32 +307,11 @@ function ScoreCell({
 
 // ─── Block breakdown ─────────────────────────────────────────────
 
-function BlockBreakdown({
-  pairs,
-  preResponses,
-  postResponses,
-}: {
-  pairs: ConstructPair[];
-  preResponses: Record<string, { selectedOptionId: string; isCorrect: boolean }>;
-  postResponses: Record<string, { selectedOptionId: string; isCorrect: boolean }>;
-}): JSX.Element {
-  // Aggregate by block — same shape as the spec block listing in the
-  // instrument doc (usage / failure / mechanics / evaluation).
-  type BlockStats = { total: number; preCorrect: number; postCorrect: number };
-  const byBlock: Record<string, BlockStats> = {};
-  for (const pair of pairs) {
-    const slot = byBlock[pair.block] ?? { total: 0, preCorrect: 0, postCorrect: 0 };
-    slot.total += 1;
-    if (preResponses[pair.preItem.id]?.isCorrect) slot.preCorrect += 1;
-    if (postResponses[pair.postItem.id]?.isCorrect) slot.postCorrect += 1;
-    byBlock[pair.block] = slot;
-  }
-  const blockOrder: Array<keyof typeof BLOCK_LABELS> = [
-    'usage',
-    'failure',
-    'mechanics',
-    'evaluation',
-  ];
+function BlockBreakdown({ outcomes }: { outcomes: ConstructOutcome[] }): JSX.Element {
+  // Same block listing as the instrument doc (usage / failure /
+  // mechanics / evaluation). The change counts only constructs answered
+  // on both forms.
+  const blocks = blockOutcomes(outcomes);
 
   return (
     <section
@@ -319,13 +324,11 @@ function BlockBreakdown({
     >
       <Overline className="mb-3">By construct block</Overline>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {blockOrder.map((block) => {
-          const stats = byBlock[block];
-          if (!stats) return null;
-          const delta = stats.postCorrect - stats.preCorrect;
+        {blocks.map((stats) => {
+          const delta = stats.change;
           return (
             <div
-              key={block}
+              key={stats.block}
               style={{
                 background: SURFACE,
                 border: '1px solid rgb(var(--border-light))',
@@ -334,17 +337,17 @@ function BlockBreakdown({
               }}
             >
               <div className="mb-1 font-sans text-[12.5px] font-semibold text-ink">
-                {BLOCK_LABELS[block]}
+                {BLOCK_LABELS[stats.block]}
               </div>
               <div
                 className="font-mono text-[11px] text-secondary"
                 style={{ letterSpacing: '0.02em', lineHeight: 1.6 }}
               >
                 <div>
-                  Pre <strong className="text-ink">{stats.preCorrect}/{stats.total}</strong>
+                  Pre <strong className="text-ink">{stats.preCorrect}/{stats.preAnswered}</strong>
                 </div>
                 <div>
-                  Post <strong className="text-ink">{stats.postCorrect}/{stats.total}</strong>
+                  Post <strong className="text-ink">{stats.postCorrect}/{stats.postTotal}</strong>
                 </div>
                 <div style={{ color: delta > 0 ? SUCCESS : delta < 0 ? ERROR : 'rgb(var(--muted))' }}>
                   {delta > 0 ? '+' : delta < 0 ? '−' : '±'}
@@ -647,7 +650,11 @@ function ComparisonSide({
             )}
           </div>
         ) : (
-          <p className="m-0 font-sans text-body-sm italic text-muted">No response recorded.</p>
+          <p className="m-0 font-sans text-body-sm italic text-muted">
+            {showFeedback
+              ? 'No response recorded.'
+              : 'Not in your baseline: this question was added after you took the pre-assessment.'}
+          </p>
         )}
         {/* Show the correct option for context whenever the learner
             didn't pick it. Only on the post side — the pre side is the
@@ -687,16 +694,6 @@ function ComparisonSide({
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────
-
-function countCorrect(
-  items: AssessmentItem[] | PostAssessmentItem[],
-  responses: Record<string, { isCorrect: boolean }>,
-): number {
-  return items.reduce(
-    (acc, item) => (responses[item.id]?.isCorrect ? acc + 1 : acc),
-    0,
-  );
-}
 
 function IncompletePlaceholder({
   preComplete,

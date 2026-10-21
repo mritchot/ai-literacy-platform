@@ -1,4 +1,4 @@
-// Pre-Assessment instrument — 10 scenario-based items administered
+// Pre-Assessment instrument — 12 scenario-based items administered
 // BEFORE Module 1. No course vocabulary assumed; learners answer based
 // on existing intuition and experience. Responses are recorded without
 // feedback during the pre-assessment itself; the same constructs are
@@ -8,7 +8,10 @@
 // learning gains.
 //
 // Source: the pre-assessment instrument document (Phase 4 planning corpus).
-// Answer key distribution: A=2, B=3, C=2, D=3.
+// PRE-11 and PRE-12 were added later so the form measures task
+// decomposition (objective 4.1, Delegation) and disclosure (4.5,
+// Diligence); see `instrument-version.ts`.
+// Answer key distribution: A=3, B=3, C=3, D=3.
 
 export type AssessmentBlock = 'usage' | 'failure' | 'mechanics' | 'evaluation';
 
@@ -495,6 +498,96 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
         isCorrect: true,
         feedbackText:
           'The original prompt specifies almost nothing: no metrics, no comparison period, no audience, no format, no constraints. The model defaults to generic patterns because the prompt doesn\'t narrow the output space. Compare that to a restructured request like "Compare Q3 2025 revenue, gross margin, and customer acquisition cost against Q2 2025 for a board presentation; flag any variance over 5%." That gives the model the specificity it needs to generate targeted, useful output. The gap is almost always in the instruction, not in the tool.',
+      },
+    ],
+  },
+  {
+    id: 'PRE-11',
+    construct: 'Task decomposition',
+    constructKey: 'task-decomposition',
+    block: 'evaluation',
+    objectiveRefs: ['4.1'],
+    stem:
+      'A sales lead is preparing a renewal proposal for a long-standing client. The work has four parts: (1) building a table of the client\'s product usage from last year\'s CRM export, (2) recommending a renewal price that reflects budget worries the client\'s finance director raised with her on a call last week, (3) summarizing the client\'s published annual report, which she will paste into the tool, and (4) proofreading the final proposal. She wants to use an AI tool to save time. Which plan is most sound?',
+    scenarioSummary:
+      'A sales lead splits a renewal proposal into four parts and has to decide which ones an AI tool should handle.',
+    options: [
+      {
+        id: 'A',
+        text:
+          'Hand all four parts to the tool, since each one has a clear source or a clear format, and then review the finished proposal once at the end. One careful read of the whole document catches errors just as well as four separate checks would.',
+        isCorrect: false,
+        feedbackText:
+          'Handing over all four parts as one block treats them as equally safe. Parts 1 and 4 can be checked against a clear source, but part 2 depends on a conversation the tool never saw. A single read of a finished proposal tends to check polish, not whether the price reflects what the client said.',
+      },
+      {
+        id: 'B',
+        text:
+          'Write the whole proposal herself. A renewal for a long-standing client is high-stakes, and any AI involvement, even in the table or the proofreading, puts the relationship at risk if something slips through and the client notices it.',
+        isCorrect: false,
+        feedbackText:
+          'The stakes of the deliverable do not make every part risky. Building a table from an export and proofreading are checkable tasks where a tool saves time without adding much risk. Refusing all help spends effort on the safe parts without improving the parts that need judgment.',
+      },
+      {
+        id: 'C',
+        text:
+          'Hand parts 1 and 4 to the tool and check them against the export and the final draft. Have it draft part 3 from the pasted report and check its figures. Write part 2 herself; it rests on a call the tool never heard.',
+        isCorrect: true,
+        feedbackText:
+          'This plan decides part by part. Parts 1 and 4 have a clear source or standard to check against, so they can be handed off with a check. Part 3 works from a pasted source, so the tool can draft and she can verify the figures. Part 2 depends on context only she has, so it stays with her.',
+      },
+      {
+        id: 'D',
+        text:
+          'Hand parts 2 and 3 to the tool, since pricing analysis and summarizing are where it saves the most time, and do parts 1 and 4 herself, since copying figures and proofreading need a careful human eye that a tool cannot supply.',
+        isCorrect: false,
+        feedbackText:
+          'This inverts the risk. Copying figures and proofreading are the easiest parts to check, while the price recommendation depends on a call the tool never heard. Time saved on the pricing section is lost if the recommendation ignores what the client\'s finance director said.',
+      },
+    ],
+  },
+  {
+    id: 'PRE-12',
+    construct: 'Disclosure and accountability',
+    constructKey: 'disclosure-accountability',
+    block: 'evaluation',
+    objectiveRefs: ['4.5'],
+    stem:
+      'A policy analyst used an AI tool while preparing a briefing for her department head. The tool drafted the background section and compiled a table of figures from public sources. She checked every figure against its source, corrected two, and wrote the recommendations herself. Her organization expects staff to note when AI was used in their work. Which note is most appropriate to attach to the briefing?',
+    scenarioSummary:
+      'A policy analyst used AI for part of a briefing, checked and corrected it, and has to decide how to note the AI use.',
+    options: [
+      {
+        id: 'A',
+        text:
+          '"AI drafted the background section and compiled the figures table. I checked every figure against its source and corrected two. The recommendations are my own, and I answer for the whole briefing."',
+        isCorrect: true,
+        feedbackText:
+          'This note says which parts the tool produced, what was checked and what was found, and who stands behind the result. A reader can judge each section on that basis, and the author keeps accountability for the whole document.',
+      },
+      {
+        id: 'B',
+        text:
+          '"No note is needed. I reviewed and corrected everything the tool produced, so the final briefing is my own work, and a note would only make readers doubt sections that are already accurate."',
+        isCorrect: false,
+        feedbackText:
+          'Reviewing the output does not change the fact that the tool drafted parts of it. Leaving the note out hides information a reader can use to weigh sections differently, and it breaks the expectation the organization has set.',
+      },
+      {
+        id: 'C',
+        text:
+          '"Portions of this document may have been prepared with the assistance of AI tools. Readers should independently verify any information in it before relying on it for decisions or sharing it further."',
+        isCorrect: false,
+        feedbackText:
+          'A blanket "may have been used" tells the reader nothing about which parts the tool produced or what was checked. Asking readers to verify everything shifts the author\'s responsibility onto them.',
+      },
+      {
+        id: 'D',
+        text:
+          '"This briefing was produced by AI and then reviewed by me. Because AI tools are known to make mistakes, I cannot guarantee the figures, and any errors should simply be raised with the vendor of the AI tool."',
+        isCorrect: false,
+        feedbackText:
+          'This overstates the tool\'s role and disclaims responsibility. The author chose to use the tool, checked its output, and sends the briefing under her name. Errors in it are hers to answer for, not the vendor\'s.',
       },
     ],
   },

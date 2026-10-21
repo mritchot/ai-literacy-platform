@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Icon } from '../components/shared/Icon';
 import type { AnalyticsEvent } from '../contexts/AnalyticsContext';
 import type { LearnerProgressState } from '../contexts/LearnerProgressContext';
+import { downloadFile, localDateStamp } from '../utils/download-file';
 import { ConfirmModal } from './ConfirmModal';
 import type { DataSource } from './DataSourceToggle';
 
@@ -81,26 +82,6 @@ function eventToXAPI(event: AnalyticsEvent): XAPIStatement {
   };
 }
 
-function downloadFile(filename: string, content: string, mime: string): void {
-  const blob = new Blob([content], { type: mime });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-
-// Local calendar day (not UTC) so a late-evening export in a
-// negative-UTC timezone isn't stamped with tomorrow's date.
-function dateStamp(): string {
-  const d = new Date();
-  const pad = (n: number): string => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-}
-
 export function ExportControls({
   dataSource,
   progress,
@@ -119,7 +100,7 @@ export function ExportControls({
       platform: { version: PLATFORM_VERSION, exportedBy: 'analytics-dashboard' },
     };
     downloadFile(
-      `analytics-export-${dateStamp()}.json`,
+      `analytics-export-${localDateStamp()}.json`,
       JSON.stringify(payload, null, 2),
       'application/json',
     );
@@ -136,7 +117,7 @@ export function ExportControls({
       statements,
     };
     downloadFile(
-      `xapi-export-${dateStamp()}.json`,
+      `xapi-export-${localDateStamp()}.json`,
       JSON.stringify(payload, null, 2),
       'application/json',
     );
