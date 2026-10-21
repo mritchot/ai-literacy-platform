@@ -3,9 +3,12 @@
 // Source: Handa et al. (V1); Appel, McCrory & Tamkin (V3); Appel, Massenkoff & McCrory,
 // Jan 2026 (Nov 2025 data) (V4).
 //
-// Color rule: Story 3 uses neutral --secondary / --tertiary for the bars,
-// NOT the 4D olive/blue-gray, because the 4D framework hasn't been
-// introduced yet at this point in the narrative. The action color
+// Color rule: Story 3 uses the neutral --secondary for the bars, NOT the
+// 4D olive/blue-gray, because the 4D framework hasn't been introduced yet
+// at this point in the narrative. The two series are told apart by fill
+// style instead of hue (solid augmentation, outlined automation) and by
+// printed values, since IC 1.3 asks the learner to read this chart and two
+// neighboring neutrals are indistinguishable (WCAG 1.4.1). The action color
 // is used for the directive sparkline because it's an editorial signal,
 // not a 4D one (see 4C spec §18.2 rationale).
 
@@ -15,6 +18,7 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
+  LabelList,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -135,11 +139,32 @@ export function AdoptionTrendChart({
                 {collabData.map((d) => (
                   <Cell key={`aug-${d.wave}`} fill={tokens.secondary} />
                 ))}
+                <LabelList
+                  dataKey="augmentation"
+                  position="top"
+                  formatter={(v: number) => `${v}%`}
+                  fontSize={11}
+                  fontFamily={AXIS_TICK_STYLE.fontFamily}
+                  fill={tokens.ink}
+                />
               </Bar>
               <Bar dataKey="automation" isAnimationActive animationDuration={400}>
                 {collabData.map((d) => (
-                  <Cell key={`auto-${d.wave}`} fill={tokens.tertiary} />
+                  <Cell
+                    key={`auto-${d.wave}`}
+                    fill="transparent"
+                    stroke={tokens.secondary}
+                    strokeWidth={1.5}
+                  />
                 ))}
+                <LabelList
+                  dataKey="automation"
+                  position="top"
+                  formatter={(v: number) => `${v}%`}
+                  fontSize={11}
+                  fontFamily={AXIS_TICK_STYLE.fontFamily}
+                  fill={tokens.ink}
+                />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
@@ -158,7 +183,12 @@ export function AdoptionTrendChart({
             <span
               aria-hidden="true"
               className="inline-block"
-              style={{ width: 10, height: 10, background: tokens.tertiary }}
+              style={{
+                width: 10,
+                height: 10,
+                background: 'transparent',
+                border: `1.5px solid ${tokens.secondary}`,
+              }}
             />
             Automation
           </span>
