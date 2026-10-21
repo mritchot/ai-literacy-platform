@@ -314,7 +314,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'The AI model was trained on a significantly larger corpus of French text than Thai text, giving it stronger translation capabilities for French. The quality gap reflects a training data imbalance rather than a structural limitation of the model\'s architecture.',
         isCorrect: false,
         feedbackText:
-          'Training data volume is a real factor in translation quality, but it doesn\'t explain the *structural* nature of the disparity. A model with less Thai training data would produce lower-quality translations, but the specific failure pattern (meaning collapse during round-trip translation) points to a representation issue, not a data quantity issue. The question asks for the structural explanation, and tokenization alignment is the structural difference: Thai fragments into sub-character pieces while French tokens track meaningful units.',
+          'Training data volume is a real factor in translation quality, but it doesn\'t explain the structural nature of the disparity. A model with less Thai training data would produce lower-quality translations, but the specific failure pattern (meaning collapse during round-trip translation) points to a representation issue, not a data quantity issue. The question asks for the structural explanation, and tokenization alignment is the structural difference: Thai fragments into sub-character pieces while French tokens track meaningful units.',
       },
       {
         id: 'B',
@@ -434,7 +434,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'Claim 4, because the evaluation methodology section is what reviewers scrutinize most closely, and any inaccuracy in the evaluation plan would signal the applicant lacks the methodological rigor to execute the proposed initiative.',
         isCorrect: false,
         feedbackText:
-          'The evaluation methodology in Claim 4 describes the coordinator\'s own planned activities (pre/post assessments, surveys, quarterly reports). These are *intentions*, not factual claims about external sources. They should be reviewed for feasibility, but they don\'t carry the same fabrication risk as an AI-generated citation to a specific government report.',
+          'The evaluation methodology in Claim 4 describes the coordinator\'s own planned activities (pre/post assessments, surveys, quarterly reports). These are intentions, not factual claims about external sources. They should be reviewed for feasibility, but they don\'t carry the same fabrication risk as an AI-generated citation to a specific government report.',
       },
     ],
   },
