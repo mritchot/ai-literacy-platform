@@ -1,5 +1,5 @@
 // Post-Assessment instrument — 12 scenario-based items administered
-// AFTER Module 4 completion. The options use course vocabulary
+// AFTER Module 4 completion. The options use program vocabulary
 // (tokenization, next-token prediction, context window,
 // augmentation/automation spectrum, Description competency, 4D
 // framework); the stems never name the concept an item tests, so the

@@ -9,7 +9,7 @@
 // post score, or both, and so distorts the pre-to-post gain the Level 2
 // evaluation reports.
 //   • Post stems that name the concept being tested (LS-01, AE-01).
-//   • A post stem whose course term appears only in the key (AE-15).
+//   • A post stem whose program term appears only in the key (AE-15).
 //   • The key as the longest option (LS-02, AE-15; Haladyna, Downing &
 //     Rodriguez, 2002, guideline 24).
 //   • Literal *asterisk emphasis*, which renders as plain asterisks (LS-19).
@@ -48,7 +48,7 @@ const POST_STEM_CUES = [
 
 // Competency names are matched case-sensitively, since "description" is
 // an ordinary word; the rest match in any case.
-const COURSE_TERMS = [
+const PROGRAM_TERMS = [
   { label: 'token', re: /token/i },
   { label: 'context window', re: /context window/i },
   { label: 'next-token', re: /next-token/i },
@@ -172,9 +172,9 @@ for (const bank of BANKS) {
       for (const cue of POST_STEM_CUES) {
         if (cue.test(item.stem)) errors.push(`${where}: stem names the concept under test ("${item.stem.match(cue)[0]}")`);
       }
-      for (const term of COURSE_TERMS) {
+      for (const term of PROGRAM_TERMS) {
         if (term.re.test(item.stem) && term.re.test(key.text) && !distractors.some((d) => term.re.test(d.text))) {
-          errors.push(`${where}: course term "${term.label}" appears in the stem and the key but in no distractor`);
+          errors.push(`${where}: program term "${term.label}" appears in the stem and the key but in no distractor`);
         }
       }
     }
