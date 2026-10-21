@@ -509,8 +509,9 @@ function Section6({ module }: ModuleProp): JSX.Element {
           runs about 75,000 words per 100,000 tokens in OpenAI’s tokenizers, so 200K is roughly the
           length of a 500-page novel. Counts differ by vendor and even by model version: Anthropic
           says the tokenizer it introduced with Claude Opus 4.7 produces about 30 percent more
-          tokens for the same text
-         <Citation ids="anthropic-token-counting-2026" pageKey="newer-tokenizer" />. Other formats fit very differently. The same content in Japanese or another
+          tokens for the same text than its earlier models did
+         <Citation ids="anthropic-token-counting-2026" pageKey="newer-tokenizer" />. Other formats
+          fit very differently. The same content in Japanese or another
           non-Latin script can use two to three times as many tokens for the same meaning,
           leaving room for the equivalent of roughly 170 to 250 pages of an English novel rather
           than 500.
@@ -709,8 +710,8 @@ function Section8({ module }: ModuleProp): JSX.Element {
           affirming responses are common, and the human-preference tuning that follows rewards
           agreeable answers: people, and the reward models trained on their ratings, tend to
           prefer a response that matches their own view, sometimes over a correct one
-         <Citation ids="sharma-2024" pageKey="preference-data" />. When you present a flawed argument and ask for
-          feedback, the most statistically probable response is agreement, not critique. The
+         <Citation ids="sharma-2024" pageKey="preference-data" />. When you present a flawed
+          argument and ask for feedback, the most statistically probable response is agreement, not critique. The
           model is more likely to tell you your analysis is insightful than to tell you it
           contains an error.
         </p>
