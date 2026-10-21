@@ -67,7 +67,8 @@ function artifactLabelFromKey(key: string): string {
     const [, p, rest] = code;
     return `${p!.toUpperCase()} ${rest!.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}`;
   }
-  return tail;
+  // Keys without a practice code, e.g. `4.9.closing_confidence` → "Closing Confidence"
+  return tail.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 // Active reading time for a module — sums per-section values recorded

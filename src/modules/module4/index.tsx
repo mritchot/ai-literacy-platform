@@ -18,10 +18,12 @@ import {
   MODULE_4_KC_ITEMS_S4,
   MODULE_4_KC_ITEMS_S7,
 } from './knowledge-check-items';
+import { CLOSING_CONFIDENCE_REFLECTION } from './module4-content';
 import { OutputVerification } from './OutputVerification';
 import { PromptComparison } from './PromptComparison';
 import { R7Trigger } from '../../components/reference/R7Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
+import { ReflectionPrompt } from '../../components/shared/ReflectionPrompt';
 import { TaskDecomposition } from './TaskDecomposition';
 
 const MODULE_ID = 4;
@@ -147,18 +149,21 @@ function Section2({ module }: ModuleProp): JSX.Element {
         assistance but requiring your active direction. Most workplace tasks are not single
         activities; they are bundles of sub-tasks with different reliability profiles.
       </p>
-      <p className="m-0 mb-4 font-sans text-body text-body">
-        Expert users decompose the same way. When Anthropic interviewed 53 of its engineers and
-        researchers, one rule of thumb was to hand off a component when it is decoupled enough
-        from the rest
-        to stand alone, and another was to delegate where checking the result costs less than
-        producing it<Citation ids="huang-2025" pageKey="delegation-criteria" />. Even so, in the
-        earlier survey of 132 staff, more than half said they could fully delegate only a fifth
-        of their work or less, and the authors note that “fully delegate” itself ranged from no verification to
-        light oversight<Citation ids="huang-2025" pageKey="full-delegation-share" />.
-        Decomposition is not a route to handing everything off. It is how you find the few
-        components that can go and the many that need you.
+      <p className="m-0 mb-2 font-sans text-body text-body">
+        As you sort the components below, apply two tests to each one. Both come from
+        Anthropic’s interviews with 53 of its own engineers and researchers about the work they
+        hand to Claude<Citation ids="huang-2025" pageKey="delegation-criteria" />:
       </p>
+      <ul className="m-0 mb-4 list-disc space-y-1.5 pl-5 font-sans text-body text-body">
+        <li>
+          Does it stand alone? Hand off a component when it is decoupled enough from the rest of
+          the work.
+        </li>
+        <li>
+          Is checking cheaper than producing? Delegate where verifying the result takes little
+          effort compared with creating it.
+        </li>
+      </ul>
       <p className="m-0 mb-6 font-sans text-body text-body">
         One thing to watch for as you work through the exercise below: your choices interact.
         How you categorize one component can change the right answer for another. A step you
@@ -189,24 +194,20 @@ function Section3({ module }: ModuleProp): JSX.Element {
       sectionLabel="Section 3 · P9 Interactive"
       width="interactive"
     >
-      <p className="m-0 mb-6 font-sans text-body text-body">
+      <p className="m-0 mb-4 font-sans text-body text-body">
         You’ve decided what to delegate. The next judgment is how to describe it. Description
         breaks down into three dimensions
        <Citation ids="dakan-feller-2025" pageKey="description" />: <em>product</em> (what you
         want), <em>process</em> (how the AI should approach the task, and how you work through it
         together), and <em>performance</em> (how the AI should behave). Most underspecified
-        prompts fail on all three at once. This is the skill knowledge workers most often report
-        lacking. In one survey of 319, 72 said that even when they could see an output fell short, they
-        struggled to revise the query or steer the model to a better one
-       <Citation ids="lee-2025" pageKey="inhibitors" />. In the same survey, 45 said that
-        turning an intention into a query added effort
-       <Citation ids="lee-2025" pageKey="effort-shift-stewardship" />. The three dimensions below
-        give that effort a structure. Usage data points the same way: across countries and US
-        states, the education level needed to understand the model's responses tracked the
-        education level of the prompts almost perfectly, and the researchers found the model
-        responds in a highly sophisticated way mainly when the prompt is sophisticated
-       <Citation ids="appel-massenkoff-mccrory-2026" pageKey="prompt-response-education" />.
-        Read the weak prompt and its output, then rewrite it across all three dimensions.
+        prompts fail on all three at once. In one survey of 319 knowledge workers, 72 said that
+        even when they could see an output fell short, they struggled to revise the query or
+        steer the model to a better one<Citation ids="lee-2025" pageKey="inhibitors" />. The
+        three dimensions below give that revision a structure.
+      </p>
+      <p className="m-0 mb-6 font-sans text-body font-semibold text-ink">
+        Your task: read the weak prompt and its output, then rewrite the prompt across all three
+        dimensions and compare your rewrite with an improved version.
       </p>
       <PromptComparison />
     </SectionContainer>
@@ -459,13 +460,23 @@ function Section9({ module }: ModuleProp): JSX.Element {
          <Citation ids="lee-2025" pageKey="correlational-caveat" />. Still, the direction
           matters. Confidence is the intended product of a program like this one, and the
           confidence this program built is confidence in your evaluation process, not in the
-          tool's output. That is the kind the research links to more scrutiny. The moment the
-          verification workflow starts to feel unnecessary is the moment it is doing the most
-          work. If your Discernment practice fades as the outputs keep looking clean, you have
-          not become better at using AI; you have become a faster route for unverified content.
+          tool's output. That is the kind the research links to more scrutiny.
         </p>
+        <ReflectionPrompt
+          moduleId={4}
+          sectionId={9}
+          promptId="closing_confidence"
+          accent="discernment"
+          engagedEvent="closing_confidence_engaged"
+          savedEvent="closing_confidence_saved"
+          promptText={CLOSING_CONFIDENCE_REFLECTION}
+        />
         <p className="m-0">
-          There is a second reason to keep verifying routine outputs, beyond catching errors.
+          The moment the verification workflow starts to feel unnecessary is the moment it is
+          doing the most work. If your Discernment practice fades as the outputs keep looking
+          clean, you have not become better at using AI; you have become a faster route for
+          unverified content. There is a second reason to keep verifying routine outputs, beyond
+          catching errors.
           Evaluation is a skill, and skills decay without practice. The knowledge-worker survey
           warns that reserving critical thinking for high-stakes tasks is risky, because
           low-stakes work is where the skill stays exercised
@@ -475,7 +486,9 @@ function Section9({ module }: ModuleProp): JSX.Element {
          <Citation ids="huang-2025" pageKey="paradox-of-supervision" />. Some of those engineers
           solve a problem without AI now and then, on purpose, to stay sharp
          <Citation ids="huang-2025" pageKey="deliberate-practice" />. Treat one routine task a
-          week as a full-verification exercise, even when the output looks fine.
+          week as a full-verification exercise, even when the output looks fine. Start with the
+          second task in your Module 2 action commitment, the one you already delegate to AI that
+          may need more human oversight.
         </p>
         <p className="m-0">
           The diligence statement is the artifact that outlasts the program. The action commitment

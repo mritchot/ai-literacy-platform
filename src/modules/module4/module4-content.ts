@@ -21,9 +21,9 @@ export interface TaskCard {
   feedback: Record<P8Category, TaskCardFeedback>;
 }
 
-export const P8_SCENARIO = `Your task: You are a senior analyst at a mid-size professional services firm. Your managing director has asked you to produce a competitive landscape briefing for a prospective client meeting in 48 hours. The briefing must include: a summary of five competitor organizations (revenue, headcount, recent strategic moves), an analysis of how the prospect's market position compares, a set of three strategic recommendations tailored to the prospect's specific situation, and an executive summary suitable for the managing director to present directly.
+export const P8_SCENARIO = `You are a senior analyst at a mid-size professional services firm. Your managing director has asked you to produce a competitive landscape briefing for a prospective client meeting in 48 hours. The briefing must include: a summary of five competitor organizations (revenue, headcount, recent strategic moves), an analysis of how the prospect's market position compares, a set of three strategic recommendations tailored to the prospect's specific situation, and an executive summary suitable for the managing director to present directly.
 
-You have access to an AI tool. You have 48 hours. Decide how to allocate each component.`;
+You have access to an AI tool. You have 48 hours. Assign each of the six components below to Human-Only, AI-Assisted, or Fully Delegated, then select See Results.`;
 
 export const P8_CARDS: TaskCard[] = [
   {
@@ -176,9 +176,11 @@ export const P8_SUMMARY = `Decomposition pattern:
 
 The task you just decomposed had six components spanning three reliability levels. Two were appropriate for full delegation (data compilation, formatting): deterministic tasks with clear specifications and low verification burden. Two required active human-AI collaboration (comparative analysis, executive summary): AI provides structural acceleration and you provide evaluative judgment. Two required human-only execution (data verification, strategic recommendations): the model lacks access to the ground truth or the relationship context that makes the output valuable.
 
+Two of six is a small fully delegated share, and heavy users report one too. In a survey of 132 Anthropic engineers and researchers, more than half said they could fully delegate only a fifth of their work or less, and the authors note that respondents may have read "fully delegate" as anything from no verification to light oversight (Huang et al., Dec 2025). Decomposition is not a route to handing everything off. It is how you find the few components that can go and the many that need you.
+
 This is the Delegation competency in practice. It is a component-level assessment of where the tool adds value and where it introduces risk, not a single decision about whether to "use AI." The decomposition you just performed is the first step in every AI-assisted work cycle that follows in this module.`;
 
-export const P8_REFLECTION = `Think about a deliverable you produce regularly in your current role. Without naming it, mentally list its components: the sub-tasks that go into producing it. Which components would you assign to each of the three categories? Where is the boundary between "AI-assisted" and "fully delegated" least clear? One or two sentences.`;
+export const P8_REFLECTION = `Think about a deliverable you produce regularly in your current role. You don't need to name it. List three to five of its components and put each in one of the three categories: Human-Only, AI-Assisted, or Fully Delegated. For the component you were least sure about, what would you need to know to decide? A short list is enough.`;
 
 // ─── P9: Prompt Reformulation ─────────────────────────────────────
 
@@ -212,7 +214,7 @@ export const P9_ANNOTATIONS: P9Annotation[] = [
   },
   {
     label: 'Process description gap',
-    text: 'The output lists categories but doesn’t connect them to the team’s actual vendor review process. The compliance manager has a specific workflow (intake forms, evaluation criteria, scoring rubrics) and none of it appears here because the prompt didn’t tell the model how to approach the task. Without process constraints, the model produces a generic framework rather than mapping to the existing one.',
+    text: 'The output lists categories but doesn’t connect them to the team’s actual vendor review process. The compliance manager has a specific workflow (intake forms, evaluation criteria, scoring matrices) and none of it appears here because the prompt didn’t tell the model how to approach the task. Without process constraints, the model produces a generic framework rather than mapping to the existing one.',
   },
   {
     label: 'Performance description gap',
@@ -220,21 +222,21 @@ export const P9_ANNOTATIONS: P9Annotation[] = [
   },
 ];
 
-export const P9_REFORMULATED_PROMPT = `"I'm briefing my compliance team (6 people, all experienced in vendor review but new to AI-specific regulation) on how the EU AI Act's transparency and risk-classification requirements change our current vendor evaluation process. We use a 30-point scoring rubric organized by data handling, operational risk, and contractual terms. Write a 400-word briefing memo (not a general summary) that maps the three most relevant regulatory changes directly to specific sections of our existing rubric, identifies which evaluation criteria need to be added or modified, and flags two vendor categories that will require re-review within 90 days. Use direct, action-oriented language. Skip the 'it is recommended' phrasing; just tell the team what to do and by when."`;
+export const P9_REFORMULATED_PROMPT = `"I'm briefing my compliance team (6 people, all experienced in vendor review but new to AI-specific regulation) on how the EU AI Act's transparency and risk-classification requirements change our current vendor evaluation process. We use a 30-point scoring matrix organized by data handling, operational risk, and contractual terms. Write a 400-word briefing memo (not a general summary) that maps the three most relevant regulatory changes directly to specific sections of our existing scoring matrix, identifies which evaluation criteria need to be added or modified, and flags two vendor categories that will require re-review within 90 days. Use direct, action-oriented language. Skip the 'it is recommended' phrasing; just tell the team what to do and by when."`;
 
 export const P9_IMPROVED_OUTPUT = `**Team Briefing: EU AI Act Impact on Vendor Review Process**
 
-Three changes in the EU AI Act directly affect how we score vendors on the 30-point rubric. Here's what shifts and what you need to do.
+Three changes in the EU AI Act directly affect how we score vendors on the 30-point scoring matrix. Here's what shifts and what you need to do.
 
-**1. Transparency documentation → Rubric Section 2 (Operational Risk), Criteria 2.3–2.5**
+**1. Transparency documentation → Matrix Section 2 (Operational Risk), Criteria 2.3–2.5**
 
-High-risk AI vendors must now provide technical documentation covering training data sources, model performance metrics, and known limitations. Our current criteria 2.3 ("vendor provides system documentation") is too broad. Replace it with two scored items: (a) vendor supplies a model card or equivalent technical summary, and (b) vendor discloses training data provenance for any system processing personal data. Add both to the rubric by end of this month.
+High-risk AI vendors must now provide technical documentation covering training data sources, model performance metrics, and known limitations. Our current criteria 2.3 ("vendor provides system documentation") is too broad. Replace it with two scored items: (a) vendor supplies a model card or equivalent technical summary, and (b) vendor discloses training data provenance for any system processing personal data. Add both to the matrix by end of this month.
 
-**2. Risk classification → New Rubric Section (add as Section 4: AI Risk Tier)**
+**2. Risk classification → New Matrix Section (add as Section 4: AI Risk Tier)**
 
 The Act classifies AI systems into four risk tiers. Any vendor deploying a system classified as "high-risk" triggers mandatory conformity assessment and human oversight requirements. Add a new scoring section: AI Risk Tier Assessment, with three criteria covering the vendor's self-classification, supporting evidence, and conformity documentation. Score on a 1–5 scale consistent with existing sections.
 
-**3. Accountability provisions → Rubric Section 3 (Contractual Terms), Criteria 3.1 and 3.6**
+**3. Accountability provisions → Matrix Section 3 (Contractual Terms), Criteria 3.1 and 3.6**
 
 Deploying organizations bear accountability for AI outputs even when generated by third-party systems. Update criterion 3.1 (liability allocation) to explicitly address AI-generated outputs, and add a new criterion 3.6 requiring vendors to provide incident-response protocols for AI system failures.
 
@@ -243,9 +245,11 @@ Deploying organizations bear accountability for AI outputs even when generated b
 1. **Data analytics vendors** (4 active contracts): most likely to fall under high-risk classification due to automated decision-making on personal data. Begin re-review this week.
 2. **Customer-facing chatbot vendors** (2 active contracts): transparency documentation requirements apply immediately. Request model cards from both vendors by Friday.
 
-I'll distribute updated rubric templates by Wednesday. Flag questions before then.`;
+I'll distribute updated matrix templates by Wednesday. Flag questions before then.`;
 
-export const P9_REFLECTION = `Compare the two outputs. Of the three Description dimensions (product, process, performance), which made the biggest difference in this case? Now look at your own reformulation above. Which dimension did you specify most clearly, and which would you strengthen if you rewrote it? One or two sentences.`;
+export const P9_AFTER_NOTE = `Better description changed the fit of this memo, not the accuracy of its claims. Every obligation, risk tier, and deadline in it is a specific factual claim. Check each one against the Act's text before the team acts on it. One has already moved: in July 2026 the EU postponed the obligations for stand-alone high-risk systems to December 2027 (Regulation (EU) 2026/1744), so "must now provide" in point 1 of the After memo is no longer accurate.`;
+
+export const P9_REFLECTION = `Compare the two outputs. Usage data shows the same pattern at scale. Across 117 countries and 50 US states, the years of education needed to understand the model's responses tracked the years needed to understand the prompts almost perfectly, and the model answered in a sophisticated way mainly when the prompt was sophisticated (Appel, Massenkoff & McCrory, 2026, pp. 34–35). Of the three Description dimensions (product, process, performance), which made the biggest difference in this case? Now look at your own reformulation above. Which dimension did you specify most clearly, and which would you strengthen if you rewrote it? One or two sentences.`;
 
 // ─── P10: Output Verification ─────────────────────────────────────
 
@@ -266,9 +270,9 @@ export interface VerificationElement {
   feedback: Record<Classification, VerificationFeedback>;
 }
 
-export const P10_SCENARIO = `Your situation: You are a senior operations analyst. Your director asked you to use AI to draft a two-page internal briefing on how three competitor firms are applying AI to supply chain operations: what they've announced, what results they've reported, and what your organization should consider in response. You delegated the drafting to AI with a well-specified prompt (audience, format, constraints). The output arrived looking polished and professional. Your director plans to circulate it to the leadership team tomorrow morning.
+export const P10_SCENARIO = `You are a senior operations analyst. Your director asked you to use AI to draft a two-page internal briefing on how three competitor firms are applying AI to supply chain operations: what they've announced, what results they've reported, and what your organization should consider in response. You delegated the drafting to AI with a well-specified prompt (audience, format, constraints). The output arrived looking polished and professional. Your director plans to circulate it to the leadership team tomorrow morning.
 
-Before you send it forward, you need to verify the output. Below is the AI-generated briefing. Read it, then evaluate each flagged element.`;
+Before you send it forward, you need to verify the output. Below is the AI-generated briefing. Read it, then classify each of the six flagged elements as Include, Verify, or Flag.`;
 
 // The briefing renders as paragraphs with six embedded highlight markers.
 // Each segment of `P10_BRIEFING_SEGMENTS` is either plain text (`marker:
@@ -494,11 +498,13 @@ Verify: dependency risk (Element 6): The recommendations were not generated clai
 
 The triage heuristic has two factors. Count the specificity signals (one signal vs. compounding signals) AND estimate the verification cost (clear search target vs. hard-to-verify). These compound. Element 1 was high-signal AND hard-to-verify, which puts it at flag, high risk. Element 2 was single-signal AND clear search target, which puts it at verify, medium risk. Element 4 was self-managed, with no verification cost, which puts it at include, low risk. The skill is reading both axes at once, then matching the risk profile to your available verification time.`;
 
+export const P10_REFLECTION = `Pick one AI-generated output you used at work in the last two weeks. Using the two-factor triage (how many specificity signals, how hard to verify), name one element you would flag, one you would verify, and one you could include as written. Which of them did you actually check before you used it? Two or three sentences.`;
+
 // ─── P11: Iterative Refinement ────────────────────────────────────
 
-export const P11_SCENARIO = `Your task: You are an HR business partner at a mid-size technology company. The Chief People Officer has asked you to draft an internal communication to a 200-person engineering department announcing a reorganization. Three teams are being merged into two, reporting lines are changing for roughly 60 people, and two team lead positions are being eliminated (the affected individuals have already been notified privately). The email will go out Monday morning. It needs to be clear, honest, and specific enough that people know what's changed, without generating panic or a wave of resignations.
+export const P11_SCENARIO = `You are an HR business partner at a mid-size technology company. The Chief People Officer has asked you to draft an internal communication to a 200-person engineering department announcing a reorganization. Three teams are being merged into two, reporting lines are changing for roughly 60 people, and two team lead positions are being eliminated (the affected individuals have already been notified privately). The email will go out Monday morning. It needs to be clear, honest, and specific enough that people know what's changed, without generating panic or a wave of resignations.
 
-You've decided to use AI to draft the communication. The exercise below walks you through three refinement turns, practicing the Description-Discernment loop on each iteration.`;
+You've decided to use AI to draft the communication. The exercise below walks you through three refinement turns, practicing the Description-Discernment loop on each iteration. You evaluate the first two drafts, then write a refinement of your own in the third turn and compare it with a sample.`;
 
 export const P11_TURN1_PROMPT = `Your initial prompt: "Write an email to the engineering department announcing a reorganization. Three teams are being merged into two and some reporting lines are changing."`;
 
@@ -651,24 +657,28 @@ export const P11_REFLECTION = `You evaluated three drafts and wrote one refineme
 // content. P12_SCENARIO / P12_EXEMPLAR / etc. remain plain strings
 // below since they don't carry inline citations.
 
-export const P12_SCENARIO = `Your situation: You've just completed the competitive landscape briefing from the output verification scenario, the one with the AI-generated competitor profiles that required verification. Imagine you caught the errors, verified the data against primary sources, rewrote the strategic recommendations using your own meeting notes, and sent the final briefing to your director. The briefing is going to the leadership team tomorrow.
+export const P12_SCENARIO = `Go back to the internal briefing from the output verification exercise: the AI draft on how Meridian, Praxon, and Cascade apply AI to their supply chains. Imagine you checked each element as the triage summary recommends. You removed what you could not confirm, checked the figures against company materials, rewrote the recommended actions from the confirmed figures, and sent the final briefing to your director. It goes to the leadership team tomorrow.
 
-Your organization has adopted the practice of appending a brief AI diligence statement to any deliverable that involved AI assistance. Write the statement for this briefing.`;
+Your organization has adopted the practice of appending a brief AI diligence statement to any deliverable that involved AI assistance. Write the statement for this briefing, then save it to compare it with an exemplar statement.`;
 
-export const P12_EXEMPLAR = `**AI Diligence Statement: Competitive Landscape Briefing**
+export const P12_EXEMPLAR = `**AI Diligence Statement: Competitor AI in Supply Chain Operations**
 
-**Delegation:** Competitor data compilation (profiles, revenue, headcount, recent announcements) was fully delegated to AI using a structured prompt specifying five competitors and four data categories. Comparative analysis was AI-assisted: AI generated the framework, which I reweighted based on the prospect's priorities from our initial meeting. Strategic recommendations and the executive summary were human-authored from verified inputs. Formatting was fully delegated.
+**Delegation:** The first draft (three competitor profiles and three recommended actions) was fully delegated to AI. The final profiles are AI-assisted: I kept the AI's text where verification supported it and cut or corrected the rest. The recommended actions are human-authored from the verified inputs.
 
-**Description:** The prompt specified a two-page internal briefing for the leadership team covering competitor profiles, comparative analysis, strategic recommendations, and an executive summary. Constraints: factual claims must be verifiable, no speculative projections, direct tone.
+**Description:** The prompt specified a two-page internal briefing for the leadership team on how three named competitors apply AI to supply chain operations: what each announced, what results each reported, and what we should consider in response. Constraints: factual claims attributed to a named source, no speculative projections, direct tone.
 
-**Discernment:** Verification identified two fabricated elements (a nonexistent HBR citation and a fabricated competitor CFO quote), both removed. Three data points were checked against annual reports; one unconfirmable figure was removed.
+**Discernment:** Verification identified two fabricated elements (a nonexistent HBR citation and a fabricated competitor CFO quote), both removed. Three figures were checked against company materials; one could not be confirmed, so it was removed and no recommended action relies on it.
 
-**Diligence:** Two limitations: (1) competitive data reflects publicly available information only, and (2) comparative analysis weights are based on a single initial meeting with the prospect. Strategic recommendations reflect my professional judgment informed by the verified data.`;
+**Diligence:** Two limitations: (1) competitor results are company-reported, and Cascade's figures have no independent verification, which the briefing states; (2) the briefing draws on public announcements only. The recommended actions reflect my professional judgment informed by the verified data. Prepared with Claude (Anthropic); I reviewed all AI-generated content and take full responsibility for the briefing.`;
 
 export const P12_EFFECTIVENESS = `What makes the exemplar effective:
 
 The exemplar does four things your own statement may or may not have included. Read these as a reference for the next statement you write at work, not as a judgment on your draft.
 
-First, it uses the 4D vocabulary naturally, not as a checklist. "Fully delegated," "AI-assisted," "human-authored" are Delegation terms doing real descriptive work: they tell the reader exactly where AI contributed and where it didn't. Second, it names what was verified and what was found: the fabricated citation, the fabricated quote, the unconfirmable figure. This is Discernment made visible: not just "I checked the output" but "I checked it, found these specific problems, and here is what I did about each one." Third, it acknowledges limitations honestly: the data is public-only, the priority weighting reflects a single meeting. This is accountability, not defensiveness. Fourth, it is concise enough to actually append to a deliverable. A diligence statement that takes longer to read than the briefing it accompanies won't be used. The exemplar covers all four competencies in a single, brief block of structured prose.`;
+First, it uses the 4D vocabulary naturally, not as a checklist. "Fully delegated," "AI-assisted," "human-authored" are Delegation terms doing real descriptive work: they tell the reader exactly where AI contributed and where it didn't. Second, it names what was verified and what was found: the fabricated citation, the fabricated quote, the unconfirmable figure. This is Discernment made visible: not just "I checked the output" but "I checked it, found these specific problems, and here is what I did about each one." Third, it acknowledges limitations honestly: the results are company-reported, and the data is public-only. It also names the tool and says who answers for the result, as the framework's authors do in their own statement (Dakan & Feller, 2025, p. 7). This is accountability, not defensiveness. Fourth, it is concise enough to actually append to a deliverable. A diligence statement that takes longer to read than the briefing it accompanies won't be used. The exemplar covers all four competencies in a single, brief block of structured prose.`;
 
 export const P12_REFLECTION = `Think about the last deliverable you produced at work that involved AI assistance. If you had appended a diligence statement like the exemplar above, what would have been different in the document itself, in how your manager perceived it, or in how you thought about your own process? One or two sentences.`;
+
+// ─── S9: Program closing ──────────────────────────────────────────
+
+export const CLOSING_CONFIDENCE_REFLECTION = `Think of the AI task you do most often at work. Over this program, which grew more: your confidence that the tool gets that task right, or your confidence that you can tell when it has not? Name one check you will keep running on that task even when the output looks fine.`;
