@@ -273,7 +273,8 @@ export function R2DelegationGuide(): JSX.Element {
           internal strategy, anything under NDA — whether that material can enter an external
           tool at all is an organizational policy decision, not an individual delegation decision.
           The framework covers the tool side of this inside Delegation: Platform Awareness includes
-          evaluating AI tools against operational and regulatory needs. Whether your material may enter a given tool stays your organization&rsquo;s call.
+          evaluating AI tools against operational and regulatory needs. Whether your material may
+          enter a given tool stays your organization&rsquo;s call.
         </p>
         <p className="m-0 text-body-sm text-body" style={{ lineHeight: 1.55, marginTop: 8 }}>
           Check your organization&rsquo;s AI-use policy before the flowchart, not after. If no

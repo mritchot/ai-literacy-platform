@@ -329,7 +329,7 @@ export function KnowledgeCheck({
           </div>
           {confidence && (
             <p className="m-0 mt-2 font-sans text-[12.5px] text-secondary">
-              You rated this {CONFIDENCE_LABEL[confidence]}.
+              Your confidence rating: {CONFIDENCE_LABEL[confidence]}.
               {confidence === 'certain' &&
                 !selectedOption.isPreferred &&
                 ' A confident miss is the one most worth a second look: compare your reasoning with the recommended response.'}

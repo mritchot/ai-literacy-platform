@@ -54,11 +54,15 @@ export function computeCalibration(
   return { bands, rated, certainMisses };
 }
 
-/** Certain vs. guessing comparison, or null when either level is unrated. */
+/** A one-item band would let a single answer decide the comparison. */
+const MIN_RATED_PER_BAND = 2;
+
+/** Certain vs. guessing comparison, or null when either level has too few ratings. */
 export function calibrationVerdict(summary: CalibrationSummary): string | null {
   const certain = summary.bands.find((b) => b.level === 'certain');
   const guessing = summary.bands.find((b) => b.level === 'guessing');
-  if (!certain?.rated || !guessing?.rated) return null;
+  if (!certain || !guessing) return null;
+  if (certain.rated < MIN_RATED_PER_BAND || guessing.rated < MIN_RATED_PER_BAND) return null;
   return certain.preferred / certain.rated > guessing.preferred / guessing.rated
     ? 'Answers rated Certain matched the recommended response more often than guesses.'
     : 'Answers rated Certain matched the recommended response no more often than guesses, so confidence is not yet tracking accuracy.';

@@ -143,7 +143,7 @@ const KC_4_3: KnowledgeCheckItemData = {
       feedbackTitle: 'Dangerous misread of specificity indicators',
       feedbackTone: 'error',
       feedbackText:
-        'The paragraph has every surface feature of credibility: a recognized institution, plausible authors, specific page numbers, a precise projection. That surface credibility is exactly what the next-token prediction × knowledge pair produces. Page numbers do not add reliability; they add specificity to a fabricated reference, making it harder to dismiss on first reading. The model generates page numbers because citations in financial reports typically include them. It is pattern completion, not source retrieval.',
+        'The paragraph has every surface feature of credibility: a recognized institution, plausible authors, specific page numbers, a precise projection. That surface credibility is exactly what the next-token prediction × knowledge pair produces. Page numbers do not add reliability; they add specificity to a reference that may be fabricated, making it harder to dismiss on first reading. A model can generate page numbers simply because citations in financial reports typically include them. That is pattern completion, not source retrieval, and only a lookup tells you which one happened.',
     },
     {
       id: 'c',

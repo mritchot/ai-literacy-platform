@@ -37,7 +37,7 @@ export function KCCalibration({
           <Fragment key={b.level}>
             {i > 0 && ' · '}
             <strong className="text-ink">
-              {CONFIDENCE_LABEL[b.level]}, {b.preferred} of {b.rated} preferred
+              {CONFIDENCE_LABEL[b.level]}: {b.preferred} of {b.rated} preferred
             </strong>
           </Fragment>
         ))}
