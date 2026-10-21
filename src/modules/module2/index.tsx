@@ -202,15 +202,23 @@ function Section2({ module }: ModuleProp): JSX.Element {
           and a quality check. Real work often moves between the two, even inside a single
           project.
         </p>
-        <p className="m-0">
-          The framework calls these two ways of working modalities and names a third, agency: you
-          configure an AI to carry out future tasks on its own, sometimes for other people. Its
-          examples are game characters, tutors, and chatbots that someone sets up this way, which
-          is different from using a chatbot yourself. The framework says agency requires a
-          sophisticated understanding of what AI can and cannot do
-          <Citation ids="dakan-feller-2025" pageKey="modalities" />. This program stops at the
-          first two. The judgment it builds still applies if you later set up AI to act on its own.
-        </p>
+        <EvidenceNote
+          id="m2-s2-agency"
+          moduleId={2}
+          sectionId={2}
+          label="A third way of working"
+        >
+          <p className="m-0">
+            The framework calls these two ways of working modalities and names a third, agency:
+            you configure an AI to carry out future tasks on its own, sometimes for other people.
+            Its examples are game characters, tutors, and chatbots that someone sets up this way,
+            which is different from using a chatbot yourself. The framework says agency requires a
+            sophisticated understanding of what AI can and cannot do
+            <Citation ids="dakan-feller-2025" pageKey="modalities" />. This program stops at the
+            first two. The judgment it builds still applies if you later set up AI to act on its
+            own.
+          </p>
+        </EvidenceNote>
       </div>
 
       <div className="my-8">
@@ -235,11 +243,8 @@ function Section2({ module }: ModuleProp): JSX.Element {
           learning cost. Some of Anthropic's engineers describe losing the incidental learning
           that came from debugging a problem by hand: reading the docs and code around it and
           building a model of the system on the way
-          <Citation ids="huang-2025" pageKey="paradox-of-supervision" />. Only 13 of 319 knowledge
-          workers in one survey named skill development as a reason to think critically about AI
-          output
-          <Citation ids="lee-2025" pageKey="skill-development-motivator" />. Asking the tool to teach is how some
-          of that learning comes back.
+          <Citation ids="huang-2025" pageKey="paradox-of-supervision" />. Asking the tool to
+          teach is how some of that learning comes back.
         </p>
         <p className="m-0">
           <em>Validation</em> is the smallest category at under 3%, and nearly all of it is
@@ -258,15 +263,28 @@ function Section2({ module }: ModuleProp): JSX.Element {
           <Citation ids="lee-2025" pageKey="verification-practices" />. The behavioral data shows
           that people rarely use AI as a checker. It cannot show how often they check AI.
         </p>
-        <p className="m-0">
-          Employers, meanwhile, are asking for more AI-adjacent skills. Between 2023 and 2025,
-          quality assurance entered the posting requirements of 87 more US occupations, and
-          process optimization of 114 more. The McKinsey Global Institute groups them with
-          teaching as skills used to redesign work with AI, supervise and verify AI systems, or
-          train people to use them
-          <Citation ids="mgi-agents-robots-us-2025" pageKey="qa-demand" />. People rarely ask AI
-          to check their work, and employers increasingly want people who can check AI's.
-        </p>
+        <EvidenceNote
+          id="m2-s2-checking"
+          moduleId={2}
+          sectionId={2}
+          label="More on checking AI's work"
+        >
+          <p className="m-0">
+            Employers are asking for more AI-adjacent skills. Between 2023 and 2025, quality
+            assurance entered the posting requirements of 87 more US occupations, and process
+            optimization of 114 more. The McKinsey Global Institute groups them with teaching as
+            skills used to redesign work with AI, supervise and verify AI systems, or train people
+            to use them
+            <Citation ids="mgi-agents-robots-us-2025" pageKey="qa-demand" />. People rarely ask AI
+            to check their work, and employers increasingly want people who can check AI's.
+          </p>
+          <p className="m-0">
+            Few workers treat that checking as a way to build their own skill. Only 13 of 319
+            knowledge workers in one survey named skill development as a reason to think
+            critically about AI output
+            <Citation ids="lee-2025" pageKey="skill-development-motivator" />.
+          </p>
+        </EvidenceNote>
         <h3 className="m-0 mt-6 font-sans text-h3 font-semibold text-ink">
           Automation patterns: 43% of all conversations
           <Citation ids="handa-2025" pageKey="aug-auto-split-57-43" />
@@ -289,20 +307,14 @@ function Section2({ module }: ModuleProp): JSX.Element {
         <p className="m-0 mt-4">
           The aggregate split (57% augmentation, 43% automation) is the January 2025 behavioral
           baseline. It describes what users actually do, measured by analyzing conversation
-          transcripts, not what they say they do when asked. The split moves: by August 2025
-          automation had edged ahead (49% to 47%), and by November 2025 augmentation led again at
-          52% to 45%, with about 3% of conversations fitting neither category
+          transcripts, not what they say they do when asked. The difference between what users
+          do and what they say they do matters, and the gap is larger than you might expect. The
+          split also moves: by August 2025 automation had edged ahead (49% to 47%), and by
+          November 2025 augmentation led again at 52% to 45%, with about 3% of conversations
+          fitting neither category
           <Citation ids="appel-massenkoff-mccrory-2026" pageKey="aug-auto-52-45" />. The
           labeled percentages for the five patterns above come from the January wave; later
-          reports chart the same five patterns, and directive use is the one that moved most. The
-          difference between what users do and what they say they do matters, and the gap is
-          larger than you might expect. One caution on
-          the number itself. This 57% is a share of conversations on one platform. It is
-          unrelated to the 57% of US work hours that McKinsey Global Institute estimates current
-          technology could automate in theory
-          <Citation ids="mgi-agents-robots-us-2025" pageKey="not-a-forecast" />. That figure
-          measures technical feasibility, not observed use, and its authors state it is not a
-          forecast of job losses. The two numbers coincide; they do not corroborate each other.
+          reports chart the same five patterns, and directive use is the one that moved most.
         </p>
         <p className="m-0">
           One more thing about the behavioral data before you explore it yourself: these patterns
@@ -369,18 +381,11 @@ function Section3({ module }: ModuleProp): JSX.Element {
         user population, not the full workforce.
       </p>
       <p className="m-0 mb-6 font-sans text-body-sm text-secondary" style={{ lineHeight: 1.55 }}>
-        A second single-platform dataset shows how much the population matters. OpenRouter is a
-        developer-facing service that routes requests to hundreds of models. There, programming
-        grew from about 11% to more than half of all usage by volume during 2025
-        <Citation ids="openrouter-a16z-2025" pageKey="programming-share-50" />. Programming and
-        technology made up more than 80% of the OpenRouter traffic sent to Claude
-        <Citation ids="openrouter-a16z-2025" pageKey="claude-programming-80" />. In aggregate
-        volume, creative roleplay nearly matched programming
-        <Citation ids="openrouter-a16z-2025" pageKey="roleplay-volume-49" />. That study excludes
-        enterprise and locally hosted use
-        <Citation ids="openrouter-a16z-2025" pageKey="scope-limits-57" />, so it is a third
-        population, not a correction to this one. Every usage dataset is a window
-        onto its own users.
+        Other platforms serve other users. On one developer-facing service that routes
+        requests to hundreds of models, programming grew from about 11% to more than half of
+        all usage by volume during 2025
+        <Citation ids="openrouter-a16z-2025" pageKey="programming-share-50" />. Every usage
+        dataset is a window onto its own users.
       </p>
       <AugAutoDashboard
         occupationCategories={augmentationAutomation.occupation_usage_shares.categories}
