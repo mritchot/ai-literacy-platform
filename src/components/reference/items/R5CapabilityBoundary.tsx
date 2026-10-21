@@ -43,7 +43,7 @@ const RELIABLE_ROWS: ReliableRow[] = [
   },
   {
     task: 'Reformatting and restructuring',
-    why: 'Deterministic tasks with clear output specifications. Token-level manipulation within well-defined patterns.',
+    why: 'Tasks with one well-defined correct output and a clear specification. Token-level manipulation within well-defined patterns.',
     notes: 'Format + audience + length spec → reliable output.',
   },
   {
@@ -160,7 +160,7 @@ const FAILS_CATEGORIES: FailsCategory[] = [
       },
       {
         failsAt: 'Multi-document synthesis',
-        why: 'Multiple documents consume context rapidly; later documents may be underprocessed',
+        why: 'Multiple documents consume context rapidly; documents in the middle of the stack are the most likely to be underprocessed',
         instead: 'Process documents individually, then synthesize yourself',
       },
     ],
