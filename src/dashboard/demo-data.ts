@@ -31,6 +31,7 @@
 import type {
   AssessmentRecord,
   AssessmentResponse,
+  KCConfidence,
   LearnerProgressState,
   KnowledgeCheckResult,
 } from '../contexts/LearnerProgressContext';
@@ -88,6 +89,26 @@ const KC_RESPONSES: Record<string, KnowledgeCheckResult> = {
   '1.3.ic_1_2': kc('b', true, at(7, 41)),
   '1.3.ic_1_3': kc('c', true, at(9, 53)),
 };
+
+// Confidence ratings on the eight demo KCs, kept beside KC_RESPONSES so the
+// calibration row renders in portfolio mode. KC-1.2 is the confident miss.
+const KC_CONFIDENCE: Record<string, KCConfidence> = {
+  '1.7.kc_1_1': 'fairly',
+  '1.7.kc_1_2': 'certain',
+  '1.7.kc_1_3': 'certain',
+  '1.7.kc_1_4': 'certain',
+  '2.7.kc_2_1': 'fairly',
+  '2.7.kc_2_2': 'guessing',
+  '2.7.kc_2_3': 'guessing',
+  '2.7.kc_2_4': 'certain',
+};
+
+const KC_RESPONSES_RATED: Record<string, KnowledgeCheckResult> = Object.fromEntries(
+  Object.entries(KC_RESPONSES).map(([key, result]) => {
+    const confidence = KC_CONFIDENCE[key];
+    return [key, confidence ? { ...result, confidence } : result];
+  }),
+);
 
 // ── Reflections ─────────────────────────────────────────────────────────
 const REFLECTIONS: Record<string, string> = {
@@ -229,7 +250,7 @@ export const DEMO_PROGRESS: LearnerProgressState = {
   scrolledSections: { ...completed },
   interactionCompleteSections: { ...completed },
   completedSections: {}, // legacy field; the new split maps are authoritative
-  knowledgeChecks: KC_RESPONSES,
+  knowledgeChecks: KC_RESPONSES_RATED,
   reflections: REFLECTIONS,
   viewedTabs: VIEWED_TABS,
   engagedFlags: ENGAGED_FLAGS,
@@ -446,7 +467,7 @@ const POST_DEMO = demoAssessment('post', POST_ASSESSMENT_ITEMS, POST_ANSWERS, at
 const profileMin = 13 * DAY + 20;
 
 const KC_RESPONSES_COMPLETE: Record<string, KnowledgeCheckResult> = {
-  ...KC_RESPONSES,
+  ...KC_RESPONSES_RATED,
   '3.10.kc_3_1': kc('b', true, at(3 * DAY + 5, 14)),
   '3.10.kc_3_2': kc('a', true, at(3 * DAY + 5, 52)),
   '3.10.kc_3_3': kc('b', true, at(3 * DAY + 6, 37)),

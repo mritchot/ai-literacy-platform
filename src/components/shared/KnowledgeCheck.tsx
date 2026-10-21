@@ -5,8 +5,11 @@
 
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
-import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { useLearnerProgress, type KCConfidence } from '../../contexts/LearnerProgressContext';
+import { CONFIDENCE_LABEL, isConfidence } from '../../utils/kc-calibration';
 import { scrollBehavior } from '../../utils/motion';
+import { CheckSources, type CheckSource } from './CheckSources';
+import { ConfidenceRating } from './ConfidenceRating';
 import { Icon } from './Icon';
 import { nextRadioIndex } from './radio-group-nav';
 import { Overline } from './Overline';
@@ -27,6 +30,8 @@ interface KnowledgeCheckOption {
   feedbackTitle: string;
   feedbackText: string;
   feedbackTone: KnowledgeCheckTone;
+  /** Citations for claims in `feedbackText`, rendered as chips after it. */
+  sources?: CheckSource[];
 }
 
 export interface KnowledgeCheckItemData {
@@ -71,6 +76,9 @@ export function KnowledgeCheck({
   const stored = getKnowledgeCheck(moduleId, sectionId, item.id);
   const [selected, setSelected] = useState<string | null>(stored?.selectedOptionId ?? null);
   const [submitted, setSubmitted] = useState<boolean>(Boolean(stored));
+  const [confidence, setConfidence] = useState<KCConfidence | null>(
+    isConfidence(stored?.confidence) ? stored.confidence : null,
+  );
   const [showAll, setShowAll] = useState<boolean>(false);
 
   // Ref to the post-submit feedback callout. After submission we scroll
@@ -88,16 +96,18 @@ export function KnowledgeCheck({
     if (!selected || submitted) return;
     const option = item.options.find((o) => o.id === selected);
     if (!option) return;
+    const rating = confidence ? { confidence } : {};
     recordKnowledgeCheck(moduleId, sectionId, item.id, {
       selectedOptionId: option.id,
       isPreferred: option.isPreferred,
       timestamp: Date.now(),
+      ...rating,
     });
     track({
       type: `${item.id}_submitted`,
       moduleId,
       sectionId,
-      payload: { optionId: option.id, isPreferred: option.isPreferred },
+      payload: { optionId: option.id, isPreferred: option.isPreferred, ...rating },
     });
     didJustSubmitRef.current = true;
     setSubmitted(true);
@@ -111,6 +121,9 @@ export function KnowledgeCheck({
   useEffect(() => {
     if (submitted && didJustSubmitRef.current && feedbackRef.current) {
       didJustSubmitRef.current = false;
+      // Submit unmounts the focused button and disables the radios, so
+      // focus would otherwise fall to <body> (WCAG 2.4.3).
+      feedbackRef.current.focus({ preventScroll: true });
       feedbackRef.current.scrollIntoView({ behavior: scrollBehavior(), block: 'nearest' });
     }
   }, [submitted]);
@@ -153,7 +166,7 @@ export function KnowledgeCheck({
             previous hardcoded #4A5A66 stayed dark and went near-
             invisible on the dark card surface. */}
         <Overline style={{ color: 'rgb(var(--info))' }}>
-          Knowledge check · Tier 1 · Recall
+          Knowledge check · Applied scenario
         </Overline>
         <Overline style={{ color: 'rgb(var(--muted))' }}>
           Item {itemNumber} of {totalItems} · Obj. {item.objectiveRef}
@@ -273,13 +286,14 @@ export function KnowledgeCheck({
       </fieldset>
 
       {!submitted && (
-        <div className="mt-4 flex justify-end">
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <ConfidenceRating idBase={`kc-${item.id}`} value={confidence} onChange={setConfidence} />
           <button
             type="button"
             onClick={submit}
             disabled={!selected}
             aria-disabled={!selected}
-            className="bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] transition-colors duration-[160ms] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
+            className="self-end sm:self-auto bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] transition-colors duration-[160ms] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
           >
             Submit response
           </button>
@@ -288,17 +302,20 @@ export function KnowledgeCheck({
 
       {/* Always-mounted live region: content injected on submit is
           reliably announced (a region that mounts together with its
-          content often isn't). The visual callout below is separate. */}
+          content often isn't). It carries only the feedback body: the
+          callout below takes focus on submit and announces the title as
+          its group label, so neither part is read twice. */}
       <span aria-live="polite" className="sr-only">
-        {submitted && selectedOption
-          ? `${selectedOption.feedbackTitle}. ${selectedOption.feedbackText}`
-          : ''}
+        {submitted && selectedOption ? selectedOption.feedbackText : ''}
       </span>
 
       {submitted && selectedOption && (
         <div
           ref={feedbackRef}
-          className="mt-4"
+          tabIndex={-1}
+          role="group"
+          aria-label={selectedOption.feedbackTitle}
+          className="mt-4 focus:outline-none"
           style={{
             background: TONE_BG[selectedOption.feedbackTone],
             borderLeft: `3px solid ${TONE_BORDER[selectedOption.feedbackTone]}`,
@@ -308,7 +325,16 @@ export function KnowledgeCheck({
           <Overline className="mb-1.5">{selectedOption.feedbackTitle}</Overline>
           <div className="font-sans text-body-sm leading-relaxed text-body">
             {selectedOption.feedbackText}
+            <CheckSources sources={selectedOption.sources} />
           </div>
+          {confidence && (
+            <p className="m-0 mt-2 font-sans text-[12.5px] text-secondary">
+              Your confidence rating: {CONFIDENCE_LABEL[confidence]}.
+              {confidence === 'certain' &&
+                !selectedOption.isPreferred &&
+                ' A confident miss is the one most worth a second look: compare your reasoning with the recommended response.'}
+            </p>
+          )}
         </div>
       )}
 
@@ -329,6 +355,7 @@ export function KnowledgeCheck({
           </div>
           <div className="font-sans text-body-sm leading-relaxed text-body">
             {preferredOption.feedbackText}
+            <CheckSources sources={preferredOption.sources} />
           </div>
         </div>
       )}
@@ -364,6 +391,7 @@ export function KnowledgeCheck({
                   </div>
                   <div className="font-sans text-body-sm leading-relaxed text-body">
                     {opt.feedbackText}
+                    <CheckSources sources={opt.sources} />
                   </div>
                 </li>
               ))}

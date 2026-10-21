@@ -232,7 +232,7 @@ function Section4({ module }: ModuleProp): JSX.Element {
       module={module}
       sectionId={4}
       sectionTitle="Knowledge check: Delegation and Description"
-      sectionLabel="Section 4 · Tier 1 assessment"
+      sectionLabel="Section 4 · Scenario questions"
       width="reading"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
@@ -351,7 +351,7 @@ function Section7({ module }: ModuleProp): JSX.Element {
       module={module}
       sectionId={7}
       sectionTitle="Knowledge check: Discernment and the loop"
-      sectionLabel="Section 7 · Tier 1 assessment"
+      sectionLabel="Section 7 · Scenario questions"
       width="reading"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">

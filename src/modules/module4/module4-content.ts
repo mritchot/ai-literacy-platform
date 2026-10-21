@@ -340,7 +340,7 @@ export const P10_ELEMENTS: VerificationElement[] = [
     marker: 1,
     highlightedText: 'According to a case study published in the Harvard Business Review (Chen & Walters, 2025)',
     intendedClassification: 'flag',
-    diagnosticPair: 'NTP × Knowledge: compounding specificity',
+    diagnosticPair: 'Next-token prediction × Knowledge: compounding specificity',
     feedback: {
       flag: {
         title: 'Right call: check this first.',
@@ -388,7 +388,7 @@ export const P10_ELEMENTS: VerificationElement[] = [
     highlightedText:
       'Praxon’s CFO stated in a February 2025 earnings call that the platform "has fundamentally changed how we think about procurement resilience"',
     intendedClassification: 'flag',
-    diagnosticPair: 'NTP × Knowledge: compounding specificity with attribution',
+    diagnosticPair: 'Next-token prediction × Knowledge: compounding specificity with attribution',
     feedback: {
       flag: {
         title: 'Right call: check this first.',

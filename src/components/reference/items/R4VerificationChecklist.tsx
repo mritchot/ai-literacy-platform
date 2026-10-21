@@ -129,7 +129,7 @@ interface DiagnosticPair {
 
 const DIAGNOSTIC_PAIRS: DiagnosticPair[] = [
   {
-    pair: 'NTP × Knowledge',
+    pair: 'Next-token prediction × Knowledge',
     produces: 'Hallucinated specifics (citations, quotes, statistics)',
     checkBy: 'Search for the source independently',
   },
@@ -139,7 +139,7 @@ const DIAGNOSTIC_PAIRS: DiagnosticPair[] = [
     checkBy: 'Compare output against original instructions',
   },
   {
-    pair: 'Tokenization × NTP',
+    pair: 'Tokenization × Next-token prediction',
     produces: 'Confident arithmetic errors',
     checkBy: 'Recalculate independently',
   },

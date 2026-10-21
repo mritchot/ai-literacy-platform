@@ -59,6 +59,8 @@ export const CITATIONS = {
       'human-machine-frontier': 'pp. 26–27, Figures 2.7–2.8',
       'genai-knowledge-work-decline': 'p. 26',
       'culture-barrier-46': 'p. 49, Figure 4.1',
+      'barriers-vision-culture':
+        'p. 49, Figure 4.1 (organizational culture and resistance to change, 46%); p. 62 and p. 63, Figure 4.13 (lack of vision among managers and leaders, 43%)',
       'ai-investment-8x': 'p. 11',
       'economy-profiles': 'pp. 124–125 (Canada), 144–145 (Hong Kong SAR), 192–193 (Singapore)',
     },
@@ -145,6 +147,10 @@ export const CITATIONS = {
     pages: {
       'aug-auto-52-45': 'p. 5; p. 17 n. 2',
       'directive-share-32': 'p. 9',
+      'aug-auto-trend':
+        'p. 5 (November 2025: augmentation 52%, automation 45%); p. 9 (January 2025 restated at 56% and 41%; underlying trend still toward automation)',
+      'access-not-sufficient':
+        'pp. 35–36 (higher-usage countries use AI more collaboratively); p. 55 (expanding access alone will not suffice)',
       'jan-2025-restated-56-41': 'p. 9',
       'speed-reliability-tradeoff': 'pp. 38–39',
       'success-and-task-horizon': 'pp. 21, 26, 41–42',
@@ -451,6 +457,8 @@ export const CITATIONS = {
       'not-a-forecast': 'pp. 3–4',
       'agents-44-hours': 'p. 11',
       'midpoint-27': 'p. 37',
+      'not-a-forecast-midpoint-27':
+        'pp. 3–4 (technical potential, not a forecast); p. 37 (about 27% of current hours automated by 2030 in the midpoint scenario)',
       'shared-skills-72': 'pp. 28–29',
       'frame-interpret': 'p. 4',
       'skills-partnership': 'p. 28',

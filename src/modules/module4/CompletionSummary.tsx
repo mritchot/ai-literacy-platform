@@ -20,6 +20,7 @@ import { AssessmentGrowth } from '../../components/assessment/AssessmentGrowth';
 import { R7Trigger } from '../../components/reference/R7Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
 import { Icon } from '../../components/shared/Icon';
+import { KCCalibration } from '../../components/shared/KCCalibration';
 import { KCReview } from '../../components/shared/KCReview';
 import { Overline } from '../../components/shared/Overline';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
@@ -309,6 +310,7 @@ export function CompletionSummary(): JSX.Element {
         <DiligenceCard statement={p12Statement} />
       </div>
       <KCSummaryBar kcCorrect={kcCorrect} kcTotal={kcTotal} />
+      <KCCalibration results={ALL_KC_KEYS.map((key) => state.knowledgeChecks[key])} />
       {/* Knowledge check review — collapsed-by-default expandable
           section. Mirrors the pre/post AssessmentResults pattern so KCs
           get the same response-transparency treatment as assessment

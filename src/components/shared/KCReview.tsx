@@ -31,6 +31,7 @@ import {
   MODULE_4_KC_ITEMS_S4,
   MODULE_4_KC_ITEMS_S7,
 } from '../../modules/module4/knowledge-check-items';
+import { CheckSources } from './CheckSources';
 import { Icon } from './Icon';
 import type { KnowledgeCheckItemData } from './KnowledgeCheck';
 import { Overline } from './Overline';
@@ -404,6 +405,7 @@ function KCItemRow({
                         {opt.feedbackTitle}
                       </div>
                       {opt.feedbackText}
+                      <CheckSources sources={opt.sources} />
                     </div>
                   )}
                 </li>
@@ -442,6 +444,7 @@ function KCItemRow({
                 style={{ lineHeight: 1.55, overflowWrap: 'anywhere' }}
               >
                 {preferredOption.feedbackText}
+                <CheckSources sources={preferredOption.sources} />
               </div>
             </div>
           )}

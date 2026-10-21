@@ -108,13 +108,13 @@ export const KC_METADATA = {
     sectionId: 7,
     objectiveRef: '2.1',
     stemPreview:
-      'A product manager describes her AI workflow: notes in, stakeholder summary out, names…',
+      'Two product managers build a daily summary from notes; both call it augmentation…',
     preferredOptionId: 'a',
     options: [
-      { id: 'a', label: '(a) Automation classified as augmentation' },
-      { id: 'b', label: '(b) She’s right — this is augmentation' },
-      { id: 'c', label: '(c) Could be either; withhold judgment' },
-      { id: 'd', label: '(d) Well-designed directive interaction' },
+      { id: 'a', label: '(a) Marcus augments; Priya automates' },
+      { id: 'b', label: '(b) Both are augmenting' },
+      { id: 'c', label: '(c) Both are automating' },
+      { id: 'd', label: '(d) Priya augments; Marcus automates' },
     ],
   },
   kc_2_2: {
@@ -213,12 +213,12 @@ export const KC_METADATA = {
     sectionId: 10,
     objectiveRef: '3.4',
     stemPreview:
-      'A strategy-meeting brief loads long documents; the analysis misses late-input material…',
+      'A 180,000-token brief yields three risks; the third cites regulation the brief never mentions…',
     preferredOptionId: 'c',
     options: [
       { id: 'a', label: '(a) Model supplemented from general knowledge' },
       { id: 'b', label: '(b) Only two risks were well-supported' },
-      { id: 'c', label: '(c) Context window nearly consumed' },
+      { id: 'c', label: '(c) Long input used unevenly; risk 3 generated' },
     ],
   },
 
@@ -267,7 +267,7 @@ export const KC_METADATA = {
       { id: 'a', label: '(a) Verify the citation; assess the rest' },
       { id: 'b', label: '(b) Likely reliable — specifics are plausible' },
       { id: 'c', label: '(c) Classify the whole paragraph fabricated' },
-      { id: 'd', label: '(d) Send it; flag concerns verbally later' },
+      { id: 'd', label: '(d) Soften the attribution; keep the claim' },
     ],
   },
   kc_4_4: {

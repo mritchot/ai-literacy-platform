@@ -26,7 +26,12 @@ const KC_1_1: KnowledgeCheckItemData = {
       feedbackTitle: 'Partially right, but oversimplified',
       feedbackTone: 'caution',
       feedbackText:
-        'Sharing workflows is constructive, but framing the gap as mainly an access issue that new tools will close misreads the data. Income explains about 70% of the variation in adoption across countries, and the research links the disparities to a mix of likely factors, some of them tied to income: digital infrastructure, economic structure, regulatory environment, awareness and access, and trust in the tools. Better connectivity addresses only part of that list, and the gaps between countries showed no sign of closing between August and November 2025 (Appel, Massenkoff & McCrory, 2026, p. 6). Those factors shape whether tools that work in one context produce results in another. Leadership and culture count too: 43% of executives name lack of vision among managers and leaders as a barrier to AI adoption, and 46% of employers name organizational culture as a barrier to transformation (WEF 2025, pp. 49, 62). Among U.S. public companies, enterprise AI adoption also tracks prior investment in software, R&D, and organizational capability (Chatterji et al., 2026, pp. 15–16).',
+        'Sharing workflows is constructive, but framing the gap as mainly an access issue that new tools will close misreads the data. Income explains about 70% of the variation in adoption across countries, and the research links the disparities to a mix of likely factors, some of them tied to income: digital infrastructure, economic structure, regulatory environment, awareness and access, and trust in the tools. Better connectivity addresses only part of that list, and the gaps between countries showed no sign of closing between August and November 2025. Those factors shape whether tools that work in one context produce results in another. Leadership and culture count too. In World Economic Forum surveys, 43% of executives name lack of vision among managers and leaders as a barrier to AI adoption, and 46% of employers name organizational culture as a barrier to transformation. Among U.S. public companies, enterprise AI adoption also tracks prior investment in software, R&D, and organizational capability.',
+      sources: [
+        { ids: 'appel-massenkoff-mccrory-2026', pageKey: 'country-gaps-stable' },
+        { ids: 'wef-2025', pageKey: 'barriers-vision-culture' },
+        { ids: 'chatterji-2026', pageKey: 'complements' },
+      ],
     },
     {
       id: 'b',
@@ -53,7 +58,12 @@ const KC_1_1: KnowledgeCheckItemData = {
       feedbackTitle: 'No basis in the data',
       feedbackTone: 'error',
       feedbackText:
-        'The cross-country data shows no convergence: between August and November 2025, low-use countries did not catch up and high-use countries did not pull away (Appel, Massenkoff & McCrory, 2026, p. 6). Convergence does appear within the United States, where usage across states became more even over the same period, but that is a single-country pattern measured over three months. The premise is half right: the price of equivalent model quality has collapsed since 2022, so lower-cost offerings are real (Stanford AI Index, as reproduced by Evans, May 2025, slide 18). But lower prices raise use without changing who is positioned to use the tool well. Enterprise adoption of even mature technology takes a decade or more: public cloud still held only about 30% of enterprise workloads after ten years (Goldman Sachs CIO Survey, as reproduced by Evans, November 2025, slide 58). For a Latin America office, waiting for equalization without active investment is not a strategy the evidence supports.',
+        'The cross-country data shows no convergence: between August and November 2025, low-use countries did not catch up and high-use countries did not pull away. Convergence does appear within the United States, where usage across states became more even over the same period, but that is a single-country pattern measured over three months. The premise is half right: Stanford AI Index data show the price of equivalent model quality has collapsed since 2022, so lower-cost offerings are real. But lower prices raise use without changing who is positioned to use the tool well. Enterprise adoption of even mature technology takes a decade or more: in Goldman Sachs’s CIO survey, public cloud still held only about 30% of enterprise workloads after ten years. For a Latin America office, waiting for equalization without active investment is not a strategy the evidence supports.',
+      sources: [
+        { ids: 'appel-massenkoff-mccrory-2026', pageKey: 'country-gaps-stable' },
+        { ids: 'evans-2025-05', pageKey: 'price-collapse-18' },
+        { ids: 'evans-2025-11', pageKey: 'cloud-30-58' },
+      ],
     },
   ],
 };
@@ -73,7 +83,7 @@ const KC_1_2: KnowledgeCheckItemData = {
   options: [
     {
       id: 'a',
-      text: '“Our team uses AI daily, and most report time savings. But research shows that when professionals’ actual AI usage is compared to their self-reports, the two diverge: a significant share are automating tasks they believe they’re augmenting. Meanwhile, in one large study’s general-workforce sample, 69% of professionals mention the social stigma around AI use, and many keep their use quiet, which means we can’t learn from, measure, or improve whatever practices are already working. On the employer side, skill gaps are the most-cited barrier to business transformation (63%), and AI and big data is the fastest-rising skill employers expect to need. The gap isn’t capability. It’s the competency to use these tools in ways we can actually evaluate and build on.”',
+      text: '“Our team uses AI daily, and most report time savings. But research shows self-reports and actual usage diverge: many professionals automate tasks they believe they’re augmenting. In one large study’s general-workforce sample, 69% of professionals mention the social stigma around AI use, and many keep their use quiet, so we can’t learn from, measure, or improve what already works. Skill gaps are the most-cited barrier to business transformation (63%), and AI and big data is the fastest-rising skill employers expect to need. The gap is the competency to use these tools in ways we can evaluate.”',
       isPreferred: true,
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
@@ -100,12 +110,16 @@ const KC_1_2: KnowledgeCheckItemData = {
     },
     {
       id: 'd',
-      text: '“The research is clear that AI will fundamentally transform knowledge work within the next five years. Task-level automation rates are increasing rapidly, directive interactions with AI tools have risen significantly, and the augmentation-automation balance is shifting decisively toward full automation. We need a structured AI literacy program now to prepare our team for this transition and ensure they can work alongside increasingly capable systems before the window closes.”',
+      text: '“The research is clear that AI will fundamentally transform knowledge work within the next five years. Task-level automation rates are increasing rapidly, directive interactions with AI tools have risen significantly, and the augmentation-automation balance is shifting decisively toward full automation. Most of the analysis our team does today will soon run end to end without us. We need a structured AI literacy program now to prepare our team for this transition and ensure they can work alongside increasingly capable systems before the window closes.”',
       isPreferred: false,
       feedbackTitle: 'Fabricates a claim',
       feedbackTone: 'error',
       feedbackText:
-        'No source in the research corpus projects that AI will automate most knowledge work within five years. Even McKinsey Global Institute’s estimate that current technology could in theory automate 57% of US work hours is labeled by its authors as technical potential, not a forecast. Their midpoint scenario assumes about 27% of hours automated by 2030 (McKinsey Global Institute, 2025, pp. 3–4, 37). The data shows a mixed augmentation-automation picture: automation rose through August 2025, then augmentation regained the lead in November, while the underlying trend still points toward more automation than in January (Appel, Massenkoff & McCrory, 2026, pp. 5, 9). Even industry commentary that expects large change stops short of the five-year claim. Benedict Evans expects twenty more years of deployment in the first, absorb stage alone (Evans, November 2025, slide 61). His closing advice to executives is to presume radical uncertainty (Evans, May 2026, slide 78). Overstating the threat undermines credibility and misrepresents the evidence. A CLO who fact-checks this claim will discount the entire proposal.',
+        'No source in the research corpus projects that AI will automate most knowledge work within five years. Even McKinsey Global Institute’s estimate that current technology could in theory automate 57% of US work hours is labeled by its authors as technical potential, not a forecast. Their midpoint scenario assumes about 27% of hours automated by 2030. The data shows a mixed augmentation-automation picture: automation rose through August 2025, then augmentation regained the lead in November, while the underlying trend still points toward more automation than in January. Overstating the threat undermines credibility and misrepresents the evidence. A CLO who fact-checks this claim will discount the entire proposal.',
+      sources: [
+        { ids: 'mgi-agents-robots-us-2025', pageKey: 'not-a-forecast-midpoint-27' },
+        { ids: 'appel-massenkoff-mccrory-2026', pageKey: 'aug-auto-trend' },
+      ],
     },
   ],
 };

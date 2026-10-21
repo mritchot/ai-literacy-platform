@@ -10,6 +10,7 @@ import { forwardRef, useEffect, useRef, useState, type ReactNode } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { scrollBehavior } from '../../utils/motion';
+import { CheckSources, type CheckSource } from './CheckSources';
 import { Icon } from './Icon';
 import { nextRadioIndex } from './radio-group-nav';
 
@@ -22,6 +23,8 @@ interface InterpretationCheckOption {
   feedbackTitle: string;
   feedbackText: string;
   feedbackTone: InterpretationCheckTone;
+  /** Citations for claims in `feedbackText`, rendered as chips after it. */
+  sources?: CheckSource[];
 }
 
 export interface InterpretationCheckItemData {
@@ -95,6 +98,9 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
     useEffect(() => {
       if (submitted && didJustSubmitRef.current && feedbackRef.current) {
         didJustSubmitRef.current = false;
+        // Same focus hand-off as KnowledgeCheck: Submit unmounts, so
+        // focus moves to the feedback instead of falling to <body>.
+        feedbackRef.current.focus({ preventScroll: true });
         feedbackRef.current.scrollIntoView({ behavior: scrollBehavior(), block: 'nearest' });
       }
     }, [submitted]);
@@ -224,17 +230,19 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
           </div>
         )}
 
-        {/* Always-mounted live region — see KnowledgeCheck. */}
+        {/* Always-mounted live region carrying the feedback body only;
+            the focused callout announces the title. See KnowledgeCheck. */}
         <span aria-live="polite" className="sr-only">
-          {submitted && selectedOption
-            ? `${selectedOption.feedbackTitle}. ${selectedOption.feedbackText}`
-            : ''}
+          {submitted && selectedOption ? selectedOption.feedbackText : ''}
         </span>
 
         {submitted && selectedOption && (
           <div
             ref={feedbackRef}
-            className="mt-4 transition-opacity duration-200"
+            tabIndex={-1}
+            role="group"
+            aria-label={selectedOption.feedbackTitle}
+            className="mt-4 transition-opacity duration-200 focus:outline-none"
             style={{
               background: TONE_BG[selectedOption.feedbackTone],
               borderLeft: `3px solid ${TONE_BORDER[selectedOption.feedbackTone]}`,
@@ -252,6 +260,7 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
             </div>
             <div className="font-sans text-body-sm leading-relaxed text-body">
               {selectedOption.feedbackText}
+              <CheckSources sources={selectedOption.sources} />
             </div>
           </div>
         )}
@@ -276,6 +285,7 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
             </div>
             <div className="font-sans text-body-sm leading-relaxed text-body">
               {preferredOption.feedbackText}
+              <CheckSources sources={preferredOption.sources} />
             </div>
           </div>
         )}
@@ -317,6 +327,7 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
                     </div>
                     <div className="font-sans text-body-sm leading-relaxed text-body">
                       {opt.feedbackText}
+                      <CheckSources sources={opt.sources} />
                     </div>
                   </li>
                 ))}

@@ -12,6 +12,7 @@ import { useCallback, useEffect, useRef, type ReactNode } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { scrollBehavior } from '../../utils/motion';
+import { CheckSources } from '../../components/shared/CheckSources';
 import { Citation } from '../../components/shared/Citation';
 import { InterpretationCheck } from '../../components/shared/InterpretationCheck';
 import { Overline } from '../../components/shared/Overline';
@@ -24,7 +25,11 @@ import {
 } from './GeographicAdoptionChart';
 import { GDPCorrelationScatter } from './GDPCorrelationScatter';
 import { SkillDemandBar } from './SkillDemandBar';
-import { MODULE_1_DEBRIEFS, MODULE_1_IC_ITEMS } from './interpretation-check-items';
+import {
+  MODULE_1_DEBRIEF_SOURCES,
+  MODULE_1_DEBRIEFS,
+  MODULE_1_IC_ITEMS,
+} from './interpretation-check-items';
 
 interface SkillRow {
   rank: number;
@@ -264,6 +269,7 @@ function StoryShell({
           style={{ opacity: 1 }}
         >
           {debrief}
+          {ic && <CheckSources sources={MODULE_1_DEBRIEF_SOURCES[ic.id]} />}
         </p>
       )}
 
