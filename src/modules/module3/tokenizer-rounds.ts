@@ -80,6 +80,13 @@ export const QUICK_LOAD_SAMPLES: QuickLoadSample[] = [
       'Estimado equipo, adjunto el informe trimestral para su revisión. Por favor confirmen recibo antes del viernes.',
   },
   {
+    // Three rows of seven cells (71 tokens in cl100k_base) so learners can
+    // check Section 6's two-to-four-tokens-per-cell budget themselves.
+    label: 'Sales export (CSV)',
+    text:
+      'date,region,sku,units,unit_price,revenue,rep\n2026-03-15,North,SKU-2847-BLK,42,30.45,1278.90,R117\n2026-03-15,South,SKU-2848-WHT,17,19.95,339.15,R104',
+  },
+  {
     label: 'Product SKU list',
     text: 'SKU-2847-BLK-XL, SKU-2847-BLK-L, SKU-2847-NVY-XL, SKU-2847-NVY-L, SKU-2848-WHT-M',
   },

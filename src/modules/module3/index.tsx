@@ -517,9 +517,11 @@ function Section6({ module }: ModuleProp): JSX.Element {
           than 500.
           Source code is heavier than equivalent English prose because operators, punctuation,
           and split identifiers each consume tokens; a few hundred lines of Python can run
-          several thousand. Spreadsheets and CSVs consume tokens unpredictably: every comma,
-          cell value, and digit fragment registers as its own piece, so a couple thousand rows
-          of mixed numbers and short labels can fill 10,000 to 20,000 tokens.
+          several thousand. Spreadsheets and CSVs are heavier than they look: every comma,
+          cell value, and digit fragment registers as its own piece. Budget two to four tokens per
+          cell. A 2,000-row sales export with seven columns (date, region, SKU, units, price,
+          revenue, rep) comes to about 58,000 tokens in this module’s tokenizer, and a two-column
+          list of the same length to about 9,000.
         </p>
         <p className="m-0">
           That sounds like a lot until you upload your team’s vendor portfolio for a quarterly
