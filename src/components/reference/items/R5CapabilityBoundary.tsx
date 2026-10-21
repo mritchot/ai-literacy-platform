@@ -48,7 +48,7 @@ const RELIABLE_ROWS: ReliableRow[] = [
   },
   {
     task: 'Brainstorming and ideation',
-    why: 'High-temperature sampling across the probability distribution produces diverse options by design.',
+    why: 'Sampling from the probability distribution, rather than always taking the top token, produces varied options; asking for many distinct options widens the spread.',
     notes: 'Useful for breadth. Evaluate each option independently; plausible ≠ good.',
   },
   {

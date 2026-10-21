@@ -403,7 +403,12 @@ function Section4({ module }: ModuleProp): JSX.Element {
           low temperature, the model almost always picks the highest-probability token, producing
           consistent, predictable output. At high temperature, the model is willing to select
           lower-probability tokens, producing more varied output but with a higher chance of
-          drifting into implausible territory.
+          drifting into implausible territory. You will rarely set it yourself. Most chat apps
+          offer no temperature control, and on Anthropic’s newest models the developer interface
+          rejects any temperature other than the default
+         <Citation ids="anthropic-thinking-2026" pageKey="sampling-parameters" />. Temperature
+          still explains why the same prompt gives different answers. What you control is the
+          prompt: ask for one answer, or ask for ten distinct options.
         </p>
         <p className="m-0">
           The interactive demonstration below shows both features in action: probability-based
