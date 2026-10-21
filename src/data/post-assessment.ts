@@ -53,7 +53,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'C',
         text:
-          'The interaction logs suggest the team\'s actual usage is predominantly directive and automation-oriented, even though the manager frames it as collaboration. This gap between self-reported and observed interaction patterns is documented in the behavioral research on AI adoption.',
+          'The interaction logs suggest the team\'s actual usage is predominantly directive and automation-oriented, even though the manager frames it as collaboration. This gap between self-reported and observed interaction patterns is documented in research on AI adoption.',
         isCorrect: true,
         feedbackText:
           'The behavioral research on AI adoption finds a gap between how professionals describe their AI usage (collaborative and iterative) and what their interaction patterns show (more directive than reported). The gap is not universal: when Anthropic compared its own engineers\' self-reported task mix with usage logs, the two distributions roughly aligned. The documented gap concerns collaboration style, not which tasks people bring to AI. The manager\'s framing reflects a common self-report bias, not intentional misrepresentation. The disconnect between perceived and actual interaction style is real. Recognizing this gap is the first step toward deliberately choosing augmentative practices when the task warrants them.',
@@ -137,7 +137,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'B',
         text:
-          'The model generates text by predicting what a plausible analyst citation should look like from training-data patterns. Unless it actually retrieved and read the Gartner report, the quadrant placement, consecutive-year claim, and cited differentiators may each be fabricated.',
+          'The model generates text by predicting what a plausible analyst citation looks like. Unless it retrieved and read the Gartner report, the quadrant placement, the consecutive-year claim, and the differentiators may each be fabricated.',
         isCorrect: true,
         feedbackText:
           'The model\'s next-token prediction mechanism generates what a plausible analyst citation should contain, based on statistical patterns. Each element (the quadrant placement, the "third consecutive year" claim, the specific differentiators) is independently generated to fit the expected format of a Gartner citation. Unless the tool performed an active retrieval step (searching for and reading the actual report during this interaction), every detail may be fabricated while appearing authoritative. The specificity and formatting are features of fluent generation, not evidence of accuracy.',
@@ -199,7 +199,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'D',
         text:
-          'The chatbot generated plausible counts instead of counting. It reads the order numbers as token chunks, not as strings it compares one by one, so exact matching and tallying across a list come out as estimates. A spreadsheet formula gives the exact count.',
+          'The chatbot generated plausible counts instead of counting. It reads the order numbers as token chunks, not as strings it compares one by one, so exact tallies come out as estimates. A spreadsheet formula gives the exact count.',
         isCorrect: true,
         feedbackText:
           'This is a boundary task: the job needs exact, item-by-item operations below the level at which the model represents text. In conversation, the model does not loop through the list, compare each pair of strings, and keep a tally. It predicts what a count should look like, and each new attempt is a new prediction, which is why the answers differ from each other and from the truth. Tools that can run code count exactly when they actually run it. For any count, sort, deduplication, or comparison across many items, use a spreadsheet formula or a code tool, and use the chatbot to write the formula if that helps.',
@@ -417,7 +417,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'B',
         text:
-          'Claim 2, because it cites a specific government report with a precise statistic. If the report doesn\'t exist or the 34% is fabricated, the application contains a falsified citation that could disqualify the proposal and damage credibility with the funder.',
+          'Claim 2, because it cites a specific government report with a precise statistic. If the report doesn\'t exist or the 34% is fabricated, the application carries a false citation that could disqualify it and damage credibility with the funder.',
         isCorrect: true,
         feedbackText:
           'Claim 2 cites a specific government report ("U.S. Department of Labor\'s 2024 Workforce Innovation Report") with a precise statistic (34% turnover reduction). This is exactly the type of claim AI models fabricate fluently: a plausible-sounding report title, a credible government source, and a specific percentage that would be impressive if real. If the report doesn\'t exist or the statistic is fabricated, the grant application contains a falsified citation. In a grant review context, a falsified citation can disqualify the proposal and damage the organization\'s credibility with the funder. The consequences are immediate and disproportionate to the other claims.',
@@ -455,7 +455,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'A',
         text:
-          '"Create a first-week onboarding schedule for a junior data analyst joining a 12-person analytics team at a financial services firm. Include: systems access setup on Day 1, introductions to the three team leads they\'ll work with, a shadow session with a senior analyst on Day 2 or 3, and a 30-minute check-in with their manager on Day 5. Format as a day-by-day table."',
+          '"Create a first-week onboarding schedule for a junior data analyst joining a 12-person analytics team at a financial services firm. Include systems access on Day 1, introductions to the three team leads, a shadow session with a senior analyst on Day 2 or 3, and a manager check-in on Day 5. Format as a day-by-day table."',
         isCorrect: true,
         feedbackText:
           'This prompt demonstrates the Description competency: it specifies the role (junior data analyst), context (12-person team, financial services), concrete activities (systems access, team introductions, shadow session, manager check-in), timing constraints (Day 1, Day 2–3, Day 5), and output format (day-by-day table). Each specification narrows the model\'s output space toward a targeted, useful result. The model generates based on what the prompt tells it. More structural specification produces more relevant output.',
@@ -463,10 +463,10 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'B',
         text:
-          '"Help me with onboarding. Be more specific and detailed. I need something actually useful, not a generic template. Make it thorough and comprehensive. Include everything a new hire would need."',
+          '"Help me with onboarding. Some background: we are a 400-person financial services firm with offices in Chicago and Toronto, founded in 2009. We value collaboration, curiosity, and client focus, and our analytics team has doubled in two years. New hires have told us their first weeks felt disorganized. Please make onboarding better."',
         isCorrect: false,
         feedbackText:
-          'This prompt adds intensity, not information. "Be more specific" doesn\'t tell the model what to be specific about. "Include everything" is an unbounded instruction that produces breadth without relevance. The prompt still lacks structural specification (role, team context, format, constraints) that would narrow the output space.',
+          'This prompt adds background, not specification. It tells the model about the firm but never says what to produce: no role, no time frame, no activities, no format. Length is not Description. Given this prompt, the model will produce a warmer, longer generic onboarding plan, because nothing in it narrows the output to a particular role, week, or format.',
       },
       {
         id: 'C',
@@ -479,10 +479,10 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'D',
         text:
-          '"Help me with onboarding for a data analyst. Make it specific to our company. Include first-week activities, team introductions, and system setup. Let me know if you need any other information to make this better."',
+          '"Help me with onboarding for a data analyst joining our team. Make it specific to our company and our industry rather than a generic template. Include first-week activities, team introductions, and system setup, and make sure nothing important is missed. Let me know if you need any other information to make this better."',
         isCorrect: false,
         feedbackText:
-          'This is better than the original (it adds the role and some categories), but it still relies on the model to fill in specifics ("specific to our company" without saying what about the company matters). The closing "let me know if you need other information" defers specification to the model rather than providing it upfront. Compare that to option A, where every detail is in the prompt itself.',
+          'This is better than the original (it adds the role and some categories), but it still relies on the model to fill in specifics ("specific to our company and our industry" without saying what the company or industry is). The closing "let me know if you need other information" defers specification to the model rather than providing it upfront. Compare that to option A, where every detail is in the prompt itself.',
       },
     ],
   },

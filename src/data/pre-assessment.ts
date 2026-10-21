@@ -148,7 +148,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'A',
         text:
-          'The citation may be entirely fabricated. Unless the AI tool actively searched for and retrieved the source document, it generated the citation by predicting what plausible academic language should come next. That process can produce confident, invented references that look authoritative.',
+          'The citation may be entirely fabricated. Unless the AI tool searched for and retrieved the source document, it generated the citation by predicting what plausible text should come next, a process that can produce confident, invented references.',
         isCorrect: true,
         feedbackText:
           'Some AI tools can now search the web or retrieve documents to ground their responses in real sources. But when an AI generates a citation without performing a retrieval step, it\'s producing text that looks like a well-formed reference (author, year, page number, statistic) because that\'s what citations look like in its training data. The result can be entirely fabricated while appearing authoritative. Knowing whether the tool searched for the source, or simply generated what a source should look like, is the critical distinction.',
@@ -246,7 +246,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'B',
         text:
-          'The AI tool does not weigh every part of a long input equally. Text near the start and end gets the most attention and text in the middle the least, so clauses in the middle of a long contract are the likeliest to be missed.',
+          'The AI tool read the whole contract but did not weigh every part of it equally. Text near the start and end gets the most attention and text in the middle the least, so clauses in the middle of a long contract are the likeliest to be missed.',
         isCorrect: true,
         feedbackText:
           'AI models have a finite context window: a limit on how much text they can process at once. Even when the entire document fits within that window, the model\'s ability to attend to all parts of the input is not uniform. Content near the beginning and end of the input receives more attention than content buried in the middle. For long documents, this means the model may miss relevant information in the middle sections even though it read the whole text. This failure mode is systematic: longer documents and more dispersed target information increase the probability of omission.',
@@ -352,7 +352,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'D',
         text:
-          'The model processes text as chunks called tokens rather than as individual characters. Some tasks can be solved through pattern recognition at the token level, but tasks requiring precise character-by-character analysis depend on how the word was split into tokens, which the model doesn\'t control or see.',
+          'The model processes text as chunks called tokens, not as individual characters. Some tasks can be solved from patterns at the chunk level, but counting letters needs character-by-character analysis, and the model does not see the letters inside each chunk.',
         isCorrect: true,
         feedbackText:
           'AI models convert text into tokens (sub-word chunks) before processing it. "Strawberry" might be split into tokens like "straw" + "berry" or "str" + "aw" + "berry," depending on the tokenizer. The model never "sees" individual letters the way a human reader does. Some tasks (like reversal) can be solved through learned patterns at the token level, but precise character-level operations (counting specific letters, identifying character positions) require the model to reason about units smaller than its tokens. When an R sits inside a multi-letter token ("str" holds one R, "berry" holds two), the model has to recall each token\'s spelling to count them, and that recall is unreliable. This is a systematic limitation, not a random error: it affects any task that requires character-level precision. Some AI tools can route character-level tasks to a built-in program that processes letters directly. When that happens, the task succeeds reliably. The failure described here occurs when the AI handles the task conversationally, generating an answer rather than running an operation.',
@@ -422,7 +422,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'A',
         text:
-          'Claim 1, because it describes the general scope of the Act, and getting the foundational framing wrong would undermine every downstream recommendation in the policy update.',
+          'Claim 1, because it describes the general scope of the Act. Every later point in the summary builds on that framing, so an error there would undermine each downstream recommendation in the policy update.',
         isCorrect: false,
         feedbackText:
           'The general scope description (Claim 1) is worth verifying, but it uses broad, hedged language ("specific provisions varying by salary threshold") that is less likely to be precisely wrong in a consequential way. General framing errors are lower-stakes than specific legislative claims because they\'re less likely to drive concrete policy decisions.',
@@ -430,7 +430,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'B',
         text:
-          'Claim 2, because it describes a specific legislative change with concrete policy implications, and if the amendment\'s scope or timing is fabricated or inaccurate, the resulting internal policy could expose the organization to compliance risk.',
+          'Claim 2, because it asserts a specific legislative change, and if the amendment\'s scope or timing is fabricated or wrong, the internal policy built on it could expose the organization to compliance risk.',
         isCorrect: true,
         feedbackText:
           'Claim 2 makes a specific assertion about legislative change: that coverage was expanded to all employees regardless of salary. If this is fabricated or inaccurately scoped (wrong amendment, wrong scope, wrong timing), the internal policy update could direct the organization to apply protections it isn\'t required to apply, or worse, fail to apply protections it is required to apply. The verification priority hierarchy puts claims with direct compliance or legal consequences above general framing, operational details, and resource references.',
@@ -491,7 +491,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'D',
         text:
-          'Restructuring the request to include the specific metrics to analyze, the comparison period, the target audience, the desired format, and any constraints, because the model generates output based on what the prompt specifies, and an underspecified prompt produces output that defaults to generic patterns.',
+          'Restructuring the request to name the specific metrics, the comparison period, the audience, the format, and any constraints, because the model generates output from what the prompt specifies, and an underspecified prompt defaults to generic patterns.',
         isCorrect: true,
         feedbackText:
           'The original prompt specifies almost nothing: no metrics, no comparison period, no audience, no format, no constraints. The model defaults to generic patterns because the prompt doesn\'t narrow the output space. Compare that to a restructured request like "Compare Q3 2025 revenue, gross margin, and customer acquisition cost against Q2 2025 for a board presentation; flag any variance over 5%." That gives the model the specificity it needs to generate targeted, useful output. The gap is almost always in the instruction, not in the tool.',
