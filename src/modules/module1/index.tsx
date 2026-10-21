@@ -516,39 +516,32 @@ function FourDVocabularyBlock(): JSX.Element {
   );
 }
 
-const FOUR_DS: { name: string; tone: string; toneDark: string; description: ReactNode }[] = [
+// Tones read the --{competency}-text tokens so the names and borders flip
+// with the theme; the light values equal the original hexes.
+const FOUR_DS: { name: string; tone: string; description: ReactNode }[] = [
   {
     name: 'Delegation',
-    tone: '#3D4A35',
-    toneDark: '#B5C4AB',
+    tone: 'rgb(var(--delegation-text))',
     description:
       'is deciding what to hand to AI and what to keep human. AI doesn’t improve every task, and not everything needs your direct effort. It also means knowing what the tool you are using does well and where it fails, and choosing how to work with it: hand the task over, or work through it together. Delegation is the judgment call about where the line sits for a given task.',
   },
   {
     name: 'Description',
-    tone: '#5A4A37',
-    toneDark: '#C9B99E',
+    tone: 'rgb(var(--description-text))',
     description:
       'is communicating what you need from AI clearly enough to get a useful result. This is the skill behind effective prompting: specifying the task, the constraints, the format, and the quality standard. The framework divides it into three parts: what you want (product), how the AI should approach the task and how you work through it together (process), and how the AI should behave (performance).',
   },
   {
     name: 'Discernment',
-    tone: '#354A57',
-    toneDark: '#A8BCCA',
+    tone: 'rgb(var(--discernment-text))',
     description:
       'is evaluating what AI gives you back. Does the output meet your standard? Is the reasoning sound? Does it show bias, such as a one-sided framing picked up from the data the AI learned from? Is the way you are working with it producing results, or does the approach need to change? Would you stake your professional reputation on this result without further review?',
   },
   {
     name: 'Diligence',
-    tone: '#4A3557',
-    toneDark: '#BEA8C9',
-    description: (
-      <>
-        is the accountability layer: using AI within ethical and legal limits, documenting how AI
-        contributed to a deliverable, maintaining transparency with colleagues and stakeholders,
-        and taking full ownership of the final product regardless of how it was produced.
-      </>
-    ),
+    tone: 'rgb(var(--diligence-text))',
+    description:
+      'is the accountability layer: using AI within ethical and legal limits, documenting how AI contributed to a deliverable, maintaining transparency with colleagues and stakeholders, and taking full ownership of the final product regardless of how it was produced.',
   },
 ];
 
