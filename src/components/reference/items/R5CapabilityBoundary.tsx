@@ -99,7 +99,7 @@ const FAILS_CATEGORIES: FailsCategory[] = [
     rows: [
       {
         failsAt: 'Multi-digit arithmetic',
-        why: 'Numbers split into arbitrary token chunks; “127” may become [“12”, “7”] or [“1”, “27”]',
+        why: 'Digits are cut into tokens by a fixed rule, not by value: “1279” becomes [“127”, “9”], so token boundaries cut across place value',
         instead: 'Ask the model to write code that performs the calculation',
       },
       {

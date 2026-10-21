@@ -214,12 +214,19 @@ function Section2({ module }: ModuleProp): JSX.Element {
         </h3>
         <p className="m-0">
           The digit sequence “127” is a single token, while “1279” splits into “127” and
-          “9.” Here the split does not come from frequency. The tokenizer this module uses cuts
-          every run of digits into chunks of up to three, counting from the left, so even a
+          “9.” Here the split does not come from frequency. The tokenizer this module uses, and
+          OpenAI’s newer o200k_base, cut every run of digits into chunks of up to three, counting
+          from the left<Citation ids="openai-tiktoken" pageKey="digit-grouping" />, so even a
           common year like “2024” becomes “202” and “4.” Place value groups digits from the
-          right, so the token boundaries often ignore the number’s mathematical structure. This is why AI tools make arithmetic errors that look
-          bizarre: the model is not performing calculation on numbers, it is predicting the next
-          token in a sequence of statistically derived fragments that happen to contain digits.
+          right, so the token boundaries often ignore the number’s mathematical structure. Typed
+          without commas, 12345678 becomes 123 / 456 / 78. Typed as 12,345,678, it becomes
+          12 / , / 345 / , / 678, with each comma a token of its own. It is the same number split
+          two ways, and only the second split lines up with place value. Other vendors chose
+          other rules: the tokenizer Google uses for Gemini 2.0 and Gemma 3 splits every digit
+          apart<Citation ids="gemma-team-2025" pageKey="split-digits" />. None of these rules
+          does arithmetic. This is why AI tools make arithmetic errors that look bizarre: the
+          model is not performing calculation on numbers, it is predicting the next token in a
+          sequence of fragments that happen to contain digits.
         </p>
         <p className="m-0">
           Newer AI tools partially address this by routing arithmetic to external calculators
