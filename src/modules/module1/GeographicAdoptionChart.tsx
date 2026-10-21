@@ -31,6 +31,7 @@ import {
   TOOLTIP_STYLE,
 } from '../../utils/chart-config';
 import { useChartTokens } from '../../hooks/useChartTokens';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useViewport } from '../../hooks/useViewport';
 
 // ─── Types ────────────────────────────────────────────────────────────
@@ -443,6 +444,7 @@ function BarChartFigure({
 }): JSX.Element {
   const viewport = useViewport();
   const tokens = useChartTokens();
+  const reducedMotion = useReducedMotion();
 
   if (rows.length === 0) {
     return (
@@ -552,7 +554,7 @@ function BarChartFigure({
                   }) as any}
                   labelFormatter={(label) => label}
                 />
-                <Bar dataKey="aui" isAnimationActive={animate} animationDuration={400}>
+                <Bar dataKey="aui" isAnimationActive={animate && !reducedMotion} animationDuration={400}>
                   {rows.map((c) => (
                     <Cell key={c.iso3} fill={tierColor[c.tier as TierName] ?? tierColor.Emerging} />
                   ))}
@@ -708,6 +710,7 @@ export function CensusEnterpriseInset({
   adoption: CensusAdoption;
 }): JSX.Element {
   const tokens = useChartTokens();
+  const reducedMotion = useReducedMotion();
   // Memoized so the two-bar inset keeps a stable data identity across
   // re-renders (fresh arrays restart Recharts' layout + animation).
   const data = useMemo(() => {
@@ -754,7 +757,7 @@ export function CensusEnterpriseInset({
               cursor={{ fill: tokens.cursorFill }}
               formatter={(value: number) => [`${value}%`, 'Adoption rate']}
             />
-            <Bar dataKey="pct" fill={tokens.secondary} isAnimationActive animationDuration={400}>
+            <Bar dataKey="pct" fill={tokens.secondary} isAnimationActive={!reducedMotion} animationDuration={400}>
               {data.map((d) => (
                 <Cell key={d.period} fill={tokens.secondary} />
               ))}
