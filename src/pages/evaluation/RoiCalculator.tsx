@@ -66,6 +66,8 @@ const [MODULE_MINUTES_LOW, MODULE_MINUTES_HIGH] = MODULES.reduce<[number, number
 );
 const PROGRAM_MINUTES_LOW = MODULE_MINUTES_LOW + ASSESSMENT_MINUTES;
 const PROGRAM_MINUTES_HIGH = MODULE_MINUTES_HIGH + ASSESSMENT_MINUTES;
+// Program time at its midpoint: the conservative margin on cost already
+// sits in C_fixed, whose default is in the upper half of the build range.
 const PARTICIPANT_HOURS =
   ((PROGRAM_MINUTES_LOW + PROGRAM_MINUTES_HIGH) / 2 +
     REACTION_SURVEY_MINUTES +
