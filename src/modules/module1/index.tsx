@@ -331,11 +331,25 @@ function Section4({ module }: ModuleProp): JSX.Element {
           Teams solve the same problems independently, develop the same workarounds, and make the
           same mistakes, because no one can see what anyone else is doing.
         </p>
+        <p className="m-0">
+          The result is an organization where individuals are getting faster, but the institution
+          isn’t getting smarter.
+        </p>
+        <FasterPeopleCallout />
+        <p className="m-0">
+          This is not a problem that training alone can fix. Employers themselves rank
+          organizational culture and resistance to change as the second-largest barrier to
+          transformation, at 46%<Citation ids="wef-2025" pageKey="culture-barrier-46" />. If a
+          professional completes an AI competency program and returns to a team where using AI
+          is perceived as cutting corners, the most likely outcome is that they continue to use
+          AI, and continue to hide it. Skill acquisition without social normalization produces
+          no measurable organizational change.
+        </p>
         <EvidenceNote
           id="m1-s4-hidden-practice"
           moduleId={1}
           sectionId={4}
-          label="More on how practice goes unseen"
+          label="More on concealment and its costs"
         >
           <p className="m-0">
             The concealment reaches into the output itself. In a survey of 319 knowledge workers,
@@ -351,25 +365,14 @@ function Section4({ module }: ModuleProp): JSX.Element {
             <Citation ids="huang-2025" pageKey="social-dynamics" />. Shared vocabulary does not
             restore those conversations by itself. It makes the ones that still happen usable.
           </p>
+          <p className="m-0">
+            Enforcement has its own cost. MIT’s 2026 AI committee heard from instructors that
+            policing unauthorized AI use was harming their relationships with the people they
+            teach, and it warns that more policing builds distrust. It recommends shared norms
+            people understand over rules that feel arbitrary
+            <Citation ids="mit-2026" pageKey="policing-distrust" />.
+          </p>
         </EvidenceNote>
-        <p className="m-0">
-          The result is an organization where individuals are getting faster, but the institution
-          isn’t getting smarter.
-        </p>
-        <FasterPeopleCallout />
-        <p className="m-0">
-          This is not a problem that training alone can fix. Employers themselves rank
-          organizational culture and resistance to change as the second-largest barrier to
-          transformation, at 46%<Citation ids="wef-2025" pageKey="culture-barrier-46" />. If a
-          professional completes an AI competency program and returns to a team where using AI
-          is perceived as cutting corners, the most likely outcome is that they continue to use
-          AI, and continue to hide it. Skill acquisition without social normalization produces
-          no measurable organizational change. Enforcement has its own cost. MIT’s 2026 AI
-          committee heard from instructors that policing unauthorized AI use was harming their
-          relationships with the people they teach, and it warns that more policing builds
-          distrust. It recommends shared norms people understand over rules that feel arbitrary
-          <Citation ids="mit-2026" pageKey="policing-distrust" />.
-        </p>
         <p className="m-0">
           What’s missing is shared language: a way to talk about AI use that is professional,
           specific, and evaluative rather than promotional or defensive. That’s what the next

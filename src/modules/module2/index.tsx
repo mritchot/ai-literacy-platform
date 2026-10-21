@@ -258,11 +258,9 @@ function Section2({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           Read the 3% carefully. It counts users asking the tool to check the user's work. It does not count
-          users checking the tool's work, which often happens outside the conversation. In one
-          survey of 319 knowledge workers, 114 said they verify AI output against external sources
-          and 125 said they check it against objective criteria such as whether code runs
-          <Citation ids="lee-2025" pageKey="verification-practices" />. The behavioral data shows
-          that people rarely use AI as a checker. It cannot show how often they check AI.
+          users checking the tool's work, which often happens outside the conversation. The
+          behavioral data shows that people rarely use AI as a checker. It cannot show how often
+          they check AI.
         </p>
         <EvidenceNote
           id="m2-s2-checking"
@@ -270,6 +268,12 @@ function Section2({ module }: ModuleProp): JSX.Element {
           sectionId={2}
           label="More on checking AI's work"
         >
+          <p className="m-0">
+            Checking outside the conversation is common. In one survey of 319 knowledge workers,
+            114 said they verify AI output against external sources and 125 said they check it
+            against objective criteria such as whether code runs
+            <Citation ids="lee-2025" pageKey="verification-practices" />.
+          </p>
           <p className="m-0">
             Employers are asking for more AI-adjacent skills. Between 2023 and 2025, quality
             assurance entered the posting requirements of 87 more US occupations, and process
@@ -789,9 +793,8 @@ function Section8({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           <strong className="font-semibold text-ink">Third</strong>, the share of directive
           interactions rose sharply in 2025 and has only partly fallen back. More output is
-          passing through less human review. Whether
-          that trend accelerates or reverses depends on whether professionals can evaluate what the
-          tool gives them back.
+          passing through less human review. Whether that trend accelerates or reverses depends
+          on whether professionals can evaluate what the tool gives them back.
         </p>
         <p className="m-0">
           That last point is the bridge to Module 3. Everything in this module has been about{' '}
