@@ -7,6 +7,8 @@ A four-module interactive learning platform teaching AI literacy to mid-career k
 
 Live: [ai-literacy.ritchot.me](https://ai-literacy.ritchot.me)
 
+For reviewers: the [needs analysis](https://ai-literacy.ritchot.me/#/needs-analysis) sets out the business problem and its evidence, the [evaluation framework](https://ai-literacy.ritchot.me/#/evaluation) defines how results are measured at Kirkpatrick Levels 1 to 4 (with a live ROI model), and [behind the build](https://ai-literacy.ritchot.me/#/build) records the learning architecture, budget, timeline, and QA. Open [ai-literacy.ritchot.me/?portfolio=true](https://ai-literacy.ritchot.me/?portfolio=true) to move through every module without the learner gates; the analytics dashboard is then at `/#/dashboard`.
+
 Best viewed on desktop. Mobile is fully functional, but the data dashboards and multi-panel practice activities are designed for larger screens.
 
 ## Program structure
