@@ -45,7 +45,7 @@ export const SAMPLE1_META: MemoMeta = {
 export const SAMPLE1_STATUS: StatusRow[] = [
   { workstream: 'Content Development', status: 'Complete', tone: 'success', notes: 'All four modules authored, reviewed, and integrated. 37 sections, 16 knowledge checks, 3 interpretation checks finalized.' },
   { workstream: 'Platform Build', status: 'Complete', tone: 'success', notes: 'Custom React platform deployed to Cloudflare Pages. 12 interactive components, admin dashboard, three-mode navigation, dark mode. Production code cleanup complete.' },
-  { workstream: 'Assessment System', status: 'Complete', tone: 'success', notes: '10-item pre/post assessment (parallel design) implemented and integrated into the admin-dashboard analytics.' },
+  { workstream: 'Assessment System', status: 'Complete', tone: 'success', notes: '12-item pre/post assessment (parallel design) implemented and integrated into the admin-dashboard analytics.' },
   { workstream: 'Evaluation Framework', status: 'In Progress', tone: 'caution', notes: 'Levels 1 and 2 design documents complete. Level 3 (behavioral) in final review. Level 4 (ROI) drafting this week. Target: complete by May 16.' },
   { workstream: 'PM Documentation', status: 'Not Started', tone: 'neutral', notes: 'Deferred until the evaluation framework is complete. Retrospective, no upstream dependency. Target: May 19.' },
 ];
@@ -91,8 +91,8 @@ export const SAMPLE2_DECISIONS: DecisionRow[] = [
   {
     n: '2',
     item: 'Pre/post assessment: 10 items may be too few for reliable measurement across four competency dimensions.',
-    decision: 'Retained as-is. 10 items is a deliberate tradeoff: sufficient construct coverage against completion burden for time-pressured mid-career professionals. Documented in 6B §7.5.',
-    status: 'Resolved',
+    decision: 'Retained at 10 items at this review, as a tradeoff between construct coverage and completion burden for time-pressured mid-career professionals (6B §7.5). Later reversed: expanded to 12 items, because the 10-item form had no pre/post pair for task decomposition (Delegation) or disclosure (Diligence).',
+    status: 'Revised',
     tone: 'success',
     owner: 'L&D Manager',
   },
