@@ -108,13 +108,13 @@ export const KC_METADATA = {
     sectionId: 7,
     objectiveRef: '2.1',
     stemPreview:
-      'A product manager describes her AI workflow: notes in, stakeholder summary out, names…',
+      'Two product managers build a daily summary from notes; both call it augmentation…',
     preferredOptionId: 'a',
     options: [
-      { id: 'a', label: '(a) Automation classified as augmentation' },
-      { id: 'b', label: '(b) She’s right — this is augmentation' },
-      { id: 'c', label: '(c) Could be either; withhold judgment' },
-      { id: 'd', label: '(d) Well-designed directive interaction' },
+      { id: 'a', label: '(a) Marcus augments; Priya automates' },
+      { id: 'b', label: '(b) Both are augmenting' },
+      { id: 'c', label: '(c) Both are automating' },
+      { id: 'd', label: '(d) Priya augments; Marcus automates' },
     ],
   },
   kc_2_2: {
