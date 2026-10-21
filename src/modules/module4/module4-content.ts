@@ -176,9 +176,11 @@ export const P8_SUMMARY = `Decomposition pattern:
 
 The task you just decomposed had six components spanning three reliability levels. Two were appropriate for full delegation (data compilation, formatting): deterministic tasks with clear specifications and low verification burden. Two required active human-AI collaboration (comparative analysis, executive summary): AI provides structural acceleration and you provide evaluative judgment. Two required human-only execution (data verification, strategic recommendations): the model lacks access to the ground truth or the relationship context that makes the output valuable.
 
+Only two of the six components could go to AI outright. Heavy users report a small fully delegated share too. In a survey of 132 Anthropic engineers and researchers, more than half said they could fully delegate only a fifth of their work or less, and the authors note that respondents may have read "fully delegate" as anything from no verification to light oversight (Huang et al., Dec 2025). Decomposition is not a route to handing everything off. It is how you find the few components that can go and the many that need you.
+
 This is the Delegation competency in practice. It is a component-level assessment of where the tool adds value and where it introduces risk, not a single decision about whether to "use AI." The decomposition you just performed is the first step in every AI-assisted work cycle that follows in this module.`;
 
-export const P8_REFLECTION = `Think about a deliverable you produce regularly in your current role. Without naming it, mentally list its components: the sub-tasks that go into producing it. Which components would you assign to each of the three categories? Where is the boundary between "AI-assisted" and "fully delegated" least clear? One or two sentences.`;
+export const P8_REFLECTION = `Think about a deliverable you produce regularly in your current role. You don't need to name it. List three to five of its components and put each in one of the three categories: Human-Only, AI-Assisted, or Fully Delegated. For the component you were least sure about, what would you need to know to decide? A short list is enough.`;
 
 // ─── P9: Prompt Reformulation ─────────────────────────────────────
 

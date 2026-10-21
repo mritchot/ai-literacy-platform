@@ -147,18 +147,21 @@ function Section2({ module }: ModuleProp): JSX.Element {
         assistance but requiring your active direction. Most workplace tasks are not single
         activities; they are bundles of sub-tasks with different reliability profiles.
       </p>
-      <p className="m-0 mb-4 font-sans text-body text-body">
-        Expert users decompose the same way. When Anthropic interviewed 53 of its engineers and
-        researchers, one rule of thumb was to hand off a component when it is decoupled enough
-        from the rest
-        to stand alone, and another was to delegate where checking the result costs less than
-        producing it<Citation ids="huang-2025" pageKey="delegation-criteria" />. Even so, in the
-        earlier survey of 132 staff, more than half said they could fully delegate only a fifth
-        of their work or less, and the authors note that “fully delegate” itself ranged from no verification to
-        light oversight<Citation ids="huang-2025" pageKey="full-delegation-share" />.
-        Decomposition is not a route to handing everything off. It is how you find the few
-        components that can go and the many that need you.
+      <p className="m-0 mb-2 font-sans text-body text-body">
+        As you sort the components below, apply two tests to each one. Both come from
+        Anthropic’s interviews with 53 of its own engineers and researchers about the work they
+        hand to Claude<Citation ids="huang-2025" pageKey="delegation-criteria" />:
       </p>
+      <ul className="m-0 mb-4 list-disc space-y-1.5 pl-5 font-sans text-body text-body">
+        <li>
+          Does it stand alone? Hand off a component when it is decoupled enough from the rest of
+          the work.
+        </li>
+        <li>
+          Is checking cheaper than producing? Delegate where verifying the result takes little
+          effort compared with creating it.
+        </li>
+      </ul>
       <p className="m-0 mb-6 font-sans text-body text-body">
         One thing to watch for as you work through the exercise below: your choices interact.
         How you categorize one component can change the right answer for another. A step you
