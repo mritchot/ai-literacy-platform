@@ -498,6 +498,8 @@ Verify: dependency risk (Element 6): The recommendations were not generated clai
 
 The triage heuristic has two factors. Count the specificity signals (one signal vs. compounding signals) AND estimate the verification cost (clear search target vs. hard-to-verify). These compound. Element 1 was high-signal AND hard-to-verify, which puts it at flag, high risk. Element 2 was single-signal AND clear search target, which puts it at verify, medium risk. Element 4 was self-managed, with no verification cost, which puts it at include, low risk. The skill is reading both axes at once, then matching the risk profile to your available verification time.`;
 
+export const P10_REFLECTION = `Pick one AI-generated output you used at work in the last two weeks. Using the two-factor triage (how many specificity signals, how hard to verify), name one element you would flag, one you would verify, and one you could include as written. Which of them did you actually check before you used it? Two or three sentences.`;
+
 // ─── P11: Iterative Refinement ────────────────────────────────────
 
 export const P11_SCENARIO = `Your task: You are an HR business partner at a mid-size technology company. The Chief People Officer has asked you to draft an internal communication to a 200-person engineering department announcing a reorganization. Three teams are being merged into two, reporting lines are changing for roughly 60 people, and two team lead positions are being eliminated (the affected individuals have already been notified privately). The email will go out Monday morning. It needs to be clear, honest, and specific enough that people know what's changed, without generating panic or a wave of resignations.

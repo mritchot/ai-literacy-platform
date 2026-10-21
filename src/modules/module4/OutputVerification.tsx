@@ -9,12 +9,14 @@ import { Icon } from '../../components/shared/Icon';
 import { Overline } from '../../components/shared/Overline';
 import { R4Trigger } from '../../components/reference/R4Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
+import { ReflectionPrompt } from '../../components/shared/ReflectionPrompt';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { scrollBehavior } from '../../utils/motion';
 import {
   P10_BRIEFING_SEGMENTS,
   P10_ELEMENTS,
+  P10_REFLECTION,
   P10_SCENARIO,
   P10_SUMMARY,
   type Classification,
@@ -278,23 +280,36 @@ export function OutputVerification(): JSX.Element {
       </ul>
 
       {allSubmitted && (
-        <aside
-          role="note"
-          className="mt-8"
-          style={{
-            background: 'rgb(var(--surface-warm))',
-            border: '1px solid rgb(var(--border))',
-            borderLeft: `3px solid ${DISCERNMENT}`,
-            padding: '18px 22px',
-          }}
-        >
-          <h4 className="m-0 mb-3 font-sans text-h4 font-semibold text-ink">
-            Verification pattern: what this briefing revealed
-          </h4>
-          <div className="font-sans text-body-sm leading-relaxed text-body whitespace-pre-line">
-            {P10_SUMMARY.replace(/^Verification triage[^.\n]*\.\n\n/, '')}
+        <>
+          <aside
+            role="note"
+            className="mt-8"
+            style={{
+              background: 'rgb(var(--surface-warm))',
+              border: '1px solid rgb(var(--border))',
+              borderLeft: `3px solid ${DISCERNMENT}`,
+              padding: '18px 22px',
+            }}
+          >
+            <h4 className="m-0 mb-3 font-sans text-h4 font-semibold text-ink">
+              Verification pattern: what this briefing revealed
+            </h4>
+            <div className="font-sans text-body-sm leading-relaxed text-body whitespace-pre-line">
+              {P10_SUMMARY.replace(/^Verification triage[^.\n]*\.\n\n/, '')}
+            </div>
+          </aside>
+          <div className="mt-6">
+            <ReflectionPrompt
+              moduleId={4}
+              sectionId={5}
+              promptId="p10_reflection"
+              accent="discernment"
+              engagedEvent="p10_reflection_engaged"
+              savedEvent="p10_reflection_saved"
+              promptText={P10_REFLECTION}
+            />
           </div>
-        </aside>
+        </>
       )}
       </section>
     </div>
