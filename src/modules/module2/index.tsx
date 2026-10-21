@@ -608,40 +608,52 @@ function Section6({ module }: ModuleProp): JSX.Element {
           The report that measured the trend offers two main explanations
           <Citation ids="appel-mccrory-tamkin-2025" pageKey="directive-explanations" />. The first is
           that models are getting better: as AI produces higher-quality first-draft outputs, users
-          need fewer refinement turns. Usage data from the same months is consistent with that reading, though it measures
-          adoption, not quality. Reasoning models work through a problem in steps before answering.
-          On one developer platform, their share of usage went from negligible in early 2025 to
-          more than half by late 2025
-          <Citation ids="openrouter-a16z-2025" pageKey="reasoning-share-50" />. Industry analyst
-          Benedict Evans puts the pace at a new frontier model every six to nine months
-          <Citation ids="evans-2026-05" pageKey="frontier-cadence-20" />. The second is
+          need fewer refinement turns. Usage data from the same months is consistent with that
+          reading, though it measures adoption, not quality: on one developer platform, the share
+          of usage going to reasoning models, which work through a problem in steps before
+          answering, went from negligible in early 2025 to more than half by late 2025
+          <Citation ids="openrouter-a16z-2025" pageKey="reasoning-share-50" />. The second is
           learning-by-doing: users who gain experience with AI develop enough confidence to
           delegate complete tasks rather than collaborating on them. Enterprise records show use
-          deepening after adoption, though they measure volume, not delegation. About half of the
+          deepening after adoption, though they measure volume, not delegation: about half of the
           growth in usage between mid-2025 and early 2026 came from firms that had already
-          adopted. The researchers read an early-2026 jump, which reached early and recent
-          adopters at the same time, as a change affecting all customers rather than only the
-          usual growth after adoption
-          <Citation ids="chatterji-2026" pageKey="within-firm-growth" />. Both
-          explanations are probably contributing. The November reversal adds a third factor:
-          product features that invite collaboration, such as file creation and persistent memory,
-          may pull usage back toward augmentation
-          <Citation ids="appel-massenkoff-mccrory-2026" pageKey="aug-auto-52-45" />. The first two lead
-          to the same consequence: more output is passing through less human review.
+          adopted<Citation ids="chatterji-2026" pageKey="within-firm-growth" />. Both
+          explanations are probably contributing, and both lead to the same consequence: more
+          output is passing through less human review.
+        </p>
+        <p className="m-0">
+          The November reversal shows the trend is not fixed. Product features that invite
+          collaboration, such as file creation and persistent memory, may pull usage back toward
+          augmentation<Citation ids="appel-massenkoff-mccrory-2026" pageKey="aug-auto-52-45" />.
         </p>
         <p className="m-0">
           The tasks with the highest time savings (compiling information, drafting documents,
           preparing reports) overlap with the tasks people hand over outright: most directive
           conversations are writing and content generation, and drafting business email shows a
           high share of directive use
-          <Citation ids="handa-2025" pageKey="directive-writing" />. Job postings already mention
-          the matching skills less often. Between 2023 and 2025, writing and editing dropped out
-          of the posting requirements of 134 US occupations, and general science and research out
-          of 140
-          <Citation ids="mgi-agents-robots-us-2025" pageKey="declining-mentions" />. The analysts
-          note the skills remain essential for much of the workforce. The efficiency gain is real.
+          <Citation ids="handa-2025" pageKey="directive-writing" />. The efficiency gain is real.
           But so is the verification gap.
         </p>
+        <EvidenceNote id="m2-s6-directive-trend" moduleId={2} sectionId={6}>
+          <p className="m-0">
+            Models change quickly. Industry analyst Benedict Evans puts the pace at a new frontier
+            model every six to nine months
+            <Citation ids="evans-2026-05" pageKey="frontier-cadence-20" />.
+          </p>
+          <p className="m-0">
+            The enterprise records carry a caution. The researchers read an early-2026 jump,
+            which reached early and recent adopters at the same time, as a change affecting all
+            customers rather than only the usual growth after adoption
+            <Citation ids="chatterji-2026" pageKey="within-firm-growth" />.
+          </p>
+          <p className="m-0">
+            Job postings already mention the skills behind the most-delegated tasks less often.
+            Between 2023 and 2025, writing and editing dropped out of the posting requirements of
+            134 US occupations, and general science and research out of 140
+            <Citation ids="mgi-agents-robots-us-2025" pageKey="declining-mentions" />. The
+            analysts note the skills remain essential for much of the workforce.
+          </p>
+        </EvidenceNote>
       </div>
 
       <div className="my-8">
@@ -652,7 +664,9 @@ function Section6({ module }: ModuleProp): JSX.Element {
             A home inspector who uses AI to draft reports faster doesn't become a faster inspector;
             they become someone who spends proportionally more of their day doing physical
             inspections and proportionally less writing about them.
-            <Citation ids="tamkin-mccrory-2025" pageKey="bottleneck-tasks" />
+            <Citation ids="tamkin-mccrory-2025" pageKey="bottleneck-tasks" /> Tamkin and McCrory
+            quote the economists Aghion, Jones, and Jones: growth “may be constrained not by what
+            we are good at but rather by what is essential and yet hard to improve.”
           </p>
           <p className="m-0 mb-2">
             History shows two outcomes. When Otis launched the automatic elevator in 1950, the
@@ -663,23 +677,11 @@ function Section6({ module }: ModuleProp): JSX.Element {
             question to every automation: is the thing being automated the task, or the job? For
             most knowledge work, it is the task.
           </p>
-          <p className="m-0 mb-2">
-            The AI-accelerated task gets faster; the role doesn't disappear; it reshapes around
-            the tasks AI cannot do. The WEF reads its employer forecasts the same way: employers
-            expect a smaller human share of task time by 2030, but the report notes both people
-            and machines may do more,
-            higher-value work in that time, so concern about humans 'running out of things to do'
-            would be misplaced
-            <Citation ids="wef-2025" pageKey="human-machine-frontier" />. The open question the
-            report poses is whether workers share in the value machines generate. For your own
-            practice, the bottleneck concept points to a specific question: which of your tasks
-            are reshaping right now, and are you making that decision deliberately, or is the
-            tool's speed making it for you?
-          </p>
           <p className="m-0">
-            Tamkin and McCrory link this to an observation by the economists Aghion, Jones, and
-            Jones: growth may be held back less by what we are good at than by what is essential
-            and hard to improve <Citation ids="tamkin-mccrory-2025" pageKey="bottleneck-tasks" />.
+            The AI-accelerated task gets faster; the role doesn't disappear; it reshapes around
+            the tasks AI cannot do. For your own practice, the bottleneck concept points to a
+            specific question: which of your tasks are reshaping right now, and are you making
+            that decision deliberately, or is the tool's speed making it for you?
           </p>
         </BottleneckCallout>
       </div>
