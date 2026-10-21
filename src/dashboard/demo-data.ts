@@ -420,7 +420,7 @@ export const DEMO_EVENTS: AnalyticsEvent[] = [
 // The same learner, followed to the end: Module 3 finished on day 3,
 // Module 4 on day 10, the post-assessment on day 13, then the competency
 // profile. All 37 sections done, all 16 knowledge checks answered (13
-// preferred; KC-4.3 chose c), all 11 optional interactions saved. The
+// preferred; KC-4.3 chose c), all 14 optional interactions saved. The
 // post-assessment scores 11 of 12, still missing structured prompting,
 // so the dashboard and the Level 2 worked example tell the same story.
 const DAY = 24 * 60;
@@ -502,6 +502,15 @@ const REFLECTIONS_COMPLETE: Record<string, string> = {
     'Writing the statement made me separate what I checked from what I only read, which I had not done before.',
   '4.8.p12_statement':
     'AI compiled the competitor figures and drafted the comparison table. I checked every figure against the filings and corrected two. The recommendations are mine, and I am responsible for the briefing.',
+  '4.5.p10_reflection':
+    'Last week I used an AI summary of a supplier contract. I would flag the quoted penalty rate, verify the renewal date, and include the list of parties as written. I only checked the renewal date.',
+  '4.9.closing_confidence':
+    'My confidence that I can tell when a variance summary is wrong grew more than my confidence in the tool. I will keep tying every figure in the summary back to the ledger, even when it reads well.',
+  '4.9.p4_revised_task1':
+    'Budget variance analysis: the figures are a boundary-task risk (arithmetic), so the AI drafts the commentary and I recompute every variance from source. If checking takes more than 30 minutes, the analytical sections go back to human-only.',
+  '4.9.p4_revised_task2':
+    'Client proposals: claims about the client are fluent-fabrication risks, so I flag every specific fact about their history or market and verify it before the draft goes out. My prompt now names the client, the audience, and the decision the proposal supports.',
+  '4.9.p4_revised_tell': 'My finance manager',
 };
 
 const ACTIVE_TIME_MS_COMPLETE: Record<string, number> = {
@@ -541,11 +550,20 @@ const COMPLETION_EVENTS: Ev[] = [
   ev(at(m4Start + 12, 45), 'p9_reflection_saved', 4, 3, { chars: 151 }),
   ev(at(m4Start + 14, 10), 'kc_4_1_submitted', 4, 4, { optionId: 'd', isPreferred: true }),
   ev(at(m4Start + 15, 2), 'kc_4_2_submitted', 4, 4, { optionId: 'b', isPreferred: true }),
+  ev(at(m4Start + 22, 40), 'p10_reflection_saved', 4, 5, { chars: 194 }),
   ev(at(m4Start + 27, 5), 'p11_reflection_saved', 4, 6, { chars: 129 }),
   ev(at(m4Start + 30, 44), 'kc_4_3_submitted', 4, 7, { optionId: 'c', isPreferred: false }),
   ev(at(m4Start + 31, 30), 'kc_4_4_submitted', 4, 7, { optionId: 'c', isPreferred: true }),
   ev(at(m4Start + 31, 33), 'kc_module_4_complete', 4, 7),
   ev(at(m4Start + 38, 50), 'p12_reflection_saved', 4, 8, { chars: 102 }),
+  // Section 9: the closing reflection, then the revisit of the P4 commitment.
+  ev(at(m4Start + 40, 10), 'closing_confidence_saved', 4, 9, { chars: 195 }),
+  ev(at(m4Start + 40, 25), 'p4_commitment_revisit_engaged', 4, 9),
+  ev(at(m4Start + 41, 5), 'p4_commitment_revised_saved', 4, 9, {
+    task1Chars: 239,
+    task2Chars: 258,
+    namedSomeone: true,
+  }),
   // The competency profile opens once the post-assessment is done.
   ev(at(profileMin, 2), 'section_4_10_enter', 4, 10),
   ev(at(profileMin, 20), 'completion_profile_viewed', 4, 10),

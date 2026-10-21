@@ -22,8 +22,9 @@ interface SummaryMetricsBarProps {
   events: AnalyticsEvent[];
 }
 
-// Optional interaction event keys (4D §7.6), plus the Module 4 closing
-// revisit of the P4 commitment.
+// Optional interaction event keys (4D §7.6), plus three Module 4
+// additions: the P10 reflection, the S9 closing-confidence reflection,
+// and the S9 revisit of the P4 commitment.
 const OPTIONAL_INTERACTION_EVENTS = new Set<string>([
   'p3_reflection_1_saved',
   'p3_reflection_2_saved',
@@ -35,8 +36,10 @@ const OPTIONAL_INTERACTION_EVENTS = new Set<string>([
   'p7_reasoning_submitted',
   'p8_reflection_saved',
   'p9_reflection_saved',
+  'p10_reflection_saved',
   'p11_reflection_saved',
   'p12_reflection_saved',
+  'closing_confidence_saved',
 ]);
 const TOTAL_OPTIONAL = OPTIONAL_INTERACTION_EVENTS.size;
 
