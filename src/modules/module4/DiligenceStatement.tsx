@@ -58,7 +58,7 @@ const SCAFFOLD: { label: string; color: string; prompt: string }[] = [
     label: 'Diligence',
     color: 'rgb(var(--diligence))',
     prompt:
-      'What limitations remain in the final deliverable? What should the reader be aware of?',
+      'What limitations remain in the final deliverable? What should the reader be aware of? Which tool did you use, and who takes responsibility for the final content?',
   },
 ];
 
