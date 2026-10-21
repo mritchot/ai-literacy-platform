@@ -8,11 +8,11 @@
 // learner score above their knowledge, which inflates the pre score, the
 // post score, or both, and so distorts the pre-to-post gain the Level 2
 // evaluation reports.
-//   • Post stems that name the concept being tested (LS-01, AE-01).
-//   • A post stem whose program term appears only in the key (AE-15).
-//   • The key as the longest option (LS-02, AE-15; Haladyna, Downing &
-//     Rodriguez, 2002, guideline 24).
-//   • Literal *asterisk emphasis*, which renders as plain asterisks (LS-19).
+//   • Post stems that name the concept being tested.
+//   • A post stem whose program term appears only in the key.
+//   • The key as the longest option (Haladyna, Downing & Rodriguez,
+//     2002, guideline 24).
+//   • Literal *asterisk emphasis*, which renders as plain asterisks.
 //   • Answer-key distributions that drift from the file headers.
 //
 // The banks are read as source text, not imported, so the script needs no

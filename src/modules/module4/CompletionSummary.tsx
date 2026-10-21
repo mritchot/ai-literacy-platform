@@ -139,7 +139,7 @@ export function CompletionSummary(): JSX.Element {
       const b = byBlock.find((x) => x.block === key);
       return {
         name,
-        items: b?.postTotal ?? 0,
+        items: b?.postAnswered ?? 0,
         preItems: b?.preAnswered ?? 0,
         pre: b?.preCorrect ?? 0,
         post: b?.postCorrect ?? 0,
@@ -157,7 +157,7 @@ export function CompletionSummary(): JSX.Element {
       preTotal: summary.preCorrect,
       preItems: summary.preAnswered,
       postTotal: summary.postCorrect,
-      postItems: summary.postTotal,
+      postItems: summary.postAnswered,
       change: summary.change,
       gainText: gainSentence(summary),
       blocks,

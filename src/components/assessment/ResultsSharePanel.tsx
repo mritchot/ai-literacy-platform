@@ -144,7 +144,6 @@ export function ResultsSharePanel(): JSX.Element {
             border: '1px solid rgb(var(--border))',
           }}
         >
-          <Icon name="check" size={14} />
           Copy code
         </button>
         <button

@@ -80,8 +80,12 @@ export interface GrowthSummary {
   /** Correct pre responses, over `preAnswered`. */
   preCorrect: number;
   preAnswered: number;
-  /** Correct post responses, over `postTotal`. */
+  /** Correct post responses, over `postAnswered`. */
   postCorrect: number;
+  /** Post responses recorded. Below `postTotal` only when the post was
+   *  taken on the earlier ten-item form. */
+  postAnswered: number;
+  /** Items on the current post form. */
   postTotal: number;
   /** Constructs answered on both forms. The change and the normalized
    *  gain are computed over these alone. */
@@ -105,6 +109,7 @@ export function summarizeGrowth(outcomes: readonly ConstructOutcome[]): GrowthSu
     preCorrect: answeredPre.filter((o) => o.pre === true).length,
     preAnswered: answeredPre.length,
     postCorrect: outcomes.filter((o) => o.post === true).length,
+    postAnswered: outcomes.filter((o) => o.post !== null).length,
     postTotal: outcomes.length,
     compared: compared.length,
     comparedPreCorrect,
@@ -121,6 +126,8 @@ export type GrowthReading = 'gain' | 'drop' | 'held-strong' | 'held-stalled';
 export function readGrowth(summary: GrowthSummary): GrowthReading {
   if (summary.change > 0) return 'gain';
   if (summary.change < 0) return 'drop';
+  // With no construct answered on both forms there is no baseline to hold.
+  if (summary.compared === 0) return 'held-stalled';
   return summary.comparedPreCorrect >= STRONG_BASELINE_SHARE * summary.compared
     ? 'held-strong'
     : 'held-stalled';
@@ -144,6 +151,7 @@ export interface BlockOutcome {
   preCorrect: number;
   preAnswered: number;
   postCorrect: number;
+  postAnswered: number;
   postTotal: number;
   /** Over the block's constructs answered on both forms. */
   change: number;
@@ -160,6 +168,7 @@ export function blockOutcomes(outcomes: readonly ConstructOutcome[]): BlockOutco
         preCorrect: summary.preCorrect,
         preAnswered: summary.preAnswered,
         postCorrect: summary.postCorrect,
+        postAnswered: summary.postAnswered,
         postTotal: summary.postTotal,
         change: summary.change,
       };

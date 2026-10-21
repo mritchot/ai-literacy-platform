@@ -66,7 +66,7 @@ import { drawPageFooter } from './pdf/primitives';
  *  `ASSESSMENT_BLOCKS` below). */
 export interface AssessmentBlockResult {
   name: 'Usage patterns' | 'Failure modes' | 'Mechanics' | 'Evaluation';
-  /** Post items in the block. */
+  /** Post items answered in the block. */
   items: number;
   /** Pre items answered in the block; fewer than `items` when the
    *  baseline predates the twelve-item form. */

@@ -23,13 +23,14 @@ interface AssessmentIntroProps {
 }
 
 const PRE_HEADLINE = 'Before you begin: a baseline';
+const POST_HEADLINE = 'Almost done: your post-program assessment';
 
+// The "about" figure is the range midpoint rounded to the nearest five.
 function minutesFor(itemCount: number): { low: number; high: number; about: number } {
   const low = Math.ceil(itemCount * ASSESSMENT_MINUTES_PER_ITEM.low);
   const high = Math.ceil(itemCount * ASSESSMENT_MINUTES_PER_ITEM.high);
   return { low, high, about: Math.round((low + high) / 10) * 5 };
 }
-const POST_HEADLINE = 'Almost done: your post-program assessment';
 
 export function AssessmentIntro({
   kind,

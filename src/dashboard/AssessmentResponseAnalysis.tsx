@@ -255,7 +255,7 @@ function ScoreSummaryBar({
       />
       <ScoreCell
         label="Post-Assessment"
-        value={postComplete ? `${growth.postCorrect} / ${growth.postTotal}` : '—'}
+        value={postComplete ? `${growth.postCorrect} / ${growth.postAnswered}` : '—'}
         sub={postComplete ? 'Complete' : 'Not started'}
       />
       <ScoreCell

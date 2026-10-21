@@ -103,6 +103,28 @@ test('a ten-response pre record is scored against the twelve-item post like with
   assert.equal(evaluation.postTotal, 4);
 });
 
+test('a ten-response post record is scored over the items answered', () => {
+  const legacyIds = POST_ASSESSMENT_ITEMS.slice(0, 10).map((it) => it.id);
+  const pre = Object.fromEntries(PRE_ASSESSMENT_ITEMS.map((it) => [it.id, { isCorrect: false }]));
+  const post = Object.fromEntries(legacyIds.map((id) => [id, { isCorrect: true }]));
+  const s = scoring.summarizeGrowth(
+    scoring.constructOutcomes(PRE_ASSESSMENT_ITEMS, POST_ASSESSMENT_ITEMS, pre, post),
+  );
+  assert.equal(s.postCorrect, 10);
+  assert.equal(s.postAnswered, 10);
+  assert.equal(s.compared, 10);
+  assert.equal(s.change, 10);
+});
+
+test('with nothing answered on both forms, a zero change is not a strong baseline', () => {
+  const s = scoring.summarizeGrowth(
+    scoring.constructOutcomes(pre10, post10, {}, responses(post10, 7)),
+  );
+  assert.equal(s.compared, 0);
+  assert.equal(scoring.readGrowth(s), 'held-stalled');
+  assert.equal(scoring.gainSentence(s), null);
+});
+
 test('every post item pairs with a pre item on the same construct', () => {
   for (const post of POST_ASSESSMENT_ITEMS) {
     const pre = PRE_ASSESSMENT_ITEMS.find((p) => p.id === post.parallelPreId);

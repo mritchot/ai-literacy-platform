@@ -89,6 +89,7 @@ export function ExportControls({
   onResetConfirmed,
 }: ExportControlsProps): JSX.Element {
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const sourceLabel = dataSource === 'demo-complete' ? 'completed demo' : dataSource;
   const [announcement, setAnnouncement] = useState('');
 
   const handleJSON = () => {
@@ -138,7 +139,7 @@ export function ExportControls({
         <button
           type="button"
           onClick={handleJSON}
-          aria-label={`Export analytics as JSON (${dataSource} data)`}
+          aria-label={`Export analytics as JSON (${sourceLabel} data)`}
           className="inline-flex items-center gap-2 font-sans text-[13px] font-semibold text-ink hover:bg-surface"
           style={{
             padding: '8px 14px',
@@ -152,7 +153,7 @@ export function ExportControls({
         <button
           type="button"
           onClick={handleXAPI}
-          aria-label={`Export analytics as xAPI (${dataSource} data)`}
+          aria-label={`Export analytics as xAPI (${sourceLabel} data)`}
           className="inline-flex items-center gap-2 font-sans text-[13px] font-semibold text-ink hover:bg-surface"
           style={{
             padding: '8px 14px',

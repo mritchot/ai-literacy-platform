@@ -31,6 +31,7 @@ import {
   constructOutcomes,
   gainSentence,
   heldLabel,
+  readGrowth,
   summarizeGrowth,
   type ConstructOutcome,
   type GrowthSummary,
@@ -193,7 +194,7 @@ function ScoreHeader({ summary }: { summary: GrowthSummary }): JSX.Element {
   const deltaBg =
     delta > 0 ? SUCCESS_LIGHT : delta < 0 ? ERROR_LIGHT : SURFACE;
   const gain = gainSentence(summary);
-  const stalled = summary.comparedPreCorrect < summary.compared;
+  const stalled = readGrowth(summary) === 'held-stalled';
 
   return (
     <section
@@ -222,7 +223,7 @@ function ScoreHeader({ summary }: { summary: GrowthSummary }): JSX.Element {
         />
         <ScoreCell
           label="Post-assessment"
-          value={`${summary.postCorrect} / ${summary.postTotal}`}
+          value={`${summary.postCorrect} / ${summary.postAnswered}`}
           sub="After Module 4"
         />
         <div
@@ -347,7 +348,7 @@ function BlockBreakdown({ outcomes }: { outcomes: ConstructOutcome[] }): JSX.Ele
                   Pre <strong className="text-ink">{stats.preCorrect}/{stats.preAnswered}</strong>
                 </div>
                 <div>
-                  Post <strong className="text-ink">{stats.postCorrect}/{stats.postTotal}</strong>
+                  Post <strong className="text-ink">{stats.postCorrect}/{stats.postAnswered}</strong>
                 </div>
                 <div style={{ color: delta > 0 ? SUCCESS : delta < 0 ? ERROR : 'rgb(var(--muted))' }}>
                   {delta > 0 ? '+' : delta < 0 ? '−' : '±'}

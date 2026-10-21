@@ -179,9 +179,10 @@ export function SummaryMetricsBar({ progress, events }: SummaryMetricsBarProps):
 }
 
 /**
- * Assessment summary card. Three display states:
+ * Assessment summary card. Four display states:
  *   • Neither complete  → "—"       with "No assessments taken"
  *   • Pre complete only → "8 / 12"  with "Pre-assessment · Post not started"
+ *   • Post complete only → "9 / 12" with "Post-assessment · No baseline taken"
  *   • Both complete     → "8 → 11"  with "+3 growth · 75% of gap closed · 12 items each"
  *
  * The arrow compares the constructs answered on both forms, so a learner
@@ -216,6 +217,17 @@ function AssessmentCard({ a }: { a: Metrics['assessment'] }): JSX.Element {
     );
   }
 
+  if (!a.preComplete) {
+    return (
+      <MetricCard
+        label="Assessment"
+        value={`${g.postCorrect} / ${g.postAnswered}`}
+        detail="Post-assessment · No baseline taken"
+        progress={null}
+      />
+    );
+  }
+
   const value = `${g.comparedPreCorrect} → ${g.comparedPostCorrect}`;
   const scope =
     g.compared === g.postTotal ? `${g.postTotal} items each` : `${g.compared} of ${g.postTotal} in baseline`;
@@ -231,7 +243,7 @@ function AssessmentCard({ a }: { a: Metrics['assessment'] }): JSX.Element {
       label="Assessment"
       value={value}
       detail={detail}
-      progress={g.postTotal === 0 ? 0 : g.postCorrect / g.postTotal}
+      progress={g.postAnswered === 0 ? 0 : g.postCorrect / g.postAnswered}
       progressColor="rgb(var(--action))"
     />
   );
