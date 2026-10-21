@@ -18,7 +18,7 @@ The consequence is that the KPIs that matter do not come from the AI provider at
 
 ## The KPI framework
 
-KPIs fall into four categories, each tracing back to specific Level 3 behaviors. Organizations select from them based on which outcomes matter and which they already have the infrastructure to measure. Employers say the outcomes they most expect from training investment are enhanced productivity (77%), competitiveness (70%), and talent retention (65%) ([WEF Future of Jobs Report, 2025](https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf), p. 48). Those are expectations, not measured results, which is the reason this framework measures. The efficiency and quality KPIs speak to productivity; this framework does not measure competitiveness or retention directly.
+KPIs fall into four categories, each tracing back to specific Level 3 behaviors. Organizations select from them based on which outcomes matter and which they already have the infrastructure to measure. Employers say the outcomes they most expect from training investment are enhanced productivity (77%), competitiveness (70%), and talent retention (65%) ([WEF Future of Jobs Report, 2025](https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf), p. 48). Those are expectations, not measured results, which is the reason this framework measures. The efficiency and quality KPIs speak to productivity; this framework does not measure competitiveness or retention directly. None of the KPIs assumes a profit motive. In a university, hospital, or public agency, E1–E3 count staff time returned to core work and Q1 counts errors avoided. The ROI Institute has also published a guide to the same method for government training programs ([Phillips & Phillips, 2009](https://www.calhr.ca.gov/Documents/how-to-calculate-roi-in-government-training-programs.pdf)).
 
 **Efficiency gains** (read together: a faster draft that needs more rounds is not a gain)
 
@@ -101,7 +101,7 @@ Efficiency Benefit = 200 × $140,000 × 0.25 × 0.30 × 0.40 = **$840,000**. Qua
 
 | Milestone | Activity |
 |---|---|
-| Pre-program | Establish KPI baselines (≥3 months historical) and the A2 concealment baseline |
+| Pre-program | Establish KPI baselines (6–12 months of history where systems hold it, 3 months at minimum) and the A2 concealment baseline |
 | 90 days | Level 3 complete; begin watching Level 4 KPIs for direction (no ROI yet) |
 | 6 months | First Level 4 point: measure KPIs, run estimation surveys, calculate a preliminary ROI range |
 | 12 months | Full evaluation: trend-line analysis, final ROI with confidence range, integrated L1–L4 narrative |
