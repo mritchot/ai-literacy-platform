@@ -213,12 +213,12 @@ export const KC_METADATA = {
     sectionId: 10,
     objectiveRef: '3.4',
     stemPreview:
-      'A strategy-meeting brief loads long documents; the analysis misses late-input material…',
+      'A 180,000-token brief yields three risks; the third cites regulation the brief never mentions…',
     preferredOptionId: 'c',
     options: [
       { id: 'a', label: '(a) Model supplemented from general knowledge' },
       { id: 'b', label: '(b) Only two risks were well-supported' },
-      { id: 'c', label: '(c) Context window nearly consumed' },
+      { id: 'c', label: '(c) Long input used unevenly; risk 3 generated' },
     ],
   },
 
