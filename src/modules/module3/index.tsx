@@ -481,8 +481,8 @@ function Section6({ module }: ModuleProp): JSX.Element {
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
           The third mechanical idea is the simplest to state and the hardest to see: the model
-          has a fixed-size container for everything it can process at once, and anything that
-          doesn’t fit is silently dropped.
+          has a fixed-size container for everything it can process at once, and you may not be
+          told what the model did not see.
         </p>
         <p className="m-0">
           This container is called the <strong>context window</strong>. It holds your prompt, any
@@ -554,8 +554,15 @@ function Section6({ module }: ModuleProp): JSX.Element {
          <Citation ids="modarressi-nolima-2025" pageKey="drop-at-32k" />. The practical rule is
           that the advertised window is a ceiling on what fits, not a promise about what the
           model will use well. The window has a maximum size, and that maximum is absolute. There is
-          no overflow mechanism, no “page two” of the model’s attention. When the input exceeds
-          the window, the excess is truncated, and the model does not tell you it happened.
+          no overflow mechanism, no “page two” of the model’s attention. What happens at the limit
+          depends on the tool. A single input that is too long is usually refused with an error
+         <Citation ids="anthropic-context-windows-2026" pageKey="overflow" />. Two other cases
+          are quiet. Over a long conversation, chat apps drop or summarize the oldest turns to
+          make room<Citation ids="anthropic-context-windows-2026" pageKey="rolling" />. And some
+          tools stop placing a large upload in the window at all: they search it and pass the
+          model only the passages that match your question
+         <Citation ids="anthropic-rag-projects-2026" pageKey="search-mode" />. In both quiet
+          cases, the response does not tell you what the model never saw.
         </p>
         <h3 className="m-0 mt-2 font-sans text-h3 font-semibold text-ink">
           Context exhaustion is usually cumulative.
@@ -565,8 +572,8 @@ function Section6({ module }: ModuleProp): JSX.Element {
           transcripts, the original spec, the post-mortems from related work) and ask for a
           retrospective. The first response fits. You ask for revisions, regenerate sections,
           compare angles. Each round adds to the running total. By the time the conversation has
-          run long enough, files that fit at the start may be silently truncated to make room
-          for what came later. The model will still produce a fluent, complete-sounding
+          run long enough, files that fit at the start may be silently dropped or summarized to
+          make room for what came later. The model will still produce a fluent, complete-sounding
           retrospective, because fluent, complete-sounding text is what next-token prediction
           optimizes for. Nothing in the response will signal that three interview transcripts
           and half the post-mortems were dropped two prompts ago.
@@ -870,8 +877,8 @@ function Section11({ module }: ModuleProp): JSX.Element {
           errors in arithmetic, multilingual content, and character-level tasks. Next-token
           prediction determines how output is generated: one token at a time, by probability,
           with no mechanism to distinguish real from plausible. The context window determines
-          how much the model can hold; it is a fixed container with a hard edge, and information
-          that falls outside is silently lost. Two more properties round out the set: knowledge
+          how much the model can hold; it is a fixed container with a hard edge, and you may not be
+          told what falls outside it. Two more properties round out the set: knowledge
           that is frozen at the training cutoff and unevenly distributed across topics, and
           steerability that follows the most probable response pattern rather than your exact
           intent.
