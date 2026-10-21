@@ -11,6 +11,7 @@ import { ReflectionPrompt } from '../../components/shared/ReflectionPrompt';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import {
+  P9_AFTER_NOTE,
   P9_ANNOTATIONS,
   P9_IMPROVED_OUTPUT,
   P9_REFLECTION,
@@ -420,6 +421,25 @@ function PhaseCompare({
           visibleOnMobile={compareTab === 'after'}
         />
       </div>
+
+      {/* The After memo models good Description, not verified content.
+          Without this note the page would present its regulatory claims
+          as trustworthy just because the prompt was well specified. */}
+      <aside
+        role="note"
+        aria-label="Verification note"
+        style={{
+          background: 'rgb(var(--discernment-light))',
+          border: '1px solid rgb(var(--border))',
+          borderLeft: '3px solid rgb(var(--discernment))',
+          padding: '16px 20px',
+        }}
+      >
+        <Overline className="mb-2" style={{ color: 'rgb(var(--discernment-text))' }}>
+          Before you send it
+        </Overline>
+        <p className="m-0 font-sans text-body-sm text-body">{P9_AFTER_NOTE}</p>
+      </aside>
 
       {/* Bring the learner's own three-field reformulation forward into
           Phase 3 so they can compare their work against the expert

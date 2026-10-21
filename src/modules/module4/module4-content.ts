@@ -247,6 +247,8 @@ Deploying organizations bear accountability for AI outputs even when generated b
 
 I'll distribute updated rubric templates by Wednesday. Flag questions before then.`;
 
+export const P9_AFTER_NOTE = `Better description changed the fit of this memo, not the accuracy of its claims. Every obligation, risk tier, and deadline in it is a specific factual claim. Check each one against the Act's text before the team acts on it. One has already moved: in July 2026 the EU postponed the obligations for stand-alone high-risk systems to December 2027 (Regulation (EU) 2026/1744), so "must now provide" in point 1 of the After memo is no longer accurate.`;
+
 export const P9_REFLECTION = `Compare the two outputs. Usage data shows the same pattern at scale. Across 117 countries and 50 US states, the years of education needed to understand the model's responses tracked the years needed to understand the prompts almost perfectly, and the model answered in a sophisticated way mainly when the prompt was sophisticated (Appel, Massenkoff & McCrory, 2026, pp. 34–35). Of the three Description dimensions (product, process, performance), which made the biggest difference in this case? Now look at your own reformulation above. Which dimension did you specify most clearly, and which would you strengthen if you rewrote it? One or two sentences.`;
 
 // ─── P10: Output Verification ─────────────────────────────────────
