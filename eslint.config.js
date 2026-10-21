@@ -10,7 +10,9 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist', 'node_modules'] },
+  // Gitignored local folders (agent worktrees, planning prompts) hold
+  // copies of the source; linting them would report on untracked code.
+  { ignores: ['dist', 'node_modules', '.claude/worktrees/**', 'cc-prompts/**'] },
   {
     files: ['src/**/*.{ts,tsx}', 'vite.config.ts'],
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
