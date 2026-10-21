@@ -150,25 +150,20 @@ function Section2({ module }: ModuleProp): JSX.Element {
          <Citation ids="ritchot-2025" pageKey="predictable-errors" />.
         </p>
         <p className="m-0">
-          Think of the model's vocabulary as a fixed set of tokens. The size depends on the
-          tokenizer. The one this module's playground uses, OpenAI's cl100k_base, has about
-          100,000 tokens; OpenAI's newer o200k_base has about 200,000
-          <Citation ids="openai-tiktoken" pageKey="vocab-sizes" />, and other labs' tokenizers
-          differ again. Every input you
-          provide must be represented using only those tokens. A common English word like
-          "report" matches a single token. An unusual term might require three or four tokens
-          placed side by side to spell it out. The model never sees your original text; it only
-          sees the token sequence. The fixed-set picture breaks down in one place. The pieces are
-          not chosen by meaning or by spelling rules. Apart from a few fixed rules for where text
-          may be split, such as cutting runs of digits into chunks of up to three, they are chosen
-          by how often a character sequence appeared in the text the tokenizer was built from.
-          That is why the examples below look arbitrary until you know the rules. Tokens are also the unit the industry prices by. Vendors quote cost per
-          million tokens the way chipmakers once quoted megahertz
-         <Citation ids="evans-2025-05" pageKey="mtok-22" />. On one routing platform, the median
-          effective price across task categories was $0.73 per million tokens in 2025
-         <Citation ids="openrouter-a16z-2025" pageKey="median-cost-48" />. So everything below
-          about which inputs fragment into more tokens is also a lesson in which inputs cost
-          more.
+          Think of the model's vocabulary as a fixed set of tokens: about 100,000 for the
+          tokenizer this module's playground uses (OpenAI's cl100k_base), about 200,000 for
+          OpenAI's newer o200k_base, and different again for other labs
+          <Citation ids="openai-tiktoken" pageKey="vocab-sizes" />. Every input you provide must
+          be represented using only those tokens. The pieces are not chosen by meaning or by
+          spelling rules. Apart from a few fixed rules for where text may be split, such as
+          cutting runs of digits into chunks of up to three, they are chosen by how often a
+          character sequence appeared in the text the tokenizer was built from. A common English
+          word like "report" matches a single token. An unusual term might require three or four
+          tokens placed side by side to spell it out. The model never sees your original text; it
+          only sees the token sequence. That is why the examples below look arbitrary until you
+          know the rules. Tokens are also the unit vendors price by
+         <Citation ids="evans-2025-05" pageKey="mtok-22" />, so an input that fragments into more
+          tokens also costs more to process.
         </p>
       </div>
 
@@ -503,12 +498,10 @@ function Section6({ module }: ModuleProp): JSX.Element {
           natively<Citation ids="qwen3-model-card-2025" pageKey="context-length" />. This module
           uses 200,000 tokens as its working example: it sits between the open-weight and
           flagship sizes and is a round number for the arithmetic that follows. Most requests use a small
-          fraction of that. Across one routing platform's traffic, the average prompt grew from
-          about 1,500 to more than 6,000 tokens between early 2024 and late 2025
-         <Citation ids="openrouter-a16z-2025" pageKey="prompt-length-6k" />. Programming work drove
-          most of that rise: coding requests routinely exceed 20,000 tokens, while other kinds
-          of requests stayed relatively flat. The window rarely binds on a single request. It binds over a session, which is
-          the failure mode described below.
+          fraction of that, even though average prompts have grown, mostly in programming work
+         <Citation ids="openrouter-a16z-2025" pageKey="prompt-length-6k" />. The window rarely
+          binds on a single request. It binds over a session, which is the failure mode described
+          below.
         </p>
         <p className="m-0">
           What a 200K window actually holds depends entirely on what you put in. English prose
@@ -538,10 +531,8 @@ function Section6({ module }: ModuleProp): JSX.Element {
           steps before it answers, those steps are reasoning tokens, and they count as output.
           On the same routing platform, average completion length nearly tripled during 2025,
           from about 150 to 400 tokens, mostly because of reasoning tokens
-         <Citation ids="openrouter-a16z-2025" pageKey="reasoning-tokens-completion" />. In the
-          same year, reasoning models went from a negligible share of the platform's traffic to
-          more than half<Citation ids="openrouter-a16z-2025" pageKey="reasoning-share-50" />.
-          A tool that thinks longer is also a tool that fills its container faster.
+         <Citation ids="openrouter-a16z-2025" pageKey="reasoning-tokens-completion" />. A tool
+          that thinks longer is also a tool that fills its container faster.
         </p>
         <p className="m-0">
           Flagship models now advertise context windows of about one million tokens, but
