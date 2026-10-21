@@ -16,7 +16,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     route: 'needs-analysis/problem-statement',
     title: 'Executive Problem Statement',
     blurb:
-      'The workforce problem the program addresses, from evidence to measured outcome: AI tools are available, the judgment to use them well is not.',
+      'The workforce problem the program addresses, from evidence to measurement: AI tools are available, the judgment to use them well is not.',
     type: 'Reading',
   },
   {

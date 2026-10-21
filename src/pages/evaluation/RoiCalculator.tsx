@@ -258,9 +258,11 @@ function formatHours(value: number): string {
   return value.toLocaleString('en-US', { maximumFractionDigits: 1 });
 }
 
-/** A break-even share outside 0–100% cannot be reached, so it shows a dash. */
+/** Above 100% the break-even cannot be reached, so it shows a dash. Below 0
+ *  the other stream already covers the cost, so the share needed is 0%. */
 function fmtOne(value: number): string {
-  if (!Number.isFinite(value) || value < 0 || value > 100) return '—';
+  if (!Number.isFinite(value) || value > 100) return '—';
+  if (value < 0) return '0.0%';
   return `${value.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`;
 }
 

@@ -3,6 +3,7 @@
 // bar, footer note. Spatial composition follows the mockup;
 // every color, font, radius, and spacing draws from design system tokens.
 
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   COMPETENCIES,
@@ -429,6 +430,14 @@ function CaseStrip({
    *  pre/post data. */
   onOpenPortfolio: (() => void) | undefined;
 }): JSX.Element {
+  // The button unmounts once the mode flips, so focus moves to the
+  // confirmation instead of falling back to <body>.
+  const [opened, setOpened] = useState(false);
+  const confirmationRef = useRef<HTMLParagraphElement>(null);
+  useEffect(() => {
+    if (opened) confirmationRef.current?.focus();
+  }, [opened]);
+
   return (
     <section aria-labelledby="case-heading" className="mb-10">
       <h2 id="case-heading" className="m-0 mb-5">
@@ -453,14 +462,28 @@ function CaseStrip({
           </Link>
         ))}
       </div>
-      {onOpenPortfolio && (
+      {onOpenPortfolio ? (
         <button
           type="button"
-          onClick={onOpenPortfolio}
+          onClick={() => {
+            onOpenPortfolio();
+            setOpened(true);
+          }}
           className="mt-4 bg-transparent p-0 font-sans text-caption font-medium text-action hover:underline"
         >
           Reviewing this as portfolio work? Open every module
         </button>
+      ) : (
+        opened && (
+          <p
+            ref={confirmationRef}
+            tabIndex={-1}
+            role="status"
+            className="m-0 mt-4 font-sans text-caption text-secondary"
+          >
+            Every module is now open.
+          </p>
+        )
       )}
     </section>
   );
