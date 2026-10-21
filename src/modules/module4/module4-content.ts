@@ -247,7 +247,7 @@ Deploying organizations bear accountability for AI outputs even when generated b
 
 I'll distribute updated rubric templates by Wednesday. Flag questions before then.`;
 
-export const P9_REFLECTION = `Compare the two outputs. Of the three Description dimensions (product, process, performance), which made the biggest difference in this case? Now look at your own reformulation above. Which dimension did you specify most clearly, and which would you strengthen if you rewrote it? One or two sentences.`;
+export const P9_REFLECTION = `Compare the two outputs. Usage data shows the same pattern at scale. Across 117 countries and 50 US states, the years of education needed to understand the model's responses tracked the years needed to understand the prompts almost perfectly, and the model answered in a sophisticated way mainly when the prompt was sophisticated (Appel, Massenkoff & McCrory, 2026, pp. 34–35). Of the three Description dimensions (product, process, performance), which made the biggest difference in this case? Now look at your own reformulation above. Which dimension did you specify most clearly, and which would you strengthen if you rewrote it? One or two sentences.`;
 
 // ─── P10: Output Verification ─────────────────────────────────────
 

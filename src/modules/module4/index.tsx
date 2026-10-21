@@ -192,24 +192,20 @@ function Section3({ module }: ModuleProp): JSX.Element {
       sectionLabel="Section 3 · P9 Interactive"
       width="interactive"
     >
-      <p className="m-0 mb-6 font-sans text-body text-body">
+      <p className="m-0 mb-4 font-sans text-body text-body">
         You’ve decided what to delegate. The next judgment is how to describe it. Description
         breaks down into three dimensions
        <Citation ids="dakan-feller-2025" pageKey="description" />: <em>product</em> (what you
         want), <em>process</em> (how the AI should approach the task, and how you work through it
         together), and <em>performance</em> (how the AI should behave). Most underspecified
-        prompts fail on all three at once. This is the skill knowledge workers most often report
-        lacking. In one survey of 319, 72 said that even when they could see an output fell short, they
-        struggled to revise the query or steer the model to a better one
-       <Citation ids="lee-2025" pageKey="inhibitors" />. In the same survey, 45 said that
-        turning an intention into a query added effort
-       <Citation ids="lee-2025" pageKey="effort-shift-stewardship" />. The three dimensions below
-        give that effort a structure. Usage data points the same way: across countries and US
-        states, the education level needed to understand the model's responses tracked the
-        education level of the prompts almost perfectly, and the researchers found the model
-        responds in a highly sophisticated way mainly when the prompt is sophisticated
-       <Citation ids="appel-massenkoff-mccrory-2026" pageKey="prompt-response-education" />.
-        Read the weak prompt and its output, then rewrite it across all three dimensions.
+        prompts fail on all three at once. In one survey of 319 knowledge workers, 72 said that
+        even when they could see an output fell short, they struggled to revise the query or
+        steer the model to a better one<Citation ids="lee-2025" pageKey="inhibitors" />. The
+        three dimensions below give that revision a structure.
+      </p>
+      <p className="m-0 mb-6 font-sans text-body font-semibold text-ink">
+        Your task: read the weak prompt and its output, then rewrite the prompt across all three
+        dimensions and compare your rewrite with an improved version.
       </p>
       <PromptComparison />
     </SectionContainer>
