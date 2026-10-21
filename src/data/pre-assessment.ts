@@ -1,4 +1,4 @@
-// Pre-Assessment instrument — 10 scenario-based items administered
+// Pre-Assessment instrument — 12 scenario-based items administered
 // BEFORE Module 1. No course vocabulary assumed; learners answer based
 // on existing intuition and experience. Responses are recorded without
 // feedback during the pre-assessment itself; the same constructs are
@@ -8,7 +8,10 @@
 // learning gains.
 //
 // Source: the pre-assessment instrument document (Phase 4 planning corpus).
-// Answer key distribution: A=2, B=3, C=2, D=3.
+// PRE-11 and PRE-12 were added later so the form measures task
+// decomposition (objective 4.1, Delegation) and disclosure (4.5,
+// Diligence); see `instrument-version.ts`.
+// Answer key distribution: A=3, B=3, C=3, D=3.
 
 export type AssessmentBlock = 'usage' | 'failure' | 'mechanics' | 'evaluation';
 
@@ -51,41 +54,41 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
     block: 'usage',
     objectiveRefs: ['2.1', '2.4'],
     stem:
-      'Based on large-scale behavioral research, which of the following best describes how professionals currently work with AI tools?',
+      'A colleague tells you she uses AI "as a sparring partner. I go back and forth with it until the work is right." She shows you her chat history for the past week. Of her 30 conversations, 22 are a single request and a single response that she pasted into a document without a follow-up message. Which reading of her description and her history is most accurate?',
     scenarioSummary:
-      'How professionals actually use AI tools vs. how they describe using them.',
+      'A colleague calls her AI use back-and-forth collaboration; her chat history shows 22 of 30 conversations were one request and one response.',
     options: [
       {
         id: 'A',
         text:
-          'Most professionals who use AI regularly engage in iterative, multi-turn collaboration: going back and forth with the tool, refining outputs together until the result meets their standards. Self-reported usage patterns reliably reflect these actual interaction styles.',
+          'Her description is the better guide. She knows how she works, and a chat history leaves out the thinking she does before writing a request and while reviewing the response, so the history understates how collaborative her use is.',
         isCorrect: false,
         feedbackText:
-          'Behavioral data tells a different story. In one interview study, professionals described 65% of their AI use as augmentative, but conversation data puts augmentation at 47% to 57% depending on the measurement wave, and directive usage (a complete request, an accepted result, minimal iteration) rose from about 28% to 39% of interactions before easing to 32%. The gap between how professionals describe their AI workflow and how they actually interact with these tools is a recurring finding in adoption research.',
+          'Thinking before and after a conversation is real, but it does not change what the history shows: most exchanges ended after one response that went straight into a document. Research on AI use finds the same gap at scale. In one interview study, professionals described 65% of their AI use as augmentative, but conversation data puts augmentation at 47% to 57% depending on the measurement wave.',
       },
       {
         id: 'B',
         text:
-          'Professionals delegate more than they report: directive exchanges (a complete request, an accepted result, minimal iteration) rose from about a quarter to nearly two-fifths of interactions during 2025, even as professionals describe their usage as iterative collaboration.',
+          'Her history fits a pattern research on AI use often finds: people describe their use as more collaborative than their conversations show. Most of her work is handed off in one exchange, which her own description misses.',
         isCorrect: true,
         feedbackText:
-          'Large-scale behavioral studies show that directive interactions grew over 2025 and that automation briefly overtook augmentation in August, even as professionals describe their usage as iterative collaboration. This matters because directive exchanges hand the work to the tool with little iteration, so any refinement or checking has to happen after the chat, if it happens at all. That raises the risk of unverified or low-quality deliverables. Without awareness of this pattern, teams can\'t assess whether their actual workflow matches their intended quality standard.',
+          'Studies that set interview self-reports beside large samples of conversation data find that people describe their AI use as more collaborative than the data shows, and that one-request, one-answer exchanges make up a large share of real use. Her history fits that pattern. This matters because directive exchanges hand the work to the tool with little iteration, so any refinement or checking has to happen after the chat, if it happens at all. That raises the risk of unverified or low-quality deliverables. Without seeing the pattern, she can\'t tell whether her actual workflow matches the quality standard she intends.',
       },
       {
         id: 'C',
         text:
-          'Most professionals limit AI usage to routine administrative tasks such as data formatting, scheduling, and email sorting, and avoid using it for complex creative or analytical work.',
+          'Her history shows efficient use. Needing several rounds of follow-up is a sign of unclear requests, so single exchanges that produce usable text mean she has learned to ask well, a more advanced form of collaboration.',
         isCorrect: false,
         feedbackText:
-          'AI usage for complex tasks like drafting and analysis is widespread and growing. It extends well beyond routine administrative work.',
+          'A well-specified single request can produce good output, but it is still a hand-off: one instruction, one accepted result. Calling it collaboration repeats the gap between description and practice. Back-and-forth is where a person applies judgment to the draft, which is what her description claims and her history does not show.',
       },
       {
         id: 'D',
         text:
-          'Most professionals who describe themselves as frequent AI users actually engage with these tools far less consistently than their self-reports suggest. The gap is in usage frequency, not interaction style.',
+          'The history can\'t settle the question either way. Whether a conversation is collaborative depends on what she was trying to do, and without knowing each task, the number of turns says nothing about how she works.',
         isCorrect: false,
         feedbackText:
-          'The issue is misidentifying interaction quality, not exaggerating frequency. Professionals genuinely use AI frequently; the gap is in how they characterize the nature of that interaction.',
+          'Turn count is not a perfect measure, but 22 single exchanges out of 30, each pasted straight into a document, is a clear pattern. Saying the history "says nothing" discards the best evidence available. The useful move is to compare the description with the record.',
       },
     ],
   },
@@ -148,7 +151,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'A',
         text:
-          'The citation may be entirely fabricated. Unless the AI tool actively searched for and retrieved the source document, it generated the citation by predicting what plausible academic language should come next. That process can produce confident, invented references that look authoritative.',
+          'The citation may be entirely fabricated. Unless the AI tool searched for and retrieved the source document, it generated the citation by predicting what plausible text should come next, a process that can produce confident, invented references.',
         isCorrect: true,
         feedbackText:
           'Some AI tools can now search the web or retrieve documents to ground their responses in real sources. But when an AI generates a citation without performing a retrieval step, it\'s producing text that looks like a well-formed reference (author, year, page number, statistic) because that\'s what citations look like in its training data. The result can be entirely fabricated while appearing authoritative. Knowing whether the tool searched for the source, or simply generated what a source should look like, is the critical distinction.',
@@ -231,9 +234,9 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
     block: 'failure',
     objectiveRefs: ['3.3'],
     stem:
-      'A legal analyst pastes a 40-page contract into an AI tool with the instruction: "Review this contract and list every clause that limits the vendor\'s liability." The AI produces a well-organized list of eight liability clauses. The analyst later discovers that three additional liability clauses appearing in the final ten pages of the contract were omitted entirely. What is the most likely explanation?',
+      'A legal analyst pastes a 40-page contract into an AI tool with the instruction: "Review this contract and list every clause that limits the vendor\'s liability." The AI produces a well-organized list of eight liability clauses, quoting language from both the first and the last pages of the contract. The tool\'s documentation says it accepts documents of several hundred pages. The analyst later discovers that three additional liability clauses, on pages 17 to 23, were omitted entirely. What is the most likely explanation?',
     scenarioSummary:
-      'A legal analyst pastes a 40-page contract and asks for every liability clause; the AI returns 8, missing 3 in the final pages.',
+      'A legal analyst pastes a 40-page contract and asks for every liability clause; the AI returns 8, missing 3 in the middle pages.',
     options: [
       {
         id: 'A',
@@ -246,26 +249,26 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'B',
         text:
-          'The AI tool has a limited working memory for processing input. As the document length increases, the model\'s ability to attend to content in all parts of the text degrades, making it more likely to miss information that appears far from the instruction or from earlier relevant content.',
+          'The AI tool read the whole contract but did not weigh every part of it equally. Text near the start and end gets the most attention and text in the middle the least, so clauses in the middle of a long contract are the likeliest to be missed.',
         isCorrect: true,
         feedbackText:
-          'AI models have a finite context window: a limit on how much text they can process at once. Even when the entire document fits within that window, the model\'s ability to attend to all parts of the input is not uniform. Content that appears far from the instruction, or far from other relevant content, receives less attention during generation. For long documents, this means the model may miss relevant information, especially toward the end of the input. This failure mode is systematic: longer documents and more dispersed target information increase the probability of omission.',
+          'AI models have a finite context window: a limit on how much text they can process at once. Even when the entire document fits within that window, the model\'s ability to attend to all parts of the input is not uniform. Content near the beginning and end of the input receives more attention than content buried in the middle. For long documents, this means the model may miss relevant information in the middle sections even though it read the whole text. This failure mode is systematic: longer documents and more dispersed target information increase the probability of omission.',
       },
       {
         id: 'C',
         text:
-          'The AI tool prioritized the most legally significant liability clauses and intentionally excluded the three minor ones. It applied legal judgment to determine which clauses warranted inclusion in the summary.',
+          'The three omitted clauses used different wording ("indemnification cap," "aggregate exposure") from the instruction\'s phrase, and the AI tool searched the contract for the exact words "limits the vendor\'s liability," so clauses phrased another way never matched.',
         isCorrect: false,
         feedbackText:
-          'AI models do not apply domain-specific professional judgment to decide what to include or exclude. The model has no basis for assessing the legal significance of individual clauses relative to each other; it generates output based on pattern matching, not legal analysis. Framing the omission as intentional prioritization masks a genuine capability limitation.',
+          'The model does not run a keyword search over the document. It reads the whole input and generates its answer from learned patterns, so it can recognize an indemnification cap as a liability limit when it attends to that passage. What sets the missed clauses apart is where they sit: together, in the middle of a long input. Position, not vocabulary, explains the omission.',
       },
       {
         id: 'D',
         text:
-          'The AI tool hit a hard input limit and silently dropped the final portion of the document before processing it. The last ten pages were never received by the model, which is why those clauses don\'t appear in the output. This is a common failure with long documents that exceed the tool\'s maximum capacity.',
+          'The AI tool hit a hard input limit and silently dropped part of the document before processing it. The pages holding the missing clauses were never received by the model, which is why those clauses don\'t appear in the output. This is a common failure with long documents that exceed the tool\'s capacity.',
         isCorrect: false,
         feedbackText:
-          'Silent truncation can occur with very long inputs, and some older tools do fail this way. But modern AI tools typically indicate when input exceeds their limit, and a 40-page contract is within the capacity of most current models. The more common and harder-to-detect failure is attention degradation: the full text is received, but the model doesn\'t process all parts with equal fidelity. Silent truncation is the obvious failure mode to guard against; attention degradation is the subtle one that catches experienced users off guard.',
+          'Over-long input is a real risk, and what happens to it depends on the tool: some refuse it with an error, some drop or summarize older conversation turns without saying so, and large uploads may be searched in pieces rather than read whole. You may not be told what the model did not see. But this contract is well within the tool\'s stated limit, and the answer quotes both the first and the last pages, so the whole document was received. The harder failure to detect is uneven attention: the full text is received, but the middle is processed with less care than the edges. Truncation is the obvious failure to guard against; uneven attention is the subtle one that catches experienced users off guard.',
       },
     ],
   },
@@ -352,10 +355,10 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'D',
         text:
-          'The model processes text as chunks called tokens rather than as individual characters. Some tasks can be solved through pattern recognition at the token level, but tasks requiring precise character-by-character analysis depend on how the word was split into tokens, which the model doesn\'t control or see.',
+          'The model processes text as chunks called tokens, not as individual characters. Some tasks can be solved from patterns at the chunk level, but counting letters needs character-by-character analysis, and the model does not see the letters inside each chunk.',
         isCorrect: true,
         feedbackText:
-          'AI models convert text into tokens (sub-word chunks) before processing it. "Strawberry" might be split into tokens like "straw" + "berry" or "str" + "aw" + "berry," depending on the tokenizer. The model never "sees" individual letters the way a human reader does. Some tasks (like reversal) can be solved through learned patterns at the token level, but precise character-level operations (counting specific letters, identifying character positions) require the model to reason about units smaller than its tokens. When the tokenization splits an R across a token boundary, the model may not register it. This is a systematic limitation, not a random error: it affects any task that requires character-level precision. Some AI tools can route character-level tasks to a built-in program that processes letters directly. When that happens, the task succeeds reliably. The failure described here occurs when the AI handles the task conversationally, generating an answer rather than running an operation.',
+          'AI models convert text into tokens (sub-word chunks) before processing it. "Strawberry" might be split into tokens like "straw" + "berry" or "str" + "aw" + "berry," depending on the tokenizer. The model never "sees" individual letters the way a human reader does. Some tasks (like reversal) can be solved through learned patterns at the token level, but precise character-level operations (counting specific letters, identifying character positions) require the model to reason about units smaller than its tokens. When an R sits inside a multi-letter token ("str" holds one R, "berry" holds two), the model has to recall each token\'s spelling to count them, and that recall is unreliable. This is a systematic limitation, not a random error: it affects any task that requires character-level precision. Some AI tools can route character-level tasks to a built-in program that processes letters directly. When that happens, the task succeeds reliably. The failure described here occurs when the AI handles the task conversationally, generating an answer rather than running an operation.',
       },
     ],
   },
@@ -422,7 +425,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'A',
         text:
-          'Claim 1, because it describes the general scope of the Act, and getting the foundational framing wrong would undermine every downstream recommendation in the policy update.',
+          'Claim 1, because it describes the general scope of the Act. Every later point in the summary builds on that framing, so an error there would undermine each downstream recommendation in the policy update.',
         isCorrect: false,
         feedbackText:
           'The general scope description (Claim 1) is worth verifying, but it uses broad, hedged language ("specific provisions varying by salary threshold") that is less likely to be precisely wrong in a consequential way. General framing errors are lower-stakes than specific legislative claims because they\'re less likely to drive concrete policy decisions.',
@@ -430,7 +433,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'B',
         text:
-          'Claim 2, because it describes a specific legislative change with concrete policy implications, and if the amendment\'s scope or timing is fabricated or inaccurate, the resulting internal policy could expose the organization to compliance risk.',
+          'Claim 2, because it asserts a specific legislative change, and if the amendment\'s scope or timing is fabricated or wrong, the internal policy built on it could expose the organization to compliance risk.',
         isCorrect: true,
         feedbackText:
           'Claim 2 makes a specific assertion about legislative change: that coverage was expanded to all employees regardless of salary. If this is fabricated or inaccurately scoped (wrong amendment, wrong scope, wrong timing), the internal policy update could direct the organization to apply protections it isn\'t required to apply, or worse, fail to apply protections it is required to apply. The verification priority hierarchy puts claims with direct compliance or legal consequences above general framing, operational details, and resource references.',
@@ -491,10 +494,100 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
       {
         id: 'D',
         text:
-          'Restructuring the request to include the specific metrics to analyze, the comparison period, the target audience, the desired format, and any constraints, because the model generates output based on what the prompt specifies, and an underspecified prompt produces output that defaults to generic patterns.',
+          'Restructuring the request to name the specific metrics, the comparison period, the audience, the format, and any constraints, because the model generates output from what the prompt specifies, and an underspecified prompt defaults to generic patterns.',
         isCorrect: true,
         feedbackText:
           'The original prompt specifies almost nothing: no metrics, no comparison period, no audience, no format, no constraints. The model defaults to generic patterns because the prompt doesn\'t narrow the output space. Compare that to a restructured request like "Compare Q3 2025 revenue, gross margin, and customer acquisition cost against Q2 2025 for a board presentation; flag any variance over 5%." That gives the model the specificity it needs to generate targeted, useful output. The gap is almost always in the instruction, not in the tool.',
+      },
+    ],
+  },
+  {
+    id: 'PRE-11',
+    construct: 'Task decomposition',
+    constructKey: 'task-decomposition',
+    block: 'evaluation',
+    objectiveRefs: ['4.1'],
+    stem:
+      'A sales lead is preparing a renewal proposal for a long-standing client. The work has four parts: (1) building a table of the client\'s product usage from last year\'s CRM export, (2) recommending a renewal price that reflects budget worries the client\'s finance director raised with her on a call last week, (3) summarizing the client\'s published annual report, which she will paste into the tool, and (4) proofreading the final proposal. She wants to use an AI tool to save time. Which plan is most sound?',
+    scenarioSummary:
+      'A sales lead splits a renewal proposal into four parts and has to decide which ones an AI tool should handle.',
+    options: [
+      {
+        id: 'A',
+        text:
+          'Hand all four parts to the tool, since each one has a clear source or a clear format, and then review the finished proposal once at the end. One careful read of the whole document catches errors just as well as four separate checks would.',
+        isCorrect: false,
+        feedbackText:
+          'Handing over all four parts as one block treats them as equally safe. Parts 1 and 4 can be checked against a clear source, but part 2 depends on a conversation the tool never saw. A single read of a finished proposal tends to check polish, not whether the price reflects what the client said.',
+      },
+      {
+        id: 'B',
+        text:
+          'Write the whole proposal herself. A renewal for a long-standing client is high-stakes, and any AI involvement, even in the table or the proofreading, puts the relationship at risk if something slips through and the client notices it.',
+        isCorrect: false,
+        feedbackText:
+          'The stakes of the deliverable do not make every part risky. Building a table from an export and proofreading are checkable tasks where a tool saves time without adding much risk. Refusing all help spends effort on the safe parts without improving the parts that need judgment.',
+      },
+      {
+        id: 'C',
+        text:
+          'Hand parts 1 and 4 to the tool and check them against the export and the final draft. Have it draft part 3 from the pasted report and check its figures. Write part 2 herself; it rests on a call the tool never heard.',
+        isCorrect: true,
+        feedbackText:
+          'This plan decides part by part. Parts 1 and 4 have a clear source or standard to check against, so they can be handed off with a check. Part 3 works from a pasted source, so the tool can draft and she can verify the figures. Part 2 depends on context only she has, so it stays with her.',
+      },
+      {
+        id: 'D',
+        text:
+          'Hand parts 2 and 3 to the tool, since pricing analysis and summarizing are where it saves the most time, and do parts 1 and 4 herself, since copying figures and proofreading need a careful human eye that a tool cannot supply.',
+        isCorrect: false,
+        feedbackText:
+          'This inverts the risk. Copying figures and proofreading are the easiest parts to check, while the price recommendation depends on a call the tool never heard. Time saved on the pricing section is lost if the recommendation ignores what the client\'s finance director said.',
+      },
+    ],
+  },
+  {
+    id: 'PRE-12',
+    construct: 'Disclosure and accountability',
+    constructKey: 'disclosure-accountability',
+    block: 'evaluation',
+    objectiveRefs: ['4.5'],
+    stem:
+      'A policy analyst used an AI tool while preparing a briefing for her department head. The tool drafted the background section and compiled a table of figures from public sources. She checked every figure against its source, corrected two, and wrote the recommendations herself. Her organization expects staff to note when AI was used in their work. Which note is most appropriate to attach to the briefing?',
+    scenarioSummary:
+      'A policy analyst used AI for part of a briefing, checked and corrected it, and has to decide how to note the AI use.',
+    options: [
+      {
+        id: 'A',
+        text:
+          '"AI drafted the background section and compiled the figures table. I checked every figure against its source and corrected two. The recommendations are my own, and I answer for the whole briefing."',
+        isCorrect: true,
+        feedbackText:
+          'This note says which parts the tool produced, what was checked and what was found, and who stands behind the result. A reader can judge each section on that basis, and the author keeps accountability for the whole document.',
+      },
+      {
+        id: 'B',
+        text:
+          '"No note is needed. I reviewed and corrected everything the tool produced, so the final briefing is my own work, and a note would only make readers doubt sections that are already accurate."',
+        isCorrect: false,
+        feedbackText:
+          'Reviewing the output does not change the fact that the tool drafted parts of it. Leaving the note out hides information a reader can use to weigh sections differently, and it breaks the expectation the organization has set.',
+      },
+      {
+        id: 'C',
+        text:
+          '"Portions of this document may have been prepared with the assistance of AI tools. Readers should independently verify any information in it before relying on it for decisions or sharing it further."',
+        isCorrect: false,
+        feedbackText:
+          'A blanket "may have been used" tells the reader nothing about which parts the tool produced or what was checked. Asking readers to verify everything shifts the author\'s responsibility onto them.',
+      },
+      {
+        id: 'D',
+        text:
+          '"This briefing was produced by AI and then reviewed by me. Because AI tools are known to make mistakes, I cannot guarantee the figures, and any errors should simply be raised with the vendor of the AI tool."',
+        isCorrect: false,
+        feedbackText:
+          'This overstates the tool\'s role and disclaims responsibility. The author chose to use the tool, checked its output, and sends the briefing under her name. Errors in it are hers to answer for, not the vendor\'s.',
       },
     ],
   },

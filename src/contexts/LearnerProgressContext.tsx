@@ -33,7 +33,7 @@ export interface KnowledgeCheckResult {
 // The platform administers two parallel assessments — a pre-assessment
 // (gates Module 1 in learner mode; no feedback shown) and a
 // post-assessment (gates M4 S10 in learner mode; comparative results
-// shown). Each assessment has 10 items, joined by `constructKey`.
+// shown). Each assessment has 12 items, joined by `constructKey`.
 // Responses live on this context (single source of learner state) so
 // the M4 S10 AssessmentGrowth view can read both sides without a
 // second store. See `src/data/pre-assessment.ts` and
@@ -52,13 +52,20 @@ export interface AssessmentResponse {
   isCorrect: boolean;
   /** ms timestamp of submission. */
   timestamp: number;
+  /** ms from the item appearing to its submission. Optional: responses
+   *  recorded before response timing existed have none. */
+  responseMs?: number | undefined;
+  /** Item-bank version the response was given against (see
+   *  `src/data/instrument-version.ts`). Absent on responses recorded
+   *  before versioning, which belong to the earlier ten-item form. */
+  instrumentVersion?: string | undefined;
 }
 
 export interface AssessmentRecord {
   /** ms timestamp when the learner started this assessment (intro page
    *  "Begin" click). null until started. */
   startedAt: number | null;
-  /** ms timestamp when the learner submitted item 10. null until
+  /** ms timestamp when the learner submitted the last item. null until
    *  completed. The completion gate uses `completedAt != null`. */
   completedAt: number | null;
   /** Responses keyed by item id. A learner can re-enter mid-assessment;

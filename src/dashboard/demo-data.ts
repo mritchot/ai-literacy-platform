@@ -3,7 +3,14 @@
 // (`LearnerProgressState` and `AnalyticsEvent[]`), not the spec's idealized
 // nested shape.
 //
-// **Realistic learner distribution:**
+// Two demo learners share one history. DEMO_PROGRESS / DEMO_EVENTS stop in
+// Module 3 (described below). DEMO_PROGRESS_COMPLETE / DEMO_EVENTS_COMPLETE
+// (end of file) finish the program over 14 days and take the
+// post-assessment, so reviewers can see the pre→post growth view. The two
+// assessment records reproduce the Level 2 worked example row for row:
+// pre 8/12 (constructs 2, 4, 6, 10 missed), post 11/12 (10 still missed).
+//
+// **Realistic learner distribution (in progress):**
 //   • Module 1: complete (8/8)
 //   • Module 2: complete (8/8)
 //   • Module 3: ~60% through (7/11) — first three sections of P5/P6/P7 work
@@ -22,10 +29,15 @@
 // P8/P9/P11/P12 not yet started.
 
 import type {
+  AssessmentRecord,
+  AssessmentResponse,
   LearnerProgressState,
   KnowledgeCheckResult,
 } from '../contexts/LearnerProgressContext';
 import type { AnalyticsEvent } from '../contexts/AnalyticsContext';
+import { INSTRUMENT_VERSION } from '../data/instrument-version';
+import { PRE_ASSESSMENT_ITEMS, type AssessmentItem } from '../data/pre-assessment';
+import { POST_ASSESSMENT_ITEMS } from '../data/post-assessment';
 
 // ── Anchor timestamp ────────────────────────────────────────────────────
 // 2026-04-15T09:00:00.000Z — arbitrary but realistic Tuesday morning.
@@ -123,48 +135,7 @@ const ACTIVE_TIME_MS: Record<string, number> = {
   '3.5': 240_000, '3.6': 180_000, '3.7': 240_000,
 };
 
-export const DEMO_PROGRESS: LearnerProgressState = {
-  // Last position: M3 S7 (the most recently completed section). Sets the
-  // sidebar's "current" indicator and matches the resume target on landing.
-  current: { moduleId: 3, sectionId: 7 },
-  scrolledSections: { ...completed },
-  interactionCompleteSections: { ...completed },
-  completedSections: {}, // legacy field; the new split maps are authoritative
-  knowledgeChecks: KC_RESPONSES,
-  reflections: REFLECTIONS,
-  viewedTabs: VIEWED_TABS,
-  engagedFlags: ENGAGED_FLAGS,
-  activeTimeMs: ACTIVE_TIME_MS,
-  // The demo learner is mid-program (M3 S7), so the pre-assessment is
-  // complete and the post-assessment hasn't been started yet. Demo
-  // responses for the pre-assessment are seeded with 6/10 correct so
-  // the eventual post-assessment comparison shows visible growth.
-  assessments: {
-    pre: {
-      startedAt: Date.now() - 14 * 24 * 60 * 60_000,
-      completedAt: Date.now() - 14 * 24 * 60 * 60_000 + 8 * 60_000,
-      responses: {
-        'PRE-1':  { itemId: 'PRE-1',  selectedOptionId: 'B', isCorrect: true,  timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
-        'PRE-2':  { itemId: 'PRE-2',  selectedOptionId: 'A', isCorrect: false, timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
-        'PRE-3':  { itemId: 'PRE-3',  selectedOptionId: 'A', isCorrect: true,  timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
-        'PRE-4':  { itemId: 'PRE-4',  selectedOptionId: 'D', isCorrect: false, timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
-        'PRE-5':  { itemId: 'PRE-5',  selectedOptionId: 'B', isCorrect: true,  timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
-        'PRE-6':  { itemId: 'PRE-6',  selectedOptionId: 'C', isCorrect: false, timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
-        'PRE-7':  { itemId: 'PRE-7',  selectedOptionId: 'D', isCorrect: true,  timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
-        'PRE-8':  { itemId: 'PRE-8',  selectedOptionId: 'C', isCorrect: true,  timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
-        'PRE-9':  { itemId: 'PRE-9',  selectedOptionId: 'B', isCorrect: true,  timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
-        'PRE-10': { itemId: 'PRE-10', selectedOptionId: 'B', isCorrect: false, timestamp: Date.now() - 14 * 24 * 60 * 60_000 },
-      },
-    },
-    post: {
-      startedAt: null,
-      completedAt: null,
-      responses: {},
-    },
-  },
-};
-
-// ── Analytics events ────────────────────────────────────────────────────
+// ── Event helper ────────────────────────────────────────────────────────
 type Ev = AnalyticsEvent;
 
 const ev = (
@@ -181,6 +152,101 @@ const ev = (
   ...(payload && { payload }),
 });
 
+// ── Pre/post assessment answers ─────────────────────────────────────────
+// One table per form drives both the stored responses and the
+// `assessment_item_answered` events, so the two cannot drift apart.
+// Correctness, construct, and block come from the item banks. Response
+// times vary around a minute; PRE-6 took 7 seconds, so the dashboard's
+// rapid-answer flag has a case to show.
+type DemoAnswer = readonly [itemId: string, option: 'A' | 'B' | 'C' | 'D', seconds: number];
+
+function demoAssessment(
+  kind: 'pre' | 'post',
+  items: readonly AssessmentItem[],
+  answers: readonly DemoAnswer[],
+  startTs: number,
+): { record: AssessmentRecord; events: Ev[] } {
+  const responses: Record<string, AssessmentResponse> = {};
+  const events: Ev[] = [
+    ev(startTs, `${kind}_assessment_started`, undefined, undefined, { itemCount: items.length }),
+  ];
+  let ts = startTs;
+  for (const [itemId, option, seconds] of answers) {
+    const item = items.find((it) => it.id === itemId);
+    if (!item) continue;
+    ts += seconds * 1000;
+    const isCorrect = item.options.find((o) => o.id === option)?.isCorrect ?? false;
+    responses[itemId] = {
+      itemId,
+      selectedOptionId: option,
+      isCorrect,
+      timestamp: ts,
+      responseMs: seconds * 1000,
+      instrumentVersion: INSTRUMENT_VERSION,
+    };
+    events.push(
+      ev(ts, 'assessment_item_answered', undefined, undefined, {
+        kind,
+        itemId,
+        construct: item.constructKey,
+        block: item.block,
+        selectedOptionId: option,
+        isCorrect,
+        responseMs: seconds * 1000,
+        instrumentVersion: INSTRUMENT_VERSION,
+      }),
+    );
+  }
+  const completedAt = ts + 5000;
+  events.push(
+    ev(completedAt, `${kind}_assessment_completed`, undefined, undefined, { itemCount: items.length }),
+  );
+  return { record: { startedAt: startTs, completedAt, responses }, events };
+}
+
+// Pre: 8 of 12, missing constructs 2, 4, 6, and 10. Taken 13 minutes
+// before Module 1 starts, so it sits first on the timeline.
+const PRE_ANSWERS: readonly DemoAnswer[] = [
+  ['PRE-1', 'B', 58],
+  ['PRE-2', 'A', 64],
+  ['PRE-3', 'A', 52],
+  ['PRE-4', 'D', 47],
+  ['PRE-5', 'B', 71],
+  ['PRE-6', 'C', 7],
+  ['PRE-7', 'D', 55],
+  ['PRE-8', 'C', 62],
+  ['PRE-9', 'B', 66],
+  ['PRE-10', 'B', 49],
+  ['PRE-11', 'C', 73],
+  ['PRE-12', 'A', 57],
+];
+const PRE_DEMO = demoAssessment('pre', PRE_ASSESSMENT_ITEMS, PRE_ANSWERS, at(-13, 0));
+
+export const DEMO_PROGRESS: LearnerProgressState = {
+  // Last position: M3 S7 (the most recently completed section). Sets the
+  // sidebar's "current" indicator and matches the resume target on landing.
+  current: { moduleId: 3, sectionId: 7 },
+  scrolledSections: { ...completed },
+  interactionCompleteSections: { ...completed },
+  completedSections: {}, // legacy field; the new split maps are authoritative
+  knowledgeChecks: KC_RESPONSES,
+  reflections: REFLECTIONS,
+  viewedTabs: VIEWED_TABS,
+  engagedFlags: ENGAGED_FLAGS,
+  activeTimeMs: ACTIVE_TIME_MS,
+  // The demo learner is mid-program (M3 S7), so the pre-assessment is
+  // complete and the post-assessment hasn't been started yet.
+  assessments: {
+    pre: PRE_DEMO.record,
+    post: {
+      startedAt: null,
+      completedAt: null,
+      responses: {},
+    },
+  },
+};
+
+// ── Analytics events ────────────────────────────────────────────────────
 // Module entry: start + section_enter + section_scrolled for each section.
 // Returns end time so subsequent modules chain correctly.
 function moduleNavBlock(
@@ -307,80 +373,159 @@ const M3_EVENTS: Ev[] = [
   // No M3 KC submission, no module_3_complete — learner hasn't reached S8+.
 ];
 
-// ── Pre-assessment events ──────────────────────────────────────────────
-// The demo learner took the pre-assessment ~15 minutes before starting
-// Module 1, so these events sit BEFORE the M1 block on the timeline.
-// Negative `at()` offsets compute timestamps before the T0 anchor.
-//
-// Item answers MUST stay consistent with the responses in
-// DEMO_PROGRESS.assessments.pre.responses above (same selectedOptionId
-// + isCorrect per item). The construct/block payload on each item
-// comes from the canonical mapping in src/data/pre-assessment.ts.
-//
-// Cadence: 60 seconds between item answers (10 items × 60s = 10 min),
-// flanked by started at T0-15m and completed at T0-4m. All within the
-// 15-minute window before M1 starts. Note: the in-state response
-// timestamps in DEMO_PROGRESS use `Date.now() - 14d` because they
-// were authored before this event block existed; the event timestamps
-// here use the T0 anchor for chronological consistency with the
-// surrounding M1/M2/M3 events.
-const PRE_ASSESSMENT_EVENTS: Ev[] = [
-  ev(at(-15, 0), 'pre_assessment_started', undefined, undefined, {
-    itemCount: 10,
-  }),
-  ev(at(-14, 0), 'assessment_item_answered', undefined, undefined, {
-    kind: 'pre', itemId: 'PRE-1', construct: 'augmentation-automation', block: 'usage',
-    selectedOptionId: 'B', isCorrect: true,
-  }),
-  ev(at(-13, 0), 'assessment_item_answered', undefined, undefined, {
-    kind: 'pre', itemId: 'PRE-2', construct: 'productivity-verification', block: 'usage',
-    selectedOptionId: 'A', isCorrect: false,
-  }),
-  ev(at(-12, 0), 'assessment_item_answered', undefined, undefined, {
-    kind: 'pre', itemId: 'PRE-3', construct: 'fluent-fabrication', block: 'failure',
-    selectedOptionId: 'A', isCorrect: true,
-  }),
-  ev(at(-11, 0), 'assessment_item_answered', undefined, undefined, {
-    kind: 'pre', itemId: 'PRE-4', construct: 'boundary-task', block: 'failure',
-    selectedOptionId: 'D', isCorrect: false,
-  }),
-  ev(at(-10, 0), 'assessment_item_answered', undefined, undefined, {
-    kind: 'pre', itemId: 'PRE-5', construct: 'context-window', block: 'failure',
-    selectedOptionId: 'B', isCorrect: true,
-  }),
-  ev(at(-9, 0), 'assessment_item_answered', undefined, undefined, {
-    kind: 'pre', itemId: 'PRE-6', construct: 'prediction-retrieval', block: 'mechanics',
-    selectedOptionId: 'C', isCorrect: false,
-  }),
-  ev(at(-8, 0), 'assessment_item_answered', undefined, undefined, {
-    kind: 'pre', itemId: 'PRE-7', construct: 'tokenization', block: 'mechanics',
-    selectedOptionId: 'D', isCorrect: true,
-  }),
-  ev(at(-7, 0), 'assessment_item_answered', undefined, undefined, {
-    kind: 'pre', itemId: 'PRE-8', construct: 'capability-diagnosis', block: 'mechanics',
-    selectedOptionId: 'C', isCorrect: true,
-  }),
-  ev(at(-6, 0), 'assessment_item_answered', undefined, undefined, {
-    kind: 'pre', itemId: 'PRE-9', construct: 'verification-priority', block: 'evaluation',
-    selectedOptionId: 'B', isCorrect: true,
-  }),
-  ev(at(-5, 0), 'assessment_item_answered', undefined, undefined, {
-    kind: 'pre', itemId: 'PRE-10', construct: 'structured-prompting', block: 'evaluation',
-    selectedOptionId: 'B', isCorrect: false,
-  }),
-  ev(at(-4, 0), 'pre_assessment_completed', undefined, undefined, {
-    itemCount: 10,
-  }),
-];
-
 // Combine and sort chronologically. Pre-assessment block goes first
 // (negative offsets sort before the T0-anchored module blocks).
 export const DEMO_EVENTS: AnalyticsEvent[] = [
-  ...PRE_ASSESSMENT_EVENTS,
+  ...PRE_DEMO.events,
   ...m1.events,
   ...M1_EVENTS,
   ...m2.events,
   ...M2_EVENTS,
   ...m3.events,
   ...M3_EVENTS,
+].sort((a, b) => a.ts - b.ts);
+
+// ── Completed learner (Demo · completed) ────────────────────────────────
+// The same learner, followed to the end: Module 3 finished on day 3,
+// Module 4 on day 10, the post-assessment on day 13, then the competency
+// profile. All 37 sections done, all 16 knowledge checks answered (13
+// preferred; KC-4.3 chose c), all 11 optional interactions saved. The
+// post-assessment scores 11 of 12, still missing structured prompting,
+// so the dashboard and the Level 2 worked example tell the same story.
+const DAY = 24 * 60;
+
+function sectionNavBlock(
+  moduleId: number,
+  firstSectionId: number,
+  startMin: number,
+  sectionDurations: number[],
+): { events: Ev[]; endMin: number } {
+  const events: Ev[] = [];
+  let cursor = startMin;
+  sectionDurations.forEach((minutes, i) => {
+    const sectionId = firstSectionId + i;
+    events.push(ev(at(cursor, 2), `section_${moduleId}_${sectionId}_enter`, moduleId, sectionId));
+    events.push(
+      ev(
+        at(cursor, Math.max(20, minutes * 60 - 25)),
+        `section_${moduleId}_${sectionId}_scrolled`,
+        moduleId,
+        sectionId,
+      ),
+    );
+    cursor += minutes;
+  });
+  return { events, endMin: cursor };
+}
+
+const ALL_SECTIONS: Record<string, true> = Object.fromEntries(
+  [8, 8, 11, 10].flatMap((count, m) =>
+    Array.from({ length: count }, (_, i) => [`${m + 1}.${i + 1}`, true] as const),
+  ),
+);
+
+const m3Rest = sectionNavBlock(3, 8, 3 * DAY, [2, 3, 3, 1]);
+const m4Start = 10 * DAY;
+const m4 = sectionNavBlock(4, 1, m4Start, [1.5, 6, 6, 3, 7, 6, 3, 7, 2]);
+
+const POST_ANSWERS: readonly DemoAnswer[] = [
+  ['POST-1', 'C', 52],
+  ['POST-2', 'A', 61],
+  ['POST-3', 'B', 49],
+  ['POST-4', 'D', 44],
+  ['POST-5', 'A', 68],
+  ['POST-6', 'C', 57],
+  ['POST-7', 'D', 53],
+  ['POST-8', 'B', 74],
+  ['POST-9', 'B', 59],
+  ['POST-10', 'D', 66],
+  ['POST-11', 'D', 81],
+  ['POST-12', 'C', 63],
+];
+const POST_DEMO = demoAssessment('post', POST_ASSESSMENT_ITEMS, POST_ANSWERS, at(13 * DAY, 0));
+const profileMin = 13 * DAY + 20;
+
+const KC_RESPONSES_COMPLETE: Record<string, KnowledgeCheckResult> = {
+  ...KC_RESPONSES,
+  '3.10.kc_3_1': kc('b', true, at(3 * DAY + 5, 14)),
+  '3.10.kc_3_2': kc('a', true, at(3 * DAY + 5, 52)),
+  '3.10.kc_3_3': kc('b', true, at(3 * DAY + 6, 37)),
+  '3.10.kc_3_4': kc('c', true, at(3 * DAY + 7, 21)),
+  '4.4.kc_4_1': kc('d', true, at(m4Start + 14, 10)),
+  '4.4.kc_4_2': kc('b', true, at(m4Start + 15, 2)),
+  '4.7.kc_4_3': kc('c', false, at(m4Start + 30, 44)),
+  '4.7.kc_4_4': kc('c', true, at(m4Start + 31, 30)),
+};
+
+const REFLECTIONS_COMPLETE: Record<string, string> = {
+  ...REFLECTIONS,
+  '3.7.p7_reasoning':
+    'The contract summary looked complete, but the clauses in the middle of the document were the ones it skipped. Next time I will ask about the middle sections on their own.',
+  '4.2.p8_reflection':
+    'My monthly variance pack splits cleanly: pulling the figures is delegable, the commentary is AI-assisted, and the explanation to the CFO stays with me.',
+  '4.3.p9_reflection':
+    'I usually describe the product and skip the process and the performance standard. Naming the audience and the format did more than any wording change.',
+  '4.6.p11_reflection':
+    'The second draft only improved once I added the missing context. Asking the tool to try harder changed the tone, not the content.',
+  '4.8.p12_reflection':
+    'Writing the statement made me separate what I checked from what I only read, which I had not done before.',
+  '4.8.p12_statement':
+    'AI compiled the competitor figures and drafted the comparison table. I checked every figure against the filings and corrected two. The recommendations are mine, and I am responsible for the briefing.',
+};
+
+const ACTIVE_TIME_MS_COMPLETE: Record<string, number> = {
+  ...ACTIVE_TIME_MS,
+  '3.8': 120_000, '3.9': 180_000, '3.10': 240_000, '3.11': 45_000,
+  '4.1': 90_000, '4.2': 360_000, '4.3': 360_000, '4.4': 180_000, '4.5': 420_000,
+  '4.6': 360_000, '4.7': 180_000, '4.8': 420_000, '4.9': 120_000, '4.10': 150_000,
+};
+
+export const DEMO_PROGRESS_COMPLETE: LearnerProgressState = {
+  ...DEMO_PROGRESS,
+  current: { moduleId: 4, sectionId: 10 },
+  scrolledSections: { ...ALL_SECTIONS },
+  interactionCompleteSections: { ...ALL_SECTIONS },
+  knowledgeChecks: KC_RESPONSES_COMPLETE,
+  reflections: REFLECTIONS_COMPLETE,
+  activeTimeMs: ACTIVE_TIME_MS_COMPLETE,
+  assessments: {
+    pre: PRE_DEMO.record,
+    post: POST_DEMO.record,
+  },
+};
+
+const COMPLETION_EVENTS: Ev[] = [
+  // P7 reasoning, which the in-progress learner skipped.
+  ev(at(m2.endMin + 18, 40), 'p7_reasoning_submitted', 3, 7, { chars: 171 }),
+  // M3 S10 knowledge checks; the module closes after S11.
+  ev(at(3 * DAY + 5, 14), 'kc_3_1_submitted', 3, 10, { optionId: 'b', isPreferred: true }),
+  ev(at(3 * DAY + 5, 52), 'kc_3_2_submitted', 3, 10, { optionId: 'a', isPreferred: true }),
+  ev(at(3 * DAY + 6, 37), 'kc_3_3_submitted', 3, 10, { optionId: 'b', isPreferred: true }),
+  ev(at(3 * DAY + 7, 21), 'kc_3_4_submitted', 3, 10, { optionId: 'c', isPreferred: true }),
+  ev(at(3 * DAY + 7, 24), 'kc_module_3_complete', 3, 10),
+  ev(at(m3Rest.endMin, 0), 'module_3_complete', 3),
+  // Module 4 practice activities and knowledge checks.
+  ev(at(m4Start, 0), 'module_4_start', 4),
+  ev(at(m4Start + 6, 30), 'p8_reflection_saved', 4, 2, { chars: 148 }),
+  ev(at(m4Start + 12, 45), 'p9_reflection_saved', 4, 3, { chars: 151 }),
+  ev(at(m4Start + 14, 10), 'kc_4_1_submitted', 4, 4, { optionId: 'd', isPreferred: true }),
+  ev(at(m4Start + 15, 2), 'kc_4_2_submitted', 4, 4, { optionId: 'b', isPreferred: true }),
+  ev(at(m4Start + 27, 5), 'p11_reflection_saved', 4, 6, { chars: 129 }),
+  ev(at(m4Start + 30, 44), 'kc_4_3_submitted', 4, 7, { optionId: 'c', isPreferred: false }),
+  ev(at(m4Start + 31, 30), 'kc_4_4_submitted', 4, 7, { optionId: 'c', isPreferred: true }),
+  ev(at(m4Start + 31, 33), 'kc_module_4_complete', 4, 7),
+  ev(at(m4Start + 38, 50), 'p12_reflection_saved', 4, 8, { chars: 102 }),
+  // The competency profile opens once the post-assessment is done.
+  ev(at(profileMin, 2), 'section_4_10_enter', 4, 10),
+  ev(at(profileMin, 20), 'completion_profile_viewed', 4, 10),
+  ev(at(profileMin + 2, 0), 'section_4_10_scrolled', 4, 10),
+  ev(at(profileMin + 3, 0), 'module_4_complete', 4),
+];
+
+export const DEMO_EVENTS_COMPLETE: AnalyticsEvent[] = [
+  ...DEMO_EVENTS,
+  ...m3Rest.events,
+  ...m4.events,
+  ...POST_DEMO.events,
+  ...COMPLETION_EVENTS,
 ].sort((a, b) => a.ts - b.ts);

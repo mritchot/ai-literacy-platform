@@ -1,5 +1,5 @@
 // PreAssessmentPage — thin route wrapper. Lazy-loaded by router.tsx so
-// the assessment JSON payload (10 items × 4 options × consequence
+// the assessment JSON payload (12 items × 4 options × consequence
 // feedback text) isn't pulled into the initial bundle for visitors
 // who never start the assessment flow.
 

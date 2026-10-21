@@ -1,14 +1,18 @@
-// Post-Assessment instrument — 10 scenario-based items administered
-// AFTER Module 4 completion. Items use course vocabulary (tokenization,
-// next-token prediction, context window, augmentation/automation
-// spectrum, Description competency, 4D framework) and are PARALLEL to
-// the pre-assessment items by construct (different scenarios, same
-// construct). The `parallelPreId` field joins each post item to its
+// Post-Assessment instrument — 12 scenario-based items administered
+// AFTER Module 4 completion. The options use program vocabulary
+// (tokenization, next-token prediction, context window,
+// augmentation/automation spectrum, Description competency, 4D
+// framework); the stems never name the concept an item tests, so the
+// learner has to recognize which idea applies, as on the pre form.
+// Items are PARALLEL to the pre-assessment items by construct
+// (different scenarios, same construct). The `parallelPreId` field joins each post item to its
 // pre-assessment counterpart for the comparative results view in
 // `components/assessment/AssessmentResults.tsx`.
 //
 // Source: the post-assessment instrument document (Phase 4 planning corpus).
-// Answer key distribution: A=3, B=3, C=2, D=2.
+// POST-11 and POST-12 pair with PRE-11 and PRE-12 (task decomposition,
+// disclosure); see `instrument-version.ts`.
+// Answer key distribution: A=3, B=3, C=3, D=3.
 
 import type { AssessmentItem } from './pre-assessment';
 
@@ -28,7 +32,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'usage',
     objectiveRefs: ['2.1', '2.4'],
     stem:
-      'After completing the program, a participant reviews her team\'s AI usage logs and notices that 80% of their AI interactions are single-turn exchanges (one prompt, one response, no follow-up). In a team meeting, her manager describes their AI strategy as "deeply collaborative. We use it as a thinking partner." Applying what you\'ve learned about the augmentation-automation spectrum, which assessment is most accurate?',
+      'After completing the program, a participant reviews her team\'s AI usage logs and notices that 80% of their AI interactions are single-turn exchanges (one prompt, one response, no follow-up). In a team meeting, her manager describes their AI strategy as "deeply collaborative. We use it as a thinking partner." Which assessment is most accurate?',
     scenarioSummary:
       'A team\'s logs show 80% single-turn AI usage while the manager describes the team\'s strategy as deeply collaborative.',
     options: [
@@ -51,7 +55,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'C',
         text:
-          'The interaction logs suggest the team\'s actual usage is predominantly directive and automation-oriented, even though the manager frames it as collaboration. This gap between self-reported and observed interaction patterns is documented in the behavioral research on AI adoption.',
+          'The interaction logs suggest the team\'s actual usage is predominantly directive and automation-oriented, even though the manager frames it as collaboration. This gap between self-reported and observed interaction patterns is documented in research on AI adoption.',
         isCorrect: true,
         feedbackText:
           'The behavioral research on AI adoption finds a gap between how professionals describe their AI usage (collaborative and iterative) and what their interaction patterns show (more directive than reported). The gap is not universal: when Anthropic compared its own engineers\' self-reported task mix with usage logs, the two distributions roughly aligned. The documented gap concerns collaboration style, not which tasks people bring to AI. The manager\'s framing reflects a common self-report bias, not intentional misrepresentation. The disconnect between perceived and actual interaction style is real. Recognizing this gap is the first step toward deliberately choosing augmentative practices when the task warrants them.',
@@ -74,7 +78,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'usage',
     objectiveRefs: ['2.2', '2.3'],
     stem:
-      'A department head reviews data showing her team\'s AI-assisted tasks and notices that customer-facing proposal drafting saves the most time per task (over 60% reduction). She plans to mandate AI use for all client proposals starting next quarter. Applying the productivity-risk framework from the program, what is the most critical gap in her decision?',
+      'A department head reviews data showing her team\'s AI-assisted tasks and notices that customer-facing proposal drafting saves the most time per task (over 60% reduction). She plans to mandate AI use for all client proposals starting next quarter. What is the most critical gap in her decision?',
     scenarioSummary:
       'A department head plans to mandate AI for all client proposals based on 60%+ time savings, without examining verification burden.',
     options: [
@@ -89,10 +93,10 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'B',
         text:
-          'She hasn\'t benchmarked her team\'s time savings against industry averages. Without knowing whether 60% is above or below the median productivity gain for proposal drafting, she can\'t determine whether her team is using AI effectively or underperforming.',
+          'She hasn\'t checked whether proposal drafting is augmentation or automation. If her team refines each draft with the tool over several turns, that back-and-forth already reviews the content, so the proposals need no separate verification step.',
         isCorrect: false,
         feedbackText:
-          'Industry benchmarking is useful for operational optimization, but it\'s not the critical gap here. Whether 60% is above or below the industry median doesn\'t change the risk calculus. The question isn\'t whether the team is saving enough time; it\'s whether the outputs they\'re saving time on are safe to use without extensive verification.',
+          'Iterating with the tool and verifying its output are different activities. Refining a draft over several turns improves tone and structure, but a proposal refined over ten turns can still carry a fabricated statistic or an inaccurate compliance claim, and the client still receives it. Only a check against sources catches those errors. The critical gap is the missing verification assessment for a customer-facing document.',
       },
       {
         id: 'C',
@@ -120,7 +124,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'failure',
     objectiveRefs: ['3.2', '4.3'],
     stem:
-      'A product manager uses an AI tool to generate a competitive landscape analysis. The report states: "Gartner\'s 2025 Magic Quadrant for Enterprise Collaboration platforms placed Vendor X in the Leaders quadrant for the third consecutive year, citing its API extensibility and compliance automation as key differentiators." The statement is fluent, specific, and formatted exactly like a real analyst citation. Using the mechanical understanding of language models from the program, what is the strongest reason to verify this claim before including it in a board presentation?',
+      'A product manager uses an AI tool to generate a competitive landscape analysis. The report states: "Gartner\'s 2025 Magic Quadrant for Enterprise Collaboration platforms placed Vendor X in the Leaders quadrant for the third consecutive year, citing its API extensibility and compliance automation as key differentiators." The statement is fluent, specific, and formatted exactly like a real analyst citation. What is the strongest reason to verify this claim before including it in a board presentation?',
     scenarioSummary:
       'An AI-generated competitive analysis cites a specific Gartner Magic Quadrant placement with named differentiators: fluent, specific, and unverified.',
     options: [
@@ -135,7 +139,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'B',
         text:
-          'The model generates text by predicting what a plausible analyst citation should look like from training-data patterns. Unless it actually retrieved and read the Gartner report, the quadrant placement, consecutive-year claim, and cited differentiators may each be fabricated.',
+          'The model generates text by predicting what a plausible analyst citation looks like. Unless it retrieved and read the Gartner report, the quadrant placement, the consecutive-year claim, and the differentiators may each be fabricated.',
         isCorrect: true,
         feedbackText:
           'The model\'s next-token prediction mechanism generates what a plausible analyst citation should contain, based on statistical patterns. Each element (the quadrant placement, the "third consecutive year" claim, the specific differentiators) is independently generated to fit the expected format of a Gartner citation. Unless the tool performed an active retrieval step (searching for and reading the actual report during this interaction), every detail may be fabricated while appearing authoritative. The specificity and formatting are features of fluent generation, not evidence of accuracy.',
@@ -143,10 +147,10 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'C',
         text:
-          'AI models tend to favor positive framing when generating competitive analysis, so even if the Gartner report exists, the model likely exaggerated the vendor\'s positioning. The vendor may have been placed in the Challengers or Visionaries quadrant rather than Leaders.',
+          'The tool\'s temperature setting let it sample a less probable continuation, so the quadrant placement drifted from the real one. Lowering the temperature and regenerating the analysis would return the accurate Gartner placement and differentiators.',
         isCorrect: false,
         feedbackText:
-          'AI models don\'t have a systematic "positive framing" bias that selectively inflates competitive positioning. The model didn\'t exaggerate. It may have generated the entire citation without any connection to a real report at all. Framing this as exaggeration implies the underlying data is real but distorted, when the data may not exist at all.',
+          'Temperature changes how much the output varies from run to run, not whether it is grounded in a source. At any setting, the model generates citation-shaped text from patterns unless it retrieved the report during this interaction. A lower temperature would produce the same kind of claim more consistently, which is not the same as producing a verified one. The only fix is to check the placement against the report itself.',
       },
       {
         id: 'D',
@@ -166,41 +170,41 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'failure',
     objectiveRefs: ['3.3'],
     stem:
-      'A quality assurance analyst asks an AI chatbot to compare two product serial numbers ("SN-4872-XR-2941" and "SN-4872-XR-2914") and identify the differences. The AI responds: "These serial numbers are identical." The analyst can see they differ in the last four digits (2941 vs. 2914). Using your understanding of tokenization and how models represent text, what best explains this error?',
+      'An operations analyst pastes a list of 140 purchase-order numbers (formatted like "PO-2025-04417") into an AI chatbot and asks: "How many of these appear more than once?" The chatbot answers that 6 order numbers are duplicated. A spreadsheet check shows 11. When the analyst asks the chatbot to check again, it answers 8. What best explains these results?',
     scenarioSummary:
-      'A QA analyst asks an AI to compare two near-identical serial numbers; the AI calls them identical despite a visible four-digit difference.',
+      'An analyst asks an AI chatbot to count duplicates in 140 pasted purchase-order numbers; it answers 6, then 8, against a true count of 11.',
     options: [
       {
         id: 'A',
         text:
-          'The AI chatbot used a fuzzy matching algorithm that treats strings with high character overlap as identical. Since the two serial numbers share 90% of their characters, the similarity threshold was exceeded and the tool reported them as matching.',
+          'The chatbot used a fuzzy-matching method that groups near-identical order numbers together. Numbers that differ by a single digit were grouped on one pass and separated on the other, which is why its two counts disagree with each other.',
         isCorrect: false,
         feedbackText:
-          'AI chatbots don\'t use fuzzy matching algorithms with similarity thresholds. The model isn\'t running a string comparison function and then applying a match/no-match threshold. It generates a response by predicting what a plausible answer should be, and the tokenization of the input determines how much character-level detail is available to the model during that prediction.',
+          'A chatbot answering in conversation isn\'t running a matching method, fuzzy or exact. It reads the order numbers as token chunks and generates a count that fits the context. The two answers are two predictions, not two runs of a configurable algorithm, which is why neither matches the spreadsheet.',
       },
       {
         id: 'B',
         text:
-          'The AI chatbot compared only the prefix portions of the serial numbers ("SN-4872-XR") and truncated the comparison at the hyphen boundary. Most AI tools process hyphenated strings as separate segments and don\'t always carry the comparison through to the final segment.',
+          'The list was too long for the chatbot to hold at once. Its context window filled partway through the 140 numbers, so it counted duplicates only in the part of the list it could still see, and a different part each time it was asked.',
         isCorrect: false,
         feedbackText:
-          'The model doesn\'t process hyphenated strings by segmenting at hyphen boundaries and comparing segments independently. The tokenizer breaks the input into tokens based on its vocabulary, not based on punctuation structure. The comparison failure is about the granularity of the tokens relative to the character-level difference, not about where the tokenizer splits.',
+          'A list of 140 order numbers runs to roughly a thousand tokens, a small fraction of any current context window, so the whole list was in view. Context window limits explain omissions in long documents. This failure comes from the task: exact matching and counting across a list is an operation, and in conversation the model generates an answer instead of performing one.',
       },
       {
         id: 'C',
         text:
-          'The AI chatbot made a probabilistic judgment that two serial numbers from the same product line are more likely to be identical than different. It applied a statistical prior about serial number patterns rather than performing a character-level comparison of the actual input.',
+          'The chatbot made random processing errors. Like any software under load, it occasionally miscounts, and asking it to check again until two of its answers agree would eventually produce the correct count of duplicates.',
         isCorrect: false,
         feedbackText:
-          'While the model\'s outputs are probabilistic, framing this as a "statistical prior about serial number patterns" implies a deliberate inference process that doesn\'t match the mechanism. The model isn\'t reasoning about serial number likelihood. It\'s processing token sequences, and the token representation may not preserve the character-level distinction between 2941 and 2914.',
+          'The errors aren\'t glitches that repetition will average out. Each answer is a fresh prediction of a plausible count, and two predictions can agree and still be wrong. The limitation is systematic: exact counting through conversation is unreliable on every attempt, so agreement between two generated answers is not verification.',
       },
       {
         id: 'D',
         text:
-          'The AI chatbot processes these serial numbers as token sequences rather than character sequences. If the differing digits fall within the same token or are split across token boundaries, the model may not represent the character-level difference that is visible to a human reader.',
+          'The chatbot generated plausible counts instead of counting. It reads the order numbers as token chunks, not as strings it compares one by one, so exact tallies come out as estimates. A spreadsheet formula gives the exact count.',
         isCorrect: true,
         feedbackText:
-          'The model\'s tokenizer converts text into tokens: chunks that may contain multiple characters or digits. The serial numbers "SN-4872-XR-2941" and "SN-4872-XR-2914" might be tokenized such that the differing digits (41 vs. 14) fall within a token boundary where the model doesn\'t represent each character individually. The human eye sees a clear difference at the character level, but the model operates at the token level. If the token-level representations are similar enough, the model doesn\'t register the difference. This is the same class of failure as counting letters or comparing them: the task requires granularity that the tokenization doesn\'t provide.',
+          'This is a boundary task: the job needs exact, item-by-item operations below the level at which the model represents text. In conversation, the model does not loop through the list, compare each pair of strings, and keep a tally. It predicts what a count should look like, and each new attempt is a new prediction, which is why the answers differ from each other and from the truth. Tools that can run code count exactly when they actually run it. For any count, sort, deduplication, or comparison across many items, use a spreadsheet formula or a code tool, and use the chatbot to write the formula if that helps.',
       },
     ],
   },
@@ -212,25 +216,25 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'failure',
     objectiveRefs: ['3.3'],
     stem:
-      'A compliance officer pastes three separate policy documents (totaling 35 pages) into an AI tool with the instruction: "Identify any contradictions between these three documents." The AI reports two contradictions, both between Documents 1 and 2. The officer later discovers a significant contradiction between Documents 1 and 3, where Document 3 explicitly overrides a key provision in Document 1. Using your understanding of context window mechanics, what most likely happened?',
+      'A compliance officer pastes three policy documents into an AI tool, one after another: Document 1 (14 pages), Document 2 (12 pages), and Document 3 (9 pages), well within the tool\'s stated limit. Her instruction: "Identify any contradictions between these three documents." The AI reports two contradictions, both between Documents 1 and 3. The officer later discovers one it missed: a provision on page 7 of Document 2 is explicitly overridden by Document 3. What most likely happened?',
     scenarioSummary:
-      'An AI asked to find contradictions across three policy documents reports only adjacent pairs, missing a real conflict between the first and third documents.',
+      'An AI asked to find contradictions across three pasted policy documents misses a conflict involving a provision near the center of the combined input.',
     options: [
       {
         id: 'A',
         text:
-          'The AI tool\'s attention across the combined input was uneven. It processed the earlier documents with greater fidelity and progressively lost the ability to hold and cross-reference content from Document 3 against provisions established in Document 1 as the total input length increased.',
+          'The tool\'s attention across the combined input was uneven: material near the start and end of a long input gets the most weight. Page 7 of Document 2 sat near the center of the 35 pages, where a provision is most likely to be underweighted.',
         isCorrect: true,
         feedbackText:
-          'Context window mechanics explain this failure precisely. Even when all three documents fit within the model\'s context window, the model\'s attention is not uniformly distributed across the full input. As total input length increases, the model\'s ability to hold earlier content in active working memory while processing later content degrades. Cross-document contradiction work requires the model to hold a provision from Document 1 in active memory while comparing it against a provision in Document 3. Attention degradation hits that combination hardest. The model found contradictions between Documents 1 and 2 (which sit closer together in the input) but missed the Document 1-to-3 contradiction because the relevant provisions were farther apart.',
+          'Context window mechanics explain this failure. All three documents fit within the model\'s context window, but attention is not spread evenly across a long input: material near the beginning and end receives more weight than material buried in the middle, the lost-in-the-middle effect. Documents 1 and 3 sat at the edges of the combined input, and the model found the conflicts between them. Page 7 of Document 2 is page 21 of 35, near the center. Cross-document work is especially exposed, because the model has to connect a middle-zone provision to one far away. The fix is positional: check the middle sections on their own, or run the comparison on shorter inputs.',
       },
       {
         id: 'B',
         text:
-          'The AI tool compared the documents sequentially (1 vs. 2, then 2 vs. 3) rather than holistically, and because the contradiction was between Documents 1 and 3, it fell outside the pairwise comparison sequence. The tool never directly compared the two documents that conflicted.',
+          'The AI tool compared the documents as separate pairs (1 vs. 3, then 1 vs. 2) rather than holistically. Because the conflict was between Documents 2 and 3, it fell outside the comparison sequence, and the tool never directly compared the two documents that conflicted.',
         isCorrect: false,
         feedbackText:
-          'AI models don\'t process multi-document comparisons through structured pairwise passes. The model processes the entire input as a single token sequence and generates its response through next-token prediction. The failure is about the model\'s attention being unevenly distributed across the combined input, with content later in the sequence getting less effective cross-referencing against content earlier in the sequence. There is no missing comparison step to add back.',
+          'AI models don\'t process multi-document comparisons through structured pairwise passes. The model processes the entire input as a single token sequence and generates its response through next-token prediction. The failure is about the model\'s attention being unevenly distributed across the combined input, with material in the middle of the sequence getting the least weight. There is no missing comparison step to add back.',
       },
       {
         id: 'C',
@@ -238,15 +242,15 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'The AI tool determined that two contradictions was a statistically appropriate number for documents of this type and length, and stopped searching after reaching that threshold. It prioritized conciseness over completeness to avoid producing an overwhelmingly detailed response.',
         isCorrect: false,
         feedbackText:
-          'AI models don\'t have an internal threshold for "appropriate number of contradictions." The model isn\'t deciding to stop searching after finding two. It\'s generating a response based on what it can attend to across the full input, and attention degradation across 35 pages means some contradictions simply aren\'t detected. The omission is a capability limitation, not an editorial choice.',
+          'AI models don\'t have an internal threshold for "appropriate number of contradictions." The model isn\'t deciding to stop searching after finding two. It\'s generating a response based on what it can attend to across the full input, and uneven attention across 35 pages means a provision in the middle can go undetected. The omission is a capability limitation, not an editorial choice.',
       },
       {
         id: 'D',
         text:
-          'The contradiction between Documents 1 and 3 involved domain-specific legal terminology that the AI tool wasn\'t trained to recognize as contradictory. It identified the simpler contradictions between Documents 1 and 2 because they used more common language patterns.',
+          'The Document 2 provision used clause numbers and defined terms that split into unusual tokens, so tokenization kept the model from matching it against the wording in Document 3. The conflicts between Documents 1 and 3 used plainer wording that tokenized cleanly.',
         isCorrect: false,
         feedbackText:
-          'If the model could identify contradictions between Documents 1 and 2 using legal terminology, it has sufficient domain knowledge to identify contradictions using similar terminology between Documents 1 and 3. The issue is the model\'s ability to sustain attention and cross-reference across increasing input length, not domain-specific vocabulary.',
+          'Tokenization affects character-level tasks such as counting letters or comparing digit strings. It does not stop a model from recognizing that two passages make conflicting policy statements, and the same model found the conflicts between Documents 1 and 3. What sets the missed provision apart is its position near the center of a long input, not how its words were split into tokens.',
       },
     ],
   },
@@ -258,9 +262,9 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'mechanics',
     objectiveRefs: ['3.2'],
     stem:
-      'A procurement specialist asks an AI tool to provide the current ISO 9001:2015 certification requirements for medical device suppliers. The tool produces a detailed, well-structured list of 12 requirements that reads like official documentation. The specialist notices that requirements 8 through 12 don\'t appear in the actual ISO standard. Applying the prediction-vs.-retrieval distinction from the program, which explanation is most accurate?',
+      'A procurement specialist asks an AI tool to provide the ISO 9001:2015 certification requirements for medical device suppliers, the edition the company\'s suppliers are certified to. The tool produces a detailed, well-structured list of 12 requirements that reads like official documentation. The specialist notices that requirements 8 through 12 don\'t appear in the 2015 standard or in the 2026 revision that followed it. Which explanation is most accurate?',
     scenarioSummary:
-      'An AI lists 12 ISO 9001:2015 certification requirements; the last 5 don\'t exist in the actual standard.',
+      'An AI lists 12 ISO 9001:2015 certification requirements; the last 5 don\'t exist in the 2015 edition or its 2026 revision.',
     options: [
       {
         id: 'A',
@@ -304,7 +308,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'mechanics',
     objectiveRefs: ['3.1'],
     stem:
-      'A localization manager asks an AI tool to translate a product tagline from English to Thai and then translate it back to English to check fidelity. The round-trip translation produces a noticeably different meaning from the original. She runs the same test with a French translation and the round-trip is nearly perfect. Using your understanding of tokenization, what is the most likely structural explanation for this disparity?',
+      'A localization manager asks an AI tool to translate a product tagline from English to Thai and then translate it back to English to check fidelity. The round-trip translation produces a noticeably different meaning from the original. She runs the same test with a French translation and the round-trip is nearly perfect. What is the most likely structural explanation for this disparity?',
     scenarioSummary:
       'Round-trip translation through Thai shifts meaning while round-trip through French preserves it. Same model, same task, different result.',
     options: [
@@ -327,10 +331,10 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'C',
         text:
-          'The AI model applied a different translation strategy for Thai (statistical phrase matching) than for French (neural machine translation) because it automatically selects the optimal method based on the language pair. The Thai strategy is older and less accurate.',
+          'Thai text breaks into many more tokens than French, so the Thai round trip filled the model\'s context window and the end of the tagline was cut off before translation. The meaning shifted because part of the input never reached the model.',
         isCorrect: false,
         feedbackText:
-          'AI language models don\'t switch between "statistical phrase matching" and "neural machine translation" based on language pair. The model uses the same architecture (next-token prediction over a tokenized representation) for all languages. The quality difference comes from how the tokenizer handles different scripts, not from a choice between translation strategies.',
+          'The token count is right; the consequence is wrong. A product tagline runs to a few dozen tokens even in Thai, a tiny fraction of any current context window, so nothing was cut off. Heavier tokenization matters here because meaning is represented in fragments that don\'t align with Thai\'s words and syllables, not because of how much room the text takes up. Context window limits explain omissions in long documents, not a meaning shift in one sentence.',
       },
       {
         id: 'D',
@@ -350,7 +354,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'mechanics',
     objectiveRefs: ['3.4'],
     stem:
-      'A team lead asks three colleagues to each use an AI tool for a different task, then report the results. Colleague A asked the tool to write a press release announcing a product launch; the output was polished and accurate. Colleague B asked the tool to verify whether a specific clause exists in their company\'s 200-page vendor agreement; the tool said yes, but the clause doesn\'t exist. Colleague C asked the tool to calculate the weighted average cost of capital using five financial inputs; the result was off by several percentage points. The team lead asks you: "Why did the tool work for A but fail for B and C?" Using the capability diagnosis framework from the program, which response is most accurate?',
+      'A team lead asks three colleagues to each use an AI tool for a different task, then report the results. Colleague A asked the tool to write a press release announcing a product launch; the output was polished and accurate. Colleague B asked the tool to verify whether a specific clause exists in their company\'s 200-page vendor agreement; the tool said yes, but the clause doesn\'t exist. Colleague C asked the tool to calculate the weighted average cost of capital using five financial inputs; the result was off by several percentage points. The team lead asks you: "Why did the tool work for A but fail for B and C?" Which response is most accurate?',
     scenarioSummary:
       'Three colleagues, three AI tasks: press release succeeds, vendor-agreement clause check fabricates, WACC calculation is wrong by several points.',
     options: [
@@ -395,7 +399,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     constructKey: 'verification-priority',
     block: 'evaluation',
     objectiveRefs: ['4.3'],
-    stem: `A program coordinator uses an AI tool to draft a grant application for a workforce development initiative. The draft includes the following four claims. Using the verification priority framework from the program, which claim should be verified first?
+    stem: `A program coordinator uses an AI tool to draft a grant application for a workforce development initiative. The draft includes the following four claims. Which claim should be verified first?
 
 1. "Workforce development programs have historically played a central role in addressing skill gaps during periods of economic transition."
 2. "The U.S. Department of Labor's 2024 Workforce Innovation Report found that employer-sponsored upskilling programs reduced turnover by 34% in participating organizations."
@@ -415,7 +419,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'B',
         text:
-          'Claim 2, because it cites a specific government report with a precise statistic. If the report doesn\'t exist or the 34% is fabricated, the application contains a falsified citation that could disqualify the proposal and damage credibility with the funder.',
+          'Claim 2, because it cites a specific government report with a precise statistic. If the report doesn\'t exist or the 34% is fabricated, the application carries a false citation that could disqualify it and damage credibility with the funder.',
         isCorrect: true,
         feedbackText:
           'Claim 2 cites a specific government report ("U.S. Department of Labor\'s 2024 Workforce Innovation Report") with a precise statistic (34% turnover reduction). This is exactly the type of claim AI models fabricate fluently: a plausible-sounding report title, a credible government source, and a specific percentage that would be impressive if real. If the report doesn\'t exist or the statistic is fabricated, the grant application contains a falsified citation. In a grant review context, a falsified citation can disqualify the proposal and damage the organization\'s credibility with the funder. The consequences are immediate and disproportionate to the other claims.',
@@ -446,14 +450,14 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'evaluation',
     objectiveRefs: ['4.2'],
     stem:
-      'A training coordinator asks an AI tool: "Help me with onboarding." The output is a generic checklist that could apply to any organization. Rather than abandoning the tool, she restructures her request. Which restructured prompt best demonstrates the Description competency from the program?',
+      'A training coordinator asks an AI tool: "Help me with onboarding." The output is a generic checklist that could apply to any organization. Rather than abandoning the tool, she restructures her request. Which restructured prompt is most likely to produce a plan she can use?',
     scenarioSummary:
       'A vague onboarding prompt produced a generic checklist. Four restructured prompts compete to demonstrate the Description competency.',
     options: [
       {
         id: 'A',
         text:
-          '"Create a first-week onboarding schedule for a junior data analyst joining a 12-person analytics team at a financial services firm. Include: systems access setup on Day 1, introductions to the three team leads they\'ll work with, a shadow session with a senior analyst on Day 2 or 3, and a 30-minute check-in with their manager on Day 5. Format as a day-by-day table."',
+          '"Create a first-week onboarding schedule for a junior data analyst joining a 12-person analytics team at a financial services firm. Include systems access on Day 1, introductions to the three team leads, a shadow session with a senior analyst on Day 2 or 3, and a manager check-in on Day 5. Format as a day-by-day table."',
         isCorrect: true,
         feedbackText:
           'This prompt demonstrates the Description competency: it specifies the role (junior data analyst), context (12-person team, financial services), concrete activities (systems access, team introductions, shadow session, manager check-in), timing constraints (Day 1, Day 2–3, Day 5), and output format (day-by-day table). Each specification narrows the model\'s output space toward a targeted, useful result. The model generates based on what the prompt tells it. More structural specification produces more relevant output.',
@@ -461,10 +465,10 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'B',
         text:
-          '"Help me with onboarding. Be more specific and detailed. I need something actually useful, not a generic template. Make it thorough and comprehensive. Include everything a new hire would need."',
+          '"Help me with onboarding. Some background: we are a 400-person financial services firm with offices in Chicago and Toronto, founded in 2009. We value collaboration, curiosity, and client focus, and our analytics team has doubled in two years. New hires have told us their first weeks felt disorganized. Please make onboarding better."',
         isCorrect: false,
         feedbackText:
-          'This prompt adds intensity, not information. "Be more specific" doesn\'t tell the model what to be specific about. "Include everything" is an unbounded instruction that produces breadth without relevance. The prompt still lacks structural specification (role, team context, format, constraints) that would narrow the output space.',
+          'This prompt adds background, not specification. It tells the model about the firm but never says what to produce: no role, no time frame, no activities, no format. Length is not Description. Given this prompt, the model will produce a warmer, longer generic onboarding plan, because nothing in it narrows the output to a particular role, week, or format.',
       },
       {
         id: 'C',
@@ -477,10 +481,102 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'D',
         text:
-          '"Help me with onboarding for a data analyst. Make it specific to our company. Include first-week activities, team introductions, and system setup. Let me know if you need any other information to make this better."',
+          '"Help me with onboarding for a data analyst joining our team. Make it specific to our company and our industry rather than a generic template. Include first-week activities, team introductions, and system setup, and make sure nothing important is missed. Let me know if you need any other information to make this better."',
         isCorrect: false,
         feedbackText:
-          'This is better than the original (it adds the role and some categories), but it still relies on the model to fill in specifics ("specific to our company" without saying what about the company matters). The closing "let me know if you need other information" defers specification to the model rather than providing it upfront. Compare that to option A, where every detail is in the prompt itself.',
+          'This is better than the original (it adds the role and some categories), but it still relies on the model to fill in specifics ("specific to our company and our industry" without saying what the company or industry is). The closing "let me know if you need other information" defers specification to the model rather than providing it upfront. Compare that to option A, where every detail is in the prompt itself.',
+      },
+    ],
+  },
+  {
+    id: 'POST-11',
+    parallelPreId: 'PRE-11',
+    construct: 'Task decomposition',
+    constructKey: 'task-decomposition',
+    block: 'evaluation',
+    objectiveRefs: ['4.1'],
+    stem:
+      'A benefits manager is preparing an employee FAQ about a change of health-benefits provider. The work has four parts: (1) pulling every question employees asked at last week\'s town hall out of the meeting transcript, which she will paste in; (2) drafting answers about the new coverage terms from the provider\'s plan document, which she will also paste in; (3) deciding which questions to answer now and which to hold until employee representatives have been consulted; and (4) formatting the FAQ into the intranet template. Which plan for using AI is most sound?',
+    scenarioSummary:
+      'A benefits manager splits an employee FAQ into four parts and has to decide how much of each to hand to AI.',
+    options: [
+      {
+        id: 'A',
+        text:
+          'Fully delegate all four parts. The tool has the transcript and the plan document, so it has every source it needs, and she can review the finished FAQ once, carefully, before it is published to the whole company.',
+        isCorrect: false,
+        feedbackText:
+          'Supplying the sources does not make every part delegable. Part 3 is a judgment about timing and commitments to employee representatives, and nothing in the transcript or the plan document tells the tool what was promised. Part 1 also needs a check: a long transcript is a volume task, and questions buried in the middle are the ones most likely to be dropped. One read of a polished FAQ tends to check tone and layout, not whether a question is missing or an answer is premature.',
+      },
+      {
+        id: 'B',
+        text:
+          'Keep all four parts human-only. Benefits changes are sensitive, and employees who learn the FAQ was produced with AI will trust its answers less, however accurate those answers turn out to be.',
+        isCorrect: false,
+        feedbackText:
+          'Sensitivity raises the bar for checking. It does not make every part unsuitable for AI. Extracting questions and formatting a template are checkable tasks, and refusing help on them spends time without improving the parts that need judgment. Whether employees are told AI was used is a disclosure decision, which a diligence statement handles, not a reason to avoid the tool.',
+      },
+      {
+        id: 'C',
+        text:
+          'Fully delegate parts 2 and 3, since drafting answers from a source document and ranking questions are pattern tasks the model handles well, and keep parts 1 and 4 human-only, since a transcript and a template need exact handling by a person.',
+        isCorrect: false,
+        feedbackText:
+          'This inverts the risk. Pulling questions from a transcript and formatting a template are the parts with a clear standard to check against. Answers about coverage terms must match the plan document line by line, and deciding what to answer now depends on consultation commitments the tool cannot see. The model will produce answers and a ranking that look right whether or not they are, which is why those two parts need the most human control.',
+      },
+      {
+        id: 'D',
+        text:
+          'Delegate parts 1 and 4, then check that no town-hall question is missing. Use AI to draft part 2 and check each answer against the plan document. Keep part 3 human-only: it turns on commitments the tool knows nothing about.',
+        isCorrect: true,
+        feedbackText:
+          'This plan makes the decision component by component. Parts 1 and 4 have a clear standard, the transcript and the template, so they can be delegated with a check; for part 1 the check is completeness, because questions in the middle of a long transcript are the easiest to lose. Part 2 works from a pasted source, so AI can draft and she verifies each answer against the plan. Part 3 depends on context only she has, so it stays human-only.',
+      },
+    ],
+  },
+  {
+    id: 'POST-12',
+    parallelPreId: 'PRE-12',
+    construct: 'Disclosure and accountability',
+    constructKey: 'disclosure-accountability',
+    block: 'evaluation',
+    objectiveRefs: ['4.5'],
+    stem:
+      'A training manager used AI to prepare a quarterly report on the company\'s onboarding program for the executive team. The tool turned her survey export into charts, drafted a summary of 140 open-ended comments, and suggested three improvements. She checked the charts against the export, read all 140 comments to confirm the summary, rejected one suggested improvement, and rewrote the other two from her own observations. Her company asks staff to note AI use in their deliverables. Which note is most appropriate to attach to the report?',
+    scenarioSummary:
+      'A training manager used AI for charts, a comment summary, and suggestions in an executive report, and has to decide how to note it.',
+    options: [
+      {
+        id: 'A',
+        text:
+          '"AI assistance was used in preparing this report, in line with company policy. All of its content has been reviewed for accuracy and approved by the program owner, and the report reflects the onboarding team\'s current view of the program."',
+        isCorrect: false,
+        feedbackText:
+          'This acknowledges AI use without saying what it did. The executive team cannot tell whether the charts, the comment summary, or the recommendations came from the tool, or what "reviewed" covered. A diligence statement earns trust by being specific: which parts AI produced, what was checked, and what the author changed.',
+      },
+      {
+        id: 'B',
+        text:
+          '"The charts, the comment summary, and the improvement ideas were generated by AI. Because the analysis is the tool\'s, the executive team should treat these conclusions as provisional until a second reviewer confirms them."',
+        isCorrect: false,
+        feedbackText:
+          'This understates her own work and hands accountability away. She checked the charts and the comments, rejected one suggestion, and rewrote two, so the conclusions are hers. Telling the executive team to wait for a second reviewer shifts a responsibility she has already carried out.',
+      },
+      {
+        id: 'C',
+        text:
+          '"AI built the charts and drafted the comment summary; I checked both against the export and all 140 comments. Of three AI-suggested improvements, I rejected one and rewrote two from my own observations. I stand behind the report."',
+        isCorrect: true,
+        feedbackText:
+          'This statement does what the Diligence competency asks. It separates AI-generated work (charts, comment summary) from human judgment (the rejected and rewritten improvements), names the checks and what they covered, and closes with accountability. It is short enough to append to the report, and a reader can weigh each part on what was done to it.',
+      },
+      {
+        id: 'D',
+        text:
+          '"No AI note is needed. The report went through the same review as any other deliverable, and naming the tool would only invite the executive team to discount findings that have already been checked."',
+        isCorrect: false,
+        feedbackText:
+          'Leaving the note out breaks the company\'s stated expectation and treats disclosure as a risk to the findings rather than evidence for them. When AI use goes unreported, colleagues cannot learn which uses worked. A specific note that says what was checked makes the findings easier to trust, not harder.',
       },
     ],
   },

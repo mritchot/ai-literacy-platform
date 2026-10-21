@@ -329,20 +329,19 @@ function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
     numHex: string;
     denomHex?: string;
   };
-  const delta = growth.postTotal - growth.preTotal;
-  const deltaFmt = fmtDelta(delta);
+  const deltaFmt = fmtDelta(growth.change);
   const cells: ScoreCell[] = [
     {
       label: 'PRE',
       numText: String(growth.preTotal),
-      denomText: ' / 10',
+      denomText: ` / ${growth.preItems}`,
       numHex: C.assessmentText,
       denomHex: C.tertiary,
     },
     {
       label: 'POST',
       numText: String(growth.postTotal),
-      denomText: ' / 10',
+      denomText: ` / ${growth.postItems}`,
       numHex: C.assessmentText,
       denomHex: C.tertiary,
     },
@@ -368,7 +367,7 @@ function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
     resetTracking(doc);
 
     // Numeral — Source Serif 4 26 pt. For Pre/Post, render numerator
-    // and " / 10" as two text calls (different sizes/colors) baseline-
+    // and " / N" as two text calls (different sizes/colors) baseline-
     // aligned. Center the COMBINED string in the cell.
     doc.setFont(FONT.serif, 'bold');
     doc.setFontSize(26);
@@ -477,12 +476,12 @@ function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
     doc.setFont(FONT.sans, 'normal');
     doc.setFontSize(10);
     setTextHex(doc, C.body);
-    const preStr = `${block.pre} / ${block.items}`;
+    const preStr = `${block.pre} / ${block.preItems}`;
     const postStr = `${block.post} / ${block.items}`;
     doc.text(preStr, colPreRight - doc.getTextWidth(preStr), baselineY);
     doc.text(postStr, colPostRight - doc.getTextWidth(postStr), baselineY);
 
-    const rowDelta = fmtDelta(block.post - block.pre);
+    const rowDelta = fmtDelta(block.change);
     doc.setFont(FONT.sans, 'bold');
     doc.setFontSize(10);
     setTextHex(doc, rgbToHex(rowDelta.rgb));
@@ -497,7 +496,9 @@ function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
   doc.setFontSize(10.5);
   setTextHex(doc, C.secondary);
   const framingText = safe(
-    'Same constructs, parallel scenarios. The pre side measured your intuition; the post side measured your reasoning after the four modules.',
+    growth.gainText
+      ? `Same constructs, parallel scenarios. ${growth.gainText}.`
+      : 'Same constructs, parallel scenarios. The pre side measured your intuition; the post side measured your reasoning after the four modules.',
   );
   const framingLines = doc.splitTextToSize(framingText, innerW) as string[];
   const framingClamped = framingLines.slice(0, 3);

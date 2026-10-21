@@ -3,10 +3,11 @@
 // either demo data or live context state into a common shape, and stacks
 // the four dashboard sections.
 //
-// Live mode reads from `useLearnerProgress` and `useAnalyticsEvents`. Demo
-// mode reads from the static `demo-data.ts` file. Demo data is never written
-// to localStorage — switching back to Live mode reveals the actual learner
-// state (or the empty state if it's empty).
+// Live mode reads from `useLearnerProgress` and `useAnalyticsEvents`. The two
+// demo modes read from the static `demo-data.ts` file: one learner in
+// Module 3, and the same learner after the post-assessment. Demo data is
+// never written to localStorage — switching back to Live mode reveals the
+// actual learner state (or the empty state if it's empty).
 
 import { useMemo, useState } from 'react';
 import {
@@ -22,7 +23,12 @@ import { STORAGE_KEYS } from '../constants/storage-keys';
 import { Overline } from '../components/shared/Overline';
 import { AssessmentResponseAnalysis } from './AssessmentResponseAnalysis';
 import { DataSourceToggle, type DataSource } from './DataSourceToggle';
-import { DEMO_EVENTS, DEMO_PROGRESS } from './demo-data';
+import {
+  DEMO_EVENTS,
+  DEMO_EVENTS_COMPLETE,
+  DEMO_PROGRESS,
+  DEMO_PROGRESS_COMPLETE,
+} from './demo-data';
 import { EventTimeline } from './EventTimeline';
 import { ExportControls } from './ExportControls';
 import { KCResponseAnalysis } from './KCResponseAnalysis';
@@ -60,6 +66,9 @@ export default function AnalyticsDashboard(): JSX.Element {
   const data: DashboardData = useMemo(() => {
     if (dataSource === 'demo') {
       return { progress: DEMO_PROGRESS, events: DEMO_EVENTS };
+    }
+    if (dataSource === 'demo-complete') {
+      return { progress: DEMO_PROGRESS_COMPLETE, events: DEMO_EVENTS_COMPLETE };
     }
     return { progress: learnerProgress.state, events: liveEvents };
   }, [dataSource, learnerProgress.state, liveEvents]);
@@ -109,14 +118,25 @@ export default function AnalyticsDashboard(): JSX.Element {
           className="m-0 mt-2 font-sans text-body-sm"
           style={{
             color:
-              dataSource === 'demo'
-                ? 'rgb(var(--caution))'
-                : 'rgb(var(--secondary))',
+              dataSource === 'live'
+                ? 'rgb(var(--secondary))'
+                : 'rgb(var(--caution))',
           }}
         >
           {dataSource === 'demo'
-            ? 'Showing pre-populated demo data'
-            : 'Showing live data from localStorage'}
+            ? 'Showing pre-populated demo data: a learner partway through Module 3'
+            : dataSource === 'demo-complete'
+              ? 'Showing pre-populated demo data: the same learner after the post-assessment'
+              : 'Showing live data from localStorage'}
+        </p>
+        <p className="m-0 mt-2 max-w-reading font-sans text-caption text-tertiary">
+          Each view shows one learner. The pre/post assessment is the program&rsquo;s Level 2
+          measure; Levels 1, 3, and 4 are collected by the deploying organization, as set out in
+          the{' '}
+          <a href="#/evaluation" className="text-secondary underline hover:text-ink">
+            evaluation framework
+          </a>
+          .
         </p>
       </header>
 

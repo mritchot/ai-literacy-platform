@@ -12,7 +12,7 @@
 //   • restores the learner's mid-flow position if they leave and
 //     return (the next un-answered item).
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import {
   useLearnerProgress,
@@ -20,6 +20,7 @@ import {
 } from '../../contexts/LearnerProgressContext';
 import { PRE_ASSESSMENT_ITEMS, type AssessmentItem as AssessmentItemData } from '../../data/pre-assessment';
 import { POST_ASSESSMENT_ITEMS } from '../../data/post-assessment';
+import { INSTRUMENT_VERSION } from '../../data/instrument-version';
 import { scrollBehavior } from '../../utils/motion';
 import { Icon } from '../shared/Icon';
 import { AssessmentCompletion } from './AssessmentCompletion';
@@ -110,6 +111,14 @@ export function AssessmentPage({ kind }: AssessmentPageProps): JSX.Element {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentItem?.id]);
 
+  // When the active item appeared, for its response time. A resumed
+  // session restarts the clock, so a time is never stretched across a
+  // break between visits.
+  const itemShownAtRef = useRef<number | null>(null);
+  useEffect(() => {
+    if (phase === 'items') itemShownAtRef.current = Date.now();
+  }, [phase, currentItem?.id]);
+
   // Begin handler — fires when the learner clicks the intro's
   // primary CTA. Idempotent against startAssessment (which guards
   // against double-start), so a quick double-click is safe.
@@ -131,11 +140,16 @@ export function AssessmentPage({ kind }: AssessmentPageProps): JSX.Element {
     if (!currentItem || !selectedOptionId) return;
     const option = currentItem.options.find((o) => o.id === selectedOptionId);
     if (!option) return;
+    const now = Date.now();
+    const shownAt = itemShownAtRef.current;
+    const responseMs = shownAt === null ? undefined : now - shownAt;
     recordAssessmentResponse(kind, {
       itemId: currentItem.id,
       selectedOptionId,
       isCorrect: option.isCorrect,
-      timestamp: Date.now(),
+      timestamp: now,
+      responseMs,
+      instrumentVersion: INSTRUMENT_VERSION,
     });
     track({
       type: 'assessment_item_answered',
@@ -146,6 +160,8 @@ export function AssessmentPage({ kind }: AssessmentPageProps): JSX.Element {
         block: currentItem.block,
         selectedOptionId,
         isCorrect: option.isCorrect,
+        responseMs,
+        instrumentVersion: INSTRUMENT_VERSION,
       },
     });
     const isLast = currentIndex >= total - 1;
