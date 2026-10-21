@@ -129,6 +129,7 @@ export function Sidebar({
 
       <SidebarFooter
         collapsed={collapsed}
+        isMobile={isMobile}
         onToggleCollapse={onToggleCollapse}
         onCloseMobile={onCloseMobile}
         dashboardActive={location.pathname.startsWith('/dashboard')}
