@@ -586,8 +586,8 @@ function Section6({ module }: ModuleProp): JSX.Element {
           positions equally. Research on long-context language models has documented a{' '}
           <strong>lost-in-the-middle effect</strong>
          <Citation ids="liu-2024" />: material at the beginning and end of the input receives
-          more attention than material buried in the center. Subsequent studies have confirmed
-          the pattern across newer models. If you upload a 200-page document and the critical
+          more attention than material buried in the center. If you upload a 200-page document
+          and the critical
           clause is on page 100, the model is more likely to miss it than if the same clause
           appeared on page 1 or page 200.
         </p>
