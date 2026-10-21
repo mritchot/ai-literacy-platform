@@ -250,8 +250,11 @@ function Section2({ module }: ModuleProp): JSX.Element {
         </h3>
         <p className="m-0">
           When you ask “how many R’s are in ‘strawberry’?”, you are asking about individual
-          letters. But the model does not see individual letters; it sees tokens, and the word
-          “strawberry” might be a single token or two tokens depending on the model. Counting
+          letters. But the model does not see individual letters; it sees tokens. In this
+          module’s tokenizer, “strawberry” after a space is one token. Inside quotation marks, as
+          in the question above, it becomes three: str / aw / berry. Try both in the playground
+          in the next section. OpenAI’s newer tokenizer cuts the quoted word into st / raw /
+          berry. Counting
           characters within a token requires the model to have learned, during training, exactly
           which letters are packed inside that token ID. It sometimes gets this right. It often
           does not. Routing the same question to a code tool that steps through the characters
