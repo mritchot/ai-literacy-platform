@@ -117,7 +117,7 @@ const FAILS_CATEGORIES: FailsCategory[] = [
   {
     id: 'specificity',
     label: 'Specificity tasks',
-    rootCause: 'NTP × Knowledge',
+    rootCause: 'Next-token prediction × Knowledge',
     body: 'The model generates statistically probable tokens. When a task requires specific facts the training data represents thinly, it produces plausible fabrications.',
     rows: [
       {
@@ -150,7 +150,7 @@ const FAILS_CATEGORIES: FailsCategory[] = [
     rows: [
       {
         failsAt: 'Long document analysis (>20 pages)',
-        why: 'Middle sections fall into the attention valley: processed but underweighted',
+        why: 'Middle sections get the least attention (the lost-in-the-middle effect): processed but underweighted',
         instead: 'Break long documents into sections; process separately',
       },
       {
