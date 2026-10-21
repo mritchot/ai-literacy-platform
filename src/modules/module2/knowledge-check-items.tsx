@@ -294,7 +294,8 @@ const KC_2_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Compounds the overestimation',
       feedbackTone: 'error',
       feedbackText:
-        'Comparing an internal self-report figure favorably against external self-report data doubles down on a measurement approach the research has documented as systematically biased. The 65% external figure (Anthropic Interviewer, 2025, "Augmentation versus automation") is itself an overestimate; behavioral data shows actual augmentative use at 47–57% depending on the measurement period. A higher internal self-report doesn\'t indicate better practice; it may indicate a larger gap. Using biased data to validate the program that produced it creates a circular justification.',
+        'Comparing an internal self-report figure favorably against external self-report data doubles down on a measurement approach the research has documented as systematically biased. The 65% external figure, from Anthropic’s interviews with professionals, is itself an overestimate; behavioral data shows actual augmentative use at 47–57% depending on the measurement period. A higher internal self-report doesn\'t indicate better practice; it may indicate a larger gap. Using biased data to validate the program that produced it creates a circular justification.',
+      sources: [{ ids: 'anthropic-interviewer-2025', pageKey: 'self-report-augmentation' }],
     },
     {
       id: 'b',
@@ -321,7 +322,8 @@ const KC_2_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Misses the mechanism',
       feedbackTone: 'error',
       feedbackText:
-        'Output quality is the right ultimate concern, but the module\'s data shows precisely why interaction patterns matter for quality. Directive interactions, which were 32% of conversations in November 2025 after peaking at 39% in August (Appel, Massenkoff & McCrory, 2026, p. 9), produce output that receives less human evaluation before deployment. The gap between self-reported collaboration and actual behavior means that quality problems are less visible to the people producing them, not less frequent. Treating the interaction pattern as a distinction without practical consequences disconnects the measurement from the thing being measured.',
+        'Output quality is the right ultimate concern, but the module\'s data shows precisely why interaction patterns matter for quality. Directive interactions, which were 32% of conversations in November 2025 after peaking at 39% in August, produce output that receives less human evaluation before deployment. The gap between self-reported collaboration and actual behavior means that quality problems are less visible to the people producing them, not less frequent. Treating the interaction pattern as a distinction without practical consequences disconnects the measurement from the thing being measured.',
+      sources: [{ ids: 'appel-massenkoff-mccrory-2026', pageKey: 'directive-share-32' }],
     },
   ],
 };

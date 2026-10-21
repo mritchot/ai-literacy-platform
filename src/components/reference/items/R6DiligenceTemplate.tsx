@@ -138,14 +138,13 @@ export function R6DiligenceTemplate(): JSX.Element {
         AI practices legible. It does not ask for permission. It does not apologize. It states
         what happened. <em>Length scales with stakes.</em> The framework&rsquo;s authors close
         their own document with one: it names the model used, affirms human vetting, and claims
-        full responsibility in five sentences (Dakan &amp; Feller, 2025, p. 7). Institutions have
+        full responsibility in five sentences. Institutions have
         started to require one. Most journals and conferences already require acknowledgment of AI
         use, and MIT&rsquo;s 2026 AI committee recommends a statement of AI use in every thesis. The
         committee holds people responsible for all work they submit, AI-assisted content included,
-        and treats AI as a tool under the direction of a human who verifies its output (MIT Ad Hoc
-        Committee, 2026, pp. 16, 22). Accountability for the deliverable stays with you even when production was
-        delegated; the statement records how you exercised it (Lee et al., 2025,
-        p. 15).
+        and treats AI as a tool under the direction of a human who verifies its output.
+        Accountability for the deliverable stays with you even when production was delegated; the
+        statement records how you exercised it.
       </p>
 
       {/* Section: Statement structure (4 numbered scaffolds) */}
@@ -163,7 +162,9 @@ export function R6DiligenceTemplate(): JSX.Element {
         style={{ lineHeight: 1.5, fontStyle: 'italic' }}
       >
         Framework: 4D AI Fluency Framework, Diligence competency (Dakan &amp; Feller, 2025,
-        p. 6), as taught in Anthropic&rsquo;s AI Fluency course.
+        p. 6; closing diligence statement, p. 7), as taught in Anthropic&rsquo;s AI Fluency course.
+        Statement requirements: MIT Ad Hoc Committee, 2026, pp. 16, 22. Accountability: Lee et al.,
+        CHI 2025, p. 15.
       </p>
     </div>
   );

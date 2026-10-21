@@ -7,6 +7,7 @@ import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { scrollBehavior } from '../../utils/motion';
+import { CheckSources, type CheckSource } from './CheckSources';
 import { Icon } from './Icon';
 import { nextRadioIndex } from './radio-group-nav';
 import { Overline } from './Overline';
@@ -27,6 +28,8 @@ interface KnowledgeCheckOption {
   feedbackTitle: string;
   feedbackText: string;
   feedbackTone: KnowledgeCheckTone;
+  /** Citations for claims in `feedbackText`, rendered as chips after it. */
+  sources?: CheckSource[];
 }
 
 export interface KnowledgeCheckItemData {
@@ -314,6 +317,7 @@ export function KnowledgeCheck({
           <Overline className="mb-1.5">{selectedOption.feedbackTitle}</Overline>
           <div className="font-sans text-body-sm leading-relaxed text-body">
             {selectedOption.feedbackText}
+            <CheckSources sources={selectedOption.sources} />
           </div>
         </div>
       )}
@@ -335,6 +339,7 @@ export function KnowledgeCheck({
           </div>
           <div className="font-sans text-body-sm leading-relaxed text-body">
             {preferredOption.feedbackText}
+            <CheckSources sources={preferredOption.sources} />
           </div>
         </div>
       )}
@@ -370,6 +375,7 @@ export function KnowledgeCheck({
                   </div>
                   <div className="font-sans text-body-sm leading-relaxed text-body">
                     {opt.feedbackText}
+                    <CheckSources sources={opt.sources} />
                   </div>
                 </li>
               ))}

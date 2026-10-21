@@ -1,6 +1,7 @@
 // Module 1 P1 interpretation check items (IC-1.1 → IC-1.3) — content from
 // `module-1-content-document.md`, S3 (one IC per story).
 
+import type { CheckSource } from '../../components/shared/CheckSources';
 import type { InterpretationCheckItemData } from '../../components/shared/InterpretationCheck';
 
 const IC_1_1: InterpretationCheckItemData = {
@@ -33,7 +34,8 @@ const IC_1_1: InterpretationCheckItemData = {
       feedbackTitle: 'Flawed reasoning',
       feedbackTone: 'error',
       feedbackText:
-        'The 85% planning figure describes intent, not execution. The same report shows that the skill gap remains the largest cited barrier, meaning most organizations intend to upskill but have not yet succeeded. Following the market assumes someone else has solved the problem. The data suggests otherwise. Executive surveys show the same gap in a different population. In September 2025, about a third of CIOs had put an LLM project into production, and about 40% planned none before 2026 (Morgan Stanley CIO Survey, as reproduced by Evans, November 2025, slide 57). Plans are cheap. Deployment and skill are not.',
+        'The 85% planning figure describes intent, not execution. The same report shows that the skill gap remains the largest cited barrier, meaning most organizations intend to upskill but have not yet succeeded. Following the market assumes someone else has solved the problem. The data suggests otherwise. Executive surveys show the same gap in a different population. In Morgan Stanley’s September 2025 CIO survey, about a third of CIOs had put an LLM project into production, and about 40% planned none before 2026. Plans are cheap. Deployment and skill are not.',
+      sources: [{ ids: 'evans-2025-11', pageKey: 'cio-timing-57' }],
     },
     {
       id: 'd',
@@ -112,7 +114,8 @@ const IC_1_3: InterpretationCheckItemData = {
       feedbackTitle: 'Reasonable caution, wrong threshold',
       feedbackTone: 'caution',
       feedbackText:
-        'Methodological caution is appropriate, and three time points is genuinely limited. However, each wave analyzes a sample of about one million conversations (Handa et al., 2025; Appel, McCrory & Tamkin, 2025; Appel, Massenkoff & McCrory, 2026). The sample sizes are not small, and the magnitude of the shifts (11 to 12 percentage points for directive interactions between January and August: 28% to 39% as the original study counts January, or 27% to 39% when unclassified conversations stay in the count, as the later reports count them) substantially exceeds what random variation would produce. The correct response is cautious interpretation, not suspension of judgment. Waiting for "significantly more data" before acting is itself a workforce planning decision, one that this data suggests would widen existing capability gaps.',
+        'Methodological caution is appropriate, and three time points is genuinely limited. However, each wave analyzes a sample of about one million conversations. The sample sizes are not small, and the magnitude of the shifts (11 to 12 percentage points for directive interactions between January and August: 28% to 39% as the original study counts January, or 27% to 39% when unclassified conversations stay in the count, as the later reports count them) substantially exceeds what random variation would produce. The correct response is cautious interpretation, not suspension of judgment. Waiting for "significantly more data" before acting is itself a workforce planning decision, one that this data suggests would widen existing capability gaps.',
+      sources: [{ ids: ['handa-2025', 'appel-mccrory-tamkin-2025', 'appel-massenkoff-mccrory-2026'] }],
     },
     {
       id: 'c',
@@ -141,7 +144,13 @@ export const MODULE_1_DEBRIEFS: Record<string, string> = {
   ic_1_1:
     'The demand signal is clear, but so is the gap between recognizing AI as a priority and closing the competency deficit. The next story looks at where adoption is happening, and where it isn’t.',
   ic_1_2:
-    'Access is necessary but not sufficient. The January 2026 Economic Index report reaches the same conclusion: expanding access alone will not suffice. It finds that higher-usage countries use AI more collaboratively rather than delegating more, which suggests the skills needed to use AI well may themselves be unevenly distributed (Appel, Massenkoff & McCrory, 2026, pp. 35–36, 55). The gap between having AI tools and using them productively is shaped by institutional context, including, as the enterprise data shows, whether organizations create the conditions for visible, supported use. The final story looks at how usage is changing over time.',
+    'Access is necessary but not sufficient. The January 2026 Economic Index report reaches the same conclusion: expanding access alone will not suffice. It finds that higher-usage countries use AI more collaboratively rather than delegating more, which suggests the skills needed to use AI well may themselves be unevenly distributed. The gap between having AI tools and using them productively is shaped by institutional context, including, as the enterprise data shows, whether organizations create the conditions for visible, supported use. The final story looks at how usage is changing over time.',
   ic_1_3:
     'Where you sit on the augmentation–automation spectrum isn’t fixed. It’s shaped by how you think about each task, what judgment you apply, and whether your organization has the vocabulary to discuss the difference. That’s the focus of the rest of this program, starting with a finding you may recognize from your own experience.',
+};
+
+// Debriefs render as plain strings; their citations render as chips after
+// the paragraph so they follow the Sources toggle.
+export const MODULE_1_DEBRIEF_SOURCES: Partial<Record<string, CheckSource[]>> = {
+  ic_1_2: [{ ids: 'appel-massenkoff-mccrory-2026', pageKey: 'access-not-sufficient' }],
 };

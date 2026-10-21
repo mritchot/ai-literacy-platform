@@ -220,7 +220,7 @@ export function R2DelegationGuide(): JSX.Element {
           guide <em>per component</em>, not per deliverable. A quarterly business review might
           include data compilation (fully delegable), trend narrative (AI-assisted), and strategic
           recommendations (human-only). The framework names this split directly: deconstructing a
-          task into AI, human, and collaborative components (Dakan &amp; Feller, 2025, p. 4).
+          task into AI, human, and collaborative components.
         </p>
         <p className="m-0 text-body-sm text-body" style={{ lineHeight: 1.55, marginTop: 8 }}>
           When you decompose a task into separate components, a compilation step followed by a
@@ -269,12 +269,11 @@ export function R2DelegationGuide(): JSX.Element {
           paste into an AI tool leaves your organization&rsquo;s boundary the moment you send it.
           MIT&rsquo;s 2026 AI committee notes that most commercial AI plans, especially paid ones,
           let users switch off the use of their data for training. The default, however, is often
-          to record sessions for training (MIT Ad Hoc Committee, 2026, pp. 25–26). Client records, unreleased financials, personal data,
+          to record sessions for training. Client records, unreleased financials, personal data,
           internal strategy, anything under NDA — whether that material can enter an external
           tool at all is an organizational policy decision, not an individual delegation decision.
           The framework covers the tool side of this inside Delegation: Platform Awareness includes
-          evaluating AI tools against operational and regulatory needs (Dakan &amp; Feller, 2025,
-          p. 4). Whether your material may enter a given tool stays your organization&rsquo;s call.
+          evaluating AI tools against operational and regulatory needs. Whether your material may enter a given tool stays your organization&rsquo;s call.
         </p>
         <p className="m-0 text-body-sm text-body" style={{ lineHeight: 1.55, marginTop: 8 }}>
           Check your organization&rsquo;s AI-use policy before the flowchart, not after. If no
@@ -289,7 +288,9 @@ export function R2DelegationGuide(): JSX.Element {
         style={{ lineHeight: 1.5, fontStyle: 'italic' }}
       >
         Framework: 4D AI Fluency Framework, Delegation competency (Dakan &amp; Feller, 2025,
-        pp. 3–4), as taught in Anthropic&rsquo;s AI Fluency course.
+        pp. 3–4), as taught in Anthropic&rsquo;s AI Fluency course. Data-gate defaults: MIT Ad Hoc
+        Committee, 2026, pp. 25–26. Barriers to inspecting AI output: Lee et al., CHI 2025, p. 11.
+        Engineer delegation practices: Huang et al., Dec 2025.
       </p>
     </div>
   );
@@ -682,10 +683,10 @@ function Q4Note(): JSX.Element {
       the domain expertise. Without that expertise, errors are hard to spot. In a survey of 319
       knowledge workers, 58 reported barriers to inspecting AI responses, such as lacking the
       domain knowledge to judge them, and some who doubted their own ability accepted outputs
-      by default (Lee et al., CHI 2025, p. 11). Anthropic&rsquo;s engineers are divided: some
+      by default. Anthropic&rsquo;s engineers are divided: some
       prefer familiar ground where they can verify the output, others use AI in peripheral
       domains to save time, and one engineer, when unsure of a topic, asks the model for options
-      to research rather than answers to accept (Huang et al., Dec 2025).
+      to research rather than answers to accept.
     </p>
   );
 }

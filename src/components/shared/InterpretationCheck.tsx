@@ -10,6 +10,7 @@ import { forwardRef, useEffect, useRef, useState, type ReactNode } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { scrollBehavior } from '../../utils/motion';
+import { CheckSources, type CheckSource } from './CheckSources';
 import { Icon } from './Icon';
 import { nextRadioIndex } from './radio-group-nav';
 
@@ -22,6 +23,8 @@ interface InterpretationCheckOption {
   feedbackTitle: string;
   feedbackText: string;
   feedbackTone: InterpretationCheckTone;
+  /** Citations for claims in `feedbackText`, rendered as chips after it. */
+  sources?: CheckSource[];
 }
 
 export interface InterpretationCheckItemData {
@@ -257,6 +260,7 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
             </div>
             <div className="font-sans text-body-sm leading-relaxed text-body">
               {selectedOption.feedbackText}
+              <CheckSources sources={selectedOption.sources} />
             </div>
           </div>
         )}
@@ -281,6 +285,7 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
             </div>
             <div className="font-sans text-body-sm leading-relaxed text-body">
               {preferredOption.feedbackText}
+              <CheckSources sources={preferredOption.sources} />
             </div>
           </div>
         )}
@@ -322,6 +327,7 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
                     </div>
                     <div className="font-sans text-body-sm leading-relaxed text-body">
                       {opt.feedbackText}
+                      <CheckSources sources={opt.sources} />
                     </div>
                   </li>
                 ))}
