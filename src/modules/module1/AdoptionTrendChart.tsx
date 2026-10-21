@@ -157,6 +157,9 @@ export function AdoptionTrendChart({
                     strokeWidth={1.5}
                   />
                 ))}
+                {/* Recharts hands each Cell's props to its label; without
+                    stroke="none" the outline stroke would also draw around
+                    the value text. */}
                 <LabelList
                   dataKey="automation"
                   position="top"
@@ -164,6 +167,7 @@ export function AdoptionTrendChart({
                   fontSize={11}
                   fontFamily={AXIS_TICK_STYLE.fontFamily}
                   fill={tokens.ink}
+                  stroke="none"
                 />
               </Bar>
             </BarChart>
