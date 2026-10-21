@@ -168,41 +168,41 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'failure',
     objectiveRefs: ['3.3'],
     stem:
-      'A quality assurance analyst asks an AI chatbot to compare two product serial numbers ("SN-4872-XR-2941" and "SN-4872-XR-2914") and identify the differences. The AI responds: "These serial numbers are identical." The analyst can see they differ in the last four digits (2941 vs. 2914). Using your understanding of tokenization and how models represent text, what best explains this error?',
+      'An operations analyst pastes a list of 140 purchase-order numbers (formatted like "PO-2025-04417") into an AI chatbot and asks: "How many of these appear more than once?" The chatbot answers that 6 order numbers are duplicated. A spreadsheet check shows 11. When the analyst asks the chatbot to check again, it answers 8. What best explains these results?',
     scenarioSummary:
-      'A QA analyst asks an AI to compare two near-identical serial numbers; the AI calls them identical despite a visible four-digit difference.',
+      'An analyst asks an AI chatbot to count duplicates in 140 pasted purchase-order numbers; it answers 6, then 8, against a true count of 11.',
     options: [
       {
         id: 'A',
         text:
-          'The AI chatbot used a fuzzy matching algorithm that treats strings with high character overlap as identical. Since the two serial numbers share 90% of their characters, the similarity threshold was exceeded and the tool reported them as matching.',
+          'The chatbot used a fuzzy-matching method that groups near-identical order numbers together. Numbers that differ by a single digit were grouped on one pass and separated on the other, which is why its two counts disagree with each other.',
         isCorrect: false,
         feedbackText:
-          'AI chatbots don\'t use fuzzy matching algorithms with similarity thresholds. The model isn\'t running a string comparison function and then applying a match/no-match threshold. It generates a response by predicting what a plausible answer should be, and the tokenization of the input determines how much character-level detail is available to the model during that prediction.',
+          'A chatbot answering in conversation isn\'t running a matching method, fuzzy or exact. It reads the order numbers as token chunks and generates a count that fits the context. The two answers are two predictions, not two runs of a configurable algorithm, which is why neither matches the spreadsheet.',
       },
       {
         id: 'B',
         text:
-          'The AI chatbot compared only the prefix portions of the serial numbers ("SN-4872-XR") and truncated the comparison at the hyphen boundary. Most AI tools process hyphenated strings as separate segments and don\'t always carry the comparison through to the final segment.',
+          'The list was too long for the chatbot to hold at once. Its context window filled partway through the 140 numbers, so it counted duplicates only in the part of the list it could still see, and a different part each time it was asked.',
         isCorrect: false,
         feedbackText:
-          'The model doesn\'t process hyphenated strings by segmenting at hyphen boundaries and comparing segments independently. The tokenizer breaks the input into tokens based on its vocabulary, not based on punctuation structure. The comparison failure is about the granularity of the tokens relative to the character-level difference, not about where the tokenizer splits.',
+          'A list of 140 order numbers runs to roughly a thousand tokens, a small fraction of any current context window, so the whole list was in view. Context window limits explain omissions in long documents. This failure comes from the task: exact matching and counting across a list is an operation, and in conversation the model generates an answer instead of performing one.',
       },
       {
         id: 'C',
         text:
-          'The AI chatbot made a probabilistic judgment that two serial numbers from the same product line are more likely to be identical than different. It applied a statistical prior about serial number patterns rather than performing a character-level comparison of the actual input.',
+          'The chatbot made random processing errors. Like any software under load, it occasionally miscounts, and asking it to check again until two of its answers agree would eventually produce the correct count of duplicates.',
         isCorrect: false,
         feedbackText:
-          'While the model\'s outputs are probabilistic, framing this as a "statistical prior about serial number patterns" implies a deliberate inference process that doesn\'t match the mechanism. The model isn\'t reasoning about serial number likelihood. It\'s processing token sequences, and the token representation may not preserve the character-level distinction between 2941 and 2914.',
+          'The errors aren\'t glitches that repetition will average out. Each answer is a fresh prediction of a plausible count, and two predictions can agree and still be wrong. The limitation is systematic: exact counting through conversation is unreliable on every attempt, so agreement between two generated answers is not verification.',
       },
       {
         id: 'D',
         text:
-          'The AI chatbot processes these serial numbers as token sequences rather than character sequences. If the differing digits fall within the same token or are split across token boundaries, the model may not represent the character-level difference that is visible to a human reader.',
+          'The chatbot generated plausible counts instead of counting. It reads the order numbers as token chunks, not as strings it compares one by one, so exact matching and tallying across a list come out as estimates. A spreadsheet formula gives the exact count.',
         isCorrect: true,
         feedbackText:
-          'The model\'s tokenizer converts text into tokens: chunks that may contain multiple characters or digits. The serial numbers "SN-4872-XR-2941" and "SN-4872-XR-2914" might be tokenized such that the differing digits (41 vs. 14) fall within a token boundary where the model doesn\'t represent each character individually. The human eye sees a clear difference at the character level, but the model operates at the token level. If the token-level representations are similar enough, the model doesn\'t register the difference. This is the same class of failure as counting letters or comparing them: the task requires granularity that the tokenization doesn\'t provide.',
+          'This is a boundary task: the job needs exact, item-by-item operations below the level at which the model represents text. In conversation, the model does not loop through the list, compare each pair of strings, and keep a tally. It predicts what a count should look like, and each new attempt is a new prediction, which is why the answers differ from each other and from the truth. Tools that can run code count exactly when they actually run it. For any count, sort, deduplication, or comparison across many items, use a spreadsheet formula or a code tool, and use the chatbot to write the formula if that helps.',
       },
     ],
   },
