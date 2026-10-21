@@ -28,6 +28,7 @@ import { currentCommitment } from '../../data/action-commitment';
 import { POST_ASSESSMENT_ITEMS } from '../../data/post-assessment';
 import { PRE_ASSESSMENT_ITEMS } from '../../data/pre-assessment';
 import { MODULES } from '../../data/program';
+import { FocusNextPanel } from './FocusNextPanel';
 import {
   generateCompletionPDF,
   type AssessmentBlockResult,
@@ -322,6 +323,9 @@ export function CompletionSummary(): JSX.Element {
           items. The KCSummaryBar above remains the at-a-glance
           single-number; KCReview is the deeper drill-down path. */}
       <KCReview />
+      {/* Feed-forward from the post-assessment misses (AE-04): sits
+          between the look-back sections above and the milestones. */}
+      <FocusNextPanel />
       <MilestoneTable
         task1={task1}
         task2={task2}
