@@ -260,9 +260,9 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'mechanics',
     objectiveRefs: ['3.2'],
     stem:
-      'A procurement specialist asks an AI tool to provide the current ISO 9001:2015 certification requirements for medical device suppliers. The tool produces a detailed, well-structured list of 12 requirements that reads like official documentation. The specialist notices that requirements 8 through 12 don\'t appear in the actual ISO standard. Which explanation is most accurate?',
+      'A procurement specialist asks an AI tool to provide the ISO 9001:2015 certification requirements for medical device suppliers, the edition the company\'s suppliers are certified to. The tool produces a detailed, well-structured list of 12 requirements that reads like official documentation. The specialist notices that requirements 8 through 12 don\'t appear in the 2015 standard or in the 2026 revision that followed it. Which explanation is most accurate?',
     scenarioSummary:
-      'An AI lists 12 ISO 9001:2015 certification requirements; the last 5 don\'t exist in the actual standard.',
+      'An AI lists 12 ISO 9001:2015 certification requirements; the last 5 don\'t exist in the 2015 edition or its 2026 revision.',
     options: [
       {
         id: 'A',
