@@ -136,6 +136,12 @@ export const MODULES: ModuleMeta[] = [
   },
 ];
 
+// Pre/post assessment pacing, in minutes per item. The stems and options
+// run about 230 words an item, about a minute of reading at the 238 wpm
+// non-fiction average (Brysbaert, 2019), before any time to reason. The
+// assessment intro screens quote the range these give for the item count.
+export const ASSESSMENT_MINUTES_PER_ITEM = { low: 1.3, high: 1.8 } as const;
+
 export const TOTAL_OBJECTIVES = MODULES.reduce((acc, m) => acc + m.objectives, 0);
 export const TOTAL_ACTIVITIES = MODULES.reduce((acc, m) => acc + m.activities, 0);
 

@@ -8,6 +8,7 @@
 import { Link } from 'react-router-dom';
 import { Icon } from '../shared/Icon';
 import { Overline } from '../shared/Overline';
+import { ASSESSMENT_MINUTES_PER_ITEM } from '../../data/program';
 import { useViewport } from '../../hooks/useViewport';
 
 interface AssessmentIntroProps {
@@ -22,6 +23,12 @@ interface AssessmentIntroProps {
 }
 
 const PRE_HEADLINE = 'Before you begin: a baseline';
+
+function minutesFor(itemCount: number): { low: number; high: number; about: number } {
+  const low = Math.ceil(itemCount * ASSESSMENT_MINUTES_PER_ITEM.low);
+  const high = Math.ceil(itemCount * ASSESSMENT_MINUTES_PER_ITEM.high);
+  return { low, high, about: Math.round((low + high) / 10) * 5 };
+}
 const POST_HEADLINE = 'Almost done: your post-program assessment';
 
 export function AssessmentIntro({
@@ -80,10 +87,11 @@ export function AssessmentIntro({
 }
 
 function PreFraming({ itemCount }: { itemCount: number }): JSX.Element {
+  const minutes = minutesFor(itemCount);
   return (
     <div className="space-y-4 font-sans text-body text-body" style={{ lineHeight: 1.6 }}>
       <p className="m-0">
-        Before the program starts, take 10 minutes to capture a baseline.
+        Before the program starts, take about {minutes.about} minutes to capture a baseline.
         You&rsquo;ll answer <strong className="text-ink">{itemCount} scenario-based questions</strong>{' '}
         about how AI tools work and where they break down. The items sample the program&rsquo;s
         four core construct areas — usage patterns, failure modes, mechanics, and evaluation —
@@ -100,8 +108,8 @@ function PreFraming({ itemCount }: { itemCount: number }): JSX.Element {
           pick the option that feels closest.
         </li>
         <li>
-          <strong className="text-ink">About {Math.max(5, Math.ceil(itemCount * 0.75))}&ndash;
-          {Math.ceil(itemCount * 1.25)} minutes.</strong> You can leave and come back; your
+          <strong className="text-ink">About {minutes.low}&ndash;{minutes.high} minutes.</strong>{' '}
+          You can leave and come back; your
           progress is saved in this browser.
         </li>
       </ul>
@@ -122,6 +130,7 @@ function PreFraming({ itemCount }: { itemCount: number }): JSX.Element {
 }
 
 function PostFraming({ itemCount }: { itemCount: number }): JSX.Element {
+  const minutes = minutesFor(itemCount);
   return (
     <div className="space-y-4 font-sans text-body text-body" style={{ lineHeight: 1.6 }}>
       <p className="m-0">
@@ -141,8 +150,8 @@ function PostFraming({ itemCount }: { itemCount: number }): JSX.Element {
           paired with the matching pre-assessment item so you can see how your reasoning shifted.
         </li>
         <li>
-          <strong className="text-ink">About {Math.max(5, Math.ceil(itemCount * 0.75))}&ndash;
-          {Math.ceil(itemCount * 1.25)} minutes.</strong> One submission per item; you can&rsquo;t
+          <strong className="text-ink">About {minutes.low}&ndash;{minutes.high} minutes.</strong>{' '}
+          One submission per item; you can&rsquo;t
           retake it, so the comparison stays honest.
         </li>
       </ul>
