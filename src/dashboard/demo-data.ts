@@ -75,6 +75,10 @@ const KC_RESPONSES: Record<string, KnowledgeCheckResult> = {
   '1.3.ic_1_1': kc('b', true, at(5, 22)),
   '1.3.ic_1_2': kc('b', true, at(7, 41)),
   '1.3.ic_1_3': kc('c', true, at(9, 53)),
+  // M1 S5 unscored 4D practice items. Their keys sit outside `.kc_`, so the
+  // KC aggregates ignore them. The demo learner merges the two Ds once.
+  '1.5.vocab_1': kc('c', true, at(12, 55)),
+  '1.5.vocab_2': kc('c', false, at(13, 18)),
 };
 
 // ── Reflections ─────────────────────────────────────────────────────────
@@ -229,6 +233,8 @@ const M1_EVENTS: Ev[] = [
   ev(at(11, 33), 'p2_reflection_viewed', 1, 5),
   ev(at(12, 47), 'p2_reflection_continued', 1, 5),
   ev(at(12, 47), 'p2_time_on_prompt', 1, 5, { seconds: 74 }),
+  ev(at(12, 55), 'vocab_1_submitted', 1, 5, { optionId: 'c', isPreferred: true }),
+  ev(at(13, 18), 'vocab_2_submitted', 1, 5, { optionId: 'c', isPreferred: false }),
   // KC-1.1 to KC-1.4 on S7 (10.5–13 min window; must precede
   // module_1_complete at 14:00). Timestamps mirror KC_RESPONSES.
   ev(at(11, 12), 'kc_1_1_submitted', 1, 7, { optionId: 'c', isPreferred: true }),

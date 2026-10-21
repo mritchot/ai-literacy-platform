@@ -25,6 +25,7 @@ import { DataNarrative } from './DataNarrative';
 import { MODULE_1_KC_ITEMS } from './knowledge-check-items';
 import { StigmaReflection } from './StigmaReflection';
 import { FasterPeopleCallout } from './FasterPeopleCallout';
+import { FourDCheck } from './FourDCheck';
 
 const MODULE_ID = 1;
 
@@ -451,48 +452,62 @@ function FourDVocabularyBlock(): JSX.Element {
 
       <FourDList />
 
-      <p className="m-0">
-        Independent research reaches the same principle.
-        Researchers studying knowledge workers concluded that responsibility for the work stays
-        with the person even when the production is delegated, and chose the word stewardship
-        over teammate or collaborator for that reason
-        <Citation ids="lee-2025" pageKey="stewardship-definition" />. MIT’s 2026 AI committee
-        recommends the same principle for research: AI is a tool under the direction of a
-        human who is responsible for verifying its output
-        <Citation ids="mit-2026" pageKey="human-verifies" />.
-      </p>
-      <p className="m-0">
-        The four labels come from Dakan and Feller’s framework, but the structure is not arbitrary. When researchers
-        coded how 319 knowledge workers described thinking critically with AI, they sorted the
-        practices into three phases of the AI workflow taken from earlier studies: forming the
-        goal and the query, inspecting the response, and integrating it into the work
-        <Citation ids="lee-2025" pageKey="three-phases" />. Delegation and Description cover the
-        first phase. Discernment covers the second. Diligence is the accountability that carries
-        through to the finished work. Their training recommendation points the same way: verification,
-        integration, and stewardship
-        <Citation ids="lee-2025" pageKey="training-recommendation" />.
-      </p>
+      <FourDCheck />
+
       <p className="m-0">
         These four terms give you a way to describe your AI practice that is specific,
-        professional, and evaluative. They also map onto what the labor market is asking for.
-        Job-posting analysts define AI fluency as the practical ability to use and manage AI in
-        day-to-day work, not engineering expertise. Its requirements now extend beyond
-        prompting: integrating AI into workflows, interpreting outputs, recognizing wrong
-        results, and knowing when to escalate to human review
-        <Citation ids="mgi-agents-robots-europe-2026" pageKey="ai-fluency-definition" />.
-        Delegation, Description, Discernment, and Diligence cover most of that definition and
-        make it teachable. The analysts also count building simple prototypes with low- or
-        no-code tools, which this program does not cover.
-        They replace the binary framing (pro-AI or anti-AI, enthusiast or skeptic) with language
-        that treats AI use as a professional skill to be developed, discussed, and improved. The
-        framework’s authors make a related move: they see AI as more than an efficiency engine, with the potential
-        to act as a thinking partner, and they hold that only specific human competencies can
-        realize that potential
-        <Citation ids="dakan-feller-2025" pageKey="ai-fluency-definition" />. When your team
-        shares this vocabulary, the
+        professional, and evaluative. They replace the binary framing (pro-AI or anti-AI,
+        enthusiast or skeptic) with language that treats AI use as a professional skill to be
+        developed, discussed, and improved. When your team shares this vocabulary, the
         concealment dynamic described in the previous section loses its grip. AI use becomes
         something you can talk about in terms of <em>how well</em>, not <em>whether</em>.
       </p>
+      <EvidenceNote
+        id="m1-s5-framework-evidence"
+        moduleId={1}
+        sectionId={5}
+        label="Where the four terms come from"
+      >
+        <p className="m-0">
+          The four labels come from Dakan and Feller’s framework, but the structure is not
+          arbitrary. When researchers coded how 319 knowledge workers described thinking
+          critically with AI, they sorted the practices into three phases of the AI workflow
+          taken from earlier studies: forming the goal and the query, inspecting the response,
+          and integrating it into the work
+          <Citation ids="lee-2025" pageKey="three-phases" />. Delegation and Description cover
+          the first phase. Discernment covers the second. Diligence is the accountability that
+          carries through to the finished work. Their training recommendation points the same
+          way: verification, integration, and stewardship
+          <Citation ids="lee-2025" pageKey="training-recommendation" />.
+        </p>
+        <p className="m-0">
+          The accountability principle behind Diligence is not the program’s invention either.
+          The same researchers concluded that responsibility for the work stays with the person
+          even when the production is delegated, and chose the word stewardship over teammate or
+          collaborator for that reason
+          <Citation ids="lee-2025" pageKey="stewardship-definition" />. MIT’s 2026 AI committee
+          recommends the same principle for research: AI is a tool under the direction of a
+          human who is responsible for verifying its output
+          <Citation ids="mit-2026" pageKey="human-verifies" />.
+        </p>
+        <p className="m-0">
+          The terms also map onto what the labor market is asking for. Job-posting analysts
+          define AI fluency as the practical ability to use and manage AI in day-to-day work, not
+          engineering expertise. Its requirements now extend beyond prompting: integrating AI
+          into workflows, interpreting outputs, recognizing wrong results, and knowing when to
+          escalate to human review
+          <Citation ids="mgi-agents-robots-europe-2026" pageKey="ai-fluency-definition" />.
+          Delegation, Description, Discernment, and Diligence cover most of that definition and
+          make it teachable. The analysts also count building simple prototypes with low- or
+          no-code tools, which this program does not cover.
+        </p>
+        <p className="m-0">
+          The framework’s authors go further: they see AI as more than an efficiency engine, with
+          the potential to act as a thinking partner, and they hold that only specific human
+          competencies can realize that potential
+          <Citation ids="dakan-feller-2025" pageKey="ai-fluency-definition" />.
+        </p>
+      </EvidenceNote>
       <p className="m-0">
         You’ll develop each of these competencies across the remaining modules. For now, the
         point is simpler: the language exists, and it changes what’s possible.
