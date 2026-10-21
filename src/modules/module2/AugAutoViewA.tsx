@@ -181,7 +181,7 @@ export function AugAutoViewA({
       </aside>
 
       <p className="m-0 font-mono text-caption text-muted" style={{ letterSpacing: '0.02em' }}>
-        Source: Handa et al., Feb 2025, Figure 3 (p. 6); Appendix B.7 (p. 21) for the 23% non-work share.
+        Source: Handa et al., Feb 2025, Figure 3 (p. 6); depth of usage, Figure 4 (p. 7); Appendix B.7 (p. 21) for the 23% non-work share.
       </p>
     </div>
   );

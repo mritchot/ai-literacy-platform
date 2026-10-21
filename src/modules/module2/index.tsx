@@ -261,9 +261,10 @@ function Section2({ module }: ModuleProp): JSX.Element {
           <em>Feedback loop</em> interactions account for about 15%
           <Citation ids="handa-2025" pageKey="feedback-loop-15" />. These look collaborative on
           the surface (multiple exchanges, back-and-forth), but the user is not shaping the
-          output; they are reporting whether it works. Almost all feedback-loop conversations are
-          coding and debugging, where the user relays each error back to the model
-          <Citation ids="handa-2025" pageKey="feedback-loop-15" />.
+          output; they are reporting whether it works. The vast majority of feedback-loop
+          conversations are coding and debugging, where the user relays each error back to the
+          model
+          <Citation ids="handa-2025" pageKey="feedback-loop-coding" />.
         </p>
         <p className="m-0 mt-4">
           The aggregate split (57% augmentation, 43% automation) is the January 2025 behavioral
@@ -272,8 +273,10 @@ function Section2({ module }: ModuleProp): JSX.Element {
           automation had edged ahead (49% to 47%), and by November 2025 augmentation led again at
           52% to 45%, with about 3% of conversations fitting neither category
           <Citation ids="appel-massenkoff-mccrory-2026" pageKey="aug-auto-52-45" />. The
-          five-pattern breakdown above is only published for the January wave. That distinction
-          matters, and the gap between the two is larger than you might expect. One caution on
+          labeled percentages for the five patterns above come from the January wave; later
+          reports chart the same five patterns, and directive use is the one that moved most. The
+          difference between what users do and what they say they do matters, and the gap is
+          larger than you might expect. One caution on
           the number itself. This 57% is a share of conversations on one platform. It is
           unrelated to the 57% of US work hours that McKinsey Global Institute estimates current
           technology could automate in theory
@@ -340,7 +343,8 @@ function Section3({ module }: ModuleProp): JSX.Element {
         API traffic is excluded, and about a quarter of the sampled conversations are not
         work-related. Second, the direction of any bias is uncertain. The study's authors note
         that users may edit outputs outside the chat, so the true augmentation share may be
-        higher than 57%. Enterprise API traffic, by contrast, is about 77% automation. The
+        higher than 57%. Enterprise API traffic in August 2025, by contrast, was about 77% automation, which Appel, McCrory and Tamkin attribute to the programmatic nature of API use
+        <Citation ids="appel-mccrory-tamkin-2025" pageKey="api-automation-77" />. The
         patterns are directionally reliable, but the specific percentages reflect a particular
         user population, not the full workforce.
       </p>
@@ -394,7 +398,7 @@ function Section4({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           The first measures only what happens inside the AI interaction: the portion of the work
           conducted in the conversation window. Across 100,000 real-world conversations mapped to
-          work tasks, the median task showed 81% in-conversation time savings
+          work tasks, Claude's own estimates put the median task's in-conversation time savings at 81%
           <Citation ids="tamkin-mccrory-2025" pageKey="median-savings-81" />, meaning the
           AI-assisted portion took roughly a fifth of the time it would have taken unassisted.
           (The median conversation, a different unit, shows 84%.) But the range is wide. At the
@@ -408,17 +412,17 @@ function Section4({ module }: ModuleProp): JSX.Element {
           The second measurement comes from randomized controlled trials that capture the full
           work cycle: the AI interaction plus all the time users spend afterward refining,
           verifying, and correcting the output. These studies found net time savings between 14%
-          and 56%, depending on the task and the model generation tested, and at least one found
-          no saving at all.
+          and 56%, depending on the task and the model generation tested, and some found no
+          saving or even a net loss of time.
         </p>
         <p className="m-0">
           The gap between
-          them, from 81% down to 14–56%, is mostly the cost of verification and refinement: the
+          them, from 81% down to 14–56%, is in part the cost of verification and refinement: the
           time where human judgment converts AI-generated output into a reliable deliverable. The
-          report names two reasons its own figure sits higher: it cannot see work done after the
+          report offers two possible reasons its own figure sits higher: it cannot see work done after the
           conversation ends, and the trials it cites tested earlier models
           <Citation ids="tamkin-mccrory-2025" pageKey="rct-comparison" />. Even at the
-          conservative end, a 14% reduction in task time across routine workflows is operationally
+          low end of the positive findings, a 14% reduction in task time across routine workflows is operationally
           significant. At the high end, 56% represents a structural change in how work time is
           allocated.
         </p>
@@ -486,13 +490,14 @@ function Section5({ module }: ModuleProp): JSX.Element {
       <p className="m-0 mb-4 font-sans text-body text-body">
         Time saved is one axis; whether the task succeeded is another. In the November 2025 wave,
         the model judged its own output successful in 67% of consumer conversations and 49% of
-        single-shot API calls. Success falls as tasks lengthen: API calls reach a coin flip at
-        tasks a person would need about 3.5 hours to do. Multi-turn conversations degrade far more
-        slowly, which the authors attribute to users breaking tasks into steps and correcting
-        course. Two cautions apply. The success judgment is the model's own. And users choose
-        which tasks to bring, so observed success overstates what the model can do across all
-        possible tasks
-        <Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />.
+        API calls (single requests sent by software, with no follow-up turns). Success falls as
+        tasks lengthen: API calls reach a coin flip at tasks a person would need about 3.5 hours
+        to do. Consumer conversations, which can run over many turns, degrade far more slowly; the
+        authors suggest this may reflect users breaking tasks into steps and correcting course.
+        Two cautions apply. The success judgment is the model's own. And users choose which tasks
+        to bring; if they avoid tasks they expect to fail, observed success overstates what the
+        model can do across all possible tasks
+        <Citation ids="appel-massenkoff-mccrory-2026" pageKey="success-and-task-horizon" />.
       </p>
       <p className="m-0 mb-6 font-sans text-body text-body">
         <em>By Occupation</em> covers all 22
@@ -561,8 +566,8 @@ function Section6({ module }: ModuleProp): JSX.Element {
 
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
-          The report that measured the trend offers two explanations
-          <Citation ids="appel-mccrory-tamkin-2025" pageKey="directive-trend-v3" />. The first is
+          The report that measured the trend offers two main explanations
+          <Citation ids="appel-mccrory-tamkin-2025" pageKey="directive-explanations" />. The first is
           that models are getting better: as AI produces higher-quality first-draft outputs, users
           need fewer refinement turns. The capability change over the same months is documented.
           Reasoning models work through a problem in steps before answering. Tokens routed through
@@ -579,14 +584,15 @@ function Section6({ module }: ModuleProp): JSX.Element {
           explanations are probably contributing. The November reversal adds a third factor:
           product features that invite collaboration, such as file creation and persistent memory,
           may pull usage back toward augmentation
-          <Citation ids="appel-massenkoff-mccrory-2026" pageKey="aug-auto-52-45" />. And both lead
+          <Citation ids="appel-massenkoff-mccrory-2026" pageKey="aug-auto-52-45" />. The first two lead
           to the same consequence: more output is passing through less human review.
         </p>
         <p className="m-0">
           The tasks with the highest time savings (compiling information, drafting documents,
-          preparing reports) are also the tasks most often delegated outright: most directive
-          conversations are writing and content generation, including business email drafting
-          <Citation ids="handa-2025" pageKey="directive-share-28" />. The labor market is already
+          preparing reports) overlap with the tasks people hand over outright: most directive
+          conversations are writing and content generation, and drafting business email shows a
+          high share of directive use
+          <Citation ids="handa-2025" pageKey="directive-writing" />. The labor market is already
           repricing them. Between 2023 and 2025, writing and editing dropped out of the posting
           requirements of 134 US occupations, and general research out of 140
           <Citation ids="mgi-agents-robots-us-2025" pageKey="declining-mentions" />. The analysts
@@ -627,8 +633,9 @@ function Section6({ module }: ModuleProp): JSX.Element {
             tool's speed making it for you?
           </p>
           <p className="m-0">
-            The report borrows an economist's summary: growth is constrained not by what we are
-            good at but by what is essential and hard to improve.
+            Tamkin and McCrory link this to an observation by the economists Aghion, Jones, and
+            Jones: growth may be held back less by what we are good at than by what is essential
+            and hard to improve <Citation ids="tamkin-mccrory-2025" pageKey="bottleneck-tasks" />.
           </p>
         </BottleneckCallout>
       </div>
@@ -729,12 +736,13 @@ function Section8({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           <strong className="font-semibold text-ink">Second</strong>, the productivity gains are
-          real but unevenly distributed. Some task categories show 95% time savings; others show
+          real but unevenly distributed. Some tasks show 95% time savings; others show
           closer to 20%. And the tasks where AI is fastest are often the tasks where the output is
           hardest to verify: speed and reliability are separate axes, not the same one. The
-          November 2025 Economic Index wave measured both and found the same pattern: more complex
-          tasks gain more time and succeed less often. Tasks needing a college-level prompt showed
-          a 12× speedup but a 66% self-assessed success rate; simpler tasks showed 9× and 70%
+          November 2025 Economic Index wave found a related pattern: more complex tasks gain more
+          time and succeed less often. College-level tasks ran about 12 times faster with AI,
+          against 9 times for high-school-level tasks, but the model judged itself successful on
+          66% of college-level tasks, against 70% of tasks below high-school level
           <Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />.
         </p>
         <p className="m-0">

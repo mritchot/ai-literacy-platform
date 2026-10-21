@@ -200,11 +200,11 @@ function Section3({ module }: ModuleProp): JSX.Element {
        <Citation ids="lee-2025" pageKey="inhibitors" />. Others described the effort of turning
         an intention into a query as the main new cost of AI-assisted work
        <Citation ids="lee-2025" pageKey="effort-shift-stewardship" />. The three dimensions below
-        give that effort a structure. The behavioral data supports the premise. Across a million
-        conversations, the sophistication of the model's response tracked the sophistication of
-        the prompt almost one-for-one, and the model answered at an expert level mainly when asked
-        at one
-       <Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />.
+        give that effort a structure. Usage data points the same way: across countries and US
+        states, the education level needed to understand the model's responses tracked the
+        education level of the prompts almost perfectly, and the researchers found the model
+        responds in a highly sophisticated way mainly when the prompt is sophisticated
+       <Citation ids="appel-massenkoff-mccrory-2026" pageKey="prompt-response-education" />.
         Read the weak prompt and its output, then rewrite it across all three dimensions.
       </p>
       <PromptComparison />
@@ -315,10 +315,11 @@ function Section6({ module }: ModuleProp): JSX.Element {
         Description. The output verification practiced Discernment. This exercise puts the last
         two together in the cycle Module 3 named but didn’t practice: the Description-Discernment
         loop. Three structured turns on a single drafting task. The scaffolding makes the loop
-        visible. The same data shows why the loop matters: multi-turn conversations held their
-        success rate on long tasks far better than single-shot requests, which the researchers
-        attribute to users breaking work into steps and correcting course each turn
-       <Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />.
+        visible. Anthropic's usage data suggests why the loop matters: in consumer conversations,
+        which can run over many turns, success fell far more slowly as tasks lengthened than in
+        single-request API traffic, which the researchers suggest may reflect users breaking work
+        into steps and correcting course each turn
+       <Citation ids="appel-massenkoff-mccrory-2026" pageKey="multi-turn-success" />.
       </p>
       <IterativeRefinement />
     </SectionContainer>

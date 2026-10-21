@@ -184,7 +184,7 @@
       "_source": "Appel, Massenkoff & McCrory (2026); 1M Claude.ai Free/Pro/Max conversations, November 13–20, 2025",
       "globalElasticityReplicated": 0.7,
       "countryGapsStable": "AUI concentration across countries essentially unchanged between August and November 2025 (p. 12); no catch-up or pull-away (p. 6)",
-      "usStateGini": { "aug2025": 0.37, "nov2025": 0.32, "note": "If the 0.05 quarterly fall continued, US usage parity would arrive in roughly two years (p. 12); OLS/WLS imply 2–5 years, 2SLS four to five years for a 90% closure (pp. 15–17). Based on one three-month change (p. 6)." },
+      "usStateGini": { "aug2025": 0.37, "nov2025": 0.32, "note": "If the 0.05 quarterly fall continued, US usage parity would arrive in roughly two years (p. 12); OLS/WLS imply a little over two years to close most of the gap and 2SLS four to five years for a 90% closure, the report's 2–5 year range (pp. 15–17). Based on one three-month change (p. 6)." },
       "usStateWorkforcePredictor": { "elasticityTechWorkerShare": 0.36, "shareOfVarianceExplained": "nearly two-thirds", "_source": "p. 13, Figure 1.7" },
       "exclusions": "Seychelles (all geographic analyses) and Wyoming (all state analyses) excluded for abusive traffic (p. 37)",
       "examples": { "denmarkAUI_nov2025": 2.1 }
@@ -249,7 +249,7 @@
       "rSquared": 0.394,
       "pValue": "<0.001",
       "note": "Partial regression controlling for task mix. β represents the change in automation share residual per unit increase in AUI residual.",
-      "_verify": "The text extraction of Figure 2.11 reads 'R = 0.394', whereas Figure 2.4 extracts as 'R 2 = 0.709'. Confirm against the PDF whether 0.394 is R or R² before this value is surfaced anywhere; the sign of the coefficient is also inferred from the text, not printed."
+      "_verified": "PDF p. 27, Figure 2.11 prints 'β = −3.112, R² = 0.394 (p < 0.001)'; the text extraction drops the superscript and the minus sign. beta and rSquared are correct as stored."
     }
   },
 

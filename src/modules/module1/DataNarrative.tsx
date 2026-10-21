@@ -345,15 +345,15 @@ function Story2Body({
         <p className="m-0">
           AI adoption isn’t uniform. Where you sit geographically and institutionally shapes
           whether AI is available to you and how it gets used. The data you’re about to explore
-          comes from an analysis of one million AI conversations sampled over one week in August
+          comes from an analysis of one million Claude.ai conversations sampled over one week in August
           2025, measuring each country’s share of usage against its share of working-age
           population<Citation ids="appel-mccrory-tamkin-2025" pageKey="aui-method" />.
         </p>
         <p className="m-0">
           What stands out is less about how much AI gets used than about how. Countries with high
           adoption rates tend to use AI across a wider range of tasks, including creative,
-          analytical, and operational work. Countries with lower adoption concentrate on a single
-          use case: coding, which is over half of all usage in India against about a third
+          analytical, and operational work. Countries with lower adoption tend to lean more heavily on
+          one use case, coding, which is over half of all usage in India against about a third
           globally<Citation ids="appel-mccrory-tamkin-2025" pageKey="task-mix-by-country" />. The
           pattern suggests that adoption breadth, not volume alone, is a sign of maturity.
         </p>
@@ -365,7 +365,7 @@ function Story2Body({
         <p className="m-0 font-sans text-body text-body">
           The relationship between income and adoption is real, but it is not the whole story.
           Countries with comparable GDP per capita can have sharply different adoption rates. The
-          research identifies five factors that contribute beyond income: digital infrastructure,
+          research names five likely factors behind the disparities, some of them tied to income: digital infrastructure,
           economic structure, regulatory environment, awareness and access, and trust and comfort
           with the tools. For
           organizations operating across regions, this means that providing AI access does not

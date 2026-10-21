@@ -81,7 +81,7 @@ function Section1({ module }: ModuleProp): JSX.Element {
           You now know that AI productivity gains are real but unevenly distributed. You know that
           professionals overestimate how much they collaborate with AI versus how much they
           delegate to it. You know that the tasks where AI is fastest are often the tasks where
-          the output is hardest to verify<Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />. And you know that the share of directive interactions
+          it succeeds less often<Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />, so that output most needs checking. And you know that the share of directive interactions
           (hand off the task, accept the result, move on) has been rising.
         </p>
         <p className="m-0">

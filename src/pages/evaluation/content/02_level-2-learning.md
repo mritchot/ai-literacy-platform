@@ -92,7 +92,7 @@ The aggregate (+3, moderate growth) hides the useful detail: three specific gaps
 ## Sources
 
 - **Kirkpatrick Partners** — [*The Kirkpatrick Model*](https://www.kirkpatrickpartners.com/the-kirkpatrick-model/)
-- **Handa, K. et al.** — [*Which Economic Tasks Are Performed with AI? Evidence from Millions of Claude Conversations*](https://arxiv.org/abs/2503.04761) (Feb 2025) (augmentation-automation task split)
+- **Handa, K. et al.** — [*Which Economic Tasks Are Performed with AI? Evidence from Millions of Claude Conversations*](https://arxiv.org/abs/2503.04761) (Feb 2025) (augmentation-automation split)
 - **Tamkin, A. & McCrory, P.** — [*Estimating AI Productivity Gains from Claude Conversations*](https://www.anthropic.com/research/estimating-productivity-gains) (Nov 2025)
 - **Lee, H. et al.** — [*The Impact of Generative AI on Critical Thinking*](https://doi.org/10.1145/3706598.3713778), CHI 2025
 - **Karpathy, A.** — [*Deep Dive into LLMs like ChatGPT*](https://www.youtube.com/watch?v=7xTGNNLPyMI) (2025)

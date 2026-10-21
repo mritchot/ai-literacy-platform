@@ -128,7 +128,7 @@ export function FivePatternBar({ categories }: FivePatternBarProps): JSX.Element
         className="mt-3 font-mono text-caption text-muted"
         style={{ letterSpacing: '0.02em' }}
       >
-        Source: Handa et al., Feb 2025, Figure 7 (sample: 1M Claude.ai conversations, December 16–23, 2024).
+        Source: Handa et al., Feb 2025, Figure 7 (sample: 1M Claude.ai conversations, December 16–23, 2024; later reports label this the January 2025 wave).
       </figcaption>
     </figure>
   );

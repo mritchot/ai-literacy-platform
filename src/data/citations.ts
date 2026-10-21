@@ -107,9 +107,11 @@ export const CITATIONS = {
     date: 'February 2025',
     pages: {
       'aug-auto-split-57-43': 'p. 3',
+      'directive-writing': 'p. 9',
       'directive-share-28': 'p. 10',
       'feedback-loop-15': 'p. 10',
       'self-vs-behavioral': 'pp. 13–14',
+      'feedback-loop-coding': 'p. 9',
     },
   },
   'appel-mccrory-tamkin-2025': {
@@ -122,9 +124,11 @@ export const CITATIONS = {
     date: 'September 15, 2025',
     pages: {
       'directive-trend-v3': 'p. 9',
+      'directive-explanations': 'pp. 10–11',
       'adoption-speed': 'p. 2',
       'aui-method': 'pp. 14, 28',
       'task-mix-by-country': 'pp. 4, 21',
+      'api-automation-77': 'pp. 5, 36',
     },
   },
   'appel-massenkoff-mccrory-2026': {
@@ -135,12 +139,15 @@ export const CITATIONS = {
     title: 'The Anthropic Economic Index Report: Economic Primitives',
     publisher: 'Anthropic',
     date: 'January 15, 2026',
-    url: 'https://www.anthropic.com/research/economic-index-primitives',
+    url: 'https://www.anthropic.com/research/anthropic-economic-index-january-2026-report',
     pages: {
-      'aug-auto-52-45': 'p. 5',
+      'aug-auto-52-45': 'p. 5; p. 17 n. 2',
       'directive-share-32': 'p. 9',
       'jan-2025-restated-56-41': 'p. 9',
-      'speed-reliability-tradeoff': 'p. 38',
+      'speed-reliability-tradeoff': 'pp. 38–39',
+      'success-and-task-horizon': 'pp. 21, 26, 41–42',
+      'prompt-response-education': 'pp. 28, 34–35',
+      'multi-turn-success': 'pp. 26, 42',
       'success-adjusted-productivity': 'p. 48',
       'us-state-convergence': 'pp. 6, 12',
       'country-gaps-stable': 'p. 6',
@@ -155,7 +162,7 @@ export const CITATIONS = {
     date: 'March 5, 2026',
     url: 'https://www.anthropic.com/research/labor-market-impacts',
     pages: {
-      'no-unemployment-effect': 'pp. 2, 11',
+      'no-unemployment-effect': 'pp. 2, 11, 13',
       'young-worker-hiring-14': 'p. 13',
       'coverage-33-vs-94': 'p. 7',
       'most-exposed-occupations': 'pp. 8, 14',

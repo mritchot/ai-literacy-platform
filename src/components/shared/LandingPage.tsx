@@ -465,7 +465,8 @@ function Footer(): JSX.Element {
 // platform's persistent root); doesn't need to repeat on section pages.
 // Mirrors what LICENSE and licenses/LICENSE-CONTENT formalize: the project's
 // code is MIT, the instructional content is CC BY-NC-SA 4.0, and the
-// 4D taxonomy is adopted from Anthropic under the same CC license.
+// 4D taxonomy is adapted from Dakan & Feller's framework (CC BY-NC-ND 4.0)
+// as taught in Anthropic's AI Fluency course (CC BY-NC-SA 4.0).
 function AttributionFooter(): JSX.Element {
   return (
     <div

@@ -142,12 +142,13 @@ function Section2({ module }: ModuleProp): JSX.Element {
           personal computer and the internet at the same point after their first mass-market
           launches<Citation ids="bick-blandin-deming-2024" pageKey="adoption-vs-pc-internet" />.
           That speed is changing how work gets done faster than most organizations can adapt,
-          and the data on that change is complicated. Through early 2026, the most AI-exposed
-          workers showed no measurable rise in unemployment relative to unexposed workers; the
-          one early signal is a slowdown in hiring of 22-to-25-year-olds into exposed roles, and
-          it is barely significant
-          <Citation ids="massenkoff-mccrory-2026" pageKey="no-unemployment-effect" />. The
-          transformation is in tasks and skills, not yet in job counts.
+          and the data on that change is complicated. Through 2025, workers in the occupations
+          where AI already handles the largest share of tasks showed no measurable rise in
+          unemployment relative to workers in occupations with no AI exposure; the one early
+          signal is a slowdown in hiring of 22-to-25-year-olds into those roles, and it is barely
+          significant
+          <Citation ids="massenkoff-mccrory-2026" pageKey="no-unemployment-effect" />. So far,
+          the change shows up in tasks and skills more than in unemployment.
         </p>
         <p className="m-0">
           The next few sections explore three dimensions of that story through interactive data.
@@ -426,7 +427,7 @@ function FourDVocabularyBlock(): JSX.Element {
         <Citation ids="lee-2025" pageKey="stewardship-definition" />.
       </p>
       <p className="m-0">
-        The four labels are Anthropic’s, but the structure is not arbitrary. When researchers
+        The four labels come from Dakan and Feller’s framework, but the structure is not arbitrary. When researchers
         coded how 319 knowledge workers described thinking critically with AI, the practices fell
         into three phases: forming the goal and the query, inspecting the response, and
         integrating it into the work<Citation ids="lee-2025" pageKey="three-phases" />.
@@ -474,14 +475,14 @@ const FOUR_DS: { name: string; tone: string; toneDark: string; description: Reac
     tone: '#5A4A37',
     toneDark: '#C9B99E',
     description:
-      'is communicating what you need from AI clearly enough to get a useful result. This is the skill behind effective prompting: specifying the task, the constraints, the format, and the quality standard. It has three parts: what you want (product), how the work should proceed across turns (process), and how the AI should behave (performance).',
+      'is communicating what you need from AI clearly enough to get a useful result. This is the skill behind effective prompting: specifying the task, the constraints, the format, and the quality standard. The framework divides it into three parts: what you want (product), how the AI should approach the task and how you work through it together (process), and how the AI should behave (performance).',
   },
   {
     name: 'Discernment',
     tone: '#354A57',
     toneDark: '#A8BCCA',
     description:
-      'is evaluating what AI gives you back. Does the output meet your standard? Is the reasoning sound? Has the model’s training skewed the framing? Is the way you are working with it producing results, or does the approach need to change? Would you stake your professional reputation on this result without further review?',
+      'is evaluating what AI gives you back. Does the output meet your standard? Is the reasoning sound? Does it show bias, such as a one-sided framing picked up from the data the AI learned from? Is the way you are working with it producing results, or does the approach need to change? Would you stake your professional reputation on this result without further review?',
   },
   {
     name: 'Diligence',
@@ -631,9 +632,9 @@ function Section8({ module }: ModuleProp): JSX.Element {
           individual professionals are doing with AI, task by task, function by
           function. The productivity data is more specific than most people expect: not a general
           “AI makes things faster” claim, but documented time savings that vary dramatically by
-          task type, with some categories showing 95% reductions
+          task type, with some tasks showing 95% reductions
           <Citation ids="tamkin-mccrory-2025" pageKey="compile-95" /> and others closer to
-          20%. You’ll explore where the gains concentrate, where overconfidence creeps in, and
+          20%<Citation ids="tamkin-mccrory-2025" pageKey="diagnostic-20" />. You’ll explore where the gains concentrate, where overconfidence creeps in, and
           how your own task mix compares to the behavioral data.
         </p>
         <p className="m-0">

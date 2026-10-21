@@ -492,8 +492,8 @@ export function GDPCorrelationScatter({
 
                     const elements: JSX.Element[] = [];
 
-                    // 1) JPN ↔ NZL connector. These have nearly equal
-                    //    GDP per working-age but NZL's AUI is ~2× JPN's.
+                    // 1) JPN ↔ NZL connector. NZL's GDP per working-age capita
+                    //    is ~35% above JPN's, but its AUI is ~2× JPN's.
                     if (jpn && nzl) {
                       const jx = xScale(jpn.lnGdp);
                       const jy = yScale(jpn.lnAui);
@@ -519,7 +519,7 @@ export function GDPCorrelationScatter({
                             fontFamily='"IBM Plex Sans", system-ui, sans-serif'
                             fill={tokens.tertiary}
                           >
-                            Comparable income —
+                            Income only ~35% higher —
                           </text>
                           <text
                             x={midX + 8}
@@ -649,7 +649,7 @@ export function GDPCorrelationScatter({
       <p className="m-0 mt-2 font-mono text-caption text-muted" style={{ letterSpacing: '0.02em' }}>
         Income and AI Usage Index by country. Axes are log-transformed. Source: Appel, McCrory
         &amp; Tamkin, Sep 2025, Figure 2.4, p. 17; Anthropic Economic Index open dataset (MIT
-        license). New Zealand AUI 4.05 and Japan 1.86 from Figure 2.2 and p. 16.
+        license). New Zealand AUI 4.05 (Figure 2.2, p. 14) and Japan 1.86 (p. 16); GDP per working-age capita (about $74,600 and $55,200) from the open dataset. Within-US figures: Appel, McCrory &amp; Tamkin, Sep 2025, p. 19 (income; August 2025 data); Appel, Massenkoff &amp; McCrory, Jan 2026, p. 13 (computer and mathematical workers; November 2025 data).
       </p>
     </div>
   );

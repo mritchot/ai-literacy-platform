@@ -14,7 +14,7 @@
         "label": "V1",
         "source": "Handa et al. 'Which Economic Tasks Are Performed with AI?' February 2025.",
         "dataCollection": "December 16–23, 2024 (tasks, wages, and automation analyses); the paper's other analyses run to January 17, 2025",
-        "sampleSize": "1 million Claude.ai Free and Pro conversations per analysis (over 4 million across the paper)",
+        "sampleSize": "1 million Claude.ai Free and Pro conversations per analysis, except 500,000 for the skills analysis (over 4 million across the paper)",
         "sampleNote": "Multiple 7-day snapshots; see Appendix E of source for exact windows per analysis."
       },
       {
@@ -25,7 +25,7 @@
       },
       {
         "label": "V4",
-        "source": "Appel, R., Massenkoff, M., McCrory, P., McCain, M., Heller, R., Neylon, T., & Tamkin, A. 'The Anthropic Economic Index Report: Economic Primitives.' Anthropic, January 15, 2026. https://www.anthropic.com/research/economic-index-primitives",
+        "source": "Appel, R., Massenkoff, M., McCrory, P., McCain, M., Heller, R., Neylon, T., & Tamkin, A. 'The Anthropic Economic Index Report: Economic Primitives.' Anthropic, January 15, 2026. https://www.anthropic.com/research/anthropic-economic-index-january-2026-report",
         "dataCollection": "November 13–20, 2025",
         "sampleSize": "1 million Claude.ai Free, Pro, and Max conversations",
         "sampleNote": "Footnote 1, p. 17. Also includes 1M 1P API transcripts analyzed separately."
@@ -103,7 +103,7 @@
           "laborImplication": "Workers most able to adapt to AI-powered workflows see greater demand and higher wages; those with lower ability to adapt face disruption."
         },
         "_source": "Appel et al. (V3), p. 10. Both interpretations are presented as analytically distinct with different labor market implications.",
-        "laborMarketNote": "Through early 2026, workers in the most exposed occupations show no differential rise in unemployment; the only early signal is slower hiring of 22–25-year-olds into exposed roles (Massenkoff & McCrory, Mar 2026, pp. 2, 13)."
+        "laborMarketNote": "Through 2025, workers in the most exposed occupations show no differential rise in unemployment; the only early signal is slower hiring of 22–25-year-olds into exposed roles (Massenkoff & McCrory, Mar 2026, pp. 2, 13)."
       }
     },
     "v3ToV4Change": {

@@ -206,9 +206,11 @@ export function R1QuickReference(): JSX.Element {
       >
         Framework: the 4D AI Fluency Framework (Dakan &amp; Feller, 2025,
         ringling.libguides.com/ai/framework), as taught in Anthropic&rsquo;s AI Fluency:
-        Framework &amp; Foundations (2025). Sub-component names follow the course; the source
-        document names the first Delegation sub-component Goal and Task Awareness. Action verbs
-        and the two Performance sub-components are adapted for conversational workplace use.
+        Framework &amp; Foundations (2025). Sub-component names and most definitions follow the course,
+        including its conversational reading of the two Performance sub-components; the source
+        document names the first Delegation sub-component Goal and Task Awareness. Creation
+        Diligence and Process Discernment draw on the source document&rsquo;s definitions. Action
+        verbs are adapted for workplace use.
       </p>
     </div>
   );

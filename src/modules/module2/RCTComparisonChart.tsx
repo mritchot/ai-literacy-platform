@@ -52,7 +52,7 @@ export function RCTComparisonChart({
     `Range bar chart comparing two ways of measuring AI time savings. ` +
     `In-conversation savings range from ${IN_CONVERSATION_MIN}% (checking diagnostic images) ` +
     `to ${IN_CONVERSATION_MAX}% (compiling information from reports), with a median of ${median}% ` +
-    `across 100,000 conversations. Full work-cycle savings range from ${fullCycleMin}% to ` +
+    `across tasks in 100,000 conversations. Full work-cycle savings range from ${fullCycleMin}% to ` +
     `${fullCycleMax}% across controlled trials cited by the report, measuring the complete task ` +
     `including verification and refinement.`;
 

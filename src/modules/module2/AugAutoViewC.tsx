@@ -199,7 +199,7 @@ export function AugAutoViewC({
               self-report figure comes from 1,250 working professionals. The behavioral figures
               come from consumer conversations on one platform, where an occupational label does
               not mean the user works in that occupation, novices and professionals count alike,
-              and about a quarter of conversations are not work-related. The comparison is between
+              and, in the January 2025 sample, about a quarter of conversations were not work-related. The comparison is between
               how professionals describe their use and how a broad user base behaves, not a
               matched sample.
             </p>
@@ -229,8 +229,8 @@ export function AugAutoViewC({
 
       <p className="m-0 font-mono text-caption text-muted" style={{ letterSpacing: '0.02em' }}>
         Source: Handa et al., Feb 2025, pp. 13–14 (Jan 2025 behavioral); Anthropic Interviewer,
-        Dec 2025 (self-report); Appel, McCrory &amp; Tamkin, Sep 2025, p. 9 and p. 11 n. 4 (Aug
-        2025 behavioral). Classifier model differs slightly across the two behavioral
+        Dec 2025 (self-report); Appel, McCrory &amp; Tamkin, Sep 2025, Figure 1.2, p. 10, and p. 11 n. 4 (Aug
+        2025 behavioral); Appel, Massenkoff &amp; McCrory, Jan 2026, p. 5 (Nov 2025 wave). Classifier model differs slightly across the two behavioral
         measurements.
       </p>
 
