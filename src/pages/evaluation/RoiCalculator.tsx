@@ -2,23 +2,83 @@
 // web it stands in for the static formula/variable/worked-example tables
 // (the canonical markdown keeps those for the PDF), recomputing the same
 // model as the reader changes inputs. The conservative defaults reproduce
-// the document's worked example: $840,000 / $32,000 / $872,000 → 191% ROI.
+// the document's worked example: C_program $300,000, Q $400,000,
+// $840,000 / $32,000 / $872,000 → 191% ROI.
 //
 // RoiFormulaFigure is the textbook-style "equation anatomy" that precedes
-// the calculator: the three formula lines with each term as a chip, plus a
+// the calculator: the formula lines with each term as a chip, plus a
 // symbol-keyed legend. Figure and calculator render from the same FIELDS
 // registry, so symbols, glosses, and defaults cannot drift apart.
 //
 // Built on the course interactives' shared vocabulary (NextTokenDemo et
 // al.): theme tokens only — so dark mode flips for free — with the Overline
 // eyebrow, the bg-action button, and uniform spinner-less number fields
-// (one control anatomy for all eight inputs). The fixed Discernment slate
+// (one control anatomy for all nine inputs). The fixed Discernment slate
 // (SERIES_ACCENT) is the one deliberate non-token color, reserved for the
 // ROI emphasis and the figure's term chips.
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Overline } from '../../components/shared/Overline';
+import { MODULES } from '../../data/program';
+import { BUDGET_TOTAL } from '../build/resources-data';
 import { SERIES_ACCENT } from './config';
+
+// ─── Participant and manager time ──────────────────────────────────────
+//
+// The per-participant cost line prices the hours each person spends in the
+// program and its evaluation. Program minutes are read from the module
+// plan, so a re-timing of program.ts flows into C_program and the ROI.
+
+/** Pre- and post-assessments together; the same allowance the landing
+ *  hero adds to the module durations for its "90–120 min" figure. */
+const ASSESSMENT_MINUTES = 10;
+/** Level 1 reaction survey (11–17 items). */
+const REACTION_SURVEY_MINUTES = 10;
+/** Level 3, per interval: the self-assessment (one written example per
+ *  indicator) and the 15-to-20-minute check-in, taken at its midpoint. */
+const SELF_ASSESSMENT_MINUTES = 15;
+const CHECK_IN_MINUTES = 17.5;
+const LEVEL3_INTERVALS = 3;
+/** Three check-ins rounded up to an hour to cover the evidence review. */
+const MANAGER_HOURS_PER_PARTICIPANT = 1;
+/** Proxy for a line manager's loaded rate: the resource plan's L&D
+ *  Manager ($175–195K fully loaded) at its midpoint. */
+const MANAGER_LOADED_COST = 185_000;
+const WORK_HOURS_PER_YEAR = 2_080;
+const DEFAULT_LOADED_COST = 140_000;
+
+/** Parse a program.ts duration ("15–20 min" or "20 min") to [low, high]. */
+function parseMinutes(duration: string): [number, number] {
+  const range = /(\d+(?:\.\d+)?)\s*[–-]\s*(\d+(?:\.\d+)?)/.exec(duration);
+  if (range) return [Number(range[1]), Number(range[2])];
+  const single = /(\d+(?:\.\d+)?)/.exec(duration);
+  if (single) return [Number(single[1]), Number(single[1])];
+  // Fail loudly: a silent zero would understate C_program and inflate ROI.
+  throw new Error(`Unparseable module duration: "${duration}"`);
+}
+
+const [MODULE_MINUTES_LOW, MODULE_MINUTES_HIGH] = MODULES.reduce<[number, number]>(
+  ([low, high], m) => {
+    const [l, h] = parseMinutes(m.duration);
+    return [low + l, high + h];
+  },
+  [0, 0],
+);
+const PROGRAM_MINUTES_LOW = MODULE_MINUTES_LOW + ASSESSMENT_MINUTES;
+const PROGRAM_MINUTES_HIGH = MODULE_MINUTES_HIGH + ASSESSMENT_MINUTES;
+const PARTICIPANT_HOURS =
+  ((PROGRAM_MINUTES_LOW + PROGRAM_MINUTES_HIGH) / 2 +
+    REACTION_SURVEY_MINUTES +
+    LEVEL3_INTERVALS * (SELF_ASSESSMENT_MINUTES + CHECK_IN_MINUTES)) /
+  60;
+const MANAGER_HOURLY = MANAGER_LOADED_COST / WORK_HOURS_PER_YEAR;
+const COST_PER_PARTICIPANT_STEP = 25;
+const DEFAULT_COST_PER_PARTICIPANT =
+  Math.round(
+    (PARTICIPANT_HOURS * (DEFAULT_LOADED_COST / WORK_HOURS_PER_YEAR) +
+      MANAGER_HOURS_PER_PARTICIPANT * MANAGER_HOURLY) /
+      COST_PER_PARTICIPANT_STEP,
+  ) * COST_PER_PARTICIPANT_STEP;
 
 // ─── Model ─────────────────────────────────────────────────────────────
 
@@ -33,22 +93,25 @@ interface RoiInputs {
   timeSavings: number;
   /** A — attribution factor (share of improvement credited to the program), %. */
   attribution: number;
-  /** C_program — total fully loaded program cost, $. */
-  programCost: number;
-  /** Q — annual cost of AI-related quality failures across the cohort, $. */
-  qualityCost: number;
+  /** C_fixed — build, delivery, evaluation administration, and contingency, $. */
+  fixedCost: number;
+  /** c — participant and manager time per participant, $. C_program = C_fixed + N × c. */
+  costPerParticipant: number;
+  /** q — annual AI-related quality-failure cost per participant, $. Q = N × q. */
+  qualityCostPerParticipant: number;
   /** Q_reduction — reduction in those failures, %. */
   qualityReduction: number;
 }
 
 const DEFAULTS: RoiInputs = {
   participants: 200,
-  loadedCost: 140000,
+  loadedCost: DEFAULT_LOADED_COST,
   aiShare: 25,
   timeSavings: 30,
   attribution: 40,
-  programCost: 300000,
-  qualityCost: 400000,
+  fixedCost: 235000,
+  costPerParticipant: DEFAULT_COST_PER_PARTICIPANT,
+  qualityCostPerParticipant: 2000,
   qualityReduction: 20,
 };
 
@@ -128,25 +191,35 @@ const FIELDS: FieldDef[] = [
     rationale: 'Lower-bound; assumes 60% of improvement is from other factors.',
   },
   {
-    key: 'programCost',
-    symbol: 'C_program',
-    label: 'Total program cost',
-    gloss: 'total fully loaded program cost',
+    key: 'fixedCost',
+    symbol: 'C_fixed',
+    label: 'Fixed program cost',
+    gloss: 'build, delivery, evaluation administration, and contingency',
     unit: 'usd',
     min: 0,
-    step: 10000,
-    rationale:
-      'Amortized development (~735 hrs, Chapman), delivery, ~6 hrs participant time, admin, the full four-level evaluation, and contingency; anchored to ATD 2024 benchmarks.',
+    step: 5000,
+    rationale: `The program's resource plan prices a five-person build at ${BUDGET_TOTAL.low}–${BUDGET_TOTAL.high}, including evaluation administration and 15% contingency; the default sits in the upper half of that range.`,
   },
   {
-    key: 'qualityCost',
-    symbol: 'Q',
-    label: 'Annual AI-quality-failure cost',
-    gloss: 'annual cost of AI-related quality failures',
+    key: 'costPerParticipant',
+    symbol: 'c',
+    label: 'Time cost per participant',
+    gloss: 'participant and manager time per participant',
     unit: 'usd',
     min: 0,
-    step: 10000,
-    rationale: 'Estimated annual cost of AI-related quality failures across the cohort.',
+    step: COST_PER_PARTICIPANT_STEP,
+    rationale: `About ${formatHours(PARTICIPANT_HOURS)} hours of participant time (the ${PROGRAM_MINUTES_LOW}–${PROGRAM_MINUTES_HIGH}-minute program, the Level 1 survey, and three Level 3 self-assessments and check-ins) at W ÷ 2,080, plus about ${MANAGER_HOURS_PER_PARTICIPANT} hour of manager time at ~$${Math.round(MANAGER_HOURLY)} an hour. The default prices this at the default W.`,
+  },
+  {
+    key: 'qualityCostPerParticipant',
+    symbol: 'q',
+    label: 'AI-quality-failure cost per participant',
+    gloss: 'annual cost of AI-related quality failures per participant',
+    unit: 'usd',
+    min: 0,
+    step: 100,
+    rationale:
+      'Placeholder (~$2,000 per participant a year); no cited source prices AI-related errors. Replace with incident data: errors × hours to fix × loaded rate.',
   },
   {
     key: 'qualityReduction',
@@ -177,6 +250,20 @@ function fmtPct(value: number): string {
 /** Trim trailing zeros from a halved percentage (40 → "20", 25 → "12.5"). */
 function fmtHalf(value: number): string {
   return (value / 2).toLocaleString('en-US', { maximumFractionDigits: 1 });
+}
+
+function formatHours(value: number): string {
+  return value.toLocaleString('en-US', { maximumFractionDigits: 1 });
+}
+
+/** A break-even share outside 0–100% cannot be reached, so it shows a dash. */
+function fmtOne(value: number): string {
+  if (!Number.isFinite(value) || value < 0 || value > 100) return '—';
+  return `${value.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`;
+}
+
+function sharePct(numerator: number, denominator: number): number {
+  return denominator > 0 ? (numerator / denominator) * 100 : Number.NaN;
 }
 
 function fmtDefault(def: FieldDef): string {
@@ -211,6 +298,12 @@ export function RoiFormulaFigure(): JSX.Element {
         <EquationRow label="Quality benefit">
           {[sym('Q'), times('×1'), sym('Q_reduction'), times('×2'), sym('A')]}
         </EquationRow>
+        <EquationRow label="Quality-failure cost" term="Q">
+          {[sym('N'), times('×1'), sym('q')]}
+        </EquationRow>
+        <EquationRow label="Program cost" term="C_program">
+          {[sym('C_fixed'), <Op key="+">+</Op>, sym('N'), times('×1'), sym('c')]}
+        </EquationRow>
         <EquationRow label="ROI">
           <Op>(</Op>
           <span className="font-mono text-body-sm text-ink">Total benefit</span>
@@ -240,8 +333,9 @@ export function RoiFormulaFigure(): JSX.Element {
         className="m-0 mt-4 font-sans text-caption text-tertiary"
         style={{ lineHeight: 1.5 }}
       >
-        Two independently attributed benefit streams, set against total program cost. The
-        calculator below starts at these conservative defaults.
+        Two independently attributed benefit streams, set against total program cost. Program
+        cost and quality-failure cost both scale with N. The calculator below starts at these
+        conservative defaults.
       </figcaption>
     </figure>
   );
@@ -266,10 +360,20 @@ function Op({ children }: { children: ReactNode }): JSX.Element {
   return <span className="font-mono text-body-sm text-secondary">{children}</span>;
 }
 
-function EquationRow({ label, children }: { label: string; children: ReactNode }): JSX.Element {
+function EquationRow({
+  label,
+  term,
+  children,
+}: {
+  label: string;
+  /** Symbol the row defines, for derived terms (Q, C_program). */
+  term?: string;
+  children: ReactNode;
+}): JSX.Element {
   return (
     <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
       <span className="font-sans text-body-sm font-semibold text-ink">{label}</span>
+      {term !== undefined && <Sym>{term}</Sym>}
       <Op>=</Op>
       {children}
     </div>
@@ -286,15 +390,43 @@ export function RoiCalculator(): JSX.Element {
   };
 
   const results = useMemo(() => {
-    const { participants, loadedCost, aiShare, timeSavings, attribution, programCost, qualityCost, qualityReduction } = inputs;
+    const {
+      participants,
+      loadedCost,
+      aiShare,
+      timeSavings,
+      attribution,
+      fixedCost,
+      costPerParticipant,
+      qualityCostPerParticipant,
+      qualityReduction,
+    } = inputs;
+    const programCost = fixedCost + participants * costPerParticipant;
+    const qualityCost = participants * qualityCostPerParticipant;
+    // Both streams before attribution; A multiplies each of them.
+    const efficiencyBase = participants * loadedCost * (aiShare / 100) * (timeSavings / 100);
+    const qualityBase = qualityCost * (qualityReduction / 100);
     const streams = (attributionPct: number): { efficiency: number; quality: number; total: number; roi: number } => {
-      const efficiency = participants * loadedCost * (aiShare / 100) * (timeSavings / 100) * (attributionPct / 100);
-      const quality = qualityCost * (qualityReduction / 100) * (attributionPct / 100);
+      const efficiency = efficiencyBase * (attributionPct / 100);
+      const quality = qualityBase * (attributionPct / 100);
       const total = efficiency + quality;
       const roi = programCost > 0 ? ((total - programCost) / programCost) * 100 : Number.NaN;
       return { efficiency, quality, total, roi };
     };
-    return { current: streams(attribution), halved: streams(attribution / 2) };
+    // Break-even: the A (or S) at which total benefit equals program cost,
+    // holding every other input where the reader set it.
+    const breakEvenA = sharePct(programCost, efficiencyBase + qualityBase);
+    const breakEvenS = sharePct(
+      programCost - qualityBase * (attribution / 100),
+      participants * loadedCost * (aiShare / 100) * (attribution / 100),
+    );
+    return {
+      programCost,
+      current: streams(attribution),
+      halved: streams(attribution / 2),
+      breakEvenA,
+      breakEvenS,
+    };
   }, [inputs]);
 
   const { efficiency, quality, total, roi } = results.current;
@@ -372,7 +504,7 @@ export function RoiCalculator(): JSX.Element {
           </div>
           <div className="mt-1 flex flex-wrap items-baseline justify-between gap-2">
             <span className="font-sans text-body-sm text-secondary">− Program cost (C_program)</span>
-            <span className="font-mono text-body-sm text-secondary">{fmtUsd(inputs.programCost)}</span>
+            <span className="font-mono text-body-sm text-secondary">{fmtUsd(results.programCost)}</span>
           </div>
         </div>
 
@@ -391,7 +523,7 @@ export function RoiCalculator(): JSX.Element {
             className="font-mono text-overline font-semibold uppercase text-tertiary"
             style={{ letterSpacing: '0.12em' }}
           >
-            Return on investment
+            Return on investment · illustrative
           </div>
           <div
             className="mt-1 font-mono font-semibold"
@@ -410,6 +542,8 @@ export function RoiCalculator(): JSX.Element {
         <p className="m-0 mt-4 text-center font-sans text-body-sm text-secondary">
           At the current attribution (A&nbsp;=&nbsp;{inputs.attribution}%), ROI is {fmtPct(roi)};
           halving A to {fmtHalf(inputs.attribution)}% would give {fmtPct(results.halved.roi)}.
+          Break-even at these inputs: A of {fmtOne(results.breakEvenA)} or S of{' '}
+          {fmtOne(results.breakEvenS)}.
         </p>
       </div>
 
@@ -418,7 +552,9 @@ export function RoiCalculator(): JSX.Element {
         style={{ lineHeight: 1.5 }}
       >
         Formula and conservative-input discipline follow the Phillips ROI Methodology: net program
-        benefits over fully loaded cost, with attribution adjusted downward for error.
+        benefits over fully loaded cost, with attribution adjusted downward for error. The defaults
+        are illustrative inputs, not a measured return: no Level 4 data exists until an
+        organization deploys the program and supplies its own baselines.
       </p>
     </section>
   );
