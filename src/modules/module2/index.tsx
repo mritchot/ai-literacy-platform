@@ -44,6 +44,7 @@ import { AugAutoDashboard } from './AugAutoDashboard';
 import { DirectiveTrendSparkline } from './DirectiveTrendSparkline';
 import { FivePatternBar } from './FivePatternBar';
 import { MODULE_2_KC_ITEMS } from './knowledge-check-items';
+import { P4_EFFORT_PREDICTION } from './prediction-items';
 import { ProductivityDashboard } from './ProductivityDashboard';
 import { RCTComparisonChart } from './RCTComparisonChart';
 
@@ -509,22 +510,29 @@ function Section5({ module }: ModuleProp): JSX.Element {
         human judgment lives. This dashboard lets you explore that gap across occupations and
         tasks; what the data doesn’t capture is equally important: the time spent
         independently verifying output, reworking errors, and catching fabricated details that
-        looked correct on first read. The knowledge-worker survey puts a number on where that
-        effort goes. In five of the six kinds of thinking it asked about, from recall to
-        synthesis, workers reported less effort with AI in 69% to 79% of their examples.
-        Evaluation had the smallest share, 55%, and drew the most reports of more effort
-        <Citation ids="lee-2025" pageKey="effort-reduction-shares" />. The researchers call the added
-        work stewardship: turning intent into a query, steering the response, and judging
-        whether it meets the standard while staying accountable for it
-        <Citation ids="lee-2025" pageKey="effort-shift-stewardship" />.
+        looked correct on first read. Before you explore the dashboard, make one prediction.
       </p>
+      <div className="mb-6">
+        <KnowledgeCheck
+          moduleId={2}
+          sectionId={5}
+          item={P4_EFFORT_PREDICTION}
+          itemNumber={1}
+          totalItems={1}
+          variant="prediction"
+        />
+      </div>
       <p className="m-0 mb-4 font-sans text-body text-body">
         Time saved is one axis; whether the task succeeded is another. In the November 2025 wave,
         the model judged its own output successful in 67% of consumer conversations and 49% of
-        API calls (single requests sent by software, with no follow-up turns). Success falls as
-        tasks lengthen: API calls reach a coin flip at tasks a person would need about 3.5 hours
-        to do. Consumer conversations, which can run over many turns, degrade far more slowly; the
-        authors suggest this may reflect users breaking tasks into steps and correcting course.
+        API calls (single requests sent by software, with no follow-up turns). More complex
+        tasks save more time but succeed less often: in consumer conversations, success falls
+        from 70% for tasks that need less than a high-school education to 66% for college-level
+        work<Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />.
+        Success also falls as tasks lengthen: API calls reach a coin flip at tasks a person
+        would need about 3.5 hours to do. Consumer conversations, which can run over many turns,
+        degrade far more slowly; the authors suggest this may reflect users breaking tasks into
+        steps and correcting course.
         Two cautions apply. The success judgment is the model's own. And users choose which tasks
         to bring; if they avoid tasks they expect to fail, observed success overstates what the
         model can do across all possible tasks
@@ -774,12 +782,7 @@ function Section8({ module }: ModuleProp): JSX.Element {
           <strong className="font-semibold text-ink">Second</strong>, the productivity gains are
           real but unevenly distributed. Some tasks show 95% time savings; others show
           closer to 20%. And the tasks where AI is fastest are often the tasks where the output is
-          hardest to verify: speed and reliability are separate axes, not the same one. The
-          November 2025 Economic Index wave found a related pattern: more complex tasks gain more
-          time and succeed less often. College-level tasks ran about 12 times faster with AI,
-          against 9 times for high-school-level tasks, but the model judged itself successful on
-          66% of college-level tasks, against 70% of tasks below high-school level
-          <Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />.
+          hardest to verify: speed and reliability are separate axes, not the same one.
         </p>
         <p className="m-0">
           <strong className="font-semibold text-ink">Third</strong>, the share of directive
