@@ -26,6 +26,7 @@ import { Link } from 'react-router-dom';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { PRE_ASSESSMENT_ITEMS, type AssessmentItem } from '../../data/pre-assessment';
 import { POST_ASSESSMENT_ITEMS, type PostAssessmentItem } from '../../data/post-assessment';
+import { answeredBeforeRevision } from '../../data/instrument-version';
 import {
   blockOutcomes,
   constructOutcomes,
@@ -120,12 +121,19 @@ export function AssessmentResults({ variant }: AssessmentResultsProps): JSX.Elem
     postResponses,
   );
   const summary = summarizeGrowth(outcomes);
+  const revisedNote = revisionNote(
+    answeredBeforeRevision(preResponses),
+    answeredBeforeRevision(postResponses),
+  );
 
   return (
     <div className="space-y-6">
       {variant === 'standalone' && <ResultsHero />}
       <ScoreHeader summary={summary} />
       <BlockBreakdown outcomes={outcomes} />
+      {revisedNote && (
+        <p className="m-0 font-sans text-body-sm text-secondary">{revisedNote}</p>
+      )}
       <ConstructList
         pairs={pairs}
         preResponses={preResponses}
@@ -135,6 +143,16 @@ export function AssessmentResults({ variant }: AssessmentResultsProps): JSX.Elem
       {variant === 'standalone' && <ResultsFooter />}
     </div>
   );
+}
+
+// A record from before the current item bank keeps its stored answers
+// and scores; the note explains why an answer may not match the wording
+// shown beside it.
+function revisionNote(preRevised: boolean, postRevised: boolean): string | null {
+  if (!preRevised && !postRevised) return null;
+  const form =
+    preRevised && postRevised ? 'assessment' : preRevised ? 'pre-assessment' : 'post-assessment';
+  return `The ${form} items were revised after you answered them, so some of your answers appear beside wording you did not see.`;
 }
 
 // ─── Hero (standalone variant only) ──────────────────────────────

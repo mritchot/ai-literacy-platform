@@ -31,6 +31,7 @@ import {
   POST_ASSESSMENT_ITEMS,
   type PostAssessmentItem,
 } from '../data/post-assessment';
+import { answeredBeforeRevision } from '../data/instrument-version';
 import {
   constructOutcomes,
   RAPID_RESPONSE_MS,
@@ -122,10 +123,14 @@ function buildPairRows(progress: LearnerProgressState): AssessmentPairRow[] {
 export function AssessmentResponseAnalysis({
   progress,
 }: AssessmentResponseAnalysisProps): JSX.Element {
-  const { rows, hasAnyData, preComplete, postComplete, growth } = useMemo(() => {
+  const { rows, hasAnyData, preComplete, postComplete, growth, revised } = useMemo(() => {
     const _preComplete = progress.assessments?.pre?.completedAt != null;
     const _postComplete = progress.assessments?.post?.completedAt != null;
     return {
+      // Only a completed form can carry stale letters worth flagging.
+      revised:
+        (_preComplete && answeredBeforeRevision(progress.assessments?.pre?.responses ?? {})) ||
+        (_postComplete && answeredBeforeRevision(progress.assessments?.post?.responses ?? {})),
       rows: buildPairRows(progress),
       hasAnyData: _preComplete || _postComplete,
       preComplete: _preComplete,
@@ -181,6 +186,12 @@ export function AssessmentResponseAnalysis({
           post: rows.filter((r) => isRapid(r.post)).length,
         }}
       />
+      {revised && (
+        <p className="m-0 font-sans text-body-sm text-secondary">
+          This record predates the current item revision, so some stored answers appear beside
+          wording the learner did not see.
+        </p>
+      )}
       {BLOCK_ORDER.map((block) => {
         const blockRows = byBlock[block];
         if (blockRows.length === 0) return null;

@@ -9,3 +9,12 @@
 // Responses without a version belong to the earlier ten-item form.
 
 export const INSTRUMENT_VERSION = '2026.11';
+
+/** True when any stored response was given against an earlier item bank.
+ *  Its option letters then sit beside revised wording, so results views
+ *  say so. Scores still come from the stored isCorrect, never re-keyed. */
+export function answeredBeforeRevision(
+  responses: Readonly<Record<string, { instrumentVersion?: string | undefined }>>,
+): boolean {
+  return Object.values(responses).some((r) => r.instrumentVersion !== INSTRUMENT_VERSION);
+}

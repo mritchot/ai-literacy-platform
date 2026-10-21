@@ -1,7 +1,8 @@
 // Unit tests for the assessment scoring rules and the results code.
 // Run with `npm test`. The repo has no test framework, so this bundles
-// the TypeScript modules with esbuild (already installed through Vite)
-// and runs them under node:test.
+// the TypeScript modules with esbuild (a devDependency pinned to the
+// version Vite installs, so the lockfile resolves one copy) and runs them
+// under node:test.
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -24,6 +25,7 @@ const scoring = await load('src/utils/assessment-scoring.ts');
 const resultsCode = await load('src/utils/assessment-results-code.ts');
 const { PRE_ASSESSMENT_ITEMS } = await load('src/data/pre-assessment.ts');
 const { POST_ASSESSMENT_ITEMS } = await load('src/data/post-assessment.ts');
+const instrument = await load('src/data/instrument-version.ts');
 
 // A synthetic ten-construct form, so the acceptance cases read as written.
 const pre10 = Array.from({ length: 10 }, (_, i) => ({
@@ -186,5 +188,16 @@ test('response-time medians and form versions', () => {
   assert.equal(
     resultsCode.formVersion({ a: { instrumentVersion: '2026.11' }, b: {} }),
     'mixed',
+  );
+});
+
+test('a record answered against an earlier item bank is flagged as revised', () => {
+  const current = instrument.INSTRUMENT_VERSION;
+  assert.equal(instrument.answeredBeforeRevision({}), false);
+  assert.equal(instrument.answeredBeforeRevision({ a: { instrumentVersion: current } }), false);
+  assert.equal(instrument.answeredBeforeRevision({ a: {} }), true);
+  assert.equal(
+    instrument.answeredBeforeRevision({ a: { instrumentVersion: current }, b: {} }),
+    true,
   );
 });
