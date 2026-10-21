@@ -93,7 +93,7 @@ export const CITATIONS = {
       'limitations':
         'research post, "Limitations" (selection bias, demand characteristics, self-report vs. usage data, Western-based sample, non-experimental)',
       'lazy-email-quote':
-        'research post, "Introduction", topic diagram (General workforce tab, "Writing independence": a salesperson says colleagues regard AI-generated email as lazy)',
+        'research post, "Introduction", topic diagram (General workforce tab, "Writing independence": a salesperson says colleagues regard senders of AI-generated email as "too lazy" to send a personal note)',
       'conversation-only-limit':
         'research post, "Introduction" (the earlier usage tool saw only inside Claude conversations, not how outputs were used afterward)',
     },
@@ -118,9 +118,9 @@ export const CITATIONS = {
   'appel-mccrory-tamkin-2025': {
     id: 'appel-mccrory-tamkin-2025',
     shortLabel: 'Appel, McCrory & Tamkin, 2025',
-    authors: 'Appel, R., McCrory, P., & Tamkin, A.',
+    authors: 'Appel, R., McCrory, P., Tamkin, A., McCain, M., Neylon, T., & Stern, M.',
     title:
-      'Anthropic Economic Index Report: Uneven Geographic and Enterprise AI Adoption',
+      'The Anthropic Economic Index Report: Uneven Geographic and Enterprise AI Adoption',
     publisher: 'Anthropic',
     date: 'September 15, 2025',
     url: 'https://www.anthropic.com/research/anthropic-economic-index-september-2025-report',
@@ -158,7 +158,7 @@ export const CITATIONS = {
   'massenkoff-mccrory-2026': {
     id: 'massenkoff-mccrory-2026',
     shortLabel: 'Massenkoff & McCrory, 2026',
-    authors: 'Massenkoff, M. & McCrory, P.',
+    authors: 'Massenkoff, M., & McCrory, P.',
     title: 'Labor Market Impacts of AI: A New Measure and Early Evidence',
     publisher: 'Anthropic',
     date: 'March 5, 2026',
@@ -222,7 +222,7 @@ export const CITATIONS = {
   'tamkin-mccrory-2025': {
     id: 'tamkin-mccrory-2025',
     shortLabel: 'Tamkin & McCrory, 2025',
-    authors: 'Tamkin, A. & McCrory, P.',
+    authors: 'Tamkin, A., & McCrory, P.',
     title: 'Estimating AI Productivity Gains from Claude Conversations',
     publisher: 'Anthropic',
     date: 'November 5, 2025',
@@ -250,27 +250,27 @@ export const CITATIONS = {
     url: 'https://anthropic.com/research/how-ai-is-transforming-work-at-anthropic/',
     pages: {
       'delegation-criteria':
-        'research post, "AI delegation approaches" (library PDF pp. 10–11): six criteria from 53 interviews',
+        'research post, "AI delegation approaches": six criteria from 53 interviews',
       'full-delegation-share':
-        'research post, "How much work can be fully delegated to Claude?" (PDF p. 9): more than half of 132 survey respondents can fully delegate only 0–20% of work',
+        'research post, "How much work can be fully delegated to Claude?": more than half of 132 survey respondents can fully delegate only 0–20% of work',
       'tasks-kept-human':
-        'research post (PDF p. 12): strategic thinking and design decisions needing organizational context or taste',
+        'research post, "What tasks do people keep for themselves?": strategic thinking and design decisions needing organizational context or taste',
       'expertise-and-verification':
-        'research post (PDF pp. 11–12): use within expertise to verify; prompting style adapts to expertise',
+        'research post, "Trust but verify": use within expertise to verify; prompting style adapts to expertise',
       'junior-engineer-danger':
-        'research post (PDF p. 11): a proposal "really smart in the dangerous way"',
-      'paradox-of-supervision': 'research post (PDF pp. 13–14): skill atrophy, lost incidental learning, and the paradox of supervision',
+        'research post, "Trust but verify": a proposal "really smart in the dangerous way"',
+      'paradox-of-supervision': 'research post, "Skill transformations": skill atrophy, lost incidental learning, and the paradox of supervision',
       'deliberate-practice':
-        'research post (PDF p. 14): solving problems without Claude to stay sharp',
+        'research post, "Skill transformations": solving problems without Claude to stay sharp',
       'time-spenders':
-        'research post (PDF pp. 7–8): some spend more time on Claude-assisted tasks (debugging, cleanup, comprehension)',
+        'research post, "Usage and productivity": some spend more time on Claude-assisted tasks (debugging, cleanup, comprehension)',
       'self-report-limits':
-        'research post, "Usage and productivity" (PDF p. 6): METR study, experienced developers on familiar codebases overestimated their AI productivity boost; Appendix (PDF p. 25): selection, social desirability, recency bias; read alongside usage data',
-      'full-stack': 'research post (PDF pp. 12–13, 22): engineers becoming full-stack',
+        'research post, "Usage and productivity": METR study, experienced developers on familiar codebases overestimated their AI productivity boost; Appendix, "Limitations": selection, social desirability, recency bias; read alongside usage data',
+      'full-stack': 'research post, "Skill transformations" and "Task variation across teams": engineers becoming full-stack',
       'social-dynamics':
-        'research post, "Changing social dynamics in the workplace" (PDF pp. 16–17): Claude as first stop for questions that once went to colleagues; junior staff bring fewer questions to senior engineers',
+        'research post, "Changing social dynamics in the workplace": Claude as first stop for questions that once went to colleagues; junior staff bring fewer questions to senior engineers',
       'moving-target':
-        'research post (PDF p. 12): delegation boundaries renegotiated as models improve',
+        'research post, "What tasks do people keep for themselves?": delegation boundaries renegotiated as models improve',
     },
   },
 
@@ -296,7 +296,7 @@ export const CITATIONS = {
   },
   'anthropic-ai-fluency-course-2025': {
     id: 'anthropic-ai-fluency-course-2025',
-    shortLabel: 'Anthropic, Dakan & Feller, 2025',
+    shortLabel: 'Dakan, Feller & Anthropic, 2025',
     authors: 'Dakan, R., Feller, J., & Anthropic',
     title: 'AI Fluency: Framework & Foundations (course)',
     publisher: 'Anthropic Academy (Skilljar)',
@@ -305,7 +305,6 @@ export const CITATIONS = {
     pages: {
       'course-license':
         '"About this course" PDF: "Copyright 2025 Rick Dakan, Joseph Feller, and Anthropic. Released under the CC BY-NC-SA 4.0 license."',
-      'course-url': 'https://anthropic.skilljar.com/ai-fluency-framework-foundations',
     },
   },
 
@@ -494,7 +493,7 @@ export const CITATIONS = {
     publisher:
       'OpenAI (working paper; co-authors at Columbia Business School and the Wharton School)',
     date: 'August 11, 2026',
-    url: 'https://arxiv.org/abs/2608.12236',
+    url: 'https://cdn.openai.com/pdf/how-organizations-use-chatgpt.pdf',
     pages: {
       'token-growth-7x': 'p. 10',
       'survey-limits': 'p. 2',
@@ -573,7 +572,7 @@ export const CITATIONS = {
     date: 'February 2, 2023',
     pages: {
       'chatgpt-100m': 'news report, paras. 1–2',
-      'tiktok-instagram-comparison': 'news report, para. 4',
+      'tiktok-instagram-comparison': 'news report, para. 4 (Sensor Tower data, as reported by Reuters)',
     },
   },
   'bick-blandin-deming-2024': {
@@ -612,7 +611,7 @@ export const CITATIONS = {
     authors: 'Google',
     title: 'Gemini 3.1 Pro preview',
     publisher: 'Google AI for Developers, Gemini API documentation',
-    date: 'August 18, 2026 (page last updated)',
+    date: 'accessed September 4, 2026 (page last updated August 18, 2026)',
     pages: { 'input-token-limit': 'Token limits row' },
   },
   'qwen3-model-card-2025': {

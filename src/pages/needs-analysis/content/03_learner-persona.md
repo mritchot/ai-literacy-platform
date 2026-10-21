@@ -66,7 +66,7 @@ They already use AI tools (ChatGPT, Claude, Gemini, or enterprise-licensed equiv
 | Overestimates augmentation; underestimates automation | 65% self-report vs. 57% behavioral data (Handa et al.) | Build Delegation and Discernment competencies explicitly; make the gap visible |
 | Overconfidence suppresses verification | Lee et al. (CHI 2025) | Scenario-based practice that surfaces errors under confident conditions |
 | Social stigma limits visible application | 69% concealment (Anthropic Interviewer) | Build shared vocabulary (4D framework) as a normalization instrument |
-| Motivated by career relevance and output quality | 48% career transition consideration (Handa et al., Dec 2025) | Frame every module in terms of professional identity and output quality |
+| Motivated by career relevance and output quality | 48% considered moving toward AI oversight roles (Handa et al., Dec 2025) | Frame every module in terms of professional identity and output quality |
 | Time-pressured; asynchronous; browser-based | Scale of need: 59 of 100 workers need training by 2030 and 11 will not get access (WEF 2025, p. 47); modality is a design inference, not a surveyed preference | 15–30 minute modules; mobile-responsive; no live session dependency |
 | Underuse in complex tasks (inferred) | Augmentation/automation behavioral data (Handa et al.) | Module 4 scope includes appropriate delegation identification, not only output verification |
 

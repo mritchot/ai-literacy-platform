@@ -116,7 +116,7 @@ The structurally correct intervention targets the individual knowledge worker (t
 
 - **Anthropic Interviewer** — [*Introducing Anthropic Interviewer: What 1,250 Professionals Told Us About Working with AI*](https://www.anthropic.com/research/anthropic-interviewer) (Dec 2025)
 - **Appel, R., McCrory, P. & Tamkin, A.** — [*Anthropic Economic Index Report: Uneven Geographic and Enterprise AI Adoption*](https://www.anthropic.com/research/anthropic-economic-index-september-2025-report) (Sep 2025)
-- **Appel, R., Massenkoff, M., McCrory, P. et al.** — [*The Anthropic Economic Index Report: Economic Primitives*](https://www.anthropic.com/research/economic-index-primitives) (Jan 2026)
+- **Appel, R., Massenkoff, M., McCrory, P. et al.** — [*The Anthropic Economic Index Report: Economic Primitives*](https://www.anthropic.com/research/anthropic-economic-index-january-2026-report) (Jan 2026)
 - **Dakan, R. & Feller, J.** — [*Framework for AI Fluency: Practical Overview Document*](https://ringling.libguides.com/ai/framework), Version 1.1 (Jan 2025)
 - **Anthropic** — [*AI Fluency: Framework and Foundations*](https://anthropic.skilljar.com/ai-fluency-framework-foundations) (2025); *Teaching AI Fluency* (2025); *AI Fluency for Non-Profits* (2025); *Claude 101* (2025); [*AI Capabilities and Limitations*](https://anthropic.skilljar.com/ai-capabilities-and-limitations) (2026)
 - **Aubakirova, M., Atallah, A., Clark, C., Summerville, J. & Midha, A.** — [*OpenRouter State of AI: An Empirical 100 Trillion Token Study*](https://openrouter.ai/state-of-ai) (OpenRouter & a16z, Dec 2025)

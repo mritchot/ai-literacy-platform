@@ -78,7 +78,7 @@ const KC_1_2: KnowledgeCheckItemData = {
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This draft does three things the CLO needs: it grounds the case in multiple quantified findings (self-report vs. behavioral divergence, 69% stigma rate, the 63% skill-gap barrier, the WEF skill ranking, and the team’s own reported time savings), it distinguishes between the productivity opportunity (time savings when competency is present) and the capability risk (divergent behavior, invisible practices), and it connects both to a measurable organizational consequence (the inability to learn from, measure, or improve existing practices). This is the structure of a business case, not a training request.',
+        'This draft does three things the CLO needs: it grounds the case in multiple quantified findings (self-report vs. behavioral divergence, the 69% who mention social stigma, the 63% skill-gap barrier, the WEF skill ranking, and the team’s own reported time savings), it distinguishes between the productivity opportunity (time savings when competency is present) and the capability risk (divergent behavior, invisible practices), and it connects both to a measurable organizational consequence (the inability to learn from, measure, or improve existing practices). This is the structure of a business case, not a training request.',
     },
     {
       id: 'b',
