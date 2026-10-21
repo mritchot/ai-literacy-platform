@@ -308,7 +308,7 @@ const KC_2_4: KnowledgeCheckItemData = {
     },
     {
       id: 'c',
-      text: '"The survey is a useful data point, but external research shows a consistent pattern: professionals overestimate how collaboratively they use AI. When researchers compared self-reports against behavioral data from actual conversations, the gap ranged from 8 to 18 percentage points. And the share of directive interactions (give a task, accept the result) has been rising over time and constitutes roughly a third of all AI interactions. Our 72% collaborative self-report may reflect the same overestimation pattern. Before calling adoption healthy, we\'d want behavioral indicators, not just self-description."',
+      text: '"The survey is a useful data point, but external research shows a consistent pattern: professionals overestimate how collaboratively they use AI. When researchers compared self-reports against behavioral data from actual conversations, the gap ranged from 8 to 18 percentage points. And the share of directive interactions (give a task, accept the result) rose during 2025 and still makes up roughly a third of all AI interactions. Our 72% collaborative self-report may reflect the same overestimation pattern. Before calling adoption healthy, we\'d want behavioral indicators, not just self-description."',
       isPreferred: true,
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
