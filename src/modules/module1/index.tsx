@@ -577,7 +577,9 @@ function Section6({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           The full program takes roughly two hours. Each module runs between 15 and 40 minutes
-          and works as a single sitting.
+          and works as a single sitting. If you can, take the modules on different days. Spacing
+          them out, and recalling the previous module before you start the next, helps you keep
+          what you learn.
         </p>
       </div>
     </SectionContainer>

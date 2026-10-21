@@ -14,6 +14,9 @@ const Module3 = lazy(() => import('./modules/module3'));
 const Module4 = lazy(() => import('./modules/module4'));
 const AnalyticsDashboard = lazy(() => import('./dashboard'));
 const ThankYou = lazy(() => import('./pages/ThankYou'));
+// Spaced-practice refresher opened by the 30/60/90-day calendar
+// reminders (src/utils/calendar-ics.ts). Standalone like ThankYou.
+const Refresher = lazy(() => import('./pages/Refresher'));
 // Pre/Post assessment routes are lazy-loaded — their payload (10
 // items × 4 options × consequence feedback + the comparative results
 // view) only enters the bundle when the learner reaches the
@@ -114,6 +117,7 @@ const routes: RouteObject[] = [
       { path: 'module/4/section/:sectionId', element: lazyRoute(Module4) },
       { path: 'dashboard', element: <DashboardRoute /> },
       { path: 'thank-you', element: lazyRoute(ThankYou) },
+      { path: 'refresher', element: lazyRoute(Refresher) },
       { path: 'pre-assessment', element: lazyRoute(PreAssessment) },
       { path: 'post-assessment', element: lazyRoute(PostAssessment) },
       { path: 'needs-analysis', element: lazyRoute(NeedsAnalysisHub) },

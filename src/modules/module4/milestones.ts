@@ -45,3 +45,11 @@ export const R7_TOOL_LABEL = 'R7 Organizational AI Use Policy Starter';
 export function isMilestoneDays(v: unknown): v is MilestoneDays {
   return v === 30 || v === 60 || v === 90;
 }
+
+// Throwing lookup: every MilestoneDays value has an entry above, so a
+// miss is a programming error, not a state to render around.
+export function milestoneFor(days: MilestoneDays): Milestone {
+  const m = MILESTONES.find((x) => x.days === days);
+  if (!m) throw new Error(`No milestone defined for ${days} days`);
+  return m;
+}

@@ -16,12 +16,14 @@
 // dedicated `completedModules` field in the context state).
 
 import { useState, useEffect, useMemo, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { AssessmentGrowth } from '../../components/assessment/AssessmentGrowth';
 import { R7Trigger } from '../../components/reference/R7Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
 import { Icon } from '../../components/shared/Icon';
 import { KCReview } from '../../components/shared/KCReview';
 import { Overline } from '../../components/shared/Overline';
+import { RefresherReminders } from '../../components/shared/RefresherReminders';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { currentCommitment } from '../../data/action-commitment';
@@ -332,6 +334,7 @@ export function CompletionSummary(): JSX.Element {
         p8Accuracy={p8Accuracy}
         p8Answered={p8Answered}
         p8Total={p8Total}
+        examples={state.refresherExamples ?? {}}
       />
       <p
         className="m-0 font-sans text-body-sm text-secondary"
@@ -726,12 +729,15 @@ function MilestoneTable({
   p8Accuracy,
   p8Answered,
   p8Total,
+  examples,
 }: {
   task1: string;
   task2: string;
   p8Accuracy: number;
   p8Answered: number;
   p8Total: number;
+  /** Check-in examples saved in the refresher, keyed '30' | '60' | '90'. */
+  examples: Record<string, string>;
 }): JSX.Element {
   const hasTask1 = task1.trim().length > 0;
   const hasTask2 = task2.trim().length > 0;
@@ -774,6 +780,7 @@ function MilestoneTable({
     days: `${m.days} days`,
     target: m.target,
     connection: connections[m.days],
+    example: (examples[String(m.days)] ?? '').trim(),
   }));
 
   return (
@@ -841,6 +848,15 @@ function MilestoneTable({
               >
                 {row.connection}
               </p>
+              {row.example.length > 0 && (
+                <p
+                  className="m-0 mt-1 break-words font-sans text-body-sm text-secondary"
+                  style={{ lineHeight: 1.5 }}
+                >
+                  <span className="font-semibold text-ink">Your example →</span>{' '}
+                  <span className="italic">{truncateToLines(row.example, 160)}</span>
+                </p>
+              )}
             </div>
           </li>
         ))}
@@ -849,8 +865,15 @@ function MilestoneTable({
         className="m-0 mt-4 border-t border-border-light pt-3 font-sans text-body-sm text-secondary"
         style={{ lineHeight: 1.5 }}
       >
-        {CHECK_IN_EXAMPLE_PROMPT}
+        {CHECK_IN_EXAMPLE_PROMPT} The{' '}
+        <Link to="/refresher" className="font-medium text-action no-underline hover:underline">
+          refresher
+        </Link>{' '}
+        asks for it and brings back a few knowledge checks to answer from memory.
       </p>
+      <div className="mt-4">
+        <RefresherReminders placement="profile" />
+      </div>
     </section>
   );
 }
