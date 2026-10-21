@@ -665,7 +665,7 @@ function Section7({ module }: ModuleProp): JSX.Element {
             Long document analysis, multi-source synthesis, and extended conversations push
             against the context window’s hard limits. When critical information falls outside the
             window or gets buried in the middle, the model generates plausible but incomplete
-            outputs and does not signal that information was lost. The longer the input, the
+            outputs, and the tool may not tell you what it left out. The longer the input, the
             more important it becomes to verify that the output reflects the full source rather
             than only the parts the model attended to.
           </p>
