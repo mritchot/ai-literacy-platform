@@ -109,7 +109,7 @@ const FAILS_CATEGORIES: FailsCategory[] = [
       },
       {
         failsAt: 'Non-English text processing',
-        why: 'Lower-resource languages fragment 2–3× more aggressively, consuming context window and increasing error surface',
+        why: 'Lower-resource languages often take 2× or more the tokens for the same meaning, up to 15× for some languages and tokenizers (Petrov et al., 2023), consuming context window and increasing error surface',
         instead: 'Verify non-English output more carefully; expect quality gaps',
       },
     ],

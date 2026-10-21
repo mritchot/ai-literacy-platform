@@ -243,7 +243,12 @@ function Section2({ module }: ModuleProp): JSX.Element {
           Japanese, Arabic, or Hindi might produce 40 or more, because those character sequences
           were less frequent in the training data and therefore received less compression. More
           tokens means a longer sequence, which consumes more of the model’s working memory and
-          increases the surface area for generation errors.
+          increases the surface area for generation errors. Newer tokenizers narrow the gap
+          without closing it. In this module’s tokenizer, the nine-token English request “Please
+          review the attached quarterly report before Friday” takes 59 tokens in Hindi; OpenAI’s
+          newer o200k_base needs 18. Across languages and tokenizers, researchers have measured
+          the same text costing up to 15 times as many tokens
+         <Citation ids="petrov-2023" pageKey="up-to-15x" />.
         </p>
         <h3 className="m-0 mt-2 font-sans text-h3 font-semibold text-ink">
           Third, character-level tasks are structurally difficult.
@@ -505,7 +510,8 @@ function Section6({ module }: ModuleProp): JSX.Element {
           runs about 75,000 words per 100,000 tokens, so 200K is roughly the length of a 500-page
           novel. Other formats fit very differently. The same content in Japanese or another
           non-Latin script can use two to three times as many tokens for the same meaning,
-          leaving room for the equivalent of 150 pages of an English novel rather than 500.
+          leaving room for the equivalent of roughly 170 to 250 pages of an English novel rather
+          than 500.
           Source code is heavier than equivalent English prose because operators, punctuation,
           and split identifiers each consume tokens; a few hundred lines of Python can run
           several thousand. Spreadsheets and CSVs consume tokens unpredictably: every comma,
