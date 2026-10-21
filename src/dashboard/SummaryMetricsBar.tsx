@@ -14,11 +14,13 @@ interface SummaryMetricsBarProps {
   events: AnalyticsEvent[];
 }
 
-// Optional interaction event keys (4D §7.6). 11 total.
+// Optional interaction event keys (4D §7.6), plus the Module 4 closing
+// revisit of the P4 commitment.
 const OPTIONAL_INTERACTION_EVENTS = new Set<string>([
   'p3_reflection_1_saved',
   'p3_reflection_2_saved',
   'p4_commitment_saved',
+  'p4_commitment_revised_saved',
   'p3_methodology_expanded',
   'p5_free_mode_entered',
   'p6_reasoning_submitted',
@@ -28,7 +30,7 @@ const OPTIONAL_INTERACTION_EVENTS = new Set<string>([
   'p11_reflection_saved',
   'p12_reflection_saved',
 ]);
-const TOTAL_OPTIONAL = 11;
+const TOTAL_OPTIONAL = OPTIONAL_INTERACTION_EVENTS.size;
 
 interface Metrics {
   completion: { done: number; total: number; pct: number };

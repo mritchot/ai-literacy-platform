@@ -4,6 +4,7 @@
 
 import type { jsPDF } from 'jspdf';
 import type { CompletionProfileData } from '../generate-completion-pdf';
+import { MILESTONES, R7_TOOL_LABEL, type MilestoneDays } from '../milestones';
 import { C, FONT, MARGIN_LEFT, SECTION_OVERLINE_Y } from './constants';
 import {
   drawCardBase,
@@ -92,49 +93,47 @@ function drawMilestonesCard(doc: jsPDF, data: CompletionProfileData): void {
 
   // Connection excerpts (quote learner artifacts where available).
   // Ellipsis only when text was actually truncated — mirrors the
-  // on-screen truncateToLines behavior.
-  const quoteExcerpt = (raw: string): string => {
+  // on-screen truncateToLines behavior. The 30-day row quotes both
+  // tasks inside a two-line clamp, so each excerpt is short.
+  const quoteExcerpt = (raw: string, max: number): string => {
     const compact = raw.replace(/\s+/g, ' ').trim();
-    return compact.length <= 130
+    return compact.length <= max
       ? `"${compact}"`
-      : `"${compact.slice(0, 130).trimEnd()}…"`;
+      : `"${compact.slice(0, max).trimEnd()}…"`;
   };
-  const task1Excerpt =
-    data.task1.trim().length > 0
-      ? quoteExcerpt(data.task1)
-      : 'Complete the action commitment to see your commitment here.';
-  const p12Excerpt =
-    data.p12Statement.trim().length > 0
-      ? quoteExcerpt(data.p12Statement)
-      : 'Complete the diligence statement builder to see your template here.';
+  const taskExcerpts = [
+    data.task1.trim().length > 0 ? `Task 1: ${quoteExcerpt(data.task1, 30)}` : '',
+    data.task2.trim().length > 0 ? `Task 2: ${quoteExcerpt(data.task2, 30)}` : '',
+  ].filter((s) => s.length > 0);
+  const connections: Record<MilestoneDays, { refLabel: string; connection: string }> = {
+    30: {
+      refLabel: 'YOUR TASKS →',
+      connection:
+        taskExcerpts.length > 0
+          ? taskExcerpts.join(' ')
+          : 'Complete the action commitment to see your tasks here.',
+    },
+    60: {
+      refLabel: 'YOUR PRACTICE RUN →',
+      connection:
+        data.p8Answered > 0
+          ? `${data.p8Accuracy} of ${data.p8Total} components placed as intended in the task decomposition exercise.`
+          : 'Complete the task decomposition exercise to see your result here.',
+    },
+    90: {
+      refLabel: 'YOUR TOOL →',
+      connection: `${R7_TOOL_LABEL} (in the reference panel).`,
+    },
+  };
+  const milestones = MILESTONES.map((m) => ({
+    days: String(m.days),
+    target: m.pdfTarget,
+    ...connections[m.days],
+  }));
 
   const rowTop = y + padY + 50;
   const rowAreaH = h - (rowTop - y) - padY;
-  const rowH = rowAreaH / 3;
-
-  const milestones = [
-    {
-      days: '30',
-      target:
-        'Produce a diligence statement for at least one AI-assisted deliverable in your actual work.',
-      refLabel: 'YOUR STATEMENT →',
-      connection: p12Excerpt,
-    },
-    {
-      days: '60',
-      target:
-        'Apply the delegation framework to a new task category beyond the two you identified.',
-      refLabel: 'YOUR TASK 1 →',
-      connection: task1Excerpt,
-    },
-    {
-      days: '90',
-      target:
-        'Initiate a team-level conversation about AI use practices using the 4D vocabulary.',
-      refLabel: 'YOUR TOOL →',
-      connection: 'R7 Team AI Policy Starter (available in the reference panel).',
-    },
-  ];
+  const rowH = rowAreaH / milestones.length;
 
   for (let i = 0; i < milestones.length; i += 1) {
     const m = milestones[i]!; // in bounds per the loop condition

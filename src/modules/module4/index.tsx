@@ -11,6 +11,7 @@ import { getModuleOrThrow } from '../../data/program';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 
+import { CommitmentRevisit } from './CommitmentRevisit';
 import { CompletionSummary } from './CompletionSummary';
 import { DiligenceStatement } from './DiligenceStatement';
 import { IterativeRefinement } from './IterativeRefinement';
@@ -480,10 +481,12 @@ function Section9({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           The diligence statement is the artifact that outlasts the program. The action commitment
           you wrote in Module 2 identified two tasks to change your approach to. The diligence
-          statement you wrote in this module documented how you actually did it. Both are
-          designed to persist: at 30, 60, and 90 days, the question is whether these practices
-          have become part of how you work, sustained by the evidence and the mechanical
-          understanding rather than by a training program telling you to do them.
+          statement you wrote in this module showed how to document AI-assisted work once it is
+          done. Before you leave, revisit the commitment below: Modules 3 and 4 gave you the
+          property pairs, the triage levels, and the Description dimensions to sharpen it. Both
+          artifacts are designed to persist: at 30, 60, and 90 days, the question is whether
+          these practices have become part of how you work, sustained by the evidence and the
+          mechanical understanding rather than by a training program telling you to do them.
         </p>
         <p className="m-0">
           The 4D vocabulary (Delegation, Description, Discernment, Diligence) was introduced in
@@ -500,6 +503,9 @@ function Section9({ module }: ModuleProp): JSX.Element {
           The tools are on your desktop and the vocabulary is in your hands. The practice starts
           now.
         </p>
+      </div>
+      <div className="mt-8">
+        <CommitmentRevisit />
       </div>
     </SectionContainer>
   );
