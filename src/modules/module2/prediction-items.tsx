@@ -55,7 +55,7 @@ export const P4_EFFORT_PREDICTION: KnowledgeCheckItemData = {
       feedbackTitle: 'Correct: checking is where the effort stays',
       feedbackTone: 'success',
       feedbackText:
-        'For every other kind of thinking, 69% to 79% of examples reported less effort with AI. Judging quality was the exception at 55% (Lee et al., 2025, p. 12). Workers described the added work as stewardship: turning intent into a query, steering the response, and judging whether it meets the standard while staying accountable for it (pp. 12–13). That checking time is what the in-conversation savings in this dashboard leave out.',
+        'For every other kind of thinking, 69% to 79% of examples reported less effort with AI. Judging quality was the exception at 55% (Lee et al., 2025, p. 12). The researchers call the added work stewardship: turning intent into a query, steering the response, and judging whether it meets the standard while staying accountable for it (pp. 12–13). That checking time is what the in-conversation savings in this dashboard leave out.',
     },
   ],
 };

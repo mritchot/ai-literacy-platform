@@ -531,8 +531,8 @@ function Section5({ module }: ModuleProp): JSX.Element {
         the model judged its own output successful in 67% of consumer conversations and 49% of
         API calls (single requests sent by software, with no follow-up turns). More complex
         tasks save more time but succeed less often: in consumer conversations, success falls
-        from 70% for the simplest requests, such as basic product questions, to 66% for
-        college-level work
+        from 70% for low-complexity requests, such as basic questions about products, to 66%
+        for college-level work
         <Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />.
         Success also falls as tasks lengthen: API calls reach a coin flip at tasks a person
         would need about 3.5 hours to do. Consumer conversations, which can run over many turns,
@@ -646,9 +646,10 @@ function Section6({ module }: ModuleProp): JSX.Element {
             <Citation ids="evans-2026-05" pageKey="frontier-cadence-20" />.
           </p>
           <p className="m-0">
-            The enterprise records carry a caution. The researchers read an early-2026 jump,
-            which reached early and recent adopters at the same time, as a change affecting all
-            customers rather than only the usual growth after adoption
+            The enterprise records also carry a caution for the learning-by-doing reading. The
+            researchers read an early-2026 jump, which reached early and recent adopters at the
+            same time, as a change affecting all customers rather than only the usual growth
+            after adoption
             <Citation ids="chatterji-2026" pageKey="within-firm-growth" />.
           </p>
           <p className="m-0">
