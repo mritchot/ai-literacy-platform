@@ -74,6 +74,20 @@ export const CONSTRUCT_ROUTES: Record<string, ConstructRoute> = {
     focus:
       'Name the two properties behind a failure before you choose a fix. The diagnostic pair table maps each common failure to its pair.',
   },
+  'task-decomposition': {
+    moduleId: 4,
+    sectionId: 2,
+    referenceId: 'R2',
+    focus:
+      'Sort each component, not the whole task, into Human-Only, AI-Assisted, or Fully Delegated. Delegate a component when it stands alone and checking it costs less than producing it.',
+  },
+  'disclosure-accountability': {
+    moduleId: 4,
+    sectionId: 8,
+    referenceId: 'R6',
+    focus:
+      'A diligence statement says which parts AI produced, what you checked, and what you changed, then states who takes responsibility for the final content.',
+  },
   'verification-priority': {
     moduleId: 4,
     sectionId: 5,
