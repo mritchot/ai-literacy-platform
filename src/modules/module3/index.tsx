@@ -385,7 +385,7 @@ function Section4({ module }: ModuleProp): JSX.Element {
           separate question that the mechanism does not address.
         </p>
         <h3 className="m-0 mt-2 font-sans text-h3 font-semibold text-ink">
-          The model’s probabilities are frozen.
+          Knowledge: the model’s probabilities are frozen.
         </h3>
         <p className="m-0">
           The statistical patterns the model uses to predict the next token were learned during
@@ -699,7 +699,8 @@ function Section8({ module }: ModuleProp): JSX.Element {
           You now have three mechanical ideas: tokenization determines how text enters the model,
           next-token prediction determines how output is generated, and the context window
           determines how much the model can hold at once. Together they explain a large share of
-          the AI failures you will encounter at work. But there is a fourth property that
+          the AI failures you will encounter at work. Section 4 added a fourth, knowledge: the
+          patterns frozen at the training cutoff and thin on rare topics. A fifth property
           completes the picture, and it governs something you have direct control over: how well
           the model follows your instructions.
         </p>
@@ -709,20 +710,24 @@ function Section8({ module }: ModuleProp): JSX.Element {
           instruction through the same probabilistic mechanism that generates everything else. It
           predicts what a response to your instruction would look like, based on patterns from
           its training data. Sometimes that prediction aligns precisely with your intent.
-          Sometimes it does not.
+          Sometimes it does not. Three steerability failures come up most often.
         </p>
         <p className="m-0">
           The first is <strong>sycophancy</strong>. The model is trained on data where agreeable,
-          affirming responses are common, including the human-preference tuning that rewards
-          agreeable answers. When you present a flawed argument and ask for
+          affirming responses are common, and the human-preference tuning that follows rewards
+          agreeable answers: people, and the reward models trained on their ratings, tend to
+          prefer a response that matches their own view, sometimes over a correct one
+         <Citation ids="sharma-2024" pageKey="preference-data" />. When you present a flawed argument and ask for
           feedback, the most statistically probable response is agreement, not critique. The
           model is more likely to tell you your analysis is insightful than to tell you it
           contains an error.
         </p>
         <p className="m-0">
           The second is <strong>verbosity</strong>. Ask for a one-paragraph summary and you may
-          receive four paragraphs. The model’s training data contains far more long-form
-          responses than concise ones, so length is the statistically favored outcome.
+          receive four paragraphs. Preference tuning rewards length: in studies of that
+          tuning, reward models scored longer answers higher, and much of the measured gain came
+          from answers simply getting longer
+         <Citation ids="singhal-2024" pageKey="length-bias" />.
         </p>
         <p className="m-0">
           The third is <strong>format compliance without content accuracy</strong>. The model can
@@ -898,11 +903,12 @@ function Section11({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           That is the mechanical foundation. What it does not yet give you is a practiced
-          workflow for applying it. Module 4 closes that gap. It moves through three practice
+          workflow for applying it. Module 4 closes that gap. It moves through five practice
           tasks: decomposing a workplace task into components that belong to different
           reliability zones; reformulating an underspecified prompt and comparing the outputs
-          side by side; and evaluating an AI-generated deliverable by identifying exactly which
-          elements need verification and which can be trusted.
+          side by side; evaluating an AI-generated deliverable by identifying exactly which
+          elements need verification and which can be trusted; refining a draft over several
+          turns; and writing a diligence statement that documents how AI contributed.
         </p>
         <p className="m-0">
           The question shifts from <em>“why does the tool behave this way?”</em> to{' '}
