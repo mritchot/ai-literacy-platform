@@ -79,7 +79,7 @@ const KC_4_2: KnowledgeCheckItemData = {
       feedbackTitle: 'Misattributes the problem',
       feedbackTone: 'error',
       feedbackText:
-        'The output quality issue lies in the input’s specificity, not the model’s capability. A different model receiving the same underspecified prompt will produce a different set of generic posts, not a better set of targeted ones. On general-purpose benchmarks such as LMArena and Artificial Analysis, the leading labs score within a few percent of each other. For a general writing task like this one, switching among leading models is unlikely to supply what the prompt leaves out. The idea that a “better” tool would infer brand-specific requirements from a prompt that doesn’t contain them misunderstands the steerability principle from Module 3. The fix is in the Description, not the tool.',
+        'The output quality issue lies in the input’s specificity, not the model’s capability. A different model receiving the same underspecified prompt will produce a different set of generic posts, not a better set of targeted ones. On general-purpose benchmark rankings such as LMArena and Artificial Analysis, the leading labs score within a few percent of each other. For a general writing task like this one, switching among leading models is unlikely to supply what the prompt leaves out. The idea that a “better” tool would infer brand-specific requirements from a prompt that doesn’t contain them misunderstands the steerability principle from Module 3. The fix is in the Description, not the tool.',
       sources: [{ ids: 'evans-2025-11', pageKey: 'benchmarks-close-35' }],
     },
     {

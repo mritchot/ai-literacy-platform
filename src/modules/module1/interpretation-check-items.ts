@@ -56,7 +56,7 @@ const IC_1_2: InterpretationCheckItemData = {
   options: [
     {
       id: 'a',
-      text: '“That’s essentially correct. Income and infrastructure are the primary drivers: the data shows a clear correlation between GDP and AI usage, so expanding access should close most of the gap over time.”',
+      text: '“That’s essentially correct. Income and infrastructure are the primary drivers: the data shows a clear correlation between GDP and AI usage. Lower-income countries have simply had less access to the tools, so expanding access should close most of the gap over time.”',
       isPreferred: false,
       feedbackTitle: 'Oversimplified',
       feedbackTone: 'caution',
