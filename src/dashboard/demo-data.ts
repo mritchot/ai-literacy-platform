@@ -23,7 +23,7 @@
 // preferred (KC-1.2 caution, KC-2.3 caution) so the "not all correct"
 // signal reads through the dashboard.
 //
-// **Reflections:** 5 of 11 optional interactions saved (P2, P3 ref 1+2,
+// **Reflections:** 5 optional interactions saved (P2, P3 ref 1+2,
 // P4 commitment, P6 reasoning). P7 reasoning skipped per design — even
 // though P7 was reached, the learner skipped the optional reflection.
 // P8/P9/P11/P12 not yet started.

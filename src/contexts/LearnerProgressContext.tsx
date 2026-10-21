@@ -113,6 +113,15 @@ export interface LearnerProgressState {
     pre: AssessmentRecord;
     post: AssessmentRecord;
   };
+  // Refresher attempts (#/refresher), kept apart from `knowledgeChecks`
+  // so practice never overwrites a first answer or moves the dashboard's
+  // `.kc_` counts. Key: `${YYYY-MM-DD}.${moduleId}.${sectionId}.${checkId}`
+  // (local date of the attempt). Optional so static fixtures such as the
+  // dashboard demo data need not carry it; migrateProgress fills it.
+  refresherResults?: Record<string, KnowledgeCheckResult>;
+  // The learner's specific example at each check-in (situation, behavior,
+  // outcome), keyed by the milestone interval: '30' | '60' | '90'.
+  refresherExamples?: Record<string, string>;
 }
 
 const EMPTY_ASSESSMENT: AssessmentRecord = {
@@ -135,6 +144,8 @@ const INITIAL: LearnerProgressState = {
     pre: { ...EMPTY_ASSESSMENT },
     post: { ...EMPTY_ASSESSMENT },
   },
+  refresherResults: {},
+  refresherExamples: {},
 };
 
 // ─── Active-time tracker config ─────────────────────────────────────
@@ -197,6 +208,18 @@ interface LearnerProgressValue {
   /** Lifecycle record (started/completed timestamps + responses) for
    *  an assessment. Used by the comparative results view. */
   getAssessmentRecord: (kind: AssessmentKind) => AssessmentRecord;
+  // ── Refresher ────────────────────────────────────────────────────
+  /** Persist one refresher attempt. `date` is the local YYYY-MM-DD of
+   *  the attempt; the original knowledge-check record is untouched. */
+  recordRefresherResult: (
+    date: string,
+    moduleId: number,
+    sectionId: number,
+    checkId: string,
+    result: KnowledgeCheckResult,
+  ) => void;
+  /** Save the learner's specific example for a check-in interval. */
+  saveRefresherExample: (intervalDays: number, text: string) => void;
 }
 
 const LearnerProgressContext = createContext<LearnerProgressValue | null>(null);
@@ -249,7 +272,9 @@ function isProgressShape(v: unknown): v is LearnerProgressState {
 //    promoted to BOTH `scrolledSections` AND `interactionCompleteSections`
 //    so persisted progress doesn't silently regress;
 //  • `assessments` is topped up to the INITIAL shape so consumers can
-//    always destructure `pre`/`post` without a null guard.
+//    always destructure `pre`/`post` without a null guard;
+//  • the refresher maps are added empty for progress saved before the
+//    refresher existed.
 function migrateProgress(raw: LearnerProgressState): LearnerProgressState {
   const legacyCompleted = raw.completedSections ?? {};
   const rawAssessments = raw.assessments;
@@ -279,6 +304,8 @@ function migrateProgress(raw: LearnerProgressState): LearnerProgressState {
         responses: { ...(rawAssessments?.post?.responses ?? {}) },
       },
     },
+    refresherResults: { ...(raw.refresherResults ?? {}) },
+    refresherExamples: { ...(raw.refresherExamples ?? {}) },
   };
 }
 
@@ -454,6 +481,29 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
     [setState],
   );
 
+  // ── Refresher setters ───────────────────────────────────────────
+
+  const recordRefresherResult = useCallback(
+    (date: string, moduleId: number, sectionId: number, checkId: string, result: KnowledgeCheckResult) =>
+      setState((prev) => ({
+        ...prev,
+        refresherResults: {
+          ...(prev.refresherResults ?? {}),
+          [`${date}.${k(moduleId, sectionId, checkId)}`]: result,
+        },
+      })),
+    [setState],
+  );
+
+  const saveRefresherExample = useCallback(
+    (intervalDays: number, text: string) =>
+      setState((prev) => ({
+        ...prev,
+        refresherExamples: { ...(prev.refresherExamples ?? {}), [String(intervalDays)]: text },
+      })),
+    [setState],
+  );
+
   // ── Active-time tracker ─────────────────────────────────────────
   //
   // Heartbeats every HEARTBEAT_MS while: (a) `state.current` points at
@@ -584,6 +634,8 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
         state.assessments?.[kind]?.responses ?? {},
       getAssessmentRecord: (kind) =>
         state.assessments?.[kind] ?? EMPTY_ASSESSMENT,
+      recordRefresherResult,
+      saveRefresherExample,
     }),
     [
       state,
@@ -597,6 +649,8 @@ export function LearnerProgressProvider({ children }: { children: ReactNode }): 
       startAssessment,
       recordAssessmentResponse,
       completeAssessment,
+      recordRefresherResult,
+      saveRefresherExample,
     ],
   );
 

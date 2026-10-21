@@ -1,21 +1,25 @@
 // S10 CompletionSummary — personalized competency profile rendering
 // the learner's authored artifacts back into a structured profile
-// organized by the four 4D competencies. Includes a 30/60/90-day
-// behavioral milestone table and a client-side PDF export.
+// organized by the four 4D competencies. Includes a "Where to focus
+// next" panel built from post-assessment misses, a 30/60/90-day
+// behavioral milestone table with calendar check-in reminders, and a
+// client-side PDF export.
 //
 // Gating: the profile shows substantive content only when all four
 // modules are complete. An incomplete-state placeholder directs the
 // learner to finish the program first.
 //
 // Data flow: all artifacts are read from LearnerProgressContext via
-// the storage keys established by P4 (M2 action commitment), P9
-// (prompt reformulation), P10 (output verification — KC results),
-// P11 (iterative refinement — Turn 3 authored prompt), and P12
+// the storage keys established by P4 (M2 action commitment, revised in
+// M4 S9), P8 (task decomposition placement), P9 (prompt
+// reformulation), P10 (output verification — KC results), P11
+// (iterative refinement — Turn 3 authored prompt), and P12
 // (diligence statement). Module completion is derived from the
 // program's MODULES metadata + state.completedSections (there is no
 // dedicated `completedModules` field in the context state).
 
 import { useState, useEffect, useMemo, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { AssessmentGrowth } from '../../components/assessment/AssessmentGrowth';
 import { R7Trigger } from '../../components/reference/R7Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
@@ -23,11 +27,14 @@ import { Icon } from '../../components/shared/Icon';
 import { KCCalibration } from '../../components/shared/KCCalibration';
 import { KCReview } from '../../components/shared/KCReview';
 import { Overline } from '../../components/shared/Overline';
+import { RefresherReminders } from '../../components/shared/RefresherReminders';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { currentCommitment } from '../../data/action-commitment';
 import { POST_ASSESSMENT_ITEMS } from '../../data/post-assessment';
 import { PRE_ASSESSMENT_ITEMS } from '../../data/pre-assessment';
 import { MODULES } from '../../data/program';
+import { FocusNextPanel } from './FocusNextPanel';
 import {
   blockOutcomes,
   constructOutcomes,
@@ -40,6 +47,8 @@ import {
   type AssessmentGrowthData,
   type CompletionProfileData,
 } from './generate-completion-pdf';
+import { CHECK_IN_EXAMPLE_PROMPT, MILESTONES, R7_TOOL_LABEL, type MilestoneDays } from './milestones';
+import { P8_CARDS } from './module4-content';
 
 // 4D competency hex colors — matched to the on-screen accent treatment
 // used throughout the platform (R1 Quick Reference, KC tone borders).
@@ -191,8 +200,8 @@ export function CompletionSummary(): JSX.Element {
   }
 
   // ── Pull learner artifacts from context state ──────────────────
-  const task1 = state.reflections['2.5.p4_task1'] ?? '';
-  const task2 = state.reflections['2.5.p4_task2'] ?? '';
+  const commitment = currentCommitment(state.reflections);
+  const { task1, task2 } = commitment;
   const p9Product = state.reflections['4.3.p9_product'] ?? '';
   const p9Process = state.reflections['4.3.p9_process'] ?? '';
   const p9Performance = state.reflections['4.3.p9_performance'] ?? '';
@@ -208,6 +217,14 @@ export function CompletionSummary(): JSX.Element {
       return result?.isPreferred ? acc + 1 : acc;
     }, 0);
 
+  // P8 decomposition: each card is stored with isPreferred = true when
+  // the learner placed it in its intended category. Gives the Delegation
+  // card the same kind of performance measure Discernment has from P10.
+  const p8Total = P8_CARDS.length;
+  const p8Results = P8_CARDS.map((card) => state.knowledgeChecks[`4.2.${card.id}`]);
+  const p8Answered = p8Results.filter((r) => r !== undefined).length;
+  const p8Accuracy = p8Results.filter((r) => r?.isPreferred).length;
+
   // KC aggregate
   const kcTotal = ALL_KC_KEYS.length;
   const kcCorrect = ALL_KC_KEYS.reduce((acc, key) => {
@@ -219,6 +236,11 @@ export function CompletionSummary(): JSX.Element {
     completionDate,
     task1,
     task2,
+    task1Revised: commitment.task1Revised,
+    task2Revised: commitment.task2Revised,
+    p8Accuracy,
+    p8Answered,
+    p8Total,
     p9Product,
     p9Process,
     p9Performance,
@@ -296,7 +318,16 @@ export function CompletionSummary(): JSX.Element {
           user-typed string from a P4/P9/P11/P12 saved artifact).
           `lg:grid-cols-2` restores the 2x2 layout at desktop. */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2" style={{ gridAutoRows: '1fr' }}>
-        <DelegationCard task1={task1} task2={task2} />
+        <DelegationCard
+          task1={task1}
+          task2={task2}
+          task1Revised={commitment.task1Revised}
+          task2Revised={commitment.task2Revised}
+          tellWho={commitment.tellWho}
+          p8Accuracy={p8Accuracy}
+          p8Answered={p8Answered}
+          p8Total={p8Total}
+        />
         <DescriptionCard
           product={p9Product}
           processField={p9Process}
@@ -317,7 +348,17 @@ export function CompletionSummary(): JSX.Element {
           items. The KCSummaryBar above remains the at-a-glance
           single-number; KCReview is the deeper drill-down path. */}
       <KCReview />
-      <MilestoneTable task1={task1} p12Statement={p12Statement} />
+      {/* Feed-forward from the post-assessment misses (AE-04): sits
+          between the look-back sections above and the milestones. */}
+      <FocusNextPanel />
+      <MilestoneTable
+        task1={task1}
+        task2={task2}
+        p8Accuracy={p8Accuracy}
+        p8Answered={p8Answered}
+        p8Total={p8Total}
+        examples={state.refresherExamples ?? {}}
+      />
       <p
         className="m-0 font-sans text-body-sm text-secondary"
         style={{ textAlign: 'center', lineHeight: 1.55 }}
@@ -463,20 +504,56 @@ function CompetencyCard({
   );
 }
 
-function DelegationCard({ task1, task2 }: { task1: string; task2: string }): JSX.Element {
+function DelegationCard({
+  task1,
+  task2,
+  task1Revised,
+  task2Revised,
+  tellWho,
+  p8Accuracy,
+  p8Answered,
+  p8Total,
+}: {
+  task1: string;
+  task2: string;
+  task1Revised: boolean;
+  task2Revised: boolean;
+  tellWho: string;
+  p8Accuracy: number;
+  p8Answered: number;
+  p8Total: number;
+}): JSX.Element {
   const hasContent = task1.trim().length > 0 || task2.trim().length > 0;
+  const anyRevised = task1Revised || task2Revised;
   return (
     <CompetencyCard
       accent={COLORS.delegation}
       accentText="rgb(var(--delegation-text))"
       label="Delegation"
       heading="What you committed to changing"
-      footerNote="From Module 2: Action Commitment"
+      footerNote={
+        anyRevised
+          ? 'From Module 2: Action Commitment (revised in Module 4) + Module 4: Task Decomposition'
+          : 'From Module 2: Action Commitment + Module 4: Task Decomposition'
+      }
     >
+      {p8Answered > 0 && (
+        <p className="m-0 font-sans text-body-sm text-body" style={{ lineHeight: 1.55 }}>
+          Decomposition:{' '}
+          <strong className="text-ink">
+            {p8Accuracy} of {p8Total} components placed as intended
+          </strong>
+        </p>
+      )}
       {hasContent ? (
         <>
-          <QuotedBlock label="Task 1" value={task1} />
-          <QuotedBlock label="Task 2" value={task2} />
+          <QuotedBlock label={task1Revised ? 'Task 1 · revised' : 'Task 1'} value={task1} />
+          <QuotedBlock label={task2Revised ? 'Task 2 · revised' : 'Task 2'} value={task2} />
+          {tellWho.length > 0 && (
+            <p className="m-0 font-sans text-body-sm text-secondary" style={{ overflowWrap: 'anywhere' }}>
+              You will tell: <span className="text-ink">{tellWho}</span>
+            </p>
+          )}
         </>
       ) : (
         <p className="m-0 font-sans text-body-sm italic text-muted">No commitment recorded.</p>
@@ -671,58 +748,63 @@ function KCSummaryBar({
 
 function MilestoneTable({
   task1,
-  p12Statement,
+  task2,
+  p8Accuracy,
+  p8Answered,
+  p8Total,
+  examples,
 }: {
   task1: string;
-  p12Statement: string;
+  task2: string;
+  p8Accuracy: number;
+  p8Answered: number;
+  p8Total: number;
+  /** Check-in examples saved in the refresher, keyed '30' | '60' | '90'. */
+  examples: Record<string, string>;
 }): JSX.Element {
-  const rows: { days: string; target: string; connection: JSX.Element }[] = [
-    {
-      days: '30 days',
-      target:
-        'Produce a diligence statement for at least one AI-assisted deliverable in your actual work.',
-      connection:
-        p12Statement.trim().length > 0 ? (
-          <>
-            <span className="font-semibold text-ink">Your template →</span>{' '}
-            <span className="italic">
-              {truncateToLines(p12Statement, 200)}
-            </span>
-          </>
-        ) : (
-          <span className="italic text-muted">
-            Complete the diligence statement builder to see your template here.
-          </span>
-        ),
-    },
-    {
-      days: '60 days',
-      target:
-        'Apply the delegation framework to a new task category beyond the two you identified.',
-      connection:
-        task1.trim().length > 0 ? (
-          <>
-            <span className="font-semibold text-ink">Your starting point →</span>{' '}
-            <span className="italic">{truncateToLines(task1, 120)}</span>
-          </>
-        ) : (
-          <span className="italic text-muted">
-            Complete the action commitment to see your commitment here.
-          </span>
-        ),
-    },
-    {
-      days: '90 days',
-      target:
-        'Initiate a team-level conversation about AI use practices using the 4D vocabulary.',
-      connection: (
+  const hasTask1 = task1.trim().length > 0;
+  const hasTask2 = task2.trim().length > 0;
+  const connections: Record<MilestoneDays, JSX.Element> = {
+    30:
+      hasTask1 || hasTask2 ? (
         <>
-          <span className="font-semibold text-ink">Your tool →</span>{' '}
-          <span>R7 Team AI Policy Starter (available in the reference panel).</span>
+          <span className="font-semibold text-ink">Your tasks →</span>{' '}
+          {hasTask1 && <span className="italic">Task 1: {truncateToLines(task1, 90)}</span>}
+          {hasTask1 && hasTask2 && ' '}
+          {hasTask2 && <span className="italic">Task 2: {truncateToLines(task2, 90)}</span>}
         </>
+      ) : (
+        <span className="italic text-muted">
+          Complete the action commitment to see your tasks here.
+        </span>
       ),
-    },
-  ];
+    60:
+      p8Answered > 0 ? (
+        <>
+          <span className="font-semibold text-ink">Your practice run →</span>{' '}
+          <span>
+            You placed {p8Accuracy} of {p8Total} components as intended in the task decomposition
+            exercise.
+          </span>
+        </>
+      ) : (
+        <span className="italic text-muted">
+          Complete the task decomposition exercise to see your result here.
+        </span>
+      ),
+    90: (
+      <>
+        <span className="font-semibold text-ink">Your tool →</span>{' '}
+        <span>{R7_TOOL_LABEL} (available in the reference panel).</span>
+      </>
+    ),
+  };
+  const rows = MILESTONES.map((m) => ({
+    days: `${m.days} days`,
+    target: m.target,
+    connection: connections[m.days],
+    example: (examples[String(m.days)] ?? '').trim(),
+  }));
 
   return (
     <section
@@ -789,10 +871,32 @@ function MilestoneTable({
               >
                 {row.connection}
               </p>
+              {row.example.length > 0 && (
+                <p
+                  className="m-0 mt-1 break-words font-sans text-body-sm text-secondary"
+                  style={{ lineHeight: 1.5 }}
+                >
+                  <span className="font-semibold text-ink">Your example →</span>{' '}
+                  <span className="italic">{truncateToLines(row.example, 160)}</span>
+                </p>
+              )}
             </div>
           </li>
         ))}
       </ul>
+      <p
+        className="m-0 mt-4 border-t border-border-light pt-3 font-sans text-body-sm text-secondary"
+        style={{ lineHeight: 1.5 }}
+      >
+        {CHECK_IN_EXAMPLE_PROMPT} The{' '}
+        <Link to="/refresher" className="font-medium text-action no-underline hover:underline">
+          refresher
+        </Link>{' '}
+        asks for it and brings back a few knowledge checks to answer from memory.
+      </p>
+      <div className="mt-4">
+        <RefresherReminders placement="profile" />
+      </div>
     </section>
   );
 }

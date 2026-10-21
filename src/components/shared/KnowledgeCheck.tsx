@@ -5,7 +5,7 @@
 
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
-import { useLearnerProgress, type KCConfidence } from '../../contexts/LearnerProgressContext';
+import { useLearnerProgress, type KCConfidence, type KnowledgeCheckResult } from '../../contexts/LearnerProgressContext';
 import { CONFIDENCE_LABEL, isConfidence } from '../../utils/kc-calibration';
 import { scrollBehavior } from '../../utils/motion';
 import { CheckSources, type CheckSource } from './CheckSources';
@@ -70,6 +70,13 @@ interface KnowledgeCheckProps {
   totalItems: number;
   onSubmitted?: () => void;
   variant?: KnowledgeCheckVariant;
+  /** Practice mode (the refresher). When `onRecord` is set, the item
+   *  starts from `storedOverride` instead of the learner's original
+   *  answer, and a submission goes to `onRecord` alone: the original
+   *  record and the `${id}_submitted` event the dashboard reads are left
+   *  untouched, and the caller owns persistence and analytics. */
+  storedOverride?: KnowledgeCheckResult | undefined;
+  onRecord?: (result: KnowledgeCheckResult) => void;
 }
 
 const TONE_BORDER: Record<KnowledgeCheckTone, string> = {
@@ -92,12 +99,14 @@ export function KnowledgeCheck({
   totalItems,
   onSubmitted,
   variant = 'assessed',
+  storedOverride,
+  onRecord,
 }: KnowledgeCheckProps): JSX.Element {
   const { recordKnowledgeCheck, getKnowledgeCheck } = useLearnerProgress();
   const { track } = useAnalytics();
   const unscored = variant === 'assessed' ? null : UNSCORED_COPY[variant];
 
-  const stored = getKnowledgeCheck(moduleId, sectionId, item.id);
+  const stored = onRecord ? storedOverride : getKnowledgeCheck(moduleId, sectionId, item.id);
   const [selected, setSelected] = useState<string | null>(stored?.selectedOptionId ?? null);
   const [submitted, setSubmitted] = useState<boolean>(Boolean(stored));
   const [confidence, setConfidence] = useState<KCConfidence | null>(
@@ -121,18 +130,23 @@ export function KnowledgeCheck({
     const option = item.options.find((o) => o.id === selected);
     if (!option) return;
     const rating = confidence ? { confidence } : {};
-    recordKnowledgeCheck(moduleId, sectionId, item.id, {
+    const result: KnowledgeCheckResult = {
       selectedOptionId: option.id,
       isPreferred: option.isPreferred,
       timestamp: Date.now(),
       ...rating,
-    });
-    track({
-      type: `${item.id}_submitted`,
-      moduleId,
-      sectionId,
-      payload: { optionId: option.id, isPreferred: option.isPreferred, ...rating },
-    });
+    };
+    if (onRecord) {
+      onRecord(result);
+    } else {
+      recordKnowledgeCheck(moduleId, sectionId, item.id, result);
+      track({
+        type: `${item.id}_submitted`,
+        moduleId,
+        sectionId,
+        payload: { optionId: option.id, isPreferred: option.isPreferred, ...rating },
+      });
+    }
     didJustSubmitRef.current = true;
     setSubmitted(true);
     onSubmitted?.();

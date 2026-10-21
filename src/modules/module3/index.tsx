@@ -11,6 +11,7 @@ import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
 import { BottleneckCallout } from '../../components/shared/BottleneckCallout';
 import { Citation } from '../../components/shared/Citation';
 import { KnowledgeCheck } from '../../components/shared/KnowledgeCheck';
+import { RetrievalWarmup } from '../../components/shared/RetrievalWarmup';
 import { SectionContainer } from '../../components/shared/SectionContainer';
 import { getModuleOrThrow } from '../../data/program';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
@@ -72,13 +73,14 @@ function Section1({ module }: ModuleProp): JSX.Element {
       width="reading"
       autoComplete
     >
+      <RetrievalWarmup moduleId={3} />
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
           Module 2 ended with a question: <em>why does the tool behave this way, and what does
           that tell me about when to trust it?</em>
         </p>
         <p className="m-0">
-          You now know that AI productivity gains are real but unevenly distributed. You know that
+          Check your recall against this summary. You now know that AI productivity gains are real but unevenly distributed. You know that
           professionals overestimate how much they collaborate with AI versus how much they
           delegate to it. You know that the tasks where AI is fastest are often the tasks where
           it succeeds less often<Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />, so that output most needs checking. And you know that the share of directive interactions

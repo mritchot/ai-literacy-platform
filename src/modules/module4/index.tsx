@@ -6,11 +6,13 @@ import { useEffect } from 'react';
 import { useSectionParam } from '../../hooks/useSectionParam';
 import { Citation } from '../../components/shared/Citation';
 import { KnowledgeCheck } from '../../components/shared/KnowledgeCheck';
+import { RetrievalWarmup } from '../../components/shared/RetrievalWarmup';
 import { SectionContainer } from '../../components/shared/SectionContainer';
 import { getModuleOrThrow } from '../../data/program';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 
+import { CommitmentRevisit } from './CommitmentRevisit';
 import { CompletionSummary } from './CompletionSummary';
 import { DiligenceStatement } from './DiligenceStatement';
 import { IterativeRefinement } from './IterativeRefinement';
@@ -73,6 +75,7 @@ function Section1({ module }: ModuleProp): JSX.Element {
       width="reading"
       autoComplete
     >
+      <RetrievalWarmup moduleId={4} />
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
           Module 3 ended with a question: <em>given what I now know about how it works, how do I
@@ -80,11 +83,11 @@ function Section1({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">This module answers it through practice rather than further explanation.</p>
         <p className="m-0">
-          You now have the mechanical vocabulary to trace any AI output failure to a specific
-          cause. You know why a fluent paragraph can contain a fabricated citation (next-token
-          prediction meeting thin knowledge). You know why a multi-document synthesis silently
-          drops material from the files you uploaded (context window limits meeting cumulative
-          conversation length). You know why a calculation looks right but isn’t (tokenization
+          Check your recall against this summary. You now have the mechanical vocabulary to trace
+          any AI output failure to a specific cause. You know why a fluent paragraph can contain a fabricated citation (next-token
+          prediction meeting thin knowledge). You know why a multi-document synthesis can leave
+          out material from the files you uploaded, and why the tool may not tell you (context
+          window limits meeting cumulative conversation length). You know why a calculation looks right but isn’t (tokenization
           meeting probability-based generation).
           And you know that these failures concentrate in three predictable categories (boundary
           tasks, specificity tasks, and volume tasks), each with a targeted response.
@@ -493,10 +496,12 @@ function Section9({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           The diligence statement is the artifact that outlasts the program. The action commitment
           you wrote in Module 2 identified two tasks to change your approach to. The diligence
-          statement you wrote in this module documented how you actually did it. Both are
-          designed to persist: at 30, 60, and 90 days, the question is whether these practices
-          have become part of how you work, sustained by the evidence and the mechanical
-          understanding rather than by a training program telling you to do them.
+          statement you wrote in this module showed how to document AI-assisted work once it is
+          done. Before you leave, revisit the commitment below: Modules 3 and 4 gave you the
+          property pairs, the triage levels, and the Description dimensions to sharpen it. Both
+          artifacts are designed to persist: at 30, 60, and 90 days, the question is whether
+          these practices have become part of how you work, sustained by the evidence and the
+          mechanical understanding rather than by a training program telling you to do them.
         </p>
         <p className="m-0">
           The 4D vocabulary (Delegation, Description, Discernment, Diligence) was introduced in
@@ -513,6 +518,9 @@ function Section9({ module }: ModuleProp): JSX.Element {
           The tools are on your desktop and the vocabulary is in your hands. The practice starts
           now.
         </p>
+      </div>
+      <div className="mt-8">
+        <CommitmentRevisit />
       </div>
     </SectionContainer>
   );

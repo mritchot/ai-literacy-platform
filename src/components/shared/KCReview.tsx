@@ -22,6 +22,7 @@
 // Missing responses render as "Not answered" rather than blowing up.
 
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { useExpandableSet } from '../../hooks/useExpandableSet';
 import { MODULE_1_KC_ITEMS } from '../../modules/module1/knowledge-check-items';
@@ -167,7 +168,12 @@ export function KCReview(): JSX.Element {
       </h2>
       <p className="m-0 mb-5 font-sans text-body-sm text-secondary">
         Open a module to see how you answered each knowledge check, with the consequence-based
-        feedback for the option you picked.
+        feedback for the option you picked. To answer them again from memory, without your
+        earlier choice in view, use the{' '}
+        <Link to="/refresher" className="font-medium text-action no-underline hover:underline">
+          refresher
+        </Link>
+        .
       </p>
 
       <ul className="m-0 list-none space-y-3 p-0">

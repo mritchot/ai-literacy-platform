@@ -100,8 +100,17 @@ export interface AssessmentGrowthData {
 
 export interface CompletionProfileData {
   completionDate: string;
+  /** The learner's current plan: the Module 4 revision when one exists,
+   *  else the Module 2 original (see data/action-commitment.ts). */
   task1: string;
   task2: string;
+  task1Revised: boolean;
+  task2Revised: boolean;
+  /** P8 task decomposition: cards placed as intended, cards answered,
+   *  and the card count. */
+  p8Accuracy: number;
+  p8Answered: number;
+  p8Total: number;
   p9Product: string;
   p9Process: string;
   p9Performance: string;

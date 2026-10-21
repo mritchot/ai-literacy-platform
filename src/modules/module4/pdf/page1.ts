@@ -59,13 +59,15 @@ export function drawPage1(doc: jsPDF, data: CompletionProfileData): void {
     C.delegation,
     'Delegation',
     'What you committed to changing',
-    'From Module 2 — Action Commitment',
+    data.task1Revised || data.task2Revised
+      ? 'From Module 2 — Action Commitment, revised in Module 4'
+      : 'From Module 2 — Action Commitment',
     (ix, iy, iw, ih) => {
       drawStackedFields(
         doc,
         [
-          { label: 'Task 1', body: data.task1 },
-          { label: 'Task 2', body: data.task2 },
+          { label: data.task1Revised ? 'Task 1 · revised' : 'Task 1', body: data.task1 },
+          { label: data.task2Revised ? 'Task 2 · revised' : 'Task 2', body: data.task2 },
         ],
         C.delegationText,
         ix,
