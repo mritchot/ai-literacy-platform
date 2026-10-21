@@ -15,11 +15,15 @@ import { useChartTokens } from '../../hooks/useChartTokens';
 import { TokenChip } from './TokenChip';
 import { useViewport } from '../../hooks/useViewport';
 import {
+  OTHER_TOKEN,
   STEMS,
   STEM_3_OUTPUTS,
   softmaxWithTemperature,
   type Candidate,
+  type TemperatureDistribution,
 } from './stem-data';
+
+const EMPTY_DISTRIBUTION: TemperatureDistribution = { probs: [], residualProb: 0 };
 
 // Generation cap = 1: the pedagogical point is "watch a single next-token
 // prediction" — temperature exploration happens via the slider + Reset
@@ -76,11 +80,11 @@ export function NextTokenDemo(): JSX.Element {
   };
 
   const stem = STEMS[activeStem - 1]!;
-  const probs = useMemo(
+  const distribution = useMemo(
     () =>
       stem.candidates.length > 0
-        ? softmaxWithTemperature(stem.candidates, temperature, stem.residualPct)
-        : [],
+        ? softmaxWithTemperature(stem.candidates, temperature, stem.residualLogit)
+        : EMPTY_DISTRIBUTION,
     [stem, temperature],
   );
 
@@ -89,19 +93,23 @@ export function NextTokenDemo(): JSX.Element {
 
   const generate = () => {
     if (tokensExhausted || activeStem === 3) return;
-    const idx = sampleIndex(probs);
-    const c = stem.candidates[idx];
-    if (!c) return;
+    const hasResidual = stem.residualLogit !== undefined;
+    const weights = hasResidual
+      ? [...distribution.probs, distribution.residualProb]
+      : distribution.probs;
+    const idx = sampleIndex(weights);
+    const token = idx < stem.candidates.length ? stem.candidates[idx]?.token : OTHER_TOKEN;
+    if (token === undefined) return;
     setGenerated((prev) => ({
       ...prev,
-      [activeStem]: [...(prev[activeStem] ?? []), c.token],
+      [activeStem]: [...(prev[activeStem] ?? []), token],
     }));
     markEngaged(3, 5, `stem_${activeStem}_generated`);
     track({
       type: `p6_stem_${activeStem}_generated`,
       moduleId: 3,
       sectionId: 5,
-      payload: { temperature, token: c.token },
+      payload: { temperature, token },
     });
   };
 
@@ -236,7 +244,7 @@ export function NextTokenDemo(): JSX.Element {
         ) : (
           <StandardStemPanel
             stem={stem}
-            probs={probs}
+            distribution={distribution}
             temperature={temperature}
             generatedTokens={generatedTokens}
             tokensExhausted={tokensExhausted}
@@ -268,7 +276,7 @@ export function NextTokenDemo(): JSX.Element {
 
 function StandardStemPanel({
   stem,
-  probs,
+  distribution,
   temperature,
   generatedTokens,
   tokensExhausted,
@@ -277,7 +285,7 @@ function StandardStemPanel({
   onTemperatureChange,
 }: {
   stem: (typeof STEMS)[number];
-  probs: number[];
+  distribution: TemperatureDistribution;
   temperature: number;
   generatedTokens: string[];
   tokensExhausted: boolean;
@@ -291,8 +299,8 @@ function StandardStemPanel({
 
       <ProbabilityPanel
         candidates={stem.candidates}
-        probs={probs}
-        residualPct={stem.residualPct}
+        probs={distribution.probs}
+        residualProb={stem.residualLogit !== undefined ? distribution.residualProb : null}
         residualLabel={stem.residualLabel}
       />
 
@@ -382,12 +390,13 @@ function SentenceDisplay({
 function ProbabilityPanel({
   candidates,
   probs,
-  residualPct,
+  residualProb,
   residualLabel,
 }: {
   candidates: Candidate[];
   probs: number[];
-  residualPct: number;
+  /** null when the stem has no aggregate "other tokens" candidate. */
+  residualProb: number | null;
   residualLabel: string;
 }): JSX.Element {
   // Mobile drops the ProbabilityBar column entirely — the desktop
@@ -440,14 +449,15 @@ function ProbabilityPanel({
             </li>
           );
         })}
-        {residualPct > 0 && (
+        {residualProb !== null && (
           <li
+            aria-label={`${residualLabel.replace('…', '')}, probability ${(residualProb * 100).toFixed(1)} percent`}
             className="grid items-center gap-3 pt-1"
             style={{ gridTemplateColumns: gridTemplate, color: 'rgb(var(--muted))' }}
           >
             <span className="font-mono text-[12px] italic">{residualLabel}</span>
             <span className="font-mono text-[12px]" style={{ textAlign: 'right' }}>
-              {residualPct.toFixed(1)}%
+              {(residualProb * 100).toFixed(1)}%
             </span>
             {!isMobile && <span aria-hidden="true" />}
           </li>

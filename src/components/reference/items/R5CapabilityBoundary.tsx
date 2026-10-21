@@ -43,12 +43,12 @@ const RELIABLE_ROWS: ReliableRow[] = [
   },
   {
     task: 'Reformatting and restructuring',
-    why: 'Deterministic tasks with clear output specifications. Token-level manipulation within well-defined patterns.',
+    why: 'Tasks with one well-defined correct output and a clear specification. Token-level manipulation within well-defined patterns.',
     notes: 'Format + audience + length spec → reliable output.',
   },
   {
     task: 'Brainstorming and ideation',
-    why: 'High-temperature sampling across the probability distribution produces diverse options by design.',
+    why: 'Sampling from the probability distribution, rather than always taking the top token, produces varied options; asking for many distinct options widens the spread.',
     notes: 'Useful for breadth. Evaluate each option independently; plausible ≠ good.',
   },
   {
@@ -99,7 +99,7 @@ const FAILS_CATEGORIES: FailsCategory[] = [
     rows: [
       {
         failsAt: 'Multi-digit arithmetic',
-        why: 'Numbers split into arbitrary token chunks; “127” may become [“12”, “7”] or [“1”, “27”]',
+        why: 'Digits are cut into tokens by a fixed rule, not by value: “1279” becomes [“127”, “9”], so token boundaries cut across place value',
         instead: 'Ask the model to write code that performs the calculation',
       },
       {
@@ -109,7 +109,7 @@ const FAILS_CATEGORIES: FailsCategory[] = [
       },
       {
         failsAt: 'Non-English text processing',
-        why: 'Lower-resource languages fragment 2–3× more aggressively, consuming context window and increasing error surface',
+        why: 'Lower-resource languages often take 2× or more the tokens for the same meaning, up to 15× for some languages and tokenizers (Petrov et al., 2023), consuming context window and increasing error surface',
         instead: 'Verify non-English output more carefully; expect quality gaps',
       },
     ],
@@ -160,7 +160,7 @@ const FAILS_CATEGORIES: FailsCategory[] = [
       },
       {
         failsAt: 'Multi-document synthesis',
-        why: 'Multiple documents consume context rapidly; later documents may be underprocessed',
+        why: 'Multiple documents consume context rapidly; documents in the middle of the stack are the most likely to be underprocessed',
         instead: 'Process documents individually, then synthesize yourself',
       },
     ],

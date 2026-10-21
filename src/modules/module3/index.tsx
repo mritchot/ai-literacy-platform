@@ -150,25 +150,20 @@ function Section2({ module }: ModuleProp): JSX.Element {
          <Citation ids="ritchot-2025" pageKey="predictable-errors" />.
         </p>
         <p className="m-0">
-          Think of the model's vocabulary as a fixed set of tokens. The size depends on the
-          tokenizer. The one this module's playground uses, OpenAI's cl100k_base, has about
-          100,000 tokens; OpenAI's newer o200k_base has about 200,000
-          <Citation ids="openai-tiktoken" pageKey="vocab-sizes" />, and other labs' tokenizers
-          differ again. Every input you
-          provide must be represented using only those tokens. A common English word like
-          "report" matches a single token. An unusual term might require three or four tokens
-          placed side by side to spell it out. The model never sees your original text; it only
-          sees the token sequence. The fixed-set picture breaks down in one place. The pieces are
-          not chosen by meaning or by spelling rules. Apart from a few fixed rules for where text
-          may be split, such as cutting runs of digits into chunks of up to three, they are chosen
-          by how often a character sequence appeared in the text the tokenizer was built from.
-          That is why the examples below look arbitrary until you know the rules. Tokens are also the unit the industry prices by. Vendors quote cost per
-          million tokens the way chipmakers once quoted megahertz
-         <Citation ids="evans-2025-05" pageKey="mtok-22" />. On one routing platform, the median
-          effective price across task categories was $0.73 per million tokens in 2025
-         <Citation ids="openrouter-a16z-2025" pageKey="median-cost-48" />. So everything below
-          about which inputs fragment into more tokens is also a lesson in which inputs cost
-          more.
+          Think of the model's vocabulary as a fixed set of tokens: about 100,000 for the
+          tokenizer this module's playground uses (OpenAI's cl100k_base), about 200,000 for
+          OpenAI's newer o200k_base, and different again for other labs
+          <Citation ids="openai-tiktoken" pageKey="vocab-sizes" />. Every input you provide must
+          be represented using only those tokens. The pieces are not chosen by meaning or by
+          spelling rules. Apart from a few fixed rules for where text may be split, such as
+          cutting runs of digits into chunks of up to three, they are chosen by how often a
+          character sequence appeared in the text the tokenizer was built from. A common English
+          word like "report" matches a single token. An unusual term might require three or four
+          tokens placed side by side to spell it out. The model never sees your original text; it
+          only sees the token sequence. That is why the examples below look arbitrary until you
+          know the rules. Tokens are also the unit vendors price by
+         <Citation ids="evans-2025-05" pageKey="mtok-22" />, so an input that fragments into more
+          tokens also costs more to process.
         </p>
       </div>
 
@@ -214,12 +209,19 @@ function Section2({ module }: ModuleProp): JSX.Element {
         </h3>
         <p className="m-0">
           The digit sequence “127” is a single token, while “1279” splits into “127” and
-          “9.” Here the split does not come from frequency. The tokenizer this module uses cuts
-          every run of digits into chunks of up to three, counting from the left, so even a
+          “9.” Here the split does not come from frequency. The tokenizer this module uses, and
+          OpenAI’s newer o200k_base, cut every run of digits into chunks of up to three, counting
+          from the left<Citation ids="openai-tiktoken" pageKey="digit-grouping" />, so even a
           common year like “2024” becomes “202” and “4.” Place value groups digits from the
-          right, so the token boundaries often ignore the number’s mathematical structure. This is why AI tools make arithmetic errors that look
-          bizarre: the model is not performing calculation on numbers, it is predicting the next
-          token in a sequence of statistically derived fragments that happen to contain digits.
+          right, so the token boundaries often ignore the number’s mathematical structure. Typed
+          without commas, 12345678 becomes 123 / 456 / 78. Typed as 12,345,678, it becomes
+          12 / , / 345 / , / 678, with each comma a token of its own. It is the same number split
+          two ways, and only the second split lines up with place value. Other vendors chose
+          other rules: the tokenizer Google uses for Gemini 2.0 and Gemma 3 splits every digit
+          apart<Citation ids="gemma-team-2025" pageKey="split-digits" />. None of these rules
+          does arithmetic. This is why AI tools make arithmetic errors that look bizarre: the
+          model is not performing calculation on numbers, it is predicting the next token in a
+          sequence of fragments that happen to contain digits.
         </p>
         <p className="m-0">
           Newer AI tools partially address this by routing arithmetic to external calculators
@@ -236,15 +238,23 @@ function Section2({ module }: ModuleProp): JSX.Element {
           Japanese, Arabic, or Hindi might produce 40 or more, because those character sequences
           were less frequent in the training data and therefore received less compression. More
           tokens means a longer sequence, which consumes more of the model’s working memory and
-          increases the surface area for generation errors.
+          increases the surface area for generation errors. Newer tokenizers narrow the gap
+          without closing it. In this module’s tokenizer, the request “Please review the attached
+          quarterly report before Friday.” takes 9 tokens in English and 59 in Hindi; OpenAI’s
+          newer o200k_base needs 18 for the Hindi. Across languages and tokenizers, researchers have measured
+          the same text costing up to 15 times as many tokens
+         <Citation ids="petrov-2023" pageKey="up-to-15x" />.
         </p>
         <h3 className="m-0 mt-2 font-sans text-h3 font-semibold text-ink">
           Third, character-level tasks are structurally difficult.
         </h3>
         <p className="m-0">
           When you ask “how many R’s are in ‘strawberry’?”, you are asking about individual
-          letters. But the model does not see individual letters; it sees tokens, and the word
-          “strawberry” might be a single token or two tokens depending on the model. Counting
+          letters. But the model does not see individual letters; it sees tokens. In this
+          module’s tokenizer, “strawberry” after a space is one token. Inside quotation marks, as
+          in the question above, it becomes three: str / aw / berry. OpenAI’s newer tokenizer
+          cuts the quoted word into st / raw / berry. Try both versions of the word in the
+          playground in the next section, which uses this module’s tokenizer. Counting
           characters within a token requires the model to have learned, during training, exactly
           which letters are packed inside that token ID. It sometimes gets this right. It often
           does not. Routing the same question to a code tool that steps through the characters
@@ -370,7 +380,7 @@ function Section4({ module }: ModuleProp): JSX.Element {
           separate question that the mechanism does not address.
         </p>
         <h3 className="m-0 mt-2 font-sans text-h3 font-semibold text-ink">
-          The model’s probabilities are frozen.
+          Knowledge: the model’s probabilities are frozen.
         </h3>
         <p className="m-0">
           The statistical patterns the model uses to predict the next token were learned during
@@ -388,7 +398,12 @@ function Section4({ module }: ModuleProp): JSX.Element {
           low temperature, the model almost always picks the highest-probability token, producing
           consistent, predictable output. At high temperature, the model is willing to select
           lower-probability tokens, producing more varied output but with a higher chance of
-          drifting into implausible territory.
+          drifting into implausible territory. You will rarely set it yourself. Most chat apps
+          offer no temperature control, and on Anthropic’s newest models the developer interface
+          rejects any temperature other than the default
+         <Citation ids="anthropic-thinking-2026" pageKey="sampling-parameters" />. Temperature
+          still explains why the same prompt gives different answers. What you control is the
+          prompt: ask for one answer, or ask for ten distinct options.
         </p>
         <p className="m-0">
           The interactive demonstration below shows both features in action: probability-based
@@ -431,7 +446,8 @@ function Section5({ module }: ModuleProp): JSX.Element {
         side-by-side temperature comparison where the same prompt produces three different
         outputs. The candidate tokens and their base probabilities are illustrative, pre-computed
         examples rather than a live model's output; the temperature math applied to them is the
-        real softmax calculation, the same mechanism commercial models use.
+        real softmax calculation, with the rest of the vocabulary treated as one combined option
+        whose share shrinks at low temperature and grows at high temperature.
       </p>
       <NextTokenDemo />
 
@@ -466,8 +482,8 @@ function Section6({ module }: ModuleProp): JSX.Element {
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
           The third mechanical idea is the simplest to state and the hardest to see: the model
-          has a fixed-size container for everything it can process at once, and anything that
-          doesn’t fit is silently dropped.
+          has a fixed-size container for everything it can process at once, and you may not be
+          told what the model did not see.
         </p>
         <p className="m-0">
           This container is called the <strong>context window</strong>. It holds your prompt, any
@@ -483,24 +499,30 @@ function Section6({ module }: ModuleProp): JSX.Element {
           natively<Citation ids="qwen3-model-card-2025" pageKey="context-length" />. This module
           uses 200,000 tokens as its working example: it sits between the open-weight and
           flagship sizes and is a round number for the arithmetic that follows. Most requests use a small
-          fraction of that. Across one routing platform's traffic, the average prompt grew from
-          about 1,500 to more than 6,000 tokens between early 2024 and late 2025
-         <Citation ids="openrouter-a16z-2025" pageKey="prompt-length-6k" />. Programming work drove
-          most of that rise: coding requests routinely exceed 20,000 tokens, while other kinds
-          of requests stayed relatively flat. The window rarely binds on a single request. It binds over a session, which is
-          the failure mode described below.
+          fraction of that, even though average prompts have grown, mostly in programming work
+         <Citation ids="openrouter-a16z-2025" pageKey="prompt-length-6k" />. The window rarely
+          binds on a single request. It binds over a session, which is the failure mode described
+          below.
         </p>
         <p className="m-0">
           What a 200K window actually holds depends entirely on what you put in. English prose
-          runs about 75,000 words per 100,000 tokens, so 200K is roughly the length of a 500-page
-          novel. Other formats fit very differently. The same content in Japanese or another
+          runs about 75,000 words per 100,000 tokens in OpenAI’s tokenizers, so 200K is roughly the
+          length of a 500-page novel. Counts differ by vendor and even by model version: Anthropic
+          says the tokenizer it introduced with Claude Opus 4.7 produces about 30 percent more
+          tokens for the same text than its earlier models did
+         <Citation ids="anthropic-token-counting-2026" pageKey="newer-tokenizer" />. Other formats
+          fit very differently. The same content in Japanese or another
           non-Latin script can use two to three times as many tokens for the same meaning,
-          leaving room for the equivalent of 150 pages of an English novel rather than 500.
+          leaving room for the equivalent of roughly 170 to 250 pages of an English novel rather
+          than 500.
           Source code is heavier than equivalent English prose because operators, punctuation,
           and split identifiers each consume tokens; a few hundred lines of Python can run
-          several thousand. Spreadsheets and CSVs consume tokens unpredictably: every comma,
-          cell value, and digit fragment registers as its own piece, so a couple thousand rows
-          of mixed numbers and short labels can fill 10,000 to 20,000 tokens.
+          several thousand. Spreadsheets and CSVs are heavier than they look: every comma,
+          cell value, and digit fragment registers as its own piece. Budget about two tokens per
+          cell for short words and small numbers, and four or more once dates, codes, and prices
+          are mixed in. A 2,000-row sales export with seven columns (date, region, SKU, units, price,
+          revenue, rep) comes to about 58,000 tokens in this module’s tokenizer, and a two-column
+          list of the same length to about 9,000.
         </p>
         <p className="m-0">
           That sounds like a lot until you upload your team’s vendor portfolio for a quarterly
@@ -510,12 +532,10 @@ function Section6({ module }: ModuleProp): JSX.Element {
           that grows around the documents can eventually rival the documents themselves.
           Reasoning models add a draw you do not see. When a model works through a problem in
           steps before it answers, those steps are reasoning tokens, and they count as output.
-          On the same routing platform, average completion length nearly tripled during 2025,
+          On one routing platform, average completion length nearly tripled during 2025,
           from about 150 to 400 tokens, mostly because of reasoning tokens
-         <Citation ids="openrouter-a16z-2025" pageKey="reasoning-tokens-completion" />. In the
-          same year, reasoning models went from a negligible share of the platform's traffic to
-          more than half<Citation ids="openrouter-a16z-2025" pageKey="reasoning-share-50" />.
-          A tool that thinks longer is also a tool that fills its container faster.
+         <Citation ids="openrouter-a16z-2025" pageKey="reasoning-tokens-completion" />. A tool
+          that thinks longer is also a tool that fills its container faster.
         </p>
         <p className="m-0">
           Flagship models now advertise context windows of about one million tokens, but
@@ -533,8 +553,15 @@ function Section6({ module }: ModuleProp): JSX.Element {
          <Citation ids="modarressi-nolima-2025" pageKey="drop-at-32k" />. The practical rule is
           that the advertised window is a ceiling on what fits, not a promise about what the
           model will use well. The window has a maximum size, and that maximum is absolute. There is
-          no overflow mechanism, no “page two” of the model’s attention. When the input exceeds
-          the window, the excess is truncated, and the model does not tell you it happened.
+          no overflow mechanism, no “page two” of the model’s attention. What happens at the limit
+          depends on the tool. A single input that is too long is usually refused with an error
+         <Citation ids="anthropic-context-windows-2026" pageKey="overflow" />. Two other cases
+          are quiet. Over a long conversation, some chat apps drop or summarize the oldest turns to
+          make room<Citation ids="anthropic-context-windows-2026" pageKey="rolling" />. And some
+          tools stop placing a large upload in the window at all: they search it and pass the
+          model only the passages that match your question
+         <Citation ids="anthropic-rag-projects-2026" pageKey="search-mode" />. In both quiet
+          cases, the response does not tell you what the model never saw.
         </p>
         <h3 className="m-0 mt-2 font-sans text-h3 font-semibold text-ink">
           Context exhaustion is usually cumulative.
@@ -544,8 +571,8 @@ function Section6({ module }: ModuleProp): JSX.Element {
           transcripts, the original spec, the post-mortems from related work) and ask for a
           retrospective. The first response fits. You ask for revisions, regenerate sections,
           compare angles. Each round adds to the running total. By the time the conversation has
-          run long enough, files that fit at the start may be silently truncated to make room
-          for what came later. The model will still produce a fluent, complete-sounding
+          run long enough, files that fit at the start may be silently dropped or summarized to
+          make room for what came later. The model will still produce a fluent, complete-sounding
           retrospective, because fluent, complete-sounding text is what next-token prediction
           optimizes for. Nothing in the response will signal that three interview transcripts
           and half the post-mortems were dropped two prompts ago.
@@ -558,9 +585,8 @@ function Section6({ module }: ModuleProp): JSX.Element {
           positions equally. Research on long-context language models has documented a{' '}
           <strong>lost-in-the-middle effect</strong>
          <Citation ids="liu-2024" />: material at the beginning and end of the input receives
-          more attention than material buried in the center. Subsequent studies have confirmed
-          the pattern across newer models. If you upload a 200-page document and the critical
-          clause is on page 100, the model is more likely to miss it than if the same clause
+          more attention than material buried in the center. If you upload a 200-page document
+          and the critical clause is on page 100, the model is more likely to miss it than if the same clause
           appeared on page 1 or page 200.
         </p>
         <h3 className="m-0 mt-2 font-sans text-h3 font-semibold text-ink">
@@ -666,7 +692,8 @@ function Section8({ module }: ModuleProp): JSX.Element {
           You now have three mechanical ideas: tokenization determines how text enters the model,
           next-token prediction determines how output is generated, and the context window
           determines how much the model can hold at once. Together they explain a large share of
-          the AI failures you will encounter at work. But there is a fourth property that
+          the AI failures you will encounter at work. Section 4 added a fourth, knowledge: the
+          patterns frozen at the training cutoff and thin on rare topics. A fifth property
           completes the picture, and it governs something you have direct control over: how well
           the model follows your instructions.
         </p>
@@ -676,20 +703,24 @@ function Section8({ module }: ModuleProp): JSX.Element {
           instruction through the same probabilistic mechanism that generates everything else. It
           predicts what a response to your instruction would look like, based on patterns from
           its training data. Sometimes that prediction aligns precisely with your intent.
-          Sometimes it does not.
+          Sometimes it does not. Three steerability failures come up most often.
         </p>
         <p className="m-0">
           The first is <strong>sycophancy</strong>. The model is trained on data where agreeable,
-          affirming responses are common, including the human-preference tuning that rewards
-          agreeable answers. When you present a flawed argument and ask for
-          feedback, the most statistically probable response is agreement, not critique. The
-          model is more likely to tell you your analysis is insightful than to tell you it
+          affirming responses are common, and the human-preference tuning that follows rewards
+          agreeable answers: people, and the reward models trained on their ratings, tend to
+          prefer a response that matches their own view, sometimes over a correct one
+         <Citation ids="sharma-2024" pageKey="preference-data" />. When you present a flawed
+          argument and ask for feedback, the most statistically probable response is agreement,
+          not critique. The model is more likely to tell you your analysis is insightful than to tell you it
           contains an error.
         </p>
         <p className="m-0">
           The second is <strong>verbosity</strong>. Ask for a one-paragraph summary and you may
-          receive four paragraphs. The model’s training data contains far more long-form
-          responses than concise ones, so length is the statistically favored outcome.
+          receive four paragraphs. Preference tuning rewards length: in studies of that
+          tuning, reward models scored longer answers higher, and much of the measured gain came
+          from answers simply getting longer
+         <Citation ids="singhal-2024" pageKey="length-bias" />.
         </p>
         <p className="m-0">
           The third is <strong>format compliance without content accuracy</strong>. The model can
@@ -716,7 +747,7 @@ function Section9({ module }: ModuleProp): JSX.Element {
       module={module}
       sectionId={9}
       sectionTitle="When properties meet"
-      sectionLabel="Section 9 · Reading + reference"
+      sectionLabel="Section 9 · Reading + practice"
       width="reading"
       autoComplete
     >
@@ -752,12 +783,14 @@ function Section9({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           Five diagnostic pairs account for the majority of workplace AI failures. The first
-          three appear most often; the final two surface in specific contexts.
+          three appear most often; the final two surface in specific contexts. The citation
+          failure you just traced is the first. Before you see the other four, name the pair
+          behind each one yourself.
         </p>
       </div>
 
       <div className="my-8">
-        <DiagnosticPairTable />
+        <DiagnosticPairTable mode="predict" />
       </div>
 
       <div className="space-y-4 font-sans text-body text-body">
@@ -849,8 +882,8 @@ function Section11({ module }: ModuleProp): JSX.Element {
           errors in arithmetic, multilingual content, and character-level tasks. Next-token
           prediction determines how output is generated: one token at a time, by probability,
           with no mechanism to distinguish real from plausible. The context window determines
-          how much the model can hold; it is a fixed container with a hard edge, and information
-          that falls outside is silently lost. Two more properties round out the set: knowledge
+          how much the model can hold; it is a fixed container with a hard edge, and you may not be
+          told what falls outside it. Two more properties round out the set: knowledge
           that is frozen at the training cutoff and unevenly distributed across topics, and
           steerability that follows the most probable response pattern rather than your exact
           intent.
@@ -865,11 +898,12 @@ function Section11({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           That is the mechanical foundation. What it does not yet give you is a practiced
-          workflow for applying it. Module 4 closes that gap. It moves through three practice
+          workflow for applying it. Module 4 closes that gap. It moves through five practice
           tasks: decomposing a workplace task into components that belong to different
           reliability zones; reformulating an underspecified prompt and comparing the outputs
-          side by side; and evaluating an AI-generated deliverable by identifying exactly which
-          elements need verification and which can be trusted.
+          side by side; evaluating an AI-generated deliverable by identifying exactly which
+          elements need verification and which can be trusted; refining a draft over several
+          turns; and writing a diligence statement that documents how AI contributed.
         </p>
         <p className="m-0">
           The question shifts from <em>“why does the tool behave this way?”</em> to{' '}
