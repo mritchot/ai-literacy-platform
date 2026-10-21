@@ -132,9 +132,9 @@ function PostFraming({ itemCount }: { itemCount: number }): JSX.Element {
       </p>
       <ul className="m-0 list-disc space-y-1.5 pl-5">
         <li>
-          <strong className="text-ink">Use the vocabulary you&rsquo;ve learned.</strong> Tokenization,
-          next-token prediction, context window, augmentation/automation, the 4D framework: all
-          of it applies here.
+          <strong className="text-ink">Reason from what you practiced.</strong> Each question
+          describes a workplace situation without naming the concept behind it. Work out what is
+          going on before you look for familiar terms in the options.
         </li>
         <li>
           <strong className="text-ink">Comparative results when you finish.</strong> Each item is

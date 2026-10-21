@@ -1,9 +1,11 @@
 // Post-Assessment instrument — 10 scenario-based items administered
-// AFTER Module 4 completion. Items use course vocabulary (tokenization,
-// next-token prediction, context window, augmentation/automation
-// spectrum, Description competency, 4D framework) and are PARALLEL to
-// the pre-assessment items by construct (different scenarios, same
-// construct). The `parallelPreId` field joins each post item to its
+// AFTER Module 4 completion. The options use course vocabulary
+// (tokenization, next-token prediction, context window,
+// augmentation/automation spectrum, Description competency, 4D
+// framework); the stems never name the concept an item tests, so the
+// learner has to recognize which idea applies, as on the pre form.
+// Items are PARALLEL to the pre-assessment items by construct
+// (different scenarios, same construct). The `parallelPreId` field joins each post item to its
 // pre-assessment counterpart for the comparative results view in
 // `components/assessment/AssessmentResults.tsx`.
 //
@@ -28,7 +30,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'usage',
     objectiveRefs: ['2.1', '2.4'],
     stem:
-      'After completing the program, a participant reviews her team\'s AI usage logs and notices that 80% of their AI interactions are single-turn exchanges (one prompt, one response, no follow-up). In a team meeting, her manager describes their AI strategy as "deeply collaborative. We use it as a thinking partner." Applying what you\'ve learned about the augmentation-automation spectrum, which assessment is most accurate?',
+      'After completing the program, a participant reviews her team\'s AI usage logs and notices that 80% of their AI interactions are single-turn exchanges (one prompt, one response, no follow-up). In a team meeting, her manager describes their AI strategy as "deeply collaborative. We use it as a thinking partner." Which assessment is most accurate?',
     scenarioSummary:
       'A team\'s logs show 80% single-turn AI usage while the manager describes the team\'s strategy as deeply collaborative.',
     options: [
@@ -74,7 +76,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'usage',
     objectiveRefs: ['2.2', '2.3'],
     stem:
-      'A department head reviews data showing her team\'s AI-assisted tasks and notices that customer-facing proposal drafting saves the most time per task (over 60% reduction). She plans to mandate AI use for all client proposals starting next quarter. Applying the productivity-risk framework from the program, what is the most critical gap in her decision?',
+      'A department head reviews data showing her team\'s AI-assisted tasks and notices that customer-facing proposal drafting saves the most time per task (over 60% reduction). She plans to mandate AI use for all client proposals starting next quarter. What is the most critical gap in her decision?',
     scenarioSummary:
       'A department head plans to mandate AI for all client proposals based on 60%+ time savings, without examining verification burden.',
     options: [
@@ -120,7 +122,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'failure',
     objectiveRefs: ['3.2', '4.3'],
     stem:
-      'A product manager uses an AI tool to generate a competitive landscape analysis. The report states: "Gartner\'s 2025 Magic Quadrant for Enterprise Collaboration platforms placed Vendor X in the Leaders quadrant for the third consecutive year, citing its API extensibility and compliance automation as key differentiators." The statement is fluent, specific, and formatted exactly like a real analyst citation. Using the mechanical understanding of language models from the program, what is the strongest reason to verify this claim before including it in a board presentation?',
+      'A product manager uses an AI tool to generate a competitive landscape analysis. The report states: "Gartner\'s 2025 Magic Quadrant for Enterprise Collaboration platforms placed Vendor X in the Leaders quadrant for the third consecutive year, citing its API extensibility and compliance automation as key differentiators." The statement is fluent, specific, and formatted exactly like a real analyst citation. What is the strongest reason to verify this claim before including it in a board presentation?',
     scenarioSummary:
       'An AI-generated competitive analysis cites a specific Gartner Magic Quadrant placement with named differentiators: fluent, specific, and unverified.',
     options: [
@@ -258,7 +260,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'mechanics',
     objectiveRefs: ['3.2'],
     stem:
-      'A procurement specialist asks an AI tool to provide the current ISO 9001:2015 certification requirements for medical device suppliers. The tool produces a detailed, well-structured list of 12 requirements that reads like official documentation. The specialist notices that requirements 8 through 12 don\'t appear in the actual ISO standard. Applying the prediction-vs.-retrieval distinction from the program, which explanation is most accurate?',
+      'A procurement specialist asks an AI tool to provide the current ISO 9001:2015 certification requirements for medical device suppliers. The tool produces a detailed, well-structured list of 12 requirements that reads like official documentation. The specialist notices that requirements 8 through 12 don\'t appear in the actual ISO standard. Which explanation is most accurate?',
     scenarioSummary:
       'An AI lists 12 ISO 9001:2015 certification requirements; the last 5 don\'t exist in the actual standard.',
     options: [
@@ -304,7 +306,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'mechanics',
     objectiveRefs: ['3.1'],
     stem:
-      'A localization manager asks an AI tool to translate a product tagline from English to Thai and then translate it back to English to check fidelity. The round-trip translation produces a noticeably different meaning from the original. She runs the same test with a French translation and the round-trip is nearly perfect. Using your understanding of tokenization, what is the most likely structural explanation for this disparity?',
+      'A localization manager asks an AI tool to translate a product tagline from English to Thai and then translate it back to English to check fidelity. The round-trip translation produces a noticeably different meaning from the original. She runs the same test with a French translation and the round-trip is nearly perfect. What is the most likely structural explanation for this disparity?',
     scenarioSummary:
       'Round-trip translation through Thai shifts meaning while round-trip through French preserves it. Same model, same task, different result.',
     options: [
@@ -350,7 +352,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'mechanics',
     objectiveRefs: ['3.4'],
     stem:
-      'A team lead asks three colleagues to each use an AI tool for a different task, then report the results. Colleague A asked the tool to write a press release announcing a product launch; the output was polished and accurate. Colleague B asked the tool to verify whether a specific clause exists in their company\'s 200-page vendor agreement; the tool said yes, but the clause doesn\'t exist. Colleague C asked the tool to calculate the weighted average cost of capital using five financial inputs; the result was off by several percentage points. The team lead asks you: "Why did the tool work for A but fail for B and C?" Using the capability diagnosis framework from the program, which response is most accurate?',
+      'A team lead asks three colleagues to each use an AI tool for a different task, then report the results. Colleague A asked the tool to write a press release announcing a product launch; the output was polished and accurate. Colleague B asked the tool to verify whether a specific clause exists in their company\'s 200-page vendor agreement; the tool said yes, but the clause doesn\'t exist. Colleague C asked the tool to calculate the weighted average cost of capital using five financial inputs; the result was off by several percentage points. The team lead asks you: "Why did the tool work for A but fail for B and C?" Which response is most accurate?',
     scenarioSummary:
       'Three colleagues, three AI tasks: press release succeeds, vendor-agreement clause check fabricates, WACC calculation is wrong by several points.',
     options: [
@@ -395,7 +397,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     constructKey: 'verification-priority',
     block: 'evaluation',
     objectiveRefs: ['4.3'],
-    stem: `A program coordinator uses an AI tool to draft a grant application for a workforce development initiative. The draft includes the following four claims. Using the verification priority framework from the program, which claim should be verified first?
+    stem: `A program coordinator uses an AI tool to draft a grant application for a workforce development initiative. The draft includes the following four claims. Which claim should be verified first?
 
 1. "Workforce development programs have historically played a central role in addressing skill gaps during periods of economic transition."
 2. "The U.S. Department of Labor's 2024 Workforce Innovation Report found that employer-sponsored upskilling programs reduced turnover by 34% in participating organizations."
@@ -446,7 +448,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     block: 'evaluation',
     objectiveRefs: ['4.2'],
     stem:
-      'A training coordinator asks an AI tool: "Help me with onboarding." The output is a generic checklist that could apply to any organization. Rather than abandoning the tool, she restructures her request. Which restructured prompt best demonstrates the Description competency from the program?',
+      'A training coordinator asks an AI tool: "Help me with onboarding." The output is a generic checklist that could apply to any organization. Rather than abandoning the tool, she restructures her request. Which restructured prompt is most likely to produce a plan she can use?',
     scenarioSummary:
       'A vague onboarding prompt produced a generic checklist. Four restructured prompts compete to demonstrate the Description competency.',
     options: [
