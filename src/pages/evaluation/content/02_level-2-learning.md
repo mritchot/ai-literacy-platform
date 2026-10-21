@@ -40,7 +40,7 @@ That matrix is the traceability artifact: no assessment item exists without a pa
 
 ## Scoring and thresholds
 
-Scoring is binary per item, unweighted across blocks, with learning gain as the simple post-minus-pre delta. Because a short form has a ceiling, the results screen also reports normalized gain, the share of available improvement achieved: (post − pre) ÷ (items − pre) ([Hake, 1998](https://doi.org/10.1119/1.18809)). A learner who moves from 8 to 10 and one who moves from 4 to 6 both gain +2, but the first closed all of the remaining gap and the second a third of it. Labels read against the pre score: a zero change from a pre score of 80% or more reads as a strong baseline held, while a zero change from a lower pre score points the learner to the constructs still missed. A participant whose baseline was taken on the earlier ten-item form is compared on the ten constructs answered both times. Beyond the aggregate, the analytics dashboard exposes a per-construct breakdown, so a participant who improved overall but missed verification priority on both forms is flagged for targeted follow-up rather than averaged into a single number.
+Scoring is binary per item, unweighted across blocks, with learning gain as the simple post-minus-pre delta. Because a short form has a ceiling, the results screen also reports normalized gain, the share of available improvement achieved: (post − pre) ÷ (items − pre) ([Hake, 1998](https://doi.org/10.1119/1.18809)). A learner who moves from 8 to 10 and one who moves from 4 to 6 both gain +2, but the first closed half of the remaining gap and the second a quarter of it. Labels read against the pre score: a zero change from a pre score of 80% or more reads as a strong baseline held, while a zero change from a lower pre score points the learner to the constructs still missed. A participant whose baseline was taken on the earlier ten-item form is compared on the ten constructs answered both times. Beyond the aggregate, the analytics dashboard exposes a per-construct breakdown, so a participant who improved overall but missed verification priority on both forms is flagged for targeted follow-up rather than averaged into a single number.
 
 At twelve items, a single-item swing moves the score about eight points, so the thresholds are interpretive ranges, stated as percentages, rather than pass/fail cutoffs:
 
@@ -49,7 +49,7 @@ At twelve items, a single-item swing moves the score about eight points, so the 
 | 80% or more (10–12) | Strong | Solid understanding across all four domains. Ready for application; proceed to Level 3 monitoring. |
 | 60–79% (8–9) | Adequate | Core concepts acquired, specific gaps remain. Review per-construct analysis; targeted follow-up. |
 | 30–59% (4–7) | Developing | May have engaged superficially or need support. Check whether gaps are concentrated or distributed. |
-| Below 30% (0–3) | Minimal | At or below chance (3 of 12). Verify engagement before reading as a learning outcome; the dashboard flags answers given in under ten seconds, a common screen for rapid guessing ([Wise & Kong, 2005](https://doi.org/10.1207/s15324818ame1802_2)). |
+| Below 30% (0–3) | Minimal | At or below chance (3 of 12). Verify engagement before reading as a learning outcome; the dashboard flags answers given in under ten seconds, a fixed-threshold version of the response-time screen for rapid guessing ([Wise & Kong, 2005](https://doi.org/10.1207/s15324818ame1802_2)). |
 
 | Delta | Label | Reading |
 |---|---|---|

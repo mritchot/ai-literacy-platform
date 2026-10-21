@@ -250,7 +250,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'The Document 2 provision used clause numbers and defined terms that split into unusual tokens, so tokenization kept the model from matching it against the wording in Document 3. The conflicts between Documents 1 and 3 used plainer wording that tokenized cleanly.',
         isCorrect: false,
         feedbackText:
-          'Tokenization affects character-level tasks such as counting letters or comparing digit strings. It does not stop a model from recognizing that two passages make conflicting policy statements, and the same model matched provisions between Documents 1 and 3 written in the same register. What sets the missed provision apart is its position near the center of a long input, not how its words were split into tokens.',
+          'Tokenization affects character-level tasks such as counting letters or comparing digit strings. It does not stop a model from recognizing that two passages make conflicting policy statements, and the same model found the conflicts between Documents 1 and 3. What sets the missed provision apart is its position near the center of a long input, not how its words were split into tokens.',
       },
     ],
   },
@@ -576,7 +576,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           '"No AI note is needed. The report went through the same review as any other deliverable, and naming the tool would only invite the executive team to discount findings that have already been checked."',
         isCorrect: false,
         feedbackText:
-          'Leaving the note out treats disclosure as a risk to the findings rather than evidence for them. The organization\'s practice is to disclose, and the silence it replaces is what keeps teams from learning which AI practices work. A specific note that the output was checked makes the findings easier to trust, not harder.',
+          'Leaving the note out breaks the company\'s stated expectation and treats disclosure as a risk to the findings rather than evidence for them. When AI use goes unreported, colleagues cannot learn which uses worked. A specific note that says what was checked makes the findings easier to trust, not harder.',
       },
     ],
   },
