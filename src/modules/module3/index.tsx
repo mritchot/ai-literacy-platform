@@ -746,7 +746,7 @@ function Section9({ module }: ModuleProp): JSX.Element {
       module={module}
       sectionId={9}
       sectionTitle="When properties meet"
-      sectionLabel="Section 9 · Reading + reference"
+      sectionLabel="Section 9 · Reading + practice"
       width="reading"
       autoComplete
     >
@@ -782,12 +782,14 @@ function Section9({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           Five diagnostic pairs account for the majority of workplace AI failures. The first
-          three appear most often; the final two surface in specific contexts.
+          three appear most often; the final two surface in specific contexts. The citation
+          failure you just traced is the first. Before you see the other four, name the pair
+          behind each one yourself.
         </p>
       </div>
 
       <div className="my-8">
-        <DiagnosticPairTable />
+        <DiagnosticPairTable mode="predict" />
       </div>
 
       <div className="space-y-4 font-sans text-body text-body">
