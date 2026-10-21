@@ -18,10 +18,12 @@ import {
   MODULE_4_KC_ITEMS_S4,
   MODULE_4_KC_ITEMS_S7,
 } from './knowledge-check-items';
+import { CLOSING_CONFIDENCE_REFLECTION } from './module4-content';
 import { OutputVerification } from './OutputVerification';
 import { PromptComparison } from './PromptComparison';
 import { R7Trigger } from '../../components/reference/R7Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
+import { ReflectionPrompt } from '../../components/shared/ReflectionPrompt';
 import { TaskDecomposition } from './TaskDecomposition';
 
 const MODULE_ID = 4;
@@ -458,13 +460,23 @@ function Section9({ module }: ModuleProp): JSX.Element {
          <Citation ids="lee-2025" pageKey="correlational-caveat" />. Still, the direction
           matters. Confidence is the intended product of a program like this one, and the
           confidence this program built is confidence in your evaluation process, not in the
-          tool's output. That is the kind the research links to more scrutiny. The moment the
-          verification workflow starts to feel unnecessary is the moment it is doing the most
-          work. If your Discernment practice fades as the outputs keep looking clean, you have
-          not become better at using AI; you have become a faster route for unverified content.
+          tool's output. That is the kind the research links to more scrutiny.
         </p>
+        <ReflectionPrompt
+          moduleId={4}
+          sectionId={9}
+          promptId="closing_confidence"
+          accent="discernment"
+          engagedEvent="closing_confidence_engaged"
+          savedEvent="closing_confidence_saved"
+          promptText={CLOSING_CONFIDENCE_REFLECTION}
+        />
         <p className="m-0">
-          There is a second reason to keep verifying routine outputs, beyond catching errors.
+          The moment the verification workflow starts to feel unnecessary is the moment it is
+          doing the most work. If your Discernment practice fades as the outputs keep looking
+          clean, you have not become better at using AI; you have become a faster route for
+          unverified content. There is a second reason to keep verifying routine outputs, beyond
+          catching errors.
           Evaluation is a skill, and skills decay without practice. The knowledge-worker survey
           warns that reserving critical thinking for high-stakes tasks is risky, because
           low-stakes work is where the skill stays exercised
@@ -474,7 +486,9 @@ function Section9({ module }: ModuleProp): JSX.Element {
          <Citation ids="huang-2025" pageKey="paradox-of-supervision" />. Some of those engineers
           solve a problem without AI now and then, on purpose, to stay sharp
          <Citation ids="huang-2025" pageKey="deliberate-practice" />. Treat one routine task a
-          week as a full-verification exercise, even when the output looks fine.
+          week as a full-verification exercise, even when the output looks fine. Start with the
+          second task in your Module 2 action commitment, the one you already delegate to AI that
+          may need more human oversight.
         </p>
         <p className="m-0">
           The diligence statement is the artifact that outlasts the program. The action commitment
