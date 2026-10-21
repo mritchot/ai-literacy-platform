@@ -5,9 +5,11 @@
 
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
-import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { useLearnerProgress, type KCConfidence } from '../../contexts/LearnerProgressContext';
+import { CONFIDENCE_LABEL, isConfidence } from '../../utils/kc-calibration';
 import { scrollBehavior } from '../../utils/motion';
 import { CheckSources, type CheckSource } from './CheckSources';
+import { ConfidenceRating } from './ConfidenceRating';
 import { Icon } from './Icon';
 import { nextRadioIndex } from './radio-group-nav';
 import { Overline } from './Overline';
@@ -74,6 +76,9 @@ export function KnowledgeCheck({
   const stored = getKnowledgeCheck(moduleId, sectionId, item.id);
   const [selected, setSelected] = useState<string | null>(stored?.selectedOptionId ?? null);
   const [submitted, setSubmitted] = useState<boolean>(Boolean(stored));
+  const [confidence, setConfidence] = useState<KCConfidence | null>(
+    isConfidence(stored?.confidence) ? stored.confidence : null,
+  );
   const [showAll, setShowAll] = useState<boolean>(false);
 
   // Ref to the post-submit feedback callout. After submission we scroll
@@ -91,16 +96,18 @@ export function KnowledgeCheck({
     if (!selected || submitted) return;
     const option = item.options.find((o) => o.id === selected);
     if (!option) return;
+    const rating = confidence ? { confidence } : {};
     recordKnowledgeCheck(moduleId, sectionId, item.id, {
       selectedOptionId: option.id,
       isPreferred: option.isPreferred,
       timestamp: Date.now(),
+      ...rating,
     });
     track({
       type: `${item.id}_submitted`,
       moduleId,
       sectionId,
-      payload: { optionId: option.id, isPreferred: option.isPreferred },
+      payload: { optionId: option.id, isPreferred: option.isPreferred, ...rating },
     });
     didJustSubmitRef.current = true;
     setSubmitted(true);
@@ -279,13 +286,14 @@ export function KnowledgeCheck({
       </fieldset>
 
       {!submitted && (
-        <div className="mt-4 flex justify-end">
+        <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <ConfidenceRating idBase={`kc-${item.id}`} value={confidence} onChange={setConfidence} />
           <button
             type="button"
             onClick={submit}
             disabled={!selected}
             aria-disabled={!selected}
-            className="bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] transition-colors duration-[160ms] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
+            className="self-end sm:self-auto bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] transition-colors duration-[160ms] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
           >
             Submit response
           </button>
@@ -319,6 +327,14 @@ export function KnowledgeCheck({
             {selectedOption.feedbackText}
             <CheckSources sources={selectedOption.sources} />
           </div>
+          {confidence && (
+            <p className="m-0 mt-2 font-sans text-[12.5px] text-secondary">
+              You rated this {CONFIDENCE_LABEL[confidence]}.
+              {confidence === 'certain' &&
+                !selectedOption.isPreferred &&
+                ' A confident miss is the one most worth a second look: compare your reasoning with the recommended response.'}
+            </p>
+          )}
         </div>
       )}
 

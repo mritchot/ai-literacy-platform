@@ -22,10 +22,15 @@ interface SectionPosition {
   sectionId: number;
 }
 
+/** Optional self-rating a learner gives before submitting a knowledge check. */
+export type KCConfidence = 'guessing' | 'fairly' | 'certain';
+
 export interface KnowledgeCheckResult {
   selectedOptionId: string;
   isPreferred: boolean;
   timestamp: number;
+  /** Absent on results saved before ratings existed and on unrated items. */
+  confidence?: KCConfidence;
 }
 
 // ─── Pre / Post Assessment state ───────────────────────────────────

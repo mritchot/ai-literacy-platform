@@ -4,8 +4,10 @@
 // under a separate subheading; other modules don't have ICs.
 
 import { useMemo } from 'react';
-import type { LearnerProgressState } from '../contexts/LearnerProgressContext';
+import type { KCConfidence, LearnerProgressState } from '../contexts/LearnerProgressContext';
+import { KCCalibration } from '../components/shared/KCCalibration';
 import { Overline } from '../components/shared/Overline';
+import { CONFIDENCE_LABEL, isConfidence } from '../utils/kc-calibration';
 import {
   IC_IDS,
   IC_METADATA,
@@ -34,6 +36,7 @@ interface ResponseRow {
   selected: string | null; // null = not attempted
   isPreferred: boolean | null;
   feedbackTone: 'success' | 'caution' | 'error' | null;
+  confidence: KCConfidence | null;
 }
 
 function buildKCRows(
@@ -46,7 +49,7 @@ function buildKCRows(
     const key = `${meta.moduleId}.${meta.sectionId}.${kcId}`;
     const stored = progress.knowledgeChecks[key];
     if (!stored) {
-      return { meta, selected: null, isPreferred: null, feedbackTone: null };
+      return { meta, selected: null, isPreferred: null, feedbackTone: null, confidence: null };
     }
     const tone: 'success' | 'caution' | 'error' = stored.isPreferred
       ? 'success'
@@ -56,6 +59,7 @@ function buildKCRows(
       selected: stored.selectedOptionId,
       isPreferred: stored.isPreferred,
       feedbackTone: tone,
+      confidence: isConfidence(stored.confidence) ? stored.confidence : null,
     };
   });
 }
@@ -67,13 +71,14 @@ function buildICRows(progress: LearnerProgressState): ResponseRow[] {
     const stored = progress.knowledgeChecks[key];
     const fullMeta: KCMetadata = { ...meta, objectiveRef: '—' };
     if (!stored) {
-      return { meta: fullMeta, selected: null, isPreferred: null, feedbackTone: null };
+      return { meta: fullMeta, selected: null, isPreferred: null, feedbackTone: null, confidence: null };
     }
     return {
       meta: fullMeta,
       selected: stored.selectedOptionId,
       isPreferred: stored.isPreferred,
       feedbackTone: stored.isPreferred ? 'success' : 'caution',
+      confidence: null,
     };
   });
 }
@@ -87,17 +92,31 @@ export function KCResponseAnalysis({ progress }: KCResponseAnalysisProps): JSX.E
     }));
   }, [progress]);
 
+  const kcResults = useMemo(
+    () =>
+      ([1, 2, 3, 4] as const).flatMap((id) =>
+        KC_IDS[id].map((kcId) => {
+          const meta = KC_METADATA[kcId];
+          return progress.knowledgeChecks[`${meta.moduleId}.${meta.sectionId}.${kcId}`];
+        }),
+      ),
+    [progress],
+  );
+
   return (
-    <section aria-label="Knowledge check response analysis" className="grid gap-6 lg:grid-cols-2">
-      {moduleData.map((m) => (
-        <ModuleGroup
-          key={m.moduleId}
-          moduleId={m.moduleId}
-          kc={m.kc}
-          ic={m.ic}
-        />
-      ))}
-    </section>
+    <div className="space-y-6">
+      <KCCalibration results={kcResults} />
+      <section aria-label="Knowledge check response analysis" className="grid gap-6 lg:grid-cols-2">
+        {moduleData.map((m) => (
+          <ModuleGroup
+            key={m.moduleId}
+            moduleId={m.moduleId}
+            kc={m.kc}
+            ic={m.ic}
+          />
+        ))}
+      </section>
+    </div>
   );
 }
 
@@ -236,6 +255,11 @@ function ResponseCard({
           {!row.isPreferred && preferredOption && (
             <span className="text-muted">
               Preferred: {preferredOption.label}
+            </span>
+          )}
+          {row.confidence && (
+            <span className="text-secondary">
+              Confidence: <span className="text-ink">{CONFIDENCE_LABEL[row.confidence]}</span>
             </span>
           )}
         </div>
