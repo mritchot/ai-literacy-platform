@@ -111,6 +111,9 @@ export function KnowledgeCheck({
   useEffect(() => {
     if (submitted && didJustSubmitRef.current && feedbackRef.current) {
       didJustSubmitRef.current = false;
+      // Submit unmounts the focused button and disables the radios, so
+      // focus would otherwise fall to <body> (WCAG 2.4.3).
+      feedbackRef.current.focus({ preventScroll: true });
       feedbackRef.current.scrollIntoView({ behavior: scrollBehavior(), block: 'nearest' });
     }
   }, [submitted]);
@@ -288,17 +291,20 @@ export function KnowledgeCheck({
 
       {/* Always-mounted live region: content injected on submit is
           reliably announced (a region that mounts together with its
-          content often isn't). The visual callout below is separate. */}
+          content often isn't). It carries only the feedback body: the
+          callout below takes focus on submit and announces the title as
+          its group label, so neither part is read twice. */}
       <span aria-live="polite" className="sr-only">
-        {submitted && selectedOption
-          ? `${selectedOption.feedbackTitle}. ${selectedOption.feedbackText}`
-          : ''}
+        {submitted && selectedOption ? selectedOption.feedbackText : ''}
       </span>
 
       {submitted && selectedOption && (
         <div
           ref={feedbackRef}
-          className="mt-4"
+          tabIndex={-1}
+          role="group"
+          aria-label={selectedOption.feedbackTitle}
+          className="mt-4 focus:outline-none"
           style={{
             background: TONE_BG[selectedOption.feedbackTone],
             borderLeft: `3px solid ${TONE_BORDER[selectedOption.feedbackTone]}`,
