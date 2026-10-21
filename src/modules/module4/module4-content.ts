@@ -21,9 +21,9 @@ export interface TaskCard {
   feedback: Record<P8Category, TaskCardFeedback>;
 }
 
-export const P8_SCENARIO = `Your task: You are a senior analyst at a mid-size professional services firm. Your managing director has asked you to produce a competitive landscape briefing for a prospective client meeting in 48 hours. The briefing must include: a summary of five competitor organizations (revenue, headcount, recent strategic moves), an analysis of how the prospect's market position compares, a set of three strategic recommendations tailored to the prospect's specific situation, and an executive summary suitable for the managing director to present directly.
+export const P8_SCENARIO = `You are a senior analyst at a mid-size professional services firm. Your managing director has asked you to produce a competitive landscape briefing for a prospective client meeting in 48 hours. The briefing must include: a summary of five competitor organizations (revenue, headcount, recent strategic moves), an analysis of how the prospect's market position compares, a set of three strategic recommendations tailored to the prospect's specific situation, and an executive summary suitable for the managing director to present directly.
 
-You have access to an AI tool. You have 48 hours. Decide how to allocate each component.`;
+You have access to an AI tool. You have 48 hours. Assign each of the six components below to Human-Only, AI-Assisted, or Fully Delegated, then select See Results.`;
 
 export const P8_CARDS: TaskCard[] = [
   {
@@ -270,9 +270,9 @@ export interface VerificationElement {
   feedback: Record<Classification, VerificationFeedback>;
 }
 
-export const P10_SCENARIO = `Your situation: You are a senior operations analyst. Your director asked you to use AI to draft a two-page internal briefing on how three competitor firms are applying AI to supply chain operations: what they've announced, what results they've reported, and what your organization should consider in response. You delegated the drafting to AI with a well-specified prompt (audience, format, constraints). The output arrived looking polished and professional. Your director plans to circulate it to the leadership team tomorrow morning.
+export const P10_SCENARIO = `You are a senior operations analyst. Your director asked you to use AI to draft a two-page internal briefing on how three competitor firms are applying AI to supply chain operations: what they've announced, what results they've reported, and what your organization should consider in response. You delegated the drafting to AI with a well-specified prompt (audience, format, constraints). The output arrived looking polished and professional. Your director plans to circulate it to the leadership team tomorrow morning.
 
-Before you send it forward, you need to verify the output. Below is the AI-generated briefing. Read it, then evaluate each flagged element.`;
+Before you send it forward, you need to verify the output. Below is the AI-generated briefing. Read it, then classify each of the six flagged elements as Include, Verify, or Flag.`;
 
 // The briefing renders as paragraphs with six embedded highlight markers.
 // Each segment of `P10_BRIEFING_SEGMENTS` is either plain text (`marker:
@@ -502,9 +502,9 @@ export const P10_REFLECTION = `Pick one AI-generated output you used at work in 
 
 // ─── P11: Iterative Refinement ────────────────────────────────────
 
-export const P11_SCENARIO = `Your task: You are an HR business partner at a mid-size technology company. The Chief People Officer has asked you to draft an internal communication to a 200-person engineering department announcing a reorganization. Three teams are being merged into two, reporting lines are changing for roughly 60 people, and two team lead positions are being eliminated (the affected individuals have already been notified privately). The email will go out Monday morning. It needs to be clear, honest, and specific enough that people know what's changed, without generating panic or a wave of resignations.
+export const P11_SCENARIO = `You are an HR business partner at a mid-size technology company. The Chief People Officer has asked you to draft an internal communication to a 200-person engineering department announcing a reorganization. Three teams are being merged into two, reporting lines are changing for roughly 60 people, and two team lead positions are being eliminated (the affected individuals have already been notified privately). The email will go out Monday morning. It needs to be clear, honest, and specific enough that people know what's changed, without generating panic or a wave of resignations.
 
-You've decided to use AI to draft the communication. The exercise below walks you through three refinement turns, practicing the Description-Discernment loop on each iteration.`;
+You've decided to use AI to draft the communication. The exercise below walks you through three refinement turns, practicing the Description-Discernment loop on each iteration. You evaluate the first two drafts, then write a refinement of your own in the third turn and compare it with a sample.`;
 
 export const P11_TURN1_PROMPT = `Your initial prompt: "Write an email to the engineering department announcing a reorganization. Three teams are being merged into two and some reporting lines are changing."`;
 
@@ -657,9 +657,9 @@ export const P11_REFLECTION = `You evaluated three drafts and wrote one refineme
 // content. P12_SCENARIO / P12_EXEMPLAR / etc. remain plain strings
 // below since they don't carry inline citations.
 
-export const P12_SCENARIO = `Your situation: Go back to the internal briefing from the output verification exercise: the AI draft on how Meridian, Praxon, and Cascade apply AI to their supply chains. Imagine you checked each element the way you triaged it. You removed what you could not confirm, checked the figures against company materials, rewrote the recommended actions from the confirmed figures, and sent the final briefing to your director. It goes to the leadership team tomorrow.
+export const P12_SCENARIO = `Go back to the internal briefing from the output verification exercise: the AI draft on how Meridian, Praxon, and Cascade apply AI to their supply chains. Imagine you checked each element the way you triaged it. You removed what you could not confirm, checked the figures against company materials, rewrote the recommended actions from the confirmed figures, and sent the final briefing to your director. It goes to the leadership team tomorrow.
 
-Your organization has adopted the practice of appending a brief AI diligence statement to any deliverable that involved AI assistance. Write the statement for this briefing.`;
+Your organization has adopted the practice of appending a brief AI diligence statement to any deliverable that involved AI assistance. Write the statement for this briefing, then save it to compare it with an exemplar statement.`;
 
 export const P12_EXEMPLAR = `**AI Diligence Statement: Competitor AI in Supply Chain Operations**
 
