@@ -169,54 +169,51 @@ function Section2({ module }: ModuleProp): JSX.Element {
         </p>
         <h3 className="m-0 mt-6 font-sans text-h3 font-semibold text-ink">Demand</h3>
         <p className="m-0">
-          The World Economic Forum regularly surveys over a thousand employers across 55 economies
-          about the skills they expect to need most in the coming years. The 2025 report
-          identifies a familiar pattern with one important shift: AI and big data now ranks as
-          the single fastest-growing skill in the global workforce
-          <Citation ids="wef-2025" pageKey="fastest-growing-skills" />, ahead of networks and
-          cybersecurity, technological literacy, and creative thinking. Job postings say the
+          In the World Economic Forum’s 2025 employer survey, AI and big data ranks as the single
+          fastest-growing skill in the global workforce
+          <Citation ids="wef-2025" pageKey="fastest-growing-skills" />. Job postings say the
           same thing from the hiring side. Between mid-2023 and mid-2025, US workers in
           occupations whose postings ask for AI fluency rose nearly sevenfold, from about one
           million to seven million
           <Citation ids="mgi-agents-robots-us-2025" pageKey="ai-fluency-7x" />. No other skill
           grew faster. Across ten European economies, demand rose fivefold between late 2023 and
           late 2025, the same rate MGI measured in the United States over those months
-          <Citation ids="mgi-agents-robots-europe-2026" pageKey="ai-fluency-5x" />. Most
-          organizations plan to invest in skills: 85% intend to upskill their workforce over the
-          2025–2030 period<Citation ids="wef-2025" pageKey="upskill-85" />. Asked about AI
-          specifically, 77% plan to reskill existing staff to work alongside it
-          <Citation ids="wef-2025" pageKey="ai-reskill-77" />. But planning isn’t execution:
-          skill gaps, cited by 63% of employers, remain the single largest barrier to business
-          transformation
-          across industries, outranking organizational culture (46%), regulation (39%), data
-          infrastructure (32%), and investment capital (26%)
-          <Citation ids="wef-2025" pageKey="skill-gap-63" />. The report’s own reading of what to
-          train is specific. Drawing on an analysis by the job site Indeed in which GPT-4o rated
-          its own abilities, the report sees potential for generative AI to augment human work
-          rather than fully replace it in most areas, and it calls for training in both advanced
-          prompt-writing and broader generative AI literacy
-          <Citation ids="wef-2025" pageKey="genai-literacy-training" />.
+          <Citation ids="mgi-agents-robots-europe-2026" pageKey="ai-fluency-5x" />. The first
+          story below sets that demand beside the barrier employers name most often.
         </p>
         <h3 className="m-0 mt-6 font-sans text-h3 font-semibold text-ink">Geography</h3>
         <p className="m-0">
           AI adoption is not uniform. Where you work, and the institutional context around you,
           shapes how much AI gets used, by whom, and for what
-          <Citation ids="appel-mccrory-tamkin-2025" pageKey="adoption-speed" />. The pattern
-          holds beyond the consumer data you will see next. On one routing platform that serves
-          hundreds of models to developers, Asia’s share of spending more than doubled in the
-          year to November 2025, from about 13% to about 31%
-          <Citation ids="openrouter-a16z-2025" pageKey="asia-share-34" />. North America fell
-          below half. That platform assigns region by billing address, so read the shares as
-          indicative. For organizations with teams across regions, this creates a practical
-          problem: different locations developing AI capabilities at different rates, for
-          different tasks, with no shared baseline. Employer surveys add a second
-          view. In Singapore, 97% of surveyed employers do not rate their exposure to AI as low,
-          and 82% plan to reskill staff to work alongside AI; in Canada the figures are 94% and
-          90%; employers in Hong Kong expect technology to deliver 43% of task time by 2030
-          against 34% globally<Citation ids="wef-2025" pageKey="economy-profiles" />. Those
-          figures record what employers expect, not what people do. The usage data in the next
-          story shows what people actually do; it covers Singapore and Canada but not Hong Kong.
+          <Citation ids="appel-mccrory-tamkin-2025" pageKey="adoption-speed" />. For
+          organizations with teams across regions, this creates a practical problem: different
+          locations developing AI capabilities at different rates, for different tasks, with no
+          shared baseline. The second story maps that unevenness country by country.
         </p>
+        <EvidenceNote
+          id="m1-s2-regional-signals"
+          moduleId={1}
+          sectionId={2}
+          label="More on regional differences"
+        >
+          <p className="m-0">
+            The pattern holds beyond the consumer data in the next story. On one routing platform
+            that serves hundreds of models to developers, Asia’s share of spending more than
+            doubled in the year to November 2025, from about 13% to about 31%
+            <Citation ids="openrouter-a16z-2025" pageKey="asia-share-34" />. North America fell
+            below half. That platform assigns region by billing address, so read the shares as
+            indicative.
+          </p>
+          <p className="m-0">
+            Employer surveys add another view. In Singapore, 97% of surveyed employers do not rate
+            their exposure to AI as low, and 82% plan to reskill staff to work alongside AI; in
+            Canada the figures are 94% and 90%; employers in Hong Kong expect technology to
+            deliver 43% of task time by 2030 against 34% globally
+            <Citation ids="wef-2025" pageKey="economy-profiles" />. Those figures record what
+            employers expect, not what people do. The usage data in the next story covers
+            Singapore and Canada but not Hong Kong.
+          </p>
+        </EvidenceNote>
         <h3 className="m-0 mt-6 font-sans text-h3 font-semibold text-ink">Behavior</h3>
         <p className="m-0">
           How the workforce uses AI is changing rapidly, and the direction of that change matters.

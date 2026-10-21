@@ -310,6 +310,11 @@ function Story1Body({
           identify a persistent obstacle: the workforce doesn’t have the skills yet. Skill gaps are
           the barrier they cite most often: 63% expect them to hold back the transformation of
           their business, ahead of regulation and budgets<Citation ids="wef-2025" pageKey="skill-gap-63" />.
+          The report’s own reading of what to train is specific. Drawing on an analysis by the job
+          site Indeed in which GPT-4o rated its own abilities, the report sees potential for
+          generative AI to augment human work rather than fully replace it in most areas, and it
+          calls for training in both advanced prompt-writing and broader generative AI literacy
+          <Citation ids="wef-2025" pageKey="genai-literacy-training" />.
         </p>
         <p className="m-0">
           The chart below shows the top rising skills. Below it, a callout tracks how quickly the
