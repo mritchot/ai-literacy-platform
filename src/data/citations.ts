@@ -670,7 +670,7 @@ export const CITATIONS = {
     title: 'Retrieval augmented generation (RAG) for projects',
     publisher: 'Claude Help Center (support.claude.com)',
     date: 'accessed October 22, 2026',
-    pages: { 'search-mode': 'sections "What is RAG for projects?" and "How RAG works"' },
+    pages: { 'search-mode': 'sections "How RAG works" and "When RAG activates"' },
     url: 'https://support.claude.com/en/articles/11473015-retrieval-augmented-generation-rag-for-projects',
   },
   'anthropic-token-counting-2026': {

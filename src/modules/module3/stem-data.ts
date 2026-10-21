@@ -54,7 +54,7 @@ export const STEMS: Stem[] = [
       { token: ' one', baseLogit: -0.3 },
     ],
     residualLogit: 1.514,
-    residualLabel: '…roughly 100,000 other tokens',
+    residualLabel: '…100,000+ other tokens',
     annotation:
       'This is the capability zone. The training data contained this fact so many times, from so many sources, that the probability distribution concentrates overwhelmingly on the correct answer. Raising the temperature spreads some probability to other tokens, but “Paris” stays the single most likely choice across the whole slider. The model is not “looking up” France’s capital. It is predicting the next token, and the prediction happens to be correct because the pattern is strong. A database lookup is either right or wrong. A prediction is probable or improbable. On well-worn paths, the distinction does not matter. On rarer ones, it matters enormously.',
   },
@@ -72,7 +72,7 @@ export const STEMS: Stem[] = [
       { token: ' around', baseLogit: 0.5 },
     ],
     residualLogit: 0.754,
-    residualLabel: '…roughly 100,000 other tokens',
+    residualLabel: '…100,000+ other tokens',
     annotation:
       'This is the fabrication zone. The sentence stem looks like an academic citation, and the model has seen thousands of citation-shaped patterns in its training data. It generates a statistically plausible completion: a dollar figure that resembles a real finding and carries the same confident tone as the Paris answer. But look at the probability distribution. No single completion dominates. The model is not reporting a fact. It is choosing among several equally plausible patterns. The journal name and the statistic may both be fabricated. They satisfy the pattern. Whether they match reality is not something the mechanism can check.',
   },

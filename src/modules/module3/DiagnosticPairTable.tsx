@@ -12,12 +12,13 @@
 // keys do not match the dashboard's `.kc_` filter, so knowledge-check
 // metrics are unaffected. Print mode always renders the reference table.
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Overline } from '../../components/shared/Overline';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { usePrintMode } from '../../contexts/PrintModeContext';
 import { useViewport } from '../../hooks/useViewport';
+import { scrollBehavior } from '../../utils/motion';
 
 type PropertyId = 'tokenization' | 'ntp' | 'knowledge' | 'context' | 'steerability';
 
@@ -569,6 +570,18 @@ function PredictionCard({
   const checked = result !== null;
   const shown = result ?? selection;
   const feedback = checked ? RESULT_FEEDBACK[matchCount(result, row) as 0 | 1 | 2] : null;
+  // The Check button unmounts once the result is stored, so focus moves
+  // to the feedback; otherwise a keyboard user is dropped to the page top.
+  // Only after a check in this session, not when stored results remount.
+  const feedbackRef = useRef<HTMLDivElement | null>(null);
+  const justCheckedRef = useRef(false);
+  useEffect(() => {
+    if (checked && justCheckedRef.current && feedbackRef.current) {
+      justCheckedRef.current = false;
+      feedbackRef.current.focus({ preventScroll: true });
+      feedbackRef.current.scrollIntoView({ behavior: scrollBehavior(), block: 'nearest' });
+    }
+  }, [checked]);
 
   const toggle = (id: PropertyId) => {
     if (checked) return;
@@ -636,7 +649,10 @@ function PredictionCard({
           </span>
           <button
             type="button"
-            onClick={() => onCheck(selection, Date.now())}
+            onClick={() => {
+              justCheckedRef.current = true;
+              onCheck(selection, Date.now());
+            }}
             disabled={selection.length !== 2}
             aria-disabled={selection.length !== 2}
             className="bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] transition-colors duration-[160ms] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
@@ -653,7 +669,9 @@ function PredictionCard({
 
       {feedback && (
         <div
-          className="mt-3"
+          ref={feedbackRef}
+          tabIndex={-1}
+          className="mt-3 outline-none"
           style={{
             background: TONE_BG[feedback.tone],
             borderLeft: `3px solid ${TONE_BORDER[feedback.tone]}`,

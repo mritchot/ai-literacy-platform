@@ -239,9 +239,9 @@ function Section2({ module }: ModuleProp): JSX.Element {
           were less frequent in the training data and therefore received less compression. More
           tokens means a longer sequence, which consumes more of the model’s working memory and
           increases the surface area for generation errors. Newer tokenizers narrow the gap
-          without closing it. In this module’s tokenizer, the nine-token English request “Please
-          review the attached quarterly report before Friday” takes 59 tokens in Hindi; OpenAI’s
-          newer o200k_base needs 18. Across languages and tokenizers, researchers have measured
+          without closing it. In this module’s tokenizer, the request “Please review the attached
+          quarterly report before Friday.” takes 9 tokens in English and 59 in Hindi; OpenAI’s
+          newer o200k_base needs 18 for the Hindi. Across languages and tokenizers, researchers have measured
           the same text costing up to 15 times as many tokens
          <Citation ids="petrov-2023" pageKey="up-to-15x" />.
         </p>
@@ -252,9 +252,9 @@ function Section2({ module }: ModuleProp): JSX.Element {
           When you ask “how many R’s are in ‘strawberry’?”, you are asking about individual
           letters. But the model does not see individual letters; it sees tokens. In this
           module’s tokenizer, “strawberry” after a space is one token. Inside quotation marks, as
-          in the question above, it becomes three: str / aw / berry. Try both in the playground
-          in the next section. OpenAI’s newer tokenizer cuts the quoted word into st / raw /
-          berry. Counting
+          in the question above, it becomes three: str / aw / berry. OpenAI’s newer tokenizer
+          cuts the quoted word into st / raw / berry. Try both versions of the word in the
+          playground in the next section, which uses this module’s tokenizer. Counting
           characters within a token requires the model to have learned, during training, exactly
           which letters are packed inside that token ID. It sometimes gets this right. It often
           does not. Routing the same question to a code tool that steps through the characters
@@ -518,8 +518,9 @@ function Section6({ module }: ModuleProp): JSX.Element {
           Source code is heavier than equivalent English prose because operators, punctuation,
           and split identifiers each consume tokens; a few hundred lines of Python can run
           several thousand. Spreadsheets and CSVs are heavier than they look: every comma,
-          cell value, and digit fragment registers as its own piece. Budget two to four tokens per
-          cell. A 2,000-row sales export with seven columns (date, region, SKU, units, price,
+          cell value, and digit fragment registers as its own piece. Budget about two tokens per
+          cell for short words and small numbers, and four or more once dates, codes, and prices
+          are mixed in. A 2,000-row sales export with seven columns (date, region, SKU, units, price,
           revenue, rep) comes to about 58,000 tokens in this module’s tokenizer, and a two-column
           list of the same length to about 9,000.
         </p>
@@ -531,7 +532,7 @@ function Section6({ module }: ModuleProp): JSX.Element {
           that grows around the documents can eventually rival the documents themselves.
           Reasoning models add a draw you do not see. When a model works through a problem in
           steps before it answers, those steps are reasoning tokens, and they count as output.
-          On the same routing platform, average completion length nearly tripled during 2025,
+          On one routing platform, average completion length nearly tripled during 2025,
           from about 150 to 400 tokens, mostly because of reasoning tokens
          <Citation ids="openrouter-a16z-2025" pageKey="reasoning-tokens-completion" />. A tool
           that thinks longer is also a tool that fills its container faster.
@@ -555,7 +556,7 @@ function Section6({ module }: ModuleProp): JSX.Element {
           no overflow mechanism, no “page two” of the model’s attention. What happens at the limit
           depends on the tool. A single input that is too long is usually refused with an error
          <Citation ids="anthropic-context-windows-2026" pageKey="overflow" />. Two other cases
-          are quiet. Over a long conversation, chat apps drop or summarize the oldest turns to
+          are quiet. Over a long conversation, some chat apps drop or summarize the oldest turns to
           make room<Citation ids="anthropic-context-windows-2026" pageKey="rolling" />. And some
           tools stop placing a large upload in the window at all: they search it and pass the
           model only the passages that match your question
@@ -585,8 +586,7 @@ function Section6({ module }: ModuleProp): JSX.Element {
           <strong>lost-in-the-middle effect</strong>
          <Citation ids="liu-2024" />: material at the beginning and end of the input receives
           more attention than material buried in the center. If you upload a 200-page document
-          and the critical
-          clause is on page 100, the model is more likely to miss it than if the same clause
+          and the critical clause is on page 100, the model is more likely to miss it than if the same clause
           appeared on page 1 or page 200.
         </p>
         <h3 className="m-0 mt-2 font-sans text-h3 font-semibold text-ink">
@@ -711,8 +711,8 @@ function Section8({ module }: ModuleProp): JSX.Element {
           agreeable answers: people, and the reward models trained on their ratings, tend to
           prefer a response that matches their own view, sometimes over a correct one
          <Citation ids="sharma-2024" pageKey="preference-data" />. When you present a flawed
-          argument and ask for feedback, the most statistically probable response is agreement, not critique. The
-          model is more likely to tell you your analysis is insightful than to tell you it
+          argument and ask for feedback, the most statistically probable response is agreement,
+          not critique. The model is more likely to tell you your analysis is insightful than to tell you it
           contains an error.
         </p>
         <p className="m-0">
