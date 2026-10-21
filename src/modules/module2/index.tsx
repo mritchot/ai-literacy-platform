@@ -531,8 +531,9 @@ function Section5({ module }: ModuleProp): JSX.Element {
         the model judged its own output successful in 67% of consumer conversations and 49% of
         API calls (single requests sent by software, with no follow-up turns). More complex
         tasks save more time but succeed less often: in consumer conversations, success falls
-        from 70% for tasks that need less than a high-school education to 66% for college-level
-        work<Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />.
+        from 70% for the simplest requests, such as basic product questions, to 66% for
+        college-level work
+        <Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />.
         Success also falls as tasks lengthen: API calls reach a coin flip at tasks a person
         would need about 3.5 hours to do. Consumer conversations, which can run over many turns,
         degrade far more slowly; the authors suggest this may reflect users breaking tasks into
