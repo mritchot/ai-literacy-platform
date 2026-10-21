@@ -4,7 +4,7 @@
 
 import type { jsPDF } from 'jspdf';
 import type { CompletionProfileData } from '../generate-completion-pdf';
-import { MILESTONES, R7_TOOL_LABEL, type MilestoneDays } from '../milestones';
+import { MILESTONES, R7_TOOL_LABEL, WEEKLY_PRACTICE, type MilestoneDays } from '../milestones';
 import { C, FONT, MARGIN_LEFT, SECTION_OVERLINE_Y } from './constants';
 import {
   drawCardBase,
@@ -46,8 +46,8 @@ export function drawPage2(doc: jsPDF, data: CompletionProfileData): void {
   drawSectionOverline(
     doc,
     hasGrowth
-      ? '30 · 60 · 90 day milestones & assessment growth'
-      : '30 · 60 · 90 day milestones & knowledge checks',
+      ? 'Weekly · 30 · 60 · 90 day milestones & assessment growth'
+      : 'Weekly · 30 · 60 · 90 day milestones & knowledge checks',
     SECTION_OVERLINE_Y,
   );
 
@@ -89,7 +89,7 @@ function drawMilestonesCard(doc: jsPDF, data: CompletionProfileData): void {
   doc.setFont(FONT.sans, 'bold');
   doc.setFontSize(15);
   setTextHex(doc, C.ink);
-  doc.text(safe('Three commitments to carry forward'), x + padX, y + padY + 22);
+  doc.text(safe('Four commitments to carry forward'), x + padX, y + padY + 22);
 
   // Connection excerpts (quote learner artifacts where available).
   // Ellipsis only when text was actually truncated — mirrors the
@@ -125,11 +125,27 @@ function drawMilestonesCard(doc: jsPDF, data: CompletionProfileData): void {
       connection: `${R7_TOOL_LABEL} (in the reference panel).`,
     },
   };
-  const milestones = MILESTONES.map((m) => ({
-    days: String(m.days),
-    target: m.pdfTarget,
-    ...connections[m.days],
-  }));
+  // Badge text: the dated rows read "30 / DAYS"; the weekly row reads
+  // "1× / WEEK" so it is not mistaken for a seven-day milestone. §4.9
+  // names Task 2 as the place to start, so the weekly row quotes it.
+  const milestones = [
+    {
+      badge: '1×',
+      unit: 'WEEK',
+      target: WEEKLY_PRACTICE.target,
+      refLabel: 'START WITH →',
+      connection:
+        data.task2.trim().length > 0
+          ? `Task 2: ${quoteExcerpt(data.task2, 60)}`
+          : 'Complete the action commitment to see your oversight task here.',
+    },
+    ...MILESTONES.map((m) => ({
+      badge: String(m.days),
+      unit: 'DAYS',
+      target: m.pdfTarget,
+      ...connections[m.days],
+    })),
+  ];
 
   const rowTop = y + padY + 50;
   const rowAreaH = h - (rowTop - y) - padY;
@@ -157,14 +173,14 @@ function drawMilestonesCard(doc: jsPDF, data: CompletionProfileData): void {
     doc.setFont(FONT.sans, 'bold');
     doc.setFontSize(16);
     setTextHex(doc, C.diligenceText);
-    const numW = doc.getTextWidth(m.days);
-    doc.text(m.days, badgeX + (badgeW - numW) / 2, badgeY + 19);
+    const numW = doc.getTextWidth(m.badge);
+    doc.text(m.badge, badgeX + (badgeW - numW) / 2, badgeY + 19);
 
     doc.setFont(FONT.mono, 'normal');
     doc.setFontSize(7.5);
     setTracked(doc, 7.5, 0.1);
-    const daysW = doc.getTextWidth('DAYS');
-    doc.text('DAYS', badgeX + (badgeW - daysW) / 2, badgeY + 31);
+    const unitW = doc.getTextWidth(m.unit);
+    doc.text(m.unit, badgeX + (badgeW - unitW) / 2, badgeY + 31);
     resetTracking(doc);
 
     // Target text

@@ -37,6 +37,15 @@ export const MILESTONES: readonly Milestone[] = [
   },
 ];
 
+// The weekly practice sits above the dated milestones on the profile and
+// in the PDF. It is kept out of MILESTONES because that list also drives
+// the refresher's check-in intervals, and a weekly habit has no check-in.
+// It carries the §4.9 advice (practice decay) and maps to Level 3 B5.
+export const WEEKLY_PRACTICE = {
+  label: 'Weekly',
+  target: 'Verify one routine AI-assisted output a week against its source.',
+} as const;
+
 export const CHECK_IN_EXAMPLE_PROMPT =
   'At each check-in, bring one specific example: the situation, what you did, and what happened.';
 

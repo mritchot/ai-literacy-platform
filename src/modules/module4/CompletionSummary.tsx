@@ -1,8 +1,9 @@
 // S10 CompletionSummary — personalized competency profile rendering
 // the learner's authored artifacts back into a structured profile
 // organized by the four 4D competencies. Includes a "Where to focus
-// next" panel built from post-assessment misses, a 30/60/90-day
-// behavioral milestone table with calendar check-in reminders, and a
+// next" panel built from post-assessment misses, a weekly practice row
+// and 30/60/90-day behavioral milestone table with calendar check-in
+// reminders, and a
 // client-side PDF export.
 //
 // Gating: the profile shows substantive content only when all four
@@ -47,7 +48,13 @@ import {
   type AssessmentGrowthData,
   type CompletionProfileData,
 } from './generate-completion-pdf';
-import { CHECK_IN_EXAMPLE_PROMPT, MILESTONES, R7_TOOL_LABEL, type MilestoneDays } from './milestones';
+import {
+  CHECK_IN_EXAMPLE_PROMPT,
+  MILESTONES,
+  R7_TOOL_LABEL,
+  WEEKLY_PRACTICE,
+  type MilestoneDays,
+} from './milestones';
 import { P8_CARDS } from './module4-content';
 
 // 4D competency hex colors — matched to the on-screen accent treatment
@@ -744,7 +751,7 @@ function KCSummaryBar({
   );
 }
 
-// ─── 30/60/90 milestones ──────────────────────────────────────────
+// ─── Weekly practice and 30/60/90 milestones ──────────────────────
 
 function MilestoneTable({
   task1,
@@ -799,16 +806,36 @@ function MilestoneTable({
       </>
     ),
   };
-  const rows = MILESTONES.map((m) => ({
-    days: `${m.days} days`,
-    target: m.target,
-    connection: connections[m.days],
-    example: (examples[String(m.days)] ?? '').trim(),
-  }));
+  // §4.9 names Task 2 (the oversight task) as the place to start the
+  // weekly verification habit, so the weekly row quotes it.
+  const weeklyRow = {
+    days: WEEKLY_PRACTICE.label,
+    target: WEEKLY_PRACTICE.target,
+    connection: hasTask2 ? (
+      <>
+        <span className="font-semibold text-ink">Start with →</span>{' '}
+        <span className="italic">Task 2: {truncateToLines(task2, 90)}</span>
+      </>
+    ) : (
+      <span className="italic text-muted">
+        Complete the action commitment to see your oversight task here.
+      </span>
+    ),
+    example: '',
+  };
+  const rows = [
+    weeklyRow,
+    ...MILESTONES.map((m) => ({
+      days: `${m.days} days`,
+      target: m.target,
+      connection: connections[m.days],
+      example: (examples[String(m.days)] ?? '').trim(),
+    })),
+  ];
 
   return (
     <section
-      aria-label="30, 60, and 90 day milestones"
+      aria-label="Weekly practice and 30, 60, and 90 day milestones"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -820,7 +847,7 @@ function MilestoneTable({
         className="mb-4"
         style={{ color: 'rgb(var(--diligence-text))', letterSpacing: '0.1em' }}
       >
-        30 / 60 / 90 day milestones
+        Weekly practice and 30 / 60 / 90 day milestones
       </Overline>
       <ul className="m-0 list-none space-y-4 p-0">
         {rows.map((row, i) => (
