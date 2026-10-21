@@ -187,6 +187,9 @@ export default function Refresher(): JSX.Element {
                   item={entry.item}
                   itemNumber={idx + 1}
                   totalItems={recallSet.length}
+                  // Refresher answers are practice: they never feed the
+                  // calibration view, so no assessed label or confidence.
+                  variant="practice"
                   storedOverride={todaysResult(entry)}
                   onRecord={(result) => {
                     recordRefresherResult(today, entry.moduleId, entry.sectionId, entry.item.id, result);
