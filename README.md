@@ -37,8 +37,8 @@ The curriculum grew out of my M.Ed. in Education Technology and Instructional De
 
 The platform supports two access modes, activated via URL parameter or keyboard shortcut and persisted in localStorage:
 
-- **Learner** (default) — sequential section gating, no dashboard access
-- **Portfolio** (`?portfolio=true` or Ctrl/Cmd+Shift+A) — free navigation, analytics dashboard at `/#/dashboard` (demo data by default, with a live-data toggle)
+- **Learner** (default) — sequential section gating, inline sources hidden until the learner turns them on, no dashboard access
+- **Portfolio** (`?portfolio=true` or Ctrl/Cmd+Shift+A) — free navigation, inline sources shown by default, analytics dashboard at `/#/dashboard` (demo data by default, with a live-data toggle)
 
 ## Getting started
 
@@ -78,7 +78,7 @@ src/
 │                     pre/post assessment item banks
 ├── hooks/            Custom hooks (useTheme, usePlatformMode, useCitations,
 │                     useChartTokens, useExpandableSet, useLocalStorage,
-│                     useSectionParam, useViewport)
+│                     useReducedMotion, useSectionParam, useViewport)
 ├── modules/
 │   ├── module1/      Data narratives, geographic scatter, adoption charts
 │   ├── module2/      Augmentation/automation dashboard, productivity dashboard
