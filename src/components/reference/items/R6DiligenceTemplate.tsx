@@ -164,7 +164,7 @@ export function R6DiligenceTemplate(): JSX.Element {
         Framework: 4D AI Fluency Framework, Diligence competency (Dakan &amp; Feller, 2025,
         p. 6; closing diligence statement, p. 7), as taught in Anthropic&rsquo;s AI Fluency course.
         Statement requirements: MIT Ad Hoc Committee, 2026, pp. 16, 22. Accountability: Lee et al.,
-        CHI 2025, p. 15.
+        2025, p. 15.
       </p>
     </div>
   );
