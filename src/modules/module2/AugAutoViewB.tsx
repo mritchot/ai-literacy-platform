@@ -16,8 +16,6 @@ import { ReflectionPrompt } from '../../components/shared/ReflectionPrompt';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import {
   AXIS_TICK_STYLE,
-  DELEGATION_COLORS,
-  DISCERNMENT_COLORS,
   TOOLTIP_ITEM_STYLE,
   TOOLTIP_LABEL_STYLE,
   TOOLTIP_STYLE,
@@ -60,16 +58,17 @@ export function AugAutoViewB({
   const isMobile = viewport === 'mobile';
   const tokens = useChartTokens();
 
-  const meta = useMemo(
-    () => [
-      { key: 'taskIteration', color: DELEGATION_COLORS[0] },
-      { key: 'learning', color: DELEGATION_COLORS[1] },
-      { key: 'validation', color: DELEGATION_COLORS[2] },
-      { key: 'directive', color: DISCERNMENT_COLORS[0] },
-      { key: 'feedbackLoop', color: DISCERNMENT_COLORS[1] },
-    ],
-    [],
-  );
+  const meta = useMemo(() => {
+    const [taskIteration, learning, validation, directive, feedbackLoop] =
+      tokens.collaborationPatterns;
+    return [
+      { key: 'taskIteration', color: taskIteration },
+      { key: 'learning', color: learning },
+      { key: 'validation', color: validation },
+      { key: 'directive', color: directive },
+      { key: 'feedbackLoop', color: feedbackLoop },
+    ];
+  }, [tokens]);
 
   const stacked = [
     {
@@ -148,6 +147,9 @@ export function AugAutoViewB({
                 // stroke. Mirrors the design-system "competency-highlighted
                 // card" pattern transposed onto chart bars.
                 const fillOpacity = !hasAnySelection ? 1 : isSelected ? 1 : 0.25;
+                // Same --ghost edge as the S2 bar: the validation wash is
+                // about 1.15:1 against the card.
+                const restingStroke = m.key === 'validation' ? tokens.ghost : 'transparent';
                 return (
                   <Bar
                     key={m.key}
@@ -161,8 +163,8 @@ export function AugAutoViewB({
                     <Cell
                       fill={m.color}
                       fillOpacity={fillOpacity}
-                      stroke={isSelected ? 'rgb(var(--ink))' : 'transparent'}
-                      strokeWidth={isSelected ? 3 : 0}
+                      stroke={isSelected ? 'rgb(var(--ink))' : restingStroke}
+                      strokeWidth={isSelected ? 3 : m.key === 'validation' ? 1 : 0}
                     />
                   </Bar>
                 );

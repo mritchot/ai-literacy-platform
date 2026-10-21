@@ -45,15 +45,6 @@ export const AXIS_TICK_STYLE: SVGProps<SVGTextElement> = {
   fill: 'rgb(var(--tertiary))',
 };
 
-// Augmentation pattern fills (Delegation shades) — order matches
-// collaboration_patterns.categories[0..2]. Regenerated from the retuned
-// --delegation base; the mid and wash steps are the competency's -text
-// (dark) and -light (light) tint values, which the retune left alone.
-export const DELEGATION_COLORS = ['#5c7050', '#B5C4AB', '#E8EDE4'] as const;
-
-// Automation pattern fills (Discernment shades) — categories[3..4].
-export const DISCERNMENT_COLORS = ['#506579', '#A8BCCA'] as const;
-
 export function formatPercent(value: number, digits = 0): string {
   return `${value.toFixed(digits)}%`;
 }
