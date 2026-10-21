@@ -3,8 +3,8 @@
 // PlatformShell, not in the sidebar's module navigation.
 //
 // Recall: a short set of knowledge checks answered from memory. Items
-// the learner most recently missed come first; the rest rotate, least
-// recently practiced first, spread across the four modules, and the set
+// whose latest attempt was missed come first; the rest rotate, least
+// recently practiced first, spread across the four modules. Each group
 // is interleaved by module. The set is picked from attempts made before
 // today, so answering items does not reshuffle it mid-session.
 // Attempts save to `refresherResults` (never `knowledgeChecks`), so the
@@ -93,8 +93,9 @@ function pickRecallSet(
       [...g].sort(oldestFirst),
     ),
   );
-  const chosen = [...missed, ...rest].slice(0, SET_SIZE);
-  return roundRobin(byModule(chosen));
+  const missedChosen = missed.slice(0, SET_SIZE);
+  const restChosen = rest.slice(0, SET_SIZE - missedChosen.length);
+  return [...roundRobin(byModule(missedChosen)), ...roundRobin(byModule(restChosen))];
 }
 
 function completionTimestamp(state: LearnerProgressState): number | null {
@@ -154,8 +155,8 @@ export default function Refresher(): JSX.Element {
       <h1 className="m-0 mb-3 font-sans text-h2 font-semibold text-ink">Recall what you practiced</h1>
       <p className="m-0 mb-10 font-sans text-body text-body">
         Answer each knowledge check from memory before you look anything up. The set starts with
-        the ones you missed most recently and mixes the four modules. Your original answers stay
-        as they were.
+        any you missed on your last try and mixes the four modules. Your original answers stay as
+        they were.
       </p>
 
       <section aria-labelledby="refresher-recall-heading" className="mb-12">
