@@ -108,8 +108,12 @@ const DARK: ChartTokens = {
   delegation: '#a8bc9a',
   discernment: '#93b0c6',
   // --delegation (dark), --delegation (light), --delegation-light (dark);
-  // --discernment (dark), --discernment (light).
-  collaborationPatterns: ['#a8bc9a', '#5c7050', '#2a3025', '#93b0c6', '#506579'],
+  // --discernment (dark), then a chart-only step of the Discernment hue.
+  // Against the dark card (#1d1d24) every filled step clears the 3:1
+  // non-text minimum (8.2, 3.1, 7.4, 3.4:1); --discernment (light) sat at
+  // 2.8:1. The validation wash stays near the ground and carries a --ghost
+  // edge (3.1:1) in the charts, as it does in light mode.
+  collaborationPatterns: ['#a8bc9a', '#5c7050', '#2a3025', '#93b0c6', '#5b738a'],
   cursorFill: 'rgba(230, 226, 217, 0.08)', // --ink (dark) at 8%
 };
 
