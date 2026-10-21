@@ -507,8 +507,11 @@ function Section6({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           What a 200K window actually holds depends entirely on what you put in. English prose
-          runs about 75,000 words per 100,000 tokens, so 200K is roughly the length of a 500-page
-          novel. Other formats fit very differently. The same content in Japanese or another
+          runs about 75,000 words per 100,000 tokens in OpenAI’s tokenizers, so 200K is roughly the
+          length of a 500-page novel. Counts differ by vendor and even by model version: Anthropic
+          says the tokenizer it introduced with Claude Opus 4.7 produces about 30 percent more
+          tokens for the same text
+         <Citation ids="anthropic-token-counting-2026" pageKey="newer-tokenizer" />. Other formats fit very differently. The same content in Japanese or another
           non-Latin script can use two to three times as many tokens for the same meaning,
           leaving room for the equivalent of roughly 170 to 250 pages of an English novel rather
           than 500.
