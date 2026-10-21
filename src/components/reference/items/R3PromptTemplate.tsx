@@ -89,7 +89,7 @@ const SECTIONS: SectionSpec[] = [
       },
       {
         specify: 'Methods',
-        prompt: 'Use a specific model? (your rubric, SWOT, scoring matrix, regulatory checklist)',
+        prompt: 'Use a specific model? (your scoring criteria, SWOT, scoring matrix, regulatory checklist)',
       },
       {
         specify: 'Constraints',

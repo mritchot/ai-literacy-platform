@@ -214,7 +214,7 @@ export const P9_ANNOTATIONS: P9Annotation[] = [
   },
   {
     label: 'Process description gap',
-    text: 'The output lists categories but doesn’t connect them to the team’s actual vendor review process. The compliance manager has a specific workflow (intake forms, evaluation criteria, scoring rubrics) and none of it appears here because the prompt didn’t tell the model how to approach the task. Without process constraints, the model produces a generic framework rather than mapping to the existing one.',
+    text: 'The output lists categories but doesn’t connect them to the team’s actual vendor review process. The compliance manager has a specific workflow (intake forms, evaluation criteria, scoring matrices) and none of it appears here because the prompt didn’t tell the model how to approach the task. Without process constraints, the model produces a generic framework rather than mapping to the existing one.',
   },
   {
     label: 'Performance description gap',
@@ -222,21 +222,21 @@ export const P9_ANNOTATIONS: P9Annotation[] = [
   },
 ];
 
-export const P9_REFORMULATED_PROMPT = `"I'm briefing my compliance team (6 people, all experienced in vendor review but new to AI-specific regulation) on how the EU AI Act's transparency and risk-classification requirements change our current vendor evaluation process. We use a 30-point scoring rubric organized by data handling, operational risk, and contractual terms. Write a 400-word briefing memo (not a general summary) that maps the three most relevant regulatory changes directly to specific sections of our existing rubric, identifies which evaluation criteria need to be added or modified, and flags two vendor categories that will require re-review within 90 days. Use direct, action-oriented language. Skip the 'it is recommended' phrasing; just tell the team what to do and by when."`;
+export const P9_REFORMULATED_PROMPT = `"I'm briefing my compliance team (6 people, all experienced in vendor review but new to AI-specific regulation) on how the EU AI Act's transparency and risk-classification requirements change our current vendor evaluation process. We use a 30-point scoring matrix organized by data handling, operational risk, and contractual terms. Write a 400-word briefing memo (not a general summary) that maps the three most relevant regulatory changes directly to specific sections of our existing scoring matrix, identifies which evaluation criteria need to be added or modified, and flags two vendor categories that will require re-review within 90 days. Use direct, action-oriented language. Skip the 'it is recommended' phrasing; just tell the team what to do and by when."`;
 
 export const P9_IMPROVED_OUTPUT = `**Team Briefing: EU AI Act Impact on Vendor Review Process**
 
-Three changes in the EU AI Act directly affect how we score vendors on the 30-point rubric. Here's what shifts and what you need to do.
+Three changes in the EU AI Act directly affect how we score vendors on the 30-point scoring matrix. Here's what shifts and what you need to do.
 
-**1. Transparency documentation → Rubric Section 2 (Operational Risk), Criteria 2.3–2.5**
+**1. Transparency documentation → Matrix Section 2 (Operational Risk), Criteria 2.3–2.5**
 
-High-risk AI vendors must now provide technical documentation covering training data sources, model performance metrics, and known limitations. Our current criteria 2.3 ("vendor provides system documentation") is too broad. Replace it with two scored items: (a) vendor supplies a model card or equivalent technical summary, and (b) vendor discloses training data provenance for any system processing personal data. Add both to the rubric by end of this month.
+High-risk AI vendors must now provide technical documentation covering training data sources, model performance metrics, and known limitations. Our current criteria 2.3 ("vendor provides system documentation") is too broad. Replace it with two scored items: (a) vendor supplies a model card or equivalent technical summary, and (b) vendor discloses training data provenance for any system processing personal data. Add both to the matrix by end of this month.
 
-**2. Risk classification → New Rubric Section (add as Section 4: AI Risk Tier)**
+**2. Risk classification → New Matrix Section (add as Section 4: AI Risk Tier)**
 
 The Act classifies AI systems into four risk tiers. Any vendor deploying a system classified as "high-risk" triggers mandatory conformity assessment and human oversight requirements. Add a new scoring section: AI Risk Tier Assessment, with three criteria covering the vendor's self-classification, supporting evidence, and conformity documentation. Score on a 1–5 scale consistent with existing sections.
 
-**3. Accountability provisions → Rubric Section 3 (Contractual Terms), Criteria 3.1 and 3.6**
+**3. Accountability provisions → Matrix Section 3 (Contractual Terms), Criteria 3.1 and 3.6**
 
 Deploying organizations bear accountability for AI outputs even when generated by third-party systems. Update criterion 3.1 (liability allocation) to explicitly address AI-generated outputs, and add a new criterion 3.6 requiring vendors to provide incident-response protocols for AI system failures.
 
@@ -245,7 +245,7 @@ Deploying organizations bear accountability for AI outputs even when generated b
 1. **Data analytics vendors** (4 active contracts): most likely to fall under high-risk classification due to automated decision-making on personal data. Begin re-review this week.
 2. **Customer-facing chatbot vendors** (2 active contracts): transparency documentation requirements apply immediately. Request model cards from both vendors by Friday.
 
-I'll distribute updated rubric templates by Wednesday. Flag questions before then.`;
+I'll distribute updated matrix templates by Wednesday. Flag questions before then.`;
 
 export const P9_AFTER_NOTE = `Better description changed the fit of this memo, not the accuracy of its claims. Every obligation, risk tier, and deadline in it is a specific factual claim. Check each one against the Act's text before the team acts on it. One has already moved: in July 2026 the EU postponed the obligations for stand-alone high-risk systems to December 2027 (Regulation (EU) 2026/1744), so "must now provide" in point 1 of the After memo is no longer accurate.`;
 
