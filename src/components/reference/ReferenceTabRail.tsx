@@ -41,7 +41,7 @@ export function ReferenceTabRail({
   return (
     <nav
       aria-label={ariaLabel}
-      className="fixed z-30 flex flex-col"
+      className="reference-tab-rail fixed z-30 flex flex-col"
       style={{
         right: 0,
         top: 0,
