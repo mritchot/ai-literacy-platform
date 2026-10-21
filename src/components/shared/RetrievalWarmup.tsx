@@ -75,7 +75,8 @@ function WarmupQuestion({
   const taughtSection = taughtModule?.sections.find((s) => s.id === item.taughtIn.sectionId);
 
   const persist = () => {
-    if (draft.trim().length === 0 || draft === stored) return;
+    // An emptied field is saved too, so a cleared answer stays cleared.
+    if (draft === stored || (draft.trim().length === 0 && stored.length === 0)) return;
     saveReflection(moduleId, SECTION_ID, promptId, draft);
   };
 

@@ -83,9 +83,9 @@ function Section1({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           Check your recall against this summary. You now have the mechanical vocabulary to trace
           any AI output failure to a specific cause. You know why a fluent paragraph can contain a fabricated citation (next-token
-          prediction meeting thin knowledge). You know why a multi-document synthesis silently
-          drops material from the files you uploaded (context window limits meeting cumulative
-          conversation length). You know why a calculation looks right but isn’t (tokenization
+          prediction meeting thin knowledge). You know why a multi-document synthesis can leave
+          out material from the files you uploaded, and why the tool may not tell you (context
+          window limits meeting cumulative conversation length). You know why a calculation looks right but isn’t (tokenization
           meeting probability-based generation).
           And you know that these failures concentrate in three predictable categories (boundary
           tasks, specificity tasks, and volume tasks), each with a targeted response.

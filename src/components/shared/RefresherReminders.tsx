@@ -50,7 +50,7 @@ export function RefresherReminders({ placement }: RefresherRemindersProps): JSX.
       >
         Add check-in reminders to your calendar
       </button>
-      <p className="m-0 min-w-0 flex-1 font-sans text-caption text-tertiary" style={{ minWidth: 200 }}>
+      <p className="m-0 min-w-[200px] flex-1 font-sans text-caption text-tertiary">
         Downloads a calendar file with all-day reminders {intervals.slice(0, -1).join(', ')}, and{' '}
         {intervals[intervals.length - 1]} days from today. Each links to the refresher. Nothing is
         sent from this page.

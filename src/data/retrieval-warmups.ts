@@ -43,7 +43,7 @@ export const RETRIEVAL_WARMUPS: Record<WarmupModuleId, readonly WarmupItem[]> = 
       prompt:
         'Inside the conversation, Claude’s own estimates put the median task’s time savings at 81%. Controlled trials of the full work cycle found 14–56%. What accounts for part of the gap?',
       answer:
-        'Verification and refinement: the time people spend after the conversation turning AI output into a reliable deliverable. The report offers two other possible reasons: it cannot see work done after the conversation ends, and the trials tested earlier models.',
+        'Verification and refinement: the time people spend after the conversation turning AI output into a reliable deliverable. The in-conversation estimate cannot see that work. The report also notes that the trials it cites tested earlier models.',
       taughtIn: { moduleId: 2, sectionId: 4 },
     },
     {

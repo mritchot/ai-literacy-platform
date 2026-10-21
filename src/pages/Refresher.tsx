@@ -85,17 +85,18 @@ function pickRecallSet(
   const eligible = KNOWLEDGE_CHECK_CATALOG.filter(
     (e) => includeUnanswered || original[e.storageKey] !== undefined,
   );
-  const missed = eligible.filter((e) => latest.get(e.storageKey)?.isPreferred === false);
   const oldestFirst = (a: KnowledgeCheckEntry, b: KnowledgeCheckEntry) =>
     (latest.get(a.storageKey)?.timestamp ?? 0) - (latest.get(b.storageKey)?.timestamp ?? 0);
-  const rest = roundRobin(
-    byModule(eligible.filter((e) => latest.get(e.storageKey)?.isPreferred !== false)).map((g) =>
-      [...g].sort(oldestFirst),
-    ),
+  // Interleave before capping, so a long run of misses in one module
+  // cannot crowd the other modules out of the set.
+  const interleaved = (entries: KnowledgeCheckEntry[]) =>
+    roundRobin(byModule(entries).map((g) => [...g].sort(oldestFirst)));
+  const missed = interleaved(
+    eligible.filter((e) => latest.get(e.storageKey)?.isPreferred === false),
   );
+  const rest = interleaved(eligible.filter((e) => latest.get(e.storageKey)?.isPreferred !== false));
   const missedChosen = missed.slice(0, SET_SIZE);
-  const restChosen = rest.slice(0, SET_SIZE - missedChosen.length);
-  return [...roundRobin(byModule(missedChosen)), ...roundRobin(byModule(restChosen))];
+  return [...missedChosen, ...rest.slice(0, SET_SIZE - missedChosen.length)];
 }
 
 function completionTimestamp(state: LearnerProgressState): number | null {
@@ -166,7 +167,8 @@ export default function Refresher(): JSX.Element {
           </h2>
           {recallSet.length > 0 && (
             <span className="font-mono text-caption text-tertiary" aria-live="polite">
-              {answeredToday.length} of {recallSet.length} answered today · {preferredToday} preferred
+              {answeredToday.length} of {recallSet.length} answered today · {preferredToday} matched the
+              recommended answer
             </span>
           )}
         </div>

@@ -94,9 +94,12 @@ export function FocusNextPanel(): JSX.Element {
         </p>
       ) : shown.length === 0 ? (
         <p className="m-0 font-sans text-body-sm text-secondary">
-          You answered every post-assessment scenario as intended. The refresher keeps it that
-          way: it brings back the knowledge checks from all four modules, starting with any you
-          missed.
+          You answered every post-assessment scenario as intended. To keep it fresh, use the{' '}
+          <Link to="/refresher" className="font-medium text-action no-underline hover:underline">
+            refresher
+          </Link>
+          : it brings back the knowledge checks from all four modules, starting with any
+          you missed.
         </p>
       ) : (
         <>

@@ -134,8 +134,8 @@ export function CommitmentRevisit(): JSX.Element {
         </label>
         <p className="m-0 mb-3 font-sans text-body-sm text-secondary">
           Name one colleague or your manager you will tell about this plan. A role is enough.
-          Telling someone puts the 4D vocabulary to work: it makes your AI practice visible to the
-          people you work with.
+          Telling someone makes your AI practice visible to the people you work with, the opposite
+          of the hidden use Module 1 described.
         </p>
         <input
           id="commitment-revisit-tell"

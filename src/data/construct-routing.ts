@@ -51,7 +51,7 @@ export const CONSTRUCT_ROUTES: Record<string, ConstructRoute> = {
     sectionId: 6,
     referenceId: 'R5',
     focus:
-      'Long inputs can lose material, especially from the middle, and the tool may not tell you what it did not use. Check the output against the full source.',
+      'What happens to over-long input depends on the tool, and you may not be told what the model did not see. Even inside the window, material in the middle of a long input is recalled less reliably. Check the output against the full source.',
   },
   'prediction-retrieval': {
     moduleId: 3,
@@ -86,6 +86,6 @@ export const CONSTRUCT_ROUTES: Record<string, ConstructRoute> = {
     sectionId: 3,
     referenceId: 'R3',
     focus:
-      'Specify the product, the process, and the performance you want. Structure drives output quality more than tone or effort.',
+      'Specify the product you want, the process the AI should follow, and how it should behave (performance). Most underspecified prompts miss all three at once.',
   },
 };
