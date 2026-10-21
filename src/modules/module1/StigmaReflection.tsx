@@ -74,11 +74,11 @@ export function StigmaReflection({ scrollTargetId }: StigmaReflectionProps): JSX
     <article
       ref={articleRef}
       aria-label="Private reflection prompt"
+      className="px-4 py-4 sm:px-[22px] sm:py-5"
       style={{
         background: 'rgb(var(--surface))',
         border: '1px solid rgb(var(--border))',
         borderLeft: `3px solid ${DELEGATION}`,
-        padding: '20px 22px',
       }}
     >
       <Overline className="mb-2" style={{ color: 'rgb(var(--delegation-text))' }}>

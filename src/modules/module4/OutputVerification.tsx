@@ -164,10 +164,10 @@ export function OutputVerification(): JSX.Element {
 
       <section
         aria-label="Output verification scenario"
+        className="px-4 py-[18px] sm:px-[26px] sm:py-6"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
-          padding: '24px 26px',
         }}
       >
       <Overline className="mb-2">Practice activity — P10</Overline>
@@ -357,10 +357,10 @@ function BriefingDocument({
 
   return (
     <article
+      className="px-4 py-[18px] sm:px-[26px] sm:py-6"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
-        padding: '24px 26px',
       }}
     >
       <h3 className="m-0 mb-4 font-sans text-h3 font-semibold text-ink">

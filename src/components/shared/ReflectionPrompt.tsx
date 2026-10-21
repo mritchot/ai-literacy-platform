@@ -88,13 +88,12 @@ export function ReflectionPrompt({
 
   return (
     <section
-      className="mt-8 bg-[rgb(var(--white))]"
+      className="mt-8 bg-[rgb(var(--white))] px-4 py-4 sm:px-[22px] sm:py-5"
       style={{
         borderLeft: `3px solid ${ACCENT_HEX[accent]}`,
         border: '1px solid rgb(var(--border))',
         borderLeftWidth: 3,
         borderLeftColor: ACCENT_HEX[accent],
-        padding: '20px 22px',
       }}
     >
       <Overline className="mb-2" style={{ color: `rgb(var(--${accent}-text))` }}>

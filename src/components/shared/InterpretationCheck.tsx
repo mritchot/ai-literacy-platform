@@ -109,8 +109,8 @@ export const InterpretationCheck = forwardRef<HTMLDivElement, InterpretationChec
         style={{
           background: 'rgb(var(--surface))',
           border: '1px solid rgb(var(--border))',
-          padding: '18px 20px',
         }}
+        className="px-3 py-4 sm:px-5 sm:py-[18px]"
       >
         <div
           id={`ic-${item.id}-stem`}

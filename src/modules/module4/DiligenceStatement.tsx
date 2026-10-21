@@ -199,11 +199,11 @@ export function DiligenceStatement(): JSX.Element {
       </BottleneckCallout>
 
       <article
+        className="px-4 py-[18px] sm:px-[26px] sm:py-6"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
           borderTop: `3px solid ${DILIGENCE}`,
-          padding: '24px 26px',
         }}
       >
         <Overline className="mb-1">Diligence statement</Overline>

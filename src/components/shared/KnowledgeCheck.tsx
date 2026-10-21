@@ -131,13 +131,12 @@ export function KnowledgeCheck({
   return (
     <section
       aria-labelledby={`kc-${item.id}-stem`}
-      className="bg-[rgb(var(--white))]"
+      className="bg-[rgb(var(--white))] px-4 pb-4 pt-[18px] sm:px-6 sm:pb-5 sm:pt-[22px]"
       style={{
         borderLeft: `3px solid ${TIER1}`,
         border: '1px solid rgb(var(--border))',
         borderLeftWidth: 3,
         borderLeftColor: TIER1,
-        padding: '22px 24px 20px',
       }}
     >
       {/* On mobile the two Overlines stack onto their own lines so each

@@ -224,10 +224,10 @@ function StoryShell({
     <article
       ref={articleRef}
       data-story-index={storyNumber}
+      className="px-3 pb-4 pt-[18px] sm:px-[26px] sm:pb-[22px] sm:pt-6"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
-        padding: '24px 26px 22px',
         opacity: unlocked ? 1 : 0.3,
         pointerEvents: unlocked ? 'auto' : 'none',
         transition: 'opacity 300ms cubic-bezier(0.4, 0, 0.2, 1)',

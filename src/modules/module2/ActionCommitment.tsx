@@ -78,11 +78,10 @@ export function ActionCommitment(): JSX.Element {
   return (
     <section
       aria-label="Action commitment: two tasks to reconsider"
-      className="bg-[rgb(var(--white))]"
+      className="bg-[rgb(var(--white))] px-4 py-[18px] sm:px-6 sm:pb-[22px] sm:pt-6"
       style={{
         border: '1px solid rgb(var(--border))',
         borderTop: '3px solid rgb(var(--action))',
-        padding: '24px 24px 22px',
       }}
     >
       <Overline className="mb-2">Action commitment</Overline>

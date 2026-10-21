@@ -122,7 +122,7 @@ export function ProductivityDashboard({
           })}
         </div>
 
-        <div style={{ padding: '20px 22px' }}>
+        <div className="px-3 py-4 sm:px-[22px] sm:py-5">
           {activeTab === 'occupation' && (
             <div role="tabpanel" id="p4-panel-occupation" aria-labelledby="p4-tab-occupation">
               <ProductivityViewA rows={occupationRows} />
