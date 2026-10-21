@@ -178,7 +178,8 @@ function Section2({ module }: ModuleProp): JSX.Element {
           million to seven million
           <Citation ids="mgi-agents-robots-us-2025" pageKey="ai-fluency-7x" />. No other skill
           grew faster. Across ten European economies, demand rose fivefold between late 2023 and
-          late 2025, the same rate MGI measured in the United States over those months
+          late 2025, the same rate the McKinsey Global Institute (MGI) measured in the United
+          States over those months
           <Citation ids="mgi-agents-robots-europe-2026" pageKey="ai-fluency-5x" />. The first
           story below sets that demand beside the barrier employers name most often.
         </p>
