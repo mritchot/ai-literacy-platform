@@ -12,6 +12,7 @@ import { R1Trigger } from '../../components/reference/R1Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { EvidenceNote } from '../../components/shared/EvidenceNote';
 import { KnowledgeCheck } from '../../components/shared/KnowledgeCheck';
 
 import wefSkillDemand from '../../data/wef-skill-demand.json';
@@ -84,37 +85,43 @@ function Section1({ module }: ModuleProp): JSX.Element {
           them, have the understanding and judgment to capture that value.
         </p>
         <p className="m-0">
-          That question has become urgent unusually fast. ChatGPT
-          was estimated to have reached 100 million monthly active users in January 2023, two
-          months after launch. A UBS analysis of Similarweb traffic data called it the
-          fastest-growing consumer application in history
-          <Citation ids="reuters-ubs-2023" pageKey="chatgpt-100m" />. Investment followed:
-          investment flows into AI rose nearly eightfold after ChatGPT’s release in November
-          2022, and natural-language interfaces considerably lowered the technical barrier to
-          using the tools
-          <Citation ids="wef-2025" pageKey="ai-investment-8x" />. OpenAI reports more than
-          900 million weekly ChatGPT users, though only about 5% pay
+          That question has become urgent unusually fast. OpenAI reports more than 900 million
+          weekly ChatGPT users, though only about 5% pay
           <Citation ids="evans-2026-05" pageKey="wau-900m-29" />. Reach is not the same as
           depth: across ten US surveys from 2024 to 2025, weekly use runs well ahead of daily use
-          <Citation ids="evans-2025-11" pageKey="engagement-gap-39" />. The tools are no longer
-          emerging. Most professionals have tried them; fewer use them every day. And the speed of
-          that adoption has outrun most organizations’ ability to evaluate whether their people
-          are using these tools well.
+          <Citation ids="evans-2025-11" pageKey="engagement-gap-39" />. Most professionals have
+          tried the tools; fewer use them every day. And the speed of that adoption has outrun
+          most organizations’ ability to evaluate whether their people are using these tools
+          well.
         </p>
         <p className="m-0">
           Skill gaps in the labor market are the most-cited barrier to transforming a business:
           63% of surveyed employers expect them to hold back their transformation, ahead of
           regulation, infrastructure, and budget<Citation ids="wef-2025" pageKey="skill-gap-63" />.
-          A separate survey of more than 11,000 executives asked about AI adoption specifically.
-          Half named a lack of skills as the top barrier. A lack of vision among managers and
-          leaders came a close second (43%), ahead of cost, regulation, and customer demand
-          <Citation ids="wef-2025" pageKey="ai-adoption-barrier-50" />. Your organization almost
-          certainly has access to the technology. What it doesn’t have is a way to tell whether
-          its people are using it well. Enterprise usage records show the same gap from the
-          vendor side. Firms that buy the same system differ widely in who uses it, how much,
-          and for what<Citation ids="chatterji-2026" pageKey="non-uniform-use" />. The researchers conclude that adoption is only the beginning of
-          deployment<Citation ids="chatterji-2026" pageKey="adoption-not-deployment" />.
+          Your organization almost certainly has access to the technology. What it doesn’t have
+          is a way to tell whether its people are using it well.
         </p>
+        <EvidenceNote id="m1-s1-access-gap" moduleId={1} sectionId={1}>
+          <p className="m-0">
+            Investment has followed adoption. Investment flows into AI rose nearly eightfold after
+            ChatGPT’s release in November 2022, and natural-language interfaces considerably
+            lowered the technical barrier to using the tools
+            <Citation ids="wef-2025" pageKey="ai-investment-8x" />.
+          </p>
+          <p className="m-0">
+            A separate survey of more than 11,000 executives asked about AI adoption specifically.
+            Half named a lack of skills as the top barrier. A lack of vision among managers and
+            leaders came a close second (43%), ahead of cost, regulation, and customer demand
+            <Citation ids="wef-2025" pageKey="ai-adoption-barrier-50" />.
+          </p>
+          <p className="m-0">
+            Enterprise usage records show the same gap from the vendor side. Firms that buy the
+            same system differ widely in who uses it, how much, and for what
+            <Citation ids="chatterji-2026" pageKey="non-uniform-use" />. The researchers conclude
+            that adoption is only the beginning of deployment
+            <Citation ids="chatterji-2026" pageKey="adoption-not-deployment" />.
+          </p>
+        </EvidenceNote>
         <p className="m-0">
           This module grounds that claim in data: what the market demands, where adoption is
           happening, how usage patterns are shifting, and why the gap between access and
@@ -312,23 +319,13 @@ function Section4({ module }: ModuleProp): JSX.Element {
           Forty-one percent of employers expect to downsize where AI can replicate people’s
           work, and 47% plan to move staff from roles AI will shrink into other roles
           inside the organization
-          <Citation ids="wef-2025" pageKey="downsize-41" />. The concealment reaches into the
-          output itself. In a survey of 319 knowledge workers, 45 described reworking AI output to
-          fit the style the task called for, and some edited it to read less AI-generated and
-          more personal
-          <Citation ids="lee-2025" pageKey="verification-practices" />.
+          <Citation ids="wef-2025" pageKey="downsize-41" />.
         </p>
         <p className="m-0">
           When a significant share of your workforce uses AI in isolation, four things happen
           simultaneously. First, peer learning stops. The colleague who discovered an effective
           way to use AI for financial analysis doesn’t share it, because sharing means disclosing.
-          Concealment is not the only way this happens. At Anthropic, where asking Claude first
-          is the norm, one senior engineer noted that junior staff bring them fewer questions,
-          and another said they ask more questions than before, but 80 to 90 percent of them
-          now go to the model
-          <Citation ids="huang-2025" pageKey="social-dynamics" />. Shared vocabulary does not restore
-          those conversations by itself. It makes the ones that still happen usable. Second,
-          best practices stay invisible. Every individual is running their own experiment
+          Second, best practices stay invisible. Every individual is running their own experiment
           with AI, and none of the results are visible to the organization. Third, productivity
           gains become unmeasurable. If managers don’t know which outputs involved AI, they can’t
           evaluate whether AI-assisted work is better, worse, or different, and they can’t make
@@ -336,6 +333,27 @@ function Section4({ module }: ModuleProp): JSX.Element {
           Teams solve the same problems independently, develop the same workarounds, and make the
           same mistakes, because no one can see what anyone else is doing.
         </p>
+        <EvidenceNote
+          id="m1-s4-hidden-practice"
+          moduleId={1}
+          sectionId={4}
+          label="More on how practice goes unseen"
+        >
+          <p className="m-0">
+            The concealment reaches into the output itself. In a survey of 319 knowledge workers,
+            45 described reworking AI output to fit the style the task called for, and some edited
+            it to read less AI-generated and more personal
+            <Citation ids="lee-2025" pageKey="verification-practices" />.
+          </p>
+          <p className="m-0">
+            Concealment is not the only way peer learning stops. At Anthropic, where asking Claude
+            first is the norm, one senior engineer noted that junior staff bring them fewer
+            questions, and another said they ask more questions than before, but 80 to 90 percent
+            of them now go to the model
+            <Citation ids="huang-2025" pageKey="social-dynamics" />. Shared vocabulary does not
+            restore those conversations by itself. It makes the ones that still happen usable.
+          </p>
+        </EvidenceNote>
         <p className="m-0">
           The result is an organization where individuals are getting faster, but the institution
           isn’t getting smarter.
