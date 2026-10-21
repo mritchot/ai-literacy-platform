@@ -20,6 +20,7 @@ import {
   TOOLTIP_STYLE,
 } from '../../utils/chart-config';
 import { useChartTokens } from '../../hooks/useChartTokens';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useViewport } from '../../hooks/useViewport';
 import { Citation } from '../../components/shared/Citation';
 
@@ -95,6 +96,7 @@ export function SkillDemandBar({
   instability,
 }: SkillDemandBarProps): JSX.Element {
   const tokens = useChartTokens();
+  const reducedMotion = useReducedMotion();
   const viewport = useViewport();
   const top = useMemo<AnnotatedRow[]>(() => {
     const shareBySkill = new Map(coreSkills.map((c) => [c.skill, c.share]));
@@ -164,7 +166,7 @@ export function SkillDemandBar({
               />
               <Bar
                 dataKey="netIncrease"
-                isAnimationActive
+                isAnimationActive={!reducedMotion}
                 animationDuration={400}
                
               >

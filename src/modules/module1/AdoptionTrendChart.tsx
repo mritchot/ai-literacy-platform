@@ -33,6 +33,7 @@ import {
   TOOLTIP_STYLE,
 } from '../../utils/chart-config';
 import { useChartTokens } from '../../hooks/useChartTokens';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { Icon } from '../../components/shared/Icon';
 
 interface CollaborationPoint {
@@ -61,6 +62,7 @@ export function AdoptionTrendChart({
 }: AdoptionTrendChartProps): JSX.Element {
   const [caveatOpen, setCaveatOpen] = useState(false);
   const tokens = useChartTokens();
+  const reducedMotion = useReducedMotion();
 
   // Convert decimals → percentage points for chart consumption.
   // X-axis label uses only the period (e.g. "Jan 2025") — the internal
@@ -135,7 +137,7 @@ export function AdoptionTrendChart({
                   name === 'augmentation' ? 'Augmentation' : 'Automation',
                 ]}
               />
-              <Bar dataKey="augmentation" isAnimationActive animationDuration={400}>
+              <Bar dataKey="augmentation" isAnimationActive={!reducedMotion} animationDuration={400}>
                 {collabData.map((d) => (
                   <Cell key={`aug-${d.wave}`} fill={tokens.secondary} />
                 ))}
@@ -148,7 +150,7 @@ export function AdoptionTrendChart({
                   fill={tokens.ink}
                 />
               </Bar>
-              <Bar dataKey="automation" isAnimationActive animationDuration={400}>
+              <Bar dataKey="automation" isAnimationActive={!reducedMotion} animationDuration={400}>
                 {collabData.map((d) => (
                   <Cell
                     key={`auto-${d.wave}`}
@@ -240,7 +242,7 @@ export function AdoptionTrendChart({
                   dataKey="pct"
                   stroke={tokens.action}
                   strokeWidth={2}
-                  isAnimationActive
+                  isAnimationActive={!reducedMotion}
                   animationDuration={400}
                   dot={(props) => {
                     const { cx, cy, payload, index } = props as {

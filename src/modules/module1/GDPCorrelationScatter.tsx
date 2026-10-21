@@ -39,6 +39,7 @@ import {
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { AXIS_TICK_STYLE } from '../../utils/chart-config';
 import { useChartTokens } from '../../hooks/useChartTokens';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useViewport } from '../../hooks/useViewport';
 import type { GeoCountry } from './GeographicAdoptionChart';
 import {
@@ -89,6 +90,7 @@ export function GDPCorrelationScatter({
   countries,
 }: GDPCorrelationScatterProps): JSX.Element {
   const tokens = useChartTokens();
+  const reducedMotion = useReducedMotion();
   const { track } = useAnalytics();
   const figureRef = useRef<HTMLElement | null>(null);
   const seenRef = useRef(false);
@@ -594,7 +596,7 @@ export function GDPCorrelationScatter({
                     data={data}
                     fill={tierColor[tier]}
                     shape={renderPoint(tierColor[tier])}
-                    isAnimationActive
+                    isAnimationActive={!reducedMotion}
                     animationDuration={400}
                   />
                 );

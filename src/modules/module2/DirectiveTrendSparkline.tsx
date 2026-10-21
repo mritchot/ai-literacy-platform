@@ -11,6 +11,7 @@ import {
 } from 'recharts';
 import { AXIS_TICK_STYLE } from '../../utils/chart-config';
 import { useChartTokens } from '../../hooks/useChartTokens';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 // AXIS_TICK_STYLE is consumed below via the XAxis tick prop; the inline
 // label uses individual SVG attributes since <text> typing rejects the bag.
 
@@ -26,6 +27,7 @@ interface DirectiveTrendSparklineProps {
 
 export function DirectiveTrendSparkline({ series }: DirectiveTrendSparklineProps): JSX.Element {
   const tokens = useChartTokens();
+  const reducedMotion = useReducedMotion();
   const data = series.map((p) => ({
     // X-axis label: the period (e.g. "Jan 2025") is sufficient — the
     // internal wave id (V1/V3/V4) is dropped from the display.
@@ -62,7 +64,7 @@ export function DirectiveTrendSparkline({ series }: DirectiveTrendSparklineProps
               dataKey="pct"
               stroke={tokens.action}
               strokeWidth={2}
-              isAnimationActive
+              isAnimationActive={!reducedMotion}
               animationDuration={400}
               dot={(props) => {
                 const { cx, cy, payload, index } = props as {

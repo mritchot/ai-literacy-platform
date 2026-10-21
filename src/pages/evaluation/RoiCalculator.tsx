@@ -481,7 +481,7 @@ function InputField({
             setText(String(value));
           }}
           className="w-32 px-2.5 py-1.5 font-mono text-body-sm text-ink [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-          style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))' }}
+          style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--ghost))' }}
         />
         {def.unit === 'pct' && <span className="font-mono text-body-sm text-tertiary">%</span>}
       </div>

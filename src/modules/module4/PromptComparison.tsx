@@ -106,10 +106,10 @@ export function PromptComparison(): JSX.Element {
 
       <section
         aria-label="Prompt reformulation comparison"
+        className="px-4 py-[18px] sm:px-[26px] sm:py-6"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
-          padding: '24px 26px',
         }}
       >
       <Overline className="mb-2">Practice activity — P9</Overline>
@@ -341,7 +341,7 @@ function PromptField({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         rows={3}
-        className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body-sm text-ink placeholder:text-muted focus:border-ink"
+        className="block w-full resize-y border border-ghost bg-[rgb(var(--white))] p-3 font-sans text-body-sm text-ink placeholder:text-muted focus:border-ink"
         style={{ minHeight: 80, lineHeight: 1.55 }}
       />
     </div>

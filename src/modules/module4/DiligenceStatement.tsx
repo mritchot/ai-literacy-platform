@@ -199,11 +199,11 @@ export function DiligenceStatement(): JSX.Element {
       </BottleneckCallout>
 
       <article
+        className="px-4 py-[18px] sm:px-[26px] sm:py-6"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
           borderTop: `3px solid ${DILIGENCE}`,
-          padding: '24px 26px',
         }}
       >
         <Overline className="mb-1">Diligence statement</Overline>
@@ -263,7 +263,7 @@ export function DiligenceStatement(): JSX.Element {
           aria-describedby="p12-section-delegation p12-section-description p12-section-discernment p12-section-diligence"
           rows={8}
           placeholder="Write your diligence statement here. Use the four sections above as a guide, but write in your own voice — this should read as a professional document you'd actually append to a deliverable."
-          className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
+          className="block w-full resize-y border border-ghost bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
           style={{ minHeight: 200, lineHeight: 1.55 }}
         />
 

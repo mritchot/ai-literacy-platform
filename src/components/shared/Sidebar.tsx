@@ -86,9 +86,13 @@ export function Sidebar({
       className="flex flex-shrink-0 flex-col border-r border-border transition-[width] duration-[250ms]"
       style={{
         ...sidebarStyle,
-        height: '100vh',
+        // Phones: pin both edges instead of using 100vh. On iOS Safari
+        // 100vh is the toolbar-retracted height, which can push the footer
+        // controls under the bottom toolbar while it shows.
+        height: isMobile ? undefined : '100vh',
         position: isMobile ? 'fixed' : 'sticky',
         top: 0,
+        bottom: isMobile ? 0 : undefined,
         left: 0,
         zIndex: isMobile ? 50 : 40,
         overflow: 'hidden',
@@ -129,6 +133,7 @@ export function Sidebar({
 
       <SidebarFooter
         collapsed={collapsed}
+        isMobile={isMobile}
         onToggleCollapse={onToggleCollapse}
         onCloseMobile={onCloseMobile}
         dashboardActive={location.pathname.startsWith('/dashboard')}

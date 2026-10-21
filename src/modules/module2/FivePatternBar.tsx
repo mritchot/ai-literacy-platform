@@ -17,6 +17,7 @@ import {
   TOOLTIP_STYLE,
 } from '../../utils/chart-config';
 import { useChartTokens } from '../../hooks/useChartTokens';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useViewport } from '../../hooks/useViewport';
 
 interface CollaborationCategory {
@@ -43,6 +44,7 @@ interface PatternMeta {
 export function FivePatternBar({ categories }: FivePatternBarProps): JSX.Element {
   const viewport = useViewport();
   const tokens = useChartTokens();
+  const reducedMotion = useReducedMotion();
 
   const meta: PatternMeta[] = useMemo(() => {
     const [taskIteration, learning, validation, directive, feedbackLoop] =
@@ -122,7 +124,7 @@ export function FivePatternBar({ categories }: FivePatternBarProps): JSX.Element
                 fill={m.color}
                 stroke={m.stroke}
                 strokeWidth={m.stroke ? 1 : 0}
-                isAnimationActive
+                isAnimationActive={!reducedMotion}
                 animationDuration={400}
               />
             ))}

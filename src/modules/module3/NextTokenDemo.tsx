@@ -158,10 +158,10 @@ export function NextTokenDemo(): JSX.Element {
 
       <section
         aria-label="Next-token prediction demonstration"
+        className="px-4 py-[18px] sm:px-[26px] sm:py-6"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
-          padding: '24px 26px',
         }}
     >
       <Overline className="mb-2">Practice activity — P6</Overline>

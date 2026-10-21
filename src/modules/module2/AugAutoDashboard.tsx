@@ -154,7 +154,7 @@ export function AugAutoDashboard(props: AugAutoDashboardProps): JSX.Element {
         })}
       </div>
 
-      <div style={{ padding: '20px 22px' }}>
+      <div className="px-3 py-4 sm:px-[22px] sm:py-5">
         {activeTab === 'adoption' && (
           <div role="tabpanel" id="p3-panel-adoption" aria-labelledby="p3-tab-adoption">
             <AugAutoViewA

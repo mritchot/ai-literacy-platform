@@ -88,13 +88,12 @@ export function ReflectionPrompt({
 
   return (
     <section
-      className="mt-8 bg-[rgb(var(--white))]"
+      className="mt-8 bg-[rgb(var(--white))] px-4 py-4 sm:px-[22px] sm:py-5"
       style={{
         borderLeft: `3px solid ${ACCENT_HEX[accent]}`,
         border: '1px solid rgb(var(--border))',
         borderLeftWidth: 3,
         borderLeftColor: ACCENT_HEX[accent],
-        padding: '20px 22px',
       }}
     >
       <Overline className="mb-2" style={{ color: `rgb(var(--${accent}-text))` }}>
@@ -112,7 +111,7 @@ export function ReflectionPrompt({
         onBlur={persist}
         rows={5}
         aria-label={`Reflection text area for prompt ${promptId}`}
-        className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
+        className="block w-full resize-y border border-ghost bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
         style={{ minHeight: 120, lineHeight: 1.55 }}
         placeholder="Type your response here. Saved privately to your progress."
       />

@@ -358,3 +358,13 @@
     animation: sectionEnter 200ms cubic-bezier(0.4, 0, 0.2, 1) backwards;
   }
 }
+
+/* Phones: the fixed reference tab rail is 38px wide and sits over the
+   right edge of the content column. Reserve that strip on any section
+   that mounts a rail so no text or control runs under it. Unlayered so
+   Tailwind never purges it. */
+@media (max-width: 767px) {
+  .section-enter:has(.reference-tab-rail) {
+    padding-right: 46px;
+  }
+}
