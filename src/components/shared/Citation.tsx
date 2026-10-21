@@ -256,8 +256,11 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
         spaceBelow >= ESTIMATED_HEIGHT || spaceBelow >= spaceAbove ? 'below' : 'above';
 
       // Anchor by the chip's left edge but clamp to viewport.
+      // On a phone narrower than 364px the popover shrinks to the
+      // viewport (see its maxWidth), so clamp against that width.
       const desiredLeft = chipRect.left;
-      const maxLeft = window.innerWidth - POPOVER_MAX_WIDTH - VIEWPORT_PAD;
+      const popoverWidth = Math.min(POPOVER_MAX_WIDTH, window.innerWidth - 2 * VIEWPORT_PAD);
+      const maxLeft = window.innerWidth - popoverWidth - VIEWPORT_PAD;
       const left = Math.max(VIEWPORT_PAD, Math.min(desiredLeft, maxLeft));
 
       // Above-placement uses the height ESTIMATE; clamp so a popover
@@ -380,9 +383,11 @@ const CitationPopover = forwardRef<HTMLDivElement, CitationPopoverProps>(
       position: 'fixed',
       left: pos.left,
       top: pos.top,
-      maxWidth: 340,
+      // Never wider than the viewport minus its 12px margins, so the
+      // close button stays on screen at 320px.
+      maxWidth: 'min(340px, calc(100vw - 24px))',
       width: 'max-content',
-      minWidth: 240,
+      minWidth: 'min(240px, calc(100vw - 24px))',
       zIndex: 50,
       background: 'rgb(var(--white))',
       border: '1px solid rgb(var(--border))',

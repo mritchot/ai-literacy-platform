@@ -7,11 +7,12 @@
 // Design note — why a module-level store rather than per-instance
 // `useState`: this hook is called directly at *every* site that needs
 // it — Citation.tsx (one per chip across the modules) and
-// SidebarFooter.tsx (one). If each call site held its own `useState`, toggling from the
-// sidebar would not re-render the Citation chips — they'd hold stale,
-// independent state. So the visibility lives in a single module-level
-// store, shared across all instances via `useSyncExternalStore` (the
-// same pattern usePlatformMode and useTheme use). No context provider,
+// SidebarFooter.tsx (one). If each call site held its own `useState`,
+// toggling from the sidebar would not re-render the Citation chips —
+// they'd hold stale, independent state. So the visibility lives in a
+// single module-level store, shared across all instances via
+// `useSyncExternalStore` (the same pattern usePlatformMode and useTheme
+// use). No context provider,
 // no prop threading: components just call the hook and stay in sync.
 //
 // Persistence: localStorage key 'citation-visibility'. With no stored
