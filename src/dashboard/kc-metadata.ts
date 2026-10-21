@@ -267,7 +267,7 @@ export const KC_METADATA = {
       { id: 'a', label: '(a) Verify the citation; assess the rest' },
       { id: 'b', label: '(b) Likely reliable — specifics are plausible' },
       { id: 'c', label: '(c) Classify the whole paragraph fabricated' },
-      { id: 'd', label: '(d) Send it; flag concerns verbally later' },
+      { id: 'd', label: '(d) Soften the attribution; keep the claim' },
     ],
   },
   kc_4_4: {
