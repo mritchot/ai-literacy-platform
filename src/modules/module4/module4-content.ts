@@ -657,7 +657,7 @@ export const P11_REFLECTION = `You evaluated three drafts and wrote one refineme
 // content. P12_SCENARIO / P12_EXEMPLAR / etc. remain plain strings
 // below since they don't carry inline citations.
 
-export const P12_SCENARIO = `Go back to the internal briefing from the output verification exercise: the AI draft on how Meridian, Praxon, and Cascade apply AI to their supply chains. Imagine you checked each element the way you triaged it. You removed what you could not confirm, checked the figures against company materials, rewrote the recommended actions from the confirmed figures, and sent the final briefing to your director. It goes to the leadership team tomorrow.
+export const P12_SCENARIO = `Go back to the internal briefing from the output verification exercise: the AI draft on how Meridian, Praxon, and Cascade apply AI to their supply chains. Imagine you checked each element as the triage summary recommends. You removed what you could not confirm, checked the figures against company materials, rewrote the recommended actions from the confirmed figures, and sent the final briefing to your director. It goes to the leadership team tomorrow.
 
 Your organization has adopted the practice of appending a brief AI diligence statement to any deliverable that involved AI assistance. Write the statement for this briefing, then save it to compare it with an exemplar statement.`;
 
