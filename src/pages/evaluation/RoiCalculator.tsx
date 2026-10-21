@@ -177,7 +177,7 @@ const FIELDS: FieldDef[] = [
     max: 100,
     step: 1,
     rationale:
-      'Against an 81% in-conversation median and the 14–56% range from earlier controlled trials; 30% acknowledges full-cycle verification overhead.',
+      'Inside the 14–56% range that controlled trials report; well below the 81% in-conversation median, which leaves out the time spent refining output (Tamkin & McCrory, 2025).',
   },
   {
     key: 'attribution',
