@@ -650,6 +650,97 @@ export const CITATIONS = {
       'effective-length': 'Table 3 (effective length at 85% of base score)',
     },
   },
+  'anthropic-context-windows-2026': {
+    id: 'anthropic-context-windows-2026',
+    shortLabel: 'Anthropic context-window docs, 2026',
+    authors: 'Anthropic',
+    title: 'Context windows',
+    publisher: 'Claude Platform Docs (platform.claude.com)',
+    date: 'accessed October 22, 2026',
+    pages: {
+      overflow: 'section "Context window overflow behavior"',
+      rolling: 'section "How the context window works", footnote 1',
+    },
+    url: 'https://platform.claude.com/docs/en/build-with-claude/context-windows',
+  },
+  'anthropic-rag-projects-2026': {
+    id: 'anthropic-rag-projects-2026',
+    shortLabel: 'Anthropic Help Center, 2026',
+    authors: 'Anthropic',
+    title: 'Retrieval augmented generation (RAG) for projects',
+    publisher: 'Claude Help Center (support.claude.com)',
+    date: 'accessed October 22, 2026',
+    pages: { 'search-mode': 'sections "What is RAG for projects?" and "How RAG works"' },
+    url: 'https://support.claude.com/en/articles/11473015-retrieval-augmented-generation-rag-for-projects',
+  },
+  'anthropic-token-counting-2026': {
+    id: 'anthropic-token-counting-2026',
+    shortLabel: 'Anthropic token-counting docs, 2026',
+    authors: 'Anthropic',
+    title: 'Token counting',
+    publisher: 'Claude Platform Docs (platform.claude.com)',
+    date: 'accessed October 22, 2026',
+    pages: { 'newer-tokenizer': 'section "Supported models", note on the newer tokenizer' },
+    url: 'https://platform.claude.com/docs/en/build-with-claude/token-counting',
+  },
+  'anthropic-thinking-2026': {
+    id: 'anthropic-thinking-2026',
+    shortLabel: 'Anthropic thinking docs, 2026',
+    authors: 'Anthropic',
+    title: 'Thinking',
+    publisher: 'Claude Platform Docs (platform.claude.com)',
+    date: 'accessed October 22, 2026',
+    pages: {
+      'sampling-parameters':
+        'section "Limits and feature compatibility", subsection "Sampling parameters"',
+    },
+    url: 'https://platform.claude.com/docs/en/build-with-claude/thinking',
+  },
+  'petrov-2023': {
+    id: 'petrov-2023',
+    shortLabel: 'Petrov et al., 2023',
+    authors: 'Petrov, A., La Malfa, E., Torr, P. H. S., & Bibi, A.',
+    title: 'Language Model Tokenizers Introduce Unfairness Between Languages',
+    publisher:
+      'Advances in Neural Information Processing Systems (NeurIPS) 2023; arXiv:2305.15425',
+    date: '2023',
+    pages: { 'up-to-15x': 'abstract' },
+    url: 'https://arxiv.org/abs/2305.15425',
+  },
+  'gemma-team-2025': {
+    id: 'gemma-team-2025',
+    shortLabel: 'Gemma Team, 2025',
+    authors: 'Gemma Team, Google DeepMind',
+    title: 'Gemma 3 Technical Report',
+    publisher: 'arXiv:2503.19786',
+    date: 'March 2025',
+    pages: {
+      'split-digits': 'Section 2.2 (tokenizer shared with Gemini 2.0; split digits)',
+    },
+    url: 'https://arxiv.org/abs/2503.19786',
+  },
+  'sharma-2024': {
+    id: 'sharma-2024',
+    shortLabel: 'Sharma et al., 2024',
+    authors:
+      'Sharma, M., Tong, M., Korbak, T., Duvenaud, D., Askell, A., Bowman, S. R., et al.',
+    title: 'Towards Understanding Sycophancy in Language Models',
+    publisher:
+      'International Conference on Learning Representations (ICLR) 2024; arXiv:2310.13548',
+    date: 'May 2024',
+    pages: { 'preference-data': 'abstract' },
+    url: 'https://arxiv.org/abs/2310.13548',
+  },
+  'singhal-2024': {
+    id: 'singhal-2024',
+    shortLabel: 'Singhal et al., 2024',
+    authors: 'Singhal, P., Goyal, T., Xu, J., & Durrett, G.',
+    title: 'A Long Way to Go: Investigating Length Correlations in RLHF',
+    publisher: 'Conference on Language Modeling (COLM) 2024; arXiv:2310.03716',
+    date: '2024',
+    pages: { 'length-bias': 'abstract' },
+    url: 'https://arxiv.org/abs/2310.03716',
+  },
   'openai-tiktoken': {
     id: 'openai-tiktoken',
     shortLabel: 'OpenAI tiktoken, 2026',
@@ -662,6 +753,8 @@ export const CITATIONS = {
       'vocab-sizes':
         'openai_public.py, special-token ids in cl100k_base() and o200k_base(); Encoding.n_vocab',
       'model-mapping': 'Cookbook, section "Encodings" table',
+      'digit-grouping':
+        'openai_public.py, pat_str for cl100k_base() and o200k_base() (digits matched in runs of one to three)',
     },
   },
   'zell-krizan-2014': {
