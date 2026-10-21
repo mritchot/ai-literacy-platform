@@ -446,7 +446,8 @@ function Section5({ module }: ModuleProp): JSX.Element {
         side-by-side temperature comparison where the same prompt produces three different
         outputs. The candidate tokens and their base probabilities are illustrative, pre-computed
         examples rather than a live model's output; the temperature math applied to them is the
-        real softmax calculation, the same mechanism commercial models use.
+        real softmax calculation, with the rest of the vocabulary treated as one combined option
+        whose share shrinks at low temperature and grows at high temperature.
       </p>
       <NextTokenDemo />
 
