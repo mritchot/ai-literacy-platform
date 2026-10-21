@@ -140,6 +140,7 @@ function Section2({ module }: ModuleProp): JSX.Element {
       sectionTitle="Task decomposition"
       sectionLabel="Section 2 · P8 Interactive"
       width="interactive"
+      requirement="assign every component and select See Results"
     >
       <p className="m-0 mb-4 font-sans text-body text-body">
         The first judgment in any AI-assisted work cycle is scope: which parts of a task belong
@@ -188,6 +189,7 @@ function Section3({ module }: ModuleProp): JSX.Element {
       sectionTitle="Prompt reformulation"
       sectionLabel="Section 3 · P9 Interactive"
       width="interactive"
+      requirement="complete all three fields of your rewrite and submit it"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         You’ve decided what to delegate. The next judgment is how to describe it. Description
@@ -234,6 +236,7 @@ function Section4({ module }: ModuleProp): JSX.Element {
       sectionTitle="Knowledge check: Delegation and Description"
       sectionLabel="Section 4 · Tier 1 assessment"
       width="reading"
+      requirement="submit a response to each knowledge check item"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         Two scenario-based items applying what you practiced in the task decomposition exercise
@@ -272,6 +275,7 @@ function Section5({ module }: ModuleProp): JSX.Element {
       sectionTitle="Output verification"
       sectionLabel="Section 5 · P10 Interactive"
       width="interactive"
+      requirement="submit a classification for every element in the briefing"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         You’ve decomposed a task and specified it clearly. Now: which parts of an AI-generated
@@ -310,6 +314,7 @@ function Section6({ module }: ModuleProp): JSX.Element {
       sectionTitle="Iterative refinement"
       sectionLabel="Section 6 · P11 Interactive"
       width="interactive"
+      requirement="write and submit your own refinement in Turn 3"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         The task decomposition exercise practiced Delegation. The prompt reformulation practiced
@@ -353,6 +358,7 @@ function Section7({ module }: ModuleProp): JSX.Element {
       sectionTitle="Knowledge check: Discernment and the loop"
       sectionLabel="Section 7 · Tier 1 assessment"
       width="reading"
+      requirement="submit a response to each knowledge check item"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         Two scenario-based items applying what you practiced in the output verification scenario
@@ -390,6 +396,7 @@ function Section8({ module }: ModuleProp): JSX.Element {
       sectionTitle="Diligence statement"
       sectionLabel="Section 8 · P12 Interactive"
       width="interactive"
+      requirement="save your statement to see the exemplar"
     >
       <DiligenceStatement />
     </SectionContainer>

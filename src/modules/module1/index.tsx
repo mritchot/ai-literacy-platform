@@ -248,6 +248,7 @@ function Section3({ module }: ModuleProp): JSX.Element {
       sectionTitle="Data narrative — the workforce shift"
       sectionLabel="Section 3 · P1 Interactive"
       width="interactive"
+      requirement="submit all three interpretation checks"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         Below are three sequential stories. Each one combines a few paragraphs of context, a data
@@ -605,6 +606,7 @@ function Section7({ module }: ModuleProp): JSX.Element {
       sectionTitle="Knowledge check"
       sectionLabel="Section 7 · Tier 1 assessment"
       width="reading"
+      requirement="submit a response to each knowledge check item"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         Four scenario-based items. Pick the response best supported by the data. Feedback

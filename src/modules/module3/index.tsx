@@ -282,6 +282,7 @@ function Section3({ module }: ModuleProp): JSX.Element {
       sectionTitle="Tokenizer playground"
       sectionLabel="Section 3 · P5 Interactive"
       width="interactive"
+      requirement="lock a prediction in each of the four guided rounds"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         Predict the token count, then see the actual result. Four guided rounds — each designed
@@ -424,6 +425,7 @@ function Section5({ module }: ModuleProp): JSX.Element {
       sectionTitle="Next-token prediction in action"
       sectionLabel="Section 5 · P6 Interactive"
       width="interactive"
+      requirement="open all three stems and generate at least one token on Stem 1 or Stem 2"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         Three stems show the prediction mechanism in three modes: a pattern-completion task where
@@ -615,6 +617,7 @@ function Section7({ module }: ModuleProp): JSX.Element {
       sectionTitle="Context window scenario: the missing clause"
       sectionLabel="Section 7 · P7 Interactive"
       width="interactive"
+      requirement="begin verification and submit a rating for all four summary claims"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         A simulated contract review where the AI tool has summarized a 42-page agreement. The
@@ -803,6 +806,7 @@ function Section10({ module }: ModuleProp): JSX.Element {
       sectionTitle="Knowledge check"
       sectionLabel="Section 10 · Tier 1 assessment"
       width="reading"
+      requirement="submit a response to each knowledge check item"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         Four scenario-based items. Pick the response best supported by the mechanical framework

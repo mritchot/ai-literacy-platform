@@ -38,6 +38,11 @@ interface SectionContainerProps {
   // render — for explanatory/transition sections that have no learner
   // interaction. Scroll-to-90% remains required.
   autoComplete?: boolean;
+  // What the learner must do to finish the section's interaction,
+  // phrased to follow "To continue," (e.g. "submit all three
+  // interpretation checks"). Keep it in step with the section's
+  // completion effect, which is the rule it describes.
+  requirement?: string;
 }
 
 export function SectionContainer({
@@ -48,6 +53,7 @@ export function SectionContainer({
   width = 'reading',
   children,
   autoComplete = false,
+  requirement,
 }: SectionContainerProps): JSX.Element {
   const {
     markInteractionComplete,
@@ -55,6 +61,7 @@ export function SectionContainer({
     setCurrentSection,
     isSectionComplete,
     isAssessmentComplete,
+    state,
   } = useLearnerProgress();
   // Platform mode gates the Next button: learner mode requires the
   // section to be complete before advancing; portfolio mode
@@ -203,6 +210,15 @@ export function SectionContainer({
   // since it's keyed off `!canAdvance`).
   const canAdvance =
     mode !== 'learner' || isSectionComplete(module.id, sectionId);
+  // Name the unmet half of the completion rule instead of a generic
+  // "complete this section".
+  const progressKey = `${module.id}.${sectionId}`;
+  const gateMessage =
+    requirement && !state.interactionCompleteSections[progressKey]
+      ? `To continue, ${requirement}.`
+      : !state.scrolledSections[progressKey]
+        ? 'To continue, read to the end of this section.'
+        : 'Complete this section to advance';
 
   // Continue button click — gated by canAdvance. The Link variant is rendered
   // when enabled; a disabled <button> when not. This keeps the destination
@@ -288,12 +304,12 @@ export function SectionContainer({
         // because the child has no intrinsic content size. Anchoring to
         // the parent's available width keeps the link visible even when
         // there's nothing to balance it on the right.
-        className={`mx-auto mt-12 flex w-full flex-nowrap items-center justify-between gap-4 border-t border-border-light pt-5 ${innerMaxWidth}`}
+        className={`mx-auto mt-12 flex w-full flex-nowrap items-center justify-between gap-4 border-t border-border-light pt-2 ${innerMaxWidth}`}
       >
         {prevSection ? (
           <Link
             to={`/module/${module.id}/section/${prevSection.id}`}
-            className="group flex min-w-0 flex-1 items-center gap-2 font-sans text-[13.5px] font-semibold text-tertiary no-underline hover:text-secondary"
+            className="group flex min-w-0 flex-1 items-center gap-2 py-3 font-sans text-[13.5px] font-semibold text-tertiary no-underline hover:text-secondary"
           >
             <Icon name="arrowLeft" size={14} />
             <span className="truncate">
@@ -303,7 +319,7 @@ export function SectionContainer({
         ) : (
           <Link
             to="/"
-            className="flex min-w-0 flex-1 items-center gap-2 font-sans text-[13.5px] font-semibold text-tertiary no-underline hover:text-secondary"
+            className="flex min-w-0 flex-1 items-center gap-2 py-3 font-sans text-[13.5px] font-semibold text-tertiary no-underline hover:text-secondary"
           >
             <Icon name="arrowLeft" size={14} />
             <span className="truncate">{isMobile ? 'Back' : 'Back to program home'}</span>
@@ -344,17 +360,16 @@ export function SectionContainer({
           />
         )}
       </nav>
-      {/* Helper text under the nav when the button is gated — lets the
-          learner know what to do to unlock advancement. Visible only when
-          the section is incomplete; once complete, this disappears so the
-          finished state is uncluttered. */}
+      {/* Helper text under the nav when the button is gated — tells the
+          learner what unlocks advancement. Visible only when the section
+          is incomplete; once complete, this disappears so the finished
+          state is uncluttered. */}
       {!canAdvance && (
         <div
-          className={`mx-auto mt-2 ${innerMaxWidth} text-right font-mono text-[11px] text-muted`}
-          style={{ letterSpacing: '0.02em' }}
+          className={`mx-auto ${innerMaxWidth} text-right font-sans text-[13px] text-secondary`}
           aria-live="polite"
         >
-          Complete this section to advance
+          {gateMessage}
         </div>
       )}
     </article>
@@ -388,7 +403,7 @@ function ContinueButton({
         disabled
           ? 'cursor-not-allowed text-muted'
           : 'cursor-pointer text-action hover:text-action-hover',
-        'border-0 bg-transparent p-0 text-right',
+        'border-0 bg-transparent px-0 py-3 text-right',
       ].join(' ')}
       style={{
         // Reset native button visual residue.

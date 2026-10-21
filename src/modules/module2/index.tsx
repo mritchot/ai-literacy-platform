@@ -334,6 +334,7 @@ function Section3({ module }: ModuleProp): JSX.Element {
       sectionTitle="Dashboard — augmentation vs. automation"
       sectionLabel="Section 3 · P3 Interactive"
       width="interactive"
+      requirement="open a second dashboard tab"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         Three tabs, three angles on the same behavioral dataset. <em>Adoption by Occupation</em>{' '}
@@ -485,6 +486,7 @@ function Section5({ module }: ModuleProp): JSX.Element {
       sectionTitle="Dashboard — productivity distributions"
       sectionLabel="Section 5 · P4 Interactive"
       width="interactive"
+      requirement="start writing Task 1 or Task 2 in the action commitment"
     >
       <p className="m-0 mb-4 font-sans text-body text-body">
         The previous section introduced two ways of measuring productivity: in-conversation
@@ -701,6 +703,7 @@ function Section7({ module }: ModuleProp): JSX.Element {
       sectionTitle="Knowledge check"
       sectionLabel="Section 7 · Tier 1 assessment"
       width="reading"
+      requirement="submit a response to each knowledge check item"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         Four scenario-based items. Pick the response that best applies the module framework.
