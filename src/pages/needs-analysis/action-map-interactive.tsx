@@ -417,7 +417,7 @@ export function InteractiveMap(): JSX.Element {
           </div>
           <p style={{ fontSize: 14, lineHeight: 1.65, margin: 0, color: 'rgb(var(--ink-secondary))' }}>{GOAL_TEXT}</p>
           <p style={{ fontSize: 11, color: 'rgb(var(--tertiary))', margin: '10px 0 0', fontStyle: 'italic', lineHeight: 1.5 }}>
-            {GOAL_NOTE}
+            {renderInline(GOAL_NOTE, 'goal-note')}
           </p>
         </div>
 

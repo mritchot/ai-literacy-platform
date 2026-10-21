@@ -55,6 +55,8 @@ The indicators map to [the program's 4D competency framework](https://ai-literac
 | B11 | Influence (90d) | Has helped a colleague improve their AI practices, through coaching, sharing materials, or demonstrating techniques. | Conversation |
 | B12 | Influence (90d) | Has raised a concern about output quality, data handling, or delegation appropriateness in a team setting. | Conversation |
 
+Each indicator is the workplace form of an action-map behavior: B1 observes D1, B2 observes D3 and D8, B3 observes D4 and D5, B4 observes D6, B5 observes D7, B6 observes D9, B7 observes D10, B8 observes D11, and B9 observes D12. D2, the call between augmenting a task and keeping it human, shows up in B1 and B10. B11 and B12 have no counterpart in the action map. They measure influence on the team, which the business goal's team-level gains depend on.
+
 Three of the twelve (B2, B8, and partly B1) are self-report by nature, because they describe cognitive processes that leave no artifact; the specificity requirement is their primary control. This graduated-confidence model is a transparency mechanism: organizations should weight artifact-anchored claims heavily and temper self-report claims accordingly, which is more honest than treating all twelve as equally observable.
 
 ## Progressive intervals and convergence
