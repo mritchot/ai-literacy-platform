@@ -35,7 +35,7 @@
   "collaborationMode": {
     "_source": "V1: Handa et al., pp. 3, 9, Figure 7; V3: Appel et al., p. 9; V4: Appel, Massenkoff & McCrory (2026), pp. 9–10",
     "description": "How users engage with Claude — automation (task delegation) vs. augmentation (collaborative interaction) — tracked over three waves.",
-    "_v1DiscrepancyNote": "V1 augmentation/automation values reconciled to the Handa et al. primary figures (57% augmentation / 43% automation; pp. 3, 9; Figure 7; sum = 100%) by author decision on 03-07-2026 so the platform teaches one V1 number everywhere (Module 2 body text and augmentation-automation.json use the same 57/43). Economic Primitives (V4) retrospectively reports the same V1 period as 56/41 (p. 9; sum = 97%, remainder unclassified) from its own classification pipeline; V3 and V4 points in this series remain from that pipeline, so the cross-wave comparison spans classifier generations — see _classifierCaveat, which the chart surfaces in its 'About this data' expandable.",
+    "_v1DiscrepancyNote": "V1 augmentation/automation values reconciled to the Handa et al. primary figures (57% augmentation / 43% automation; pp. 3, 9; Figure 7; sum = 100%) by author decision on 03-07-2026 so the platform teaches one V1 number everywhere (Module 2 body text and augmentation-automation.json use the same 57/43). The later Economic Index reports restate the same V1 period as about 56/41: the September 2025 report already shows V1 at 55.5/41.1 (Appel, McCrory & Tamkin, 2025, Figure 1.2, p. 10; https://www.anthropic.com/research/anthropic-economic-index-september-2025-report), and Economic Primitives (V4) repeats 56/41 (p. 9; footnote 6, p. 18). The gap from Handa's 57/43 is the ~3% of unclassified conversations, which the restatement keeps in the total (sum ≈ 97%) and Handa's split leaves out (sum = 100%); it is not a reclassification. V3 and V4 points in this series come from those later reports, and the classifier model changed between waves, so the cross-wave comparison spans classifier generations — see _classifierCaveat, which the chart surfaces in its 'About this data' expandable.",
     "timeSeries": [
       {
         "wave": "V1",
@@ -51,8 +51,8 @@
         "augmentation": 0.47,
         "automation": 0.49,
         "dominant": "automation",
-        "note": "First time automation exceeded augmentation. Percentages derived from V4 deltas: V4 reports augmentation 'jumped 5pp to 52%' (→ V3 ≈ 47%) and automation 'fell 4pp to 45%' (→ V3 ≈ 49%). Cross-check: V3 footnote 4 (p. 11) states 49% automation with Sonnet 4 classifier. Remaining ~4% unclassified (3.9% per V4 footnote 2, p. 17).",
-        "_derivation": "Derived from Economic Primitives p. 5 deltas, not stated directly in V3 text. Confirmed by V3 footnote 4."
+        "note": "First time automation exceeded augmentation. V3 Figure 1.2 (p. 10) prints 47.0% augmentation and 49.1% automation. Cross-checks: V4 reports augmentation 'jumped 5pp to 52%' and automation 'fell 4pp to 45%' (Economic Primitives p. 5); V3 footnote 4 (p. 11) states 49% automation with Sonnet 4 classifier. Remaining ~4% unclassified (3.9% per V4 footnote 2, p. 17).",
+        "_derivation": "Read from V3 Figure 1.2 (p. 10); consistent with Economic Primitives p. 5 deltas and V3 footnote 4."
       },
       {
         "wave": "V4",

@@ -102,7 +102,7 @@ const FIELDS: FieldDef[] = [
     max: 100,
     step: 1,
     rationale:
-      'MGI puts agents at 44% of US work hours as technical potential and about 27% automated by 2030 in its midpoint scenario (Yee et al., 2025); 25% sits at the adoption end. Handa et al.\u2019s 57% is a share of conversations, not hours, and is not used here.',
+      'MGI puts agents, its term for all machines that automate nonphysical work, AI-based or not, at 44% of US work hours as technical potential. Its midpoint scenario automates about 27% of all US work hours by 2030 (Yee et al., 2025); 25% sits just below that midpoint. Handa et al. find 57% of occupations use AI on at least a tenth of their tasks; their 57% conversation split is a different statistic and is not used here.',
   },
   {
     key: 'timeSavings',
@@ -114,7 +114,7 @@ const FIELDS: FieldDef[] = [
     max: 100,
     step: 1,
     rationale:
-      'Against an 81% in-conversation median; 30% acknowledges full-cycle verification overhead.',
+      'Against an 81% in-conversation median and the 14–56% range from earlier controlled trials; 30% acknowledges full-cycle verification overhead.',
   },
   {
     key: 'attribution',

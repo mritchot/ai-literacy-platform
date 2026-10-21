@@ -5,8 +5,9 @@
 // the "real" number and the trials feel like noise. Now both
 // measurement approaches read as equal frames:
 //
-//   Row 1 (in-conversation, 20–95% with median 81%) — the
-//          self-estimated savings inside the AI conversation window.
+//   Row 1 (in-conversation: named examples 20–95%, most tasks 50–95%,
+//          median 81%) — the self-estimated savings inside the AI
+//          conversation window.
 //   Row 2 (full work cycle, 14–56% across controlled trials cited by the report) — the net
 //          savings once verification and revision are included.
 //
@@ -31,8 +32,9 @@ interface RCTComparisonChartProps {
 
 // Constants per the redesign spec. Pulled out as named constants so the
 // values + their provenance (source paper) are explicit at the top.
-const IN_CONVERSATION_MIN = 20; // diagnostic images — lowest documented task savings
-const IN_CONVERSATION_MAX = 95; // compiling reports — highest documented task savings
+const IN_CONVERSATION_MIN = 20; // diagnostic images — lowest named example
+const IN_CONVERSATION_MAX = 95; // compiling reports — highest named example
+const IN_CONVERSATION_MOST_MIN = 50; // Figure 6, p. 13 — most tasks fall between 50% and 95%
 
 const ROW_HEIGHT = 30; // px — bar fill height
 const TRACK_HEIGHT = 44; // px — track height (allows margin around bar)
@@ -50,8 +52,9 @@ export function RCTComparisonChart({
 
   const ariaLabel =
     `Range bar chart comparing two ways of measuring AI time savings. ` +
-    `In-conversation savings range from ${IN_CONVERSATION_MIN}% (checking diagnostic images) ` +
-    `to ${IN_CONVERSATION_MAX}% (compiling information from reports), with a median of ${median}% ` +
+    `In-conversation savings in the report's named examples run from ${IN_CONVERSATION_MIN}% ` +
+    `(checking diagnostic images) to ${IN_CONVERSATION_MAX}% (compiling information from reports); ` +
+    `most tasks fall between ${IN_CONVERSATION_MOST_MIN}% and ${IN_CONVERSATION_MAX}%, with a median of ${median}% ` +
     `across tasks in 100,000 conversations. Full work-cycle savings range from ${fullCycleMin}% to ` +
     `${fullCycleMax}% across controlled trials cited by the report, measuring the complete task ` +
     `including verification and refinement.`;
@@ -74,7 +77,7 @@ export function RCTComparisonChart({
           min={IN_CONVERSATION_MIN}
           max={IN_CONVERSATION_MAX}
           medianMarker={{ value: median, label: `${median}% median` }}
-          tooltipText={`In-conversation savings: ${IN_CONVERSATION_MIN}%–${IN_CONVERSATION_MAX}% range, ${median}% median. Measures only the time spent in the AI interaction.`}
+          tooltipText={`In-conversation savings: named examples ${IN_CONVERSATION_MIN}%–${IN_CONVERSATION_MAX}%; most tasks ${IN_CONVERSATION_MOST_MIN}%–${IN_CONVERSATION_MAX}%; ${median}% median. Measures only the time spent in the AI interaction.`}
         />
 
         {/* Row 2 — full work cycle */}
@@ -97,7 +100,8 @@ export function RCTComparisonChart({
       <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-1.5 font-mono text-[11px] text-tertiary">
         <span className="inline-flex items-center gap-1.5">
           <DiamondGlyph color="var(--action)" />
-          In-conversation range ({IN_CONVERSATION_MIN}–{IN_CONVERSATION_MAX}%, median {median}%)
+          In-conversation (named examples {IN_CONVERSATION_MIN}–{IN_CONVERSATION_MAX}%; most tasks{' '}
+          {IN_CONVERSATION_MOST_MIN}–{IN_CONVERSATION_MAX}%; median {median}%)
         </span>
         <span className="inline-flex items-center gap-1.5">
           <CircleGlyph color="var(--info)" />

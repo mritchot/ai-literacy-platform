@@ -10,7 +10,7 @@ const TITLE = 'Faster people, flat organizations';
 
 const FIGURES: { value: string; label: string }[] = [
   { value: '80%', label: 'respondents who say AI improved their own productivity' },
-  { value: '37%', label: 'respondents who report any effect on their organization’s earnings' },
+  { value: '37%', label: 'respondents who report any positive effect on their organization’s earnings' },
 ];
 
 export function FasterPeopleCallout(): JSX.Element {
@@ -46,9 +46,11 @@ export function FasterPeopleCallout(): JSX.Element {
         <Citation ids="mckinsey-state-of-ai-2026" pageKey="individual-vs-enterprise" />.
       </p>
       <p className="m-0 font-sans text-body-sm text-body">
-        The gap did not move between 2025 and 2026. The organizations that closed it redesigned
-        workflows and measured impact; most did neither
-        <Citation ids="mckinsey-state-of-ai-2026" pageKey="workflow-redesign-74" />. Concealment
+        The 37% was essentially unchanged from 2025. The few organizations reporting significant
+        returns from AI were about three times as likely as others to have redesigned workflows
+        <Citation ids="mckinsey-state-of-ai-2026" pageKey="workflow-redesign-74" /> and twice as
+        likely to have defined processes for measuring impact
+        <Citation ids="mckinsey-state-of-ai-2026" pageKey="measure-impact-2x" />. Concealment
         is the individual-level face of the same problem: gains that stay private cannot be
         measured, shared, or built on.
       </p>

@@ -48,13 +48,14 @@ export const CITATIONS = {
     pages: {
       'skill-gap-63': 'p. 49, Figure 4.1',
       'fastest-growing-skills': 'p. 37, Figure 3.4',
+      'core-skills-2025': 'p. 35, Figure 3.3; pp. 40–41, Figure 3.6',
       'upskill-85': 'p. 52, Figure 4.4',
       'ai-transform-86': 'p. 11, Figure 1.2; p. 62',
       'ai-adoption-barrier-50': 'pp. 62–63, Figure 4.13 (Executive Opinion Survey)',
       'ai-reskill-77': 'pp. 62–63, Figure 4.14',
       'downsize-41': 'p. 63, Figure 4.14',
       'skills-instability-39': 'pp. 32–33, Figure 3.1',
-      'genai-literacy-training': 'p. 44, Box 3.1',
+      'genai-literacy-training': 'pp. 43–44, Box 3.1',
       'human-machine-frontier': 'pp. 26–27, Figures 2.7–2.8',
       'genai-knowledge-work-decline': 'p. 26',
       'culture-barrier-46': 'p. 49, Figure 4.1',
@@ -74,11 +75,11 @@ export const CITATIONS = {
     url: 'https://www.anthropic.com/research/anthropic-interviewer',
     pages: {
       'time-savings-86':
-        'research post, "AI’s impact in the general workforce" (survey: 86% say AI saves time)',
+        'research post, "AI’s impact in the general workforce" (general-workforce survey, N = 1,000: 86% say AI saves time)',
       'satisfaction-65':
-        'research post, "AI’s impact in the general workforce" (survey: 65% satisfied with AI’s role)',
+        'research post, "AI’s impact in the general workforce" (general-workforce survey, N = 1,000: 65% satisfied with AI’s role)',
       'stigma-69':
-        'research post, "AI’s impact in the general workforce" (69% mentioned social stigma; theme count from interview transcripts)',
+        'research post, "AI’s impact in the general workforce" (general-workforce sample, N = 1,000: 69% mentioned social stigma, a theme count from interview transcripts; fact-checker quotation)',
       'anxiety-55':
         'research post, "AI’s impact in the general workforce" (41% feel secure; 55% anxious; 8% anxious with no plan)',
       'self-report-augmentation':
@@ -88,13 +89,13 @@ export const CITATIONS = {
       'oversight-roles-48':
         'research post, "Augmentation versus automation" (48% considered moving toward AI-oversight roles)',
       'sample-method':
-        'research post, "Participants" (1,250 via crowdworker platforms: general workforce N=1,000, scientists N=125, creatives N=125; 10–15 minute AI-run interviews)',
+        'research post, "Participants" and "How Anthropic Interviewer works" (1,250 via crowdworker platforms: general workforce N=1,000, scientists N=125, creatives N=125; 10–15 minute AI-run interviews)',
       'limitations':
         'research post, "Limitations" (selection bias, demand characteristics, self-report vs. usage data, Western-based sample, non-experimental)',
       'lazy-email-quote':
-        'research post, "AI’s impact in the general workforce" (library capture PDF p. 2: salesperson quotation, colleagues regard AI-generated email as lazy)',
+        'research post, "Introduction", topic diagram (General workforce tab, "Writing independence": a salesperson says colleagues regard AI-generated email as lazy)',
       'conversation-only-limit':
-        'research post, introduction (library capture PDF p. 1: the earlier usage tool saw only inside Claude conversations, not how outputs were used afterward)',
+        'research post, "Introduction" (the earlier usage tool saw only inside Claude conversations, not how outputs were used afterward)',
     },
   },
   'handa-2025': {
@@ -122,6 +123,7 @@ export const CITATIONS = {
       'Anthropic Economic Index Report: Uneven Geographic and Enterprise AI Adoption',
     publisher: 'Anthropic',
     date: 'September 15, 2025',
+    url: 'https://www.anthropic.com/research/anthropic-economic-index-september-2025-report',
     pages: {
       'directive-trend-v3': 'p. 9',
       'directive-explanations': 'pp. 10–11',
@@ -204,7 +206,9 @@ export const CITATIONS = {
         'pp. 8–9 (objective criteria 125/319; cross-referencing 114/319; source checks 23/319; style edits 45/319)',
       'three-phases': 'p. 8 (goal and query formation; inspect response; integrate response)',
       'inhibitors':
-        'p. 11 (awareness, motivation, and ability barriers; trivial task 55/319; trust 83/319; time 44/319; domain knowledge 58/319)',
+        'p. 11 (awareness, motivation, and ability barriers; trivial task 55/319; trust 83/319; time 44/319; barriers to inspecting responses, such as limited domain knowledge, 58/319; barriers to revising queries and improving output 72/319)',
+      'skill-development-motivator':
+        'p. 11 (skill development 13/319, a motivator for critical thinking)',
       'practice-decay':
         'p. 11 (critical thinking only in high-stakes work is risky; skills decay without low-stakes practice)',
       'correlational-caveat': 'p. 14 (design does not establish causation)',
@@ -226,6 +230,7 @@ export const CITATIONS = {
       // Figure 6's caption (the canonical 81% locator) sits on p. 13;
       // p. 12's body text carries the 84% conversation-level figure.
       'median-savings-81': 'p. 13, Figure 6',
+      'most-tasks-50-95': 'p. 12; p. 13, Figure 6',
       'compile-95': 'p. 12',
       'documents-87': 'p. 10',
       'diagnostic-20': 'p. 12',
@@ -245,23 +250,25 @@ export const CITATIONS = {
     url: 'https://anthropic.com/research/how-ai-is-transforming-work-at-anthropic/',
     pages: {
       'delegation-criteria':
-        'research post, "What people delegate" (library PDF pp. 10–11): six criteria from 53 interviews',
+        'research post, "AI delegation approaches" (library PDF pp. 10–11): six criteria from 53 interviews',
       'full-delegation-share':
-        'research post (PDF p. 9): more than half can fully delegate only 0–20% of work',
+        'research post, "How much work can be fully delegated to Claude?" (PDF p. 9): more than half of 132 survey respondents can fully delegate only 0–20% of work',
       'tasks-kept-human':
         'research post (PDF p. 12): strategic thinking and design decisions needing organizational context or taste',
       'expertise-and-verification':
         'research post (PDF pp. 11–12): use within expertise to verify; prompting style adapts to expertise',
       'junior-engineer-danger':
         'research post (PDF p. 11): a proposal "really smart in the dangerous way"',
-      'paradox-of-supervision': 'research post (PDF p. 14)',
+      'paradox-of-supervision': 'research post (PDF pp. 13–14): skill atrophy, lost incidental learning, and the paradox of supervision',
       'deliberate-practice':
         'research post (PDF p. 14): solving problems without Claude to stay sharp',
       'time-spenders':
         'research post (PDF pp. 7–8): some spend more time on Claude-assisted tasks (debugging, cleanup, comprehension)',
       'self-report-limits':
-        'research post, Appendix (PDF p. 25): selection, social desirability, recency bias; read alongside usage data',
+        'research post, "Usage and productivity" (PDF p. 6): METR study, experienced developers on familiar codebases overestimated their AI productivity boost; Appendix (PDF p. 25): selection, social desirability, recency bias; read alongside usage data',
       'full-stack': 'research post (PDF pp. 12–13, 22): engineers becoming full-stack',
+      'social-dynamics':
+        'research post, "Changing social dynamics in the workplace" (PDF pp. 16–17): Claude as first stop for questions that once went to colleagues; junior staff bring fewer questions to senior engineers',
       'moving-target':
         'research post (PDF p. 12): delegation boundaries renegotiated as models improve',
     },
@@ -358,12 +365,13 @@ export const CITATIONS = {
       'capacity-gap-32': 'slide 32 (Gallup, June 2023–December 2025)',
       'probabilistic-52': 'slide 52',
       'verification-scalable-52': 'slide 52',
-      'task-vs-job-54': 'slides 54–55 (US Census; BLS)',
+      'task-vs-job-54': 'slides 33, 54–57, 67 (US Census; BLS; AICPA; FMI)',
       'frontier-cadence-20': 'slide 20',
       'capex-700-8': 'slide 8 (company guidance, includes capital leases)',
       'cfo-impact-35': 'slide 35 (Atlanta Fed, Baslandze et al., December 2025)',
       'provisional-thesis-27': 'slide 27',
       'apps-hundreds-40': 'slide 40',
+      'new-questions-66': 'slide 66',
     },
   },
   'openrouter-a16z-2025': {
@@ -410,6 +418,7 @@ export const CITATIONS = {
       'productivity-80': 'p. 3',
       'ebit-37': 'pp. 4, 12',
       'scaling-44': 'p. 5',
+      'regular-use': 'p. 5',
       'functions-56': 'p. 5',
       'chatbot-scaling-47': 'p. 7',
       'agent-scaling-40': 'p. 3',
@@ -469,7 +478,7 @@ export const CITATIONS = {
     pages: {
       'automatable-58': 'pp. 3, 6',
       'shared-skills-75': 'pp. 3, 20',
-      'ai-fluency-5x': 'pp. 22–23',
+      'ai-fluency-5x': 'pp. 13, 22–23',
       'ai-fluency-definition': 'pp. 24, 31',
       'country-variation': 'pp. 13, 22, 58, 78',
       'domain-expertise': 'p. 24',
@@ -489,6 +498,7 @@ export const CITATIONS = {
     pages: {
       'token-growth-7x': 'p. 10',
       'survey-limits': 'p. 2',
+      'automated-classification': 'pp. 7–8',
       'adopter-profile': 'pp. 11, 14',
       'firm-size-intensity': 'p. 14',
       'complements': 'pp. 15–16',
@@ -498,8 +508,10 @@ export const CITATIONS = {
       'task-breadth': 'pp. 19–20',
       'non-uniform-use': 'p. 22',
       'adoption-not-deployment': 'p. 23',
+      'within-firm-growth': 'pp. 3, 11',
       'telemetry-limits': 'pp. 22–23',
       'non-agentic-share': 'p. 10',
+      'cohort-acceleration': 'p. 11',
     },
   },
   'mit-2026': {
@@ -516,6 +528,7 @@ export const CITATIONS = {
       'shared-framework': 'p. 7',
       'policy-menu': 'pp. 29–30',
       'policy-rationale': 'p. 16',
+      'policing-distrust': 'pp. 5, 17–18',
       'responsibility': 'p. 16',
       'instructor-disclosure': 'p. 20',
       'effective-use': 'p. 21',
@@ -524,7 +537,7 @@ export const CITATIONS = {
       'overreliance': 'p. 7',
       'deadline-offloading': 'p. 7',
       'no-generic-training': 'p. 24',
-      'training-capture': 'p. 25',
+      'training-capture': 'pp. 25–26',
     },
   },
   'ritchot-2025': {

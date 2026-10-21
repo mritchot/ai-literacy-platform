@@ -95,7 +95,7 @@
     },
     "coreSkills2030": {
       "_source": "Figure 3.6, p. 41; narrative pp. 40–41",
-      "method": "Skills plotted by 2025 core share (Figure 3.3) against 2030 net increase (Figure 3.4); quadrants split at the median of each axis.",
+      "method": "Skills plotted by 2025 core share (Figure 3.3) against the share of employers expecting the skill's use to increase by 2030 (not the Figure 3.4 net-increase score); quadrants split at the median of each axis. Lists follow the narrative (pp. 40–41); the figure also plots Design and user experience just above the median, in the emerging quadrant.",
       "coreIn2030": ["AI and big data", "Analytical thinking", "Creative thinking", "Resilience, flexibility and agility", "Technological literacy", "Leadership and social influence", "Curiosity and lifelong learning", "Systems thinking", "Talent management", "Motivation and self-awareness"],
       "emerging": ["Networks and cybersecurity", "Environmental stewardship"],
       "steady": ["Empathy and active listening", "Service orientation and customer service", "Resource management and operations"],
@@ -106,10 +106,10 @@
       "_note": "Figure 3.7 prints an index (1 = equal requirement) on two O*NET-derived axes; the text extraction carries no per-skill values, so only the ranked findings are recorded.",
       "metrics": { "importanceGap": "how much more essential a skill is for growing jobs", "proficiencyGap": "how much more expertise growing jobs require" },
       "findings": [
-        "Resilience, flexibility and agility is the strongest differentiator on both axes.",
+        "Resilience, flexibility and agility is the most significant overall differentiator: it has the largest importance gap and the second-largest proficiency gap, after manual dexterity, endurance and precision.",
         "Programming scores higher on importance but needs less proficiency than technological literacy.",
         "Resource management and operations, and quality control, show marked gaps on both axes.",
-        "Analytical thinking is fifth on importance gap and sixth on proficiency gap.",
+        "Analytical thinking is fifth on importance gap and sixth on proficiency gap per the narrative (the figure plots it seventh).",
         "Manual dexterity differs on proficiency, not importance.",
         "Service orientation and customer service is the only skill growing jobs need no more than declining jobs."
       ]
@@ -206,6 +206,7 @@
     ],
     "aiAdoptionBarriers": {
       "_source": "Figure 4.13, p. 63; narrative p. 62",
+      "description": "Share of executives expecting the stated barrier will hinder the adoption of AI among local businesses in their economy, unlike the Figure 4.1 question about the respondent's own organizational transformation.",
       "survey": "World Economic Forum Executive Opinion Survey, more than 11,000 executives (distinct from the Future of Jobs Survey)",
       "barriers": [
         { "rank": 1, "barrier": "Lack of skills to support adoption",                       "share": 0.50 },
@@ -297,7 +298,7 @@
 
   "humanMachineFrontier": {
     "_source": "Narrative text and Figure 2.7, p. 26",
-    "reductionAttribution": { "_source": "Figure 2.8, p. 27; narrative p. 26", "automationShare": 0.815, "augmentationShare": 0.19, "description": "Of the roughly 15-point fall in the human-only task share by 2030, 81.5% is attributed to automation and 19% to human-machine collaboration." },
+    "reductionAttribution": { "_source": "Figure 2.8, p. 27; narrative p. 26", "automationShare": 0.815, "augmentationShare": 0.19, "_note": "Figure 2.8 prints 81.5% for automation; the narrative (p. 26) rounds it to nearly 82% and gives 19% for collaboration, so the two shares sum to 100.5%.", "description": "Of the roughly 15-point fall in the human-only task share by 2030, 81.5% is attributed to automation and 19% to human-machine collaboration." },
     "caveat": "Compares 2025 and 2030 proportions only; does not measure change in the absolute volume of work (p. 27).",
     "taskDistribution": {
       "current": {
@@ -342,13 +343,14 @@
     "shareLowOrVeryLow": 0.69,
     "shareModerate": 0.285,
     "noSubstitution": ["Empathy and active listening", "Sensory-processing abilities", "Manual dexterity, endurance and precision"],
-    "highestSubstitution": ["AI and big data (data mining, machine learning applications)", "Reading, writing and mathematics", "Multi-lingualism"],
+    "namedHigherSubstitution": ["AI and big data (data mining, machine learning applications)", "Reading, writing and mathematics", "Multi-lingualism"],
+    "_namedNote": "Skill groups the Box 3.1 text names as higher-substitution areas and GenAI strengths (p. 44). Figure B3.1 sorts by moderate-or-high capacity and ranks Marketing and media and Systems thinking above Multi-lingualism.",
     "employerImplication": "Training should focus on advanced prompt-writing skills and broader GenAI literacy (p. 44)."
   },
 
   "economyProfiles": {
     "_source": "Economy profiles, pages as listed per row; global row from the report's global figures",
-    "_fieldDefinitions": "AI exposure = share of employers not reporting low AI exposure (User Guide, p. 109). AI transform expected = share naming AI and information processing as a transformation driver (Figure 1.2 question). Human-machine 2030 = share of task time expected to be delivered by humans, both, and technology (p. 110).",
+    "_fieldDefinitions": "AI exposure = share of employers not reporting low AI exposure (User Guide, p. 109). AI transform expected = share naming AI and information processing as a transformation driver (Figure 1.2 question). Human-machine 2030 = share of task time expected to be delivered by humans, both, and technology (p. 110). Mid-career training investment score = average Executive Opinion Survey response of companies in the economy to 'to what extent does government invest in mid-career reskilling and upskilling opportunities?', from 1 (not at all) to 7 (to a great extent) (User Guide, p. 109).",
     "global": {
       "name": "Global",
       "pages": null,

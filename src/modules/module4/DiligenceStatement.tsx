@@ -152,8 +152,8 @@ export function DiligenceStatement(): JSX.Element {
           See module4-content.ts for the rationale comment. */}
       <article className="font-sans text-body text-body">
         <p className="m-0" style={{ marginBottom: '0.85em' }}>
-          Module 1 opened with a number: 69% of professionals mention the social stigma that
-          comes with using AI at work
+          Module 1 opened with a number: 69% of professionals in one study’s general-workforce
+          sample mention the social stigma that comes with using AI at work
          <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" />, and for many of
           them it keeps their use undisclosed. Not because they reject the tool, but because
           they fear how colleagues and managers will perceive them for using it. The result is the concealment dynamic:
@@ -171,10 +171,12 @@ export function DiligenceStatement(): JSX.Element {
         </p>
         <p className="m-0" style={{ marginBottom: '0.85em' }}>
           A diligence statement is a structured document (appended to a deliverable or included
-          in a project record) that makes your AI practices legible. Institutions have started to
-          require one. MIT's 2026 AI policy mandates a statement of AI use in every thesis and
-          bars listing AI as a co-author
-         <Citation ids="mit-2026" pageKey="thesis-statement" />. It can be as brief as a
+          in a project record) that makes your AI practices legible. Publishers and institutions
+          have started to ask for one. Most journals and conferences already require acknowledgment
+          of AI use, and MIT's 2026 AI committee recommends a statement of AI use in every thesis,
+          with AI never listed as a co-author
+         <Citation ids="mit-2026" pageKey="thesis-statement" />. A diligence statement can be as
+          brief as a
           single paragraph for a low-stakes internal draft or as detailed as a full-page
           disclosure for a client-facing report or published analysis. Length scales with the
           stakes and complexity of the deliverable, not with a fixed word count. It does not ask

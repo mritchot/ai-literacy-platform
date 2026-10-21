@@ -119,8 +119,10 @@ export function SkillDemandBar({
     <figure className="m-0" aria-label={ariaLabel}>
       <p className="m-0 mb-3 font-sans text-body-sm text-body">
         Bars show how fast demand is rising. The marker shows how many employers already treat
-        the skill as core: AI and big data is rising fastest but is core for only 45% today
-        <Citation ids="wef-2025" pageKey="fastest-growing-skills" />.
+        the skill as core, and “emerging” flags fast-rising skills that most employers do not
+        yet treat as core. AI and big data is rising fastest
+        <Citation ids="wef-2025" pageKey="fastest-growing-skills" /> but is core for only 45% today
+        <Citation ids="wef-2025" pageKey="core-skills-2025" />.
       </p>
       {viewport === 'mobile' ? (
         <MobileSkillsList rows={top} tokens={tokens} />
@@ -218,7 +220,9 @@ export function SkillDemandBar({
         className="mt-3 font-mono text-caption text-muted"
         style={{ letterSpacing: '0.02em' }}
       >
-        Source: WEF Future of Jobs Report 2025, Figure 3.4, p. 37; Figure 3.1, p. 33.
+        Source: WEF Future of Jobs Report 2025, Figure 3.4, p. 37; Figure 3.3, p. 35; Figure 3.6,
+        p. 41; Figure 3.1, p. 33. Skills-endure figure: McKinsey Global Institute, Nov 2025,
+        Exhibit 10, p. 29.
       </figcaption>
     </figure>
   );
@@ -355,9 +359,8 @@ function SkillInstabilityCallout({
       <p className="m-0 font-sans text-body-sm text-secondary">
         Employers expect 39% of core skills to change by 2030, down from 44% in 2023
         <Citation ids="wef-2025" pageKey="skills-instability-39" />. The target is becoming
-        clearer, not smaller. Job-posting data point the same way: US occupations whose postings
-        ask for AI fluency grew nearly sevenfold between mid-2023 and mid-2025
-        <Citation ids="mgi-agents-robots-us-2025" pageKey="ai-fluency-7x" />.
+        clearer, not smaller. Most skills endure; their application shifts
+        <Citation ids="mgi-agents-robots-us-2025" pageKey="shared-skills-72" />.
       </p>
     </aside>
   );

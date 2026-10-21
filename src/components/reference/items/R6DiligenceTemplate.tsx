@@ -93,9 +93,9 @@ const SCAFFOLD_SECTIONS: ScaffoldSection[] = [
 
 const EXAMPLE_A_TITLE = 'AI Diligence Statement: Q3 Market Analysis';
 const EXAMPLE_A_PARAGRAPHS: string[] = [
-  'In developing this market analysis, we collaborated with Claude (Anthropic) to assist with initial data compilation, structural development, and drafting of descriptive sections. The analytical framework, strategic interpretation, competitive positioning recommendations, and executive summary were developed by the human authors, drawing on internal data sources and domain expertise that were not shared with the AI tool.',
-  'All AI-generated and co-created content underwent review and revision by the authoring team. The final document reflects the team’s judgment, expertise, and intended recommendations. While AI assistance was instrumental in accelerating the drafting process, the authors maintain full responsibility for the content, its accuracy, and its conclusions.',
-  'This disclosure is made in accordance with our team’s AI use practices and to maintain transparency about the role of AI in our analytical work.',
+  'Claude (Anthropic) helped us compile the initial data, propose a structure, and draft the descriptive sections of this market analysis. The analytical framework, strategic interpretation, competitive positioning recommendations, and executive summary were developed by the human authors, drawing on internal data sources and domain expertise that were not shared with the AI tool.',
+  'Two team members checked every figure in the Claude-drafted sections against the source datasets before the draft went to review. They corrected two misstated growth rates and rewrote passages where the draft claimed more than the data supported. Claude shortened the drafting time; the interpretations are ours, and we answer for any error that remains.',
+  'We include this statement so readers can see which parts of the analysis began as AI drafts and weigh them accordingly. Our team attaches one to every client-facing deliverable that involved AI.',
 ];
 
 // ─────────────────────────────────────────────────────────────────────
@@ -138,13 +138,14 @@ export function R6DiligenceTemplate(): JSX.Element {
         AI practices legible. It does not ask for permission. It does not apologize. It states
         what happened. <em>Length scales with stakes.</em> The framework&rsquo;s authors close
         their own document with one: it names the model used, affirms human vetting, and claims
-        full responsibility in five sentences (Dakan &amp; Feller, 2025, p. 7). The form is
-        becoming standard. MIT&rsquo;s 2026 institutional policy requires a statement of AI use in
-        every thesis and holds the author responsible for all submitted content. It treats AI as a
-        tool under the direction of a human who verifies its output (MIT Ad Hoc Committee, 2026,
-        pp. 16, 22). Accountability for the deliverable stays with you even when production was
-        delegated; the statement records how you exercised it. Source: Lee et al., CHI 2025,
-        p. 15.
+        full responsibility in five sentences (Dakan &amp; Feller, 2025, p. 7). Institutions have
+        started to require one. Most journals and conferences already require acknowledgment of AI
+        use, and MIT&rsquo;s 2026 AI committee recommends a statement of AI use in every thesis. The
+        committee holds people responsible for all work they submit, AI-assisted content included,
+        and treats AI as a tool under the direction of a human who verifies its output (MIT Ad Hoc
+        Committee, 2026, pp. 16, 22). Accountability for the deliverable stays with you even when production was
+        delegated; the statement records how you exercised it (Lee et al., 2025,
+        p. 15).
       </p>
 
       {/* Section: Statement structure (4 numbered scaffolds) */}
@@ -398,8 +399,9 @@ function ExampleACard(): JSX.Element {
           borderTop: '1px solid rgb(var(--border-light))',
         }}
       >
-        Modeled on the Diligence Statement that closes Dakan &amp; Feller&rsquo;s framework
-        document (2025, p. 7).
+        Format informed by the Diligence Statement that closes Dakan &amp; Feller&rsquo;s framework
+        document (2025, p. 7) and the AI Diligence Statement published with Anthropic&rsquo;s AI
+        Fluency course (2025). The example&rsquo;s wording is original.
       </p>
     </article>
   );

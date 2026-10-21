@@ -107,7 +107,7 @@ export const P8_CARDS: TaskCard[] = [
     feedback: {
       human: {
         title: 'This is the work AI cannot do.',
-        text: 'Tailored strategic recommendations depend on context the model does not have: your initial meeting with the prospect, their leadership dynamics, board-level priorities, and institutional factors that don’t appear in public data. This is where your professional judgment creates the value the client is paying for. Delegating this component delegates the deliverable’s core intellectual contribution. This matches what heavy users report. Anthropic’s engineers consistently kept high-level and strategic thinking, and design decisions that need organizational context or taste, and their survey showed the smallest productivity gains for exactly those tasks (Huang et al., Dec 2025).',
+        text: 'Tailored strategic recommendations depend on context the model does not have: your initial meeting with the prospect, their leadership dynamics, board-level priorities, and institutional factors that don’t appear in public data. This is where your professional judgment creates the value the client is paying for. Delegating this component delegates the deliverable’s core intellectual contribution. This matches what heavy users report. Anthropic’s engineers consistently kept high-level and strategic thinking, and design decisions that need organizational context or taste, and their survey showed the smallest productivity gains for design and planning tasks (Huang et al., Dec 2025).',
         tone: 'success',
       },
       assisted: {

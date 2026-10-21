@@ -27,7 +27,7 @@ Organized by the 4D competency framework (Delegation, Description, Discernment, 
 
 **D2. The participant distinguishes between tasks that benefit from AI augmentation and tasks that should remain human-only, based on stakes, verifiability, and domain expertise requirements.**
 - Sub-component: Task Delegation
-- Gap trace: Underuse through overcaution in high-complexity tasks + overreliance in perceived-routine tasks (Persona — Lee et al. finding that reduced scrutiny is reported most often for tasks perceived as trivial (55 of 319); [Lee et al., CHI 2025, p. 11](https://doi.org/10.1145/3706598.3713778)). *(Note: "Underuse through overcaution" is a design-grounded inference derived from the augmentation/automation behavioral divergence in Handa et al., Feb 2025 — see the persona's footnote 3. No direct survey item on task avoidance behavior is available in the current corpus.)*
+- Gap trace: Underuse through overcaution in high-complexity tasks + overreliance in perceived-routine tasks (Persona — Lee et al. finding that 55 of 319 workers named a task's perceived triviality as a reason to skip critical thinking; [Lee et al., CHI 2025, p. 11](https://doi.org/10.1145/3706598.3713778)). *(Note: "Underuse through overcaution" is a design-grounded inference derived from the augmentation/automation behavioral divergence in Handa et al., Feb 2025 — see the persona's footnote 3. No direct survey item on task avoidance behavior is available in the current corpus.)*
 - Module trace: Module 2 (task-type productivity data) → Module 4 (sandbox — structured delegation exercises)
 
 **D3. The participant identifies the capability boundaries of the AI tool they are using (what it can generate reliably vs. where it is likely to produce errors) before delegating a task.**
@@ -66,7 +66,7 @@ Organized by the 4D competency framework (Delegation, Description, Discernment, 
 
 **D9. The participant evaluates whether the AI's reasoning process, not just the final output, is sound, checking for logical gaps, unsupported assumptions, and circular reasoning.**
 - Sub-component: Process Discernment
-- Gap trace: Lee et al. — workers most often skip scrutiny on tasks they see as trivial (55 of 319), meaning process evaluation is the first thing dropped (Lee et al., CHI 2025, p. 11); Handa et al. — validation is the smallest behavioral category at 2.8% of all interactions (Handa et al., Feb 2025, p. 10)
+- Gap trace: Lee et al. — 55 of 319 workers said they skip critical thinking on tasks they see as trivial, which puts process evaluation at risk on routine work (Lee et al., CHI 2025, p. 11); Handa et al. — validation is the smallest behavioral category at 2.8% of all interactions (Handa et al., Feb 2025, p. 10)
 - Module trace: Module 4 (sequential classification scenario — consequence-based feedback when process evaluation is skipped)
 
 ### DILIGENCE
@@ -83,7 +83,7 @@ Organized by the 4D competency framework (Delegation, Description, Discernment, 
 
 **D12. The participant discusses their AI usage practices openly with colleagues and managers, using the 4D competency vocabulary to describe how they delegate, prompt, evaluate, and verify.**
 - Sub-component: Transparency Diligence (extended to organizational behavior change)
-- Gap trace: 69% concealment dynamic (Anthropic Interviewer, Dec 2025); the Executive Problem Statement's argument that individual competency without social normalization produces no measurable business outcome, corroborated by the 80% individual-gain versus 37% enterprise-impact gap ([Tinkoff et al., 2026](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai), p. 14)
+- Gap trace: 69% concealment dynamic (Anthropic Interviewer, Dec 2025); the Executive Problem Statement's argument that individual competency without social normalization produces no measurable business outcome; the 80% individual-gain versus 37% enterprise-impact gap corroborates that outcome, though the survey does not measure social normalization ([Tinkoff et al., 2026](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai), p. 14)
 - Module trace: Module 1 (stigma data, normalization framing) → Module 2 (peer usage patterns — making invisible practices visible) → Module 4 (reflection prompts using 4D vocabulary)
 
 ---

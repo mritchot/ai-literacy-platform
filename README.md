@@ -136,7 +136,7 @@ Content traces to specific findings from:
 - Qwen Team (2025) — Qwen3-8B model card
 - Hardman — transfer research and practice-based methods
 
-These are the anchor sources; the in-module citation registry and the artifact pages' linked bibliographies extend the set (Lee et al. CHI 2025, Mollick 2012, the Anthropic Economic Index reports, McKinsey's State of AI 2026, the MGI Agents, robots, and us reports, Chatterji et al. 2026 on enterprise adoption, and others).
+These are the anchor sources; the in-module citation registry and the artifact pages' linked bibliographies extend the set (Lee et al. CHI 2025, Mollick 2012, the Anthropic Economic Index reports, and others).
 
 ## License
 
@@ -145,7 +145,7 @@ This project uses a dual license:
 - **Code** (`LICENSE`): MIT License
 - **Content** (`licenses/LICENSE-CONTENT`): CC BY-NC-SA 4.0
 
-The competency taxonomy is adapted from the [4D AI Fluency Framework](https://ringling.libguides.com/ai/framework) by Dakan and Feller (2025, CC BY-NC-ND 4.0), as taught in Anthropic's [AI Fluency: Framework & Foundations](https://anthropic.skilljar.com/ai-fluency-framework-foundations) course (2025, CC BY-NC-SA 4.0). Commercial use of course content requires a separate agreement — contact michael@ritchot.me.
+The competency taxonomy is adapted from Anthropic's [AI Fluency: Framework & Foundations](https://anthropic.skilljar.com/ai-fluency-framework-foundations) course (2025, CC BY-NC-SA 4.0; Copyright 2025 Rick Dakan, Joseph Feller, and Anthropic), which teaches the [4D AI Fluency Framework](https://ringling.libguides.com/ai/framework) (Dakan & Feller, 2025, CC BY-NC-ND 4.0). Commercial use of course content requires a separate agreement — contact michael@ritchot.me.
 
 ## Author
 

@@ -51,10 +51,10 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
       {
         id: 'C',
         text:
-          'The interaction logs suggest the team\'s actual usage is predominantly directive and automation-oriented, even though the manager frames it as collaboration. This gap between self-reported and observed interaction patterns is well-documented in the behavioral research on AI adoption.',
+          'The interaction logs suggest the team\'s actual usage is predominantly directive and automation-oriented, even though the manager frames it as collaboration. This gap between self-reported and observed interaction patterns is documented in the behavioral research on AI adoption.',
         isCorrect: true,
         feedbackText:
-          'The behavioral research on AI adoption finds a gap between how professionals describe their AI usage (collaborative and iterative) and what their interaction patterns show (more directive than reported). The gap is not universal: when Anthropic compared its own engineers\' self-reported task mix with usage logs, the two distributions roughly aligned. It is the collaboration mode, not the task, that people misjudge. The manager\'s framing reflects a common self-report bias, not intentional misrepresentation. The disconnect between perceived and actual interaction style is real. Recognizing this gap is the first step toward deliberately choosing augmentative practices when the task warrants them.',
+          'The behavioral research on AI adoption finds a gap between how professionals describe their AI usage (collaborative and iterative) and what their interaction patterns show (more directive than reported). The gap is not universal: when Anthropic compared its own engineers\' self-reported task mix with usage logs, the two distributions roughly aligned. The documented gap concerns collaboration style, not which tasks people bring to AI. The manager\'s framing reflects a common self-report bias, not intentional misrepresentation. The disconnect between perceived and actual interaction style is real. Recognizing this gap is the first step toward deliberately choosing augmentative practices when the task warrants them.',
       },
       {
         id: 'D',

@@ -15,16 +15,16 @@ const IC_1_1: InterpretationCheckItemData = {
       feedbackTitle: 'Partially correct, but misleading',
       feedbackTone: 'caution',
       feedbackText:
-        'The skill instability rate is declining, but this doesn’t reduce the urgency. It means the target is becoming clearer, not smaller. AI literacy has moved from a broad “future skill” category to the single most demanded competency. Job-posting data agree: demand for AI fluency grew nearly sevenfold in two years. The analysts who track it class AI fluency as a skill that keeps changing in application rather than fading. A declining instability rate with a rising specific demand means the window for preparation is narrowing, not expanding.',
+        'The skill instability rate is declining, but this doesn’t reduce the urgency. It means the target is becoming clearer, not smaller. AI and big data now tops the list of skills employers expect to grow, even though only 45% treat it as core today. Job-posting data agree: demand for AI fluency grew nearly sevenfold in two years. The analysts who track it class AI fluency as a skill that keeps changing in application rather than fading. A declining instability rate with a rising specific demand means the window for preparation is narrowing, not expanding.',
     },
     {
       id: 'b',
-      text: '“We should prioritize it. AI literacy is the fastest-growing skill demand, and the majority of employers identify skill gaps as the primary barrier to transformation. Deferral widens the gap.”',
+      text: '“We should prioritize it. AI and big data is the fastest-growing skill employers expect to need, and a majority of employers cite skill gaps as a barrier to transformation, more than any other. Deferral widens the gap.”',
       isPreferred: true,
       feedbackTitle: 'Strongest response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer correctly connects two findings: the demand signal (AI literacy ranked #1) and the barrier signal (skills gaps as the primary transformation obstacle). It also identifies the consequence of inaction: deferral doesn’t pause the gap, it widens it as competitors invest.',
+        'This answer correctly connects two findings: the demand signal (AI and big data ranked first for growth) and the barrier signal (skills gaps as the primary transformation obstacle). It also identifies the consequence of inaction: deferral doesn’t pause the gap, it widens it as competitors invest.',
     },
     {
       id: 'c',
@@ -33,7 +33,7 @@ const IC_1_1: InterpretationCheckItemData = {
       feedbackTitle: 'Flawed reasoning',
       feedbackTone: 'error',
       feedbackText:
-        'The 85% planning figure describes intent, not execution. The same report shows that the skill gap remains the largest cited barrier, meaning most organizations intend to upskill but have not yet succeeded. Following the market assumes someone else has solved the problem. The data suggests otherwise. Executive surveys show the same gap in a different population. In September 2025, about a quarter of CIOs had put an LLM project into production. About 40% planned none before 2026 or later (Morgan Stanley CIO Survey, as reproduced by Evans, November 2025, slide 57). Plans are cheap. Deployment and skill are not.',
+        'The 85% planning figure describes intent, not execution. The same report shows that the skill gap remains the largest cited barrier, meaning most organizations intend to upskill but have not yet succeeded. Following the market assumes someone else has solved the problem. The data suggests otherwise. Executive surveys show the same gap in a different population. In September 2025, about a third of CIOs had put an LLM project into production, and about 40% planned none before 2026 (Morgan Stanley CIO Survey, as reproduced by Evans, November 2025, slide 57). Plans are cheap. Deployment and skill are not.',
     },
     {
       id: 'd',
@@ -141,7 +141,7 @@ export const MODULE_1_DEBRIEFS: Record<string, string> = {
   ic_1_1:
     'The demand signal is clear, but so is the gap between recognizing AI as a priority and closing the competency deficit. The next story looks at where adoption is happening, and where it isn’t.',
   ic_1_2:
-    'Access is necessary but not sufficient. The January 2026 Economic Index report reaches the same conclusion: expanding access alone will not suffice. It finds that higher-usage countries use AI more collaboratively rather than delegating more, which suggests the skills needed to use AI well may themselves be unevenly distributed (Appel, Massenkoff & McCrory, 2026, pp. 35–36, 55). The gap between having AI tools and using them productively is shaped by institutional context, including, as the enterprise data shows, whether organizations create the conditions for visible, supported use. Vendor-side usage records point the same way: buying the tool is the start of deployment, not the end (Chatterji et al., 2026). The final story looks at how usage is changing over time.',
+    'Access is necessary but not sufficient. The January 2026 Economic Index report reaches the same conclusion: expanding access alone will not suffice. It finds that higher-usage countries use AI more collaboratively rather than delegating more, which suggests the skills needed to use AI well may themselves be unevenly distributed (Appel, Massenkoff & McCrory, 2026, pp. 35–36, 55). The gap between having AI tools and using them productively is shaped by institutional context, including, as the enterprise data shows, whether organizations create the conditions for visible, supported use. OpenAI’s enterprise usage records point the same way: buying the tool is the start of deployment, not the end (Chatterji et al., 2026, p. 23). The final story looks at how usage is changing over time.',
   ic_1_3:
     'Where you sit on the augmentation–automation spectrum isn’t fixed. It’s shaped by how you think about each task, what judgment you apply, and whether your organization has the vocabulary to discuss the difference. That’s the focus of the rest of this program, starting with a finding you may recognize from your own experience.',
 };

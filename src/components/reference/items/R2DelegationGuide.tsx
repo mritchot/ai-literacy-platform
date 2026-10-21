@@ -131,7 +131,7 @@ const FLOW: FlowQuestion[] = [
     pillar: 'Verifiability',
     question: 'Can you verify every key claim in the output against an independent source?',
     consider:
-      'Is there a dashboard, database, document, or known standard you can check against? Or would you be relying on the output’s plausibility alone? And does the check scale: can you verify a hundred outputs as cheaply as one, or does each one need a person? Anthropic engineers put it as: delegate where validation effort is small compared with creation effort.',
+      'Is there a dashboard, database, document, or known standard you can check against? Or would you be relying on the output’s plausibility alone? If you will run this task many times, also ask whether the check scales: can you verify a hundred outputs as cheaply as one, or does each one need a person? A check that needs a person each time limits how many outputs you can delegate; it does not on its own make the answer No. One Anthropic engineer put it this way: delegate where validation effort is small compared with creation effort.',
     exits: [
       { kind: 'terminal', category: 'human_only', label: 'No' },
       { kind: 'continue', label: 'Yes', nextId: 'Q4' },
@@ -231,11 +231,14 @@ export function R2DelegationGuide(): JSX.Element {
         </p>
         <p className="m-0 text-body-sm text-body" style={{ lineHeight: 1.55, marginTop: 8 }}>
           These four questions are not only a training scaffold. When Anthropic interviewed 53 of
-          its own engineers about what they hand to Claude, the same tests came back: tasks where
-          checking the output costs less than producing it, self-contained components, work where
-          quality is not critical, and tasks the engineer knows well enough to catch errors. Tasks
-          that need context the model lacks, or strategic and design judgment, stayed human. Even
-          these heavy users said they could fully delegate only a fifth of their work or less.
+          its own engineers and researchers about what they hand to Claude, three of the tests
+          came back: stakes, verifiability, and context. They delegated work where quality is not
+          critical and where checking the output costs less than producing it. They kept work that
+          needs context the model lacks, along with strategic and design judgment. They also
+          favored self-contained components, the per-component rule above. The expertise test is
+          where they split: some keep AI to familiar ground they can verify, while others hand it
+          low-complexity work outside their own experience. In the earlier survey of 132 staff,
+          more than half said they could fully delegate only a fifth of their work or less.
           Source: Huang et al., Dec 2025 (Anthropic engineers; findings may not generalize).
         </p>
       </aside>
@@ -264,13 +267,14 @@ export function R2DelegationGuide(): JSX.Element {
         <p className="m-0 text-body-sm text-body" style={{ lineHeight: 1.55 }}>
           The flowchart assumes the task is yours to delegate. One gate comes first: whatever you
           paste into an AI tool leaves your organization&rsquo;s boundary the moment you send it.
-          MIT&rsquo;s 2026 review of its own AI platforms found that most commercial plans let
-          users disable training capture. The default, however, is often to record sessions (MIT
-          Ad Hoc Committee, 2026, p. 25). Client records, unreleased financials, personal data,
+          MIT&rsquo;s 2026 AI committee notes that most commercial AI plans, especially paid ones,
+          let users switch off the use of their data for training. The default, however, is often
+          to record sessions for training (MIT Ad Hoc Committee, 2026, pp. 25–26). Client records, unreleased financials, personal data,
           internal strategy, anything under NDA — whether that material can enter an external
           tool at all is an organizational policy decision, not an individual delegation decision.
-          The framework treats this as part of Delegation: evaluating a tool against operational
-          and regulatory needs is a Platform Awareness skill (Dakan &amp; Feller, 2025, p. 4).
+          The framework covers the tool side of this inside Delegation: Platform Awareness includes
+          evaluating AI tools against operational and regulatory needs (Dakan &amp; Feller, 2025,
+          p. 4). Whether your material may enter a given tool stays your organization&rsquo;s call.
         </p>
         <p className="m-0 text-body-sm text-body" style={{ lineHeight: 1.55, marginTop: 8 }}>
           Check your organization&rsquo;s AI-use policy before the flowchart, not after. If no
@@ -675,12 +679,13 @@ function Q4Note(): JSX.Element {
     >
       <strong style={{ color: 'rgb(var(--ink))' }}>Note:</strong> If Q4 = No but the task still
       benefits from AI acceleration, use AI-assisted with mandatory peer review from someone with
-      the domain expertise. This is the filter people skip most. In a survey of 319 knowledge
-      workers, 58 said they lacked the domain knowledge to judge an AI response, and low
-      confidence in one&rsquo;s own ability led to accepting outputs by default (Lee et al., CHI
-      2025, p. 11). Anthropic&rsquo;s engineers split the difference: some use AI only where they
-      can verify it, and those working outside their expertise change how they prompt, asking
-      the model for options to research rather than answers to accept (Huang et al., Dec 2025).
+      the domain expertise. Without that expertise, errors are hard to spot. In a survey of 319
+      knowledge workers, 58 reported barriers to inspecting AI responses, such as lacking the
+      domain knowledge to judge them, and some who doubted their own ability accepted outputs
+      by default (Lee et al., CHI 2025, p. 11). Anthropic&rsquo;s engineers are divided: some
+      prefer familiar ground where they can verify the output, others use AI in peripheral
+      domains to save time, and one engineer, when unsure of a topic, asks the model for options
+      to research rather than answers to accept (Huang et al., Dec 2025).
     </p>
   );
 }

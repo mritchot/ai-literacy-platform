@@ -78,7 +78,7 @@ export function AugAutoViewC({
   return (
     <div className="space-y-5">
       <p className="m-0 font-sans text-body-sm text-body">
-        Researchers asked 1,250 professionals how they use AI, then compared the answers against
+        Researchers asked 1,000 general-workforce professionals how they use AI, then compared the answers against
         behavioral data from millions of conversations. The gap is consistent and directional:
         professionals overestimate their augmentative use. Two behavioral baselines using
         different datasets and time periods both show the same pattern, but the magnitude differs.
@@ -188,15 +188,16 @@ export function AugAutoViewC({
           <div className="space-y-2 font-sans text-body-sm text-body" style={{ padding: '0 14px 14px' }}>
             <p className="m-0">
               Both behavioral measurements use the same approach (automated classification of real
-              AI conversations) but draw on different datasets and time periods. The approach is
-              now standard across vendors. OpenAI's 2026 enterprise study classifies messages
-              automatically for the same reason, with no researcher reading individual messages
-              <Citation ids="chatterji-2026" pageKey="survey-limits" />. The Jan 2025 data
+              AI conversations) but draw on different datasets and time periods. OpenAI's 2026
+              enterprise study takes the same approach, classifying messages automatically with no
+              researcher reading individual messages, though it sorts them by task rather than by
+              augmentation or automation
+              <Citation ids="chatterji-2026" pageKey="automated-classification" />. The Jan 2025 data
               (Handa et al., February 2025) is the standalone published study with full
               methodology. The later figure is the August 2025 wave of the Anthropic Economic
               Index (Appel, McCrory &amp; Tamkin, September 2025), which the Interviewer paper
               cites as its latest analysis. One more difference matters for reading the gap. The
-              self-report figure comes from 1,250 working professionals. The behavioral figures
+              self-report figure comes from 1,000 working professionals in the general-workforce sample. The behavioral figures
               come from consumer conversations on one platform, where an occupational label does
               not mean the user works in that occupation, novices and professionals count alike,
               and, in the January 2025 sample, about a quarter of conversations were not work-related. The comparison is between
@@ -219,9 +220,12 @@ export function AugAutoViewC({
               they cross-check AI output against external sources, and 23 said they check that
               cited sources exist
               <Citation ids="lee-2025" pageKey="verification-practices" />. Some of the 8 to 18
-              point gap may be oversight the behavioral data cannot observe. The gap is still
-              real, because the self-report asks about the whole task and the classifier asks
-              about the conversation, but its size is an upper bound.
+              point gap may be oversight the behavioral data cannot observe. The Interviewer
+              authors list this as one of five possible explanations, alongside sample
+              differences and the use of other AI providers
+              <Citation ids="anthropic-interviewer-2025" pageKey="self-vs-behavioral" />. The
+              direction holds against both baselines, but the size is uncertain, because the
+              self-report describes use as a whole and the classifier sees only the conversation.
             </p>
           </div>
         )}

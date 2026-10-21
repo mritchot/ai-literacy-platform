@@ -8,7 +8,7 @@
 import type { ReactNode } from 'react';
 
 const HEADER_TEXT =
-  "The 4Ds describe four competencies for effective, responsible AI use at work. They operate in two loops: the Delegation–Diligence loop governs whether and when to use AI (strategic decisions); the Description–Discernment loop governs how to work with AI effectively (operational workflow). The pairings follow the two cross-links in the source's competency diagram (Dakan & Feller, 2025, Fig. 1); the strategic and operational labels are this program's.";
+  "The 4Ds describe four competencies for effective, responsible AI use at work. They operate in two loops: the Delegation–Diligence loop governs whether and when to use AI (strategic decisions); the Description–Discernment loop governs how to work with AI effectively (operational workflow).";
 
 type CompetencyKey = 'delegation' | 'description' | 'discernment' | 'diligence';
 
@@ -210,7 +210,10 @@ export function R1QuickReference(): JSX.Element {
         including its conversational reading of the two Performance sub-components; the source
         document names the first Delegation sub-component Goal and Task Awareness. Creation
         Diligence and Process Discernment draw on the source document&rsquo;s definitions. Action
-        verbs are adapted for workplace use.
+        verbs are adapted for workplace use. The two loops pair the competencies that the crossing
+        arrows join in the source document&rsquo;s competency diagram (Fig. 1, p. 3); that diagram
+        also links each competency to its two neighbors. The loops and their strategic and
+        operational labels are this program&rsquo;s.
       </p>
     </div>
   );

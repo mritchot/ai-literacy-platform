@@ -180,9 +180,9 @@ export function R5CapabilityBoundary(): JSX.Element {
         style={{ lineHeight: 1.55 }}
       >
         Know what the tool does well and where it systematically fails before you delegate. The
-        framework calls this Platform Awareness and makes it a condition of delegation:
-        automation needs a clear task definition and a quality check (Dakan &amp; Feller, 2025,
-        pp. 2, 4). Organized by task type, not technical architecture. Each entry connects to
+        framework calls this Platform Awareness, part of Delegation (Dakan &amp; Feller, 2025,
+        p. 4). It sets two requirements for automation: a clear task definition and a quality
+        check (p. 2). Organized by task type, not technical architecture. Each entry connects to
         Module 3’s mechanical framework.
       </p>
 
@@ -599,8 +599,9 @@ function CoreDistinctionStrip(): JSX.Element {
         are independent properties. Old software automated anything you could describe in logical
         steps and gave the same answer every time. This software automates anything with enough
         training data and anything where verification scales, and it can be wrong (Evans, May
-        2026, slide 52). The Reliable list above is where those two conditions hold. The Fails
-        list is where one of them breaks.
+        2026, slide 52). Most of the Reliable list is pattern work the training data covers densely.
+        Only the Specificity failures trace to thin training data; the Boundary and Volume
+        failures trace to tokenization and the context window.
       </p>
     </aside>
   );

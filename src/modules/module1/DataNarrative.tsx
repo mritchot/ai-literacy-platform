@@ -297,8 +297,9 @@ function Story1Body({
           <Citation ids="wef-2025" pageKey="fastest-growing-skills" />. Job postings say the same
           thing from the hiring side. Between mid-2023 and mid-2025, US workers in occupations
           whose postings ask for AI fluency rose nearly sevenfold, from about one million to
-          seven million. No other skill grew faster. Ten European economies show a fivefold rise
-          over the same period.
+          seven million. No other skill grew faster. Across ten European economies, demand rose fivefold
+          between late 2023 and late 2025, the same rate MGI measured in the United States over
+          those months.
         </p>
         <p className="m-0">
           That ranking reflects more than enthusiasm. Eighty-five percent of surveyed employers
@@ -306,9 +307,9 @@ function Story1Body({
           <Citation ids="wef-2025" pageKey="upskill-85" />. Asked about AI specifically, 77% plan
           to reskill existing staff to work alongside it, the top AI strategy in 45 of 55
           economies<Citation ids="wef-2025" pageKey="ai-reskill-77" />. But the same employers
-          identify a persistent obstacle: the workforce doesn’t have the skills yet. Sixty-three
-          percent name this gap, not budgets or regulation, as the primary barrier to
-          transforming their business<Citation ids="wef-2025" pageKey="skill-gap-63" />.
+          identify a persistent obstacle: the workforce doesn’t have the skills yet. Skill gaps are
+          the barrier they cite most often: 63% expect them to hold back the transformation of
+          their business, ahead of regulation and budgets<Citation ids="wef-2025" pageKey="skill-gap-63" />.
         </p>
         <p className="m-0">
           The chart below shows the top rising skills. Below it, a callout tracks how quickly the
@@ -374,11 +375,11 @@ function Story2Body({
         </p>
         <CensusEnterpriseInset adoption={censusAdoption} />
         <p className="m-0 font-sans text-body text-body">
-          The firms that do report AI use are not a random sample. Among U.S. public companies,
-          early enterprise adopters had a median workforce of 2,934 against 424 for non-adopters
-          <Citation ids="chatterji-2026" pageKey="adopter-profile" />. The difference survives
-          controls for industry and size. Adoption tracks prior investment in R&amp;D, software,
-          and organizational capability, not access alone
+          Which firms adopt is not random. Among U.S. public companies, early ChatGPT Enterprise
+          adopters had a median workforce of 2,934 against 424 for firms without an Enterprise
+          account. Even within the same industry, the largest firms are the most likely to adopt
+          <Citation ids="chatterji-2026" pageKey="adopter-profile" />. Adoption also tracks prior
+          investment in R&amp;D, software, and organizational capability, not scale alone
           <Citation ids="chatterji-2026" pageKey="complements" />. Those estimates describe large
           public firms. They say nothing about small private firms or startups.
         </p>

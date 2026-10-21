@@ -265,8 +265,9 @@
       "sectorVariation": "One in four businesses in the Information sector reported using AI — roughly ten times the rate for Accommodation and Food Services."
     },
     "publicCompanyAdopterProfile": {
-      "_source": "Chatterji, Holtz, Rakholia, Tambe & Weeratunga, 'How Organizations Use AI: Evidence from ChatGPT', OpenAI working paper, 11 Aug 2026; Figure 2, p. 11 (2024 Compustat medians); Table 3, p. 14",
-      "_scope": "U.S. public companies only; adopters are a random subset of ChatGPT Enterprise accounts matched to tickers (417 tickers) against 11,784 non-adopter tickers. Conditional associations, not causal estimates. Says nothing about small private firms, startups, or mid-market firms (p. 14).",
+      "_source": "Chatterji, Holtz, Rakholia, Tambe & Weeratunga, 'How Organizations Use AI: Evidence from ChatGPT', OpenAI working paper, 11 Aug 2026; medians from the text, p. 11 (2024 Compustat medians; Figure 2, p. 25); scale effects from the text, p. 14 (Table 3, p. 36)",
+      "_verified": "Figure 2 (p. 25) prints medians that differ from the p. 11 text: adopters 3.0K employees, $4.8B market value, $111M R&D; non-adopters 354 employees, $167M revenue, $549M total assets, $251M market value, $8.4M R&D. Values here follow the p. 11 text.",
+      "_scope": "U.S. public companies only; adopters are a random subset of ChatGPT Enterprise accounts matched to tickers (417 tickers, p. 9) against 11,784 non-adopter tickers (p. 10). Non-adopters are public firms with no matched ChatGPT Enterprise account and may use other AI products (p. 9, n. 10). Conditional associations, not causal estimates. Says nothing about small private firms, startups, or mid-market firms (p. 14).",
       "medians2024": {
         "revenueMillionsUSD": { "adopters": 2275.1, "nonAdopters": 209.6 },
         "totalAssetsMillionsUSD": { "adopters": 4394.2, "nonAdopters": 667.6 },
@@ -277,7 +278,7 @@
       "scaleEffectsPP": {
         "topRevenueQuartile": 6.9,
         "top5PercentRevenue": 9.8,
-        "description": "Percentage-point increase in adoption probability, fiscal years 2024–2025 (p. 14)."
+        "description": "Percentage-point increase in adoption probability, fiscal years 2024–2025 (p. 14; Table 3, p. 36)."
       },
       "description": "Early enterprise adopters are larger, more capitalized, more valuable, and more R&D-intensive than the average public firm (p. 11)."
     },

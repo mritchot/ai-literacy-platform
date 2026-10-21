@@ -292,7 +292,7 @@ const KC_2_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Compounds the overestimation',
       feedbackTone: 'error',
       feedbackText:
-        'Comparing an internal self-report figure favorably against external self-report data doubles down on a measurement approach the research has documented as systematically biased. The 65% external figure (Anthropic Interviewer, 2025) is itself an overestimate; behavioral data shows actual augmentative use at 47–57% depending on the measurement period. A higher internal self-report doesn\'t indicate better practice; it may indicate a larger gap. Using biased data to validate the program that produced it creates a circular justification.',
+        'Comparing an internal self-report figure favorably against external self-report data doubles down on a measurement approach the research has documented as systematically biased. The 65% external figure (Anthropic Interviewer, 2025, "Augmentation versus automation") is itself an overestimate; behavioral data shows actual augmentative use at 47–57% depending on the measurement period. A higher internal self-report doesn\'t indicate better practice; it may indicate a larger gap. Using biased data to validate the program that produced it creates a circular justification.',
     },
     {
       id: 'b',
@@ -301,7 +301,7 @@ const KC_2_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Overcorrects and mischaracterizes',
       feedbackTone: 'caution',
       feedbackText:
-        'The research does not show that professionals "systematically misrepresent" their AI usage; the term implies intentional deception. The self-report/behavioral gap is a calibration error, the same kind of miscalibration that self-report surveys of AI use document in their own limitations. Dismissing all self-report data as unreliable loses a useful signal (what people believe about their practice), and the recommendation to implement direct monitoring through interaction logs and output auditing raises significant privacy, trust, and labor relations concerns that the response ignores entirely.',
+        'The research does not show that professionals "systematically misrepresent" their AI usage; the term implies intentional deception. The researchers who report the self-report/behavioral gap offer several explanations, among them users refining outputs after the chat ends and people perceiving their use as more collaborative than it is. None of them is deception. The second is a calibration error, the same kind of miscalibration that self-report surveys of AI use document in their own limitations. Dismissing all self-report data as unreliable loses a useful signal (what people believe about their practice), and the recommendation to implement direct monitoring through interaction logs and output auditing raises significant privacy, trust, and labor relations concerns that the response ignores entirely.',
     },
     {
       id: 'c',

@@ -110,7 +110,7 @@ function Section1({ module }: ModuleProp): JSX.Element {
          <Citation ids="dakan-feller-2025" pageKey="four-ds" />. Delegation determines what to
           hand to AI.
           Description determines how to specify the task. Discernment determines how to evaluate
-          what comes back. Diligence determines how to document the process and take
+          what comes back. Diligence determines how to use AI within ethical and legal limits, document the process, and take
           accountability for the result. In Modules 1 through 3, these operated as separate
           lenses, with one or two emphasized per module. In Module 4, they work together the way they
           will in your actual work: simultaneously, in sequence, as a complete professional
@@ -148,12 +148,13 @@ function Section2({ module }: ModuleProp): JSX.Element {
         activities; they are bundles of sub-tasks with different reliability profiles.
       </p>
       <p className="m-0 mb-4 font-sans text-body text-body">
-        Expert users decompose the same way. When Anthropic interviewed 53 of its engineers, one
-        rule of thumb was to hand off a component only when it is decoupled enough from the rest
+        Expert users decompose the same way. When Anthropic interviewed 53 of its engineers and
+        researchers, one rule of thumb was to hand off a component when it is decoupled enough
+        from the rest
         to stand alone, and another was to delegate where checking the result costs less than
-        producing it<Citation ids="huang-2025" pageKey="delegation-criteria" />. Even so, more
-        than half of those engineers said they could fully delegate only a fifth of their work or
-        less, and the authors note that “fully delegate” itself ranged from no verification to
+        producing it<Citation ids="huang-2025" pageKey="delegation-criteria" />. Even so, in the
+        earlier survey of 132 staff, more than half said they could fully delegate only a fifth
+        of their work or less, and the authors note that “fully delegate” itself ranged from no verification to
         light oversight<Citation ids="huang-2025" pageKey="full-delegation-share" />.
         Decomposition is not a route to handing everything off. It is how you find the few
         components that can go and the many that need you.
@@ -195,10 +196,10 @@ function Section3({ module }: ModuleProp): JSX.Element {
         want), <em>process</em> (how the AI should approach the task, and how you work through it
         together), and <em>performance</em> (how the AI should behave). Most underspecified
         prompts fail on all three at once. This is the skill knowledge workers most often report
-        lacking. In one survey of 319, 72 said they could see that an output was wrong but could
-        not revise the query or steer the model to a better one
-       <Citation ids="lee-2025" pageKey="inhibitors" />. Others described the effort of turning
-        an intention into a query as the main new cost of AI-assisted work
+        lacking. In one survey of 319, 72 said that even when they could see an output fell short, they
+        struggled to revise the query or steer the model to a better one
+       <Citation ids="lee-2025" pageKey="inhibitors" />. In the same survey, 45 said that
+        turning an intention into a query added effort
        <Citation ids="lee-2025" pageKey="effort-shift-stewardship" />. The three dimensions below
         give that effort a structure. Usage data points the same way: across countries and US
         states, the education level needed to understand the model's responses tracked the
@@ -428,8 +429,8 @@ function Section9({ module }: ModuleProp): JSX.Element {
           />
           . The mechanical data says the tool generates output by probability, not by retrieving
           facts, which means fluent text and accurate text are independent properties. And the
-          adoption data says 69% of professionals mention the social stigma that comes with
-          using AI at work
+          adoption data says 69% of professionals in one study’s general-workforce sample mention
+          the social stigma that comes with using AI at work
          <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" />, which means the
           fastest-growing capability in the modern workforce is developing in isolation, without
           shared standards, without peer learning, and without organizational visibility.
@@ -462,14 +463,17 @@ function Section9({ module }: ModuleProp): JSX.Element {
           verification workflow starts to feel unnecessary is the moment it is doing the most
           work. If your Discernment practice fades as the outputs keep looking clean, you have
           not become better at using AI; you have become a faster route for unverified content.
+        </p>
+        <p className="m-0">
           There is a second reason to keep verifying routine outputs, beyond catching errors.
           Evaluation is a skill, and skills decay without practice. The knowledge-worker survey
           warns that reserving critical thinking for high-stakes tasks is risky, because
           low-stakes work is where the skill stays exercised
-         <Citation ids="lee-2025" pageKey="practice-decay" />. Anthropic's own engineers describe
-          the same trap as a paradox of supervision: using AI well requires the skills that heavy
-          AI use can erode<Citation ids="huang-2025" pageKey="paradox-of-supervision" />. Some of
-          them solve a problem without AI now and then, on purpose, to stay sharp
+         <Citation ids="lee-2025" pageKey="practice-decay" />. Studying Anthropic's own
+          engineers, the company's researchers call the same trap a paradox of supervision: using
+          AI well requires the skills that heavy AI use can erode
+         <Citation ids="huang-2025" pageKey="paradox-of-supervision" />. Some of those engineers
+          solve a problem without AI now and then, on purpose, to stay sharp
          <Citation ids="huang-2025" pageKey="deliberate-practice" />. Treat one routine task a
           week as a full-verification exercise, even when the output looks fine.
         </p>

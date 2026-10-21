@@ -37,7 +37,7 @@ export const ROUNDS: TokenizerRound[] = [
     input: 'Budget: $4,218.50 + $763.25',
     promptHint: "Same question. How many tokens? Remember, the model doesn't see digits the way you do.",
     explanation:
-      "Numbers tokenize inconsistently. Whether a digit sequence is one token or several depends entirely on how frequently that exact string appeared in the training data, which has nothing to do with the number's mathematical value. The dollar signs, decimal points, commas, and plus sign each have their own tokenization behavior. This is why AI tools make arithmetic errors that look bizarre: the model performs prediction on token fragments, not calculation on numbers. The errors are not random. They concentrate wherever token boundaries misalign with mathematical structure.",
+      "Numbers tokenize by a fixed rule that ignores their value. This tokenizer cuts every run of digits into chunks of up to three, counting from the left, so a number like 1279 becomes 127 and 9 while place value reads it as 1,279. The dollar signs, decimal points, commas, and plus sign each have their own tokenization behavior. This is why AI tools make arithmetic errors that look bizarre: the model performs prediction on token fragments, not calculation on numbers. The errors are not random. They concentrate wherever token boundaries misalign with mathematical structure.",
   },
   {
     id: 3,

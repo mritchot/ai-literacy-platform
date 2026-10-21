@@ -465,8 +465,8 @@ function Footer(): JSX.Element {
 // platform's persistent root); doesn't need to repeat on section pages.
 // Mirrors what LICENSE and licenses/LICENSE-CONTENT formalize: the project's
 // code is MIT, the instructional content is CC BY-NC-SA 4.0, and the
-// 4D taxonomy is adapted from Dakan & Feller's framework (CC BY-NC-ND 4.0)
-// as taught in Anthropic's AI Fluency course (CC BY-NC-SA 4.0).
+// 4D taxonomy is adapted from Anthropic's AI Fluency course (CC BY-NC-SA
+// 4.0), which teaches Dakan & Feller's framework (CC BY-NC-ND 4.0).
 function AttributionFooter(): JSX.Element {
   return (
     <div
@@ -495,16 +495,7 @@ function AttributionFooter(): JSX.Element {
         .
       </p>
       <p className="m-0">
-        Competency taxonomy adapted from the{' '}
-        <a
-          href="https://ringling.libguides.com/ai/framework"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-tertiary underline hover:text-secondary"
-        >
-          4D AI Fluency Framework
-        </a>{' '}
-        (Dakan &amp; Feller, 2025, CC BY-NC-ND 4.0), as taught in Anthropic&rsquo;s{' '}
+        Competency taxonomy adapted from Anthropic&rsquo;s{' '}
         <a
           href="https://anthropic.skilljar.com/ai-fluency-framework-foundations"
           target="_blank"
@@ -513,7 +504,17 @@ function AttributionFooter(): JSX.Element {
         >
           AI Fluency: Framework &amp; Foundations
         </a>{' '}
-        (2025, CC BY-NC-SA 4.0).
+        course (2025, CC BY-NC-SA 4.0; Copyright 2025 Rick Dakan, Joseph Feller, and
+        Anthropic), which teaches the{' '}
+        <a
+          href="https://ringling.libguides.com/ai/framework"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-tertiary underline hover:text-secondary"
+        >
+          4D AI Fluency Framework
+        </a>{' '}
+        (Dakan &amp; Feller, 2025, CC BY-NC-ND 4.0).
       </p>
       <p className="m-0">
         Built with AI assistance. See the{' '}

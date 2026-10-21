@@ -70,45 +70,49 @@ function Section1({ module }: ModuleProp): JSX.Element {
     >
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
-          If you use AI at work, you’re in good company: 86% of professionals report that it
-          saves them time<Citation ids="anthropic-interviewer-2025" pageKey="time-savings-86" />,
-          and 65% say they’re satisfied with the role AI plays in their work
+          If you use AI at work, you’re in good company. In Anthropic’s survey of 1,000
+          professionals from the general workforce, 86% report that it saves them time
+          <Citation ids="anthropic-interviewer-2025" pageKey="time-savings-86" />, and 65% say
+          they’re satisfied with the role AI plays in their work
           <Citation ids="anthropic-interviewer-2025" pageKey="satisfaction-65" />. But
           widespread adoption is not the same thing as effective use. Nearly nine in ten
-          respondents to McKinsey’s 2026 global survey report regular AI use in at least one
-          function. Only 37% report that AI has contributed to their organization’s earnings
+          respondents to McKinsey’s 2026 global survey say their organization uses AI regularly
+          in at least one business function
+          <Citation ids="mckinsey-state-of-ai-2026" pageKey="regular-use" />. Only 37% report that AI has contributed to their organization’s earnings
           <Citation ids="mckinsey-state-of-ai-2026" pageKey="ebit-37" />. The tools can produce
           real productivity gains. The question is whether workers, and the organizations around
           them, have the understanding and judgment to capture that value.
         </p>
         <p className="m-0">
-          That question has become urgent faster than any previous technology shift. ChatGPT
+          That question has become urgent unusually fast. ChatGPT
           was estimated to have reached 100 million monthly active users in January 2023, two
           months after launch. A UBS analysis of Similarweb traffic data called it the
           fastest-growing consumer application in history
-          <Citation ids="reuters-ubs-2023" pageKey="chatgpt-100m" />. OpenAI reports more than
+          <Citation ids="reuters-ubs-2023" pageKey="chatgpt-100m" />. Investment followed:
+          investment flows into AI rose nearly eightfold after ChatGPT’s release in November
+          2022, and natural-language interfaces considerably lowered the technical barrier to
+          using the tools
+          <Citation ids="wef-2025" pageKey="ai-investment-8x" />. OpenAI reports more than
           900 million weekly ChatGPT users, though only about 5% pay
           <Citation ids="evans-2026-05" pageKey="wau-900m-29" />. Reach is not the same as
           depth: across ten US surveys from 2024 to 2025, weekly use runs well ahead of daily use
-          <Citation ids="evans-2025-11" pageKey="engagement-gap-39" />. Investment followed:
-          flows into AI rose nearly eightfold after ChatGPT’s release in November 2022, and
-          natural-language interfaces removed most of the technical barrier to using the tools
-          <Citation ids="wef-2025" pageKey="ai-investment-8x" />. The tools are no longer
-          emerging; they are embedded in daily workflows across industries. Most professionals have tried them; fewer use them every day. And the speed of
+          <Citation ids="evans-2025-11" pageKey="engagement-gap-39" />. The tools are no longer
+          emerging. Most professionals have tried them; fewer use them every day. And the speed of
           that adoption has outrun most organizations’ ability to evaluate whether their people
           are using these tools well.
         </p>
         <p className="m-0">
-          Sixty-three percent of employers worldwide identify workforce skill gaps, not budget
-          or infrastructure or regulation, as the single largest barrier to transforming their
-          business<Citation ids="wef-2025" pageKey="skill-gap-63" />. A separate survey of more
-          than 11,000 executives asked about AI adoption specifically. Half named a lack of
-          skills as the top barrier, ahead of cost, regulation, and customer demand
+          Skill gaps in the labor market are the most-cited barrier to transforming a business:
+          63% of surveyed employers expect them to hold back their transformation, ahead of
+          regulation, infrastructure, and budget<Citation ids="wef-2025" pageKey="skill-gap-63" />.
+          A separate survey of more than 11,000 executives asked about AI adoption specifically.
+          Half named a lack of skills as the top barrier. A lack of vision among managers and
+          leaders came a close second (43%), ahead of cost, regulation, and customer demand
           <Citation ids="wef-2025" pageKey="ai-adoption-barrier-50" />. Your organization almost
           certainly has access to the technology. What it doesn’t have is a way to tell whether
           its people are using it well. Enterprise usage records show the same gap from the
           vendor side. Firms that buy the same system differ widely in who uses it, how much,
-          and for what. The researchers conclude that adoption is only the beginning of
+          and for what<Citation ids="chatterji-2026" pageKey="non-uniform-use" />. The researchers conclude that adoption is only the beginning of
           deployment<Citation ids="chatterji-2026" pageKey="adoption-not-deployment" />.
         </p>
         <p className="m-0">
@@ -138,9 +142,10 @@ function Section2({ module }: ModuleProp): JSX.Element {
           reached an estimated 100 million monthly users two months after launch; TikTok took
           about nine months and Instagram about two and a half years
           <Citation ids="reuters-ubs-2023" pageKey="tiktok-instagram-comparison" />. Two years
-          after ChatGPT’s release, U.S. adoption of generative AI was running ahead of the
-          personal computer and the internet at the same point after their first mass-market
-          launches<Citation ids="bick-blandin-deming-2024" pageKey="adoption-vs-pc-internet" />.
+          after ChatGPT’s release, overall U.S. adoption of generative AI, at home and at work
+          combined, was running ahead of the personal computer and the internet at a comparable
+          point after their first mass-market launches; adoption at work alone was keeping pace
+          with the PC<Citation ids="bick-blandin-deming-2024" pageKey="adoption-vs-pc-internet" />.
           That speed is changing how work gets done faster than most organizations can adapt,
           and the data on that change is complicated. Through 2025, workers in the occupations
           where AI already handles the largest share of tasks showed no measurable rise in
@@ -167,18 +172,22 @@ function Section2({ module }: ModuleProp): JSX.Element {
           occupations whose postings ask for AI fluency rose nearly sevenfold, from about one
           million to seven million
           <Citation ids="mgi-agents-robots-us-2025" pageKey="ai-fluency-7x" />. No other skill
-          grew faster. Ten European economies show a fivefold rise over the same period
+          grew faster. Across ten European economies, demand rose fivefold between late 2023 and
+          late 2025, the same rate MGI measured in the United States over those months
           <Citation ids="mgi-agents-robots-europe-2026" pageKey="ai-fluency-5x" />. Most
-          organizations recognize the shift: 85% plan to upskill their workforce
-          <Citation ids="wef-2025" pageKey="upskill-85" /> in response. But planning isn’t
-          execution: skill gaps remain the single largest barrier to business transformation
+          organizations plan to invest in skills: 85% intend to upskill their workforce over the
+          2025–2030 period<Citation ids="wef-2025" pageKey="upskill-85" />. Asked about AI
+          specifically, 77% plan to reskill existing staff to work alongside it
+          <Citation ids="wef-2025" pageKey="ai-reskill-77" />. But planning isn’t execution:
+          skill gaps, cited by 63% of employers, remain the single largest barrier to business
+          transformation
           across industries, outranking organizational culture (46%), regulation (39%), data
           infrastructure (32%), and investment capital (26%)
-          <Citation ids="wef-2025" pageKey="skill-gap-63" />. Nearly every organization intends
-          to adapt, but far fewer are able to. The report’s own reading of what to train is
-          specific: employers need programs that build both prompt-writing skill and broader
-          generative AI literacy, because the technology augments human work rather than
-          replacing it in most areas
+          <Citation ids="wef-2025" pageKey="skill-gap-63" />. The report’s own reading of what to
+          train is specific. Drawing on an analysis by the job site Indeed in which GPT-4o rated
+          its own abilities, the report sees potential for generative AI to augment human work
+          rather than fully replace it in most areas, and it calls for training in both advanced
+          prompt-writing and broader generative AI literacy
           <Citation ids="wef-2025" pageKey="genai-literacy-training" />.
         </p>
         <h3 className="m-0 mt-6 font-sans text-h3 font-semibold text-ink">Geography</h3>
@@ -193,21 +202,23 @@ function Section2({ module }: ModuleProp): JSX.Element {
           below half. That platform assigns region by billing address, so read the shares as
           indicative. For organizations with teams across regions, this creates a practical
           problem: different locations developing AI capabilities at different rates, for
-          different tasks, with no shared baseline. Employer expectations run ahead of usage
-          almost everywhere. In Singapore, 97% of surveyed employers report AI exposure and 82%
-          plan to reskill staff to work alongside AI; in Canada the figures are 94% and 90%;
-          employers in Hong Kong expect technology to deliver 43% of task time by 2030 against
-          34% globally<Citation ids="wef-2025" pageKey="ai-reskill-77" />. The usage data in the
-          next story shows how differently those expectations are being met.
+          different tasks, with no shared baseline. Employer surveys add a second
+          view. In Singapore, 97% of surveyed employers do not rate their exposure to AI as low,
+          and 82% plan to reskill staff to work alongside AI; in Canada the figures are 94% and
+          90%; employers in Hong Kong expect technology to deliver 43% of task time by 2030
+          against 34% globally<Citation ids="wef-2025" pageKey="economy-profiles" />. Those
+          figures record what employers expect, not what people do. The usage data in the next
+          story shows what people actually do; it covers Singapore and Canada but not Hong Kong.
         </p>
         <h3 className="m-0 mt-6 font-sans text-h3 font-semibold text-ink">Behavior</h3>
         <p className="m-0">
           How the workforce uses AI is changing rapidly, and the direction of that change matters.
           The way professionals interacted with AI tools twelve months ago is measurably different
           from how they interact today, and that shift points to a new kind of judgment these
-          tools now demand. The change has not slowed: enterprise usage accelerated across every
-          adoption cohort in early 2026
-          <Citation ids="chatterji-2026" pageKey="token-growth-7x" />.
+          tools now demand. Usage volume is also still
+          climbing: OpenAI's enterprise records show use accelerating in early 2026 among early
+          and recent adopters alike
+          <Citation ids="chatterji-2026" pageKey="cohort-acceleration" />.
         </p>
       </div>
     </SectionContainer>
@@ -281,26 +292,30 @@ function Section4({ module }: ModuleProp): JSX.Element {
           In a survey of 1,250 professionals (1,000 from the general workforce, 125 scientists,
           and 125 creatives; interviews conducted by an AI interviewer, with the dataset publicly
           released)<Citation ids="anthropic-interviewer-2025" pageKey="sample-method" />, 69%
-          mentioned the social stigma that can come with using AI at work
+          of the general-workforce group mentioned the social stigma that can come with using AI at work
           <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" />.
           It’s not that they reject AI. Most of them use it regularly and report clear
-          productivity gains. The barrier is disclosure. They use AI, they benefit from it, and
-          they don’t tell anyone.
+          productivity gains. The barrier is disclosure. Some use AI, benefit from it, and keep
+          that to themselves.
         </p>
         <p className="m-0">
-          When asked why, professionals don’t point to technical barriers. They describe team
-          environments where expressing enthusiasm for AI risks being perceived as lazy,
-          replaceable, or insufficiently skilled to do the work themselves. One salesperson in
+          The stigma surfaced as a theme in how workplace dynamics shape AI adoption, and the
+          examples the researchers quote describe colleagues’ judgment, not technical barriers.
+          One fact-checker said nothing when a colleague said they hated AI, and tells no one
+          about their own process because they know how many people feel about AI
+          <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" />. One salesperson in
           the Interviewer sample reported that colleagues can tell when an email is AI-generated
           and regard the sender as too lazy to write a personal note
-          <Citation ids="anthropic-interviewer-2025" pageKey="lazy-email-quote" />. In those
-          environments, the rational response is silence: keep using AI privately, keep the
+          <Citation ids="anthropic-interviewer-2025" pageKey="lazy-email-quote" />. In workplaces
+          like these, the rational response is silence: keep using AI privately, keep the
           gains, and avoid the professional cost of visibility. The fear is not irrational.
           Forty-one percent of employers expect to downsize where AI can replicate people’s
-          work, and 47% plan to move staff out of roles AI will shrink
+          work, and 47% plan to move staff from roles AI will shrink into other roles
+          inside the organization
           <Citation ids="wef-2025" pageKey="downsize-41" />. The concealment reaches into the
-          output itself. In a survey of 319 knowledge workers, 45 described editing AI text so
-          that it would not read as AI-generated
+          output itself. In a survey of 319 knowledge workers, 45 described reworking AI output to
+          fit the style the task called for, and some edited it to read less AI-generated and
+          more personal
           <Citation ids="lee-2025" pageKey="verification-practices" />.
         </p>
         <p className="m-0">
@@ -309,8 +324,9 @@ function Section4({ module }: ModuleProp): JSX.Element {
           way to use AI for financial analysis doesn’t share it, because sharing means disclosing.
           Concealment is not the only way this happens. At Anthropic, where asking Claude first
           is the norm, one senior engineer noted that junior staff bring them fewer questions,
-          and another said 80 to 90 percent of their questions now go to the model
-          <Citation ids="huang-2025" pageKey="full-stack" />. Shared vocabulary does not restore
+          and another said they ask more questions than before, but 80 to 90 percent of them
+          now go to the model
+          <Citation ids="huang-2025" pageKey="social-dynamics" />. Shared vocabulary does not restore
           those conversations by itself. It makes the ones that still happen usable. Second,
           best practices stay invisible. Every individual is running their own experiment
           with AI, and none of the results are visible to the organization. Third, productivity
@@ -332,10 +348,11 @@ function Section4({ module }: ModuleProp): JSX.Element {
           professional completes an AI competency program and returns to a team where using AI
           is perceived as cutting corners, the most likely outcome is that they continue to use
           AI, and continue to hide it. Skill acquisition without social normalization produces
-          no measurable organizational change. Institutions that tried enforcement first report
-          the same dynamic. MIT’s 2026 review found that policing AI use eroded trust, and it
-          recommends norms people understand over rules they evade
-          <Citation ids="mit-2026" pageKey="policy-rationale" />.
+          no measurable organizational change. Enforcement has its own cost. MIT’s 2026 AI
+          committee heard from instructors that policing unauthorized AI use was harming their
+          relationships with the people they teach, and it warns that more policing builds
+          distrust. It recommends shared norms people understand over rules that feel arbitrary
+          <Citation ids="mit-2026" pageKey="policing-distrust" />.
         </p>
         <p className="m-0">
           What’s missing is shared language: a way to talk about AI use that is professional,
@@ -420,19 +437,23 @@ function FourDVocabularyBlock(): JSX.Element {
       <FourDList />
 
       <p className="m-0">
-        The accountability principle behind Diligence is not the program’s invention.
+        Independent research reaches the same principle.
         Researchers studying knowledge workers concluded that responsibility for the work stays
         with the person even when the production is delegated, and chose the word stewardship
         over teammate or collaborator for that reason
-        <Citation ids="lee-2025" pageKey="stewardship-definition" />.
+        <Citation ids="lee-2025" pageKey="stewardship-definition" />. MIT’s 2026 AI committee
+        recommends the same principle for research: AI is a tool under the direction of a
+        human who is responsible for verifying its output
+        <Citation ids="mit-2026" pageKey="human-verifies" />.
       </p>
       <p className="m-0">
         The four labels come from Dakan and Feller’s framework, but the structure is not arbitrary. When researchers
-        coded how 319 knowledge workers described thinking critically with AI, the practices fell
-        into three phases: forming the goal and the query, inspecting the response, and
-        integrating it into the work<Citation ids="lee-2025" pageKey="three-phases" />.
-        Delegation and Description cover the first phase. Discernment is the second. Diligence
-        governs the third. Their training recommendation names the same skills: verification,
+        coded how 319 knowledge workers described thinking critically with AI, they sorted the
+        practices into three phases of the AI workflow taken from earlier studies: forming the
+        goal and the query, inspecting the response, and integrating it into the work
+        <Citation ids="lee-2025" pageKey="three-phases" />. Delegation and Description cover the
+        first phase. Discernment covers the second. Diligence is the accountability that carries
+        through to the finished work. Their training recommendation points the same way: verification,
         integration, and stewardship
         <Citation ids="lee-2025" pageKey="training-recommendation" />.
       </p>
@@ -444,11 +465,14 @@ function FourDVocabularyBlock(): JSX.Element {
         prompting: integrating AI into workflows, interpreting outputs, recognizing wrong
         results, and knowing when to escalate to human review
         <Citation ids="mgi-agents-robots-europe-2026" pageKey="ai-fluency-definition" />.
-        Delegation, Description, Discernment, and Diligence are that definition, made teachable.
+        Delegation, Description, Discernment, and Diligence cover most of that definition and
+        make it teachable. The analysts also count building simple prototypes with low- or
+        no-code tools, which this program does not cover.
         They replace the binary framing (pro-AI or anti-AI, enthusiast or skeptic) with language
         that treats AI use as a professional skill to be developed, discussed, and improved. The
-        framework’s authors make the same move: they treat AI as a thinking partner rather than
-        an efficiency engine, and they make human competence the condition for that
+        framework’s authors make a related move: they see AI as more than an efficiency engine, with the potential
+        to act as a thinking partner, and they hold that only specific human competencies can
+        realize that potential
         <Citation ids="dakan-feller-2025" pageKey="ai-fluency-definition" />. When your team
         shares this vocabulary, the
         concealment dynamic described in the previous section loses its grip. AI use becomes
@@ -492,10 +516,7 @@ const FOUR_DS: { name: string; tone: string; toneDark: string; description: Reac
       <>
         is the accountability layer: using AI within ethical and legal limits, documenting how AI
         contributed to a deliverable, maintaining transparency with colleagues and stakeholders,
-        and taking full ownership of the final product regardless of how it was produced. The
-        principle is not unique to this program. MIT’s 2026 institutional policy states that AI
-        is a tool under the direction of a human who verifies its output
-        <Citation ids="mit-2026" pageKey="human-verifies" />.
+        and taking full ownership of the final product regardless of how it was produced.
       </>
     ),
   },
@@ -623,7 +644,7 @@ function Section8({ module }: ModuleProp): JSX.Element {
           You’ve seen the market picture: what employers need, where adoption is happening, how
           usage patterns are changing, and why a workforce that conceals its AI practices can’t
           improve them. The data is clear that AI literacy is a strategic priority, and the
-          employers surveyed name it as the training they need
+          WEF report itself calls for training in broader generative AI literacy
           <Citation ids="wef-2025" pageKey="genai-literacy-training" />, but it’s been presented
           at the market and workforce level, not at the level of your daily work.
         </p>
