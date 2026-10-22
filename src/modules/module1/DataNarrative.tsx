@@ -336,13 +336,6 @@ function Story1Body({
           regulation and budgets<Citation ids="wef-2025" pageKey="skill-gap-63" />.
         </p>
         <p className="m-0">
-          Drawing on an analysis by the job site Indeed in which GPT-4o rated its own abilities,
-          the report sees potential for generative AI to augment human work rather than fully
-          replace it in most areas, and it calls for training in both advanced prompt-writing and
-          broader generative AI literacy
-          <Citation ids="wef-2025" pageKey="genai-literacy-training" />.
-        </p>
-        <p className="m-0">
           The chart below shows the top rising skills. Below it, a callout tracks how quickly the
           required skills are turning over, using a measure called skills instability: the share
           of core workforce skills expected to change over a five-year window
