@@ -37,7 +37,10 @@ export function formatNote(meta: CitationMeta, locator: string | undefined): str
   // The comma sits inside the closing quote unless the title already
   // ends in its own punctuation.
   const title = /[?!]$/.test(meta.title) ? `“${meta.title}”` : `“${meta.title},”`;
-  const tail = [authors === publisher ? null : publisher, noteDate(meta.date), locator]
+  // Locators quote section titles with straight quotes; the note's own
+  // title uses curly ones, so match them.
+  const loc = locator?.replace(/"([^"]*)"/g, '“$1”');
+  const tail = [authors === publisher ? null : publisher, noteDate(meta.date), loc]
     .filter((p): p is string => p !== null && p !== undefined && p.length > 0)
     .join(', ');
   return `${authors}, ${title} ${tail}`;

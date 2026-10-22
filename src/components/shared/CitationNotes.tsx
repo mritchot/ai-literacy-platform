@@ -102,7 +102,11 @@ export function SourcesList({ ids }: { ids: readonly string[] }): JSX.Element | 
       <ul className="my-4 list-disc space-y-1.5 pl-5 text-body text-body">
         {ids.map((id) => {
           const s = getCitation(id);
-          const tail = [s.authors === s.publisher ? null : s.publisher, s.date]
+          // The short publisher form the endnotes use, named once when the
+          // publisher is also the author.
+          const publisher = s.notePublisher ?? s.publisher;
+          const sameAsAuthor = publisher === s.authors || publisher === s.noteAuthors;
+          const tail = [sameAsAuthor ? null : publisher, s.date]
             .filter((p): p is string => p !== null)
             .join(', ');
           return (
