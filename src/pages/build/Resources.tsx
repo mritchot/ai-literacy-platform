@@ -111,7 +111,7 @@ function CustomVsArticulate(): JSX.Element {
             <div key={block.heading} className="print-keep mb-5 last:mb-0">
               <h4 className="mb-2 font-sans text-h4 font-semibold text-ink-secondary">{block.heading}</h4>
               {block.paragraphs.map((p, i) => (
-                <p key={i} className="m-0 mb-2.5 max-w-reading font-sans text-body-sm text-body last:mb-0" style={{ lineHeight: 1.65 }}>
+                <p key={i} className="m-0 mb-2.5 font-sans text-body-sm text-body last:mb-0" style={{ lineHeight: 1.65 }}>
                   {p}
                 </p>
               ))}
@@ -129,7 +129,7 @@ export default function Resources(): JSX.Element {
       <ArtifactTopBar pdfSlug="resources" />
       <ArtifactHeader label="Behind the build · Project Management" slug="resources" title="Resource & Budget Plan" />
 
-      <div className="max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
+      <div>{renderMarkdown(INTRO_MD.trim())}</div>
 
       <CostContrast />
 
@@ -166,7 +166,7 @@ export default function Resources(): JSX.Element {
       {SECTIONS.map((s) => (
         <section key={s.heading} className="mt-10">
           <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{s.heading}</h2>
-          <div className="max-w-reading">{renderMarkdown(s.body)}</div>
+          <div>{renderMarkdown(s.body)}</div>
         </section>
       ))}
 

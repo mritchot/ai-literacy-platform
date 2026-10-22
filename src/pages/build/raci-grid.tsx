@@ -59,7 +59,7 @@ export function RaciGrid(): JSX.Element {
         {selectedRole === null ? (
           <>
             <Overline className="mb-1.5">Accountability</Overline>
-            <p className="m-0 max-w-reading font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
+            <p className="m-0 font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
               The <strong className="text-ink">L&amp;D Manager</strong> is Accountable (A) for{' '}
               <strong className="text-ink">{lmAccountable} of {ACTIVITIES.length}</strong> activities, as the program
               owner who approves each deliverable before it advances. The Executive Sponsor is Accountable only at
@@ -73,7 +73,7 @@ export function RaciGrid(): JSX.Element {
               <Overline as="span">{ROLES[selectedRole]!.abbr}</Overline>
               <span className="font-sans text-body-sm font-semibold text-ink">{ROLES[selectedRole]!.name}</span>
             </div>
-            <p className="m-0 mb-3 max-w-reading font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
+            <p className="m-0 mb-3 font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
               {ROLES[selectedRole]!.definition}
             </p>
             <div className="flex flex-wrap gap-2">

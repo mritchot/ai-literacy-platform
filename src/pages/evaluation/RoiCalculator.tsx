@@ -441,7 +441,7 @@ export function RoiCalculator(): JSX.Element {
       >
         ROI calculator
       </h2>
-      <p className="m-0 mb-6 max-w-reading font-sans text-body text-body">
+      <p className="m-0 mb-6 font-sans text-body text-body">
         The defaults below are the conservative inputs from the static model, each with its
         rationale; together they reproduce the document&rsquo;s worked example.
         Change any input and the chain recomputes.

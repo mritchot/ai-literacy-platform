@@ -29,7 +29,7 @@ function ProseSection({ heading, body }: { heading: string; body: string }): JSX
   return (
     <section className="mt-10">
       <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{heading}</h2>
-      <div className="max-w-reading">{renderMarkdown(body)}</div>
+      <div>{renderMarkdown(body)}</div>
     </section>
   );
 }
@@ -40,7 +40,7 @@ export default function LearningArchitecture(): JSX.Element {
       <ArtifactTopBar pdfSlug="learning-architecture" />
       <ArtifactHeader label="Behind the build · Design" slug="learning-architecture" title="Learning Architecture" />
 
-      <div className="max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
+      <div>{renderMarkdown(INTRO_MD.trim())}</div>
 
       {SECTIONS.map((s) => (
         <ProseSection key={s.heading} heading={s.heading} body={s.body} />

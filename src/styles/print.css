@@ -24,9 +24,8 @@
    Print design system, shared by all four families:
      Masthead   series breadcrumb in mono caps, Source Serif 4 title at
                 32px [19pt], course name at 16px, closed by a rule.
-     Body       IBM Plex Sans 16px [9.6pt] at line-height 1.65, set in the
-                680px [5.7in] reading column the web uses (about 85
-                characters a line). Reference cards keep the full width.
+     Body       IBM Plex Sans 16px [9.6pt] at line-height 1.65, across the
+                full content width, the same as tables and figures.
      Headings   sans semibold, as on the web: H2 22px [13pt], H3 18px
                 [11pt], H4 16px.
      Tables     full content width; one 1px frame on the table itself, a
@@ -135,18 +134,8 @@
 
   /* ─── Measure ─── */
 
-  /* Running text in a series document sits in the 680px reading column,
-     the width the web page uses; tables and figures keep the full width.
-     The interactive pages wrap their prose in max-w-reading; a markdown
-     article (a reading document, or Level 4's two prose halves) lets its
-     tables out to the full width and holds only its text to the column. */
-  html.print-mode .print-body article.max-w-reading {
-    max-width: none;
-  }
-
-  html.print-mode .print-body article:is(:has(> .doc-title), .max-w-reading) > :is(p, ul, ol, h2, h3, h4, hr, blockquote) {
-    max-width: 680px;
-  }
+  /* Running text uses the full content width, the same as tables and
+     figures, so every block on the page shares one edge. */
 
   /* Markdown tables sit a step tighter to the text around them, which
      keeps a lead-in label and its table together on the page they
@@ -399,10 +388,6 @@
     color: rgb(var(--secondary));
     font-weight: 600;
     font-variant-numeric: tabular-nums;
-  }
-
-  html.print-mode .print-shell:not([data-print-family='reference']) :is(.print-notes, .print-colophon) {
-    max-width: 680px;
   }
 
   /* URLs wrap only at the <wbr> joints PrintNotes adds. */

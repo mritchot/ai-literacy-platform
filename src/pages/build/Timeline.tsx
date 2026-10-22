@@ -224,7 +224,7 @@ export default function Timeline(): JSX.Element {
       <ArtifactTopBar pdfSlug="timeline" />
       <ArtifactHeader label="Behind the build · Project Management" slug="timeline" title="Project Timeline" />
 
-      <div className="max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
+      <div>{renderMarkdown(INTRO_MD.trim())}</div>
 
       <EffortComparison />
       <GanttChart />
@@ -232,7 +232,7 @@ export default function Timeline(): JSX.Element {
       {SECTIONS.map((s) => (
         <section key={s.heading} className="mt-10">
           <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{s.heading}</h2>
-          <div className="max-w-reading">{renderMarkdown(s.body)}</div>
+          <div>{renderMarkdown(s.body)}</div>
         </section>
       ))}
 

@@ -87,7 +87,7 @@ function DesignNote({ text }: { text: string }): JSX.Element {
       <Overline className="mb-1.5" style={{ color: 'rgb(var(--info))' }}>
         Communication design
       </Overline>
-      <p className="m-0 max-w-reading font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
+      <p className="m-0 font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
         {text}
       </p>
     </aside>
@@ -135,7 +135,7 @@ function DesignReview(): JSX.Element {
   return (
     <MemoCard>
       <MemoHeader eyebrow="Sample 2 · Design review (simulated)" title="Phase 2 Design Review: Decisions and Action Items" meta={SAMPLE2_META} />
-      <p className="m-0 mt-4 max-w-reading font-sans text-body text-body" style={{ lineHeight: 1.65 }}>
+      <p className="m-0 mt-4 font-sans text-body text-body" style={{ lineHeight: 1.65 }}>
         {SAMPLE2_INTRO}
       </p>
       <div className="mt-4 space-y-2.5">
@@ -170,7 +170,7 @@ export default function Communications(): JSX.Element {
       <ArtifactTopBar pdfSlug="communications" />
       <ArtifactHeader label="Behind the build · Project Management" slug="communications" title="Stakeholder Communications" />
 
-      <div className="max-w-reading">{renderMarkdown(INTRO_MD)}</div>
+      <div>{renderMarkdown(INTRO_MD)}</div>
 
       <div className="mt-8 space-y-3">
         <StatusUpdate />

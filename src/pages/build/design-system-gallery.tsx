@@ -92,7 +92,7 @@ function CompetencyConstraint(): JSX.Element {
       <Overline className="mb-2" style={{ color: 'rgb(var(--info))' }}>
         The one rule
       </Overline>
-      <p className="m-0 mb-4 max-w-reading font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
+      <p className="m-0 mb-4 font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
         The 4D competency colors are reserved for competency tagging: swatches, tags, and
         competency-scoped accents. They are <strong className="text-ink">never</strong> used for
         general UI. Buttons, links, and navigation use the dedicated <span className="font-mono">--action</span>{' '}

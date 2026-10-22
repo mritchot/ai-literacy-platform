@@ -489,8 +489,7 @@ function BlogCard({
         className="m-0 mb-5 font-sans text-body-sm text-body"
         style={{ lineHeight: 1.6 }}
       >
-        This is the last course I plan to build. I'll keep writing, and the blog is where my next
-        work will show up. I write about life, learning, research, and
+        I'll keep writing, and the blog is where my next work will show up. I write about life, learning, research, and
         technology, mostly AI lately. New posts go up when I have something worth saying, not on
         a schedule.
       </p>

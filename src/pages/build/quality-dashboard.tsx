@@ -24,7 +24,7 @@ function Section({ label, note, children }: { label: string; note?: string; chil
         <span aria-hidden="true" className="h-px flex-1" style={{ background: 'rgb(var(--border-light))' }} />
       </div>
       {note && (
-        <p className="m-0 mb-4 max-w-reading font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
+        <p className="m-0 mb-4 font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
           {note}
         </p>
       )}

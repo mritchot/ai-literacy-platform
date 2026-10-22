@@ -46,13 +46,13 @@ export default function Level4Results(): JSX.Element {
     <ArtifactPage width="interactive">
       <ArtifactTopBar pdfSlug="level-4-results" />
       <SeriesEyebrow label="Evaluation framework · Interactive" slug="level-4-results" />
-      <article className="max-w-reading">{renderMarkdown(partA)}</article>
+      <article>{renderMarkdown(partA)}</article>
       <RoiFormulaFigure />
       <RoiCalculator />
       {partB.length > 0 && (
-        <article className="mt-10 max-w-reading">{renderMarkdown(partB)}</article>
+        <article className="mt-10">{renderMarkdown(partB)}</article>
       )}
-      <div className="max-w-reading">
+      <div>
         <SourcesList ids={SOURCE_IDS} />
       </div>
       <ArtifactFooter currentSlug="level-4-results" />

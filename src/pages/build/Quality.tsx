@@ -37,14 +37,14 @@ export default function Quality(): JSX.Element {
       <ArtifactTopBar pdfSlug="quality" />
       <ArtifactHeader label="Behind the build · Project Management" slug="quality" title="QA Dashboard" />
 
-      <div className="max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
+      <div>{renderMarkdown(INTRO_MD.trim())}</div>
 
       <QualityDashboard />
 
       {SECTIONS.map((s) => (
         <section key={s.heading} className="mt-10">
           <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{s.heading}</h2>
-          <div className="max-w-reading">{renderMarkdown(s.body)}</div>
+          <div>{renderMarkdown(s.body)}</div>
         </section>
       ))}
 

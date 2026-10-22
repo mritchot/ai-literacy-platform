@@ -67,7 +67,7 @@ function ProseSection({ heading, body }: { heading: string; body: string }): JSX
   return (
     <section className="mt-10">
       <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{heading}</h2>
-      <div className="max-w-reading">{renderMarkdown(body)}</div>
+      <div>{renderMarkdown(body)}</div>
     </section>
   );
 }
@@ -81,13 +81,13 @@ export default function ActionMap(): JSX.Element {
       <ArtifactHeader label="Needs Analysis · Interactive" slug="action-map" title="Action Map" />
 
       {/* Framing line + dual-platform delivery note, verbatim from the md. */}
-      <div className="max-w-reading">{renderMarkdown(INTRO_MD)}</div>
+      <div>{renderMarkdown(INTRO_MD)}</div>
 
       <InteractiveMap />
 
       <ProseSection heading="Traceability Summary" body={TRACEABILITY_MD} />
       <ProseSection heading="Scope and Feasibility Notes" body={SCOPE_MD} />
-      <div className="max-w-reading">
+      <div>
         <SourcesList ids={SOURCE_IDS} />
       </div>
 

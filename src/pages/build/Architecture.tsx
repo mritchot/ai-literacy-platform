@@ -70,7 +70,7 @@ function AdrCard({ adr, expanded, onToggle }: { adr: Adr; expanded: boolean; onT
       {expanded && (
         <div id={panelId} className="border-t border-border-light" style={{ padding: '16px 20px' }}>
           {adr.rationale.map((p, i) => (
-            <p key={i} className="m-0 mb-3 max-w-reading font-sans text-body-sm text-body last:mb-0" style={{ lineHeight: 1.65 }}>
+            <p key={i} className="m-0 mb-3 font-sans text-body-sm text-body last:mb-0" style={{ lineHeight: 1.65 }}>
               {renderInline(p)}
             </p>
           ))}
@@ -118,14 +118,14 @@ export default function Architecture(): JSX.Element {
       <ArtifactTopBar pdfSlug="architecture" />
       <ArtifactHeader label="Behind the build · Design" slug="architecture" title="Architecture Decisions" />
 
-      <div className="max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
+      <div>{renderMarkdown(INTRO_MD.trim())}</div>
 
       <ArchitectureBrowser />
 
       {SECTIONS.map((s) => (
         <section key={s.heading} className="mt-10">
           <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{s.heading}</h2>
-          <div className="max-w-reading">{renderMarkdown(s.body)}</div>
+          <div>{renderMarkdown(s.body)}</div>
         </section>
       ))}
 
