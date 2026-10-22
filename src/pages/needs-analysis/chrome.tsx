@@ -6,8 +6,10 @@ import { createArtifactSeries } from '../artifact-series/artifact-series';
 import { SERIES } from './config';
 
 export const {
+  ArtifactPage,
   ArtifactTopBar,
   SeriesEyebrow,
+  ArtifactHeader,
   ArtifactFooter,
   ReadingArtifact,
   ArtifactHub,

@@ -573,7 +573,7 @@ export function InteractiveMap(): JSX.Element {
           style={{
             background: 'rgb(var(--white))',
             padding: '20px 22px',
-            border: '1px solid #C8D5DE',
+            border: '1px solid rgb(var(--discernment) / 0.35)',
             marginBottom: 20,
           }}
         >
@@ -642,7 +642,7 @@ export function InteractiveMap(): JSX.Element {
         </div>
 
         {/* Ring 3: Reference Information */}
-        <div style={{ background: 'rgb(var(--white))', padding: '20px 22px', border: '1px solid #D1C4D9' }}>
+        <div style={{ background: 'rgb(var(--white))', padding: '20px 22px', border: '1px solid rgb(var(--diligence) / 0.35)' }}>
           <div
             style={{
               fontSize: 10,

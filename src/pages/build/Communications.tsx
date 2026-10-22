@@ -8,6 +8,7 @@
 import COMMS_MD from './content/07_communications.md?raw';
 import { renderMarkdown } from '../../components/shared/render-markdown';
 import { Overline } from '../../components/shared/Overline';
+import { TABLE, TABLE_FRAME, TD, TH, TH_ROW, THEAD } from '../../components/shared/table-classes';
 import {
   SAMPLE1_BODY_MD,
   SAMPLE1_META,
@@ -21,7 +22,7 @@ import {
   type MemoMeta,
   type StatusTone,
 } from './communications-data';
-import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
+import { ArtifactFooter, ArtifactHeader, ArtifactPage, ArtifactTopBar } from './chrome';
 
 const INTRO_MD = COMMS_MD.replace(/\r\n/g, '\n').trim();
 
@@ -61,7 +62,7 @@ function MemoHeader({ eyebrow, title, meta }: { eyebrow: string; title: string; 
             <dt className="font-mono text-[10px] font-bold uppercase text-tertiary" style={{ letterSpacing: '0.08em', paddingTop: 2 }}>
               {k}
             </dt>
-            <dd className="m-0 font-sans text-[12.5px] text-body">{v}</dd>
+            <dd className="m-0 font-sans text-body-sm text-body">{v}</dd>
           </div>
         ))}
       </dl>
@@ -97,12 +98,12 @@ function StatusUpdate(): JSX.Element {
   return (
     <MemoCard>
       <MemoHeader eyebrow="Sample 1 · Status update (simulated)" title="Weekly Project Status Update" meta={SAMPLE1_META} />
-      <div className="mt-4 overflow-x-auto">
-        <table className="w-full border-collapse text-left" style={{ minWidth: 520 }}>
-          <thead>
+      <div className={`mt-4 ${TABLE_FRAME}`}>
+        <table className={TABLE} style={{ minWidth: 520 }}>
+          <thead className={THEAD}>
             <tr>
               {['Workstream', 'Status', 'Notes'].map((h) => (
-                <th key={h} scope="col" className="border-b border-border px-3 py-2 font-sans text-label font-semibold uppercase text-ink-secondary">
+                <th key={h} scope="col" className={TH}>
                   {h}
                 </th>
               ))}
@@ -111,13 +112,13 @@ function StatusUpdate(): JSX.Element {
           <tbody>
             {SAMPLE1_STATUS.map((r) => (
               <tr key={r.workstream}>
-                <th scope="row" className="border-b border-border-light px-3 py-2.5 align-top font-sans text-[13px] font-semibold text-ink" style={{ minWidth: 130 }}>
+                <th scope="row" className={TH_ROW} style={{ minWidth: 130 }}>
                   {r.workstream}
                 </th>
-                <td className="border-b border-border-light px-3 py-2.5 align-top">
+                <td className={TD}>
                   <StatusBadge label={r.status} tone={r.tone} />
                 </td>
-                <td className="border-b border-border-light px-3 py-2.5 align-top font-sans text-[12.5px] text-body" style={{ lineHeight: 1.55 }}>
+                <td className={TD}>
                   {r.notes}
                 </td>
               </tr>
@@ -151,7 +152,7 @@ function DesignReview(): JSX.Element {
               <span className="mr-1.5 font-mono text-[10px] uppercase text-tertiary">Raised</span>
               {d.item}
             </p>
-            <p className="m-0 font-sans text-[12.5px] text-body" style={{ lineHeight: 1.6 }}>
+            <p className="m-0 font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
               <span className="mr-1.5 font-mono text-[10px] uppercase text-tertiary">Decision</span>
               {d.decision}
             </p>
@@ -165,14 +166,11 @@ function DesignReview(): JSX.Element {
 
 export default function Communications(): JSX.Element {
   return (
-    <div className="mx-auto max-w-interactive px-4 py-12 sm:px-8 lg:px-16 lg:py-14">
+    <ArtifactPage width="interactive">
       <ArtifactTopBar pdfSlug="communications" />
-      <SeriesEyebrow label="Behind the build · Project Management" />
+      <ArtifactHeader label="Behind the build · Project Management" slug="communications" title="Stakeholder Communications" />
 
-      <h1 className="m-0 mb-2 font-display text-display font-normal text-ink">Stakeholder Communications</h1>
-      <p className="m-0 mb-6 font-sans text-h3 font-normal text-secondary">AI Literacy for the Modern Workforce</p>
-
-      <div className="prose-longform max-w-reading">{renderMarkdown(INTRO_MD)}</div>
+      <div className="max-w-reading">{renderMarkdown(INTRO_MD)}</div>
 
       <div className="mt-8 space-y-3">
         <StatusUpdate />
@@ -185,6 +183,6 @@ export default function Communications(): JSX.Element {
       </div>
 
       <ArtifactFooter currentSlug="communications" />
-    </div>
+    </ArtifactPage>
   );
 }

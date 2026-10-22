@@ -24,7 +24,7 @@ import { citedIds, renderMarkdown } from '../../components/shared/render-markdow
 import { SourcesList } from '../../components/shared/CitationNotes';
 import { InteractiveMap } from './action-map-interactive';
 import { BEHAVIORS, GOAL_NOTE } from './action-map-data';
-import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
+import { ArtifactFooter, ArtifactHeader, ArtifactPage, ArtifactTopBar } from './chrome';
 
 // ─── Prose sections sliced from the finalized markdown ─────────────────
 
@@ -67,7 +67,7 @@ function ProseSection({ heading, body }: { heading: string; body: string }): JSX
   return (
     <section className="mt-10">
       <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{heading}</h2>
-      <div className="prose-longform max-w-reading">{renderMarkdown(body)}</div>
+      <div className="max-w-reading">{renderMarkdown(body)}</div>
     </section>
   );
 }
@@ -76,17 +76,12 @@ function ProseSection({ heading, body }: { heading: string; body: string }): JSX
 
 export default function ActionMap(): JSX.Element {
   return (
-    <div className="mx-auto max-w-interactive px-4 py-12 sm:px-8 lg:px-16 lg:py-14">
+    <ArtifactPage width="interactive">
       <ArtifactTopBar pdfSlug="action-map" />
-      <SeriesEyebrow label="Needs Analysis · Interactive" />
-
-      <h1 className="m-0 mb-2 font-display text-display font-normal text-ink">Action Map</h1>
-      <p className="m-0 mb-6 font-sans text-h3 font-normal text-secondary">
-        AI Literacy for the Modern Workforce
-      </p>
+      <ArtifactHeader label="Needs Analysis · Interactive" slug="action-map" title="Action Map" />
 
       {/* Framing line + dual-platform delivery note, verbatim from the md. */}
-      <div className="prose-longform max-w-reading">{renderMarkdown(INTRO_MD)}</div>
+      <div className="max-w-reading">{renderMarkdown(INTRO_MD)}</div>
 
       <InteractiveMap />
 
@@ -97,6 +92,6 @@ export default function ActionMap(): JSX.Element {
       </div>
 
       <ArtifactFooter currentSlug="action-map" />
-    </div>
+    </ArtifactPage>
   );
 }

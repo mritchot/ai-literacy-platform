@@ -10,7 +10,7 @@ import LA_MD from './content/01_learning-architecture.md?raw';
 import { citedIds, renderMarkdown } from '../../components/shared/render-markdown';
 import { SourcesList } from '../../components/shared/CitationNotes';
 import { LearningArchitectureDiagram } from './learning-architecture-interactive';
-import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
+import { ArtifactFooter, ArtifactHeader, ArtifactPage, ArtifactTopBar } from './chrome';
 
 // Intro = the prose before the first `## `; the remaining `## ` blocks render
 // as titled sections between the intro and the diagram.
@@ -29,21 +29,18 @@ function ProseSection({ heading, body }: { heading: string; body: string }): JSX
   return (
     <section className="mt-10">
       <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{heading}</h2>
-      <div className="prose-longform max-w-reading">{renderMarkdown(body)}</div>
+      <div className="max-w-reading">{renderMarkdown(body)}</div>
     </section>
   );
 }
 
 export default function LearningArchitecture(): JSX.Element {
   return (
-    <div className="mx-auto max-w-interactive px-4 py-12 sm:px-8 lg:px-16 lg:py-14">
+    <ArtifactPage width="interactive">
       <ArtifactTopBar pdfSlug="learning-architecture" />
-      <SeriesEyebrow label="Behind the build · Design" />
+      <ArtifactHeader label="Behind the build · Design" slug="learning-architecture" title="Learning Architecture" />
 
-      <h1 className="m-0 mb-2 font-display text-display font-normal text-ink">Learning Architecture</h1>
-      <p className="m-0 mb-6 font-sans text-h3 font-normal text-secondary">AI Literacy for the Modern Workforce</p>
-
-      <div className="prose-longform max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
+      <div className="max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
 
       {SECTIONS.map((s) => (
         <ProseSection key={s.heading} heading={s.heading} body={s.body} />
@@ -54,6 +51,6 @@ export default function LearningArchitecture(): JSX.Element {
       <SourcesList ids={citedIds(LA_MD)} />
 
       <ArtifactFooter currentSlug="learning-architecture" />
-    </div>
+    </ArtifactPage>
   );
 }

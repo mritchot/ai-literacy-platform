@@ -147,7 +147,7 @@ function PlatformCell({
       </div>
       <div className="font-sans text-[12.5px] font-semibold text-ink-secondary">{cell.label}</div>
       {showDesc && (
-        <p className="m-0 mt-1.5 font-sans text-[11.5px] text-body" style={{ lineHeight: 1.55 }}>
+        <p className="m-0 mt-1.5 font-sans text-body-sm text-body" style={{ lineHeight: 1.55 }}>
           {cell.desc}
         </p>
       )}
@@ -394,7 +394,7 @@ function KirkpatrickLane({ expanded, onToggle }: { expanded: boolean; onToggle: 
               </span>
               <div>
                 <div className="mb-1 font-sans text-[13px] font-semibold text-ink-secondary">{k.name}</div>
-                <div className="font-sans text-[11.5px] text-body" style={{ lineHeight: 1.55 }}>
+                <div className="font-sans text-body-sm text-body" style={{ lineHeight: 1.55 }}>
                   {k.detail}
                 </div>
               </div>
@@ -431,7 +431,7 @@ function AssessmentTiers(): JSX.Element {
               </span>
               <span className="font-mono text-[11px] font-bold text-secondary">{t.label}</span>
             </div>
-            <p className="m-0 mb-1.5 font-sans text-[11.5px] text-body" style={{ lineHeight: 1.5 }}>
+            <p className="m-0 mb-1.5 font-sans text-body-sm text-body" style={{ lineHeight: 1.5 }}>
               {t.desc}
             </p>
             <span className="font-mono text-[10px] text-muted">
@@ -448,7 +448,7 @@ function L3Callout(): JSX.Element {
   return (
     <div
       className="flex items-start gap-3.5"
-      style={{ background: 'rgb(var(--white))', border: '1px solid #B5C4AB', padding: '16px 20px' }}
+      style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--delegation) / 0.45)', padding: '16px 20px' }}
     >
       <span
         className="flex h-8 min-w-[32px] items-center justify-center font-mono text-[11px] font-bold"
@@ -458,7 +458,7 @@ function L3Callout(): JSX.Element {
       </span>
       <div>
         <div className="mb-1.5 font-sans text-[13px] font-semibold text-ink-secondary">Transfer Measurement by Design</div>
-        <p className="m-0 font-sans text-[12px] text-body" style={{ lineHeight: 1.6 }}>
+        <p className="m-0 font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
           Two objectives produce trackable artifacts that the 30/60/90-day behavioral follow-up checks for
           sustained use. <strong className="text-ink">Objective 2.3</strong> is a task-level action commitment:
           the participant identifies a specific task they will change their approach to.{' '}
@@ -596,7 +596,7 @@ export function LearningArchitectureDiagram(): JSX.Element {
                   {p.label} · {p.component}
                 </span>
               </div>
-              <p className="m-0 pl-1 font-sans text-[11px] text-body" style={{ lineHeight: 1.5 }}>
+              <p className="m-0 pl-1 font-sans text-body-sm text-body" style={{ lineHeight: 1.5 }}>
                 {p.legend}
               </p>
             </div>

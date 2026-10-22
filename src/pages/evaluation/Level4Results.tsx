@@ -8,7 +8,7 @@
 import MARKDOWN from './content/04_level-4-results.md?raw';
 import { citedIds, renderMarkdown } from '../../components/shared/render-markdown';
 import { SourcesList } from '../../components/shared/CitationNotes';
-import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
+import { ArtifactFooter, ArtifactPage, ArtifactTopBar, SeriesEyebrow } from './chrome';
 import { RoiCalculator, RoiFormulaFigure } from './RoiCalculator';
 
 // Split markers mirror the canonical section boundaries. Part A ends just
@@ -43,19 +43,19 @@ const SOURCE_IDS = [
 
 export default function Level4Results(): JSX.Element {
   return (
-    <div className="mx-auto max-w-interactive px-4 py-12 sm:px-8 lg:px-16 lg:py-14">
+    <ArtifactPage width="interactive">
       <ArtifactTopBar pdfSlug="level-4-results" />
-      <SeriesEyebrow label="Evaluation framework · Interactive" />
-      <article className="prose-longform max-w-reading">{renderMarkdown(partA)}</article>
+      <SeriesEyebrow label="Evaluation framework · Interactive" slug="level-4-results" />
+      <article className="max-w-reading">{renderMarkdown(partA)}</article>
       <RoiFormulaFigure />
       <RoiCalculator />
       {partB.length > 0 && (
-        <article className="prose-longform mt-10 max-w-reading">{renderMarkdown(partB)}</article>
+        <article className="mt-10 max-w-reading">{renderMarkdown(partB)}</article>
       )}
-      <div className="prose-longform max-w-reading">
+      <div className="max-w-reading">
         <SourcesList ids={SOURCE_IDS} />
       </div>
       <ArtifactFooter currentSlug="level-4-results" />
-    </div>
+    </ArtifactPage>
   );
 }

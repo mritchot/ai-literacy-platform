@@ -8,7 +8,7 @@ import { citedIds, renderMarkdown } from '../../components/shared/render-markdow
 import { SourcesList } from '../../components/shared/CitationNotes';
 import { QualityDashboard } from './quality-dashboard';
 import { VALIDATED_FILES } from './quality-data';
-import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
+import { ArtifactFooter, ArtifactHeader, ArtifactPage, ArtifactTopBar } from './chrome';
 
 const [INTRO_MD = '', ...REST] = QA_MD.replace(/\r\n/g, '\n').split(/\n## /);
 const SECTIONS = REST.map((part) => {
@@ -33,27 +33,24 @@ const SOURCE_IDS = [
 
 export default function Quality(): JSX.Element {
   return (
-    <div className="mx-auto max-w-interactive px-4 py-12 sm:px-8 lg:px-16 lg:py-14">
+    <ArtifactPage width="interactive">
       <ArtifactTopBar pdfSlug="quality" />
-      <SeriesEyebrow label="Behind the build · Project Management" />
+      <ArtifactHeader label="Behind the build · Project Management" slug="quality" title="QA Dashboard" />
 
-      <h1 className="m-0 mb-2 font-display text-display font-normal text-ink">QA Dashboard</h1>
-      <p className="m-0 mb-6 font-sans text-h3 font-normal text-secondary">AI Literacy for the Modern Workforce</p>
-
-      <div className="prose-longform max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
+      <div className="max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
 
       <QualityDashboard />
 
       {SECTIONS.map((s) => (
         <section key={s.heading} className="mt-10">
           <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{s.heading}</h2>
-          <div className="prose-longform max-w-reading">{renderMarkdown(s.body)}</div>
+          <div className="max-w-reading">{renderMarkdown(s.body)}</div>
         </section>
       ))}
 
       <SourcesList ids={SOURCE_IDS} />
 
       <ArtifactFooter currentSlug="quality" />
-    </div>
+    </ArtifactPage>
   );
 }

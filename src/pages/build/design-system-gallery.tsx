@@ -191,7 +191,7 @@ function CardSpecimens(): JSX.Element {
       {cards.map((c) => (
         <div key={c.label} style={{ background: c.bg, border: '1px solid rgb(var(--border))', padding: c.pad }}>
           <div className="font-sans text-[12.5px] font-semibold text-ink">{c.label}</div>
-          <div className="mt-1 font-sans text-[11.5px] text-body" style={{ lineHeight: 1.5 }}>
+          <div className="mt-1 font-sans text-body-sm text-body" style={{ lineHeight: 1.5 }}>
             {c.note}
           </div>
         </div>

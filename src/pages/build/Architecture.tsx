@@ -14,7 +14,7 @@ import { ExpandAllToggle } from '../../components/shared/ExpandAllToggle';
 import { Overline } from '../../components/shared/Overline';
 import { useExpandableSet } from '../../hooks/useExpandableSet';
 import { ADRS, type Adr } from './architecture-data';
-import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
+import { ArtifactFooter, ArtifactHeader, ArtifactPage, ArtifactTopBar } from './chrome';
 
 const [INTRO_MD = '', ...REST] = ARCH_MD.replace(/\r\n/g, '\n').split(/\n## /);
 const SECTIONS = REST.map((part) => {
@@ -114,27 +114,24 @@ function ArchitectureBrowser(): JSX.Element {
 
 export default function Architecture(): JSX.Element {
   return (
-    <div className="mx-auto max-w-interactive px-4 py-12 sm:px-8 lg:px-16 lg:py-14">
+    <ArtifactPage width="interactive">
       <ArtifactTopBar pdfSlug="architecture" />
-      <SeriesEyebrow label="Behind the build · Design" />
+      <ArtifactHeader label="Behind the build · Design" slug="architecture" title="Architecture Decisions" />
 
-      <h1 className="m-0 mb-2 font-display text-display font-normal text-ink">Architecture Decisions</h1>
-      <p className="m-0 mb-6 font-sans text-h3 font-normal text-secondary">AI Literacy for the Modern Workforce</p>
-
-      <div className="prose-longform max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
+      <div className="max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
 
       <ArchitectureBrowser />
 
       {SECTIONS.map((s) => (
         <section key={s.heading} className="mt-10">
           <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{s.heading}</h2>
-          <div className="prose-longform max-w-reading">{renderMarkdown(s.body)}</div>
+          <div className="max-w-reading">{renderMarkdown(s.body)}</div>
         </section>
       ))}
 
       <SourcesList ids={SOURCE_IDS} />
 
       <ArtifactFooter currentSlug="architecture" />
-    </div>
+    </ArtifactPage>
   );
 }

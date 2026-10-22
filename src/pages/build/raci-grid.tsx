@@ -32,7 +32,7 @@ function Legend(): JSX.Element {
           >
             {d.letter}
           </span>
-          <span className="font-sans text-[12px] text-body">
+          <span className="font-sans text-body-sm text-body">
             <span className="font-semibold text-ink">{d.name}</span>: {d.meaning}
           </span>
         </div>
