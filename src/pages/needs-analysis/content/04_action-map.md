@@ -1,6 +1,6 @@
 # Action Map
 
-*Following Cathy Moore's Action Mapping framework, organized by the 4D competency taxonomy of Delegation, Description, Discernment, and Diligence{{cite:dakan-feller-2025#four-ds}}.*
+*Following Cathy Moore's action mapping method{{cite:moore-2017}}, organized by the 4D competency taxonomy of Delegation, Description, Discernment, and Diligence{{cite:dakan-feller-2025#four-ds}}.*
 
 > **Delivery note.** Each practice activity below is mapped to two deliverables: a custom-coded platform component (Component 4) and a corporate Articulate (Rise 360 / Storyline) component (Component 5). The program was designed against both contexts to demonstrate that the instructional design transfers across a bespoke build and a standard authoring stack. The custom platform was built and shipped ([ritchot.me/courses/ai-literacy](https://ritchot.me/courses/ai-literacy/)); the Articulate build was specified but not produced, a deliberate scope decision for an independent portfolio project without enterprise funding. The Component 5 mappings are retained because the interaction-fidelity tradeoffs they record are part of the design analysis.
 
