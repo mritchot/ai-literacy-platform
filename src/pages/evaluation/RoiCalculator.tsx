@@ -24,6 +24,7 @@ import { PRE_ASSESSMENT_ITEMS } from '../../data/pre-assessment';
 import { POST_ASSESSMENT_ITEMS } from '../../data/post-assessment';
 import { BUDGET_TOTAL } from '../build/resources-data';
 import { SERIES_ACCENT } from './config';
+import { renderInline } from '../../components/shared/render-markdown';
 
 // ─── Participant and manager time ──────────────────────────────────────
 //
@@ -153,7 +154,7 @@ const FIELDS: FieldDef[] = [
     max: 100,
     step: 1,
     rationale:
-      'MGI puts agents, its term for all machines that automate nonphysical work, AI-based or not, at 44% of US work hours as technical potential. Its midpoint scenario automates about 27% of all US work hours by 2030 (Yee et al., 2025); 25% sits just below that midpoint. Handa et al. find 57% of occupations use AI on at least a tenth of their tasks; their 57% conversation split is a different statistic and is not used here.',
+      'MGI puts agents, its term for all machines that automate nonphysical work, AI-based or not, at 44% of US work hours as technical potential. Its midpoint scenario automates about 27% of all US work hours by 2030{{cite:mgi-agents-robots-us-2025#agents-44-midpoint-27}}; 25% sits just below that midpoint. Handa et al. find 57% of occupations use AI on at least a tenth of their tasks; their 57% conversation split is a different statistic and is not used here.',
   },
   {
     key: 'timeSavings',
@@ -165,7 +166,7 @@ const FIELDS: FieldDef[] = [
     max: 100,
     step: 1,
     rationale:
-      'Inside the 14–56% range that controlled trials report; well below the 81% in-conversation median, which leaves out the time spent refining output (Tamkin & McCrory, 2025).',
+      'Inside the 14–56% range that controlled trials report; well below the 81% in-conversation median, which leaves out the time spent refining output{{cite:tamkin-mccrory-2025#rct-comparison}}.',
   },
   {
     key: 'attribution',
@@ -612,7 +613,7 @@ function InputField({
         {def.unit === 'pct' && <span className="font-mono text-body-sm text-tertiary">%</span>}
       </div>
       <p className="m-0 mt-1.5 font-sans text-caption text-tertiary" style={{ lineHeight: 1.5 }}>
-        {def.rationale}
+        {renderInline(def.rationale, `${def.key}-rationale`)}
       </p>
     </div>
   );

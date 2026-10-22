@@ -55,7 +55,7 @@ Scaled items use a 5-point Likert agreement scale (Strongly Disagree to Strongly
 | C3 | I feel more confident in my ability to explain to a colleague why an AI tool produced an incorrect or misleading result. | 5-point Likert |
 | C4 | What, if anything, do you still feel uncertain about when working with AI tools? | Open response |
 
-Two paired items separate the confidence the program intends to build from the confidence it intends to reduce. [Lee et al. (CHI 2025, pp. 5, 9)](https://doi.org/10.1145/3706598.3713778) measured three confidences per task on a five-point scale (in oneself, in the AI, and in evaluating the AI's output) and found that confidence in the AI is associated with less critical thinking while confidence in evaluation is associated with more. A reaction survey that reports only "more confident" cannot tell the two apart.
+Two paired items separate the confidence the program intends to build from the confidence it intends to reduce. Lee et al. (CHI 2025) measured three confidences per task on a five-point scale (in oneself, in the AI, and in evaluating the AI's output) and found that confidence in the AI is associated with less critical thinking while confidence in evaluation is associated with more{{cite:lee-2025#three-confidences}}. A reaction survey that reports only "more confident" cannot tell the two apart.
 
 | # | Item | Format |
 |---|---|---|
@@ -89,7 +89,7 @@ C5 and C6 use a retrospective change scale rather than the agreement scale. When
 
 **Distribution.** Place an embedded link in the post-completion communication (an LMS-triggered email, an intranet notification, or a direct link on the completion screen). The link should appear at the moment of completion, not in a separate follow-up days later.
 
-**Anonymity.** Administer anonymously to maximize candor, particularly on the confidence and quality dimensions where social desirability inflates scores. Anthropic's internal study of its own engineers is a cautionary case. Its survey collected names, and the authors list social-desirability bias, 12-month recall bias, and self-selection by engaged respondents among the reasons to read the self-reports only alongside usage data, and recommend anonymous collection in future studies ([Huang et al., 2025](https://anthropic.com/research/how-ai-is-transforming-work-at-anthropic/), Appendix). If an organization needs to link Level 1 reactions to the same individual's Level 3 data, use a coded identifier rather than a name or email, and disclose the linking in the survey introduction. Identified responses enable longitudinal analysis but may suppress critical feedback.
+**Anonymity.** Administer anonymously to maximize candor, particularly on the confidence and quality dimensions where social desirability inflates scores. Anthropic's internal study of its own engineers is a cautionary case. Its survey collected names, and the authors list social-desirability bias, 12-month recall bias, and self-selection by engaged respondents among the reasons to read the self-reports only alongside usage data, and recommend anonymous collection in future studies{{cite:huang-2025#survey-limitations-appendix}}. If an organization needs to link Level 1 reactions to the same individual's Level 3 data, use a coded identifier rather than a name or email, and disclose the linking in the survey introduction. Identified responses enable longitudinal analysis but may suppress critical feedback.
 
 **Response rate.** Target a minimum 60% response rate for cohort-level interpretation. Below that, non-response bias becomes a real concern, since strong positive and negative reactors tend to respond while moderate reactors do not, producing a bimodal distribution that misrepresents the cohort.
 
@@ -114,10 +114,3 @@ Level 1 sets the context for the levels above it. A cohort that scores well on t
 ---
 
 ¹ *This is an evaluation instrument design, not a results report. The program is an independent portfolio project that has not been deployed at organizational scale, so no Level 1 cohort data exists. The page presents the proposed item bank; the administration protocol and analysis thresholds are complete, and a deploying organization would adapt the items to its own context before administering the survey through its own infrastructure.*
-
----
-
-## Sources
-
-- **Lee, H.-P., Sarkar, A., Tankelevitch, L., Drosos, I., Rintel, S., Banks, R. & Wilson, N.** — [*The Impact of Generative AI on Critical Thinking*](https://doi.org/10.1145/3706598.3713778) (CHI 2025)
-- **Huang, S., Seethor, B., Durmus, E., Handa, K., McCain, M., Stern, M. & Ganguli, D.** — [*How AI Is Transforming Work at Anthropic*](https://anthropic.com/research/how-ai-is-transforming-work-at-anthropic/) (Anthropic, Dec 2025)
