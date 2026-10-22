@@ -43,12 +43,12 @@ const RELIABLE_ROWS: ReliableRow[] = [
   },
   {
     task: 'Reformatting and restructuring',
-    why: 'Tasks with one well-defined correct output and a clear specification. Token-level manipulation within well-defined patterns.',
+    why: 'Tasks with one correct output and a clear specification. Token-level manipulation within known patterns.',
     notes: 'Format + audience + length spec → reliable output.',
   },
   {
     task: 'Brainstorming and ideation',
-    why: 'Sampling from the probability distribution, rather than always taking the top token, produces varied options; asking for many distinct options widens the spread.',
+    why: 'Sampling produces varied options; asking for many distinct options widens the spread.',
     notes: 'Useful for breadth. Evaluate each option independently; plausible ≠ good.',
   },
   {
@@ -109,7 +109,7 @@ const FAILS_CATEGORIES: FailsCategory[] = [
       },
       {
         failsAt: 'Non-English text processing',
-        why: 'Lower-resource languages often take 2× or more the tokens for the same meaning, up to 15× for some languages and tokenizers (Petrov et al., 2023), consuming context window and increasing error surface',
+        why: 'Lower-resource languages often take 2× or more the tokens for the same meaning (up to 15×; Petrov et al., 2023), so they use up context faster',
         instead: 'Verify non-English output more carefully; expect quality gaps',
       },
     ],
@@ -160,7 +160,7 @@ const FAILS_CATEGORIES: FailsCategory[] = [
       },
       {
         failsAt: 'Multi-document synthesis',
-        why: 'Multiple documents consume context rapidly; documents in the middle of the stack are the most likely to be underprocessed',
+        why: 'Several documents fill the context fast; those in the middle are most likely to be underprocessed',
         instead: 'Process documents individually, then synthesize yourself',
       },
     ],
@@ -182,8 +182,7 @@ export function R5CapabilityBoundary(): JSX.Element {
         Know what the tool does well and where it systematically fails before you delegate. The
         framework calls this Platform Awareness, part of Delegation (Dakan &amp; Feller, 2025,
         p. 4). It sets two requirements for automation: a clear task definition and a quality
-        check (p. 2). This reference is organized by task type rather than technical
-        architecture. Each entry connects to Module 3’s mechanical framework.
+        check (p. 2). It is organized by task type, not technical architecture. Each entry connects to Module 3’s mechanical framework.
       </p>
 
       {/* Section 1: Reliable */}
