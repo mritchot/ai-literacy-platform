@@ -7,7 +7,8 @@
 // from the co-located markdown (via ?raw).
 
 import TL_MD from './content/04_timeline.md?raw';
-import { renderMarkdown } from '../../components/shared/render-markdown';
+import { citedIds, renderMarkdown } from '../../components/shared/render-markdown';
+import { SourcesList } from '../../components/shared/CitationNotes';
 import { ExpandAllToggle } from '../../components/shared/ExpandAllToggle';
 import { Overline } from '../../components/shared/Overline';
 import { useExpandableSet } from '../../hooks/useExpandableSet';
@@ -25,6 +26,8 @@ const SECTIONS = REST.map((part) => {
     body: nl === -1 ? '' : part.slice(nl + 1).trim(),
   };
 });
+
+const SOURCE_IDS = citedIds(TL_MD);
 
 const TICKS = [5, 10, 15, 20, 25, 30];
 const LABEL_W = 150;
@@ -235,6 +238,8 @@ export default function Timeline(): JSX.Element {
           <div className="prose-longform max-w-reading">{renderMarkdown(s.body)}</div>
         </section>
       ))}
+
+      <SourcesList ids={SOURCE_IDS} />
 
       <ArtifactFooter currentSlug="timeline" />
     </div>

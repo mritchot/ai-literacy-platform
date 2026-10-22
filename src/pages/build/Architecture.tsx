@@ -7,7 +7,8 @@
 
 import { useId } from 'react';
 import ARCH_MD from './content/03_architecture.md?raw';
-import { renderMarkdown } from '../../components/shared/render-markdown';
+import { citedIds, renderInline, renderMarkdown } from '../../components/shared/render-markdown';
+import { SourcesList } from '../../components/shared/CitationNotes';
 import { DisclosureChevron } from '../../components/shared/DisclosureChevron';
 import { ExpandAllToggle } from '../../components/shared/ExpandAllToggle';
 import { Overline } from '../../components/shared/Overline';
@@ -25,6 +26,9 @@ const SECTIONS = REST.map((part) => {
     body: nl === -1 ? '' : part.slice(nl + 1).trim(),
   };
 });
+
+// Sources cited on the page, in reading order: intro, decision records, sections.
+const SOURCE_IDS = citedIds(INTRO_MD, ...ADRS.flatMap((a) => a.rationale), ...SECTIONS.map((s) => s.body));
 
 function StatusBadge({ status }: { status: Adr['status'] }): JSX.Element {
   const adopted = status === 'adopted';
@@ -67,7 +71,7 @@ function AdrCard({ adr, expanded, onToggle }: { adr: Adr; expanded: boolean; onT
         <div id={panelId} className="border-t border-border-light" style={{ padding: '16px 20px' }}>
           {adr.rationale.map((p, i) => (
             <p key={i} className="m-0 mb-3 max-w-reading font-sans text-body-sm text-body last:mb-0" style={{ lineHeight: 1.65 }}>
-              {p}
+              {renderInline(p)}
             </p>
           ))}
         </div>
@@ -127,6 +131,8 @@ export default function Architecture(): JSX.Element {
           <div className="prose-longform max-w-reading">{renderMarkdown(s.body)}</div>
         </section>
       ))}
+
+      <SourcesList ids={SOURCE_IDS} />
 
       <ArtifactFooter currentSlug="architecture" />
     </div>

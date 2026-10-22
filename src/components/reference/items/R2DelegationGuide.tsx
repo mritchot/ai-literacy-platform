@@ -11,6 +11,7 @@
 // practice activity (P8) and the portable job aid (R2).
 
 import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { Citation } from '../../shared/Citation';
 
 // ─────────────────────────────────────────────────────────────────────
 // Categories — terminal recommendations from the flowchart, also rendered
@@ -239,7 +240,8 @@ export function R2DelegationGuide(): JSX.Element {
           where they split: some keep AI to familiar ground they can verify, while others hand it
           low-complexity work outside their own experience. In the earlier survey of 132 staff,
           more than half said they could fully delegate only a fifth of their work or less.
-          Source: Huang et al., Dec 2025 (Anthropic engineers; findings may not generalize).
+          Source: Huang et al., Dec 2025<Citation ids="huang-2025" /> (Anthropic engineers; findings
+          may not generalize).
         </p>
       </aside>
 
@@ -288,10 +290,14 @@ export function R2DelegationGuide(): JSX.Element {
         className="m-0 mt-6 text-caption text-tertiary"
         style={{ lineHeight: 1.5, fontStyle: 'italic' }}
       >
-        Framework: 4D AI Fluency Framework, Delegation competency (Dakan &amp; Feller, 2025,
-        pp. 3–4), as taught in Anthropic&rsquo;s AI Fluency course. Data-gate defaults: MIT Ad Hoc
-        Committee, 2026, pp. 25–26. Barriers to inspecting AI output: Lee et al., CHI 2025, p. 11.
-        Engineer delegation practices: Huang et al., Dec 2025.
+        Framework: 4D AI Fluency Framework, Delegation competency (Dakan &amp; Feller,
+        2025)<Citation ids="dakan-feller-2025" pageKey="delegation" />, as taught in
+        Anthropic&rsquo;s AI Fluency course<Citation ids="anthropic-ai-fluency-course-2025" />.
+        Data-gate defaults: MIT Ad Hoc Committee,
+        2026<Citation ids="mit-2026" pageKey="training-capture" />. Barriers to inspecting AI
+        output: Lee et al., CHI 2025<Citation ids="lee-2025" pageKey="inhibitors" />. Engineer
+        delegation practices: Huang et al., Dec
+        2025<Citation ids="huang-2025" pageKey="delegation-criteria" />.
       </p>
     </div>
   );

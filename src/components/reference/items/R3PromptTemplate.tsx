@@ -16,6 +16,7 @@
 import { useState, type ReactNode } from 'react';
 import { usePrintMode } from '../../../contexts/PrintModeContext';
 import { Icon } from '../../shared/Icon';
+import { Citation } from '../../shared/Citation';
 
 // ─────────────────────────────────────────────────────────────────────
 // Constants
@@ -192,7 +193,7 @@ export function R3PromptTemplate(): JSX.Element {
         <em>It is a structural scaffold, not a prompt library.</em> Its sections follow the three
         Description sub-components. Most underspecified prompts fail on all three at once.
         Workers who can spot a flawed output often cannot steer the model to a better one (72 of
-        319 in Lee et al., CHI 2025, p. 11); the template is for that step.
+        319)<Citation ids="lee-2025" pageKey="inhibitors" />; the template is for that step.
       </p>
 
       {/* Three Description sections, vertically stacked, each collapsible. */}
@@ -216,8 +217,9 @@ export function R3PromptTemplate(): JSX.Element {
         className="m-0 mt-6 text-caption text-tertiary"
         style={{ lineHeight: 1.5, fontStyle: 'italic' }}
       >
-        Framework: 4D AI Fluency Framework, Description competency (Dakan &amp; Feller, 2025,
-        pp. 4–5), as taught in Anthropic&rsquo;s AI Fluency course.
+        Framework: 4D AI Fluency Framework, Description competency (Dakan &amp; Feller,
+        2025)<Citation ids="dakan-feller-2025" pageKey="description" />, as taught in
+        Anthropic&rsquo;s AI Fluency course<Citation ids="anthropic-ai-fluency-course-2025" />.
       </p>
     </div>
   );

@@ -6,6 +6,7 @@
 // CSS variables added during 3B-8.
 
 import type { ReactNode } from 'react';
+import { Citation } from '../../shared/Citation';
 
 const HEADER_TEXT =
   "The 4Ds describe four competencies for effective, responsible AI use at work. They operate in two loops. The Delegation–Diligence loop governs the strategic decisions: whether and when to use AI. The Description–Discernment loop governs the operational workflow: how to work with AI effectively.";
@@ -205,13 +206,15 @@ export function R1QuickReference(): JSX.Element {
         style={{ lineHeight: 1.5, fontStyle: 'italic' }}
       >
         Framework: the 4D AI Fluency Framework (Dakan &amp; Feller, 2025,
-        ringling.libguides.com/ai/framework), as taught in Anthropic&rsquo;s AI Fluency:
-        Framework &amp; Foundations (2025). Sub-component names and most definitions follow the course,
+        ringling.libguides.com/ai/framework)<Citation ids="dakan-feller-2025" />,
+        as taught in Anthropic&rsquo;s AI Fluency: Framework &amp; Foundations
+        (2025)<Citation ids="anthropic-ai-fluency-course-2025" />. Sub-component names and most definitions follow the course,
         including its conversational reading of the two Performance sub-components; the source
         document names the first Delegation sub-component Goal and Task Awareness. Creation
         Diligence and Process Discernment draw on the source document&rsquo;s definitions. Action
         verbs are adapted for workplace use. The two loops pair the competencies that the crossing
-        arrows join in the source document&rsquo;s competency diagram (Fig. 1, p. 3); that diagram
+        arrows join in the source document&rsquo;s competency
+        diagram<Citation ids="dakan-feller-2025" pageKey="competency-diagram" />; that diagram
         also links each competency to its two neighbors. The loops and their strategic and
         operational labels are this program&rsquo;s.
       </p>

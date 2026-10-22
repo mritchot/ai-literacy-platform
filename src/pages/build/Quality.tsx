@@ -4,8 +4,10 @@
 // ./quality-data; prose is sliced from the co-located markdown (via ?raw).
 
 import QA_MD from './content/08_quality.md?raw';
-import { renderMarkdown } from '../../components/shared/render-markdown';
+import { citedIds, renderMarkdown } from '../../components/shared/render-markdown';
+import { SourcesList } from '../../components/shared/CitationNotes';
 import { QualityDashboard } from './quality-dashboard';
+import { VALIDATED_FILES } from './quality-data';
 import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
 
 const [INTRO_MD = '', ...REST] = QA_MD.replace(/\r\n/g, '\n').split(/\n## /);
@@ -18,6 +20,16 @@ const SECTIONS = REST.map((part) => {
     body: nl === -1 ? '' : part.slice(nl + 1).trim(),
   };
 });
+
+// Sources cited on the page, in reading order: intro, the validated-files
+// table, then the closing sections.
+const SOURCE_IDS = [
+  ...new Set([
+    ...citedIds(INTRO_MD),
+    ...VALIDATED_FILES.flatMap((f) => (f.sources ?? []).flatMap((s) => (typeof s.ids === 'string' ? [s.ids] : s.ids))),
+    ...citedIds(...SECTIONS.map((s) => s.body)),
+  ]),
+];
 
 export default function Quality(): JSX.Element {
   return (
@@ -38,6 +50,8 @@ export default function Quality(): JSX.Element {
           <div className="prose-longform max-w-reading">{renderMarkdown(s.body)}</div>
         </section>
       ))}
+
+      <SourcesList ids={SOURCE_IDS} />
 
       <ArtifactFooter currentSlug="quality" />
     </div>

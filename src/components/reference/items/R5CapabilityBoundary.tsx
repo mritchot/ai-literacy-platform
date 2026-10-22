@@ -9,6 +9,8 @@
 
 import type { ReactNode } from 'react';
 import { useViewport } from '../../../hooks/useViewport';
+import { Citation } from '../../shared/Citation';
+import { renderInline } from '../../shared/render-markdown';
 
 // ─────────────────────────────────────────────────────────────────────
 // Brand accents, resolved through the competency tokens so they follow
@@ -109,7 +111,7 @@ const FAILS_CATEGORIES: FailsCategory[] = [
       },
       {
         failsAt: 'Non-English text processing',
-        why: 'Lower-resource languages often take 2× or more the tokens for the same meaning (up to 15×; Petrov et al., 2023), so they use up context faster',
+        why: 'Lower-resource languages often take 2× or more the tokens for the same meaning (up to 15×){{cite:petrov-2023#up-to-15x}}, so they use up context faster',
         instead: 'Verify non-English output more carefully; expect quality gaps',
       },
     ],
@@ -180,9 +182,10 @@ export function R5CapabilityBoundary(): JSX.Element {
         style={{ lineHeight: 1.55 }}
       >
         Know what the tool does well and where it systematically fails before you delegate. The
-        framework calls this Platform Awareness, part of Delegation (Dakan &amp; Feller, 2025,
-        p. 4). It sets two requirements for automation: a clear task definition and a quality
-        check (p. 2). It is organized by task type, not technical architecture. Each entry connects to Module 3’s mechanical framework.
+        framework calls this Platform Awareness, part of
+        Delegation<Citation ids="dakan-feller-2025" pageKey="platform-awareness" />. It sets two
+        requirements for automation: a clear task definition and a quality
+        check<Citation ids="dakan-feller-2025" pageKey="modalities" />. It is organized by task type, not technical architecture. Each entry connects to Module 3’s mechanical framework.
       </p>
 
       {/* Section 1: Reliable */}
@@ -200,8 +203,10 @@ export function R5CapabilityBoundary(): JSX.Element {
         style={{ lineHeight: 1.5, fontStyle: 'italic' }}
       >
         Framework: 4D AI Fluency Framework, Delegation (Platform Awareness) and Discernment
-        competencies (Dakan &amp; Feller, 2025, pp. 4–6), as taught in Anthropic&rsquo;s AI
-        Fluency course. Mechanical explanations from Module 3.
+        competencies (Dakan &amp; Feller,
+        2025)<Citation ids="dakan-feller-2025" pageKey="delegation-discernment-4-6" />, as taught
+        in Anthropic&rsquo;s AI Fluency course<Citation ids="anthropic-ai-fluency-course-2025" />.
+        Mechanical explanations from Module 3.
       </p>
     </div>
   );
@@ -525,7 +530,7 @@ function FailsCategoryBlock({
                 className="font-sans text-[12px]"
                 style={{ color: 'rgb(var(--ink))', lineHeight: 1.5, marginBottom: 8 }}
               >
-                {row.why}
+                {renderInline(row.why)}
               </div>
               <MobileFieldLabel label="Instead" color="rgb(var(--discernment-text))" />
               {/* Instead column rendered BOLD per spec — these are
@@ -543,7 +548,7 @@ function FailsCategoryBlock({
                 className="font-sans text-[12px]"
                 style={{ color: 'rgb(var(--ink))', lineHeight: 1.5 }}
               >
-                {row.why}
+                {renderInline(row.why)}
               </div>
               {/* Instead column rendered BOLD per spec — these are
                   the actionable takeaways. */}
@@ -597,8 +602,8 @@ function CoreDistinctionStrip(): JSX.Element {
         The model generates text rather than retrieving facts. Fluent output and accurate output
         are independent properties. Old software automated anything you could describe in logical
         steps and gave the same answer every time. This software automates anything with enough
-        training data and anything where verification scales, and it can be wrong (Evans, May
-        2026, slide 52). Most of the Reliable list is pattern work the training data covers densely.
+        training data and anything where verification scales, and it can be
+        wrong<Citation ids="evans-2026-05" pageKey="verification-scalable-52" />. Most of the Reliable list is pattern work the training data covers densely.
         Only the Specificity failures trace to thin training data; the Boundary and Volume
         failures trace to tokenization and the context window.
       </p>

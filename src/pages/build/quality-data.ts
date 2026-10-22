@@ -6,6 +6,8 @@
 // (planning corpus, outside the repo),
 // §2–§6. Counts are transcribed from the document.
 
+import type { CheckSource } from '../../components/shared/CheckSources';
+
 export interface QaPass {
   activity: string;
   method: string;
@@ -44,17 +46,19 @@ export const VALIDATION_PASSES: ValidationPass[] = [
 export interface ValidatedFile {
   file: string;
   source: string;
+  /** Registry citation for the source paper, rendered as a chip after `source`. */
+  sources?: CheckSource[];
   content: string;
   status: string;
 }
 
 // §4.2 Validation results — the six JSON data files.
 export const VALIDATED_FILES: ValidatedFile[] = [
-  { file: 'augmentation-automation.json', source: 'Handa et al.', content: 'Occupation/task breakdowns; 57%/43% augmentation-automation split', status: 'Pass' },
-  { file: 'productivity-gains.json', source: 'Tamkin & McCrory', content: 'Task time reductions; 81% median savings (Fig. 6 caption, p. 13)', status: 'Pass · 2 corrections' },
-  { file: 'geographic-adoption.json', source: 'Appel, McCrory & Tamkin', content: 'Country-level usage rates; institutional-inertia indicators', status: 'Pass' },
-  { file: 'wef-skill-demand.json', source: 'WEF Future of Jobs 2025', content: 'Fastest-growing/declining skills; employer transformation expectations', status: 'Pass' },
-  { file: 'interviewer-findings.json', source: 'Anthropic Interviewer', content: '86% time savings; 65% satisfaction; 69% stigma; 48% career transition', status: 'Pass' },
+  { file: 'augmentation-automation.json', source: 'Handa et al.', sources: [{ ids: 'handa-2025' }], content: 'Occupation/task breakdowns; 57%/43% augmentation-automation split', status: 'Pass' },
+  { file: 'productivity-gains.json', source: 'Tamkin & McCrory', sources: [{ ids: 'tamkin-mccrory-2025' }], content: 'Task time reductions; 81% median savings (Fig. 6 caption, p. 13)', status: 'Pass · 2 corrections' },
+  { file: 'geographic-adoption.json', source: 'Appel, McCrory & Tamkin', sources: [{ ids: 'appel-mccrory-tamkin-2025' }], content: 'Country-level usage rates; institutional-inertia indicators', status: 'Pass' },
+  { file: 'wef-skill-demand.json', source: 'WEF Future of Jobs 2025', sources: [{ ids: 'wef-2025' }], content: 'Fastest-growing/declining skills; employer transformation expectations', status: 'Pass' },
+  { file: 'interviewer-findings.json', source: 'Anthropic Interviewer', sources: [{ ids: 'anthropic-interviewer-2025' }], content: '86% time savings; 65% satisfaction; 69% stigma; 48% career transition', status: 'Pass' },
   { file: 'adoption-trends.json', source: 'Multiple sources', content: 'Longitudinal adoption rates; interaction-mode temporal data', status: 'Pass' },
 ];
 

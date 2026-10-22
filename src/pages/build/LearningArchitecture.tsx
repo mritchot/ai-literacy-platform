@@ -7,7 +7,8 @@
 // ./learning-architecture-data.
 
 import LA_MD from './content/01_learning-architecture.md?raw';
-import { renderMarkdown } from '../../components/shared/render-markdown';
+import { citedIds, renderMarkdown } from '../../components/shared/render-markdown';
+import { SourcesList } from '../../components/shared/CitationNotes';
 import { LearningArchitectureDiagram } from './learning-architecture-interactive';
 import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
 
@@ -49,6 +50,8 @@ export default function LearningArchitecture(): JSX.Element {
       ))}
 
       <LearningArchitectureDiagram />
+
+      <SourcesList ids={citedIds(LA_MD)} />
 
       <ArtifactFooter currentSlug="learning-architecture" />
     </div>

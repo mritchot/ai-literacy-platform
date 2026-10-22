@@ -75,7 +75,7 @@ export const ADRS: Adr[] = [
     status: 'adopted',
     rationale: [
       'All the data behind the charts comes from published research with fixed numbers, so it never changes while the site is running and needs no server to process it. It is stored in plain data files that load straight into the page, which is fast and keeps hosting simple.',
-      'Those files are also open to inspection: anyone can open one and check that a figure traces back to its source study, such as Handa et al. (2025). Learner activity is saved in the browser and can be exported as a file, so none of this requires a server.',
+      'Those files are also open to inspection: anyone can open one and check that a figure traces back to its source study, such as Handa et al. (2025){{cite:handa-2025}}. Learner activity is saved in the browser and can be exported as a file, so none of this requires a server.',
     ],
   },
   {

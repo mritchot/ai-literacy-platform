@@ -5,6 +5,7 @@
 // counts in the section headings ("Ten…", "Eight-check…") are hardcoded prose
 // and must be updated by hand if the arrays change.
 
+import { CheckSources } from '../../components/shared/CheckSources';
 import { Overline } from '../../components/shared/Overline';
 import {
   CAPABILITY_CHECKS,
@@ -103,7 +104,10 @@ function TripleValidation(): JSX.Element {
                 <th scope="row" className="border-b border-border-light px-3 py-2.5 align-top font-mono text-[11.5px] font-semibold text-ink" style={{ minWidth: 190 }}>
                   {f.file}
                 </th>
-                <td className="border-b border-border-light px-3 py-2.5 align-top font-sans text-[12px] text-secondary">{f.source}</td>
+                <td className="border-b border-border-light px-3 py-2.5 align-top font-sans text-[12px] text-secondary">
+                  {f.source}
+                  <CheckSources sources={f.sources} />
+                </td>
                 <td className="border-b border-border-light px-3 py-2.5 align-top font-sans text-[12px] text-body" style={{ lineHeight: 1.5 }}>
                   {f.content}
                 </td>

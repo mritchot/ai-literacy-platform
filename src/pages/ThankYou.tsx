@@ -16,6 +16,7 @@
 import { useEffect, useRef } from 'react';
 import { useAnalytics } from '../contexts/AnalyticsContext';
 import { renderMarkdownLite } from '../components/shared/render-markdown-lite';
+import { Citation } from '../components/shared/Citation';
 
 // The full diligence-statement prose lives in DILIGENCE.md at the repo
 // root (rendered on GitHub for public visibility) and is loaded here via
@@ -35,11 +36,6 @@ const STRIPE_TIP_URL = '';
 // the writing index, not the site root: the root is a landing page, and
 // the post stream lives under /writing/.
 const BLOG_URL = 'https://ritchot.me/writing/';
-
-// Ethan Mollick, "30 Months on the Exponential (in Charts)", One Useful
-// Thing, 20 October 2026: the shift from chat-window work to delegating to
-// agents, cited in the origin story's note on where the course stands.
-const MOLLICK_URL = 'https://www.oneusefulthing.org/p/30-months-on-the-exponential-in-charts';
 
 // Feed subscription page. The site offers full-text RSS and Atom only —
 // there is no email list, so the copy below must not promise one.
@@ -245,16 +241,7 @@ function OriginStory(): JSX.Element {
       <p className="m-0">
         One note on where this stands. I built the course for the way most people used AI when I
         started in 2024: a chatbot, one exchange at a time. The most capable users now hand whole
-        tasks to agents and review what comes back (
-        <a
-          href={MOLLICK_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-medium text-action no-underline hover:underline"
-        >
-          Mollick, 2026
-        </a>
-        ). The fundamentals here still apply, and checking an agent&rsquo;s work is harder than
+        tasks to agents and review what comes back<Citation ids="mollick-2026" />. The fundamentals here still apply, and checking an agent&rsquo;s work is harder than
         checking a chat reply. The course does not teach agent workflows, though. The October
         2026 update will likely be the last, and I don&rsquo;t plan to build more courses.
       </p>

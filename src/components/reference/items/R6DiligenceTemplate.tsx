@@ -9,6 +9,7 @@
 // owns the writing experience; R6 owns the reference.
 
 import type { ReactNode } from 'react';
+import { Citation } from '../../shared/Citation';
 
 // ─────────────────────────────────────────────────────────────────────
 // Constants
@@ -166,10 +167,12 @@ export function R6DiligenceTemplate(): JSX.Element {
         className="m-0 mt-6 text-caption text-tertiary"
         style={{ lineHeight: 1.5, fontStyle: 'italic' }}
       >
-        Framework: 4D AI Fluency Framework, Diligence competency (Dakan &amp; Feller, 2025,
-        p. 6; closing diligence statement, p. 7), as taught in Anthropic&rsquo;s AI Fluency course.
-        Statement requirements: MIT Ad Hoc Committee, 2026, pp. 16, 22. Accountability: Lee et al.,
-        2025, p. 15.
+        Framework: 4D AI Fluency Framework, Diligence competency (Dakan &amp; Feller,
+        2025)<Citation ids="dakan-feller-2025" pageKey="diligence-and-statement" />, as taught in
+        Anthropic&rsquo;s AI Fluency course<Citation ids="anthropic-ai-fluency-course-2025" />.
+        Statement requirements: MIT Ad Hoc Committee,
+        2026<Citation ids="mit-2026" pageKey="statement-requirements" />. Accountability: Lee et
+        al., 2025<Citation ids="lee-2025" pageKey="stewardship-definition" />.
       </p>
     </div>
   );
@@ -407,8 +410,9 @@ function ExampleACard(): JSX.Element {
         }}
       >
         Format informed by the Diligence Statement that closes Dakan &amp; Feller&rsquo;s framework
-        document (2025, p. 7) and the AI Diligence Statement published with Anthropic&rsquo;s AI
-        Fluency course (2025). The example&rsquo;s wording is original.
+        document (2025)<Citation ids="dakan-feller-2025" pageKey="diligence-statement" /> and the AI
+        Diligence Statement published with Anthropic&rsquo;s AI Fluency course
+        (2025)<Citation ids="anthropic-ai-fluency-course-2025" />. The example&rsquo;s wording is original.
       </p>
     </article>
   );
