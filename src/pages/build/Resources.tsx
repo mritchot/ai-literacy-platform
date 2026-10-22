@@ -89,7 +89,7 @@ function CustomVsArticulate(): JSX.Element {
   const open = usePrintMode() || expanded;
   return (
     <section
-      className="mt-10 overflow-hidden"
+      className="print-flow mt-10 overflow-hidden"
       style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', borderLeft: `3px solid ${SERIES_ACCENT}` }}
     >
       <button
@@ -104,9 +104,9 @@ function CustomVsArticulate(): JSX.Element {
         <DisclosureChevron expanded={open} />
       </button>
       {open && (
-        <div id="custom-articulate-panel" className="border-t border-border-light" style={{ padding: '18px 20px' }}>
+        <div id="custom-articulate-panel" className="print-flow border-t border-border-light" style={{ padding: '18px 20px' }}>
           {RATIONALE.map((block) => (
-            <div key={block.heading} className="mb-5 last:mb-0">
+            <div key={block.heading} className="print-keep mb-5 last:mb-0">
               <h4 className="mb-2 font-sans text-h4 font-semibold text-ink-secondary">{block.heading}</h4>
               {block.paragraphs.map((p, i) => (
                 <p key={i} className="m-0 mb-2.5 max-w-reading font-sans text-body-sm text-body last:mb-0" style={{ lineHeight: 1.65 }}>

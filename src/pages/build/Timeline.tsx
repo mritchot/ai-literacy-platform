@@ -135,7 +135,7 @@ function GanttRow({ phase, id, open, onToggle }: { phase: Phase; id: string; ope
   const left = ((phase.startWeek - 1) / TIMELINE_MAX_WEEKS) * 100;
   const width = (phase.weeks / TIMELINE_MAX_WEEKS) * 100;
   return (
-    <div>
+    <div className="print-keep">
       <button
         type="button"
         onClick={onToggle}

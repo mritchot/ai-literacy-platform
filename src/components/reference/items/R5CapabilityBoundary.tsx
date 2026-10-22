@@ -395,7 +395,7 @@ function FailsSection(): JSX.Element {
 
       {/* Three sub-category cards */}
       <div
-        className="overflow-hidden"
+        className="print-flow overflow-hidden"
         style={{
           border: '1px solid rgb(var(--border))',
           borderTop: 'none',

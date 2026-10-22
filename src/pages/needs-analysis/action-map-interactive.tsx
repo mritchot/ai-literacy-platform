@@ -307,7 +307,7 @@ export function InteractiveMap(): JSX.Element {
 
   return (
     <div
-      className="my-7 overflow-hidden"
+      className="print-flow my-7 overflow-hidden"
       style={{
         background: 'rgb(var(--surface-warm))',
         border: '1px solid rgb(var(--border-light))',

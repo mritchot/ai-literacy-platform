@@ -182,7 +182,7 @@ export function R6DiligenceTemplate(): JSX.Element {
 function StatementStructure(): JSX.Element {
   return (
     <article
-      className="overflow-hidden"
+      className="print-flow overflow-hidden"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -230,6 +230,7 @@ function ScaffoldRow({
 }): JSX.Element {
   return (
     <div
+      className="print-keep"
       style={{
         padding: '14px 16px',
         borderBottom: isLast ? 'none' : '1px solid rgb(var(--border-light))',

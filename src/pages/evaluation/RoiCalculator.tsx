@@ -424,7 +424,7 @@ export function RoiCalculator(): JSX.Element {
   return (
     <section
       aria-label="Interactive ROI calculator"
-      className="mt-6"
+      className="print-flow mt-6"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',

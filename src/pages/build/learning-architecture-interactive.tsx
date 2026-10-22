@@ -236,7 +236,7 @@ function ModuleCard({
 
   return (
     <div
-      className="overflow-hidden"
+      className="print-flow overflow-hidden"
       style={{
         background: 'rgb(var(--white))',
         border: `1px solid ${expanded ? emph[0] : 'rgb(var(--border-light))'}`,
@@ -294,7 +294,7 @@ function ModuleCard({
       </button>
 
       {/* Platform split — always visible */}
-      <div className="flex" style={{ borderTop: '1px solid rgb(var(--border))' }}>
+      <div className="print-keep flex" style={{ borderTop: '1px solid rgb(var(--border))' }}>
         <PlatformCell platform={PLATFORMS.custom} cell={module.custom} side="left" showDesc={expanded} />
         <PlatformCell platform={PLATFORMS.articulate} cell={module.articulate} side="right" showDesc={expanded} />
       </div>
@@ -342,7 +342,7 @@ function ModuleCard({
 function KirkpatrickLane({ expanded, onToggle }: { expanded: boolean; onToggle: () => void }): JSX.Element {
   const panelId = useId();
   return (
-    <div className="overflow-hidden" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))' }}>
+    <div className="print-flow overflow-hidden" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))' }}>
       <SegmentBar colors={KIRK_LEVELS.map((k) => k.color)} />
       <button
         type="button"
@@ -357,7 +357,7 @@ function KirkpatrickLane({ expanded, onToggle }: { expanded: boolean; onToggle: 
         </span>
         <DisclosureChevron expanded={expanded} />
       </button>
-      <div className="grid grid-cols-2 sm:grid-cols-4" style={{ borderTop: '1px solid rgb(var(--border-light))' }}>
+      <div className="print-keep grid grid-cols-2 sm:grid-cols-4" style={{ borderTop: '1px solid rgb(var(--border-light))' }}>
         {KIRK_LEVELS.map((k, i) => (
           <div
             key={k.key}
@@ -383,7 +383,7 @@ function KirkpatrickLane({ expanded, onToggle }: { expanded: boolean; onToggle: 
           {KIRK_LEVELS.map((k, i) => (
             <div
               key={k.key}
-              className="flex items-start gap-3"
+              className="print-keep flex items-start gap-3"
               style={{ padding: '12px 22px', borderBottom: i < KIRK_LEVELS.length - 1 ? '1px solid rgb(var(--border-light))' : undefined }}
             >
               <span

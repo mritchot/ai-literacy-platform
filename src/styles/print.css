@@ -49,7 +49,15 @@
   }
 
   html.print-mode .print-masthead {
-    margin-bottom: 0.5in;
+    margin-bottom: 0.25in;
+  }
+
+  /* Markdown tables sit a step tighter to the text around them, which
+     keeps a lead-in label and its table together on the page they
+     share without pushing later figures over a break. */
+  html.print-mode .print-body .my-6.overflow-x-auto {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
   }
 
   /* Scroll containers cannot scroll on paper. */
@@ -76,24 +84,84 @@
 
   /* ─── Page breaks ─── */
 
-  html.print-mode :is(h1, h2, h3, h4) {
+  /* Body text never leaves one or two lines alone at a page edge. */
+  html.print-mode .print-body :is(p, li, dd) {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Chromium does not apply widows inside a list item, and list items
+     here run a few lines at most, so each one stays whole. */
+  html.print-mode .print-body li {
+    break-inside: avoid;
+  }
+
+  /* Keep-with-next: headings; overline labels and the label rows that
+     pair one with a rule; a paragraph that leads into a table; a
+     table's group label row (RACI's phases); the decorative connectors
+     between stacked cards. */
+  html.print-mode :is(h1, h2, h3, h4, h5, h6),
+  html.print-mode .print-body .text-overline,
+  html.print-mode .print-body div:has(> .text-overline:first-child + span[aria-hidden='true']),
+  html.print-mode .print-body p:has(+ :is(table, .overflow-x-auto)),
+  html.print-mode .print-body tr:has(> th[scope='rowgroup']),
+  html.print-mode .print-body div[aria-hidden='true']:has(> svg) {
     break-after: avoid;
   }
 
-  /* Tables, callouts (blockquotes, asides, the labelled stat sections),
-     figures, and the small cards (ADR records, decision items, R1's
-     quadrants) stay whole. Larger cards flow across pages; only a
-     disclosure header stays with the panel it opens. */
-  html.print-mode :is(table, tr, blockquote, aside, figure, svg, [role='img']),
-  html.print-mode section[aria-label],
+  /* Stay whole: table rows, callouts (blockquotes, asides, the labelled
+     stat sections), figures, every bordered card or panel, the small
+     cards that carry no border of their own (ADR records, decision
+     items, grid cells such as R1's quadrants and the ROI calculator's
+     fields), and the card connectors. A box taller than a page cannot
+     stay whole: its component marks it `print-flow`, and it breaks
+     between its own cards and rows (marked `print-keep`) instead. */
+  html.print-mode .print-body :is(tr, blockquote, aside, figure, svg, [role='img']),
+  html.print-mode .print-body section[aria-label]:not(.print-flow),
+  html.print-mode .print-body :is([style*='border:'], [style*='border-left:'], [style*='border-top'][style*='border-right'][style*='border-bottom'][style*='border-left']):not(.print-flow),
+  html.print-mode .print-body .print-keep,
   html.print-mode .print-body .space-y-2\.5 > div,
+  html.print-mode .print-body .grid > *,
+  html.print-mode .print-body div[aria-hidden='true']:has(> svg),
   html.print-mode .print-body [style*='minmax(240px'] > * {
     break-inside: avoid;
+  }
+
+  /* Tables break between rows, never inside one, and the header row
+     repeats (thead, below). The first two rows stay with the header and
+     the last row stays with the one before it, so no page carries a
+     lone row. */
+  html.print-mode .print-body tbody > tr:is(:first-child, :nth-child(2), :last-child) {
+    break-before: avoid;
+  }
+
+  /* A box that flows never leaves its decorative accent bar alone at
+     the foot of a page. */
+  html.print-mode .print-body .print-flow > [aria-hidden='true']:first-child {
+    break-after: avoid;
+  }
+
+  /* Inside a box that flows, the last item of a stacked list never
+     crosses a page break alone. */
+  html.print-mode .print-body .print-flow .flex-col > :last-child:not(:first-child) {
+    break-before: avoid;
+  }
+
+  /* A bordered box that does break redraws its border, padding, and
+     background on each page, so no fragment is left open-ended. */
+  html.print-mode .print-body :is([style*='border:'], [style*='border-top'][style*='border-right'][style*='border-bottom'][style*='border-left'], [style*='border-left:'], .print-flow) {
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 
   html.print-mode button[aria-expanded] {
     break-inside: avoid;
     break-after: avoid;
+  }
+
+  /* Sticky cells have nothing to stick to on paper. */
+  html.print-mode .print-body .sticky {
+    position: static !important;
   }
 
   /* R1's sub-row alignment floors (see SUB_*_MIN_HEIGHT in R1QuickReference)
@@ -111,6 +179,11 @@
 
   html.print-mode thead {
     display: table-header-group;
+  }
+
+  /* A card's header block stays with the body it opens. */
+  html.print-mode .print-body header {
+    break-after: avoid;
   }
 
   html.print-mode .print-colophon {

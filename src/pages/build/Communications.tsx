@@ -71,7 +71,7 @@ function MemoHeader({ eyebrow, title, meta }: { eyebrow: string; title: string; 
 
 function MemoCard({ children }: { children: React.ReactNode }): JSX.Element {
   return (
-    <article style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', padding: '22px 24px' }}>
+    <article className="print-flow" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', padding: '22px 24px' }}>
       {children}
     </article>
   );

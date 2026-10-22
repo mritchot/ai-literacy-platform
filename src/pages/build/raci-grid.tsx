@@ -8,6 +8,7 @@
 
 import { Fragment, useState } from 'react';
 import { Overline } from '../../components/shared/Overline';
+import { usePrintMode } from '../../contexts/PrintModeContext';
 import { ACTIVITIES, PHASES, RACI, ROLES, countFor, type Assignment } from './raci-data';
 
 // Muted cell styling — earthy green / amber / slate for R/A/C, a neutral for I.
@@ -43,6 +44,10 @@ function Legend(): JSX.Element {
 export function RaciGrid(): JSX.Element {
   const [phaseFilter, setPhaseFilter] = useState<string | null>(null);
   const [selectedRole, setSelectedRole] = useState<number | null>(null);
+  // Chromium does not repaint form controls in a table header it repeats
+  // on a continuation page, so the print route draws the role headers as
+  // plain text boxes.
+  const printMode = usePrintMode();
 
   const shownPhases = PHASES.filter((p) => !phaseFilter || p === phaseFilter);
   const lmAccountable = countFor(0, 'A');
@@ -123,6 +128,18 @@ export function RaciGrid(): JSX.Element {
               </th>
               {ROLES.map((r, i) => {
                 const on = selectedRole === i;
+                if (printMode) {
+                  return (
+                    <th key={r.abbr} scope="col" className="text-center" style={{ padding: '4px 6px', minWidth: 64 }}>
+                      <span
+                        className="block w-full font-mono text-[12px] font-bold"
+                        style={{ padding: '8px 4px', color: 'rgb(var(--ink-secondary))', border: '1px solid rgb(var(--border))' }}
+                      >
+                        {r.abbr}
+                      </span>
+                    </th>
+                  );
+                }
                 return (
                   <th key={r.abbr} scope="col" className="text-center" style={{ padding: '4px 6px', minWidth: 64 }}>
                     <button
