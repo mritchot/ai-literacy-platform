@@ -5,6 +5,8 @@
 
 A four-module interactive learning platform that teaches AI literacy to mid-career knowledge workers. Built as a portfolio piece, it shows end-to-end L&D program development, from needs analysis and instructional design through custom platform engineering and Kirkpatrick evaluation architecture.
 
+Status: complete. The October 2026 update is the last planned update.
+
 Live: [ai-literacy.ritchot.me](https://ai-literacy.ritchot.me)
 
 For reviewers: the [needs analysis](https://ai-literacy.ritchot.me/#/needs-analysis) sets out the business problem and its evidence, the [evaluation framework](https://ai-literacy.ritchot.me/#/evaluation) defines how results are measured at Kirkpatrick Levels 1 to 4 (with a live ROI model), and [behind the build](https://ai-literacy.ritchot.me/#/build) records the learning architecture, budget, timeline, and QA. Open [ai-literacy.ritchot.me/?portfolio=true](https://ai-literacy.ritchot.me/?portfolio=true) to move through every module without the learner gates; the analytics dashboard is then at `/#/dashboard`.

@@ -36,6 +36,11 @@ const STRIPE_TIP_URL = '';
 // the post stream lives under /writing/.
 const BLOG_URL = 'https://ritchot.me/writing/';
 
+// Ethan Mollick, "30 Months on the Exponential (in Charts)", One Useful
+// Thing, 20 October 2026: the shift from chat-window work to delegating to
+// agents, cited in the origin story's note on where the course stands.
+const MOLLICK_URL = 'https://www.oneusefulthing.org/p/30-months-on-the-exponential-in-charts';
+
 // Feed subscription page. The site offers full-text RSS and Atom only —
 // there is no email list, so the copy below must not promise one.
 const SUBSCRIBE_URL = 'https://ritchot.me/subscribe/';
@@ -238,6 +243,23 @@ function OriginStory(): JSX.Element {
       </p>
 
       <p className="m-0">
+        One note on where this stands. I built the course for the way most people used AI when I
+        started in 2024: a chatbot, one exchange at a time. The most capable users now hand whole
+        tasks to agents and review what comes back (
+        <a
+          href={MOLLICK_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-medium text-action no-underline hover:underline"
+        >
+          Mollick, 2026
+        </a>
+        ). The fundamentals here still apply, and checking an agent&rsquo;s work is harder than
+        checking a chat reply. The course does not teach agent workflows, though. The October
+        2026 update will likely be the last, and I don&rsquo;t plan to build more courses.
+      </p>
+
+      <p className="m-0">
         I made this course free because foundational AI literacy shouldn't sit behind a paywall.
         The competencies here (the mechanics behind how LLMs work, knowing what to delegate, how
         to specify it, how to evaluate what comes back, and how to document the process) are
@@ -411,8 +433,8 @@ function TipCard({ onClick }: { onClick: () => void }): JSX.Element {
         className="m-0 mb-5 font-sans text-body-sm text-body"
         style={{ lineHeight: 1.6 }}
       >
-        This course is free and will stay free. Tips go directly toward the research, hosting, and
-        development time behind future courses.
+        This course is free and will stay free. Tips go toward hosting this course and toward my
+        writing.
       </p>
       <a
         href={STRIPE_TIP_URL}
@@ -480,8 +502,8 @@ function BlogCard({
         className="m-0 mb-5 font-sans text-body-sm text-body"
         style={{ lineHeight: 1.6 }}
       >
-        I'm building more courses. The next one is in development. If you want to know when it
-        ships, the blog is where I'll say so. I write about life, learning, research, and
+        This is the last course I plan to build. I'll keep writing, and the blog is where my next
+        work will show up. I write about life, learning, research, and
         technology, mostly AI lately. New posts go up when I have something worth saying, not on
         a schedule.
       </p>
