@@ -87,7 +87,7 @@ const EXTENSION_PAIRS: PairRow[] = [
   {
     id: 'pair_4',
     failure:
-      'Incomplete summary of a long document — output looks complete but misses sections',
+      'Incomplete summary of a long document: output looks complete but misses sections',
     pair: ['context', 'ntp'],
     property1: 'Context window',
     property2: 'Next-token prediction',
@@ -97,7 +97,7 @@ const EXTENSION_PAIRS: PairRow[] = [
   },
   {
     id: 'pair_5',
-    failure: 'Degrades in non-English languages — more errors, awkward phrasing',
+    failure: 'Output degrades in non-English languages, with more errors and awkward phrasing',
     pair: ['tokenization', 'knowledge'],
     property1: 'Tokenization',
     property2: 'Knowledge (sparse)',

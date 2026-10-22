@@ -60,8 +60,8 @@ export function drawPage1(doc: jsPDF, data: CompletionProfileData): void {
     'Delegation',
     'What you committed to changing',
     data.task1Revised || data.task2Revised
-      ? 'From Module 2 — Action Commitment, revised in Module 4'
-      : 'From Module 2 — Action Commitment',
+      ? 'From Module 2: Action Commitment, revised in Module 4'
+      : 'From Module 2: Action Commitment',
     (ix, iy, iw, ih) => {
       drawStackedFields(
         doc,
@@ -86,7 +86,7 @@ export function drawPage1(doc: jsPDF, data: CompletionProfileData): void {
     C.description,
     'Description',
     'How you specified the task',
-    'From Module 4 — Prompt Reformulation',
+    'From Module 4: Prompt Reformulation',
     (ix, iy, iw, ih) => {
       drawStackedFields(
         doc,
@@ -112,7 +112,7 @@ export function drawPage1(doc: jsPDF, data: CompletionProfileData): void {
     C.discernment,
     'Discernment',
     'How you evaluated AI output',
-    'From Module 4 — Output Verification + Iterative Refinement',
+    'From Module 4: Output Verification + Iterative Refinement',
     (ix, iy, iw, ih) => {
       const allCorrect = data.p10Accuracy === data.p10Total;
       const statH = drawStatLine(
@@ -146,7 +146,7 @@ export function drawPage1(doc: jsPDF, data: CompletionProfileData): void {
     C.diligence,
     'Diligence',
     'Your AI practices, documented',
-    'From Module 4 — Diligence Statement',
+    'From Module 4: Diligence Statement',
     (ix, iy, iw, ih) => {
       drawDiligenceStatement(doc, ix, iy, iw, ih, data.p12Statement, LINES.diligence);
     },

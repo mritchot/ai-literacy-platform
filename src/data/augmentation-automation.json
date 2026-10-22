@@ -64,7 +64,7 @@
         "pattern": "Task Iteration",
         "category": "augmentation",
         "pct": 31.3,
-        "definition": "Collaborative refinement process — the user and AI iterate on a task together.",
+        "definition": "Collaborative refinement process: the user and AI iterate on a task together.",
         "example": "Let's draft a marketing strategy for our new product. ... Good start, but can we add some concrete metrics?",
         "typical_tasks": "Front-end development, landing pages, professional communication, resumes and cover letters"
       },
@@ -72,7 +72,7 @@
         "pattern": "Learning",
         "category": "augmentation",
         "pct": 23.3,
-        "definition": "Knowledge acquisition and understanding — the user asks the AI for information or explanations.",
+        "definition": "Knowledge acquisition and understanding: the user asks the AI for information or explanations.",
         "example": "Can you explain how neural networks work?",
         "typical_tasks": "General education topics, health advice, embedded systems, subject-specific learning"
       },
@@ -80,7 +80,7 @@
         "pattern": "Validation",
         "category": "augmentation",
         "pct": 2.8,
-        "definition": "Work verification and improvement — the user asks the AI to check their work and suggest improvements.",
+        "definition": "Work verification and improvement: the user asks the AI to check their work and suggest improvements.",
         "example": "I've written this SQL query to find duplicate customer records. Can you check if my logic is correct and suggest any improvements?",
         "typical_tasks": "Language translations"
       },
@@ -88,7 +88,7 @@
         "pattern": "Directive",
         "category": "automation",
         "pct": 27.8,
-        "definition": "Complete task delegation with minimal interaction — the user gives a task and the AI completes it.",
+        "definition": "Complete task delegation with minimal interaction: the user gives a task and the AI completes it.",
         "example": "Format this technical documentation in Markdown.",
         "typical_tasks": "Writing and content generation, business email drafting, schoolwork-related tasks"
       },
@@ -96,7 +96,7 @@
         "pattern": "Feedback Loop",
         "category": "automation",
         "pct": 14.8,
-        "definition": "Task completion guided by environmental feedback — the user repeatedly relays error states back to the AI.",
+        "definition": "Task completion guided by environmental feedback: the user repeatedly relays error states back to the AI.",
         "example": "Here's my Python script for data analysis – it's giving an IndexError. Can you help fix it? ... Now I'm getting a different error...",
         "typical_tasks": "Coding and debugging"
       }

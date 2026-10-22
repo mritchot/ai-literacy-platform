@@ -36,7 +36,7 @@ export const NEUTRAL_TOKENS: TokenSpec[] = [
   { name: 'border-light', light: '227 221 210', dark: '38 38 45', usage: 'Divider lines, section separators' },
   { name: 'surface', light: '238 234 225', dark: '23 23 29', usage: 'Recessed areas, hover dip, sidebar' },
   { name: 'surface-warm', light: '243 240 233', dark: '26 26 33', usage: 'Legend, footer areas' },
-  { name: 'canvas', light: '247 244 239', dark: '16 16 20', usage: 'Page ground — washi / sumi' },
+  { name: 'canvas', light: '247 244 239', dark: '16 16 20', usage: 'Page ground (washi / sumi)' },
   { name: 'white', light: '253 251 247', dark: '29 29 36', usage: 'Raised card surface (never pure white)' },
 ];
 
@@ -55,7 +55,7 @@ export const ACTION_TOKENS: TokenSpec[] = [
   { name: 'action', light: '12 107 118', dark: '76 195 208', usage: 'Primary button, actionable links' },
   { name: 'action-hover', light: '10 90 99', dark: '99 205 216', usage: 'Primary button hover' },
   { name: 'action-active', light: '8 77 85', dark: '118 212 222', usage: 'Primary button active/pressed' },
-  { name: 'focus', light: '199 59 39', dark: '224 85 67', usage: 'Keyboard focus ring — vermilion' },
+  { name: 'focus', light: '199 59 39', dark: '224 85 67', usage: 'Keyboard focus ring (vermilion)' },
 ];
 
 // Competency scope variables: the accent itself plus its wash and on-wash

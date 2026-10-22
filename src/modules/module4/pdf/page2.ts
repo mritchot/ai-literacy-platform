@@ -35,7 +35,7 @@ export function drawPage2(doc: jsPDF, data: CompletionProfileData): void {
 
   drawHeader(doc, {
     eyebrow: 'Competency Profile · continued',
-    title: 'Where the practice goes next',
+    title: 'What to practice next',
     subtitle: hasGrowth
       ? 'Forward commitments and program growth'
       : 'Knowledge checks and forward commitments',
@@ -82,7 +82,7 @@ function drawMilestonesCard(doc: jsPDF, data: CompletionProfileData): void {
   doc.setFontSize(9);
   setTextHex(doc, C.diligence);
   setTracked(doc, 9);
-  doc.text(safe('WHERE THE PRACTICE GOES NEXT'), x + padX, y + padY + 2);
+  doc.text(safe('WHAT TO PRACTICE NEXT'), x + padX, y + padY + 2);
   resetTracking(doc);
 
   // Title
@@ -600,7 +600,7 @@ function drawClosingCard(doc: jsPDF, compact: boolean): void {
   doc.rect(x, y, w, h, 'F');
 
   const closing = safe(
-    'This profile is a snapshot of where you are now. The milestones above are where the practice goes next.',
+    'This profile is a snapshot of where you are now. The milestones above set out what to practice next.',
   );
 
   // Wrap the body first so we can decide whether to render the eyebrow

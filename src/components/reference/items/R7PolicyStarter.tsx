@@ -116,7 +116,7 @@ const AREAS: DiscussionArea[] = [
       },
       {
         topic: 'Accountability',
-        prompt: 'Who’s accountable for errors — delegator, reviewer, or both?',
+        prompt: 'Who’s accountable for errors: delegator, reviewer, or both?',
         note: "Some workers skip verification because they see it as someone else's job (11 of 319 in one survey), and some because they lack the time (44 of 319; one cited a daily sales quota). A norm has to answer both. Source: Lee et al., CHI 2025, p. 11.",
       },
       {
@@ -165,7 +165,7 @@ const FRAMES: ConversationFrame[] = [
   {
     id: 'frame-1',
     title: 'Frame 1: Process improvement',
-    body: '“I’ve been thinking about how we could be more consistent in how we use AI tools. I put together some discussion points — could we spend 10 minutes in our next 1:1?”',
+    body: '“I’ve been thinking about how we could be more consistent in how we use AI tools. I put together some discussion points. Could we spend 10 minutes in our next 1:1?”',
   },
   {
     id: 'frame-2',
@@ -213,7 +213,7 @@ export function R7PolicyStarter(): JSX.Element {
     <div className="font-sans">
       {/* Intro */}
       <p
-        className="m-0 mb-4 text-body-sm text-body"
+        className="m-0 mb-2 text-body-sm text-body"
         style={{ lineHeight: 1.55 }}
       >
         <strong style={{ color: 'rgb(var(--ink))' }}>
@@ -222,12 +222,18 @@ export function R7PolicyStarter(): JSX.Element {
         In one study’s general-workforce sample, 69% of professionals mention the social stigma
         that comes with using AI at work, and
         many conceal their use from colleagues. This scaffold
-        helps you initiate a conversation about shared AI use norms. You are proposing shared
-        standards, not asking for permission. The shape is deliberate. When an MIT committee was
-        charged in 2026 with proposing institution-wide AI policy, it rejected a single rule as too
-        permissive for some contexts and too restrictive for others. It recommended instead a shared
-        framework: a policy menu, disclosure expectations, and accountability standards that each
-        department adapts (MIT Ad Hoc Committee, 2026, pp. 1, 7). The four areas below are that framework at team
+        helps you start a conversation about shared AI use norms. You are proposing shared
+        standards, not asking for permission.
+      </p>
+      <p
+        className="m-0 mb-4 text-body-sm text-body"
+        style={{ lineHeight: 1.55 }}
+      >
+        When an MIT committee was charged in 2026 with proposing institution-wide AI policy, it
+        rejected a single rule as too permissive for some contexts and too restrictive for others.
+        It recommended instead a shared framework: a policy menu, disclosure expectations, and
+        accountability standards that each department adapts
+        (MIT Ad Hoc Committee, 2026, pp. 1, 7). The four areas below are that framework at team
         scale.
       </p>
 

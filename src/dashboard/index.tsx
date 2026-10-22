@@ -131,7 +131,7 @@ export default function AnalyticsDashboard(): JSX.Element {
         </p>
         <p className="m-0 mt-2 max-w-reading font-sans text-caption text-tertiary">
           Each view shows one learner. The pre/post assessment is the program&rsquo;s Level 2
-          measure; Levels 1, 3, and 4 are collected by the deploying organization, as set out in
+          measure; the deploying organization collects Levels 1, 3, and 4, as set out in
           the{' '}
           <a href="#/evaluation" className="text-secondary underline hover:text-ink">
             evaluation framework
@@ -173,9 +173,9 @@ export default function AnalyticsDashboard(): JSX.Element {
               </Overline>
             </h2>
             <p className="m-0 mb-3 font-sans text-caption text-tertiary">
-              Pre→post growth across the instrument&rsquo;s four construct blocks (usage,
-              failure modes, mechanics, evaluation) — the program&rsquo;s core constructs,
-              not every module objective.
+              Pre→post growth across the instrument&rsquo;s four construct blocks: usage,
+              failure modes, mechanics, and evaluation. The blocks cover the program&rsquo;s
+              core constructs, not every module objective.
             </p>
             <AssessmentResponseAnalysis progress={data.progress} />
           </section>

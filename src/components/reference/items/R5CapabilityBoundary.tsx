@@ -182,8 +182,8 @@ export function R5CapabilityBoundary(): JSX.Element {
         Know what the tool does well and where it systematically fails before you delegate. The
         framework calls this Platform Awareness, part of Delegation (Dakan &amp; Feller, 2025,
         p. 4). It sets two requirements for automation: a clear task definition and a quality
-        check (p. 2). Organized by task type, not technical architecture. Each entry connects to
-        Module 3’s mechanical framework.
+        check (p. 2). This reference is organized by task type rather than technical
+        architecture. Each entry connects to Module 3’s mechanical framework.
       </p>
 
       {/* Section 1: Reliable */}

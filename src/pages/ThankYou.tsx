@@ -219,7 +219,7 @@ function OriginStory(): JSX.Element {
         Design, where I designed a module that taught AI through its mechanics (tokenization,
         and the context-window and subword effects that follow from it), not just its outputs. I was
         teaching high school students at an international school in Macao at the time, though I
-        built it with working professionals in mind too — the reasons these tools fail don't
+        built it with working professionals in mind too: the reasons these tools fail don't
         change much between a teenager's history essay and a manager's quarterly report. None of
         the major labs had published a literacy program yet, and the research on how to teach
         this well barely existed. So I was guessing, partly: what to teach about AI, and how to
@@ -232,16 +232,16 @@ function OriginStory(): JSX.Element {
         my read on it: teach the mechanics as the base, ground the practice in transfer research
         and evaluation methodology, and treat learning design and technical implementation as
         one job rather than two. The platform itself, the code you're reading this on, is a
-        custom build — every piece of it, from the data visualizations to the verification
-        triage exercise to the diligence statement builder, designed and coded as one system. I
-        think that integration matters more than any single feature.
+        custom build: every piece of it, from the data visualizations to the verification
+        triage exercise to the diligence statement builder, was designed and coded as one
+        system. I think that integration matters more than any single feature.
       </p>
 
       <p className="m-0">
         I made this course free because foundational AI literacy shouldn't sit behind a paywall.
-        The competencies here (the mechanics behind how LLMs fundamentally work, knowing what to
-        delegate, how to specify it, how to evaluate what comes back, and how to document the
-        process) are baseline professional skills now. They shouldn't cost money to learn.
+        The competencies here (the mechanics behind how LLMs work, knowing what to delegate, how
+        to specify it, how to evaluate what comes back, and how to document the process) are
+        baseline professional skills now.
       </p>
 
       <p className="m-0">
@@ -326,8 +326,8 @@ function EvaluationBlock(): JSX.Element {
       </h2>
       <p className="m-0 mb-5 font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
         How the course measures whether it works: the four Kirkpatrick levels (reaction, learning,
-        behavior, and results), designed before the modules were built, so success was defined
-        before anything existed to produce it. Four documents, instruments and methodology intact.
+        behavior, and results), designed along with their success criteria before any module
+        was built. Four documents, instruments and methodology intact.
       </p>
       <a
         href="#/evaluation"
@@ -480,7 +480,7 @@ function BlogCard({
         className="m-0 mb-5 font-sans text-body-sm text-body"
         style={{ lineHeight: 1.6 }}
       >
-        I'm building more courses. The next one is in development — if you want to know when it
+        I'm building more courses. The next one is in development. If you want to know when it
         ships, the blog is where I'll say so. I write about life, learning, research, and
         technology, mostly AI lately. New posts go up when I have something worth saying, not on
         a schedule.
@@ -513,8 +513,8 @@ function BlogCard({
         >
           RSS and Atom
         </a>
-        . Point a feed reader at either and new posts arrive as they land — no email list, no
-        tracking.
+        . Point a feed reader at either and new posts arrive as they're published. There's no
+        email list and no tracking.
       </p>
       {/* Course hub — secondary affordance under the blog CTA. Same
           outlined-button treatment as "Read the blog"; the two sit as
@@ -552,8 +552,8 @@ function BlogCard({
         className="m-0 mt-5 font-sans text-body-sm text-body"
         style={{ lineHeight: 1.6 }}
       >
-        If you'd like to email me — about the course, what you wish you could learn next, or just
-        to chat — I'm at{' '}
+        If you'd like to email me about the course or what you wish you could learn next, or just
+        to chat, I'm at{' '}
         <a
           href={`mailto:${EMAIL}`}
           onClick={onEmailClick}

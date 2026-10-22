@@ -50,7 +50,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'The high proportion of single-turn exchanges indicates the team is using AI efficiently. Iterative multi-turn interactions are a sign of poorly written prompts, not of deeper collaboration, and the manager should view this pattern as a positive indicator.',
         isCorrect: false,
         feedbackText:
-          'Efficiency and collaboration are not opposites, but describing single-turn usage as "efficient prompting" rather than "automation-style usage" repeats exactly the self-report/behavioral gap the program identified. Multi-turn interaction is a sign that a human is applying judgment, refining output, and maintaining quality control, not a sign of poor prompting. The distinction matters for output quality.',
+          'Efficiency and collaboration are not opposites, but describing single-turn usage as "efficient prompting" rather than "automation-style usage" repeats exactly the self-report/behavioral gap the program identified. Multi-turn interaction is a sign that a human is applying judgment, refining output, and maintaining quality control, not a sign of poor prompting.',
       },
       {
         id: 'C',
@@ -58,7 +58,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'The interaction logs suggest the team\'s actual usage is predominantly directive and automation-oriented, even though the manager frames it as collaboration. This gap between self-reported and observed interaction patterns is documented in research on AI adoption.',
         isCorrect: true,
         feedbackText:
-          'The behavioral research on AI adoption finds a gap between how professionals describe their AI usage (collaborative and iterative) and what their interaction patterns show (more directive than reported). The gap is not universal: when Anthropic compared its own engineers\' self-reported task mix with usage logs, the two distributions roughly aligned. The documented gap concerns collaboration style, not which tasks people bring to AI. The manager\'s framing reflects a common self-report bias, not intentional misrepresentation. The disconnect between perceived and actual interaction style is real. Recognizing this gap is the first step toward deliberately choosing augmentative practices when the task warrants them.',
+          'The behavioral research on AI adoption finds a gap between self-report and behavior: professionals describe their AI usage as collaborative and iterative, but their interaction patterns are more directive than reported. The gap is not universal: when Anthropic compared its own engineers\' self-reported task mix with usage logs, the two distributions roughly aligned. The documented gap concerns collaboration style, not which tasks people bring to AI. The manager\'s framing reflects a common self-report bias, not intentional misrepresentation. Recognizing this gap is the first step toward deliberately choosing augmentative practices when the task warrants them.',
       },
       {
         id: 'D',
@@ -104,7 +104,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'She hasn\'t consulted her team about their comfort level with AI-assisted proposal writing. Mandating AI use without employee input creates resistance, and adoption studies show that voluntary usage produces higher-quality outputs than required usage.',
         isCorrect: false,
         feedbackText:
-          'Employee comfort and adoption willingness are real factors in change management, but they\'re not the critical analytical gap. Even if the team enthusiastically adopts AI for proposals, the verification burden for customer-facing documents remains. The risk is in the outputs, not in the adoption strategy.',
+          'Employee comfort and adoption willingness are real factors in change management, but they\'re not the critical analytical gap. Even if the team enthusiastically adopts AI for proposals, the verification burden for customer-facing documents remains.',
       },
       {
         id: 'D',
@@ -112,7 +112,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'She hasn\'t considered whether the AI tool she\'s using is specifically designed for proposal writing. General-purpose AI tools produce lower-quality outputs for specialized document types, and a domain-specific tool would eliminate most of the quality risks associated with mandated use.',
         isCorrect: false,
         feedbackText:
-          'Domain-specific tools may produce higher baseline quality, but they don\'t eliminate the verification burden for high-stakes documents. A tool optimized for proposal writing can still fabricate statistics, misrepresent capabilities, or introduce inaccuracies that require human review. The critical gap is the absence of a verification assessment, not the absence of a specialized tool.',
+          'Domain-specific tools may produce higher baseline quality, but they don\'t eliminate the verification burden for high-stakes documents. A tool optimized for proposal writing can still fabricate statistics or misrepresent capabilities, and those errors require human review. The critical gap is the absence of a verification assessment.',
       },
     ],
   },
@@ -126,7 +126,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     stem:
       'A product manager uses an AI tool to generate a competitive landscape analysis. The report states: "Gartner\'s 2025 Magic Quadrant for Enterprise Collaboration platforms placed Vendor X in the Leaders quadrant for the third consecutive year, citing its API extensibility and compliance automation as key differentiators." The statement is fluent, specific, and formatted exactly like a real analyst citation. What is the strongest reason to verify this claim before including it in a board presentation?',
     scenarioSummary:
-      'An AI-generated competitive analysis cites a specific Gartner Magic Quadrant placement with named differentiators: fluent, specific, and unverified.',
+      'An AI-generated competitive analysis cites a specific, unverified Gartner Magic Quadrant placement with named differentiators.',
     options: [
       {
         id: 'A',
@@ -142,7 +142,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'The model generates text by predicting what a plausible analyst citation looks like. Unless it retrieved and read the Gartner report, the quadrant placement, the consecutive-year claim, and the differentiators may each be fabricated.',
         isCorrect: true,
         feedbackText:
-          'The model\'s next-token prediction mechanism generates what a plausible analyst citation should contain, based on statistical patterns. Each element (the quadrant placement, the "third consecutive year" claim, the specific differentiators) is independently generated to fit the expected format of a Gartner citation. Unless the tool performed an active retrieval step (searching for and reading the actual report during this interaction), every detail may be fabricated while appearing authoritative. The specificity and formatting are features of fluent generation, not evidence of accuracy.',
+          'The model\'s next-token prediction mechanism generates what a plausible analyst citation should contain, based on statistical patterns. The quadrant placement, the "third consecutive year" claim, and the specific differentiators are each generated independently to fit the expected format of a Gartner citation. Unless the tool performed an active retrieval step (searching for and reading the actual report during this interaction), every detail may be fabricated while appearing authoritative. The specificity and formatting are features of fluent generation, not evidence of accuracy.',
       },
       {
         id: 'C',
@@ -242,7 +242,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'The AI tool determined that two contradictions was a statistically appropriate number for documents of this type and length, and stopped searching after reaching that threshold. It prioritized conciseness over completeness to avoid producing an overwhelmingly detailed response.',
         isCorrect: false,
         feedbackText:
-          'AI models don\'t have an internal threshold for "appropriate number of contradictions." The model isn\'t deciding to stop searching after finding two. It\'s generating a response based on what it can attend to across the full input, and uneven attention across 35 pages means a provision in the middle can go undetected. The omission is a capability limitation, not an editorial choice.',
+          'AI models don\'t have an internal threshold for "appropriate number of contradictions." The model isn\'t deciding to stop searching after finding two. It\'s generating a response based on what it can attend to across the full input, and uneven attention across 35 pages means a provision in the middle can go undetected.',
       },
       {
         id: 'D',
@@ -272,7 +272,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'The AI tool accessed a draft version of an upcoming ISO revision that includes proposed requirements not yet in the published standard. The additional items are real but belong to a future version of the certification framework.',
         isCorrect: false,
         feedbackText:
-          'This explanation assumes the model has access to draft standards not yet published. AI models generate based on training data patterns, not by accessing unpublished documents. More fundamentally, this explanation frames the additional requirements as real. The issue is that they may be entirely fabricated, not that they belong to a future version.',
+          'This explanation assumes the model has access to draft standards not yet published. AI models generate based on training data patterns, not by accessing unpublished documents. More fundamentally, this explanation treats the additional requirements as real, when they may be entirely fabricated.',
       },
       {
         id: 'B',
@@ -310,7 +310,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
     stem:
       'A localization manager asks an AI tool to translate a product tagline from English to Thai and then translate it back to English to check fidelity. The round-trip translation produces a noticeably different meaning from the original. She runs the same test with a French translation and the round-trip is nearly perfect. What is the most likely structural explanation for this disparity?',
     scenarioSummary:
-      'Round-trip translation through Thai shifts meaning while round-trip through French preserves it. Same model, same task, different result.',
+      'Round-trip translation through Thai shifts the meaning of a tagline; the same test through French, with the same model, preserves it.',
     options: [
       {
         id: 'A',
@@ -342,7 +342,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'Thai script tokenizes into many small byte-level fragments that don\'t align with its meaningful units, while French and English map onto tokens tracking whole words and word parts, so the Thai tagline\'s meaning shifts or collapses in round-trip translation.',
         isCorrect: true,
         feedbackText:
-          'Tokenization is the structural explanation. Tokenizer vocabularies are built mostly from English and other Latin-script text, so common English and French words map onto whole-word or word-part tokens that line up with meaning. Non-Latin scripts, including Thai, appeared far less often in that data, so Thai text fragments much more aggressively — often into byte-level pieces that split individual characters and ignore where Thai\'s words and syllables actually begin and end. The model has to rebuild meaning from fragments that don\'t align with meaningful units, which gives it weaker handles on the content it needs to preserve. The round-trip test exposes this: French→English→French holds because French tokens track meaningful units; Thai→English→Thai degrades because the representation is built on misaligned fragments. Thinner Thai training data compounds the problem, but the fragmentation is the structural piece.',
+          'Tokenization is the structural explanation. Tokenizer vocabularies are built mostly from English and other Latin-script text, so common English and French words map onto whole-word or word-part tokens that line up with meaning. Non-Latin scripts, including Thai, appeared far less often in that data, so Thai text fragments much more aggressively, often into byte-level pieces that split individual characters and ignore where Thai\'s words and syllables actually begin and end. The model has to rebuild meaning from fragments that don\'t align with meaningful units, which makes the content harder to preserve. The round-trip test exposes this: French→English→French holds because French tokens track meaningful units; Thai→English→Thai degrades because the representation is built on misaligned fragments. Thinner Thai training data compounds the problem, but the fragmentation is the structural piece.',
       },
     ],
   },
@@ -364,7 +364,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'Task A succeeded because press releases use formulaic language that AI tools are well-trained on, while Tasks B and C failed because vendor agreements and financial calculations are specialized domains that require enterprise-grade AI tools. The team should upgrade to a domain-specific model for legal and financial work.',
         isCorrect: false,
         feedbackText:
-          'The failure is about architectural fit, not domain specialization. A "domain-specific" model for legal or financial work would still struggle with the same underlying limitations: context window attention degradation for long-document verification (Task B) and token-based representation for exact numerical computation (Task C). The fix isn\'t a better model; it\'s knowing which tasks match the model\'s architecture and which require different tools (e.g., a code execution environment for Task C, or a retrieval system for Task B).',
+          'The failure is about architectural fit, not domain specialization. A "domain-specific" model for legal or financial work would still struggle with the same underlying limitations: context window attention degradation for long-document verification in Task B, and token-based representation for exact numerical computation in Task C. The fix isn\'t a better model; it\'s knowing which tasks match the model\'s architecture and which require different tools, such as a code execution environment for Task C or a retrieval system for Task B.',
       },
       {
         id: 'B',
@@ -372,7 +372,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'Task A required generating plausible, well-structured text, which is what the architecture is optimized for. Task B stressed the context window: verifying one precise fact demands sustained attention across a long input. Task C failed because exact numerical computation conflicts with token-based, probabilistic generation.',
         isCorrect: true,
         feedbackText:
-          'The capability diagnosis framework maps each success or failure to a specific property of the model\'s architecture. Task A (press release) succeeded because generating well-structured, contextually appropriate text is precisely what next-token prediction is optimized for. The model excels at producing language that fits the expected patterns of a given document type. Task B (clause verification) failed because finding a specific fact in a 200-page document requires sustained attention across the entire input and precise retrieval. The model\'s attention degrades across long inputs, so it sometimes "finds" clauses that don\'t exist or misses clauses that do. Task C (WACC calculation) failed because exact arithmetic requires precise numerical operations that conflict with the model\'s token-based, probabilistic architecture. The model generates plausible-looking numbers rather than computing.',
+          'The capability diagnosis framework maps each success or failure to a specific property of the model\'s architecture. Task A, the press release, succeeded because generating well-structured, contextually appropriate text is precisely what next-token prediction is optimized for. The model excels at producing language that fits the expected patterns of a given document type. Task B, the clause verification, failed because finding a specific fact in a 200-page document requires sustained attention across the entire input and precise retrieval. The model\'s attention degrades across long inputs, so it sometimes "finds" clauses that don\'t exist or misses clauses that do. Task C, the WACC calculation, failed because exact arithmetic requires precise numerical operations that conflict with the model\'s token-based, probabilistic architecture. The model generates plausible-looking numbers rather than computing.',
       },
       {
         id: 'C',
@@ -380,7 +380,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'Task A succeeded by chance. If the team ran it again, the press release might contain errors too. The model doesn\'t have different reliability levels for different tasks; it has a general accuracy rate, and Tasks B and C happened to fall on the wrong side of that probability distribution.',
         isCorrect: false,
         feedbackText:
-          'The model does have systematically different reliability levels for different tasks. That\'s the central insight of the capability diagnosis framework. Press release generation aligns with the model\'s architectural strengths (text generation). Clause verification and numerical computation conflict with specific architectural limitations (context window attention and token-based representation, respectively). The outcomes are predictable, not random.',
+          'The model does have systematically different reliability levels for different tasks. That\'s the central insight of the capability diagnosis framework. Press release generation aligns with the model\'s architectural strength, text generation. Clause verification and numerical computation conflict with specific architectural limitations: context window attention and token-based representation, respectively. The outcomes are predictable, not random.',
       },
       {
         id: 'D',
@@ -422,7 +422,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'Claim 2, because it cites a specific government report with a precise statistic. If the report doesn\'t exist or the 34% is fabricated, the application carries a false citation that could disqualify it and damage credibility with the funder.',
         isCorrect: true,
         feedbackText:
-          'Claim 2 cites a specific government report ("U.S. Department of Labor\'s 2024 Workforce Innovation Report") with a precise statistic (34% turnover reduction). This is exactly the type of claim AI models fabricate fluently: a plausible-sounding report title, a credible government source, and a specific percentage that would be impressive if real. If the report doesn\'t exist or the statistic is fabricated, the grant application contains a falsified citation. In a grant review context, a falsified citation can disqualify the proposal and damage the organization\'s credibility with the funder. The consequences are immediate and disproportionate to the other claims.',
+          'Claim 2 cites a precise statistic (34% turnover reduction) from a specific government report, the "U.S. Department of Labor\'s 2024 Workforce Innovation Report." This is exactly the type of claim AI models fabricate fluently: a plausible-sounding report title, a credible government source, and a specific percentage that would be impressive if real. If the report doesn\'t exist or the statistic is fabricated, the grant application contains a falsified citation. In a grant review context, a falsified citation can disqualify the proposal and damage the organization\'s credibility with the funder. The consequences are immediate and disproportionate to the other claims.',
       },
       {
         id: 'C',
@@ -460,7 +460,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           '"Create a first-week onboarding schedule for a junior data analyst joining a 12-person analytics team at a financial services firm. Include systems access on Day 1, introductions to the three team leads, a shadow session with a senior analyst on Day 2 or 3, and a manager check-in on Day 5. Format as a day-by-day table."',
         isCorrect: true,
         feedbackText:
-          'This prompt demonstrates the Description competency: it specifies the role (junior data analyst), context (12-person team, financial services), concrete activities (systems access, team introductions, shadow session, manager check-in), timing constraints (Day 1, Day 2–3, Day 5), and output format (day-by-day table). Each specification narrows the model\'s output space toward a targeted, useful result. The model generates based on what the prompt tells it. More structural specification produces more relevant output.',
+          'This prompt demonstrates the Description competency. It specifies the role, a junior data analyst, and the context, a 12-person team at a financial services firm. It lists the concrete activities (systems access, team introductions, a shadow session, a manager check-in), sets timing constraints for Day 1, Day 2–3, and Day 5, and asks for a day-by-day table. Each specification narrows the model\'s output space toward a targeted, useful result. The model generates based on what the prompt tells it, so more structural specification produces more relevant output.',
       },
       {
         id: 'B',
@@ -484,7 +484,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           '"Help me with onboarding for a data analyst joining our team. Make it specific to our company and our industry rather than a generic template. Include first-week activities, team introductions, and system setup, and make sure nothing important is missed. Let me know if you need any other information to make this better."',
         isCorrect: false,
         feedbackText:
-          'This is better than the original (it adds the role and some categories), but it still relies on the model to fill in specifics ("specific to our company and our industry" without saying what the company or industry is). The closing "let me know if you need other information" defers specification to the model rather than providing it upfront. Compare that to option A, where every detail is in the prompt itself.',
+          'This is better than the original because it adds the role and some categories, but it still relies on the model to fill in specifics ("specific to our company and our industry" without saying what the company or industry is). The closing "let me know if you need other information" defers specification to the model rather than providing it upfront. Compare that to option A, where every detail is in the prompt itself.',
       },
     ],
   },
@@ -514,7 +514,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           'Keep all four parts human-only. Benefits changes are sensitive, and employees who learn the FAQ was produced with AI will trust its answers less, however accurate those answers turn out to be.',
         isCorrect: false,
         feedbackText:
-          'Sensitivity raises the bar for checking. It does not make every part unsuitable for AI. Extracting questions and formatting a template are checkable tasks, and refusing help on them spends time without improving the parts that need judgment. Whether employees are told AI was used is a disclosure decision, which a diligence statement handles, not a reason to avoid the tool.',
+          'Sensitivity raises the bar for checking, but it does not make every part unsuitable for AI. Extracting questions and formatting a template are checkable tasks, and refusing help on them spends time without improving the parts that need judgment. Whether employees are told AI was used is a disclosure decision, which a diligence statement handles, not a reason to avoid the tool.',
       },
       {
         id: 'C',
@@ -568,7 +568,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           '"AI built the charts and drafted the comment summary; I checked both against the export and all 140 comments. Of three AI-suggested improvements, I rejected one and rewrote two from my own observations. I stand behind the report."',
         isCorrect: true,
         feedbackText:
-          'This statement does what the Diligence competency asks. It separates AI-generated work (charts, comment summary) from human judgment (the rejected and rewritten improvements), names the checks and what they covered, and closes with accountability. It is short enough to append to the report, and a reader can weigh each part on what was done to it.',
+          'This statement does what the Diligence competency asks. It separates AI-generated work (charts, comment summary) from the human judgment in the rejected and rewritten improvements, names the checks and what they covered, and closes with accountability. It is short enough to append to the report, and a reader can weigh each part on what was done to it.',
       },
       {
         id: 'D',
@@ -576,7 +576,7 @@ export const POST_ASSESSMENT_ITEMS: PostAssessmentItem[] = [
           '"No AI note is needed. The report went through the same review as any other deliverable, and naming the tool would only invite the executive team to discount findings that have already been checked."',
         isCorrect: false,
         feedbackText:
-          'Leaving the note out breaks the company\'s stated expectation and treats disclosure as a risk to the findings rather than evidence for them. When AI use goes unreported, colleagues cannot learn which uses worked. A specific note that says what was checked makes the findings easier to trust, not harder.',
+          'Leaving the note out breaks the company\'s stated expectation and treats disclosure as a risk to the findings rather than evidence for them. When AI use goes unreported, colleagues cannot learn which uses worked. A specific note that says what was checked makes the findings easier to trust.',
       },
     ],
   },

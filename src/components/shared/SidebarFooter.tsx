@@ -224,8 +224,8 @@ function ModeIndicator({ collapsed }: { collapsed: boolean }): JSX.Element | nul
         <button
           type="button"
           onClick={resetMode}
-          aria-label={`${label} active — exit to learner mode`}
-          title={`${label} — click to exit`}
+          aria-label={`${label} active. Exit to learner mode`}
+          title={`${label}: click to exit`}
           className="flex h-7 w-7 items-center justify-center font-mono text-[11px] font-bold text-secondary hover:bg-[rgb(var(--white))] hover:text-ink"
           style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border))' }}
         >

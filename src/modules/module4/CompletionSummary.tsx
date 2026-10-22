@@ -370,8 +370,8 @@ export function CompletionSummary(): JSX.Element {
         className="m-0 font-sans text-body-sm text-secondary"
         style={{ textAlign: 'center', lineHeight: 1.55 }}
       >
-        This profile is a snapshot of where you are now; the milestones above show where the
-        practice goes next.
+        This profile is a snapshot of where you are now. The milestones above set out what to
+        practice next.
       </p>
       {/* Soft invitation to the standalone creator page — first-person
           origin story + tip / blog links. Hash-router link so it works

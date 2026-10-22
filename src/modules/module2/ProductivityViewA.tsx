@@ -116,7 +116,7 @@ export function ProductivityViewA({ rows }: ProductivityViewAProps): JSX.Element
         Cost Without AI is the hourly wage multiplied by the task's unassisted duration; Labor
         Cost With AI is what's left after applying the time savings. The gap between them is the
         savings potential: a $134 task that AI reduces by 87% drops to about $17 per occurrence,
-        representing roughly $117 in recovered labor value.
+        which recovers roughly $117 in labor value.
       </p>
       <p className="m-0 font-sans text-body-sm text-body">
         These averages reflect the cognitive, text-based portion of each occupation that people

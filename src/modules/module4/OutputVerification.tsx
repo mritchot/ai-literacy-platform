@@ -220,9 +220,9 @@ export function OutputVerification(): JSX.Element {
         >
           Two factors determine where an element belongs:{' '}
           <strong className="text-ink">how many specificity signals it carries</strong>{' '}
-          (one detail vs. compounding details), and{' '}
-          <strong className="text-ink">how hard it is to verify</strong> (clear search target vs.
-          no good way to check). Together they determine the risk profile.
+          (one detail vs. compounding details) and{' '}
+          <strong className="text-ink">how hard it is to verify</strong>, from a clear search target
+          to no good way to check. Together they determine the risk profile.
         </p>
         <ul
           className="m-0 list-none space-y-1.5 p-0 font-sans text-body-sm text-body"
@@ -248,8 +248,9 @@ export function OutputVerification(): JSX.Element {
           className="m-0 mt-2 font-sans text-body-sm italic text-secondary"
           style={{ lineHeight: 1.5 }}
         >
-          The heuristic: count the signals AND consider how easy verification will be. The two
-          compound: high signal count plus hard-to-verify is the flag pattern.
+          The heuristic is to count the signals and consider how easy verification will be. The
+          two factors compound: a high signal count plus a hard-to-verify element is the flag
+          pattern.
         </p>
       </aside>
 

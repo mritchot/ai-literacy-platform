@@ -108,11 +108,8 @@ function Section1({ module }: ModuleProp): JSX.Element {
           judgment and the tool's output.
         </p>
         <p className="m-0">
-          <strong className="font-semibold text-ink">That mental picture is almost certainly incomplete.</strong>
-        </p>
-        <p className="m-0">
-          Incomplete in the way that self-assessments of any complex behavior tend to be
-          incomplete. Across 22 meta-analyses covering academic, language, medical, sports, and
+          That mental picture is almost certainly incomplete, as self-assessments of any complex
+          behavior tend to be. Across 22 meta-analyses covering academic, language, medical, sports, and
           vocational skills, self-ratings of ability correlate only moderately with measured
           performance, and the match is weakest when the task is unfamiliar, complex, or hard to
           score objectively
@@ -161,13 +158,12 @@ function Section1({ module }: ModuleProp): JSX.Element {
           researchers used: task-level adoption patterns across occupations, productivity
           distributions that range from 95% time savings down to about 20%, and the documented
           discrepancy between what professionals report doing with AI and what they do.
-          The point is not to prove that your self-assessment is inaccurate. It's to give you the
-          data to calibrate it.
+          The purpose is to give you the data to calibrate your own self-assessment.
         </p>
         <p className="m-0">
           By the end of this module, you'll have identified at least one task where you're probably
-          leaving value on the table and at least one where you may be trusting the output more
-          than the evidence warrants.
+          underusing AI and at least one where you may be trusting the output more than the
+          evidence warrants.
         </p>
       </div>
     </SectionContainer>
@@ -188,15 +184,14 @@ function Section2({ module }: ModuleProp): JSX.Element {
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
           When researchers analyzed over a million AI conversations (the same single-platform
-          Claude dataset introduced in Module 1), they didn't just count how
-          often people used AI. They classified <em>how</em> those conversations worked. The
-          result is a five-pattern taxonomy that captures the range of ways professionals interact
-          with AI tools.
+          Claude dataset introduced in Module 1), they classified <em>how</em> those
+          conversations worked as well as how often they happened. The result is a five-pattern
+          taxonomy of the ways professionals interact with AI tools.
         </p>
         <p className="m-0">
-          The five patterns fall into two categories you encountered in Module 1: augmentation
-          (where the human does the substantive intellectual work with AI assistance) and
-          automation (where AI performs the core task with minimal human involvement). The 4D
+          The five patterns fall into two categories you encountered in Module 1: augmentation,
+          where the human does the substantive intellectual work with AI assistance, and
+          automation, where AI performs the core task with minimal human involvement. The 4D
           framework draws a similar line from the delegation side. In automation, AI performs a
           task you defined, on your direct instruction; in augmentation, you and the AI define and
           carry out the task together
@@ -236,13 +231,13 @@ function Section2({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           <em>Task iteration</em> is the most common single pattern, accounting for roughly a third
           of all AI interactions. The user and the AI work on a task together through multiple
-          exchanges: drafting, revising, refining. The human shapes the direction; the AI
-          accelerates the execution.
+          exchanges, drafting and then revising. The human sets the direction, and the AI speeds
+          up the work.
         </p>
         <p className="m-0">
           <em>Learning</em> accounts for about a quarter of interactions. The user asks AI to
-          explain, teach, or clarify, not to produce a deliverable, but to build the user's own
-          understanding. It matters more than its share suggests, because delegation has a
+          explain, teach, or clarify, and the goal is the user's own understanding rather than a
+          deliverable. It matters more than its share suggests, because delegation has a
           learning cost. Some of Anthropic's engineers describe losing the incidental learning
           that came from debugging a problem by hand: reading the docs and code around it and
           building a model of the system on the way
@@ -253,10 +248,9 @@ function Section2({ module }: ModuleProp): JSX.Element {
           <em>Validation</em> is the smallest category at under 3%, and nearly all of it is
           language translation
           <Citation ids="handa-2025" pageKey="feedback-loop-15" />. The user brings their own work
-          and asks the AI to check it. Given that verification is one of the highest-value
-          applications of AI assistance, the near-absence of validation in the behavioral data is a
-          significant finding. Fewer than 3 in 100 AI interactions involve the user asking the
-          tool to check <em>their</em> work rather than produce <em>its</em> work.
+          and asks the AI to check it. Verification is one of the highest-value applications of
+          AI assistance, yet fewer than 3 in 100 AI interactions involve the user asking the tool
+          to check <em>their</em> work rather than produce <em>its</em> work.
         </p>
         <p className="m-0">
           Read the 3% carefully. It counts users asking the tool to check the user's work. It does not count
@@ -314,27 +308,24 @@ function Section2({ module }: ModuleProp): JSX.Element {
         <p className="m-0 mt-4">
           The aggregate split (57% augmentation, 43% automation) is the January 2025 behavioral
           baseline. It describes what users actually do, measured by analyzing conversation
-          transcripts, not what they say they do when asked. The difference between what users
-          do and what they say they do matters, and the gap is larger than you might expect. The
-          split also moves: by August 2025 automation had edged ahead (49% to 47%), and by
-          November 2025 augmentation led again at 52% to 45%, with about 3% of conversations
+          transcripts, not what they say they do when asked. The split also moves: by August 2025
+          automation had edged ahead, 49% to 47%, and by November 2025 augmentation led again at 52% to 45%, with about 3% of conversations
           fitting neither category
           <Citation ids="appel-massenkoff-mccrory-2026" pageKey="aug-auto-52-45" />. The
           labeled percentages for the five patterns above come from the January wave; later
           reports chart the same five patterns, and directive use is the one that moved most.
         </p>
         <p className="m-0">
-          One more thing about the behavioral data before you explore it yourself: these patterns
-          are not stable. Between January and August 2025, the share of directive interactions
-          jumped from 28% to 39%
+          Between January and August 2025, the share of directive interactions jumped from 28% to
+          39%
           <Citation
             ids={['handa-2025', 'appel-mccrory-tamkin-2025']}
             pageKey="directive-share-28"
           />
           . By November, it had fallen back to 32%
           <Citation ids="appel-massenkoff-mccrory-2026" pageKey="directive-share-32" />. The chart
-          below shows how quickly that share has moved. The point is that how
-          people use AI is evolving rapidly, and any snapshot is exactly that: a snapshot.
+          below shows how quickly that share has moved. How people use AI changes fast, so any
+          single measurement describes one period.
         </p>
       </div>
 
@@ -368,15 +359,16 @@ function Section3({ module }: ModuleProp): JSX.Element {
       requirement="open a second dashboard tab"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
-        Three tabs, three angles on the same behavioral dataset. <em>Adoption by Occupation</em>{' '}
+        The dashboard's three tabs show the same behavioral dataset from different angles.{' '}
+        <em>Adoption by Occupation</em>{' '}
         ranks where AI usage concentrates relative to each occupation's share of the workforce.{' '}
         <em>Collaboration Patterns</em> breaks down the five-pattern taxonomy you encountered in
         the previous section, with a reflection prompt that asks you to map your own recent AI
         interactions onto it. <em>Self-Report vs. Behavioral Data</em> sets your self-assessment
         from that prompt against the documented gap between what professionals say they do and
-        what the conversation data shows, and asks a follow-up reflection that closes the loop.
-        Move between tabs in whatever order makes sense; the prompts in the second and third tabs
-        are where this section asks for your time.
+        what the conversation data shows, then asks a follow-up reflection question. Move between
+        tabs in whatever order makes sense; most of the work in this section is the two prompts
+        in the second and third tabs.
       </p>
       <p className="m-0 mb-6 font-sans text-body-sm text-secondary" style={{ lineHeight: 1.55 }}>
         Two caveats. First, this dataset comes from one platform's consumer tiers; business and
@@ -392,8 +384,7 @@ function Section3({ module }: ModuleProp): JSX.Element {
         Other platforms serve other users. On one developer-facing service that routes
         requests to hundreds of models, programming grew from about 11% to more than half of
         all usage by volume during 2025
-        <Citation ids="openrouter-a16z-2025" pageKey="programming-share-50" />. Every usage
-        dataset is a window onto its own users.
+        <Citation ids="openrouter-a16z-2025" pageKey="programming-share-50" />.
       </p>
       <div className="mb-6">
         <BottleneckCallout title="Your task">
@@ -469,10 +460,10 @@ function Section4({ module }: ModuleProp): JSX.Element {
           time where human judgment converts AI-generated output into a reliable deliverable. The
           report offers two possible reasons its own figure sits higher: it cannot see work done after the
           conversation ends, and the trials it cites tested earlier models
-          <Citation ids="tamkin-mccrory-2025" pageKey="rct-comparison" />. Even at the
-          low end of the positive findings, a 14% reduction in task time across routine workflows is operationally
-          significant. At the high end, 56% represents a structural change in how work time is
-          allocated.
+          <Citation ids="tamkin-mccrory-2025" pageKey="rct-comparison" />. Even the low
+          end of the positive findings, a 14% reduction in task time, matters when it applies
+          across routine workflows. At the high end, 56% is large enough to change how work time
+          is allocated.
         </p>
       </div>
 
@@ -486,8 +477,8 @@ function Section4({ module }: ModuleProp): JSX.Element {
 
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
-          One framing that will help you read the dashboard in the next section: productivity gain
-          and verification burden are not the same axis. A task category can show high
+          As you read the dashboard in the next section, treat productivity gain and verification
+          burden as separate axes. A task category can show high
           in-conversation time savings <em>and</em> high risk of unverified output. Compiling
           information from reports is 95% faster inside the AI interaction, but a fabricated
           citation embedded in that compiled output is invisible unless someone verifies every
@@ -524,10 +515,10 @@ function Section5({ module }: ModuleProp): JSX.Element {
       <p className="m-0 mb-4 font-sans text-body text-body">
         The previous section introduced two ways of measuring productivity: in-conversation
         time savings and net time savings after verification. The gap between them is where
-        human judgment lives. This dashboard lets you explore that gap across occupations and
-        tasks; what the data doesn’t capture is equally important: the time spent
-        independently verifying output, reworking errors, and catching fabricated details that
-        looked correct on first read.
+        human judgment comes in. This dashboard lets you explore that gap across occupations and
+        tasks. What the data doesn’t capture is equally important: the time spent independently
+        verifying output, reworking errors, and catching fabricated details that looked correct
+        on first read.
       </p>
       <div className="mb-6">
         <BottleneckCallout title="Your task">
@@ -556,8 +547,8 @@ function Section5({ module }: ModuleProp): JSX.Element {
         from 70% for low-complexity requests, such as basic questions about products, to 66%
         for college-level work
         <Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />.
-        Success also falls as tasks lengthen: API calls reach a coin flip at tasks a person
-        would need about 3.5 hours to do. Consumer conversations, which can run over many turns,
+        Success also falls as tasks lengthen: API calls succeed only half the time on tasks a
+        person would need about 3.5 hours to do. Consumer conversations, which can run over many turns,
         degrade far more slowly; the authors suggest this may reflect users breaking tasks into
         steps and correcting course.
         Two cautions apply. The success judgment is the model's own. And users choose which tasks
@@ -609,10 +600,10 @@ function Section6({ module }: ModuleProp): JSX.Element {
           throughout this module: the behavioral data shows a workforce that
           overestimates how collaboratively it works with AI, and the productivity data shows
           time savings that shrink substantially once you account for the verification work that
-          follows. These two findings converge on the same problem.
+          follows. Both findings point to the same problem.
         </p>
         <p className="m-0">
-          The directive interaction trend makes the convergence visible. Between January and August
+          The directive interaction trend shows that problem in the usage data. Between January and August
           2025, the share of AI interactions classified as directive (user gives a task, accepts
           the result, moves on) rose from 28% to 39%
           <Citation
@@ -658,8 +649,8 @@ function Section6({ module }: ModuleProp): JSX.Element {
           preparing reports) overlap with the tasks people hand over outright: most directive
           conversations are writing and content generation, and drafting business email shows a
           high share of directive use
-          <Citation ids="handa-2025" pageKey="directive-writing" />. The efficiency gain is real.
-          But so is the verification gap.
+          <Citation ids="handa-2025" pageKey="directive-writing" />. The efficiency gain on these
+          tasks is real, and so is the verification gap.
         </p>
         <EvidenceNote id="m2-s6-directive-trend" moduleId={2} sectionId={6}>
           <p className="m-0">
@@ -698,7 +689,7 @@ function Section6({ module }: ModuleProp): JSX.Element {
           </p>
           <p className="m-0 mb-2">
             History shows two outcomes. When Otis launched the automatic elevator in 1950, the
-            elevator attendant's whole job was one task, and it became a button. When spreadsheets
+            elevator attendant's whole job was one task, and a button replaced it. When spreadsheets
             arrived, accountants did not disappear; the job changed. Once barcodes automated
             inventory, grocery stores stocked five times more products
             <Citation ids="evans-2026-05" pageKey="task-vs-job-54" />. Benedict Evans puts one
@@ -706,8 +697,8 @@ function Section6({ module }: ModuleProp): JSX.Element {
             most knowledge work, it is the task.
           </p>
           <p className="m-0">
-            The AI-accelerated task gets faster; the role doesn't disappear; it reshapes around
-            the tasks AI cannot do. For your own practice, the bottleneck concept points to a
+            The AI-accelerated task gets faster, and the role, instead of disappearing, reshapes
+            around the tasks AI cannot do. For your own practice, the bottleneck concept points to a
             specific question: which of your tasks are reshaping right now, and are you making
             that decision deliberately, or is the tool's speed making it for you?
           </p>
@@ -718,10 +709,9 @@ function Section6({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           That is a Delegation question. And the answer depends on Discernment: your ability to
           evaluate whether the AI-accelerated output meets the standard you'd apply if
-          you'd produced it yourself. These two competencies, introduced in Module 1, are not
-          abstract categories. They describe the specific judgment calls the data in this module
-          documents: which tasks to hand to AI (Delegation), and how to evaluate what comes back
-          (Discernment).
+          you'd produced it yourself. These two competencies, introduced in Module 1, describe
+          the specific judgment calls the data in this module documents. Delegation covers which
+          tasks to hand to AI; Discernment covers how to evaluate what comes back.
         </p>
         <p className="m-0">
           The next module shifts from behavioral data to the mechanics underneath it. You've seen
@@ -793,9 +783,9 @@ function Section8({ module }: ModuleProp): JSX.Element {
     >
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
-          You've spent this module looking at what professionals do with AI, not what
-          they say they do, not what headlines claim they do, but what the behavioral data
-          documents. Three findings should stay with you.
+          You've spent this module looking at what professionals do with AI as the behavioral
+          data documents it, rather than what they say they do or what headlines claim they do.
+          Three findings should stay with you.
         </p>
         <p className="m-0">
           <strong className="font-semibold text-ink">First</strong>, the gap between self-reported
@@ -813,7 +803,7 @@ function Section8({ module }: ModuleProp): JSX.Element {
           <strong className="font-semibold text-ink">Second</strong>, the productivity gains are
           real but unevenly distributed. Some tasks show 95% time savings; others show
           closer to 20%. And the tasks where AI is fastest are often the tasks where the output is
-          hardest to verify: speed and reliability are separate axes, not the same one.
+          hardest to verify: speed and reliability are separate axes.
         </p>
         <p className="m-0">
           <strong className="font-semibold text-ink">Third</strong>, the share of directive
@@ -822,8 +812,8 @@ function Section8({ module }: ModuleProp): JSX.Element {
           on whether professionals can evaluate what the tool gives them back.
         </p>
         <p className="m-0">
-          That last point is the bridge to Module 3. Everything in this module has been about{' '}
-          <em>what</em>: what people do, what happens when they do it, what the data shows. Module
+          That last point leads into Module 3. Everything in this module has been about{' '}
+          <em>what</em>: what people do with AI and what happens when they do it. Module
           3 asks <em>why</em>. Why does the tool produce fluent text that contains fabricated
           citations? Why does it handle some tasks reliably and fail unpredictably on others? Why
           does an AI-generated financial summary look correct even when the numbers are invented?
@@ -831,9 +821,9 @@ function Section8({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           The answers are mechanical. Language models generate output through a
           specific process (probability-based prediction, not information retrieval), and that
-          process has specific, documentable failure modes. Understanding those mechanics is what
-          converts the behavioral awareness you built in this module into the evaluative judgment
-          you need to act on it.
+          process has specific, documentable failure modes. Understanding those mechanics turns
+          the behavioral awareness you built in this module into the evaluative judgment you need
+          to act on it.
         </p>
         <p className="m-0">
           The question shifts from <em>"what's happening?"</em> to{' '}

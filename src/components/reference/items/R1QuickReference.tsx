@@ -8,7 +8,7 @@
 import type { ReactNode } from 'react';
 
 const HEADER_TEXT =
-  "The 4Ds describe four competencies for effective, responsible AI use at work. They operate in two loops: the Delegation–Diligence loop governs whether and when to use AI (strategic decisions); the Description–Discernment loop governs how to work with AI effectively (operational workflow).";
+  "The 4Ds describe four competencies for effective, responsible AI use at work. They operate in two loops. The Delegation–Diligence loop governs the strategic decisions: whether and when to use AI. The Description–Discernment loop governs the operational workflow: how to work with AI effectively.";
 
 type CompetencyKey = 'delegation' | 'description' | 'discernment' | 'diligence';
 

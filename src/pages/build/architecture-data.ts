@@ -26,7 +26,7 @@ export const ADRS: Adr[] = [
     decision: 'Vite + React + TypeScript (strict mode)',
     status: 'adopted',
     rationale: [
-      'The platform is built with three common web tools. React is a common framework for building interactive interfaces, and it works well with the charting and interface libraries the dashboards and sandbox rely on. Vite is the build tool that packages everything the browser downloads, and it keeps that package small and quick to load.',
+      'The platform is built with three common web tools. React is a widely used framework for building interactive interfaces, and it works well with the charting and interface libraries the dashboards and sandbox rely on. Vite is the build tool that packages everything the browser downloads, and it keeps that package small and quick to load.',
       'TypeScript is a version of JavaScript that checks the code for mistakes before the site ever ships, rather than letting them surface for a learner. Its strict setting applies those checks more rigorously, which is especially useful where the research data files connect to the charts that display them.',
     ],
   },
@@ -37,7 +37,6 @@ export const ADRS: Adr[] = [
     status: 'adopted',
     rationale: [
       'Moving between the four modules and their sections runs on React Router, a common navigation tool for a site like this. It is set to "hash" mode, which is why every address carries a # (for example, /#/module/1/section/2). That # keeps the part after it on the visitor\'s device instead of sending it to a server, so the site runs on simple, free hosting with no server setup.',
-      'That is what makes the zero-setup hosting described below possible.',
     ],
   },
   {
@@ -56,7 +55,7 @@ export const ADRS: Adr[] = [
     decision: 'Recharts',
     status: 'adopted',
     rationale: [
-      'Module 2\'s dashboard shows several interactive charts: the split between AI augmenting versus automating tasks, adoption by country, productivity gains, and projected skill demand. Recharts is a charting library made for React, and it draws all of these with very little custom code. An alternative, D3, offers more control but would have added a lot of extra work the charts here do not need.',
+      'Module 2\'s dashboard shows several interactive charts: the split between AI augmenting and automating tasks, adoption by country, productivity gains, and projected skill demand. Recharts is a charting library made for React, and it draws all of these with very little custom code. An alternative, D3, offers more control but would have added a lot of extra work the charts here do not need.',
     ],
   },
   {
@@ -95,7 +94,7 @@ export const ADRS: Adr[] = [
     decision: 'Evaluated and declined',
     status: 'declined',
     rationale: [
-      'Netlify would have done the same job as Cloudflare Pages: free hosting, automatic publishing on save, and custom-domain support. It was declined because it would mean adding another company\'s account into the mix with no real advantage over Cloudflare, which already manages the domain.',
+      'Netlify would have done the same job as Cloudflare Pages: free hosting, automatic publishing on save, and custom-domain support. It was declined because it would mean adding another company\'s account with no real advantage over Cloudflare, which already manages the domain.',
     ],
   },
   {

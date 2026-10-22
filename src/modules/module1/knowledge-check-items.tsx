@@ -88,7 +88,7 @@ const KC_1_2: KnowledgeCheckItemData = {
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This draft does three things the CLO needs: it grounds the case in multiple quantified findings (self-report vs. behavioral divergence, the 69% who mention social stigma, the 63% skill-gap barrier, the WEF skill ranking, and the team’s own reported time savings), it distinguishes between the productivity opportunity (time savings when competency is present) and the capability risk (divergent behavior, invisible practices), and it connects both to a measurable organizational consequence (the inability to learn from, measure, or improve existing practices). This is the structure of a business case, not a training request.',
+        'This draft does three things the CLO needs. It grounds the case in several quantified findings: the divergence between self-reports and behavior, the 69% who mention social stigma, the 63% skill-gap barrier, the WEF skill ranking, and the team’s own reported time savings. It separates the productivity opportunity, time savings when competency is present, from the capability risk of divergent behavior and invisible practices. And it connects both to a measurable organizational consequence: the inability to learn from, measure, or improve existing practices. This is the structure of a business case, not a training request.',
     },
     {
       id: 'b',
@@ -163,7 +163,7 @@ const KC_1_3: KnowledgeCheckItemData = {
       feedbackTitle: 'Anecdotal dismissal',
       feedbackTone: 'error',
       feedbackText:
-        'Personal experience (“nobody’s ever complained”) doesn’t address the systemic pattern. The 69% finding isn’t about individual exceptions. It’s about a workforce-wide dynamic where most people mention the stigma and some keep their AI use quiet, meaning the colleague’s discomfort reflects the norm, not an anomaly. Casual reassurance from one person doesn’t change the team’s operating norms.',
+        'Personal experience (“nobody’s ever complained”) doesn’t address the systemic pattern. The 69% finding describes a workforce-wide dynamic: most people mention the stigma and some keep their AI use quiet, so the colleague’s discomfort reflects the norm, not an anomaly. Casual reassurance from one person doesn’t change the team’s operating norms.',
     },
     {
       id: 'd',
@@ -172,7 +172,7 @@ const KC_1_3: KnowledgeCheckItemData = {
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer does four things well: it validates the colleague’s experience with data (69% finding), identifies the organizational consequences of concealment (can’t learn, can’t evaluate, can’t improve), introduces shared vocabulary as the practical solution (delegation and evaluation language rather than binary framing), and models the behavior it advocates by using specific, professional language rather than vague encouragement. The response demonstrates the competency, not just the knowledge.',
+        'This answer does four things well. It validates the colleague’s experience with the 69% finding. It names the organizational consequences of concealment: the team can’t learn, evaluate, or improve. It introduces shared vocabulary for delegation and evaluation as the practical solution, in place of binary framing. And it models the behavior it advocates by using specific, professional language rather than vague encouragement.',
     },
   ],
 };
@@ -208,7 +208,7 @@ const KC_1_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer correctly applies the augmentation–automation distinction to a specific, recognizable task. It identifies the key signal: the nature of the review step. Surface-level error checking (typos, factual mistakes) is not the same as evaluating whether the summary accurately reflects your professional judgment about what’s important, what to emphasize, and what to leave out. Recognizing this doesn’t mean the current process is wrong. It means you now have the vocabulary to make a deliberate choice about whether automation is appropriate for this task or whether augmentation (more substantive review, more direction in the prompt) would produce a better outcome.',
+        'This answer correctly applies the augmentation–automation distinction to a specific, recognizable task. It identifies the key signal: the nature of the review step. Surface-level error checking, such as catching typos and factual mistakes, is not the same as evaluating whether the summary accurately reflects your professional judgment about what’s important, what to emphasize, and what to leave out. Recognizing this doesn’t mean the current process is wrong, but it gives you the vocabulary to make a deliberate choice about whether automation is appropriate for this task or whether augmentation (more substantive review, more direction in the prompt) would produce a better outcome.',
     },
     {
       id: 'c',
@@ -217,7 +217,7 @@ const KC_1_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Sidesteps the question',
       feedbackTone: 'caution',
       feedbackText:
-        'Output quality and time savings are legitimate considerations, but they don’t answer the question the module poses. The augmentation–automation distinction isn’t about whether AI use is good or bad. It’s about whether your actual behavior matches your perception of it. If you believe you’re enhancing your work but are actually delegating it, you’ve lost the ability to evaluate the quality of the delegation. The data shows this mismatch is widespread, not rare.',
+        'Output quality and time savings are legitimate considerations, but they don’t answer the question the module poses. The augmentation–automation distinction asks whether your actual behavior matches your perception of it, not whether AI use is good or bad. If you believe you’re enhancing your work but are actually delegating it, you’ve lost the ability to evaluate the quality of the delegation. The data shows this mismatch is widespread.',
     },
     {
       id: 'd',

@@ -419,7 +419,7 @@ function SegmentedControl({
             type="button"
             role="radio"
             aria-checked={active}
-            aria-label={`${CATEGORY_LABELS[cat]} — ${CATEGORY_DESCRIPTIONS[cat]}`}
+            aria-label={`${CATEGORY_LABELS[cat]}: ${CATEGORY_DESCRIPTIONS[cat]}`}
             disabled={disabled}
             onClick={() => onChange(cat)}
             className="font-sans text-[12px] font-medium transition-colors duration-[160ms]"

@@ -51,7 +51,7 @@ export function FasterPeopleCallout(): JSX.Element {
         <Citation ids="mckinsey-state-of-ai-2026" pageKey="workflow-redesign-74" /> and twice as
         likely to have defined processes for measuring impact
         <Citation ids="mckinsey-state-of-ai-2026" pageKey="measure-impact-2x" />. Concealment
-        is the individual-level face of the same problem: gains that stay private cannot be
+        is the same problem at the individual level: gains that stay private cannot be
         measured, shared, or built on.
       </p>
     </aside>

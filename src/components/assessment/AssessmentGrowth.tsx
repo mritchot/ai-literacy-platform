@@ -35,7 +35,7 @@ export function AssessmentGrowth(): JSX.Element {
         className="mb-1"
         style={{ color: 'rgb(var(--info))', letterSpacing: '0.1em' }}
       >
-        Assessment Growth
+        Assessment growth
       </Overline>
       <h2
         className="m-0 mb-1 font-sans text-h2 font-semibold text-ink"
@@ -45,7 +45,7 @@ export function AssessmentGrowth(): JSX.Element {
       </h2>
       <p className="m-0 mb-5 font-sans text-body-sm text-secondary">
         {bothComplete
-          ? 'Same constructs, parallel scenarios. Use this to see exactly how your reasoning shifted across the program.'
+          ? 'The two assessments test the same constructs with parallel scenarios, so you can see exactly how your reasoning shifted across the program.'
           : 'A side-by-side comparison appears here once both the pre- and post-assessments are complete.'}
       </p>
       {/* AssessmentResults handles its own incomplete-state placeholder

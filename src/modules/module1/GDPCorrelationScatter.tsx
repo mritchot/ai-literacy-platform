@@ -521,7 +521,7 @@ export function GDPCorrelationScatter({
                             fontFamily='"IBM Plex Sans", system-ui, sans-serif'
                             fill={tokens.tertiary}
                           >
-                            Income only ~35% higher —
+                            Income only ~35% higher, but
                           </text>
                           <text
                             x={midX + 8}

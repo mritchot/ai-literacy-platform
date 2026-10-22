@@ -327,7 +327,7 @@ function SkillInstabilityCallout({
         className="mb-1.5 font-sans text-body-sm font-semibold text-ink"
         style={{ textWrap: 'balance' }}
       >
-        Skills instability — share of core skills expected to change
+        Skills instability: share of core skills expected to change
       </div>
       {isMobile ? (
         // Mobile: stack the data points vertically so each row gets
@@ -360,8 +360,9 @@ function SkillInstabilityCallout({
       )}
       <p className="m-0 font-sans text-body-sm text-secondary">
         Employers expect 39% of core skills to change by 2030, down from 44% in 2023
-        <Citation ids="wef-2025" pageKey="skills-instability-39" />. The target is becoming
-        clearer, not smaller. Most skills endure; their application shifts
+        <Citation ids="wef-2025" pageKey="skills-instability-39" />. The skills to train for are
+        becoming easier to identify, and the need for them is not shrinking. Most skills endure;
+        their application shifts
         <Citation ids="mgi-agents-robots-us-2025" pageKey="shared-skills-72" />.
       </p>
     </aside>

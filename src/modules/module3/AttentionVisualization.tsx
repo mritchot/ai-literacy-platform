@@ -92,7 +92,7 @@ export function AttentionVisualization(): JSX.Element {
               boxSizing: 'border-box',
             }}
           />
-          Section 12 — the failed clause
+          Section 12: the failed clause
         </span>
       </div>
 

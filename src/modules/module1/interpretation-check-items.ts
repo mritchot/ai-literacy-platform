@@ -16,7 +16,7 @@ const IC_1_1: InterpretationCheckItemData = {
       feedbackTitle: 'Partially correct, but misleading',
       feedbackTone: 'caution',
       feedbackText:
-        'The skill instability rate is declining, but this doesn’t reduce the urgency. It means the target is becoming clearer, not smaller. AI and big data now tops the list of skills employers expect to grow, even though only 45% treat it as core today. Job-posting data agree: demand for AI fluency grew nearly sevenfold in two years. The analysts who track it class AI fluency as a skill that keeps changing in application rather than fading. A declining instability rate with a rising specific demand means the window for preparation is narrowing, not expanding.',
+        'The skill instability rate is declining. That makes the skills to train for easier to identify, but it doesn’t reduce the urgency. AI and big data now tops the list of skills employers expect to grow, even though only 45% treat it as core today. Job-posting data agree: demand for AI fluency grew nearly sevenfold in two years. The analysts who track it class AI fluency as a skill that keeps changing in application rather than fading. A declining instability rate with a rising specific demand means the window for preparation is narrowing.',
     },
     {
       id: 'b',
@@ -25,7 +25,7 @@ const IC_1_1: InterpretationCheckItemData = {
       feedbackTitle: 'Strongest response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer correctly connects two findings: the demand signal (AI and big data ranked first for growth) and the barrier signal (skills gaps as the primary transformation obstacle). It also identifies the consequence of inaction: deferral doesn’t pause the gap, it widens it as competitors invest.',
+        'This answer correctly connects two findings: the demand signal (AI and big data ranked first for growth) and the barrier signal (skill gaps as the primary transformation obstacle). It also identifies the consequence of inaction: deferral widens the gap as competitors invest.',
     },
     {
       id: 'c',
@@ -34,7 +34,7 @@ const IC_1_1: InterpretationCheckItemData = {
       feedbackTitle: 'Flawed reasoning',
       feedbackTone: 'error',
       feedbackText:
-        'The 85% planning figure describes intent, not execution. The same report shows that the skill gap remains the largest cited barrier, meaning most organizations intend to upskill but have not yet succeeded. Following the market assumes someone else has solved the problem. The data suggests otherwise. Executive surveys show the same gap in a different population. In Morgan Stanley’s September 2025 CIO survey, about a third of CIOs had put an LLM project into production, and about 40% planned none before 2026. Plans are cheap. Deployment and skill are not.',
+        'The 85% planning figure describes intent, not execution. The same report shows that the skill gap remains the largest cited barrier, meaning most organizations intend to upskill but have not yet succeeded. Following the market assumes someone else has solved the problem. The data suggests otherwise. Executive surveys show the same gap in a different population. In Morgan Stanley’s September 2025 CIO survey, about a third of CIOs had put an LLM project into production, and about 40% planned none before 2026.',
       sources: [{ ids: 'evans-2025-11', pageKey: 'cio-timing-57' }],
     },
     {
@@ -44,7 +44,7 @@ const IC_1_1: InterpretationCheckItemData = {
       feedbackTitle: 'Legitimate concern, wrong conclusion',
       feedbackTone: 'caution',
       feedbackText:
-        'Skepticism about projections is reasonable, and it is worth knowing what the survey is: 1,043 responses from C-suite officers at firms with 500 or more employees, reporting intentions for 2025–2030. That is expectation, not outcome, and it excludes small firms. However, this data does not stand alone. It converges with task-level adoption data (which you’ll explore in Module 2), with job-posting data on skill demand, and with documented productivity gains. The WEF survey captures employer intent and barrier perception; behavioral data from other sources shows the same direction.',
+        'Skepticism about projections is reasonable. The survey is 1,043 responses from C-suite officers at firms with 500 or more employees, reporting intentions for 2025–2030. That is expectation, not outcome, and it excludes small firms. However, the data converges with task-level adoption data (which you’ll explore in Module 2), with job-posting data on skill demand, and with documented productivity gains. The WEF survey captures employer intent and barrier perception; behavioral data from other sources shows the same direction.',
     },
   ],
 };
@@ -70,7 +70,7 @@ const IC_1_2: InterpretationCheckItemData = {
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer captures the nuance: income explains most of the cross-country variation, but not all of it. The data shows that countries with similar GDP levels can have very different adoption rates. The research names other likely factors, some of them tied to income: digital infrastructure, economic structure, regulatory environment, awareness and access, and trust and comfort with the tools. Better access addresses only part of that list. For your own organization, this means providing AI tools is necessary but not sufficient for adoption.',
+        'This answer is accurate: income explains most of the cross-country variation, but not all of it. The data shows that countries with similar GDP levels can have very different adoption rates. The research names other likely factors, some of them tied to income: digital infrastructure, economic structure, regulatory environment, awareness and access, and trust and comfort with the tools. Better access addresses only part of that list. For your own organization, this means providing AI tools is necessary but not sufficient for adoption.',
     },
     {
       id: 'c',
@@ -88,7 +88,7 @@ const IC_1_2: InterpretationCheckItemData = {
       feedbackTitle: 'Overly cautious',
       feedbackTone: 'caution',
       feedbackText:
-        'While no single dataset answers causal questions definitively, the combination of country-level adoption rates, enterprise data, and use case diversification patterns provides a substantive evidence base. The question is not whether we can draw conclusions, but which conclusions the data supports and which it doesn’t.',
+        'While no single dataset answers causal questions definitively, the combination of country-level adoption rates, enterprise data, and use case diversification patterns provides a substantive evidence base. The task is to decide which conclusions the data supports and which it doesn’t.',
     },
   ],
 };

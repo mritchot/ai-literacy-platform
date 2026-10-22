@@ -163,7 +163,7 @@ export function R2DelegationGuide(): JSX.Element {
         style={{ lineHeight: 1.55 }}
       >
         Use this guide before delegating a task to AI. Walk through four questions in sequence.
-        Each question either routes you to a recommendation or advances you to the next filter.
+        Each question either routes you to a recommendation or sends you to the next question.
       </p>
 
       {/* Vertical flowchart — the centerpiece of this guide. */}
@@ -230,9 +230,9 @@ export function R2DelegationGuide(): JSX.Element {
           full flowchart at the higher stakes level.
         </p>
         <p className="m-0 text-body-sm text-body" style={{ lineHeight: 1.55, marginTop: 8 }}>
-          These four questions are not only a training scaffold. When Anthropic interviewed 53 of
-          its own engineers and researchers about what they hand to Claude, three of the tests
-          came back: stakes, verifiability, and context. They delegated work where quality is not
+          When Anthropic interviewed 53 of its own engineers and researchers about what they hand
+          to Claude, three of this guide&rsquo;s four tests turned up in their answers: stakes,
+          verifiability, and context. They delegated work where quality is not
           critical and where checking the output costs less than producing it. They kept work that
           needs context the model lacks, along with strategic and design judgment. They also
           favored self-contained components, the per-component rule above. The expertise test is
@@ -269,17 +269,17 @@ export function R2DelegationGuide(): JSX.Element {
           paste into an AI tool leaves your organization&rsquo;s boundary the moment you send it.
           MIT&rsquo;s 2026 AI committee notes that most commercial AI plans, especially paid ones,
           let users switch off the use of their data for training. The default, however, is often
-          to record sessions for training. Client records, unreleased financials, personal data,
-          internal strategy, anything under NDA — whether that material can enter an external
-          tool at all is an organizational policy decision, not an individual delegation decision.
+          to record sessions for training. Whether client records, unreleased financials, personal
+          data, internal strategy, or anything under NDA can enter an external tool at all is an
+          organizational policy decision, not an individual delegation decision.
           The framework covers the tool side of this inside Delegation: Platform Awareness includes
-          evaluating AI tools against operational and regulatory needs. Whether your material may
-          enter a given tool stays your organization&rsquo;s call.
+          evaluating AI tools against operational and regulatory needs. The material side stays
+          your organization&rsquo;s call.
         </p>
         <p className="m-0 text-body-sm text-body" style={{ lineHeight: 1.55, marginTop: 8 }}>
-          Check your organization&rsquo;s AI-use policy before the flowchart, not after. If no
-          policy exists, that absence is worth surfacing — R7&rsquo;s Delegation Norms section is
-          the conversation starter for exactly this question.
+          Check your organization&rsquo;s AI-use policy before you start the flowchart. If no
+          policy exists, that absence is worth raising. R7&rsquo;s Delegation Norms section gives
+          you a conversation starter for this question.
         </p>
       </aside>
 

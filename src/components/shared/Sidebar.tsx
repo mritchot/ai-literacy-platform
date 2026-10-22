@@ -162,7 +162,7 @@ function SidebarHeader({
         <div className="flex justify-center">
           <Link
             to="/"
-            aria-label="AI Literacy program — home"
+            aria-label="AI Literacy program home"
             onClick={onCloseMobile}
             className="flex h-9 w-9 items-center justify-center bg-action font-mono text-[13px] font-bold tracking-wider text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))]"
           >

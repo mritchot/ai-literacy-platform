@@ -106,8 +106,8 @@ export function AugAutoViewB({
     <div className="space-y-6">
       <p className="m-0 font-sans text-body-sm text-body">
         Click any segment of the bar to see what that pattern looks like in practice. The three
-        augmentation patterns (Task Iteration, Learning, Validation) sit to the left; the two
-        automation patterns (Directive, Feedback Loop) sit to the right.
+        augmentation patterns sit to the left: Task Iteration, Learning, and Validation. The two
+        automation patterns, Directive and Feedback Loop, sit to the right.
       </p>
 
       <div aria-label={ariaLabel}>
@@ -349,7 +349,7 @@ export function AugAutoViewB({
         promptId="p3_reflection_1"
         engagedEvent="p3_reflection_1_engaged"
         savedEvent="p3_reflection_1_saved"
-        promptText="Think about the last five times you used an AI tool for work. For each, try to identify which of the five collaboration patterns it fits. How many were task iteration? How many were directive? Did any involve validation: bringing your own work for the AI to check? One pattern from the research can help: the tasks most often classified as directive are about producing (create, develop, draft); task iteration, about refining (edit, rewrite, revise); learning, about explaining (help, explain, provide). These words describe the tasks, not what people typed, so classify each conversation by what happened after your first request."
+        promptText="Think about the last five times you used an AI tool for work. For each, try to identify which of the five collaboration patterns it fits. How many were task iteration? How many were directive? Did any involve validation: bringing your own work for the AI to check? In the research, the tasks most often classified as directive are about producing: create, develop, draft. Those most often classified as task iteration are about refining: edit, rewrite, revise. Those most often classified as learning are about explaining: help, explain, provide. These words describe the tasks, not what people typed, so classify each conversation by what happened after your first request."
       />
     </div>
   );

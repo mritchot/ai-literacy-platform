@@ -94,7 +94,7 @@ function PreFraming({ itemCount }: { itemCount: number }): JSX.Element {
         Before the program starts, take about {minutes.about} minutes to capture a baseline.
         You&rsquo;ll answer <strong className="text-ink">{itemCount} scenario-based questions</strong>{' '}
         about how AI tools work and where they break down. The items sample the program&rsquo;s
-        four core construct areas — usage patterns, failure modes, mechanics, and evaluation —
+        four core construct areas (usage patterns, failure modes, mechanics, and evaluation)
         rather than every module objective.
       </p>
       <ul className="m-0 list-disc space-y-1.5 pl-5">
@@ -136,8 +136,8 @@ function PostFraming({ itemCount }: { itemCount: number }): JSX.Element {
       <p className="m-0">
         You&rsquo;ve completed the four program modules. Before you see your competency profile,
         take a <strong className="text-ink">parallel set of {itemCount}{' '}
-        scenario-based questions</strong>. Same constructs as the pre-assessment, different
-        scenarios.
+        scenario-based questions</strong>. They test the same constructs as the pre-assessment
+        with different scenarios.
       </p>
       <ul className="m-0 list-disc space-y-1.5 pl-5">
         <li>

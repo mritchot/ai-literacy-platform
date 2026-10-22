@@ -3,7 +3,7 @@
 [![Code license: MIT](https://img.shields.io/badge/code-MIT-yellow.svg)](LICENSE)
 [![Content license: CC BY-NC-SA 4.0](https://img.shields.io/badge/content-CC_BY--NC--SA_4.0-lightgrey.svg)](licenses/LICENSE-CONTENT)
 
-A four-module interactive learning platform teaching AI literacy to mid-career knowledge workers. Built as a portfolio piece demonstrating end-to-end L&D program development — from needs analysis and instructional design through custom platform engineering and Kirkpatrick evaluation architecture.
+A four-module interactive learning platform that teaches AI literacy to mid-career knowledge workers. Built as a portfolio piece, it shows end-to-end L&D program development, from needs analysis and instructional design through custom platform engineering and Kirkpatrick evaluation architecture.
 
 Live: [ai-literacy.ritchot.me](https://ai-literacy.ritchot.me)
 
@@ -13,7 +13,7 @@ Best viewed on desktop. Mobile is fully functional, but the data dashboards and 
 
 ## Program structure
 
-The curriculum grew out of my M.Ed. in Education Technology and Instructional Design, where I built a module that teaches AI through one of its mechanics, tokenization, and the errors it predicts, not just its outputs. The four modules:
+The curriculum grew out of my M.Ed. in Education Technology and Instructional Design, where I built a module that teaches AI through one of its mechanics, tokenization, and through the errors that mechanic predicts. The four modules:
 
 | Module | Focus | Sections | Duration |
 |--------|-------|----------|----------|
@@ -22,13 +22,13 @@ The curriculum grew out of my M.Ed. in Education Technology and Instructional De
 | 3: Understanding How Language Models Work | Tokenization, prediction, attention, steerability | 11 | 50–65 min |
 | 4: Evaluating AI Outputs and Working Responsibly | Delegation, prompting, verification, diligence | 10 | 70–105 min |
 
-37 sections total, 230–315 minutes end to end including the 12-item pre/post assessments (15–20 minutes each). 12 practice activities (P1–P12). 7 downloadable reference items (R1–R7). 16 scenario-based knowledge checks.
+The program has 37 sections, 12 practice activities numbered P1–P12, 7 downloadable reference items numbered R1–R7, and 16 scenario-based knowledge checks. It takes 230–315 minutes end to end, including the 12-item pre/post assessments at 15–20 minutes each.
 
 ## Tech stack
 
 - **Framework:** React 18 + TypeScript (strict mode)
-- **Build:** Vite 5 with `vite-plugin-singlefile` — produces a single `index.html` (no server required; works via `file://`)
-- **Styling:** Tailwind CSS 3 with a custom design system aligned to [ritchot.me](https://ritchot.me) — Source Serif 4 / IBM Plex Sans / IBM Plex Mono typography, warm washi light mode and sumi dark mode on CSS-variable tokens, square hairline geometry, 4D competency color palette
+- **Build:** Vite 5 with `vite-plugin-singlefile`, which produces a single `index.html` (no server required; works via `file://`)
+- **Styling:** Tailwind CSS 3 with a custom design system aligned to [ritchot.me](https://ritchot.me): Source Serif 4 / IBM Plex Sans / IBM Plex Mono typography, warm washi light mode and sumi dark mode on CSS-variable tokens, square hairline geometry, 4D competency color palette
 - **Charts:** Recharts (interactive data visualizations across Modules 1–2, the analytics dashboard, and the Behind-the-Build pages)
 - **Routing:** React Router v6 HashRouter (compatible with static hosting and `file://`)
 - **State:** React Context (`LearnerProgressContext`) with localStorage persistence
@@ -39,8 +39,8 @@ The curriculum grew out of my M.Ed. in Education Technology and Instructional De
 
 The platform supports two access modes, activated via URL parameter or keyboard shortcut and persisted in localStorage:
 
-- **Learner** (default) — sequential section gating, inline sources hidden until the learner turns them on, no dashboard access
-- **Portfolio** (`?portfolio=true` or Ctrl/Cmd+Shift+A) — free navigation, inline sources shown by default, analytics dashboard at `/#/dashboard` (demo data by default, with a live-data toggle)
+- **Learner** (default): sequential section gating, inline sources hidden until the learner turns them on, no dashboard access
+- **Portfolio** (`?portfolio=true` or Ctrl/Cmd+Shift+A): free navigation, inline sources shown by default, analytics dashboard at `/#/dashboard` with demo data by default and a live-data toggle
 
 ## Getting started
 
@@ -61,9 +61,9 @@ Open `http://localhost:5173` in your browser.
 npm run build
 ```
 
-Output: `dist/index.html` (single file, ~4.6 MB ungzipped / ~1.9 MB gzipped) plus the downloadable PDF sets — `dist/reference/` (7 reference items), `dist/needs-analysis/` (4), `dist/evaluation/` (4), and `dist/build/` (7).
+The build writes `dist/index.html` (a single file, ~4.6 MB ungzipped and ~1.9 MB gzipped) and the downloadable PDF sets: `dist/reference/` with 7 reference items, `dist/needs-analysis/` with 4, `dist/evaluation/` with 4, and `dist/build/` with 7.
 
-The single-file architecture means the entire platform — React app, fonts, styles, chart libraries — is inlined into one HTML file. This enables `file://` delivery with zero infrastructure, at the cost of code-splitting (not possible with `vite-plugin-singlefile`).
+The single-file architecture means the entire platform (React app, fonts, styles, chart libraries) is inlined into one HTML file. This enables `file://` delivery with zero infrastructure, but it rules out code-splitting, which `vite-plugin-singlefile` does not support.
 
 ## Project structure
 
@@ -95,11 +95,11 @@ src/
 
 ## Design decisions
 
-**Single-file build.** The platform must work when opened directly from disk (`file://` protocol) — this enables offline distribution and removes hosting as a dependency for portfolio reviewers. The tradeoff is ~700 KB of inlined font binaries (the self-hosted web faces plus the PDF exporter's TTF subsets) and no lazy-loading of route chunks.
+**Single-file build.** The platform must work when opened directly from disk over the `file://` protocol. This enables offline distribution and removes hosting as a dependency for portfolio reviewers. The tradeoff is ~700 KB of inlined font binaries (the self-hosted web faces plus the PDF exporter's TTF subsets) and no lazy-loading of route chunks.
 
 **No backend.** All state lives in localStorage. Analytics events are captured client-side and exportable as JSON/xAPI from the analytics dashboard. This keeps deployment to a single static file with zero ongoing infrastructure cost.
 
-**Sequential gating in Learner mode.** Sections unlock only when the preceding section is complete (scroll + interaction). This models the instructional design principle that each section builds on prior knowledge — but Portfolio mode removes the gate for non-sequential reviewers.
+**Sequential gating in Learner mode.** Sections unlock only when the preceding section is complete (scroll + interaction). This models the instructional design principle that each section builds on prior knowledge. Portfolio mode removes the gate for non-sequential reviewers.
 
 **Scenario-based assessment.** All knowledge checks use "Given this situation, what should you do?" stems rather than definitional recall. Feedback is consequence-based (each option leads to a realistic outcome) rather than correct/incorrect labels.
 
@@ -149,7 +149,7 @@ This project uses a dual license:
 - **Code** (`LICENSE`): MIT License
 - **Content** (`licenses/LICENSE-CONTENT`): CC BY-NC-SA 4.0
 
-The competency taxonomy is adapted from Anthropic's [AI Fluency: Framework & Foundations](https://anthropic.skilljar.com/ai-fluency-framework-foundations) course (2025, CC BY-NC-SA 4.0; Copyright 2025 Rick Dakan, Joseph Feller, and Anthropic), which teaches the [4D AI Fluency Framework](https://ringling.libguides.com/ai/framework) (Dakan & Feller, 2025, CC BY-NC-ND 4.0). Commercial use of course content requires a separate agreement — contact michael@ritchot.me.
+The competency taxonomy is adapted from Anthropic's [AI Fluency: Framework & Foundations](https://anthropic.skilljar.com/ai-fluency-framework-foundations) course (2025, CC BY-NC-SA 4.0; Copyright 2025 Rick Dakan, Joseph Feller, and Anthropic), which teaches the [4D AI Fluency Framework](https://ringling.libguides.com/ai/framework) (Dakan & Feller, 2025, CC BY-NC-ND 4.0). Commercial use of course content requires a separate agreement. Contact michael@ritchot.me.
 
 ## Author
 

@@ -126,7 +126,7 @@ export function ReflectionPrompt({
         >
           {showSavedBadge ? 'Saved ✓' : 'Save'}
         </button>
-        <span className="font-mono text-caption text-muted">Private — not graded</span>
+        <span className="font-mono text-caption text-muted">Private · not graded</span>
       </div>
     </section>
   );

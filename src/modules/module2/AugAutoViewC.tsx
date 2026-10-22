@@ -187,8 +187,8 @@ export function AugAutoViewC({
         {methodOpen && (
           <div className="space-y-2 font-sans text-body-sm text-body" style={{ padding: '0 14px 14px' }}>
             <p className="m-0">
-              Both behavioral measurements use the same approach (automated classification of real
-              AI conversations) but draw on different datasets and time periods. OpenAI's 2026
+              Both behavioral measurements use the same approach, automated classification of real
+              AI conversations, but draw on different datasets and time periods. OpenAI's 2026
               enterprise study takes the same approach, classifying messages automatically with no
               researcher reading individual messages, though it sorts them by task rather than by
               augmentation or automation
@@ -196,8 +196,11 @@ export function AugAutoViewC({
               (Handa et al., February 2025) is the standalone published study with full
               methodology. The later figure is the August 2025 wave of the Anthropic Economic
               Index (Appel, McCrory &amp; Tamkin, September 2025), which the Interviewer paper
-              cites as its latest analysis. One more difference matters for reading the gap. The
-              self-report figure comes from 1,000 working professionals in the general-workforce sample. The behavioral figures
+              cites as its latest analysis.
+            </p>
+            <p className="m-0">
+              The samples also differ, which affects how to read the gap. The self-report figure
+              comes from 1,000 working professionals in the general-workforce sample. The behavioral figures
               come from consumer conversations on one platform, where an occupational label does
               not mean the user works in that occupation, novices and professionals count alike,
               and, in the January 2025 sample, about a quarter of conversations were not work-related. The comparison is between

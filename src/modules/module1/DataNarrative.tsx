@@ -315,10 +315,9 @@ function Story1Body({
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
           The World Economic Forum regularly surveys over a thousand employers across 55 economies
-          about the skills they expect to need most in the coming years. The 2025 report identifies
-          a familiar pattern with one important shift: AI and big data now ranks as the single
-          fastest-growing skill in the global workforce, ahead of networks and cybersecurity,
-          technological literacy, and creative thinking
+          about the skills they expect to need most in the coming years. In the 2025 report, AI and
+          big data now ranks as the single fastest-growing skill in the global workforce, ahead
+          of networks and cybersecurity, technological literacy, and creative thinking
           <Citation ids="wef-2025" pageKey="fastest-growing-skills" />. Job postings say the same
           thing from the hiring side. Between mid-2023 and mid-2025, US workers in occupations
           whose postings ask for AI fluency rose nearly sevenfold, from about one million to
@@ -327,24 +326,26 @@ function Story1Body({
           those months.
         </p>
         <p className="m-0">
-          That ranking reflects more than enthusiasm. Eighty-five percent of surveyed employers
-          plan to upskill their workforce over the 2025–2030 period
+          Eighty-five percent of surveyed employers plan to upskill their workforce over the
+          2025–2030 period
           <Citation ids="wef-2025" pageKey="upskill-85" />. Asked about AI specifically, 77% plan
           to reskill existing staff to work alongside it, the top AI strategy in 45 of 55
           economies<Citation ids="wef-2025" pageKey="ai-reskill-77" />. But the same employers
-          identify a persistent obstacle: the workforce doesn’t have the skills yet. Skill gaps are
-          the barrier they cite most often: 63% expect them to hold back the transformation of
-          their business, ahead of regulation and budgets<Citation ids="wef-2025" pageKey="skill-gap-63" />.
-          The report’s own reading of what to train is specific. Drawing on an analysis by the job
-          site Indeed in which GPT-4o rated its own abilities, the report sees potential for
-          generative AI to augment human work rather than fully replace it in most areas, and it
-          calls for training in both advanced prompt-writing and broader generative AI literacy
+          say the workforce doesn’t have the skills yet. Skill gaps are the barrier they cite most
+          often: 63% expect them to hold back the transformation of their business, ahead of
+          regulation and budgets<Citation ids="wef-2025" pageKey="skill-gap-63" />.
+        </p>
+        <p className="m-0">
+          Drawing on an analysis by the job site Indeed in which GPT-4o rated its own abilities,
+          the report sees potential for generative AI to augment human work rather than fully
+          replace it in most areas, and it calls for training in both advanced prompt-writing and
+          broader generative AI literacy
           <Citation ids="wef-2025" pageKey="genai-literacy-training" />.
         </p>
         <p className="m-0">
           The chart below shows the top rising skills. Below it, a callout tracks how quickly the
-          required skills are turning over — a measure called skills instability that captures the
-          share of core workforce skills expected to change over a five-year window
+          required skills are turning over, using a measure called skills instability: the share
+          of core workforce skills expected to change over a five-year window
           <Citation ids="wef-2025" pageKey="skills-instability-39" />.
         </p>
       </div>
@@ -381,8 +382,8 @@ function Story2Body({
           population<Citation ids="appel-mccrory-tamkin-2025" pageKey="aui-method" />.
         </p>
         <p className="m-0">
-          What stands out is less about how much AI gets used than about how. Countries with high
-          adoption rates tend to use AI across a wider range of tasks, including creative,
+          Countries differ in how they use AI as well as how much. Those with high adoption
+          rates tend to use AI across a wider range of tasks, including creative,
           analytical, and operational work. Countries with lower adoption tend to lean more heavily on
           one use case, coding, which is over half of all usage in India against about a third
           globally<Citation ids="appel-mccrory-tamkin-2025" pageKey="task-mix-by-country" />. The
@@ -394,8 +395,8 @@ function Story2Body({
         <GeographicAdoptionChart countries={countries} tierRanges={tierRanges} />
         <GDPCorrelationScatter countries={countries} />
         <p className="m-0 font-sans text-body text-body">
-          The relationship between income and adoption is real, but it is not the whole story.
-          Countries with comparable GDP per capita can have sharply different adoption rates. The
+          Income and adoption are related, but countries with comparable GDP per capita can have
+          sharply different adoption rates. The
           research names five likely factors behind the disparities, some of them tied to income: digital infrastructure,
           economic structure, regulatory environment, awareness and access, and trust and comfort
           with the tools. For
@@ -405,9 +406,9 @@ function Story2Body({
         </p>
         <CensusEnterpriseInset adoption={censusAdoption} />
         <p className="m-0 font-sans text-body text-body">
-          Which firms adopt is not random. Among U.S. public companies, early ChatGPT Enterprise
-          adopters had a median workforce of 2,934 against 424 for firms without an Enterprise
-          account. Even within the same industry, the largest firms are the most likely to adopt
+          Among U.S. public companies, early ChatGPT Enterprise adopters had a median workforce
+          of 2,934 against 424 for firms without an Enterprise account. Even within the same
+          industry, the largest firms are the most likely to adopt
           <Citation ids="chatterji-2026" pageKey="adopter-profile" />. Adoption also tracks prior
           investment in R&amp;D, software, and organizational capability, not scale alone
           <Citation ids="chatterji-2026" pageKey="complements" />. Those estimates describe large
@@ -445,15 +446,15 @@ function Story3Body({
         <p className="m-0">
           Researchers tracked how professionals interact with AI tools across three measurement
           periods spanning twelve months. Two patterns stand out. First, the share of purely
-          directive interactions (where a user hands a complete task to the model and accepts
-          the result with minimal back-and-forth) rose sharply from 28% to 39% between January
+          directive interactions, in which a user hands a complete task to the model and accepts
+          the result with minimal back-and-forth, rose sharply from 28% to 39% between January
           and August 2025
           <Citation ids={['handa-2025', 'appel-mccrory-tamkin-2025']} pageKey="directive-share-28" />,
           then partially fell back to 32% by November
           <Citation ids="appel-massenkoff-mccrory-2026" pageKey="directive-share-32" />.
-          Second, the balance between augmentation (using AI to enhance your own thinking) and
-          automation (delegating tasks to AI entirely) shifted meaningfully during the same
-          period.
+          Second, the balance between augmentation and automation shifted meaningfully during the
+          same period. Augmentation means using AI to enhance your own thinking; automation means
+          delegating tasks to AI entirely.
         </p>
         <p className="m-0">
           These patterns introduce a distinction that will be central to the rest of this program:

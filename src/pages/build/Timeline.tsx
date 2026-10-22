@@ -207,7 +207,7 @@ function GanttChart(): JSX.Element {
       </div>
       <p className="m-0 mt-4 font-sans text-caption text-tertiary" style={{ lineHeight: 1.5 }}>
         Both tracks run the same lifecycle. The solo build merges content development and platform build into one block
-        and folds integration, QA, and launch prep into adjacent phases: compression, not skipped steps. The
+        and folds integration, QA, and launch prep into adjacent phases without skipping them. The
         organizational schedule is illustrative, derived from typical phase durations; real timings vary by team and
         scope.
       </p>

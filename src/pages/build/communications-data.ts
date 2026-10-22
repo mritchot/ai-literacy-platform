@@ -72,7 +72,7 @@ None this week. The remaining work is execution against approved designs.
 *Next update: week of May 12.*`;
 
 export const SAMPLE1_NOTE =
-  'The status update leads with a status table so a reader can assess overall health in about ten seconds; the narrative sections are read only when the table raises a question. The "Decisions needed" section appears even when empty; its absence would leave a reader wondering whether they had missed something. One dated detail: the memo reflects the build\'s then-current three-mode design; the platform later consolidated to two modes (learner/portfolio).';
+  'The status update leads with a status table so a reader can assess overall health in about ten seconds; the narrative sections are read only when the table raises a question. The "Decisions needed" section appears even when empty; its absence would leave a reader wondering whether they had missed something. The memo also reflects the build\'s three-mode design at the time; the platform later consolidated to two modes (learner/portfolio).';
 
 export const SAMPLE2_META: MemoMeta = {
   to: 'Design Review Attendees (ID, FS, SME, ES)',
@@ -129,7 +129,7 @@ export const SAMPLE2_DECISIONS: DecisionRow[] = [
 
 export const SAMPLE2_BODY_MD = `### Summary
 
-Three items were resolved with no design change required (items 2, 3, and 5, each a deliberate design decision with documented rationale). One item was accepted and implemented (item 1, the Module 3 scope expansion). One item was deferred to organizational deployment (item 4, live API data). No items were escalated to the Executive Sponsor.
+Three items were resolved with no design change required: items 2, 3, and 5, each a deliberate design decision with documented rationale. One item was accepted and implemented: item 1, the Module 3 scope expansion. One item was deferred to organizational deployment: item 4, live API data. No items were escalated to the Executive Sponsor.
 
 The review confirms that the Phase 2 architecture is approved for content development and platform build. Phase 3 begins April 25.
 

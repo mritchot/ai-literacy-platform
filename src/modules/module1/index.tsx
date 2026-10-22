@@ -89,8 +89,8 @@ function Section1({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           That question has become urgent unusually fast. OpenAI reports more than 900 million
           weekly ChatGPT users, though only about 5% pay
-          <Citation ids="evans-2026-05" pageKey="wau-900m-29" />. Reach is not the same as
-          depth: across ten US surveys from 2024 to 2025, weekly use runs well ahead of daily use
+          <Citation ids="evans-2026-05" pageKey="wau-900m-29" />. Across ten US surveys from
+          2024 to 2025, weekly use runs well ahead of daily use
           <Citation ids="evans-2025-11" pageKey="engagement-gap-39" />. Most professionals have
           tried the tools; fewer use them every day. And the speed of that adoption has outrun
           most organizations’ ability to evaluate whether their people are using these tools
@@ -155,8 +155,8 @@ function Section2({ module }: ModuleProp): JSX.Element {
           combined, was running ahead of the personal computer and the internet at a comparable
           point after their first mass-market launches; adoption at work alone was keeping pace
           with the PC<Citation ids="bick-blandin-deming-2024" pageKey="adoption-vs-pc-internet" />.
-          That speed is changing how work gets done faster than most organizations can adapt,
-          and the data on that change is complicated. Through 2025, workers in the occupations
+          That speed is changing work faster than most organizations can adapt, and the data on
+          that change is complicated. Through 2025, workers in the occupations
           where AI already handles the largest share of tasks showed no measurable rise in
           unemployment relative to workers in occupations with no AI exposure; the one early
           signal is a slowdown in hiring of 22-to-25-year-olds into those roles, and it is barely
@@ -219,12 +219,10 @@ function Section2({ module }: ModuleProp): JSX.Element {
         </EvidenceNote>
         <h3 className="m-0 mt-6 font-sans text-h3 font-semibold text-ink">Behavior</h3>
         <p className="m-0">
-          How the workforce uses AI is changing rapidly, and the direction of that change matters.
-          The way professionals interacted with AI tools twelve months ago is measurably different
-          from how they interact today, and that shift points to a new kind of judgment these
-          tools now demand. Usage volume is also still
-          climbing: OpenAI's enterprise records show use accelerating in early 2026 among early
-          and recent adopters alike
+          How the workforce uses AI is changing quickly. The way professionals interact with AI
+          tools today is measurably different from twelve months ago, and the shift calls for a
+          new kind of judgment. Usage volume is also still climbing: OpenAI’s enterprise records
+          show use accelerating in early 2026 among early and recent adopters alike
           <Citation ids="chatterji-2026" pageKey="cohort-acceleration" />.
         </p>
       </div>
@@ -300,9 +298,9 @@ function Section4({ module }: ModuleProp): JSX.Element {
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
           The data you just explored describes what’s happening in the market: skill demand,
-          adoption patterns, behavioral shifts. But there’s a dimension of the AI adoption story
-          that doesn’t show up in usage dashboards or productivity metrics, because the people it
-          affects are making sure it stays invisible.
+          adoption patterns, behavioral shifts. One part of the AI adoption story doesn’t show up
+          in usage dashboards or productivity metrics, because the people it affects keep it
+          hidden.
         </p>
         <p className="m-0">
           In a survey of 1,250 professionals (1,000 from the general workforce, 125 scientists,
@@ -310,9 +308,8 @@ function Section4({ module }: ModuleProp): JSX.Element {
           released)<Citation ids="anthropic-interviewer-2025" pageKey="sample-method" />, 69%
           of the general-workforce group mentioned the social stigma that can come with using AI at work
           <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" />.
-          It’s not that they reject AI. Most of them use it regularly and report clear
-          productivity gains. The barrier is disclosure. Some use AI, benefit from it, and keep
-          that to themselves.
+          Most of them use AI regularly and report clear productivity gains. The barrier is
+          disclosure: some use AI, benefit from it, and keep that to themselves.
         </p>
         <p className="m-0">
           The stigma surfaced as a theme in how workplace dynamics shape AI adoption, and the
@@ -342,13 +339,9 @@ function Section4({ module }: ModuleProp): JSX.Element {
           Teams solve the same problems independently, develop the same workarounds, and make the
           same mistakes, because no one can see what anyone else is doing.
         </p>
-        <p className="m-0">
-          The result is an organization where individuals are getting faster, but the institution
-          isn’t getting smarter.
-        </p>
         <FasterPeopleCallout />
         <p className="m-0">
-          This is not a problem that training alone can fix. Employers themselves rank
+          Training alone cannot fix this problem. Employers themselves rank
           organizational culture and resistance to change as the second-largest barrier to
           transformation, at 46%<Citation ids="wef-2025" pageKey="culture-barrier-46" />. If a
           professional completes an AI competency program and returns to a team where using AI
@@ -374,7 +367,7 @@ function Section4({ module }: ModuleProp): JSX.Element {
             questions, and another said they ask more questions than before, but 80 to 90 percent
             of them now go to the model
             <Citation ids="huang-2025" pageKey="social-dynamics" />. Shared vocabulary does not
-            restore those conversations by itself. It makes the ones that still happen usable.
+            restore those conversations by itself, but it makes the ones that still happen usable.
           </p>
           <p className="m-0">
             Enforcement has its own cost. MIT’s 2026 AI committee heard from instructors that
@@ -460,9 +453,8 @@ function FourDVocabularyBlock(): JSX.Element {
       </h2>
 
       <p className="m-0">
-        Whatever your answer to that reflection, you’re not alone in it. The fact that most
-        professionals navigate AI use without shared language for what they’re doing is itself
-        the problem this program addresses.
+        Whatever your answer to that reflection, you’re not alone in it. Most professionals use
+        AI without shared language for what they’re doing.
       </p>
       <p className="m-0">
         To address that gap, the program uses four competencies as a shared vocabulary. Together,
@@ -479,7 +471,7 @@ function FourDVocabularyBlock(): JSX.Element {
         professional, and evaluative. They replace the binary framing (pro-AI or anti-AI,
         enthusiast or skeptic) with language that treats AI use as a professional skill to be
         developed, discussed, and improved. When your team shares this vocabulary, the
-        concealment dynamic described in the previous section loses its grip. AI use becomes
+        concealment described in the previous section weakens. AI use becomes
         something you can talk about in terms of <em>how well</em>, not <em>whether</em>.
       </p>
       <EvidenceNote
@@ -489,10 +481,10 @@ function FourDVocabularyBlock(): JSX.Element {
         label="Where the four terms come from"
       >
         <p className="m-0">
-          The four labels come from Dakan and Feller’s framework, but the structure is not
-          arbitrary. When researchers coded how 319 knowledge workers described thinking
-          critically with AI, they sorted the practices into three phases of the AI workflow
-          taken from earlier studies: forming the goal and the query, inspecting the response,
+          The four labels come from Dakan and Feller’s framework, and they map onto research on
+          how knowledge workers use AI. When researchers coded how 319 knowledge workers
+          described thinking critically with AI, they sorted the practices into three phases of
+          the AI workflow taken from earlier studies: forming the goal and the query, inspecting the response,
           and integrating it into the work
           <Citation ids="lee-2025" pageKey="three-phases" />. Delegation and Description cover
           the first phase. Discernment covers the second. Diligence is the accountability that
@@ -501,7 +493,7 @@ function FourDVocabularyBlock(): JSX.Element {
           <Citation ids="lee-2025" pageKey="training-recommendation" />.
         </p>
         <p className="m-0">
-          The accountability principle behind Diligence is not the program’s invention either.
+          The accountability principle behind Diligence also comes from outside the program.
           The same researchers concluded that responsibility for the work stays with the person
           even when the production is delegated, and chose the word stewardship over teammate or
           collaborator for that reason
@@ -529,8 +521,8 @@ function FourDVocabularyBlock(): JSX.Element {
         </p>
       </EvidenceNote>
       <p className="m-0">
-        You’ll develop each of these competencies across the remaining modules. For now, the
-        point is simpler: the language exists, and it changes what’s possible.
+        You’ll develop each of these competencies across the remaining modules. For now, it is
+        enough to know that this shared language exists.
       </p>
     </section>
   );
@@ -543,13 +535,13 @@ const FOUR_DS: { name: string; tone: string; description: ReactNode }[] = [
     name: 'Delegation',
     tone: 'rgb(var(--delegation-text))',
     description:
-      'is deciding what to hand to AI and what to keep human. AI doesn’t improve every task, and not everything needs your direct effort. It also means knowing what the tool you are using does well and where it fails, and choosing how to work with it: hand the task over, or work through it together. Delegation is the judgment call about where the line sits for a given task.',
+      'is deciding what to hand to AI and what to keep human. AI doesn’t improve every task, and not everything needs your direct effort. It also means knowing what the tool you are using does well and where it fails, and choosing how to work with it: hand the task over, or work through it together.',
   },
   {
     name: 'Description',
     tone: 'rgb(var(--description-text))',
     description:
-      'is communicating what you need from AI clearly enough to get a useful result. This is the skill behind effective prompting: specifying the task, the constraints, the format, and the quality standard. The framework divides it into three parts: what you want (product), how the AI should approach the task and how you work through it together (process), and how the AI should behave (performance).',
+      'is communicating what you need from AI clearly enough to get a useful result. This is the skill behind effective prompting: specifying the task, the constraints, the format, and the quality standard. The framework divides it into three parts: product is what you want, process is how the AI should approach the task and how you work through it together, and performance is how the AI should behave.',
   },
   {
     name: 'Discernment',
@@ -609,7 +601,7 @@ function Section6({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           Module 1, where you are now, establishes why AI literacy is a strategic and
-          organizational priority, not just an individual skill. Module 2 shifts from the market
+          organizational priority as well as an individual skill. Module 2 shifts from the market
           picture to the behavioral evidence: what the workforce is actually doing with AI, how
           productivity gains distribute across tasks, and where the gap between perception and
           practice is widest. Module 3 goes inside the technology itself (how language models
@@ -693,15 +685,15 @@ function Section8({ module }: ModuleProp): JSX.Element {
           usage patterns are changing, and why a workforce that conceals its AI practices can’t
           improve them. The data is clear that AI literacy is a strategic priority, and the
           WEF report itself calls for training in broader generative AI literacy
-          <Citation ids="wef-2025" pageKey="genai-literacy-training" />, but it’s been presented
-          at the market and workforce level, not at the level of your daily work.
+          <Citation ids="wef-2025" pageKey="genai-literacy-training" />. So far, though, that
+          evidence has been presented at the market and workforce level, not at the level of
+          your daily work.
         </p>
         <p className="m-0">
-          Module 2 changes the lens. Instead of what the market is doing, you’ll look at what
-          individual professionals are doing with AI, task by task, function by
-          function. The productivity data is more specific than most people expect: not a general
-          “AI makes things faster” claim, but documented time savings that vary dramatically by
-          task type, with some tasks showing 95% reductions
+          In Module 2, instead of what the market is doing, you’ll look at what individual
+          professionals are doing with AI, task by task and function by function. The
+          productivity data is more specific than most people expect: documented time savings
+          vary dramatically by task type, with some tasks showing 95% reductions
           <Citation ids="tamkin-mccrory-2025" pageKey="compile-95" /> and others closer to
           20%<Citation ids="tamkin-mccrory-2025" pageKey="diagnostic-20" />. You’ll explore where the gains concentrate, where overconfidence creeps in, and
           how your own task mix compares to the behavioral data.

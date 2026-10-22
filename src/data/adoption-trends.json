@@ -34,7 +34,7 @@
   },
   "collaborationMode": {
     "_source": "V1: Handa et al., pp. 3, 9, Figure 7; V3: Appel et al., p. 9; V4: Appel, Massenkoff & McCrory (2026), pp. 9–10",
-    "description": "How users engage with Claude — automation (task delegation) vs. augmentation (collaborative interaction) — tracked over three waves.",
+    "description": "How users engage with Claude, tracked over three waves: automation (task delegation) vs. augmentation (collaborative interaction).",
     "_v1DiscrepancyNote": "V1 augmentation/automation values reconciled to the Handa et al. primary figures (57% augmentation / 43% automation; pp. 3, 9; Figure 7; sum = 100%) by author decision on 03-07-2026 so the platform teaches one V1 number everywhere (Module 2 body text and augmentation-automation.json use the same 57/43). The later Economic Index reports restate the same V1 period as about 56/41: the September 2025 report already shows V1 at 55.5/41.1 (Appel, McCrory & Tamkin, 2025, Figure 1.2, p. 10; https://www.anthropic.com/research/anthropic-economic-index-september-2025-report), and Economic Primitives (V4) repeats 56/41 (p. 9; footnote 6, p. 18). The gap from Handa's 57/43 is the ~3% of unclassified conversations, which the restatement keeps in the total (sum ≈ 97%) and Handa's split leaves out (sum = 100%); it is not a reclassification. V3 and V4 points in this series come from those later reports, and the classifier model changed between waves, so the cross-wave comparison spans classifier generations — see _classifierCaveat, which the chart surfaces in its 'About this data' expandable.",
     "timeSeries": [
       {
@@ -61,7 +61,7 @@
         "automation": 0.45,
         "dominant": "augmentation",
         "note": "Augmentation once again more prevalent. The automation share was still elevated compared to V1, suggesting the underlying trend is toward greater automation even as the August spike overstated how quickly it was materializing. Remaining 3% unclassified (V4 footnote 2, p. 17).",
-        "reboundDriver": "The rise in augmented use was driven mainly by users iterating with Claude to complete tasks ('task iteration') rather than asking Claude to explain concepts ('learning') (Economic Primitives, pp. 9–10). Product changes during this period — file creation capabilities, persistent memory, and Skills for workflow customization — may have shifted usage toward more collaborative, human-in-the-loop interactions (Economic Primitives, p. 5)."
+        "reboundDriver": "The rise in augmented use was driven mainly by users iterating with Claude to complete tasks ('task iteration') rather than asking Claude to explain concepts ('learning') (Economic Primitives, pp. 9–10). Product changes during this period, namely file creation capabilities, persistent memory, and Skills for workflow customization, may have shifted usage toward more collaborative, human-in-the-loop interactions (Economic Primitives, p. 5)."
       }
     ],
     "interpretation": "The trajectory is not linear. Users shifted sharply toward automation between January and August 2025, then partially reverted by November. The underlying trend favors greater automation, but the August spike was a temporary overshoot."

@@ -72,7 +72,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'Her history fits a pattern research on AI use often finds: people describe their use as more collaborative than their conversations show. Most of her work is handed off in one exchange, which her own description misses.',
         isCorrect: true,
         feedbackText:
-          'Studies that set interview self-reports beside large samples of conversation data find that people describe their AI use as more collaborative than the data shows, and that one-request, one-answer exchanges make up a large share of real use. Her history fits that pattern. This matters because directive exchanges hand the work to the tool with little iteration, so any refinement or checking has to happen after the chat, if it happens at all. That raises the risk of unverified or low-quality deliverables. Without seeing the pattern, she can\'t tell whether her actual workflow matches the quality standard she intends.',
+          'Studies that set interview self-reports beside large samples of conversation data find that people describe their AI use as more collaborative than the data shows, and that one-request, one-answer exchanges make up a large share of real use. Her history fits that pattern. Directive exchanges hand the work to the tool with little iteration, so any refinement or checking has to happen after the chat, if it happens at all. That raises the risk of unverified or low-quality deliverables. Without seeing the pattern, she can\'t tell whether her actual workflow matches the quality standard she intends.',
       },
       {
         id: 'C',
@@ -125,7 +125,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'She hasn\'t considered that AI tools use very different underlying technologies for each of these three task types, and that the time savings figures aren\'t directly comparable across writing, summarization, and analysis.',
         isCorrect: false,
         feedbackText:
-          'From the user\'s perspective, the underlying AI architecture is less relevant than the output characteristics. The critical question is about the outputs (whether they can be trusted without verification), not about the underlying technology.',
+          'From the user\'s perspective, the underlying AI architecture is less relevant than the output characteristics. The critical question is whether the outputs can be trusted without verification.',
       },
       {
         id: 'D',
@@ -207,7 +207,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'The AI chatbot likely counted partial matches and morphological variations: it included instances like "revenues," "non-revenue," and related compound terms in its total because it interprets word-matching requests broadly to provide comprehensive results.',
         isCorrect: false,
         feedbackText:
-          'The AI\'s error isn\'t about overly broad matching criteria. The model isn\'t running a search at all in a standard chat interaction; it\'s generating a number that fits the context. The 23 isn\'t a misconfigured search result. It\'s what happens when no search runs.',
+          'The AI\'s error isn\'t about overly broad matching criteria. In a standard chat interaction, the model isn\'t running a search at all; the 23 is a number it generated to fit the context.',
       },
       {
         id: 'C',
@@ -215,7 +215,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'The AI chatbot generated a plausible-sounding number rather than performing an actual count. Its architecture processes text in chunks that don\'t map cleanly to individual words, making precise enumeration tasks systematically unreliable when handled through conversation alone.',
         isCorrect: true,
         feedbackText:
-          'When a user pastes text into a chatbot and asks it to count, the model doesn\'t execute a counting operation; it predicts a plausible answer. Its architecture processes text in tokens (chunks that don\'t align to individual words), which makes exact enumeration unreliable. Some AI tools can perform precise counts, but only when they have access to a code execution environment that runs an actual counting script. The distinction matters: the same task routed through conversation produces an approximation; routed through a code tool, it produces an exact answer. Knowing which pathway your tool uses determines whether you can trust the result.',
+          'When a user pastes text into a chatbot and asks it to count, the model doesn\'t execute a counting operation; it predicts a plausible answer. Its architecture processes text in tokens (chunks that don\'t align to individual words), which makes exact enumeration unreliable. Some AI tools can perform precise counts, but only when they have access to a code execution environment that runs an actual counting script. The same task routed through conversation produces an approximation; routed through a code tool, it produces an exact answer. Knowing which pathway your tool uses determines whether you can trust the result.',
       },
       {
         id: 'D',
@@ -223,7 +223,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'The AI chatbot made a random processing error. Like any software, AI tools occasionally produce incorrect outputs due to computational glitches, and running the identical query again would most likely return the correct count.',
         isCorrect: false,
         feedbackText:
-          'This is not a random glitch. Running the same query again might produce a different number, but not because the first error was random. The model generates a new prediction each time, and the underlying limitation (inability to perform exact enumeration without a code tool) is consistent. The error is systematic, not stochastic.',
+          'The error is systematic, not a random glitch. Running the same query again might produce a different number because the model generates a new prediction each time, but the underlying limitation (inability to perform exact enumeration without a code tool) stays the same.',
       },
     ],
   },
@@ -260,7 +260,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'The three omitted clauses used different wording ("indemnification cap," "aggregate exposure") from the instruction\'s phrase, and the AI tool searched the contract for the exact words "limits the vendor\'s liability," so clauses phrased another way never matched.',
         isCorrect: false,
         feedbackText:
-          'The model does not run a keyword search over the document. It reads the whole input and generates its answer from learned patterns, so it can recognize an indemnification cap as a liability limit when it attends to that passage. What sets the missed clauses apart is where they sit: together, in the middle of a long input. Position, not vocabulary, explains the omission.',
+          'The model does not run a keyword search over the document. It reads the whole input and generates its answer from learned patterns, so it can recognize an indemnification cap as a liability limit when it attends to that passage. What sets the missed clauses apart is where they sit: together, in the middle of a long input.',
       },
       {
         id: 'D',
@@ -268,7 +268,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'The AI tool hit a hard input limit and silently dropped part of the document before processing it. The pages holding the missing clauses were never received by the model, which is why those clauses don\'t appear in the output. This is a common failure with long documents that exceed the tool\'s capacity.',
         isCorrect: false,
         feedbackText:
-          'Over-long input is a real risk, and what happens to it depends on the tool: some refuse it with an error, some drop or summarize older conversation turns without saying so, and large uploads may be searched in pieces rather than read whole. You may not be told what the model did not see. But this contract is well within the tool\'s stated limit, and the answer quotes both the first and the last pages, so the whole document was received. The harder failure to detect is uneven attention: the full text is received, but the middle is processed with less care than the edges. Truncation is the obvious failure to guard against; uneven attention is the subtle one that catches experienced users off guard.',
+          'Over-long input is a real risk, and what happens to it depends on the tool: some refuse it with an error, some drop or summarize older conversation turns without saying so, and large uploads may be searched in pieces rather than read whole. You may not be told what the model did not see. But this contract is well within the tool\'s stated limit, and the answer quotes both the first and the last pages, so the whole document was received. The harder failure to detect is uneven attention: the full text is received, but the middle is processed with less care than the edges.',
       },
     ],
   },
@@ -313,7 +313,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'The AI tool made an inference error: it correctly identified that the vendor has a return policy but applied faulty reasoning when extracting the specific terms, similar to how a person might misremember details from a document they read quickly.',
         isCorrect: false,
         feedbackText:
-          'The model doesn\'t "read" the vendor\'s policy and then misremember it. That description implies a retrieval-then-recall process, which doesn\'t match how generation works. The human analogy of misremembering a document is intuitive but misleading: the model never had access to the specific document in the first place during this interaction. It produced plausible-sounding terms, not inaccurate memories.',
+          'The model doesn\'t "read" the vendor\'s policy and then misremember it. That description implies a retrieval-then-recall process, which doesn\'t match how generation works. The human analogy of misremembering a document is intuitive but misleading: the model never had access to the specific document during this interaction, so there was nothing to misremember. It produced plausible-sounding terms.',
       },
     ],
   },
@@ -326,7 +326,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
     stem:
       'A software developer asks an AI chatbot to reverse the word "strawberry" and receives the response "yrrebwarts," which is correct. She then asks it to count the number of R\'s in "strawberry" and it responds "2." The actual count is 3. The reversal task succeeded but the counting task failed, even though both involve the same word. What best explains this inconsistency?',
     scenarioSummary:
-      'An AI reverses "strawberry" correctly but miscounts the R\'s. Same word, two different outcomes.',
+      'An AI chatbot reverses "strawberry" correctly but then miscounts the R\'s in that same word.',
     options: [
       {
         id: 'A',
@@ -334,7 +334,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'The reversal task is a more common request in AI training data, so the model had more examples to learn from. The counting task failed because the model encountered fewer examples of letter-counting during training and hasn\'t learned to perform it reliably.',
         isCorrect: false,
         feedbackText:
-          'Training frequency doesn\'t explain why one task succeeds and another fails on the same input. If the issue were simply insufficient training examples, the model would show general weakness on counting tasks; it wouldn\'t produce the exact wrong count of 2 with confidence. The inconsistency points to a structural limitation, not a training gap.',
+          'Training frequency doesn\'t explain why one task succeeds and another fails on the same input. If the issue were simply insufficient training examples, the model would show general weakness on counting tasks; it wouldn\'t produce the exact wrong count of 2 with confidence. The inconsistency points to a structural limitation.',
       },
       {
         id: 'B',
@@ -342,7 +342,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'The model applied two different internal algorithms: string reversal uses a character-level operation while letter counting uses a statistical estimation method, and the estimation method is inherently less accurate for letters that appear multiple times.',
         isCorrect: false,
         feedbackText:
-          'The model doesn\'t have separate algorithms for different string operations. Both tasks run through the same generation mechanism: next-token prediction. The difference in outcomes reflects how the underlying tokenization interacts with each task\'s requirements, not a choice between two internal methods.',
+          'The model doesn\'t have separate algorithms for different string operations. Both tasks run through the same generation mechanism: next-token prediction. The difference in outcomes reflects how the underlying tokenization interacts with each task\'s requirements.',
       },
       {
         id: 'C',
@@ -350,7 +350,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'The counting error is a simple arithmetic mistake that occurs randomly. The model correctly identified all three R\'s but made a calculation error when summing them, similar to how a person might miscount when working quickly through a routine task.',
         isCorrect: false,
         feedbackText:
-          'This isn\'t an arithmetic error. The model doesn\'t first identify all three R\'s and then miscount them. It never identifies individual letters at all. It generates a plausible answer based on token-level patterns, and those patterns don\'t reliably encode character-level frequency information.',
+          'This isn\'t an arithmetic error. The model never identifies individual letters at all, so it has no three R\'s to miscount. It generates a plausible answer based on token-level patterns, and those patterns don\'t reliably encode character-level frequency information.',
       },
       {
         id: 'D',
@@ -358,7 +358,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'The model processes text as chunks called tokens, not as individual characters. Some tasks can be solved from patterns at the chunk level, but counting letters needs character-by-character analysis, and the model does not see the letters inside each chunk.',
         isCorrect: true,
         feedbackText:
-          'AI models convert text into tokens (sub-word chunks) before processing it. "Strawberry" might be split into tokens like "str" + "aw" + "berry" or "st" + "raw" + "berry," depending on the tokenizer. The model never "sees" individual letters the way a human reader does. Some tasks (like reversal) can be solved through learned patterns at the token level, but precise character-level operations (counting specific letters, identifying character positions) require the model to reason about units smaller than its tokens. When an R sits inside a multi-letter token ("str" holds one R, "berry" holds two), the model has to recall each token\'s spelling to count them, and that recall is unreliable. This is a systematic limitation, not a random error: it affects any task that requires character-level precision. Some AI tools can route character-level tasks to a built-in program that processes letters directly. When that happens, the task succeeds reliably. The failure described here occurs when the AI handles the task conversationally, generating an answer rather than running an operation.',
+          'AI models convert text into tokens, which are sub-word chunks, before processing it. "Strawberry" might be split into tokens like "str" + "aw" + "berry" or "st" + "raw" + "berry," depending on the tokenizer. The model never "sees" individual letters the way a human reader does. Some tasks, like reversal, can be solved through learned patterns at the token level, but precise character-level operations, such as counting specific letters or identifying character positions, require the model to reason about units smaller than its tokens. When an R sits inside a multi-letter token ("str" holds one R, "berry" holds two), the model has to recall each token\'s spelling to count them, and that recall is unreliable. This is a systematic limitation, not a random error: it affects any task that requires character-level precision. Some AI tools can route character-level tasks to a built-in program that processes letters directly. When that happens, the task succeeds reliably. The failure described here occurs when the AI handles the task conversationally, generating an answer rather than running an operation.',
       },
     ],
   },
@@ -379,7 +379,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'The colleague is largely correct: AI failures are stochastic in nature, and while the overall error rate can be estimated statistically, there is no reliable way to predict which specific tasks will produce errors before running them through the model.',
         isCorrect: false,
         feedbackText:
-          'These failures are not random. Task A (fabricated citation) failed because the model generates plausible text through prediction rather than retrieving verified sources. Any task requiring factual specificity the model wasn\'t trained on is vulnerable. Task B (percentage miscalculation) failed because the model\'s token-based architecture doesn\'t support precise arithmetic; numerical reasoning tasks are systematically unreliable. Task C (omitted content from a long document) failed because the model\'s attention degrades across long inputs; information-extraction tasks on lengthy documents are systematically prone to omission. Each failure traces to a known property of the architecture, not to chance.',
+          'These failures are not random. Task A, the fabricated citation, failed because the model generates plausible text through prediction rather than retrieving verified sources. Any task requiring factual specificity the model wasn\'t trained on is vulnerable. Task B, the percentage miscalculation, failed because the model\'s token-based architecture doesn\'t support precise arithmetic; numerical reasoning tasks are systematically unreliable. Task C, the omitted content from a long document, failed because the model\'s attention degrades across long inputs; information-extraction tasks on lengthy documents are systematically prone to omission. Each failure traces to a known property of the architecture.',
       },
       {
         id: 'B',
@@ -387,7 +387,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'The colleague is partially right: AI models are more likely to fail on complex tasks than simple ones, so difficulty level is the best predictor of failure, and all three of these tasks fall into the "complex" category where errors should be expected.',
         isCorrect: false,
         feedbackText:
-          'Complexity is a poor predictor of AI failure. A model can flawlessly produce a sophisticated 2,000-word analysis while failing to count the letters in a five-letter word. The relevant variable is whether the task\'s requirements conflict with a specific mechanical property of how the model processes information (token-level representation, probabilistic generation, finite context window). Difficulty itself isn\'t the predictor.',
+          'Complexity is a poor predictor of AI failure. A model can flawlessly produce a sophisticated 2,000-word analysis while failing to count the letters in a five-letter word. The relevant variable is whether the task\'s requirements conflict with a specific mechanical property of how the model processes information (token-level representation, probabilistic generation, finite context window).',
       },
       {
         id: 'C',
@@ -395,7 +395,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'The colleague is wrong. Each of these failures traces to a specific mechanical property of how the model processes information, and understanding those properties lets you predict which categories of tasks are systematically unreliable before you run them.',
         isCorrect: true,
         feedbackText:
-          'The three failures map to three distinct mechanical properties: Task A reflects probabilistic generation (producing plausible text rather than verified facts), Task B reflects token-based representation (inability to perform precise numerical operations), and Task C reflects context window limitations (degraded attention across long inputs). These failures are predictable categories of unreliability, not random events. A professional who understands these properties can assess, before running a task, whether it falls into a category where the model is likely to fail and plan verification accordingly.',
+          'The three failures map to three distinct mechanical properties. Task A reflects probabilistic generation, which produces plausible text rather than verified facts. Task B reflects token-based representation and its inability to perform precise numerical operations. Task C reflects context window limitations, where attention degrades across long inputs. These failures are predictable categories of unreliability, not random events. A professional who understands these properties can assess, before running a task, whether it falls into a category where the model is likely to fail and plan verification accordingly.',
       },
       {
         id: 'D',
@@ -428,7 +428,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'Claim 1, because it describes the general scope of the Act. Every later point in the summary builds on that framing, so an error there would undermine each downstream recommendation in the policy update.',
         isCorrect: false,
         feedbackText:
-          'The general scope description (Claim 1) is worth verifying, but it uses broad, hedged language ("specific provisions varying by salary threshold") that is less likely to be precisely wrong in a consequential way. General framing errors are lower-stakes than specific legislative claims because they\'re less likely to drive concrete policy decisions.',
+          'Claim 1, the general scope description, is worth verifying, but it uses broad, hedged language ("specific provisions varying by salary threshold") that is less likely to be precisely wrong in a consequential way. General framing errors are lower-stakes than specific legislative claims because they\'re less likely to drive concrete policy decisions.',
       },
       {
         id: 'B',
@@ -465,7 +465,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
     stem:
       'A financial analyst asks an AI tool: "Write me something about our Q3 performance." The output is a generic, surface-level paragraph that could describe almost any company\'s quarterly results. The analyst is frustrated and says: "This tool just isn\'t good enough for real financial work." Before concluding the tool is inadequate, which of the following adjustments would most likely produce a substantially better result?',
     scenarioSummary:
-      'A financial analyst\'s vague AI prompt ("write something about Q3") produces generic output. The fix isn\'t a better tool.',
+      'A financial analyst\'s vague AI prompt ("write something about Q3") produces generic output, and the analyst blames the tool.',
     options: [
       {
         id: 'A',
@@ -473,7 +473,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'Running the same prompt multiple times and selecting the best output from the batch. AI tools produce variable results with each generation, and sampling several responses increases the probability of getting one that matches the analyst\'s expectations.',
         isCorrect: false,
         feedbackText:
-          'Generating multiple outputs from the same underspecified prompt gives you variation, not improvement. Each response will be a different generic paragraph because the underlying instruction hasn\'t changed. Sampling addresses randomness, not relevance. The constraint is the prompt, not the generation roll.',
+          'Generating multiple outputs from the same underspecified prompt gives you variation without improvement. Each response will be a different generic paragraph because the underlying instruction hasn\'t changed. Sampling addresses randomness; the output\'s lack of relevance comes from the prompt.',
       },
       {
         id: 'B',
@@ -489,7 +489,7 @@ export const PRE_ASSESSMENT_ITEMS: AssessmentItem[] = [
           'Adding a system instruction that tells the AI to "try harder" or "be more detailed and accurate." AI models respond to motivational framing, and explicitly requesting higher quality activates a more rigorous internal processing mode.',
         isCorrect: false,
         feedbackText:
-          'AI models do not have motivational states. Phrases like "try harder" or "be your best" don\'t activate a different processing mode. The model responds to structural specification (what to include, what format to use, what audience to write for), not to encouragement. Prompt quality is about information, not tone.',
+          'AI models do not have motivational states. Phrases like "try harder" or "be your best" don\'t activate a different processing mode. The model responds to structural specification (what to include, what format to use, what audience to write for), not to encouragement.',
       },
       {
         id: 'D',

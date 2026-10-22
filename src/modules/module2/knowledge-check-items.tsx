@@ -199,7 +199,7 @@ const KC_2_2: KnowledgeCheckItemData = {
       feedbackTitle: 'Ignores capacity and learning constraints',
       feedbackTone: 'error',
       feedbackText:
-        'Simultaneous deployment across four task types with different risk profiles and different verification requirements overwhelms the team\'s ability to develop competent evaluation practices for any of them. "Learn organically" and "errors as learning opportunities" is the approach the module\'s data shows is already failing: professionals are using AI across task types without calibrated verification, producing the self-report/behavioral gap the module documents. Unstructured adoption replicates the problem rather than solving it.',
+        'Simultaneous deployment across four task types with different risk profiles and different verification requirements overwhelms the team\'s ability to develop competent evaluation practices for any of them. "Learn organically" and "errors as learning opportunities" is the approach the module\'s data shows is already failing: professionals are using AI across task types without calibrated verification, producing the self-report/behavioral gap the module documents. Unstructured adoption would reproduce that gap.',
     },
     {
       id: 'd',
@@ -208,7 +208,7 @@ const KC_2_2: KnowledgeCheckItemData = {
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer shows the analytical skill the section calls for: evaluating task-level productivity data along both the efficiency and risk dimensions simultaneously. It correctly identifies that Task A\'s high savings come with high verification burden (citation fabrication risk), recommends Task C as the better starting point because its error types are more visible, and specifies a condition for Task A deployment (a verification process for source accuracy). This is the Delegation-Discernment intersection the module teaches: choosing where to deploy AI based on both the gain and the evaluability of the output.',
+        'This answer shows the analytical skill the section calls for: evaluating task-level productivity data along both the efficiency and risk dimensions at once. It identifies that Task A\'s high savings come with a high verification burden from the risk of fabricated citations, recommends Task C as the better starting point because its error types are more visible, and makes Task A deployment conditional on a verification process for source accuracy. This is the Delegation-Discernment intersection the module teaches: choosing where to deploy AI based on both the gain and the evaluability of the output.',
     },
   ],
 };
@@ -239,7 +239,7 @@ const KC_2_3: KnowledgeCheckItemData = {
       feedbackTitle: 'Inverts the productivity data',
       feedbackTone: 'error',
       feedbackText:
-        'This is the intuitive read, and it\'s wrong. "Where it matters most" is not the same as "where AI saves the most time." Compiling data from multiple reports (the task she keeps manual) falls into the highest-savings category in the research (approximately 95%). Client-facing investment analysis (the task she delegates to AI) is where the verification burden is highest, because the outputs look authoritative on surface review and require domain expertise to confirm against the underlying data.',
+        'This is the intuitive read, and it\'s wrong. "Where it matters most" is not the same as "where AI saves the most time." Compiling data from multiple reports, the task she keeps manual, falls into the highest-savings category in the research (approximately 95%). Client-facing investment analysis, the task she delegates to AI, is where the verification burden is highest, because the outputs look authoritative on surface review and require domain expertise to confirm against the underlying data.',
     },
     {
       id: 'b',
@@ -248,7 +248,7 @@ const KC_2_3: KnowledgeCheckItemData = {
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer captures both dimensions of the augmentation-automation diagnosis: it identifies an underuse case (manual data compilation where productivity gains are highest and verification is relatively straightforward) and an overreliance case (AI-generated investment analysis where the verification burden is highest). Crucially, it does not recommend eliminating AI from the high-risk tasks; it recommends increasing oversight. This matches the module\'s framework: the augmentation-automation distinction is not about whether to use AI, but about how much human judgment to apply.',
+        'This answer captures both dimensions of the augmentation-automation diagnosis. It identifies a case of underuse: she compiles data manually, though that is where productivity gains are highest and verification is relatively straightforward. It also identifies a case of overreliance: she uses AI for investment analysis, where the verification burden is highest. It does not recommend removing AI from the high-risk tasks; it recommends more oversight. This matches the module\'s framework, in which the augmentation-automation distinction concerns how much human judgment to apply when you use AI.',
     },
     {
       id: 'c',
@@ -294,7 +294,7 @@ const KC_2_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Compounds the overestimation',
       feedbackTone: 'error',
       feedbackText:
-        'Comparing an internal self-report figure favorably against external self-report data doubles down on a measurement approach the research has documented as systematically biased. The 65% external figure, from Anthropic’s interviews with professionals, is itself an overestimate; behavioral data shows actual augmentative use at 47–57% depending on the measurement period. A higher internal self-report doesn\'t indicate better practice; it may indicate a larger gap. Using biased data to validate the program that produced it creates a circular justification.',
+        'Comparing an internal self-report figure favorably against external self-report data rests both sides of the comparison on a measurement approach the research has documented as systematically biased. The 65% external figure, from Anthropic’s interviews with professionals, is itself an overestimate; behavioral data shows actual augmentative use at 47–57% depending on the measurement period. A higher internal self-report doesn\'t indicate better practice; it may indicate a larger gap. Using biased data to validate the program that produced it creates a circular justification.',
       sources: [{ ids: 'anthropic-interviewer-2025', pageKey: 'self-report-augmentation' }],
     },
     {
@@ -313,7 +313,7 @@ const KC_2_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer covers all four components that matter here: it identifies the self-report/behavioral divergence (8–18pp), names the directive interaction pattern as a specific observable indicator, explains why the gap matters (the difference between perceived and actual collaboration affects output quality), and offers a constructive next step (look at behavioral indicators, not just survey data). It engages with the HR director\'s conclusion respectfully while providing the evidence base to challenge it. This is Discernment applied to organizational data.',
+        'This answer covers all four components that matter here. It identifies the self-report/behavioral divergence (8–18pp), names the directive interaction pattern as a specific observable indicator, explains that the difference between perceived and actual collaboration affects output quality, and offers a constructive next step: look at behavioral indicators, not just survey data. It engages with the HR director\'s conclusion respectfully while providing the evidence base to challenge it. This is Discernment applied to organizational data.',
     },
     {
       id: 'd',

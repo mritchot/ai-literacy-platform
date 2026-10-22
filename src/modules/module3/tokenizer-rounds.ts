@@ -47,7 +47,7 @@ export const ROUNDS: TokenizerRound[] = [
     promptHint:
       'This says roughly the same thing as a two-sentence English request. How many tokens do you think it produces?',
     explanation:
-      'The same semantic content in Japanese produces significantly more tokens than its English equivalent. Each character may become its own token (or even multiple tokens) because Japanese character sequences were far less frequent in the English-dominated training data. More tokens means a longer sequence consuming more of the model’s working memory, leaving less room for context and increasing the surface area for generation errors. If you work with multilingual content, tokenization asymmetry is one structural factor in why AI tools perform less reliably outside English: fewer tokens are available for your actual content when the tokenizer spends more of them encoding each character.',
+      'The same semantic content in Japanese produces significantly more tokens than its English equivalent. Each character may become its own token (or even multiple tokens) because Japanese character sequences were far less frequent in the English-dominated training data. More tokens means a longer sequence consuming more of the model’s working memory, leaving less room for context and adding more positions where a generation error can occur. If you work with multilingual content, tokenization asymmetry is one structural factor in why AI tools perform less reliably outside English: fewer tokens are available for your actual content when the tokenizer spends more of them encoding each character.',
   },
   {
     id: 4,

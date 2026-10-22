@@ -177,7 +177,7 @@ function PhaseRead({ onContinue }: { onContinue: () => void }): JSX.Element {
           padding: '18px 20px',
         }}
       >
-        <h4 className="m-0 mb-3 font-sans text-h4 font-semibold text-ink">AI Output</h4>
+        <h4 className="m-0 mb-3 font-sans text-h4 font-semibold text-ink">AI output</h4>
         <div className="font-sans text-body-sm leading-relaxed text-body">
           {renderMarkdownLite(P9_WEAK_OUTPUT)}
         </div>
@@ -266,28 +266,28 @@ function PhaseReformulate({
       <div>
         <h4 className="m-0 mb-3 font-sans text-h4 font-semibold text-ink">Rewrite this prompt.</h4>
         <p className="m-0 mb-4 font-sans text-body-sm text-body">
-          Use the three Description sub-dimensions as scaffolding. Each field needs at least 10
+          Use the three Description dimensions as a guide. Each field needs at least 10
           characters before you can submit.
         </p>
 
         <div className="space-y-4">
           <PromptField
             id="p9_product"
-            label="Product — What do you want?"
+            label="Product: What do you want?"
             placeholder="Specify: format, audience, length, level of detail…"
             value={product}
             onChange={onProductChange}
           />
           <PromptField
             id="p9_process"
-            label="Process — How should AI approach this?"
+            label="Process: How should AI approach this?"
             placeholder="Specify: steps, frameworks, constraints, what to include/exclude…"
             value={processField}
             onChange={onProcessChange}
           />
           <PromptField
             id="p9_performance"
-            label="Performance — How should AI behave?"
+            label="Performance: How should AI behave?"
             placeholder="Specify: tone, voice, directness, what to prioritize…"
             value={performance}
             onChange={onPerformanceChange}
@@ -409,14 +409,14 @@ function PhaseCompare({
         style={{ gridAutoRows: '1fr' }}
       >
         <ComparisonColumn
-          ariaLabel="Before — output from the underspecified prompt"
-          title="Before: Underspecified Prompt"
+          ariaLabel="Before: output from the underspecified prompt"
+          title="Before: underspecified prompt"
           body={P9_WEAK_OUTPUT}
           visibleOnMobile={compareTab === 'before'}
         />
         <ComparisonColumn
-          ariaLabel="After — output from the well-specified prompt"
-          title="After: Well-Specified Prompt"
+          ariaLabel="After: output from the well-specified prompt"
+          title="After: well-specified prompt"
           body={P9_IMPROVED_OUTPUT}
           visibleOnMobile={compareTab === 'after'}
         />
@@ -471,9 +471,9 @@ function LearnerReformulationCard({
   reformulation: { product: string; process: string; performance: string };
 }): JSX.Element {
   const dimensions: { key: 'product' | 'process' | 'performance'; label: string }[] = [
-    { key: 'product', label: 'Product — What do you want?' },
-    { key: 'process', label: 'Process — How should AI approach this?' },
-    { key: 'performance', label: 'Performance — How should AI behave?' },
+    { key: 'product', label: 'Product: What do you want?' },
+    { key: 'process', label: 'Process: How should AI approach this?' },
+    { key: 'performance', label: 'Performance: How should AI behave?' },
   ];
   return (
     <aside

@@ -131,16 +131,21 @@ export function R6DiligenceTemplate(): JSX.Element {
     <div className="font-sans">
       {/* Intro paragraph */}
       <p
+        className="m-0 mb-2 text-body-sm text-body"
+        style={{ lineHeight: 1.55 }}
+      >
+        Append a diligence statement to any deliverable that involved AI assistance. The
+        statement makes your AI practices visible to readers. It states what happened, without
+        asking for permission or apologizing. <em>Length scales with stakes.</em> The
+        framework&rsquo;s authors close their own document with one: it names the model used,
+        affirms human vetting, and claims full responsibility in five sentences.
+      </p>
+      <p
         className="m-0 mb-5 text-body-sm text-body"
         style={{ lineHeight: 1.55 }}
       >
-        Append to any deliverable that involved AI assistance. A diligence statement makes your
-        AI practices legible. It does not ask for permission. It does not apologize. It states
-        what happened. <em>Length scales with stakes.</em> The framework&rsquo;s authors close
-        their own document with one: it names the model used, affirms human vetting, and claims
-        full responsibility in five sentences. Institutions have
-        started to require one. Most journals and conferences already require acknowledgment of AI
-        use, and MIT&rsquo;s 2026 AI committee recommends a statement of AI use in every thesis. The
+        Institutions have started to require one. Most journals and conferences already require
+        acknowledgment of AI use, and MIT&rsquo;s 2026 AI committee recommends a statement of AI use in every thesis. The
         committee holds people responsible for all work they submit, AI-assisted content included,
         and treats AI as a tool under the direction of a human who verifies its output.
         Accountability for the deliverable stays with you even when production was delegated; the

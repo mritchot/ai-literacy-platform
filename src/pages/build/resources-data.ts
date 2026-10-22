@@ -74,14 +74,14 @@ export const RATIONALE: RationaleBlock[] = [
     heading: 'Why custom code',
     paragraphs: [
       'Interactive complexity. The program includes 12 practice activities with varied interaction models: live data dashboards with filter controls, a tokenizer playground with real-time client-side tokenization, a next-token prediction simulator, a multi-step AI interaction sandbox, and a context-window failure scenario. Standard authoring tools cannot produce these natively; building them as embedded iframes would fracture the experience and block the learning-analytics tracking.',
-      'Data architecture. The platform renders six validated JSON datasets through interactive Recharts visualizations: live renderings with filters, tooltips, and guided reflections, not static images. The analytics dashboard aggregates learning events from localStorage and can export them as xAPI statements. This is beyond what an authoring tool produces without custom JavaScript, at which point the tool adds overhead rather than value.',
+      'Data architecture. The platform renders six validated JSON datasets as live, interactive Recharts visualizations instead of static images, with filters, tooltips, and guided reflections. The analytics dashboard aggregates learning events from localStorage and can export them as xAPI statements. This is beyond what an authoring tool produces without custom JavaScript, at which point the tool adds overhead without adding value.',
       'Portfolio differentiation. For a candidate targeting L&D Manager or Senior Learning Experience Designer roles, the custom platform signals what a Storyline build does not: technical fluency, product thinking, and the ability to work with (or manage) engineering resources. The production-grade codebase is itself a reviewable artifact.',
     ],
   },
   {
     heading: 'The Articulate deferral',
     paragraphs: [
-      'The original architecture included a parallel Articulate build (Rise for Modules 1–2, Storyline for Modules 3–4). It was deferred indefinitely for a practical reason: the ~$1,399/year Articulate 360 license is not justified for a portfolio piece when the custom platform already demonstrates the instructional design at full fidelity.',
+      'The original architecture included a parallel Articulate build (Rise for Modules 1–2, Storyline for Modules 3–4). It was deferred indefinitely because the ~$1,399/year Articulate 360 license is not justified for a portfolio piece when the custom platform already demonstrates the instructional design at full fidelity.',
       'The instructional design is platform-agnostic (only the interactive components are platform-dependent), so the content documents and component specs provide everything needed to rebuild in Articulate or any equivalent tool.',
     ],
   },

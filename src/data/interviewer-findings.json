@@ -131,7 +131,7 @@
     "_note": "Pre-computed connections between Interviewer findings and program design decisions.",
     "stigmaToFramework": {
       "finding": "69% mentioned social stigma",
-      "designResponse": "The 4D competency framework (Delegation, Description, Discernment, Diligence) is positioned not only as a skill taxonomy but as a shared professional vocabulary that enables peer normalization of AI use.",
+      "designResponse": "The 4D competency framework (Delegation, Description, Discernment, Diligence) is positioned as both a skill taxonomy and a shared professional vocabulary that enables peer normalization of AI use.",
       "componentTrace": ["Component 1 (paragraph 3)", "Component 2C (BG-3 shared vocabulary)", "Component 3A (Objective 4.5)"]
     },
     "overconfidenceToScenarios": {

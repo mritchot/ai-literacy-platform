@@ -126,7 +126,7 @@ export const ORG_PHASES: Phase[] = [
     startWeek: 1,
     weeks: 4,
     detail:
-      'Research synthesis, stakeholder interviews, learner-persona development, gap analysis. Gated on SME availability, stakeholder scheduling, and data access.',
+      'Research synthesis, stakeholder interviews, learner-persona development, gap analysis. Depends on SME availability, stakeholder scheduling, and data access.',
   },
   {
     name: 'Design',

@@ -677,7 +677,7 @@ function ByTierGroups({
                   rows={list}
                   tierColor={tierColor}
                   maxHeight={null}
-                  ariaLabel={`${tier} tier — ${list.length} countries.`}
+                  ariaLabel={`${tier} tier, ${list.length} countries.`}
                 />
               </div>
             )}

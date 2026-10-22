@@ -142,7 +142,7 @@ function PlatformCell({
           className="font-mono text-[9px] font-bold uppercase text-secondary"
           style={{ letterSpacing: '0.08em' }}
         >
-          {cell.component} — {platform.label}
+          {cell.component} · {platform.label}
         </span>
       </div>
       <div className="font-sans text-[12.5px] font-semibold text-ink-secondary">{cell.label}</div>
@@ -460,11 +460,11 @@ function L3Callout(): JSX.Element {
         <div className="mb-1.5 font-sans text-[13px] font-semibold text-ink-secondary">Transfer Measurement by Design</div>
         <p className="m-0 font-sans text-[12px] text-body" style={{ lineHeight: 1.6 }}>
           Two objectives produce trackable artifacts that the 30/60/90-day behavioral follow-up checks for
-          sustained use: <strong className="text-ink">Objective 2.3</strong> (task-level action commitment: the
-          participant identifies a specific task they will change their approach to) and{' '}
-          <strong className="text-ink">Objective 4.5</strong> (AI diligence statement: the participant documents
-          AI’s role in a completed work product using 4D vocabulary). If the program produces behavior change,
-          Level 3 data shows it. If it does not, Level 3 data shows that too.
+          sustained use. <strong className="text-ink">Objective 2.3</strong> is a task-level action commitment:
+          the participant identifies a specific task they will change their approach to.{' '}
+          <strong className="text-ink">Objective 4.5</strong> is an AI diligence statement: the participant
+          documents AI’s role in a completed work product using 4D vocabulary. Level 3 data shows whether the
+          program produces behavior change.
         </p>
       </div>
     </div>
@@ -529,8 +529,8 @@ function PracticeDensity(): JSX.Element {
         })}
       </div>
       <p className="m-0 mt-4 text-center font-sans text-[11px] italic text-muted">
-        Practice density shifts from context-setting (Modules 1–2) to applied skill-building (Modules 3–4) — 10 of
-        12 activities involve hands-on interaction.
+        Practice density shifts from context-setting in Modules 1–2 to applied skill-building in Modules 3–4.
+        Of the 12 activities, 10 involve hands-on interaction.
       </p>
     </div>
   );
@@ -593,7 +593,7 @@ export function LearningArchitectureDiagram(): JSX.Element {
               <div className="mb-1 flex items-center gap-1.5 pl-1">
                 <span aria-hidden="true" className="h-2 w-2" style={{ background: p.color }} />
                 <span className="font-mono text-[10px] font-bold uppercase text-secondary" style={{ letterSpacing: '0.06em' }}>
-                  {p.label} — {p.component}
+                  {p.label} · {p.component}
                 </span>
               </div>
               <p className="m-0 pl-1 font-sans text-[11px] text-body" style={{ lineHeight: 1.5 }}>

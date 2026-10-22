@@ -51,7 +51,7 @@ const PANELS: PanelData[] = [
     // what a user would actually paste in.
     tokens: ['東¹', '東²', '京', 'の', '天', '気', 'は', 'ど', 'う', 'です', 'か'],
     annotation:
-      'Eleven Japanese characters ("What\'s the weather like in Tokyo?") become eleven tokens — and the first character, 東, is split into two byte-level pieces (marked ¹ and ²), neither of which is a whole character on its own. The same question in English tokenizes into eight.',
+      'Eleven Japanese characters ("What\'s the weather like in Tokyo?") become eleven tokens. The first character, 東, is split into two byte-level pieces, marked ¹ and ², and neither is a whole character on its own. The same question in English tokenizes into eight.',
   },
 ];
 

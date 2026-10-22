@@ -439,7 +439,7 @@ function Turn1({
         <p className="m-0 italic">{prompt.replace(/^Your initial prompt: /, '')}</p>
       </BottleneckCallout>
 
-      <DraftCard label="AI Output: Draft 1" body={draft} />
+      <DraftCard label="AI output: Draft 1" body={draft} />
 
       <fieldset disabled={submitted} className="m-0 mt-6 border-0 p-0">
         <legend className="m-0 mb-3 font-sans text-h4 font-semibold text-ink">
@@ -539,7 +539,7 @@ function Turn2({
         </p>
       </aside>
 
-      <DraftCard label="AI Output: Draft 2" body={draft} />
+      <DraftCard label="AI output: Draft 2" body={draft} />
 
       <fieldset disabled={submitted} className="m-0 mt-6 border-0 p-0">
         <legend className="m-0 mb-3 font-sans text-h4 font-semibold text-ink">
@@ -682,7 +682,7 @@ function Turn3({
             </p>
           </aside>
 
-          <DraftCard label="AI Output: Draft 3" body={draft} />
+          <DraftCard label="AI output: Draft 3" body={draft} />
 
           <div className="mt-6">
             <EvaluationField

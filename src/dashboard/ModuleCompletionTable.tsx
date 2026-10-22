@@ -54,12 +54,12 @@ function collectArtifacts(
 
 function artifactLabelFromKey(key: string): string {
   // Patterns: `2.3.p3_reflection_1` → "P3 Reflection 1"
-  // `2.5.p4_commitment_task1` → "P4 Action Commitment — Task 1"
+  // `2.5.p4_commitment_task1` → "P4 Action Commitment: Task 1"
   // `4.8.p12_reflection` → "P12 Reflection"
   // `4.8.p12_statement` → "P12 Diligence Statement"
   const tail = key.split('.').slice(2).join('.');
-  if (tail.startsWith('p4_commitment_task1')) return 'P4 Action Commitment — Task 1';
-  if (tail.startsWith('p4_commitment_task2')) return 'P4 Action Commitment — Task 2';
+  if (tail.startsWith('p4_commitment_task1')) return 'P4 Action Commitment: Task 1';
+  if (tail.startsWith('p4_commitment_task2')) return 'P4 Action Commitment: Task 2';
   if (tail.startsWith('p12_statement')) return 'P12 Diligence Statement';
   if (tail === 'p4_revised_task1') return 'P4 Revised Commitment: Task 1';
   if (tail === 'p4_revised_task2') return 'P4 Revised Commitment: Task 2';

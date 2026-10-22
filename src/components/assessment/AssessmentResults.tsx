@@ -171,9 +171,9 @@ function ResultsHero(): JSX.Element {
         className="m-0 max-w-reading font-sans text-body text-body"
         style={{ lineHeight: 1.6 }}
       >
-        Same constructs, different scenarios. Each card pairs your reasoning at the
-        start of the program with your reasoning now, plus feedback on the
-        post-assessment option you picked.
+        The two assessments test the same constructs with different scenarios. Each card
+        pairs your reasoning at the start of the program with your reasoning now, plus
+        feedback on the post-assessment option you picked.
       </p>
     </div>
   );

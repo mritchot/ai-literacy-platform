@@ -42,7 +42,7 @@ const VOCAB_1: KnowledgeCheckItemData = {
       feedbackTitle: 'Not quite',
       feedbackTone: 'caution',
       feedbackText:
-        'Description is how she asked: the task, constraints and format she gave the tool. A clearer request might have prevented the miss, but spotting it in the output is Discernment.',
+        'Description is how she asked: the task, constraints, and format she gave the tool. A clearer request might have prevented the miss, but spotting it in the output is Discernment.',
     },
     {
       id: 'c',
@@ -51,7 +51,7 @@ const VOCAB_1: KnowledgeCheckItemData = {
       feedbackTitle: 'Correct',
       feedbackTone: 'success',
       feedbackText:
-        'Judging whether an output is relevant, sound and fit for its purpose is Discernment.',
+        'Judging whether an output is relevant, sound, and fit for its purpose is Discernment.',
     },
     {
       id: 'd',
@@ -60,7 +60,7 @@ const VOCAB_1: KnowledgeCheckItemData = {
       feedbackTitle: 'Not quite',
       feedbackTone: 'caution',
       feedbackText:
-        'Diligence is the accountability layer: standing behind the work once it goes out, disclosing AI’s role and owning the result. Judging whether this draft answers the client’s question is Discernment.',
+        'Diligence is the accountability layer: standing behind the work once it goes out, disclosing AI’s role, and owning the result. Judging whether this draft answers the client’s question is Discernment.',
     },
   ],
 };

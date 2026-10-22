@@ -158,7 +158,7 @@ export function QualityDashboard(): JSX.Element {
       <Section label="Ten verification passes">
         <QaPassTable />
       </Section>
-      <Section label="Triple-validation data protocol" note="Six JSON data files each ran three dedicated validation passes, a stricter standard than a single-pass eval, because learners draw conclusions directly from the dashboards this data powers.">
+      <Section label="Triple-validation data protocol" note="Each of the six JSON data files went through three dedicated validation passes, a stricter standard than a single-pass eval, because learners draw conclusions directly from the dashboards this data powers.">
         <TripleValidation />
       </Section>
       <Section label="Eight-check capability framework" note="Each check is Capability (does the output do what it should?) or Risk (what can go wrong that the learner cannot detect?). Risk checks matter most in learning contexts, because learners consume content without an answer key.">

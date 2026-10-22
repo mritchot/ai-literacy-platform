@@ -81,7 +81,7 @@ const SECTIONS: SectionSpec[] = [
     id: 'process',
     overline: 'Process Description',
     heading: 'How should AI approach this?',
-    italic: 'Guide the method, not just the destination.',
+    italic: 'Guide the method the AI uses.',
     rows: [
       {
         specify: 'Steps / sequence',
@@ -112,7 +112,7 @@ const SECTIONS: SectionSpec[] = [
     id: 'performance',
     overline: 'Performance Description',
     heading: 'How should AI behave?',
-    italic: 'Shape the interaction, not just the output.',
+    italic: 'Shape how the AI behaves during the interaction.',
     rows: [
       {
         specify: 'Tone',
@@ -188,11 +188,11 @@ export function R3PromptTemplate(): JSX.Element {
         className="m-0 mb-5 text-body-sm text-body"
         style={{ lineHeight: 1.55 }}
       >
-        Use this template to structure any AI prompt. Organized by the three Description
-        sub-components. Most underspecified prompts fail on all three simultaneously. Workers who
-        can spot a flawed output often cannot steer the model to a better one (72 of 319 in Lee et
-        al., CHI 2025, p. 11); the scaffold below is for that step.{' '}
-        <em>Use it as a structural scaffold for any task, not a prompt library.</em>
+        Use this template to structure any AI prompt.{' '}
+        <em>It is a structural scaffold, not a prompt library.</em> Its sections follow the three
+        Description sub-components. Most underspecified prompts fail on all three at once.
+        Workers who can spot a flawed output often cannot steer the model to a better one (72 of
+        319 in Lee et al., CHI 2025, p. 11); the template is for that step.
       </p>
 
       {/* Three Description sections, vertically stacked, each collapsible. */}
