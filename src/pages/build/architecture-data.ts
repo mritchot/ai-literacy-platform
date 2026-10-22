@@ -103,7 +103,7 @@ export const ADRS: Adr[] = [
     decision: 'Evaluated and declined',
     status: 'declined',
     rationale: [
-      'Declined on security grounds. In April 2026, Vercel disclosed a serious breach: an attacker got into a third-party AI tool used by a Vercel employee, took over that employee\'s work account, and reached internal systems, including customer configuration data the attacker was able to decrypt. The stolen data was put up for sale online.',
+      'Declined on security grounds. In April 2026, Vercel disclosed a security incident: an attacker compromised Context.ai, a third-party AI tool used by a Vercel employee, took over that employee\'s work account, and reached internal Vercel systems, where they decrypted environment variables that a limited subset of customers had not marked as sensitive{{cite:vercel-april-2026-incident}}.',
       'This site stores no sensitive data of its own, so it was not directly at risk, but the breach pointed to a broader security concern. Vercel was also unnecessary here, since Cloudflare already manages the domain.',
     ],
   },

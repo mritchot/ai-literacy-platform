@@ -78,7 +78,7 @@ export const SOLO_PHASES: Phase[] = [
     startWeek: 2,
     weeks: 1,
     detail:
-      'Production-plan overhaul (30 pages), eight components across six phases, the six-phase build sequence, QA methodology defined (Hardman AI Evals), system prompt aligned.',
+      'Production-plan overhaul (30 pages), eight components across six phases, the six-phase build sequence, QA methodology defined (Hardman\'s "AI Evals" method for L&D), system prompt aligned.',
   },
   {
     name: 'Phase 1 · Needs Analysis',
