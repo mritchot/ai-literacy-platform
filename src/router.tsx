@@ -14,7 +14,10 @@ const Module3 = lazy(() => import('./modules/module3'));
 const Module4 = lazy(() => import('./modules/module4'));
 const AnalyticsDashboard = lazy(() => import('./dashboard'));
 const ThankYou = lazy(() => import('./pages/ThankYou'));
-// Pre/Post assessment routes are lazy-loaded — their payload (10
+// Spaced-practice refresher opened by the 30/60/90-day calendar
+// reminders (src/utils/calendar-ics.ts). Standalone like ThankYou.
+const Refresher = lazy(() => import('./pages/Refresher'));
+// Pre/Post assessment routes are lazy-loaded — their payload (12
 // items × 4 options × consequence feedback + the comparative results
 // view) only enters the bundle when the learner reaches the
 // assessment flow.
@@ -50,6 +53,14 @@ const Raci = lazy(() => import('./pages/build/Raci'));
 const Resources = lazy(() => import('./pages/build/Resources'));
 const Communications = lazy(() => import('./pages/build/Communications'));
 const Quality = lazy(() => import('./pages/build/Quality'));
+// Print routes — the PDF-rendering views of the 15 artifact pages and the
+// seven reference cards (scripts/render-pdfs.mjs opens each in headless
+// Chromium). They mount as top-level siblings of PlatformShell so no app
+// chrome renders around the document; see src/pages/print/PrintShell.tsx.
+// Hash routes on the single indexable document, so they never reach a
+// crawler as URLs and are kept out of the sitemap (verify-sitemap.mjs
+// asserts it).
+const PrintRoute = lazy(() => import('./pages/print/PrintRoute'));
 
 // Suspense fallback for lazy routes. Note: the production build inlines
 // every lazy chunk via vite-plugin-singlefile, so this effectively never
@@ -106,6 +117,7 @@ const routes: RouteObject[] = [
       { path: 'module/4/section/:sectionId', element: lazyRoute(Module4) },
       { path: 'dashboard', element: <DashboardRoute /> },
       { path: 'thank-you', element: lazyRoute(ThankYou) },
+      { path: 'refresher', element: lazyRoute(Refresher) },
       { path: 'pre-assessment', element: lazyRoute(PreAssessment) },
       { path: 'post-assessment', element: lazyRoute(PostAssessment) },
       { path: 'needs-analysis', element: lazyRoute(NeedsAnalysisHub) },
@@ -129,6 +141,38 @@ const routes: RouteObject[] = [
       { path: 'build/quality', element: lazyRoute(Quality) },
       { path: '*', element: <Navigate to="/" replace /> },
     ],
+  },
+  {
+    path: '/print/needs-analysis/:slug',
+    element: (
+      <Suspense fallback={null}>
+        <PrintRoute family="needs-analysis" />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/print/evaluation/:slug',
+    element: (
+      <Suspense fallback={null}>
+        <PrintRoute family="evaluation" />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/print/build/:slug',
+    element: (
+      <Suspense fallback={null}>
+        <PrintRoute family="build" />
+      </Suspense>
+    ),
+  },
+  {
+    path: '/print/reference/:id',
+    element: (
+      <Suspense fallback={null}>
+        <PrintRoute family="reference" />
+      </Suspense>
+    ),
   },
 ];
 

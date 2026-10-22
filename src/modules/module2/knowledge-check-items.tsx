@@ -10,12 +10,14 @@ const KC_2_1: KnowledgeCheckItemData = {
   stem: (
     <>
       <p className="m-0 mb-3">
-        A product manager on your team describes her AI workflow to you: "I use AI as a thinking
-        partner. Every morning I paste my meeting notes from the previous day into Claude and ask
-        it to identify the three most important decisions that were made, draft follow-up action
-        items for each, and write a summary I can send to stakeholders. Then I scan the summary,
-        fix any names it gets wrong, and send it. I'd say this is a great example of augmentation:
-        the notes come from me, and I'm reviewing everything before it goes out."
+        Two product managers on your team send a daily stakeholder summary built from their
+        meeting notes, and both call their workflow augmentation. Priya: "I paste yesterday's
+        notes into the AI tool and ask it to identify the three most important decisions, draft
+        follow-up actions for each, and write the summary. I fix any names it gets wrong and send
+        it." Marcus: "I write my own list of the three decisions that mattered and why. Then I
+        paste that list with my notes and ask the AI what in the notes I missed or ranked too
+        low. I decide which of its points to accept, rewrite my list, and have it tighten the
+        wording."
       </p>
       <p className="m-0">
         Based on the behavioral data and collaboration patterns from this module, which assessment
@@ -26,39 +28,39 @@ const KC_2_1: KnowledgeCheckItemData = {
   options: [
     {
       id: 'a',
-      text: '"This is functionally automation classified as augmentation. She provides raw input, but the AI is performing the substantive analytical work: identifying what matters most, prioritizing decisions, structuring action items, and drafting stakeholder communication. Her review step checks for surface errors like name corrections, not for whether the AI\'s judgment about what\'s important matches her own. The behavioral data shows this pattern is common: professionals overestimate their augmentative use by 8 to 18 percentage points, often because providing input and performing surface review feels collaborative even when the core intellectual work has been delegated."',
+      text: '"Marcus is augmenting and Priya is automating, though both supply notes and review the result. The test is who decides which decisions matter. Marcus decides first and asks the AI to challenge him; Priya hands that call to the AI and checks names. Her account fits the documented pattern: professionals overestimate their augmentative use by 8 to 18 percentage points."',
       isPreferred: true,
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer correctly identifies the gap between the product manager\'s self-assessment and her actual behavior, applies the behavioral data (8–18pp overestimation) as an explanatory frame rather than an accusation, and names the specific mechanism: surface review feels like quality control but isn\'t the same as evaluating the AI\'s analytical judgments. That is the core skill on display: comparing self-reported patterns against the behavioral evidence and identifying where they diverge.',
+        'This answer applies the test the module uses: who does the substantive intellectual work. Both workflows include input and review, so neither can tell them apart. Marcus sets the priorities, asks the AI to challenge them, and chooses which challenges to accept: task iteration with a validation step. Priya hands the prioritizing to the AI and checks surface details: the directive pattern. Comparing two similar workflows is how you calibrate your own. Ask which of the two your last summary resembled.',
     },
     {
       id: 'b',
-      text: '"She\'s right. This is augmentation. The intellectual contribution is hers: she attended the meetings, captured the notes, and reviews the output before it reaches stakeholders. The AI is handling the formatting and structural organization, which is mechanical work that doesn\'t require professional judgment. Her review step (checking names and scanning for errors) confirms she\'s maintaining quality control over the final deliverable. This is consistent with the task iteration pattern, where a professional provides substantive input and the AI assists with execution."',
+      text: '"Both are augmenting. Each attended the meetings, supplies the raw notes, reviews the output before it goes out, and keeps final sign-off. The AI handles organization and wording in both workflows, which is mechanical work that does not require professional judgment. The difference between their prompts is a matter of personal style, not of who does the intellectual work."',
       isPreferred: false,
       feedbackTitle: 'Misidentifies the substantive contribution',
       feedbackTone: 'error',
       feedbackText:
-        'Attending meetings and taking notes is data collection, not the analytical work this task requires. The substantive intellectual contribution in a stakeholder summary is deciding which decisions matter most, what action items follow from them, and how to frame them for the audience. The AI is performing all three of those judgments. Providing raw material and checking names is not augmentation; it is automation with input provision.',
+        'Attending meetings and taking notes is data collection, not the analytical work this task requires. The substantive contribution in a stakeholder summary is deciding which decisions matter and what follows from them, and Priya hands that to the AI. Providing raw material and checking names is not augmentation; it is automation with input provision. The research separates two axes that help here. Automation describes the interaction: one instruction, minimal back-and-forth. Autonomy describes how much the model decides. A request like \'translate this paragraph\' is high automation but low autonomy, because the model makes few decisions. Priya\'s summary is high on both: one instruction, and the model decides which decisions mattered. Marcus, by contrast, makes the core judgment himself before the AI sees the notes.',
     },
     {
       id: 'c',
-      text: '"This could be either augmentation or automation depending on factors the description doesn\'t fully capture. If she\'s carefully evaluating whether the AI identified the right decisions and drafted appropriate action items that reflect her professional judgment, then she\'s augmenting; the review step is where the substantive intellectual work happens. If she\'s scanning only for names and typos, it\'s automation with surface review. The distinction hinges entirely on the depth of her evaluation process. Without observing the actual review in detail, it\'s more accurate to withhold judgment than to assume the worst about her workflow."',
+      text: '"Both are automating. In each workflow the AI writes the text that reaches stakeholders, so the deliverable is AI-generated either way. Marcus adds a round of back-and-forth, but extra turns do not change the category: once the AI produces the final wording, the task has been delegated, and his extra step adds time without changing who did the work."',
       isPreferred: false,
-      feedbackTitle: 'Partially correct but incomplete',
+      feedbackTitle: 'Treats who writes the final words as the test',
       feedbackTone: 'caution',
       feedbackText:
-        'The observation about review depth is accurate; the quality of the review step does matter. But this answer doesn\'t apply the behavioral data, and the scenario provides enough information to make an assessment. She describes her review as fixing names and scanning, not evaluating the AI\'s prioritization or editorial judgments. Treating the assessment as indeterminate despite available evidence is a form of over-caution that the module\'s framework addresses directly: the behavioral data shows the overestimation gap is systematic and directional, not ambiguous.',
+        'Who writes the final sentences is not the test. Marcus sets the priorities before the AI sees the notes, asks it to challenge them, and decides which challenges to accept. That is task iteration, an augmentation pattern, even though the AI tightens the wording at the end. If every AI-drafted text counted as automation, the augmentation category would be nearly empty, and the distinction could no longer help you calibrate your own use.',
     },
     {
       id: 'd',
-      text: '"This is a well-designed directive interaction: she gives a complete, well-specified instruction and accepts a high-quality result. According to the data, about 28% of AI interactions follow this directive pattern, and it\'s the most efficient approach for routine recurring tasks like daily meeting summaries. The fact that she\'s developed a consistent, repeatable workflow means she\'s optimized her process for speed and reliability. Whether we label it augmentation or automation matters less than the fact that it produces a consistent output with minimal time investment each morning."',
+      text: '"Priya is augmenting and Marcus is automating. Priya keeps the AI on a narrow, clearly specified task and checks the result herself, which is disciplined collaboration. Marcus asks the AI to evaluate his own priorities, which hands his judgment to the tool. Inviting the AI to say what you missed is the more complete form of delegation, even if it feels like a review."',
       isPreferred: false,
-      feedbackTitle: 'Correctly identifies the interaction pattern, draws the wrong conclusion',
-      feedbackTone: 'caution',
+      feedbackTitle: 'Reverses the two workflows',
+      feedbackTone: 'error',
       feedbackText:
-        'The workflow is indeed directive: a complete instruction followed by surface-level acceptance. But efficiency is not the only relevant variable. The module\'s data shows that directive interactions are increasing and that professionals underestimate how often they use them. The question isn\'t whether the output is adequate today. It\'s whether she can evaluate when it isn\'t, given that her review doesn\'t examine the AI\'s analytical judgments. A workflow optimized exclusively for speed has traded away the evaluation step.',
+        'This reverses them. Asking the AI to check work you have already done is the validation pattern from Section 2, and it keeps the judgment with you, because you decide which of its points to accept. Priya\'s request is the directive pattern: one complete instruction and an accepted result. A narrow, well-specified request can be efficient, but here it hands the core judgment, which decisions matter, to the model.',
     },
   ],
 };
@@ -197,7 +199,7 @@ const KC_2_2: KnowledgeCheckItemData = {
       feedbackTitle: 'Ignores capacity and learning constraints',
       feedbackTone: 'error',
       feedbackText:
-        'Simultaneous deployment across four task types with different risk profiles and different verification requirements overwhelms the team\'s ability to develop competent evaluation practices for any of them. "Learn organically" and "errors as learning opportunities" is the approach the module\'s data shows is already failing: professionals are using AI across task types without calibrated verification, producing the self-report/behavioral gap the module documents. Unstructured adoption replicates the problem rather than solving it.',
+        'Simultaneous deployment across four task types with different risk profiles and different verification requirements overwhelms the team\'s ability to develop competent evaluation practices for any of them. "Learn organically" and "errors as learning opportunities" is the approach the module\'s data shows is already failing: professionals are using AI across task types without calibrated verification, producing the self-report/behavioral gap the module documents. Unstructured adoption would reproduce that gap.',
     },
     {
       id: 'd',
@@ -206,7 +208,7 @@ const KC_2_2: KnowledgeCheckItemData = {
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer shows the analytical skill the section calls for: evaluating task-level productivity data along both the efficiency and risk dimensions simultaneously. It correctly identifies that Task A\'s high savings come with high verification burden (citation fabrication risk), recommends Task C as the better starting point because its error types are more visible, and specifies a condition for Task A deployment (a verification process for source accuracy). This is the Delegation-Discernment intersection the module teaches: choosing where to deploy AI based on both the gain and the evaluability of the output.',
+        'This answer shows the analytical skill the section calls for: evaluating task-level productivity data along both the efficiency and risk dimensions at once. It identifies that Task A\'s high savings come with a high verification burden from the risk of fabricated citations, recommends Task C as the better starting point because its error types are more visible, and makes Task A deployment conditional on a verification process for source accuracy. This is the Delegation-Discernment intersection the module teaches: choosing where to deploy AI based on both the gain and the evaluability of the output.',
     },
   ],
 };
@@ -237,7 +239,7 @@ const KC_2_3: KnowledgeCheckItemData = {
       feedbackTitle: 'Inverts the productivity data',
       feedbackTone: 'error',
       feedbackText:
-        'This is the intuitive read, and it\'s wrong. "Where it matters most" is not the same as "where AI saves the most time." Compiling data from multiple reports (the task she keeps manual) falls into the highest-savings category in the research (approximately 95%). Client-facing investment analysis (the task she delegates to AI) is where the verification burden is highest, because the outputs look authoritative on surface review and require domain expertise to confirm against the underlying data.',
+        'This is the intuitive read, and it\'s wrong. "Where it matters most" is not the same as "where AI saves the most time." Compiling data from multiple reports, the task she keeps manual, falls into the highest-savings category in the research (approximately 95%). Client-facing investment analysis, the task she delegates to AI, is where the verification burden is highest, because the outputs look authoritative on surface review and require domain expertise to confirm against the underlying data.',
     },
     {
       id: 'b',
@@ -246,7 +248,7 @@ const KC_2_3: KnowledgeCheckItemData = {
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer captures both dimensions of the augmentation-automation diagnosis: it identifies an underuse case (manual data compilation where productivity gains are highest and verification is relatively straightforward) and an overreliance case (AI-generated investment analysis where the verification burden is highest). Crucially, it does not recommend eliminating AI from the high-risk tasks; it recommends increasing oversight. This matches the module\'s framework: the augmentation-automation distinction is not about whether to use AI, but about how much human judgment to apply.',
+        'This answer captures both dimensions of the augmentation-automation diagnosis. It identifies a case of underuse: she compiles data manually, though that is where productivity gains are highest and verification is relatively straightforward. It also identifies a case of overreliance: she uses AI for investment analysis, where the verification burden is highest. It does not recommend removing AI from the high-risk tasks; it recommends more oversight. This matches the module\'s framework, in which the augmentation-automation distinction concerns how much human judgment to apply when you use AI.',
     },
     {
       id: 'c',
@@ -292,7 +294,8 @@ const KC_2_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Compounds the overestimation',
       feedbackTone: 'error',
       feedbackText:
-        'Comparing an internal self-report figure favorably against external self-report data doubles down on a measurement approach the research has documented as systematically biased. The 65% external figure is itself an overestimate; behavioral data shows actual augmentative use at 47–57% depending on the measurement period. A higher internal self-report doesn\'t indicate better practice; it may indicate a larger gap. Using biased data to validate the program that produced it creates a circular justification.',
+        'Comparing an internal self-report figure favorably against external self-report data rests both sides of the comparison on a measurement approach the research has documented as systematically biased. The 65% external figure, from Anthropic’s interviews with professionals, is itself an overestimate; behavioral data shows actual augmentative use at 47–57% depending on the measurement period. A higher internal self-report doesn\'t indicate better practice; it may indicate a larger gap. Using biased data to validate the program that produced it creates a circular justification.',
+      sources: [{ ids: 'anthropic-interviewer-2025', pageKey: 'self-report-augmentation' }],
     },
     {
       id: 'b',
@@ -301,16 +304,16 @@ const KC_2_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Overcorrects and mischaracterizes',
       feedbackTone: 'caution',
       feedbackText:
-        'The research does not show that professionals "systematically misrepresent" their AI usage; the term implies intentional deception. The self-report/behavioral gap is a calibration error, the same kind of overestimation that appears across self-assessments of any complex behavior. Dismissing all self-report data as unreliable loses a useful signal (what people believe about their practice), and the recommendation to implement direct monitoring through interaction logs and output auditing raises significant privacy, trust, and labor relations concerns that the response ignores entirely.',
+        'The research does not show that professionals "systematically misrepresent" their AI usage; the term implies intentional deception. The researchers who report the self-report/behavioral gap offer several explanations, among them users refining outputs after the chat ends and people perceiving their use as more collaborative than it is. None of them is deception. The second is a calibration error, the same kind of miscalibration that self-report surveys of AI use document in their own limitations. Dismissing all self-report data as unreliable loses a useful signal (what people believe about their practice), and the recommendation to implement direct monitoring through interaction logs and output auditing raises significant privacy, trust, and labor relations concerns that the response ignores entirely.',
     },
     {
       id: 'c',
-      text: '"The survey is a useful data point, but external research shows a consistent pattern: professionals overestimate how collaboratively they use AI. When researchers compared self-reports against behavioral data from actual conversations, the gap ranged from 8 to 18 percentage points. And the share of directive interactions (give a task, accept the result) has been rising over time and constitutes roughly a third of all AI interactions. Our 72% collaborative self-report may reflect the same overestimation pattern. Before calling adoption healthy, we\'d want behavioral indicators, not just self-description."',
+      text: '"The survey is a useful data point, but external research shows a consistent pattern: professionals overestimate how collaboratively they use AI. When researchers compared self-reports against behavioral data from actual conversations, the gap ranged from 8 to 18 percentage points. And the share of directive interactions (give a task, accept the result) rose during 2025 and still makes up roughly a third of all AI interactions. Our 72% collaborative self-report may reflect the same overestimation pattern. Before calling adoption healthy, we\'d want behavioral indicators, not just self-description."',
       isPreferred: true,
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer covers all four components that matter here: it identifies the self-report/behavioral divergence (8–18pp), names the directive interaction pattern as a specific observable indicator, explains why the gap matters (the difference between perceived and actual collaboration affects output quality), and offers a constructive next step (look at behavioral indicators, not just survey data). It engages with the HR director\'s conclusion respectfully while providing the evidence base to challenge it. This is Discernment applied to organizational data.',
+        'This answer covers all four components that matter here. It identifies the self-report/behavioral divergence (8–18pp), names the directive interaction pattern as a specific observable indicator, explains that the difference between perceived and actual collaboration affects output quality, and offers a constructive next step: look at behavioral indicators, not just survey data. It engages with the HR director\'s conclusion respectfully while providing the evidence base to challenge it. This is Discernment applied to organizational data.',
     },
     {
       id: 'd',
@@ -319,7 +322,8 @@ const KC_2_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Misses the mechanism',
       feedbackTone: 'error',
       feedbackText:
-        'Output quality is the right ultimate concern, but the module\'s data shows precisely why interaction patterns matter for quality. Directive interactions, which constitute roughly a third of all AI usage and have been rising, produce output that receives less human evaluation before deployment. The gap between self-reported collaboration and actual behavior means that quality problems are less visible to the people producing them, not less frequent. Treating the interaction pattern as a distinction without practical consequences disconnects the measurement from the thing being measured.',
+        'Output quality is the right ultimate concern, but the module\'s data shows precisely why interaction patterns matter for quality. Directive interactions, which were 32% of conversations in November 2025 after peaking at 39% in August, produce output that receives less human evaluation before deployment. The gap between self-reported collaboration and actual behavior means that quality problems are less visible to the people producing them, not less frequent. Treating the interaction pattern as a distinction without practical consequences disconnects the measurement from the thing being measured.',
+      sources: [{ ids: 'appel-massenkoff-mccrory-2026', pageKey: 'directive-share-32' }],
     },
   ],
 };

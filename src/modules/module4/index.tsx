@@ -6,11 +6,13 @@ import { useEffect } from 'react';
 import { useSectionParam } from '../../hooks/useSectionParam';
 import { Citation } from '../../components/shared/Citation';
 import { KnowledgeCheck } from '../../components/shared/KnowledgeCheck';
+import { RetrievalWarmup } from '../../components/shared/RetrievalWarmup';
 import { SectionContainer } from '../../components/shared/SectionContainer';
 import { getModuleOrThrow } from '../../data/program';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 
+import { CommitmentRevisit } from './CommitmentRevisit';
 import { CompletionSummary } from './CompletionSummary';
 import { DiligenceStatement } from './DiligenceStatement';
 import { IterativeRefinement } from './IterativeRefinement';
@@ -18,10 +20,12 @@ import {
   MODULE_4_KC_ITEMS_S4,
   MODULE_4_KC_ITEMS_S7,
 } from './knowledge-check-items';
+import { CLOSING_CONFIDENCE_REFLECTION } from './module4-content';
 import { OutputVerification } from './OutputVerification';
 import { PromptComparison } from './PromptComparison';
 import { R7Trigger } from '../../components/reference/R7Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
+import { ReflectionPrompt } from '../../components/shared/ReflectionPrompt';
 import { TaskDecomposition } from './TaskDecomposition';
 
 const MODULE_ID = 4;
@@ -71,6 +75,7 @@ function Section1({ module }: ModuleProp): JSX.Element {
       width="reading"
       autoComplete
     >
+      <RetrievalWarmup moduleId={4} />
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
           Module 3 ended with a question: <em>given what I now know about how it works, how do I
@@ -78,43 +83,41 @@ function Section1({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">This module answers it through practice rather than further explanation.</p>
         <p className="m-0">
-          You now have the mechanical vocabulary to trace any AI output failure to a specific
-          cause. You know why a fluent paragraph can contain a fabricated citation (next-token
-          prediction meeting thin knowledge). You know why a multi-document synthesis silently
-          drops material from the files you uploaded (context window limits meeting cumulative
-          conversation length). You know why a calculation looks right but isn’t (tokenization
-          meeting probability-based generation).
-          And you know that these failures concentrate in three predictable categories (boundary
-          tasks, specificity tasks, and volume tasks), each with a targeted response.
+          Check your recall against this summary. You now have the mechanical vocabulary to trace
+          any AI output failure to a specific cause. You know why a fluent paragraph can contain a
+          fabricated citation: next-token prediction meeting thin knowledge. You know why a
+          multi-document synthesis can leave out material from the files you uploaded, and why
+          the tool may not tell you: context window limits meeting cumulative conversation length.
+          You know why a calculation looks right but isn’t: tokenization meeting probability-based
+          generation. And you know that these failures concentrate in three predictable
+          categories: boundary tasks, specificity tasks, and volume tasks. Each category has a
+          targeted response.
         </p>
         <p className="m-0">
           What you haven’t done yet is apply that vocabulary under realistic conditions. Knowing
           that a diagnostic pair exists and using it to catch an error in a deliverable your
-          manager is about to send to a client are different competencies. Module 3 gave you the
-          framework. Module 4 gives you the reps.
+          manager is about to send to a client are different competencies.
         </p>
         <p className="m-0">
-          This module is structured around five practice activities, more than any other module
-          in the course, each targeting a specific judgment in the AI-assisted work cycle. You’ll
-          work through five practice tasks in sequence: decomposing a workplace task to decide
-          what belongs with AI and what stays human; rewriting an underspecified prompt and
-          comparing the outputs side by side; evaluating an AI-generated deliverable element by
-          element, using the mechanical framework to decide what to include, what to verify, and
-          what to flag; iterating through multiple refinement turns to practice the
-          Description-Discernment loop; and producing a diligence statement, a concrete
-          workplace-deployable document that makes your AI practices visible to colleagues and
-          managers.
+          This module has five practice activities, more than any other module in the program,
+          and each targets a specific judgment in the AI-assisted work cycle. In order, you will
+          decompose a workplace task to decide what belongs with AI and what stays human; rewrite
+          an underspecified prompt and compare the outputs side by side; evaluate an AI-generated
+          deliverable element by element, using the mechanical framework to decide what to
+          include, what to verify, and what to flag; iterate through multiple refinement turns to
+          practice the Description-Discernment loop; and produce a diligence statement, a document
+          you can use at work that makes your AI practices visible to colleagues and managers.
         </p>
         <p className="m-0">
-          All four competencies converge here. Delegation determines what to hand to AI.
+          All four competencies converge here
+         <Citation ids="dakan-feller-2025" pageKey="four-ds" />. Delegation determines what to
+          hand to AI.
           Description determines how to specify the task. Discernment determines how to evaluate
-          what comes back. Diligence determines how to document the process and take
+          what comes back. Diligence determines how to use AI within ethical and legal limits, document the process, and take
           accountability for the result. In Modules 1 through 3, these operated as separate
-          lenses, with one or two emphasized per module. In Module 4, they work together the way they
-          will in your actual work: simultaneously, in sequence, as a complete professional
-          workflow.
+          lenses, with one or two emphasized per module. In Module 4, they work together as one
+          professional workflow, the way they will in your actual work.
         </p>
-        <p className="m-0">The framing text between activities is brief. The activities carry the weight.</p>
       </div>
     </SectionContainer>
   );
@@ -138,19 +141,34 @@ function Section2({ module }: ModuleProp): JSX.Element {
       sectionTitle="Task decomposition"
       sectionLabel="Section 2 · P8 Interactive"
       width="interactive"
+      requirement="assign every component and select See Results"
     >
       <p className="m-0 mb-4 font-sans text-body text-body">
         The first judgment in any AI-assisted work cycle is scope: which parts of a task belong
         with AI, which require your expertise, and which sit in between, benefiting from AI
-        assistance but requiring your active direction. Most workplace tasks are not single
-        activities; they are bundles of sub-tasks with different reliability profiles.
+        assistance but requiring your active direction. Most workplace tasks are bundles of
+        sub-tasks with different reliability profiles.
       </p>
+      <p className="m-0 mb-2 font-sans text-body text-body">
+        As you sort the components below, apply two tests to each one. Both come from
+        Anthropic’s interviews with 53 of its own engineers and researchers about the work they
+        hand to Claude<Citation ids="huang-2025" pageKey="delegation-criteria" />:
+      </p>
+      <ul className="m-0 mb-4 list-disc space-y-1.5 pl-5 font-sans text-body text-body">
+        <li>
+          Does it stand alone? Hand off a component when it is decoupled enough from the rest of
+          the work.
+        </li>
+        <li>
+          Is checking cheaper than producing? Delegate where verifying the result takes little
+          effort compared with creating it.
+        </li>
+      </ul>
       <p className="m-0 mb-6 font-sans text-body text-body">
-        One thing to watch for as you work through the exercise below: your choices interact.
-        How you categorize one component can change the right answer for another. A step you
-        might fully delegate on its own could be safe to delegate precisely because a later
-        step involves human verification. Decompose the briefing below, and see what happens
-        when components are miscategorized.
+        As you work through the exercise below, watch how your choices interact. How you
+        categorize one component can change the right answer for another. A step could be safe
+        to delegate fully precisely because a later step involves human verification. Decompose
+        the briefing, and see what happens when components are miscategorized.
       </p>
       <TaskDecomposition />
     </SectionContainer>
@@ -174,13 +192,22 @@ function Section3({ module }: ModuleProp): JSX.Element {
       sectionTitle="Prompt reformulation"
       sectionLabel="Section 3 · P9 Interactive"
       width="interactive"
+      requirement="complete all three fields of your rewrite and submit it"
     >
-      <p className="m-0 mb-6 font-sans text-body text-body">
+      <p className="m-0 mb-4 font-sans text-body text-body">
         You’ve decided what to delegate. The next judgment is how to describe it. Description
-        breaks down into three dimensions: <em>product</em> (what you want), <em>process</em>{' '}
-        (how the AI should approach the task), and <em>performance</em> (how the AI should
-        behave). Most underspecified prompts fail on all three at once. Read the weak prompt
-        and its output, then rewrite it across all three dimensions.
+        breaks down into three dimensions
+       <Citation ids="dakan-feller-2025" pageKey="description" />: <em>product</em>, what you
+        want; <em>process</em>, how the AI should approach the task and how you work through it
+        together; and <em>performance</em>, how the AI should behave. Most underspecified
+        prompts fail on all three at once. In one survey of 319 knowledge workers, 72 said that
+        even when they could see an output fell short, they struggled to revise the query or
+        steer the model to a better one<Citation ids="lee-2025" pageKey="inhibitors" />. The
+        three dimensions below give that revision a structure.
+      </p>
+      <p className="m-0 mb-6 font-sans text-body font-semibold text-ink">
+        Your task: read the weak prompt and its output, then rewrite the prompt across all three
+        dimensions and compare your rewrite with an improved version.
       </p>
       <PromptComparison />
     </SectionContainer>
@@ -206,8 +233,9 @@ function Section4({ module }: ModuleProp): JSX.Element {
       module={module}
       sectionId={4}
       sectionTitle="Knowledge check: Delegation and Description"
-      sectionLabel="Section 4 · Tier 1 assessment"
+      sectionLabel="Section 4 · Scenario questions"
       width="reading"
+      requirement="submit a response to each knowledge check item"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         Two scenario-based items applying what you practiced in the task decomposition exercise
@@ -246,12 +274,13 @@ function Section5({ module }: ModuleProp): JSX.Element {
       sectionTitle="Output verification"
       sectionLabel="Section 5 · P10 Interactive"
       width="interactive"
+      requirement="submit a classification for every element in the briefing"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
-        You’ve decomposed a task and specified it clearly. Now: which parts of an AI-generated
-        deliverable can you trust, and which require independent verification? The exercise below
-        puts a complete polished AI output in front of you: the kind of document that arrives in
-        your inbox looking ready to forward. It is not ready to forward, and your job is to find
+        You’ve decomposed a task and specified it clearly. The next question is which parts of
+        an AI-generated deliverable you can trust and which require independent verification.
+        The exercise below gives you a complete, polished AI output, the kind of document that
+        arrives in your inbox looking ready to forward. It is not ready, and your job is to find
         out why.
       </p>
       <OutputVerification />
@@ -284,13 +313,19 @@ function Section6({ module }: ModuleProp): JSX.Element {
       sectionTitle="Iterative refinement"
       sectionLabel="Section 6 · P11 Interactive"
       width="interactive"
+      requirement="write and submit your own refinement in Turn 3"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
-        The task decomposition exercise practiced Delegation. The prompt reformulation practiced
-        Description. The output verification practiced Discernment. This exercise puts the last
-        two together in the cycle Module 3 named but didn’t practice: the Description-Discernment
-        loop. Three structured turns on a single drafting task. The scaffolding makes the loop
-        visible.
+        The task decomposition exercise practiced Delegation, the prompt reformulation practiced
+        Description, and the output verification practiced Discernment. This exercise puts the
+        last two together in the cycle Module 3 named but didn’t practice: the
+        Description-Discernment loop. You work through three structured turns on a single
+        drafting task, and the scaffolding makes the loop visible. Anthropic's usage data
+        suggests why the loop matters: in consumer conversations, which can run over many turns,
+        success fell far more slowly as tasks lengthened than in single-request API traffic,
+        which the researchers suggest may reflect users breaking work into steps and correcting
+        course each turn
+       <Citation ids="appel-massenkoff-mccrory-2026" pageKey="multi-turn-success" />.
       </p>
       <IterativeRefinement />
     </SectionContainer>
@@ -321,8 +356,9 @@ function Section7({ module }: ModuleProp): JSX.Element {
       module={module}
       sectionId={7}
       sectionTitle="Knowledge check: Discernment and the loop"
-      sectionLabel="Section 7 · Tier 1 assessment"
+      sectionLabel="Section 7 · Scenario questions"
       width="reading"
+      requirement="submit a response to each knowledge check item"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         Two scenario-based items applying what you practiced in the output verification scenario
@@ -360,6 +396,7 @@ function Section8({ module }: ModuleProp): JSX.Element {
       sectionTitle="Diligence statement"
       sectionLabel="Section 8 · P12 Interactive"
       width="interactive"
+      requirement="save your statement to see the exemplar"
     >
       <DiligenceStatement />
     </SectionContainer>
@@ -399,15 +436,15 @@ function Section9({ module }: ModuleProp): JSX.Element {
           />
           . The mechanical data says the tool generates output by probability, not by retrieving
           facts, which means fluent text and accurate text are independent properties. And the
-          adoption data says 69% of professionals mention the social stigma that comes with
-          using AI at work
-          <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" />, which means the
+          adoption data says 69% of professionals in one study’s general-workforce sample mention
+          the social stigma that comes with using AI at work
+         <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" />, which means the
           fastest-growing capability in the modern workforce is developing in isolation, without
           shared standards, without peer learning, and without organizational visibility.
         </p>
         <p className="m-0">
-          This program gave you four competencies as a practiced workflow, not as abstract
-          categories. You decomposed a task to decide what belongs with AI and what stays human.
+          This program gave you the four competencies as a workflow you have practiced. You
+          decomposed a task to decide what belongs with AI and what stays human.
           You reformulated an underspecified prompt and saw the output difference that precise
           Description produces. You evaluated an AI-generated deliverable element by element,
           using mechanical reasoning to distinguish what you can trust from what you need to
@@ -417,23 +454,55 @@ function Section9({ module }: ModuleProp): JSX.Element {
           your AI practices visible to your team and your organization.
         </p>
         <p className="m-0">
-          One caution belongs in this closing. Research on knowledge workers using generative AI
-          has documented a pattern worth naming: the more confident people become in the tool,
-          the less critical thinking they report applying to its output
-          <Citation ids="lee-2025" pageKey="confidence-critical-thinking" />. Confidence is the
-          intended product of a program like this one — but the confidence this program built is
-          confidence in your evaluation process, not in the tool's output. The moment the
-          verification workflow starts to feel unnecessary is the moment it is doing the most
-          work. If your Discernment practice fades as the outputs keep looking clean, you have
-          not become better at using AI; you have become a faster route for unverified content.
+          Research on knowledge workers using generative AI has documented a pattern: the more
+          confident people become in the tool, the less critical thinking they report applying to
+          its output
+         <Citation ids="lee-2025" pageKey="confidence-critical-thinking" />. The same study
+          found the reverse for a different kind of confidence. Workers who felt confident in
+          their own ability to do the task, or to evaluate the AI's answer, reported more critical
+          thinking
+         <Citation ids="lee-2025" pageKey="self-confidence-more-critical-thinking" />. The study
+          is a survey, so it shows association rather than cause
+         <Citation ids="lee-2025" pageKey="correlational-caveat" />. Still, the direction of the
+          association matters, because confidence is the intended product of a program like this
+          one. The confidence this program built is confidence in your evaluation process, not in
+          the tool's output, and that is the kind the research links to more scrutiny.
+        </p>
+        <ReflectionPrompt
+          moduleId={4}
+          sectionId={9}
+          promptId="closing_confidence"
+          accent="discernment"
+          engagedEvent="closing_confidence_engaged"
+          savedEvent="closing_confidence_saved"
+          promptText={CLOSING_CONFIDENCE_REFLECTION}
+        />
+        <p className="m-0">
+          The verification workflow matters most when it starts to feel unnecessary. If your
+          Discernment practice fades as the outputs keep looking clean, you are only moving
+          unverified content along faster. Routine verification also matters beyond catching
+          errors: evaluation is a skill, and skills decay without practice. The knowledge-worker
+          survey warns that reserving critical thinking for high-stakes tasks is risky, because
+          low-stakes work is where the skill stays exercised
+         <Citation ids="lee-2025" pageKey="practice-decay" />. Anthropic's researchers, studying
+          the company's own engineers, call the same problem a paradox of supervision: using AI
+          well requires the skills that heavy AI use can erode
+         <Citation ids="huang-2025" pageKey="paradox-of-supervision" />. Some of those engineers
+          solve a problem without AI now and then, on purpose, to stay sharp
+         <Citation ids="huang-2025" pageKey="deliberate-practice" />. Treat one routine task a
+          week as a full-verification exercise, even when the output looks fine. Start with the
+          second task in your Module 2 action commitment, the one you already delegate to AI that
+          may need more human oversight.
         </p>
         <p className="m-0">
           The diligence statement is the artifact that outlasts the program. The action commitment
           you wrote in Module 2 identified two tasks to change your approach to. The diligence
-          statement you wrote in this module documented how you actually did it. Both are
-          designed to persist: at 30, 60, and 90 days, the question is whether these practices
-          have become part of how you work, sustained by the evidence and the mechanical
-          understanding rather than by a training program telling you to do them.
+          statement you wrote in this module showed how to document AI-assisted work once it is
+          done. Before you leave, revisit the commitment below: Modules 3 and 4 gave you the
+          property pairs, the triage levels, and the Description dimensions to sharpen it. Both
+          artifacts are designed to persist: at 30, 60, and 90 days, the question is whether
+          these practices have become part of how you work, sustained by the evidence and the
+          mechanical understanding rather than by a training program telling you to do them.
         </p>
         <p className="m-0">
           The 4D vocabulary (Delegation, Description, Discernment, Diligence) was introduced in
@@ -445,11 +514,9 @@ function Section9({ module }: ModuleProp): JSX.Element {
           professional competency and modeling the transparency that makes organizational
           learning possible.
         </p>
-
-        <p className="m-0">
-          The tools are on your desktop and the vocabulary is in your hands. The practice starts
-          now.
-        </p>
+      </div>
+      <div className="mt-8">
+        <CommitmentRevisit />
       </div>
     </SectionContainer>
   );

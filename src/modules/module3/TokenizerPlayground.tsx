@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { decode, encode } from 'gpt-tokenizer/encoding/cl100k_base';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { BottleneckCallout } from '../../components/shared/BottleneckCallout';
 import { Icon } from '../../components/shared/Icon';
 import { Overline } from '../../components/shared/Overline';
 import { R5Trigger } from '../../components/reference/R5Trigger';
@@ -118,11 +119,15 @@ export function TokenizerPlayground(): JSX.Element {
       >
         Tokenizer playground
       </h3>
-      <p className="m-0 mb-5 font-sans text-body text-body">
-        For each text sample, predict how many tokens it will produce — then see the result. The
-        gap between your prediction and the actual count is the point. Four guided rounds, then
-        free exploration.
-      </p>
+      <div className="mb-6">
+        <BottleneckCallout title="Your task">
+          <p className="m-0">
+            For each text sample, predict how many tokens it will produce, then see the result.
+            The gap between your prediction and the actual count is the point. Lock a prediction
+            in each of the four guided rounds; free exploration with your own text follows.
+          </p>
+        </BottleneckCallout>
+      </div>
 
       <RoundIndicator
         stage={stage}
@@ -401,7 +406,7 @@ function PredictionInput({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           aria-label="Your prediction: number of tokens"
-          className="border border-border bg-[rgb(var(--white))] px-3 py-2 font-mono text-[14px] text-ink focus:border-ink"
+          className="border border-ghost bg-[rgb(var(--white))] px-3 py-2 font-mono text-[14px] text-ink focus:border-ink"
           style={{ width: 80 }}
         />
         <span className="font-sans text-body-sm text-secondary">tokens</span>
@@ -555,7 +560,7 @@ function FreeMode(): JSX.Element {
         rows={4}
         aria-label="Text to tokenize"
         placeholder="Paste or type any text…"
-        className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
+        className="block w-full resize-y border border-ghost bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
         style={{ minHeight: 80, lineHeight: 1.55 }}
       />
 

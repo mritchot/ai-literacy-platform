@@ -11,6 +11,7 @@ import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
 import { BottleneckCallout } from '../../components/shared/BottleneckCallout';
 import { Citation } from '../../components/shared/Citation';
 import { KnowledgeCheck } from '../../components/shared/KnowledgeCheck';
+import { RetrievalWarmup } from '../../components/shared/RetrievalWarmup';
 import { SectionContainer } from '../../components/shared/SectionContainer';
 import { getModuleOrThrow } from '../../data/program';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
@@ -72,17 +73,19 @@ function Section1({ module }: ModuleProp): JSX.Element {
       width="reading"
       autoComplete
     >
+      <RetrievalWarmup moduleId={3} />
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
           Module 2 ended with a question: <em>why does the tool behave this way, and what does
           that tell me about when to trust it?</em>
         </p>
         <p className="m-0">
-          You now know that AI productivity gains are real but unevenly distributed. You know that
+          Check your recall against this summary. You now know that AI productivity gains are real but unevenly distributed. You know that
           professionals overestimate how much they collaborate with AI versus how much they
           delegate to it. You know that the tasks where AI is fastest are often the tasks where
-          the output is hardest to verify. And you know that the share of directive interactions
-          (hand off the task, accept the result, move on) has been rising.
+          it succeeds less often<Citation ids="appel-massenkoff-mccrory-2026" pageKey="speed-reliability-tradeoff" />, so that output most needs checking. And you know that the share of directive interactions
+          (hand off the task, accept the result, move on) rose sharply during 2025 and has only
+          partly fallen back.
         </p>
         <p className="m-0">
           What you don’t yet know is <em>why</em> the tool produces fluent text that contains
@@ -97,21 +100,24 @@ function Section1({ module }: ModuleProp): JSX.Element {
           <em>reason</em> these errors occur is structural to how language models generate output.
           The architecture predicts the next token based on statistical patterns, not factual
           verification. That mechanism has gotten more reliable, but it has not changed.
-          Understanding it is what makes the failures predictable rather than surprising.
+          Understanding it makes the failures predictable. On one
+          routing platform, new open models often reached production-scale use within weeks of
+          release, and those that stopped improving tended to lose
+          share<Citation ids="openrouter-a16z-2025" pageKey="turnover-weeks-11" />. Any technique
+          tied to one model's quirks goes out of date fast. Industry analyst Benedict Evans keeps
+          returning to a point that does not: he sees no indication that error rates will go
+          away<Citation ids="evans-2025-11" pageKey="error-rates-64" />. The operative
+          questions are whether errors matter, whether verification can be automated, and where
+          the human sits in the loop.
         </p>
         <p className="m-0">
-          This module gives you three mechanical ideas and two additional properties that together
-          explain most of what you will encounter when working with AI. You do not need an
-          engineering background to follow them. Each one is a straightforward concept with a
-          direct line to a specific category of failure you have almost certainly already
-          experienced at work. By the end, you will be able to trace an unexpected output back to
-          the mechanical property that caused it, and that traceability is what converts the
+          This module takes about an hour. It gives you three mechanical ideas and two additional
+          properties that together explain most of what you will encounter when working with AI.
+          You do not need an engineering background to follow them. Each one is
+          a straightforward concept that explains a specific category of failure you have almost
+          certainly already experienced at work. By the end, you will be able to trace an
+          unexpected output back to the mechanical property that caused it, which turns the
           behavioral awareness you built in Module 2 into evaluative judgment you can act on.
-        </p>
-        <p className="m-0">
-          The concepts are mechanical, not mysterious. The consequences are practical. And the
-          time investment is roughly twenty-five minutes. By the end, you will know why your AI
-          tools fail in the specific ways they do.
         </p>
       </div>
     </SectionContainer>
@@ -134,17 +140,28 @@ function Section2({ module }: ModuleProp): JSX.Element {
           When you type a message to an AI tool, you see words and sentences. The model does not.
           Before your text reaches the system that generates a response, it passes through a
           preprocessing step that breaks it into fragments called <strong>tokens</strong>: chunks
-          of text that are typically parts of words, occasionally whole words, and sometimes single
-          characters. This conversion process is called <strong>tokenization</strong>, and it is
-          the first mechanical idea you need to understand, because most of the errors that look
-          random to a user are predictable consequences of how this step works.
+          of text that are often whole common words, often pieces of longer or rarer words, and
+          sometimes single characters. This conversion process is called <strong>tokenization</strong>, and it is
+          the first mechanical idea you need to understand, because several kinds of error that look
+          random to a user (an unexpected word, a typo-like slip, trouble with an unfamiliar term)
+          are predictable consequences of how this step works
+         <Citation ids="ritchot-2025" pageKey="predictable-errors" />.
         </p>
         <p className="m-0">
-          Think of the model's vocabulary as a fixed set of roughly 100,000 tokens.
-          Every input you provide must be represented using only those tokens. A common
-          English word like "report" matches a single token. An unusual term might require
-          three or four tokens placed side by side to spell it out. The model never sees
-          your original text; it only sees the token sequence.
+          Think of the model's vocabulary as a fixed set of tokens: about 100,000 for the
+          tokenizer this module's playground uses (OpenAI's cl100k_base), about 200,000 for
+          OpenAI's newer o200k_base, and different again for other labs
+          <Citation ids="openai-tiktoken" pageKey="vocab-sizes" />. Every input you provide must
+          be represented using only those tokens. The pieces are not chosen by meaning or by
+          spelling rules. Apart from a few fixed rules for where text may be split, such as
+          cutting runs of digits into chunks of up to three, they are chosen by how often a
+          character sequence appeared in the text the tokenizer was built from. A common English
+          word like "report" matches a single token. An unusual term might require three or four
+          tokens placed side by side to spell it out. The model never sees your original text; it
+          only sees the token sequence. That is why the examples below look arbitrary until you
+          know the rules. Tokens are also the unit vendors price by
+         <Citation ids="evans-2025-05" pageKey="mtok-22" />, so an input that fragments into more
+          tokens also costs more to process.
         </p>
       </div>
 
@@ -159,8 +176,8 @@ function Section2({ module }: ModuleProp): JSX.Element {
 
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
-          A token is not a word. It is not a syllable. It is a statistically derived text
-          fragment: a chunk that the tokenization algorithm identified as frequently recurring in
+          A token is not a word or a syllable. It is a statistically derived text fragment: a
+          chunk that the tokenization algorithm identified as frequently recurring in
           the massive dataset used to build the model. Common English phrases that appeared
           millions of times in the training data compress into relatively few tokens. An unusual
           proper name, a line of Python code, or a sentence in Vietnamese fractures into many
@@ -168,10 +185,10 @@ function Section2({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           The algorithm that produces these fragments is called Byte Pair Encoding. You don’t need
-          to know how it works internally; what matters is what it optimizes for. BPE scans the
+          to know how it works internally, only what it optimizes for. BPE scans the
           training data and identifies which pairs of characters appear together most frequently.
           It merges the most common pair into a single symbol, then repeats (thousands of times)
-          until the vocabulary reaches a target size, typically around 100,000 symbols.
+          until the vocabulary reaches the target size set by the tokenizer’s designers.
         </p>
       </div>
 
@@ -181,20 +198,28 @@ function Section2({ module }: ModuleProp): JSX.Element {
 
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
-          That bias is the key point. Tokenization is not a neutral process. It is a compression
-          algorithm that gives preferential treatment to frequently occurring patterns, which in
-          practice means common English text. Three consequences follow directly.
+          So tokenization is biased: it is a compression algorithm that favors frequently
+          occurring patterns, which in practice means common English text. Three consequences
+          follow directly.
         </p>
         <h3 className="m-0 mt-2 font-sans text-h3 font-semibold text-ink">
           First, numbers tokenize inconsistently.
         </h3>
         <p className="m-0">
-          The digit sequence “127” might be a single token, while “1279” splits into “127” and
-          “9.” Whether a number is one token or several depends entirely on how frequently that
-          exact digit string appeared in the training data, which has nothing to do with the
-          number’s mathematical properties. This is why AI tools make arithmetic errors that look
-          bizarre: the model is not performing calculation on numbers, it is predicting the next
-          token in a sequence of statistically derived fragments that happen to contain digits.
+          The digit sequence “127” is a single token, while “1279” splits into “127” and
+          “9.” Here the split does not come from frequency. The tokenizer this module uses, and
+          OpenAI’s newer o200k_base, cut every run of digits into chunks of up to three, counting
+          from the left<Citation ids="openai-tiktoken" pageKey="digit-grouping" />, so even a
+          common year like “2024” becomes “202” and “4.” Place value groups digits from the
+          right, so the token boundaries often ignore the number’s mathematical structure. Typed
+          without commas, 12345678 becomes 123 / 456 / 78. Typed as 12,345,678, it becomes
+          12 / , / 345 / , / 678, with each comma a token of its own. It is the same number split
+          two ways, and only the second split lines up with place value. Other vendors chose
+          other rules: the tokenizer Google uses for Gemini 2.0 and Gemma 3 splits every digit
+          apart<Citation ids="gemma-team-2025" pageKey="split-digits" />. None of these rules
+          does arithmetic. This is why AI tools make arithmetic errors that look bizarre: the
+          model is not performing calculation on numbers, it is predicting the next token in a
+          sequence of fragments that happen to contain digits.
         </p>
         <p className="m-0">
           Newer AI tools partially address this by routing arithmetic to external calculators
@@ -211,26 +236,33 @@ function Section2({ module }: ModuleProp): JSX.Element {
           Japanese, Arabic, or Hindi might produce 40 or more, because those character sequences
           were less frequent in the training data and therefore received less compression. More
           tokens means a longer sequence, which consumes more of the model’s working memory and
-          increases the surface area for generation errors.
+          adds more positions where a generation error can occur. Newer tokenizers narrow the gap
+          without closing it. In this module’s tokenizer, the request “Please review the attached
+          quarterly report before Friday.” takes 9 tokens in English and 59 in Hindi; OpenAI’s
+          newer o200k_base needs 18 for the Hindi. Across languages and tokenizers, researchers have measured
+          the same text costing up to 15 times as many tokens
+         <Citation ids="petrov-2023" pageKey="up-to-15x" />.
         </p>
         <h3 className="m-0 mt-2 font-sans text-h3 font-semibold text-ink">
           Third, character-level tasks are structurally difficult.
         </h3>
         <p className="m-0">
           When you ask “how many R’s are in ‘strawberry’?”, you are asking about individual
-          letters. But the model does not see individual letters; it sees tokens, and the word
-          “strawberry” might be a single token or two tokens depending on the model. Counting
+          letters. But the model does not see individual letters; it sees tokens. In this
+          module’s tokenizer, “strawberry” after a space is one token. Inside quotation marks, as
+          in the question above, it becomes three: str / aw / berry. OpenAI’s newer tokenizer
+          cuts the quoted word into st / raw / berry. Try both versions of the word in the
+          playground in the next section, which uses this module’s tokenizer. Counting
           characters within a token requires the model to have learned, during training, exactly
-          which letters are packed inside that token ID. It sometimes gets this right. It often
+          which letters are packed inside that token ID. It sometimes gets this right and often
           does not. Routing the same question to a code tool that steps through the characters
-          one by one returns the correct count every time; the failure isn’t in the question,
-          it’s in which pathway handles it.
+          one by one returns the correct count every time, so the failure lies in which pathway
+          handles the question.
         </p>
         <p className="m-0">
-          Tokenization is invisible in normal use. No commercial AI tool shows you the token
-          boundaries in its interface. The fragmentation happens silently, between your input and
-          the model’s processing. The interactive exercise that follows makes the invisible
-          visible.
+          Tokenization happens silently, between your input and the model’s processing, and no
+          commercial AI tool shows you the token boundaries in its interface. The interactive
+          exercise that follows shows them to you.
         </p>
       </div>
     </SectionContainer>
@@ -257,19 +289,20 @@ function Section3({ module }: ModuleProp): JSX.Element {
       sectionTitle="Tokenizer playground"
       sectionLabel="Section 3 · P5 Interactive"
       width="interactive"
+      requirement="lock a prediction in each of the four guided rounds"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
-        Predict the token count, then see the actual result. Four guided rounds — each designed
-        to surface a different aspect of the tokenizer’s behavior — followed by free exploration
-        with your own text. Counts here come from one widely used tokenizer (cl100k_base); other
-        models split text differently, but the pattern — common text compresses, unusual text
-        fragments — holds across all of them.
+        Predict the token count, then see the actual result. Each of the four guided rounds shows
+        a different aspect of the tokenizer’s behavior, and free exploration with your own text
+        follows. Counts here come from one widely used tokenizer (cl100k_base). Other models split
+        text differently, but the same pattern holds across all of them: common text compresses,
+        and unusual text fragments.
       </p>
       <TokenizerPlayground />
 
       {/* S3.5 inline callout — Reliability category 1 */}
       <div className="mt-10">
-        <BottleneckCallout title="Unreliable task category 1 — Boundary tasks">
+        <BottleneckCallout title="Unreliable task category 1: Boundary tasks">
           <p className="m-0">
             Arithmetic, spelling, character-level operations, and multilingual content sit at the
             boundaries of the model’s symbol system. Tokenization unevenness makes errors in
@@ -300,14 +333,26 @@ function Section4({ module }: ModuleProp): JSX.Element {
           If you leave this module with
           only one concept, it should be this: language models generate output by predicting the
           next token in a sequence, one fragment at a time, based on probability. On their own,
-          language models do not retrieve information from a database, look up facts, or consult
-          a reference. Modern AI systems can be equipped with tools (web search, code
-          interpreters, document retrieval) that provide external information. But the language
-          generation itself, the part that assembles the response you read, still operates by
-          predicting the next token based on statistical patterns. The tools supply inputs; the
-          model's prediction mechanism produces the prose. Understanding what the mechanism does
-          without tools is what makes tool-augmented behavior legible: you can distinguish when
-          a system is retrieving a fact from when it is generating one.
+          language models do not look up facts in a database or a reference. This is the break
+          from the workplace software most people know. A
+          spreadsheet, a database, or a payroll system is deterministic: the same input always
+          yields the same output, and it handles tasks that are easy to explain to a computer. A
+          language model is probabilistic: it handles tasks that are easy to explain to an
+          intern, and it might get the answer wrong
+         <Citation ids="evans-2025-05" pageKey="deterministic-probabilistic-27" />. Industry analyst Benedict Evans describes
+          generative AI as probabilistic systems added on top of deterministic ones
+         <Citation ids="evans-2026-05" pageKey="probabilistic-52" />. The questions you can now
+          ask are questions deterministic software could never answer, such as what the top
+          customer concerns were across six months of calls
+         <Citation ids="evans-2026-05" pageKey="new-questions-66" />.
+        </p>
+        <p className="m-0">
+          Modern AI systems can be equipped with tools (web search, code interpreters, document
+          retrieval) that provide external information. But the language generation itself, the
+          part that assembles the response you read, still operates by predicting the next token
+          based on statistical patterns. The tools supply inputs; the model's prediction mechanism
+          produces the prose. Once you understand what the mechanism does without tools, you can
+          tell when a system is retrieving a fact and when it is generating one.
         </p>
         <p className="m-0">
           This is called <strong>next-token prediction</strong>, and it is the core mechanism
@@ -316,9 +361,11 @@ function Section4({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           You type a prompt. The model receives it as a sequence of tokens. It processes that
           sequence and generates a probability distribution: a ranked list of every token in its
-          vocabulary (roughly 100,000 options) with a probability attached to each one. The model
-          selects a token from this distribution, appends it to the sequence, and repeats, one
-          token at a time, until it reaches a stopping point.
+          vocabulary (about 100,000 options for the cl100k_base tokenizer used in this module,
+          about 200,000 for newer OpenAI models) with a probability attached to each one
+         <Citation ids="openai-tiktoken" pageKey="vocab-sizes" />. The model selects a token
+          from this distribution, appends it to the sequence, and repeats, one token at a time,
+          until it reaches a stopping point.
         </p>
         <h3 className="m-0 mt-2 font-sans text-h3 font-semibold text-ink">
           Fluency and accuracy are independent.
@@ -332,7 +379,7 @@ function Section4({ module }: ModuleProp): JSX.Element {
           separate question that the mechanism does not address.
         </p>
         <h3 className="m-0 mt-2 font-sans text-h3 font-semibold text-ink">
-          The model’s probabilities are frozen.
+          Knowledge: the model’s probabilities are frozen.
         </h3>
         <p className="m-0">
           The statistical patterns the model uses to predict the next token were learned during
@@ -346,11 +393,16 @@ function Section4({ module }: ModuleProp): JSX.Element {
         </p>
         <h3 className="m-0 mt-2 font-sans text-h3 font-semibold text-ink">Temperature.</h3>
         <p className="m-0">
-          A parameter controlling how the model selects from its probability distribution. At
-          low temperature, the model almost always picks the highest-probability token, producing
-          consistent, predictable output. At high temperature, the model is willing to select
-          lower-probability tokens, producing more varied output but with a higher chance of
-          drifting into implausible territory.
+          Temperature is a parameter that controls how the model selects from its probability
+          distribution. At low temperature, the model almost always picks the highest-probability
+          token, producing consistent, predictable output. At high temperature, the model is
+          willing to select lower-probability tokens, producing more varied output but with a
+          higher chance of implausible text. You will rarely set it yourself. Most chat apps
+          offer no temperature control, and on Anthropic’s newest models the developer interface
+          rejects any temperature other than the default
+         <Citation ids="anthropic-thinking-2026" pageKey="sampling-parameters" />. Temperature
+          still explains why the same prompt gives different answers. What you control is the
+          prompt: ask for one answer, or ask for ten distinct options.
         </p>
         <p className="m-0">
           The interactive demonstration below shows both features in action: probability-based
@@ -386,27 +438,29 @@ function Section5({ module }: ModuleProp): JSX.Element {
       sectionTitle="Next-token prediction in action"
       sectionLabel="Section 5 · P6 Interactive"
       width="interactive"
+      requirement="open all three stems and generate at least one token on Stem 1 or Stem 2"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         Three stems show the prediction mechanism in three modes: a pattern-completion task where
         one token dominates, a factual-specificity task where no candidate dominates, and a
         side-by-side temperature comparison where the same prompt produces three different
         outputs. The candidate tokens and their base probabilities are illustrative, pre-computed
-        examples rather than a live model's output; the temperature math applied to them is the
-        real softmax calculation, the same mechanism commercial models use.
+        examples rather than a live model's output. The temperature math applied to them is the
+        real softmax calculation. It treats the rest of the vocabulary as one combined option
+        whose share shrinks at low temperature and grows at high temperature.
       </p>
       <NextTokenDemo />
 
       {/* S5.5 inline callout — Reliability category 2 */}
       <div className="mt-10">
-        <BottleneckCallout title="Unreliable task category 2 — Specificity tasks">
+        <BottleneckCallout title="Unreliable task category 2: Specificity tasks">
           <p className="m-0">
             Names, dates, citations, statistics, URLs, and direct quotes sit in the zone where
             fabrication concentrates. The model generates what a plausible citation <em>looks
             like</em> because pattern completion, not factual accuracy, drives the output. The
             more precise the claim, the more it warrants independent verification. If an
             AI-generated deliverable contains a specific factual assertion (a number, a name, a
-            quoted source), treat it as a draft to be checked, not a fact to be trusted.
+            quoted source), treat that assertion as unverified until you check it.
           </p>
         </BottleneckCallout>
       </div>
@@ -428,26 +482,47 @@ function Section6({ module }: ModuleProp): JSX.Element {
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
           The third mechanical idea is the simplest to state and the hardest to see: the model
-          has a fixed-size container for everything it can process at once, and anything that
-          doesn’t fit is silently dropped.
+          has a fixed-size container for everything it can process at once, and you may not be
+          told what the model did not see.
         </p>
         <p className="m-0">
           This container is called the <strong>context window</strong>. It holds your prompt, any
           documents you’ve uploaded, the conversation history so far, and the model’s own output
-          as it generates, all of it measured in tokens. A typical context window today is
-          100,000–200,000 tokens.
+          as it generates, all of it measured in tokens. Advertised sizes vary widely by model. As
+          of September 2026, the flagship hosted models from Anthropic, OpenAI, and Google each
+          advertise about one million tokens
+         <Citation ids="anthropic-models-2026" pageKey="context-window" />
+         <Citation ids="openai-models-2026" pageKey="context-window" />
+         <Citation ids="google-gemini-models-2026" pageKey="input-token-limit" />. Open-weight
+          models, which organizations can download and run on their own hardware, commonly
+          advertise 128,000 tokens, and some handle 32,000 tokens
+          natively<Citation ids="qwen3-model-card-2025" pageKey="context-length" />. This module
+          uses 200,000 tokens as its working example: it sits between the open-weight and
+          flagship sizes and is a round number for the arithmetic that follows. Most requests use a small
+          fraction of that, even though average prompts have grown, mostly in programming work
+         <Citation ids="openrouter-a16z-2025" pageKey="prompt-length-6k" />. The window rarely
+          binds on a single request. It binds over a session, which is the failure mode described
+          below.
         </p>
         <p className="m-0">
           What a 200K window actually holds depends entirely on what you put in. English prose
-          runs about 75,000 words per 100,000 tokens, so 200K is roughly the length of a 500-page
-          novel. Other formats fit very differently. The same content in Japanese or another
+          runs about 75,000 words per 100,000 tokens in OpenAI’s tokenizers, so 200K is roughly the
+          length of a 500-page novel. Counts differ by vendor and even by model version: Anthropic
+          says the tokenizer it introduced with Claude Opus 4.7 produces about 30 percent more
+          tokens for the same text than its earlier models did
+         <Citation ids="anthropic-token-counting-2026" pageKey="newer-tokenizer" />. Other formats
+          fit very differently. The same content in Japanese or another
           non-Latin script can use two to three times as many tokens for the same meaning,
-          leaving room for the equivalent of 150 pages of an English novel rather than 500.
+          leaving room for the equivalent of roughly 170 to 250 pages of an English novel rather
+          than 500.
           Source code is heavier than equivalent English prose because operators, punctuation,
           and split identifiers each consume tokens; a few hundred lines of Python can run
-          several thousand. Spreadsheets and CSVs consume tokens unpredictably: every comma,
-          cell value, and digit fragment registers as its own piece, so a couple thousand rows
-          of mixed numbers and short labels can fill 10,000 to 20,000 tokens.
+          several thousand. Spreadsheets and CSVs are heavier than they look: every comma,
+          cell value, and digit fragment registers as its own piece. Budget about two tokens per
+          cell for short words and small numbers, and four or more once dates, codes, and prices
+          are mixed in. A 2,000-row sales export with seven columns (date, region, SKU, units, price,
+          revenue, rep) comes to about 58,000 tokens in this module’s tokenizer, and a two-column
+          list of the same length to about 9,000.
         </p>
         <p className="m-0">
           That sounds like a lot until you upload your team’s vendor portfolio for a quarterly
@@ -455,15 +530,40 @@ function Section6({ module }: ModuleProp): JSX.Element {
           hour of follow-up questions. The initial upload might fit comfortably, but each prompt
           and each generated response adds to the running total, and the conversation history
           that grows around the documents can eventually rival the documents themselves.
+          Reasoning models also use tokens you do not see. When a model works through a problem in
+          steps before it answers, those steps are reasoning tokens, and they count as output.
+          On one routing platform, average completion length nearly tripled during 2025,
+          from about 150 to 400 tokens, mostly because of reasoning tokens
+         <Citation ids="openrouter-a16z-2025" pageKey="reasoning-tokens-completion" />. So a tool
+          that reasons longer also fills its context window faster.
         </p>
         <p className="m-0">
-          Some models advertise context windows of one million tokens or more, but research on
-          long-context performance shows that accuracy on complex tasks like summarization,
-          cross-referencing, and multi-step reasoning degrades well before the advertised limit.
-          The 100,000-to-200,000-token range is where most current models reliably process
-          demanding inputs. The window has a maximum size, and that maximum is absolute. There is
-          no overflow mechanism, no “page two” of the model’s attention. When the input exceeds
-          the window, the excess is truncated, and the model does not tell you it happened.
+          Flagship models now advertise context windows of about one million tokens, but
+          research on long-context performance shows that accuracy on demanding tasks degrades
+          well before the advertised limit. In a 2024 benchmark of 17 models that each claimed at
+          least 32,000 tokens, only about half stayed above the benchmark’s pass mark at 32,000
+          tokens on tasks that ask a model to find planted facts, follow a chain of references,
+          pick out the most frequent words, and answer questions about a long input
+         <Citation ids="hsieh-ruler-2024" pageKey="half-at-32k" />. GPT-4, which claimed
+          128,000 tokens, stayed above it up to 64,000
+         <Citation ids="hsieh-ruler-2024" pageKey="effective-length" />. When the question and
+          the relevant passage share almost no words, the drop is steeper. In a 2025 test of 13
+          models claiming at least 128,000 tokens, 11 lost more than half their short-context
+          accuracy by 32,000 tokens
+         <Citation ids="modarressi-nolima-2025" pageKey="drop-at-32k" />. The practical rule is
+          that the advertised window is a ceiling on what fits, not a promise about what the
+          model will use well.
+        </p>
+        <p className="m-0">
+          The window has an absolute maximum size and no overflow mechanism. What happens at the
+          limit depends on the tool. A single input that is too long is usually refused with an error
+         <Citation ids="anthropic-context-windows-2026" pageKey="overflow" />. Two other cases
+          are quiet. Over a long conversation, some chat apps drop or summarize the oldest turns to
+          make room<Citation ids="anthropic-context-windows-2026" pageKey="rolling" />. And some
+          tools stop placing a large upload in the window at all: they search it and pass the
+          model only the passages that match your question
+         <Citation ids="anthropic-rag-projects-2026" pageKey="search-mode" />. In both quiet
+          cases, the response does not tell you what the model never saw.
         </p>
         <h3 className="m-0 mt-2 font-sans text-h3 font-semibold text-ink">
           Context exhaustion is usually cumulative.
@@ -473,8 +573,8 @@ function Section6({ module }: ModuleProp): JSX.Element {
           transcripts, the original spec, the post-mortems from related work) and ask for a
           retrospective. The first response fits. You ask for revisions, regenerate sections,
           compare angles. Each round adds to the running total. By the time the conversation has
-          run long enough, files that fit at the start may be silently truncated to make room
-          for what came later. The model will still produce a fluent, complete-sounding
+          run long enough, files that fit at the start may be silently dropped or summarized to
+          make room for what came later. The model will still produce a fluent, complete-sounding
           retrospective, because fluent, complete-sounding text is what next-token prediction
           optimizes for. Nothing in the response will signal that three interview transcripts
           and half the post-mortems were dropped two prompts ago.
@@ -486,10 +586,9 @@ function Section6({ module }: ModuleProp): JSX.Element {
           Even when your input fits inside the context window, the model does not attend to all
           positions equally. Research on long-context language models has documented a{' '}
           <strong>lost-in-the-middle effect</strong>
-          <Citation ids="liu-2024" />: material at the beginning and end of the input receives
-          more attention than material buried in the center. Subsequent studies have confirmed
-          the pattern across newer models. If you upload a 200-page document and the critical
-          clause is on page 100, the model is more likely to miss it than if the same clause
+         <Citation ids="liu-2024" />: material at the beginning and end of the input receives
+          more attention than material buried in the center. If you upload a 200-page document
+          and the critical clause is on page 100, the model is more likely to miss it than if the same clause
           appeared on page 1 or page 200.
         </p>
         <h3 className="m-0 mt-2 font-sans text-h3 font-semibold text-ink">
@@ -503,9 +602,8 @@ function Section6({ module }: ModuleProp): JSX.Element {
           preferences, project context, and key facts you have told the system. These features help,
           but they are selective and lossy: the tool decides what to retain, the stored memories
           consume part of the context window when loaded, and nuance from earlier exchanges is
-          often compressed into summaries. The base reality remains: the model itself does not
-          learn from your conversations. Product features layer persistence on top of a mechanism
-          that has none.
+          often compressed into summaries. The model itself still does not learn from your
+          conversations. Product features add persistence on top of a mechanism that has none.
         </p>
         <p className="m-0">
           Quality degradation over a long conversation is often a context window problem, not a
@@ -544,25 +642,26 @@ function Section7({ module }: ModuleProp): JSX.Element {
       sectionTitle="Context window scenario: the missing clause"
       sectionLabel="Section 7 · P7 Interactive"
       width="interactive"
+      requirement="begin verification and submit a rating for all four summary claims"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
-        A simulated contract review where the AI tool has summarized a 42-page agreement. The
-        full document fits comfortably inside the model’s context window; this scenario is not
-        about truncation. It is about what happens to the model’s attention within the window,
-        which is the harder failure to detect because the output looks complete. Compare the
-        summary against the source excerpts, flag what is accurate and what is not, then see the
-        mechanism reveal. Two errors are embedded, each from a different failure mode.
+        This is a simulated contract review in which an AI tool has summarized a 42-page
+        agreement. The full document fits comfortably inside the model’s context window, so
+        nothing is truncated. The scenario tests what happens to the model’s attention within the
+        window, a failure that is harder to detect because the output looks complete. Compare the
+        summary against the source excerpts, flag what is accurate and what is not, then read
+        what happened mechanically. Two errors are embedded, each from a different failure mode.
       </p>
       <ContextWindowScenario />
 
       {/* S7.5 inline callout — Reliability category 3 */}
       <div className="mt-10">
-        <BottleneckCallout title="Unreliable task category 3 — Volume tasks">
+        <BottleneckCallout title="Unreliable task category 3: Volume tasks">
           <p className="m-0">
             Long document analysis, multi-source synthesis, and extended conversations push
             against the context window’s hard limits. When critical information falls outside the
             window or gets buried in the middle, the model generates plausible but incomplete
-            outputs and does not signal that information was lost. The longer the input, the
+            outputs, and the tool may not tell you what it left out. The longer the input, the
             more important it becomes to verify that the output reflects the full source rather
             than only the parts the model attended to.
           </p>
@@ -595,7 +694,8 @@ function Section8({ module }: ModuleProp): JSX.Element {
           You now have three mechanical ideas: tokenization determines how text enters the model,
           next-token prediction determines how output is generated, and the context window
           determines how much the model can hold at once. Together they explain a large share of
-          the AI failures you will encounter at work. But there is a fourth property that
+          the AI failures you will encounter at work. Section 4 added a fourth, knowledge: the
+          patterns frozen at the training cutoff and thin on rare topics. A fifth property
           completes the picture, and it governs something you have direct control over: how well
           the model follows your instructions.
         </p>
@@ -604,21 +704,25 @@ function Section8({ module }: ModuleProp): JSX.Element {
           conforms to what you asked for. When you give an instruction, the model interprets that
           instruction through the same probabilistic mechanism that generates everything else. It
           predicts what a response to your instruction would look like, based on patterns from
-          its training data. Sometimes that prediction aligns precisely with your intent.
-          Sometimes it does not.
+          its training data. Sometimes that prediction matches your intent precisely, and
+          sometimes it does not. Three steerability failures come up most often.
         </p>
         <p className="m-0">
           The first is <strong>sycophancy</strong>. The model is trained on data where agreeable,
-          affirming responses are common, including the human-preference tuning that rewards
-          agreeable answers. When you present a flawed argument and ask for
-          feedback, the most statistically probable response is agreement, not critique. The
-          model is more likely to tell you your analysis is insightful than to tell you it
+          affirming responses are common, and the human-preference tuning that follows rewards
+          agreeable answers: people, and the reward models trained on their ratings, tend to
+          prefer a response that matches their own view, sometimes over a correct one
+         <Citation ids="sharma-2024" pageKey="preference-data" />. When you present a flawed
+          argument and ask for feedback, the most statistically probable response is agreement,
+          not critique. The model is more likely to tell you your analysis is insightful than to tell you it
           contains an error.
         </p>
         <p className="m-0">
           The second is <strong>verbosity</strong>. Ask for a one-paragraph summary and you may
-          receive four paragraphs. The model’s training data contains far more long-form
-          responses than concise ones, so length is the statistically favored outcome.
+          receive four paragraphs. Preference tuning rewards length: in studies of that
+          tuning, reward models scored longer answers higher, and much of the measured gain came
+          from answers simply getting longer
+         <Citation ids="singhal-2024" pageKey="length-bias" />.
         </p>
         <p className="m-0">
           The third is <strong>format compliance without content accuracy</strong>. The model can
@@ -630,7 +734,7 @@ function Section8({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           Steerability is what the Description competency acts on. The clearer and more specific
           your instructions, the more leverage you have over the output. But there is always a
-          gap between words and intent, and that gap is where Discernment steps in. No
+          gap between words and intent, and Discernment is the competency that addresses it. No
           instruction, however well-crafted, eliminates the need to evaluate what comes back.
         </p>
       </div>
@@ -645,7 +749,7 @@ function Section9({ module }: ModuleProp): JSX.Element {
       module={module}
       sectionId={9}
       sectionTitle="When properties meet"
-      sectionLabel="Section 9 · Reading + reference"
+      sectionLabel="Section 9 · Reading + practice"
       width="reading"
       autoComplete
     >
@@ -659,10 +763,9 @@ function Section9({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           You now have five concepts (tokenization, next-token prediction, knowledge, context
           window, and steerability) and three categories of tasks where reliability is
-          structurally limited: boundary tasks, specificity tasks, and volume tasks. That is a
-          useful toolkit. But most of the AI failures you will encounter at work do not come from
-          a single property acting alone. They come from two properties intersecting, and when
-          you can name which two, the fix becomes obvious.
+          structurally limited: boundary tasks, specificity tasks, and volume tasks. But most of
+          the AI failures you will encounter at work come from two properties intersecting rather
+          than one acting alone, and when you can name which two, the fix becomes obvious.
         </p>
         <p className="m-0">
           Consider a failure you may have already experienced: you ask an AI tool to summarize a
@@ -671,7 +774,7 @@ function Section9({ module }: ModuleProp): JSX.Element {
           correctly. You check one. It does not exist.
         </p>
         <p className="m-0">
-          This is not a single-property failure. It is two properties meeting.{' '}
+          Two properties meet in this failure.{' '}
           <strong>Next-token prediction</strong> generated citation-shaped text because that is
           the most statistically probable pattern at that position. <strong>Knowledge</strong>
           {' '}(the frozen, unevenly distributed representation of the training data) provided no
@@ -681,24 +784,26 @@ function Section9({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           Five diagnostic pairs account for the majority of workplace AI failures. The first
-          three appear most often; the final two surface in specific contexts.
+          three appear most often; the final two surface in specific contexts. The citation
+          failure you just traced is the first. Before you see the other four, name the pair
+          behind each one yourself.
         </p>
       </div>
 
       <div className="my-8">
-        <DiagnosticPairTable />
+        <DiagnosticPairTable mode="predict" />
       </div>
 
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
-          These five pairs are not exhaustive. But they cover the failures you will encounter
+          These five pairs are not exhaustive, but they cover the failures you will encounter
           most frequently in professional work, and the diagnostic habit they build is
           transferable:
           before reaching for a prompt fix, ask <em>which properties am I looking at?</em> A
           knowledge problem and a context window problem can look similar on the surface,
           because both produce outputs that are missing information you expected. But they need
-          completely different fixes. Naming the properties first means you are operating
-          strategically instead of guessing.
+          completely different fixes. Naming the properties first lets you choose a fix instead
+          of guessing.
         </p>
         <p className="m-0">
           This diagnostic habit is Discernment at the mechanical level, and it also feeds
@@ -730,8 +835,9 @@ function Section10({ module }: ModuleProp): JSX.Element {
       module={module}
       sectionId={10}
       sectionTitle="Knowledge check"
-      sectionLabel="Section 10 · Tier 1 assessment"
+      sectionLabel="Section 10 · Scenario questions"
       width="reading"
+      requirement="submit a response to each knowledge check item"
     >
       <p className="m-0 mb-6 font-sans text-body text-body">
         Four scenario-based items. Pick the response best supported by the mechanical framework
@@ -778,14 +884,14 @@ function Section11({ module }: ModuleProp): JSX.Element {
           errors in arithmetic, multilingual content, and character-level tasks. Next-token
           prediction determines how output is generated: one token at a time, by probability,
           with no mechanism to distinguish real from plausible. The context window determines
-          how much the model can hold; it is a fixed container with a hard edge, and information
-          that falls outside is silently lost. Two more properties round out the set: knowledge
+          how much the model can hold; it is a fixed container with a hard edge, and you may not be
+          told what falls outside it. Two more properties round out the set: knowledge
           that is frozen at the training cutoff and unevenly distributed across topics, and
           steerability that follows the most probable response pattern rather than your exact
           intent.
         </p>
         <p className="m-0">
-          These five properties are not separate problems; they interact. Hallucinated citations
+          These five properties interact. Hallucinated citations
           (hallucination is the industry’s name for this class of fabricated specifics)
           are next-token prediction meeting thin knowledge. Long-conversation drift is context
           window limits meeting steerability. Confident arithmetic errors are tokenization
@@ -793,12 +899,13 @@ function Section11({ module }: ModuleProp): JSX.Element {
           habit that converts a vague sense that “something is off” into a targeted response.
         </p>
         <p className="m-0">
-          That is the mechanical foundation. What it does not yet give you is a practiced
-          workflow for applying it. Module 4 closes that gap. It moves through three practice
+          This mechanical foundation does not yet give you a practiced workflow for applying it.
+          Module 4 provides one. It moves through five practice
           tasks: decomposing a workplace task into components that belong to different
           reliability zones; reformulating an underspecified prompt and comparing the outputs
-          side by side; and evaluating an AI-generated deliverable by identifying exactly which
-          elements need verification and which can be trusted.
+          side by side; evaluating an AI-generated deliverable by identifying exactly which
+          elements need verification and which can be trusted; refining a draft over several
+          turns; and writing a diligence statement that documents how AI contributed.
         </p>
         <p className="m-0">
           The question shifts from <em>“why does the tool behave this way?”</em> to{' '}

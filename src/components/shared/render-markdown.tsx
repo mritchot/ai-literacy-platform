@@ -8,16 +8,61 @@
 // fight the single-file/self-hosted build), this is a small self-contained
 // renderer scoped to exactly the constructs the finalized content uses.
 //
-// Footnotes need no special handling: the source uses a literal superscript
-// glyph (¹) inline and a separated italic paragraph at the foot of the
-// document, so rendering italics + horizontal rules + the glyph reproduces
-// them faithfully.
+// Footnotes: the source uses a literal superscript glyph (¹) inline and a
+// separated italic paragraph at the foot of the document, so italics +
+// horizontal rules + the glyph reproduce them. A paragraph that opens with
+// the glyph is set as a note (smaller, secondary color).
+//
+// Citations: a `{{cite:…}}` token renders the same <Citation> chip the
+// modules use (a superscript endnote number in print). Syntax:
+//
+//   {{cite:tamkin-mccrory-2025#median-savings-81}}       one source + locator
+//   {{cite:lee-2025}}                                     no locator
+//   {{cite:handa-2025#aug-auto-split-57-43,appel-mccrory-tamkin-2025#directive-trend-v3}}
+//
+// Inside the braces: comma-separated registry ids (src/data/citations.ts),
+// each optionally followed by `#pageKey` from that entry's `pages` map. No
+// spaces. Write the token directly after the claim with no space before it
+// (`…an 81% median{{cite:…}}.`): the chip supplies its own leading space,
+// and nothing is left behind when the Sources toggle hides chips. The
+// double-brace prefix never occurs in prose, and scripts/verify-citations.mjs
+// fails the build when a token names an unregistered id or pageKey.
 
 import { type ReactNode } from 'react';
+import { Citation } from './Citation';
+import { TABLE, TABLE_FRAME, TD, TH, THEAD } from './table-classes';
+
+/** Matches one citation token; group 1 is the comma-separated body. */
+export const CITE_TOKEN_SOURCE = String.raw`\{\{cite:([^{}\s]+)\}\}`;
+
+/** Parse a token body ("a#k1,b") into aligned ids and page keys. */
+export function parseCiteToken(body: string): { ids: string[]; pageKeys: Array<string | undefined> } {
+  const ids: string[] = [];
+  const pageKeys: Array<string | undefined> = [];
+  for (const part of body.split(',')) {
+    const at = part.indexOf('#');
+    ids.push(at === -1 ? part : part.slice(0, at));
+    pageKeys.push(at === -1 ? undefined : part.slice(at + 1));
+  }
+  return { ids, pageKeys };
+}
+
+/** Registry ids cited by `{{cite:…}}` tokens across `texts`, in order of
+ *  first citation, de-duplicated — the input to <SourcesList>. */
+export function citedIds(...texts: readonly string[]): string[] {
+  const out: string[] = [];
+  const re = new RegExp(CITE_TOKEN_SOURCE, 'g');
+  for (const text of texts) {
+    for (const m of text.matchAll(re)) {
+      for (const id of parseCiteToken(m[1]!).ids) if (!out.includes(id)) out.push(id);
+    }
+  }
+  return out;
+}
 
 // ─── Inline ────────────────────────────────────────────────────────────
 //
-// Links `[text](url)`, bold `**text**`, italic `*text*`. Recursive so the
+// Citation tokens, links `[text](url)`, bold `**text**`, italic `*text*`. Recursive so the
 // constructs nest the way the source nests them: Sources entries wrap an
 // italic title inside a link (`[*Title*](url)`), and the delivery-note
 // footnote is one long italic span that contains a link. A fresh RegExp is
@@ -25,7 +70,10 @@ import { type ReactNode } from 'react';
 // don't clobber each other's `lastIndex`.
 
 export function renderInline(text: string, keyBase = 'i'): ReactNode {
-  const re = /\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*|\*([^*\n]+)\*/g;
+  const re = new RegExp(
+    `${CITE_TOKEN_SOURCE}|\\[([^\\]]+)\\]\\(([^)]+)\\)|\\*\\*([^*]+)\\*\\*|\\*([^*\\n]+)\\*`,
+    'g',
+  );
   const out: ReactNode[] = [];
   let last = 0;
   let k = 0;
@@ -33,13 +81,17 @@ export function renderInline(text: string, keyBase = 'i'): ReactNode {
   while ((m = re.exec(text)) !== null) {
     if (m.index > last) out.push(text.slice(last, m.index));
     const key = `${keyBase}-${k++}`;
-    if (m[1] !== undefined && m[2] !== undefined) {
+    // Group numbers: 1 cite body, 2–3 link, 4 bold, 5 italic.
+    if (m[1] !== undefined) {
+      const { ids, pageKeys } = parseCiteToken(m[1]);
+      out.push(<Citation key={key} ids={ids} pageKeys={pageKeys} />);
+    } else if (m[2] !== undefined && m[3] !== undefined) {
       // Scheme allowlist: a stray `[x](javascript:...)` in future markdown
       // must never become an executable anchor. All current content uses
       // https/mailto/#, so rendered output is unchanged; a disallowed
       // scheme renders as a non-navigating anchor (no href).
-      const rawHref = m[2].trim();
-      const safeHref = /^(https?:|mailto:|#)/i.test(rawHref) ? m[2] : undefined;
+      const rawHref = m[3].trim();
+      const safeHref = /^(https?:|mailto:|#)/i.test(rawHref) ? m[3] : undefined;
       // Internal hash-route links (`#/...`) navigate within the HashRouter SPA,
       // so they must stay in the same tab. External links (https/mailto) keep
       // opening in a new tab with noopener/noreferrer.
@@ -51,19 +103,19 @@ export function renderInline(text: string, keyBase = 'i'): ReactNode {
           {...(isInternal ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
           className="font-medium text-action underline decoration-1 underline-offset-2 transition-colors duration-[160ms] hover:text-action-hover"
         >
-          {renderInline(m[1], key)}
+          {renderInline(m[2], key)}
         </a>,
-      );
-    } else if (m[3] !== undefined) {
-      out.push(
-        <strong key={key} className="font-semibold text-ink">
-          {renderInline(m[3], key)}
-        </strong>,
       );
     } else if (m[4] !== undefined) {
       out.push(
-        <em key={key} className="italic">
+        <strong key={key} className="font-semibold text-ink">
           {renderInline(m[4], key)}
+        </strong>,
+      );
+    } else if (m[5] !== undefined) {
+      out.push(
+        <em key={key} className="italic">
+          {renderInline(m[5], key)}
         </em>,
       );
     }
@@ -74,6 +126,11 @@ export function renderInline(text: string, keyBase = 'i'): ReactNode {
 }
 
 // ─── Block ─────────────────────────────────────────────────────────────
+//
+// Every block takes the module treatment (SectionContainer and the shared
+// module components): IBM Plex Sans body at text-body, the Source Serif
+// title for the document H1, sans semibold subheads, the module reference
+// table, and the BottleneckCallout frame for blockquotes.
 
 const HR_RE = /^\s*([-*_])\1{2,}\s*$/;
 const HEADING_RE = /^\s*(#{1,6})\s+(.*)$/;
@@ -82,6 +139,7 @@ const UL_RE = /^\s*[-*•]\s+/;
 const OL_RE = /^\s*\d+\.\s+/;
 const TABLE_ROW_RE = /^\s*\|.*\|\s*$/;
 const TABLE_SEP_RE = /^\s*\|[\s:|-]+\|\s*$/;
+const FOOTNOTE_RE = /^[¹²³⁴⁵⁶⁷⁸⁹]/;
 
 function isTableStart(line: string, next: string | undefined): boolean {
   return TABLE_ROW_RE.test(line) && next !== undefined && TABLE_SEP_RE.test(next);
@@ -109,9 +167,16 @@ function splitRow(line: string): string[] {
 
 function heading(level: number, content: string, id: number): ReactNode {
   const inner = renderInline(content, `h${id}`);
+  // H1 is the document title: the module section-title treatment. The
+  // `doc-title` hook lets the print stylesheet hide it, since the print
+  // shell's masthead already sets the title.
   if (level === 1)
     return (
-      <h1 key={id} className="mb-2 mt-0 font-display text-display font-normal text-ink">
+      <h1
+        key={id}
+        className="doc-title m-0 mb-5 font-display text-title font-normal text-ink"
+        style={{ letterSpacing: '-0.005em' }}
+      >
         {inner}
       </h1>
     );
@@ -128,7 +193,7 @@ function heading(level: number, content: string, id: number): ReactNode {
       </h3>
     );
   return (
-    <h4 key={id} className="mb-2 mt-6 font-sans text-h4 font-semibold text-ink-secondary">
+    <h4 key={id} className="mb-2 mt-6 font-sans text-h4 font-semibold text-ink">
       {inner}
     </h4>
   );
@@ -174,15 +239,14 @@ export function renderMarkdown(raw: string): ReactNode[] {
       }
       const tid = id++;
       blocks.push(
-        <div key={tid} className="my-6 overflow-x-auto">
-          <table className="w-full border-collapse text-left text-body-sm text-body">
-            <thead>
+        // `my-6 overflow-x-auto` is also the print stylesheet's hook for
+        // markdown tables; keep both classes on the wrapper.
+        <div key={tid} className={`my-6 ${TABLE_FRAME}`}>
+          <table className={TABLE}>
+            <thead className={THEAD}>
               <tr>
                 {header.map((c, ci) => (
-                  <th
-                    key={ci}
-                    className="border-b border-border px-3 py-2 align-bottom font-sans text-label font-semibold uppercase tracking-wide text-ink-secondary"
-                  >
+                  <th key={ci} scope="col" className={TH}>
                     {renderInline(c, `th${tid}-${ci}`)}
                   </th>
                 ))}
@@ -192,10 +256,7 @@ export function renderMarkdown(raw: string): ReactNode[] {
               {rows.map((r, ri) => (
                 <tr key={ri}>
                   {r.map((c, ci) => (
-                    <td
-                      key={ci}
-                      className="border-b border-border-light px-3 py-2 align-top"
-                    >
+                    <td key={ci} className={TD}>
                       {renderInline(c, `td${tid}-${ri}-${ci}`)}
                     </td>
                   ))}
@@ -218,7 +279,8 @@ export function renderMarkdown(raw: string): ReactNode[] {
       blocks.push(
         <blockquote
           key={qid}
-          className="my-5 border-l-2 border-border bg-surface px-4 py-3 text-body-sm text-secondary"
+          className="my-6 border border-border bg-surface-warm font-sans text-body-sm text-body"
+          style={{ borderLeft: '3px solid rgb(var(--discernment))', padding: '16px 20px' }}
         >
           {renderInline(quote.join(' '), `bq${qid}`)}
         </blockquote>,
@@ -234,7 +296,7 @@ export function renderMarkdown(raw: string): ReactNode[] {
       }
       const lid = id++;
       blocks.push(
-        <ul key={lid} className="my-4 list-disc space-y-1.5 pl-5 text-body text-body">
+        <ul key={lid} className="my-4 list-disc space-y-1.5 pl-5 font-sans text-body text-body">
           {items.map((it, idx) => (
             <li key={idx}>{renderInline(it, `ul${lid}-${idx}`)}</li>
           ))}
@@ -251,7 +313,7 @@ export function renderMarkdown(raw: string): ReactNode[] {
       }
       const lid = id++;
       blocks.push(
-        <ol key={lid} className="my-4 list-decimal space-y-1.5 pl-5 text-body text-body">
+        <ol key={lid} className="my-4 list-decimal space-y-1.5 pl-5 font-sans text-body text-body">
           {items.map((it, idx) => (
             <li key={idx}>{renderInline(it, `ol${lid}-${idx}`)}</li>
           ))}
@@ -271,9 +333,20 @@ export function renderMarkdown(raw: string): ReactNode[] {
       i++;
     }
     const pid = id++;
+    const text = para.join(' ');
+    // A paragraph that opens with a superscript numeral is a footnote
+    // (the documents use literal ¹ ² glyphs): set a step down, in the
+    // secondary text color the modules use for notes.
     blocks.push(
-      <p key={pid} className="my-4 text-body text-body">
-        {renderInline(para.join(' '), `p${pid}`)}
+      <p
+        key={pid}
+        className={
+          FOOTNOTE_RE.test(text)
+            ? 'my-3 font-sans text-body-sm text-secondary'
+            : 'my-4 font-sans text-body text-body'
+        }
+      >
+        {renderInline(text, `p${pid}`)}
       </p>,
     );
   }

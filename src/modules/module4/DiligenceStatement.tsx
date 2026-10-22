@@ -58,7 +58,7 @@ const SCAFFOLD: { label: string; color: string; prompt: string }[] = [
     label: 'Diligence',
     color: 'rgb(var(--diligence))',
     prompt:
-      'What limitations remain in the final deliverable? What should the reader be aware of?',
+      'What limitations remain in the final deliverable? What should the reader be aware of? Which tool did you use, and who takes responsibility for the final content?',
   },
 ];
 
@@ -152,31 +152,41 @@ export function DiligenceStatement(): JSX.Element {
           See module4-content.ts for the rationale comment. */}
       <article className="font-sans text-body text-body">
         <p className="m-0" style={{ marginBottom: '0.85em' }}>
-          Module 1 opened with a number: 69% of professionals mention the social stigma that
-          comes with using AI at work
-          <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" />, and for many of
-          them it keeps their use undisclosed. Not because they reject the tool, but because
-          they fear how colleagues and managers will perceive them for using it. The result is the concealment dynamic:
-          individuals getting faster while the institution stays blind.
+          Module 1 opened with a number: 69% of professionals in one study’s general-workforce
+          sample mention the social stigma that comes with using AI at work
+         <Citation ids="anthropic-interviewer-2025" pageKey="stigma-69" />, and for many of
+          them it keeps their use undisclosed. They have not rejected the tool; they fear how
+          colleagues and managers will perceive them for using it. The result is the concealment
+          dynamic: individuals get faster while the organization cannot see the AI use behind the
+          gains.
         </p>
         <p className="m-0" style={{ marginBottom: '0.85em' }}>
           You've now spent four modules building a vocabulary that makes concealment unnecessary.
-          Delegation gives you language for which tasks you assigned to AI and why. Description
-          gives you language for how you specified the task. Discernment gives you language for
-          how you evaluated the output. What remains is the competency that converts private
-          practice into visible, accountable professional behavior: Diligence.
+          Delegation gives you language for which tasks you assigned to AI and why, Description
+          for how you specified the task, and Discernment for how you evaluated the output. The
+          fourth competency, Diligence, turns private practice into visible, accountable
+          professional behavior. The people who wrote the framework did this themselves. Their
+          overview document ends with a diligence statement naming the model they used and taking
+          full responsibility for the result
+         <Citation ids="dakan-feller-2025" pageKey="diligence-statement" />.
         </p>
         <p className="m-0" style={{ marginBottom: '0.85em' }}>
           A diligence statement is a structured document (appended to a deliverable or included
-          in a project record) that makes your AI practices legible. It can be as brief as a
-          single paragraph for a low-stakes internal draft or as detailed as a full-page
-          disclosure for a client-facing report or published analysis. Length scales with the
-          stakes and complexity of the deliverable, not with a fixed word count. It does not ask
-          for permission. It does not apologize for using AI. It states what happened: which
-          components of the deliverable were AI-generated, which were AI-assisted, which were
-          human-authored, what verification was performed, and what limitations remain. It uses
-          the 4D vocabulary you've learned because that vocabulary is precise enough to be useful
-          and professional enough to be taken seriously.
+          in a project record) that makes your AI practices legible. Publishers and institutions
+          have started to ask for one. Most journals and conferences already require acknowledgment
+          of AI use, and MIT's 2026 AI committee recommends a statement of AI use in every thesis,
+          with AI never listed as a co-author
+         <Citation ids="mit-2026" pageKey="thesis-statement" />.
+        </p>
+        <p className="m-0" style={{ marginBottom: '0.85em' }}>
+          A diligence statement can be as brief as a single paragraph for a low-stakes internal
+          draft or as detailed as a full-page disclosure for a client-facing report or published
+          analysis. Length scales with the stakes and complexity of the deliverable, not with a
+          fixed word count. The statement says what happened: which components of the deliverable
+          were AI-generated, which were AI-assisted, which were human-authored, what verification
+          was performed, and what limitations remain. It does not ask for permission or apologize
+          for using AI. It uses the 4D vocabulary you've learned because that vocabulary is
+          precise enough to be useful and professional enough to be taken seriously.
         </p>
         <p className="m-0">
           This is the program's second behavioral output artifact. The first was the action
@@ -191,11 +201,11 @@ export function DiligenceStatement(): JSX.Element {
       </BottleneckCallout>
 
       <article
+        className="px-4 py-[18px] sm:px-[26px] sm:py-6"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
           borderTop: `3px solid ${DILIGENCE}`,
-          padding: '24px 26px',
         }}
       >
         <Overline className="mb-1">Diligence statement</Overline>
@@ -208,7 +218,7 @@ export function DiligenceStatement(): JSX.Element {
             full rationale on the iOS overflow pattern). */}
         <fieldset
           className="m-0 mb-4 border-0 p-0"
-          aria-label="Diligence Statement Sections"
+          aria-label="Diligence statement sections"
         >
           <ul
             className="m-0 grid list-none gap-3 p-0 sm:grid-cols-2"
@@ -254,8 +264,8 @@ export function DiligenceStatement(): JSX.Element {
           onChange={(e) => onChange(e.target.value)}
           aria-describedby="p12-section-delegation p12-section-description p12-section-discernment p12-section-diligence"
           rows={8}
-          placeholder="Write your diligence statement here. Use the four sections above as a guide, but write in your own voice — this should read as a professional document you'd actually append to a deliverable."
-          className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
+          placeholder="Write your diligence statement here. Use the four sections above as a guide, but write in your own voice. It should read as a professional document you would append to a deliverable."
+          className="block w-full resize-y border border-ghost bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
           style={{ minHeight: 200, lineHeight: 1.55 }}
         />
 

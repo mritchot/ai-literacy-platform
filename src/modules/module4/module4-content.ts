@@ -21,9 +21,9 @@ export interface TaskCard {
   feedback: Record<P8Category, TaskCardFeedback>;
 }
 
-export const P8_SCENARIO = `Your task: You are a senior analyst at a mid-size professional services firm. Your managing director has asked you to produce a competitive landscape briefing for a prospective client meeting in 48 hours. The briefing must include: a summary of five competitor organizations (revenue, headcount, recent strategic moves), an analysis of how the prospect's market position compares, a set of three strategic recommendations tailored to the prospect's specific situation, and an executive summary suitable for the managing director to present directly.
+export const P8_SCENARIO = `You are a senior analyst at a mid-size professional services firm. Your managing director has asked you to produce a competitive landscape briefing for a prospective client meeting in 48 hours. The briefing must include: a summary of five competitor organizations (revenue, headcount, recent strategic moves), an analysis of how the prospect's market position compares, a set of three strategic recommendations tailored to the prospect's specific situation, and an executive summary suitable for the managing director to present directly.
 
-You have access to an AI tool. You have 48 hours. Decide how to allocate each component.`;
+You have access to an AI tool. You have 48 hours. Assign each of the six components below to Human-Only, AI-Assisted, or Fully Delegated, then select See Results.`;
 
 export const P8_CARDS: TaskCard[] = [
   {
@@ -35,7 +35,7 @@ export const P8_CARDS: TaskCard[] = [
     feedback: {
       delegated: {
         title: 'Efficient, given that verification is a separate step.',
-        text: 'Compiling publicly available information on named entities is a task AI handles reliably for well-known organizations, and the output structure (company name, revenue, headcount) is straightforward. But reliable is not the same as infallible. The compiled data has not been verified, and the scenario\'s stakes (a managing director presenting to a prospect\'s leadership) mean errors carry real consequences. Full delegation works here specifically because you have decomposed verification into its own component. If compilation and verification were bundled as a single task, this would be AI-Assisted, not Fully Delegated.',
+        text: 'Compiling publicly available information on named entities is a task AI handles reliably for well-known organizations, and the output structure (company name, revenue, headcount) is straightforward. Reliable output can still contain errors, and this data has not been verified. Errors carry real consequences here, because the managing director will present the briefing to the prospect\'s leadership. Full delegation works here specifically because you have decomposed verification into its own component. If compilation and verification were bundled as a single task, this would be AI-Assisted, not Fully Delegated.',
         tone: 'success',
       },
       assisted: {
@@ -59,7 +59,7 @@ export const P8_CARDS: TaskCard[] = [
     feedback: {
       human: {
         title: 'Critical judgment call.',
-        text: 'Revenue figures, headcount, and factual claims fall squarely in the specificity task category, the zone where fabrication concentrates. The model generates what plausible data looks like; it cannot verify whether the numbers are real. Cross-checking against primary sources requires human access to databases, filings, and institutional knowledge about which sources are authoritative in your industry. This step protects the entire deliverable.',
+        text: 'Revenue figures, headcount, and factual claims fall squarely in the specificity task category, where fabrication concentrates. The model generates what plausible data looks like; it cannot verify whether the numbers are real. Cross-checking against primary sources requires human access to databases, filings, and institutional knowledge about which sources are authoritative in your industry. This step protects the entire deliverable.',
         tone: 'success',
       },
       assisted: {
@@ -107,7 +107,7 @@ export const P8_CARDS: TaskCard[] = [
     feedback: {
       human: {
         title: 'This is the work AI cannot do.',
-        text: 'Tailored strategic recommendations depend on context the model does not have: your initial meeting with the prospect, their leadership dynamics, board-level priorities, and institutional factors that don’t appear in public data. This is where your professional judgment creates the value the client is paying for. Delegating this component delegates the deliverable’s core intellectual contribution.',
+        text: 'Tailored strategic recommendations depend on context the model does not have: your initial meeting with the prospect, their leadership dynamics, board-level priorities, and institutional factors that don’t appear in public data. This is where your professional judgment creates the value the client is paying for. Delegating this component delegates the deliverable’s core intellectual contribution. This matches what heavy users report. Anthropic’s engineers consistently kept high-level and strategic thinking, and design decisions that need organizational context or taste, and their survey showed the smallest productivity gains for design and planning tasks (Huang et al., Dec 2025).',
         tone: 'success',
       },
       assisted: {
@@ -117,7 +117,7 @@ export const P8_CARDS: TaskCard[] = [
       },
       delegated: {
         title: 'The deliverable is now generic.',
-        text: 'The managing director presents recommendations that sound professionally formatted but contain no insight the prospect couldn’t have generated themselves. The recommendations reference “industry best practices” and “market positioning opportunities,” language that applies to every company in the sector. The prospect notices. The managing director asks where the tailored analysis went. This is the component that justified the engagement; it was the one piece that required human judgment.',
+        text: 'The managing director presents recommendations that sound professionally formatted but contain no insight the prospect couldn’t have generated themselves. The recommendations reference “industry best practices” and “market positioning opportunities,” language that applies to every company in the sector. The prospect notices, and the managing director asks where the tailored analysis went. This is the component that justified the engagement; it was the one piece that required human judgment.',
         tone: 'error',
       },
     },
@@ -155,7 +155,7 @@ export const P8_CARDS: TaskCard[] = [
     feedback: {
       delegated: {
         title: 'Appropriate delegation.',
-        text: 'Template application, heading consistency, chart formatting, and cover pages are deterministic tasks with clear specifications. AI handles these reliably because the output requirements are fully specified, and there is no ambiguity about what “correct” looks like. Low verification burden, high time savings.',
+        text: 'Template application, heading consistency, chart formatting, and cover pages are deterministic tasks with clear specifications. AI handles these reliably because the output requirements are fully specified, and there is no ambiguity about what “correct” looks like. The verification burden is low and the time savings are high.',
         tone: 'success',
       },
       assisted: {
@@ -174,11 +174,13 @@ export const P8_CARDS: TaskCard[] = [
 
 export const P8_SUMMARY = `Decomposition pattern:
 
-The task you just decomposed had six components spanning three reliability levels. Two were appropriate for full delegation (data compilation, formatting): deterministic tasks with clear specifications and low verification burden. Two required active human-AI collaboration (comparative analysis, executive summary): AI provides structural acceleration and you provide evaluative judgment. Two required human-only execution (data verification, strategic recommendations): the model lacks access to the ground truth or the relationship context that makes the output valuable.
+The task you just decomposed had six components spanning three reliability levels. Data compilation and formatting were appropriate for full delegation: they are deterministic tasks with clear specifications and a low verification burden. Comparative analysis and the executive summary required active human-AI collaboration, with AI providing structural acceleration and you providing evaluative judgment. Data verification and the strategic recommendations required human-only execution, because the model lacks access to the ground truth or the relationship context that makes the output valuable.
+
+Two of six is a small fully delegated share, and heavy users report one too. In a survey of 132 Anthropic engineers and researchers, more than half said they could fully delegate only a fifth of their work or less, and the authors note that respondents may have read "fully delegate" as anything from no verification to light oversight (Huang et al., Dec 2025). Decomposition shows you the few components you can hand off and the many that still need you.
 
 This is the Delegation competency in practice. It is a component-level assessment of where the tool adds value and where it introduces risk, not a single decision about whether to "use AI." The decomposition you just performed is the first step in every AI-assisted work cycle that follows in this module.`;
 
-export const P8_REFLECTION = `Think about a deliverable you produce regularly in your current role. Without naming it, mentally list its components: the sub-tasks that go into producing it. Which components would you assign to each of the three categories? Where is the boundary between "AI-assisted" and "fully delegated" least clear? One or two sentences.`;
+export const P8_REFLECTION = `Think about a deliverable you produce regularly in your current role. You don't need to name it. List three to five of its components and put each in one of the three categories: Human-Only, AI-Assisted, or Fully Delegated. For the component you were least sure about, what would you need to know to decide? A short list is enough.`;
 
 // ─── P9: Prompt Reformulation ─────────────────────────────────────
 
@@ -212,29 +214,29 @@ export const P9_ANNOTATIONS: P9Annotation[] = [
   },
   {
     label: 'Process description gap',
-    text: 'The output lists categories but doesn’t connect them to the team’s actual vendor review process. The compliance manager has a specific workflow (intake forms, evaluation criteria, scoring rubrics) and none of it appears here because the prompt didn’t tell the model how to approach the task. Without process constraints, the model produces a generic framework rather than mapping to the existing one.',
+    text: 'The output lists categories but doesn’t connect them to the team’s actual vendor review process. The compliance manager has a specific workflow (intake forms, evaluation criteria, scoring matrices) and none of it appears here because the prompt didn’t tell the model how to approach the task. Without process constraints, the model produces a generic framework rather than mapping to the existing one.',
   },
   {
     label: 'Performance description gap',
-    text: 'The tone is cautious and bureaucratic ("it is recommended," "organizations should"). The compliance manager needed actionable, direct language her team can act on this week, not hedge-heavy advisory prose. The model defaulted to its most statistically probable register for regulatory content: formal, impersonal, and non-committal.',
+    text: 'The tone is cautious and bureaucratic ("it is recommended," "organizations should"). The compliance manager needed direct language her team could act on this week. The model defaulted to its most statistically probable register for regulatory content: formal, impersonal, and non-committal.',
   },
 ];
 
-export const P9_REFORMULATED_PROMPT = `"I'm briefing my compliance team (6 people, all experienced in vendor review but new to AI-specific regulation) on how the EU AI Act's transparency and risk-classification requirements change our current vendor evaluation process. We use a 30-point scoring rubric organized by data handling, operational risk, and contractual terms. Write a 400-word briefing memo (not a general summary) that maps the three most relevant regulatory changes directly to specific sections of our existing rubric, identifies which evaluation criteria need to be added or modified, and flags two vendor categories that will require re-review within 90 days. Use direct, action-oriented language. Skip the 'it is recommended' phrasing; just tell the team what to do and by when."`;
+export const P9_REFORMULATED_PROMPT = `"I'm briefing my compliance team (6 people, all experienced in vendor review but new to AI-specific regulation) on how the EU AI Act's transparency and risk-classification requirements change our current vendor evaluation process. We use a 30-point scoring matrix organized by data handling, operational risk, and contractual terms. Write a 400-word briefing memo (not a general summary) that maps the three most relevant regulatory changes directly to specific sections of our existing scoring matrix, identifies which evaluation criteria need to be added or modified, and flags two vendor categories that will require re-review within 90 days. Use direct, action-oriented language. Skip the 'it is recommended' phrasing; just tell the team what to do and by when."`;
 
 export const P9_IMPROVED_OUTPUT = `**Team Briefing: EU AI Act Impact on Vendor Review Process**
 
-Three changes in the EU AI Act directly affect how we score vendors on the 30-point rubric. Here's what shifts and what you need to do.
+Three changes in the EU AI Act directly affect how we score vendors on the 30-point scoring matrix. Here's what shifts and what you need to do.
 
-**1. Transparency documentation → Rubric Section 2 (Operational Risk), Criteria 2.3–2.5**
+**1. Transparency documentation → Matrix Section 2 (Operational Risk), Criteria 2.3–2.5**
 
-High-risk AI vendors must now provide technical documentation covering training data sources, model performance metrics, and known limitations. Our current criteria 2.3 ("vendor provides system documentation") is too broad. Replace it with two scored items: (a) vendor supplies a model card or equivalent technical summary, and (b) vendor discloses training data provenance for any system processing personal data. Add both to the rubric by end of this month.
+High-risk AI vendors must now provide technical documentation covering training data sources, model performance metrics, and known limitations. Our current criteria 2.3 ("vendor provides system documentation") is too broad. Replace it with two scored items: (a) vendor supplies a model card or equivalent technical summary, and (b) vendor discloses training data provenance for any system processing personal data. Add both to the matrix by end of this month.
 
-**2. Risk classification → New Rubric Section (add as Section 4: AI Risk Tier)**
+**2. Risk classification → New Matrix Section (add as Section 4: AI Risk Tier)**
 
 The Act classifies AI systems into four risk tiers. Any vendor deploying a system classified as "high-risk" triggers mandatory conformity assessment and human oversight requirements. Add a new scoring section: AI Risk Tier Assessment, with three criteria covering the vendor's self-classification, supporting evidence, and conformity documentation. Score on a 1–5 scale consistent with existing sections.
 
-**3. Accountability provisions → Rubric Section 3 (Contractual Terms), Criteria 3.1 and 3.6**
+**3. Accountability provisions → Matrix Section 3 (Contractual Terms), Criteria 3.1 and 3.6**
 
 Deploying organizations bear accountability for AI outputs even when generated by third-party systems. Update criterion 3.1 (liability allocation) to explicitly address AI-generated outputs, and add a new criterion 3.6 requiring vendors to provide incident-response protocols for AI system failures.
 
@@ -243,9 +245,11 @@ Deploying organizations bear accountability for AI outputs even when generated b
 1. **Data analytics vendors** (4 active contracts): most likely to fall under high-risk classification due to automated decision-making on personal data. Begin re-review this week.
 2. **Customer-facing chatbot vendors** (2 active contracts): transparency documentation requirements apply immediately. Request model cards from both vendors by Friday.
 
-I'll distribute updated rubric templates by Wednesday. Flag questions before then.`;
+I'll distribute updated matrix templates by Wednesday. Flag questions before then.`;
 
-export const P9_REFLECTION = `Compare the two outputs. Of the three Description dimensions (product, process, performance), which made the biggest difference in this case? Now look at your own reformulation above. Which dimension did you specify most clearly, and which would you strengthen if you rewrote it? One or two sentences.`;
+export const P9_AFTER_NOTE = `Better description changed the fit of this memo, not the accuracy of its claims. Every obligation, risk tier, and deadline in it is a specific factual claim. Check each one against the Act's text before the team acts on it. One has already moved: in July 2026 the EU postponed the obligations for stand-alone high-risk systems to December 2027 (Regulation (EU) 2026/1744), so "must now provide" in point 1 of the After memo is no longer accurate.`;
+
+export const P9_REFLECTION = `Compare the two outputs. Usage data shows the same pattern at scale. Across 117 countries and 50 US states, the years of education needed to understand the model's responses tracked the years needed to understand the prompts almost perfectly, and the model answered in a sophisticated way mainly when the prompt was sophisticated (Appel, Massenkoff & McCrory, 2026, pp. 34–35). Of the three Description dimensions (product, process, performance), which made the biggest difference in this case? Now look at your own reformulation above. Which dimension did you specify most clearly, and which would you strengthen if you rewrote it? One or two sentences.`;
 
 // ─── P10: Output Verification ─────────────────────────────────────
 
@@ -266,9 +270,9 @@ export interface VerificationElement {
   feedback: Record<Classification, VerificationFeedback>;
 }
 
-export const P10_SCENARIO = `Your situation: You are a senior operations analyst. Your director asked you to use AI to draft a two-page internal briefing on how three competitor firms are applying AI to supply chain operations: what they've announced, what results they've reported, and what your organization should consider in response. You delegated the drafting to AI with a well-specified prompt (audience, format, constraints). The output arrived looking polished and professional. Your director plans to circulate it to the leadership team tomorrow morning.
+export const P10_SCENARIO = `You are a senior operations analyst. Your director asked you to use AI to draft a two-page internal briefing on how three competitor firms are applying AI to supply chain operations: what they've announced, what results they've reported, and what your organization should consider in response. You delegated the drafting to AI with a well-specified prompt (audience, format, constraints). The output arrived looking polished and professional. Your director plans to circulate it to the leadership team tomorrow morning.
 
-Before you send it forward, you need to verify the output. Below is the AI-generated briefing. Read it, then evaluate each flagged element.`;
+Before you send it forward, you need to verify the output. Below is the AI-generated briefing. Read it, then classify each of the six flagged elements as Include, Verify, or Flag.`;
 
 // The briefing renders as paragraphs with six embedded highlight markers.
 // Each segment of `P10_BRIEFING_SEGMENTS` is either plain text (`marker:
@@ -340,21 +344,21 @@ export const P10_ELEMENTS: VerificationElement[] = [
     marker: 1,
     highlightedText: 'According to a case study published in the Harvard Business Review (Chen & Walters, 2025)',
     intendedClassification: 'flag',
-    diagnosticPair: 'NTP × Knowledge: compounding specificity',
+    diagnosticPair: 'Next-token prediction × Knowledge: compounding specificity',
     feedback: {
       flag: {
         title: 'Right call: check this first.',
-        text: 'This element has compounding specificity signals: a named journal, specific authors, and a recent year applied to a company the model may or may not have training data on. The citation satisfies the probability distribution for "academic reference in a business context." It looks exactly like a real HBR citation because the model optimized for that pattern. Note what\'s also missing: the article title. Without it, even searching HBR\'s database by author name plus year may not surface a definitive match: there could be multiple Chen/Walters articles, or none, and you cannot quickly distinguish "I haven\'t found it yet" from "it doesn\'t exist." High verification difficulty plus compounding signals is the flag pattern. If you can\'t confirm the citation in reasonable time, exclude it from the briefing. A single fabricated citation undermines everything else in the document.',
+        text: 'This element has compounding specificity signals: a named journal, specific authors, and a recent year applied to a company the model may or may not have training data on. The citation satisfies the probability distribution for "academic reference in a business context." It looks exactly like a real HBR citation because the model optimized for that pattern. The article title is also missing. Without it, even searching HBR\'s database by author name plus year may not surface a definitive match. There could be multiple Chen/Walters articles, or none, and you cannot quickly distinguish "I haven\'t found it yet" from "it doesn\'t exist." High verification difficulty plus compounding signals is the flag pattern. If you can\'t confirm the citation in reasonable time, exclude it from the briefing. A single fabricated citation undermines everything else in the document.',
         tone: 'success',
       },
       verify: {
         title: 'Right behavior, but deprioritized.',
-        text: 'You\'d verify before circulating, which is the correct action. But the indicators here are strong enough to prioritize this above other elements: a specific journal, specific authors, and a specific year is the compounding-specificity pattern, and the missing article title makes verification harder than a clean citation would be. Treating this as routine verification rather than a priority flag means it might not get checked first, and this is the element most likely to embarrass the organization if it reaches leadership unverified. When specificity signals compound AND verification is harder, flag it.',
+        text: 'You\'d verify before circulating, which is the correct action. But the indicators here are strong enough to prioritize this above other elements: a specific journal, specific authors, and a specific year is the compounding-specificity pattern, and the missing article title makes verification harder than a clean citation would be. Treating this as routine verification rather than a priority flag means it might not get checked first, and this is the element most likely to embarrass the organization if it reaches leadership unverified. When specificity signals compound and verification is harder, flag it.',
         tone: 'caution',
       },
       include: {
         title: 'This is how generated citations reach leadership.',
-        text: 'The citation has every surface feature of a real reference: a recognized journal, plausible author names, a recent date. That is precisely why it needs verification: it looks real because the model optimized for plausibility, not accuracy. If you forward this without checking and someone searches for the article during the meeting, the briefing (and your professional judgment) are both discredited. Compounding specificity signals (named source + authors + date) should always trigger a flag.',
+        text: 'The citation has every surface feature of a real reference: a recognized journal, plausible author names, a recent date. That is precisely why it needs verification: it looks real because the model optimized for plausibility, not accuracy. If you forward this without checking and someone searches for the article during the meeting, the briefing and your professional judgment are both discredited. Compounding specificity signals (named source + authors + date) should always trigger a flag.',
         tone: 'error',
       },
     },
@@ -367,7 +371,7 @@ export const P10_ELEMENTS: VerificationElement[] = [
     feedback: {
       verify: {
         title: 'Appropriate triage.',
-        text: 'This figure could be real; companies do report specific operational metrics. But it\'s a precise percentage attributed to a specific company and timeframe, which puts it in the verification zone. The model may have encountered this data point in training, or it may have generated a plausible-sounding figure. You can\'t tell from the output alone. Unlike a citation without an article title, this metric has a clear search target (a named company plus a specific timeframe), which makes the verification cost low: check Meridian\'s public announcements, press releases, or investor materials, and you\'ll find the figure or you won\'t in ~5 minutes either way. Single signal plus easy verification = verify-level (medium risk), not flag-level (high risk). If you find the figure, include it. If you can\'t find it, exclude or caveat it.',
+        text: 'This figure could be real; companies do report specific operational metrics. But it\'s a precise percentage attributed to a specific company and timeframe, which puts it in the verification zone. The model may have encountered this data point in training, or it may have generated a plausible-sounding figure. You can\'t tell from the output alone. Unlike a citation without an article title, this metric has a clear search target, which makes the verification cost low: check Meridian\'s public announcements, press releases, or investor materials, and you\'ll find the figure or you won\'t in ~5 minutes either way. Single signal plus easy verification = verify-level (medium risk), not flag-level (high risk). If you find the figure, include it. If you can\'t find it, exclude or caveat it.',
         tone: 'success',
       },
       include: {
@@ -388,11 +392,11 @@ export const P10_ELEMENTS: VerificationElement[] = [
     highlightedText:
       'Praxon’s CFO stated in a February 2025 earnings call that the platform "has fundamentally changed how we think about procurement resilience"',
     intendedClassification: 'flag',
-    diagnosticPair: 'NTP × Knowledge: compounding specificity with attribution',
+    diagnosticPair: 'Next-token prediction × Knowledge: compounding specificity with attribution',
     feedback: {
       flag: {
         title: 'Right call: check this first.',
-        text: 'This element combines multiple specificity signals: a direct quote attributed to a specific executive, in a specific forum (earnings call), on a specific date (February 2025), using language that could describe any company\'s AI initiative ("fundamentally changed how we think about X"). The model generated the quote because executive quotes about strategic initiatives are statistically probable in this document type. Even if Praxon\'s CFO said something similar, the exact wording is almost certainly generated. Verification is also harder than it looks: earnings call transcripts are searchable in principle, but pinpointing a specific quote against a 90-minute transcript is meaningfully harder than checking a published figure, and the generic phrasing ("fundamentally changed how we think about X") gives the search engine little to anchor on. Compounding signals plus high verification difficulty is the flag pattern. Publishing a fabricated direct quote attributed to a named executive is a more serious professional risk than an inaccurate statistic, because it misrepresents a specific person\'s words.',
+        text: 'This element combines multiple specificity signals: a direct quote attributed to a specific executive, in a specific forum, on a specific date (an earnings call in February 2025). Its language could describe any company\'s AI initiative: "fundamentally changed how we think about X." The model generated the quote because executive quotes about strategic initiatives are statistically probable in this document type. Even if Praxon\'s CFO said something similar, the exact wording is almost certainly generated. Verification is also harder than it looks. Earnings call transcripts are searchable in principle, but pinpointing a specific quote in a 90-minute transcript is meaningfully harder than checking a published figure, and the generic phrasing gives a search little to anchor on. Compounding signals plus high verification difficulty is the flag pattern. Publishing a fabricated direct quote attributed to a named executive is a more serious professional risk than an inaccurate statistic, because it misrepresents a specific person\'s words.',
         tone: 'success',
       },
       verify: {
@@ -402,7 +406,7 @@ export const P10_ELEMENTS: VerificationElement[] = [
       },
       include: {
         title: 'Direct quotes with attribution are high-priority verification targets.',
-        text: 'The model does not retrieve quotes from a transcript database; it generates text that matches the pattern of what a CFO would say about an AI initiative in an earnings call. The quote sounds plausible because the pattern is common. If this quote is generated and a leadership team member looks it up (or worse, contacts Praxon), the reputational damage extends well beyond the briefing. Multiple compounding signals (quote + named executive + specific date + specific forum) should always trigger a flag.',
+        text: 'The model does not retrieve quotes from a transcript database; it generates text that matches the pattern of what a CFO would say about an AI initiative in an earnings call. The quote sounds plausible because the pattern is common. If this quote is generated and a leadership team member looks it up, or worse, contacts Praxon, the reputational damage extends well beyond the briefing. Multiple compounding signals (quote + named executive + specific date + specific forum) should always trigger a flag.',
         tone: 'error',
       },
     },
@@ -416,17 +420,17 @@ export const P10_ELEMENTS: VerificationElement[] = [
     feedback: {
       include: {
         title: 'Good reading.',
-        text: 'This passage demonstrates a different pattern from the other elements. The figures are explicitly attributed to a press release (not an independent study), and the output itself flags that independent verification hasn\'t been published. The text is managing its own epistemic status by disclosing the source and its limitations. No verification cost: the passage discloses its own limitations, which is the include pattern (low risk). The appropriate response is to forward it with the caveat preserved. Not every specific claim requires the same triage level; the quality of the self-attribution matters.',
+        text: 'This passage shows a different pattern from the other elements. The figures are explicitly attributed to a press release rather than an independent study, and the output itself states that independent verification hasn\'t been published. By disclosing its source and its limitations, the text manages its own epistemic status. That leaves no verification cost, which is the include pattern (low risk). The appropriate response is to forward it with the caveat preserved. Not every specific claim requires the same triage level; the quality of the self-attribution matters.',
         tone: 'success',
       },
       verify: {
         title: 'Reasonable caution, but the passage already manages the risk.',
-        text: 'You could verify whether Cascade actually issued the press release, which is a defensible check. But the passage itself is doing what a well-constructed briefing should do: attributing claims to their source and flagging the absence of independent confirmation. The uncertainty you\'re flagging is already surfaced in the text. If your verification time is limited, spend it on elements that don\'t self-manage their limitations.',
+        text: 'You could verify whether Cascade actually issued the press release, which is a defensible check. But the passage itself is doing what a well-constructed briefing should do: attributing claims to their source and noting the absence of independent confirmation. The uncertainty you want to check is already stated in the text. If your verification time is limited, spend it on elements that don\'t self-manage their limitations.',
         tone: 'caution',
       },
       flag: {
         title: 'Overtriage: the text is already doing the work.',
-        text: 'Flagging everything with specific numbers loses the distinction between elements that compound specificity signals (the citation, the quote) and elements that handle attribution responsibly. The caveat clause ("though independent verification has not been published") is the kind of epistemic self-management that generated-without-awareness content typically omits. This element is more credible than the others precisely because it acknowledges its own limitations. Calibrated triage means spending your verification time where the text isn\'t already doing the work for you.',
+        text: 'Flagging everything with specific numbers loses the distinction between elements that compound specificity signals (the citation, the quote) and elements that handle attribution responsibly. The caveat clause, "though independent verification has not been published," is the kind of epistemic self-management that generated-without-awareness content typically omits. This element is more credible than the others precisely because it acknowledges its own limitations. Calibrated triage means spending your verification time where the text isn\'t already doing the work for you.',
         tone: 'error',
       },
     },
@@ -439,7 +443,7 @@ export const P10_ELEMENTS: VerificationElement[] = [
     feedback: {
       verify: {
         title: 'Correct triage.',
-        text: 'This is a specific operational metric that sounds impressive and precise. It could be real (companies do publish throughput statistics), or it could be generated to fill the pattern of "impressive-sounding operational metric in a technology capability paragraph." The word "approximately" is a slight credibility signal (generated figures tend toward false precision), but not enough to include without checking. Verification cost is low: Meridian\'s annual report or operations page should publish throughput stats with this level of detail. Clear search target, ~5 minutes either way. Single signal plus easy verification = verify-level (medium risk), not flag-level. Verify against company materials before including.',
+        text: 'This is a specific operational metric that sounds impressive and precise. It could be real, since companies do publish throughput statistics, or it could be generated to fill the pattern of "impressive-sounding operational metric in a technology capability paragraph." The word "approximately" is a slight credibility signal, because generated figures tend toward false precision, but it is not enough to include the figure without checking. Verification cost is low: Meridian\'s annual report or operations page should publish throughput stats with this level of detail. That gives you a clear search target and ~5 minutes of work either way. Single signal plus easy verification = verify-level (medium risk), not flag-level. Verify against company materials before including.',
         tone: 'success',
       },
       include: {
@@ -463,7 +467,7 @@ export const P10_ELEMENTS: VerificationElement[] = [
     feedback: {
       verify: {
         title: 'Precise identification of a different risk.',
-        text: 'The recommended actions are not generated claims in the way the citation and quote are; they are logically derived from the competitor profiles. But that derivation has a dependency problem: recommendations 1 and 2 reference data points that may themselves be unverified (Meridian\'s phased approach, Praxon\'s 4,800-supplier benchmark). If the upstream data is wrong, the downstream recommendations are built on a false premise. The verification difficulty here isn\'t about finding an external source. It\'s about checking the upstream data the recommendations depend on. The work is real but bounded: once you\'ve verified the inputs (medium risk, ~5 minutes each), the conclusions follow. This is a different verification need: not "is this claim true?" but "does the reasoning hold if the inputs change?" Checking the recommendations means checking their inputs first.',
+        text: 'The recommended actions are not generated claims in the way the citation and quote are; they are logically derived from the competitor profiles. But that derivation has a dependency problem: recommendations 1 and 2 reference Meridian\'s phased approach and Praxon\'s 4,800-supplier benchmark, data points that may themselves be unverified. If the upstream data is wrong, the downstream recommendations are built on a false premise. Verifying them means checking that upstream data, not finding an external source. For the citation and the quote, you ask whether the claim is true. Here you ask whether the reasoning holds if the inputs change. The work is real but bounded: once you\'ve verified the inputs (medium risk, ~5 minutes each), the conclusions follow.',
         tone: 'success',
       },
       include: {
@@ -473,7 +477,7 @@ export const P10_ELEMENTS: VerificationElement[] = [
       },
       flag: {
         title: 'Wrong triage category.',
-        text: 'The recommendations are not generated factual claims; they are conclusions derived from premises. There is no "real" version of these recommendations to verify against an external source. The issue is not compounding specificity signals; it is that they rest on upstream data that itself needs verification. Flagging them conflates two different types of verification need: factual claims (check against a source) and dependency risk (check the inputs that the conclusion relies on). Route these through verify: check the premises, and the conclusions follow.',
+        text: 'The recommendations are not generated factual claims; they are conclusions derived from premises. There is no "real" version of these recommendations to verify against an external source. Compounding specificity signals are not what makes them risky; the risk is that they rest on upstream data that itself needs verification. Flagging them conflates two different types of verification need: factual claims, which you check against a source, and dependency risk, which you check through the inputs the conclusion relies on. Route these through verify: check the premises, and the conclusions follow.',
         tone: 'caution',
       },
     },
@@ -482,23 +486,25 @@ export const P10_ELEMENTS: VerificationElement[] = [
 
 export const P10_SUMMARY = `Verification triage: what this briefing revealed.
 
-This briefing contained four distinct verification patterns. The triage decision for each one came from two factors operating together: the number of specificity signals (one detail vs. compounding details), and the verification cost (clear search target vs. hard-to-verify).
+This briefing contained four distinct verification patterns. The triage decision for each one came from two factors operating together: the number of specificity signals (one detail vs. compounding details) and the verification cost, whether the claim has a clear search target or is hard to verify.
 
-Flag: High Risk (Elements 1, 3): The HBR citation and the CFO quote both showed compounding specificity signals (journal + authors + year; quote + executive + forum + date) AND high verification difficulty (no article title to anchor a search; a 90-minute transcript to comb through against generic phrasing). When both factors compound, the probability of generation is high and the cost to confirm is real. These get checked first; if unconfirmed in reasonable time, they get excluded.
+Flag: High Risk (Elements 1, 3): The HBR citation and the CFO quote both showed compounding specificity signals (journal + authors + year; quote + executive + forum + date) and high verification difficulty: the citation had no article title to anchor a search, and the quote left a 90-minute transcript to comb through against generic phrasing. When both factors compound, the probability of generation is high and the cost to confirm is real. These get checked first; if unconfirmed in reasonable time, they get excluded.
 
-Verify: Medium Risk (Elements 2, 5): The revenue reduction figure and the SKU throughput number were single-signal claims with clear search targets. A named company plus a specific timeframe gives you somewhere obvious to look. Doable in ~5 minutes against primary sources. Single signal plus low verification cost = verify before including.
+Verify: Medium Risk (Elements 2, 5): The revenue reduction figure and the SKU throughput number were single-signal claims with clear search targets. A named company plus a specific timeframe gives you somewhere obvious to look, and each takes ~5 minutes to check against primary sources. Single signal plus low verification cost = verify before including.
 
 Include: Low Risk (Element 4): The Cascade passage attributed its claims to a specific source and disclosed the absence of independent verification. No verification cost: the text is managing its own epistemic status. Forward as-is with the caveat preserved.
 
 Verify: dependency risk (Element 6): The recommendations were not generated claims themselves, but they inherited the verification status of their inputs. The work is bounded: verify the upstream inputs (medium risk each), and the conclusions follow.
 
-The triage heuristic has two factors. Count the specificity signals (one signal vs. compounding signals) AND estimate the verification cost (clear search target vs. hard-to-verify). These compound. Element 1 was high-signal AND hard-to-verify, which puts it at flag, high risk. Element 2 was single-signal AND clear search target, which puts it at verify, medium risk. Element 4 was self-managed, with no verification cost, which puts it at include, low risk. The skill is reading both axes at once, then matching the risk profile to your available verification time.`;
+The triage heuristic has two factors, and they compound: count the specificity signals and estimate the verification cost. Element 1 had compounding signals and was hard to verify, which puts it at flag, high risk. Element 2 had a single signal and a clear search target, which puts it at verify, medium risk. Element 4 managed its own limitations and had no verification cost, which puts it at include, low risk. The skill is reading both factors at once, then matching the risk profile to your available verification time.`;
+
+export const P10_REFLECTION = `Pick one AI-generated output you used at work in the last two weeks. Using the two-factor triage (how many specificity signals, how hard to verify), name one element you would flag, one you would verify, and one you could include as written. Which of them did you actually check before you used it? Two or three sentences.`;
 
 // ─── P11: Iterative Refinement ────────────────────────────────────
 
-export const P11_SCENARIO = `Your task: You are an HR business partner at a mid-size technology company. The Chief People Officer has asked you to draft an internal communication to a 200-person engineering department announcing a reorganization. Three teams are being merged into two, reporting lines are changing for roughly 60 people, and two team lead positions are being eliminated (the affected individuals have already been notified privately). The email will go out Monday morning. It needs to be clear, honest, and specific enough that people know what's changed, without generating panic or a wave of resignations.
+export const P11_SCENARIO = `You are an HR business partner at a mid-size technology company. The Chief People Officer has asked you to draft an internal communication to a 200-person engineering department announcing a reorganization. Three teams are being merged into two, reporting lines are changing for roughly 60 people, and two team lead positions are being eliminated (the affected individuals have already been notified privately). The email will go out Monday morning. It needs to be clear, honest, and specific enough that people know what's changed, without generating panic or a wave of resignations.
 
-You've decided to use AI to draft the communication. The exercise below walks you through three refinement turns, practicing the Description-Discernment loop on each iteration.`;
+You've decided to use AI to draft the communication. The exercise below walks you through three refinement turns, practicing the Description-Discernment loop on each iteration. You evaluate the first two drafts, then write a refinement of your own in the third turn and compare it with a sample.`;
 
 export const P11_TURN1_PROMPT = `Your initial prompt: "Write an email to the engineering department announcing a reorganization. Three teams are being merged into two and some reporting lines are changing."`;
 
@@ -651,24 +657,34 @@ export const P11_REFLECTION = `You evaluated three drafts and wrote one refineme
 // content. P12_SCENARIO / P12_EXEMPLAR / etc. remain plain strings
 // below since they don't carry inline citations.
 
-export const P12_SCENARIO = `Your situation: You've just completed the competitive landscape briefing from the output verification scenario, the one with the AI-generated competitor profiles that required verification. Imagine you caught the errors, verified the data against primary sources, rewrote the strategic recommendations using your own meeting notes, and sent the final briefing to your director. The briefing is going to the leadership team tomorrow.
+export const P12_SCENARIO = `Go back to the internal briefing from the output verification exercise: the AI draft on how Meridian, Praxon, and Cascade apply AI to their supply chains. Imagine you checked each element as the triage summary recommends. You removed what you could not confirm, checked the figures against company materials, rewrote the recommended actions from the confirmed figures, and sent the final briefing to your director. It goes to the leadership team tomorrow.
 
-Your organization has adopted the practice of appending a brief AI diligence statement to any deliverable that involved AI assistance. Write the statement for this briefing.`;
+Your organization has adopted the practice of appending a brief AI diligence statement to any deliverable that involved AI assistance. Write the statement for this briefing, then save it to compare it with an exemplar statement.`;
 
-export const P12_EXEMPLAR = `**AI Diligence Statement: Competitive Landscape Briefing**
+export const P12_EXEMPLAR = `**AI Diligence Statement: Competitor AI in Supply Chain Operations**
 
-**Delegation:** Competitor data compilation (profiles, revenue, headcount, recent announcements) was fully delegated to AI using a structured prompt specifying five competitors and four data categories. Comparative analysis was AI-assisted: AI generated the framework, which I reweighted based on the prospect's priorities from our initial meeting. Strategic recommendations and the executive summary were human-authored from verified inputs. Formatting was fully delegated.
+**Delegation:** The first draft (three competitor profiles and three recommended actions) was fully delegated to AI. The final profiles are AI-assisted: I kept the AI's text where verification supported it and cut or corrected the rest. The recommended actions are human-authored from the verified inputs.
 
-**Description:** The prompt specified a two-page internal briefing for the leadership team covering competitor profiles, comparative analysis, strategic recommendations, and an executive summary. Constraints: factual claims must be verifiable, no speculative projections, direct tone.
+**Description:** The prompt specified a two-page internal briefing for the leadership team on how three named competitors apply AI to supply chain operations: what each announced, what results each reported, and what we should consider in response. Constraints: factual claims attributed to a named source, no speculative projections, direct tone.
 
-**Discernment:** Verification identified two fabricated elements (a nonexistent HBR citation and a fabricated competitor CFO quote), both removed. Three data points were checked against annual reports; one unconfirmable figure was removed.
+**Discernment:** Verification identified two fabricated elements (a nonexistent HBR citation and a fabricated competitor CFO quote), both removed. Three figures were checked against company materials; one could not be confirmed, so it was removed and no recommended action relies on it.
 
-**Diligence:** Two limitations: (1) competitive data reflects publicly available information only, and (2) comparative analysis weights are based on a single initial meeting with the prospect. Strategic recommendations reflect my professional judgment informed by the verified data.`;
+**Diligence:** Two limitations: (1) competitor results are company-reported, and Cascade's figures have no independent verification, which the briefing states; (2) the briefing draws on public announcements only. The recommended actions reflect my professional judgment informed by the verified data. Prepared with Claude (Anthropic); I reviewed all AI-generated content and take full responsibility for the briefing.`;
 
 export const P12_EFFECTIVENESS = `What makes the exemplar effective:
 
 The exemplar does four things your own statement may or may not have included. Read these as a reference for the next statement you write at work, not as a judgment on your draft.
 
-First, it uses the 4D vocabulary naturally, not as a checklist. "Fully delegated," "AI-assisted," "human-authored" are Delegation terms doing real descriptive work: they tell the reader exactly where AI contributed and where it didn't. Second, it names what was verified and what was found: the fabricated citation, the fabricated quote, the unconfirmable figure. This is Discernment made visible: not just "I checked the output" but "I checked it, found these specific problems, and here is what I did about each one." Third, it acknowledges limitations honestly: the data is public-only, the priority weighting reflects a single meeting. This is accountability, not defensiveness. Fourth, it is concise enough to actually append to a deliverable. A diligence statement that takes longer to read than the briefing it accompanies won't be used. The exemplar covers all four competencies in a single, brief block of structured prose.`;
+First, it uses the 4D vocabulary naturally, not as a checklist. "Fully delegated," "AI-assisted," and "human-authored" are Delegation terms that tell the reader exactly where AI contributed and where it didn't.
+
+Second, it names what was verified and what was found: the fabricated citation, the fabricated quote, the unconfirmable figure. That makes Discernment visible. The statement goes beyond "I checked the output" to "I checked it, found these specific problems, and here is what I did about each one."
+
+Third, it acknowledges limitations honestly: the results are company-reported, and the data is public-only. It also names the tool and says who answers for the result, as the framework's authors do in their own statement (Dakan & Feller, 2025, p. 7). This is accountability, not defensiveness.
+
+Fourth, it is concise enough to actually append to a deliverable. A diligence statement that takes longer to read than the briefing it accompanies won't be used. The exemplar covers all four competencies in a single, brief block of structured prose.`;
 
 export const P12_REFLECTION = `Think about the last deliverable you produced at work that involved AI assistance. If you had appended a diligence statement like the exemplar above, what would have been different in the document itself, in how your manager perceived it, or in how you thought about your own process? One or two sentences.`;
+
+// ─── S9: Program closing ──────────────────────────────────────────
+
+export const CLOSING_CONFIDENCE_REFLECTION = `Think of the AI task you do most often at work. Over this program, which grew more: your confidence that the tool gets that task right, or your confidence that you can tell when it has not? Name one check you will keep running on that task even when the output looks fine.`;

@@ -1,10 +1,14 @@
 // Story 3: AdoptionTrendChart — augmentation/automation balance over three
 // waves (V1, V3, V4) plus a directive-interaction sparkline (4C spec §3.5).
-// Source: Handa et al. (V1); Appel, McCrory & Tamkin (V3); Economic Primitives (V4).
+// Source: Handa et al. (V1); Appel, McCrory & Tamkin (V3); Appel, Massenkoff & McCrory,
+// Jan 2026 (Nov 2025 data) (V4).
 //
-// Color rule: Story 3 uses neutral --secondary / --tertiary for the bars,
-// NOT the 4D olive/blue-gray, because the 4D framework hasn't been
-// introduced yet at this point in the narrative. The action color
+// Color rule: Story 3 uses the neutral --secondary for the bars, NOT the
+// 4D olive/blue-gray, because the 4D framework hasn't been introduced yet
+// at this point in the narrative. The two series are told apart by fill
+// style instead of hue (solid augmentation, outlined automation) and by
+// printed values, since IC 1.3 asks the learner to read this chart and two
+// neighboring neutrals are indistinguishable (WCAG 1.4.1). The action color
 // is used for the directive sparkline because it's an editorial signal,
 // not a 4D one (see 4C spec §18.2 rationale).
 
@@ -14,6 +18,7 @@ import {
   BarChart,
   CartesianGrid,
   Cell,
+  LabelList,
   Line,
   LineChart,
   ResponsiveContainer,
@@ -28,6 +33,7 @@ import {
   TOOLTIP_STYLE,
 } from '../../utils/chart-config';
 import { useChartTokens } from '../../hooks/useChartTokens';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { Icon } from '../../components/shared/Icon';
 
 interface CollaborationPoint {
@@ -56,6 +62,7 @@ export function AdoptionTrendChart({
 }: AdoptionTrendChartProps): JSX.Element {
   const [caveatOpen, setCaveatOpen] = useState(false);
   const tokens = useChartTokens();
+  const reducedMotion = useReducedMotion();
 
   // Convert decimals → percentage points for chart consumption.
   // X-axis label uses only the period (e.g. "Jan 2025") — the internal
@@ -130,15 +137,40 @@ export function AdoptionTrendChart({
                   name === 'augmentation' ? 'Augmentation' : 'Automation',
                 ]}
               />
-              <Bar dataKey="augmentation" isAnimationActive animationDuration={400}>
+              <Bar dataKey="augmentation" isAnimationActive={!reducedMotion} animationDuration={400}>
                 {collabData.map((d) => (
                   <Cell key={`aug-${d.wave}`} fill={tokens.secondary} />
                 ))}
+                <LabelList
+                  dataKey="augmentation"
+                  position="top"
+                  formatter={(v: number) => `${v}%`}
+                  fontSize={11}
+                  fontFamily={AXIS_TICK_STYLE.fontFamily}
+                  fill={tokens.ink}
+                />
               </Bar>
-              <Bar dataKey="automation" isAnimationActive animationDuration={400}>
+              <Bar dataKey="automation" isAnimationActive={!reducedMotion} animationDuration={400}>
                 {collabData.map((d) => (
-                  <Cell key={`auto-${d.wave}`} fill={tokens.tertiary} />
+                  <Cell
+                    key={`auto-${d.wave}`}
+                    fill="transparent"
+                    stroke={tokens.secondary}
+                    strokeWidth={1.5}
+                  />
                 ))}
+                {/* Recharts hands each Cell's props to its label; without
+                    stroke="none" the outline stroke would also draw around
+                    the value text. */}
+                <LabelList
+                  dataKey="automation"
+                  position="top"
+                  formatter={(v: number) => `${v}%`}
+                  fontSize={11}
+                  fontFamily={AXIS_TICK_STYLE.fontFamily}
+                  fill={tokens.ink}
+                  stroke="none"
+                />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
@@ -157,15 +189,20 @@ export function AdoptionTrendChart({
             <span
               aria-hidden="true"
               className="inline-block"
-              style={{ width: 10, height: 10, background: tokens.tertiary }}
+              style={{
+                width: 10,
+                height: 10,
+                background: 'transparent',
+                border: `1.5px solid ${tokens.secondary}`,
+              }}
             />
             Automation
           </span>
         </div>
 
         <p className="m-0 mt-3 font-sans text-body-sm italic text-secondary">
-          Note: percentages in the Aug and Nov 2025 waves do not sum to 100% — a small share
-          of interactions (3–4%) do not clearly fit either category and remain unclassified.
+          Note: percentages in the Aug and Nov 2025 waves do not sum to 100%, because a small
+          share of interactions (3–4%) do not clearly fit either category and remain unclassified.
           The Jan 2025 wave uses the original Handa et al. classification, which sums to 100%.
         </p>
       </figure>
@@ -205,7 +242,7 @@ export function AdoptionTrendChart({
                   dataKey="pct"
                   stroke={tokens.action}
                   strokeWidth={2}
-                  isAnimationActive
+                  isAnimationActive={!reducedMotion}
                   animationDuration={400}
                   dot={(props) => {
                     const { cx, cy, payload, index } = props as {
@@ -259,7 +296,7 @@ export function AdoptionTrendChart({
 
       <p className="m-0 font-mono text-caption text-muted" style={{ letterSpacing: '0.02em' }}>
         Source: Handa et al., Feb 2025, pp. 3, 9; Appel, McCrory &amp; Tamkin, Sep 2025, p. 9;
-        Economic Primitives, Nov 2025, pp. 5, 9.
+        Appel, Massenkoff &amp; McCrory, Jan 2026 (Nov 2025 data), pp. 5, 9.
       </p>
     </div>
   );

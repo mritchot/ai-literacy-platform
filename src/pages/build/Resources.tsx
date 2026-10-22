@@ -9,6 +9,7 @@ import RES_MD from './content/06_resources.md?raw';
 import { renderMarkdown } from '../../components/shared/render-markdown';
 import { DisclosureChevron } from '../../components/shared/DisclosureChevron';
 import { Overline } from '../../components/shared/Overline';
+import { usePrintMode } from '../../contexts/PrintModeContext';
 import {
   BUDGET_LINES,
   BUDGET_TOTAL,
@@ -19,7 +20,7 @@ import {
   SOLO_TOTAL,
 } from './resources-data';
 import { SERIES_ACCENT } from './config';
-import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
+import { ArtifactFooter, ArtifactHeader, ArtifactPage, ArtifactTopBar } from './chrome';
 
 const [INTRO_MD = '', ...REST] = RES_MD.replace(/\r\n/g, '\n').split(/\n## /);
 const SECTIONS = REST.map((part) => {
@@ -59,7 +60,7 @@ function CostContrast(): JSX.Element {
 
 function DataRow({ label, value, note, emphasis }: { label: string; value: string; note?: string; emphasis?: boolean }): JSX.Element {
   return (
-    <div className="flex items-baseline justify-between gap-4 border-b border-border-light py-2.5 last:border-0">
+    <div className="print-keep flex items-baseline justify-between gap-4 border-b border-border-light py-2.5 last:border-0">
       <div className="min-w-0">
         <div className={`font-sans text-[13.5px] ${emphasis ? 'font-bold text-ink' : 'font-semibold text-ink'}`}>{label}</div>
         {note && (
@@ -73,9 +74,11 @@ function DataRow({ label, value, note, emphasis }: { label: string; value: strin
   );
 }
 
+// On paper a card breaks between its rows (print-flow) instead of moving
+// whole to the next page and leaving the page before half empty.
 function DataCard({ label, children }: { label: string; children: React.ReactNode }): JSX.Element {
   return (
-    <div style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', padding: '16px 20px' }}>
+    <div className="print-flow" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', padding: '16px 20px' }}>
       <Overline className="mb-3">{label}</Overline>
       {children}
     </div>
@@ -83,10 +86,12 @@ function DataCard({ label, children }: { label: string; children: React.ReactNod
 }
 
 function CustomVsArticulate(): JSX.Element {
-  const [open, setOpen] = useState(false);
+  const [expanded, setOpen] = useState(false);
+  // Forced open on the print route, where the panel is part of the document.
+  const open = usePrintMode() || expanded;
   return (
     <section
-      className="mt-10 overflow-hidden"
+      className="print-flow mt-10 overflow-hidden"
       style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', borderLeft: `3px solid ${SERIES_ACCENT}` }}
     >
       <button
@@ -101,12 +106,12 @@ function CustomVsArticulate(): JSX.Element {
         <DisclosureChevron expanded={open} />
       </button>
       {open && (
-        <div id="custom-articulate-panel" className="border-t border-border-light" style={{ padding: '18px 20px' }}>
+        <div id="custom-articulate-panel" className="print-flow border-t border-border-light" style={{ padding: '18px 20px' }}>
           {RATIONALE.map((block) => (
-            <div key={block.heading} className="mb-5 last:mb-0">
+            <div key={block.heading} className="print-keep mb-5 last:mb-0">
               <h4 className="mb-2 font-sans text-h4 font-semibold text-ink-secondary">{block.heading}</h4>
               {block.paragraphs.map((p, i) => (
-                <p key={i} className="m-0 mb-2.5 max-w-reading font-sans text-body-sm text-body last:mb-0" style={{ lineHeight: 1.65 }}>
+                <p key={i} className="m-0 mb-2.5 font-sans text-body-sm text-body last:mb-0" style={{ lineHeight: 1.65 }}>
                   {p}
                 </p>
               ))}
@@ -120,14 +125,11 @@ function CustomVsArticulate(): JSX.Element {
 
 export default function Resources(): JSX.Element {
   return (
-    <div className="mx-auto max-w-interactive px-4 py-12 sm:px-8 lg:px-16 lg:py-14">
+    <ArtifactPage width="interactive">
       <ArtifactTopBar pdfSlug="resources" />
-      <SeriesEyebrow label="Behind the build · Project Management" />
+      <ArtifactHeader label="Behind the build · Project Management" slug="resources" title="Resource & Budget Plan" />
 
-      <h1 className="m-0 mb-2 font-display text-display font-normal text-ink">Resource &amp; Budget Plan</h1>
-      <p className="m-0 mb-6 font-sans text-h3 font-normal text-secondary">AI Literacy for the Modern Workforce</p>
-
-      <div className="prose-longform max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
+      <div>{renderMarkdown(INTRO_MD.trim())}</div>
 
       <CostContrast />
 
@@ -153,8 +155,8 @@ export default function Resources(): JSX.Element {
           ))}
           <DataRow label="Total" value={`${BUDGET_TOTAL.low}–${BUDGET_TOTAL.high}`} emphasis />
           <p className="m-0 mt-3 font-sans text-caption text-tertiary" style={{ lineHeight: 1.5 }}>
-            Labor is <strong className="text-secondary">{LABOR_SHARE}</strong> of the total, consistent with L&amp;D
-            industry benchmarks. The full-stack developer is the single largest line item.
+            Labor is <strong className="text-secondary">{LABOR_SHARE}</strong> of the total, the sum of the five labor
+            lines. The full-stack developer is the single largest line item.
           </p>
         </DataCard>
       </div>
@@ -164,11 +166,11 @@ export default function Resources(): JSX.Element {
       {SECTIONS.map((s) => (
         <section key={s.heading} className="mt-10">
           <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{s.heading}</h2>
-          <div className="prose-longform max-w-reading">{renderMarkdown(s.body)}</div>
+          <div>{renderMarkdown(s.body)}</div>
         </section>
       ))}
 
       <ArtifactFooter currentSlug="resources" />
-    </div>
+    </ArtifactPage>
   );
 }

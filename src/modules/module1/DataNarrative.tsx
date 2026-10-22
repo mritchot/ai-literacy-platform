@@ -7,11 +7,17 @@
 // A sentinel element placed below each unsubmitted IC scrolls the IC back
 // into view if the learner pages past it — a one-shot per story so the
 // scroll-back doesn't fire repeatedly while the learner reads context.
+//
+// Portfolio mode promises free navigation, so there every story is
+// unlocked, the scroll-back is off, and one line explains the learner-mode
+// gate. The checks stay answerable.
 
 import { useCallback, useEffect, useRef, type ReactNode } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { usePlatformMode } from '../../hooks/usePlatformMode';
 import { scrollBehavior } from '../../utils/motion';
+import { CheckSources } from '../../components/shared/CheckSources';
 import { Citation } from '../../components/shared/Citation';
 import { InterpretationCheck } from '../../components/shared/InterpretationCheck';
 import { Overline } from '../../components/shared/Overline';
@@ -24,7 +30,11 @@ import {
 } from './GeographicAdoptionChart';
 import { GDPCorrelationScatter } from './GDPCorrelationScatter';
 import { SkillDemandBar } from './SkillDemandBar';
-import { MODULE_1_DEBRIEFS, MODULE_1_IC_ITEMS } from './interpretation-check-items';
+import {
+  MODULE_1_DEBRIEF_SOURCES,
+  MODULE_1_DEBRIEFS,
+  MODULE_1_IC_ITEMS,
+} from './interpretation-check-items';
 
 interface SkillRow {
   rank: number;
@@ -45,9 +55,33 @@ interface DirectivePoint {
   directiveShare: number;
 }
 
+interface CoreSkillRow {
+  rank: number;
+  skill: string;
+  share: number;
+}
+
+interface CoreSkills2030 {
+  coreIn2030: string[];
+  emerging: string[];
+  steady: string[];
+}
+
+interface Instability {
+  prior2016: number;
+  prior2018: number;
+  prior2020: number;
+  prior2023: number;
+  current: number;
+}
+
 interface DataNarrativeProps {
   skills: SkillRow[];
-  instability: { prior2020: number; prior2023: number; current: number };
+  /** Full 26-skill core-share list, WEF 2025 Figure 3.3 (`coreSkills2025.skills`). */
+  coreSkills: CoreSkillRow[];
+  /** Figure 3.6 quadrants (`coreSkills2030`). */
+  coreSkills2030: CoreSkills2030;
+  instability: Instability;
   /** Full Anthropic Economic Index country dataset (>=200 obs filter
    *  applied). Sourced from `src/data/geographic-adoption-full.json`. */
   countries: GeoCountry[];
@@ -65,10 +99,14 @@ interface StoryShellProps {
   ic: (typeof MODULE_1_IC_ITEMS)[number] | null;
   children: ReactNode;
   debrief?: string | null;
+  /** When false, skip the scroll-back to an unsubmitted check. */
+  scrollBack?: boolean;
 }
 
 export function DataNarrative(props: DataNarrativeProps): JSX.Element {
   const { state } = useLearnerProgress();
+  const { mode } = usePlatformMode();
+  const portfolio = mode === 'portfolio';
 
   const ic1Submitted = Boolean(state.knowledgeChecks['1.3.ic_1_1']);
   const ic2Submitted = Boolean(state.knowledgeChecks['1.3.ic_1_2']);
@@ -87,16 +125,29 @@ export function DataNarrative(props: DataNarrativeProps): JSX.Element {
         unlocked
         ic={MODULE_1_IC_ITEMS[0] ?? null}
         debrief={ic1Submitted ? MODULE_1_DEBRIEFS['ic_1_1'] ?? null : null}
+        scrollBack={!portfolio}
       >
-        <Story1Body skills={props.skills} instability={props.instability} />
+        <Story1Body
+          skills={props.skills}
+          coreSkills={props.coreSkills}
+          coreSkills2030={props.coreSkills2030}
+          instability={props.instability}
+        />
       </StoryShell>
+
+      {portfolio && (
+        <p className="m-0 font-sans text-body-sm text-secondary">
+          In learner mode, each story unlocks after the check above it.
+        </p>
+      )}
 
       <StoryShell
         storyNumber={2}
         headline="Geography, context, and the adoption gap"
-        unlocked={ic1Submitted}
+        unlocked={portfolio || ic1Submitted}
         ic={MODULE_1_IC_ITEMS[1] ?? null}
         debrief={ic2Submitted ? MODULE_1_DEBRIEFS['ic_1_2'] ?? null : null}
+        scrollBack={!portfolio}
       >
         <Story2Body
           countries={props.countries}
@@ -108,9 +159,10 @@ export function DataNarrative(props: DataNarrativeProps): JSX.Element {
       <StoryShell
         storyNumber={3}
         headline="Twelve months of behavioral shift"
-        unlocked={ic2Submitted}
+        unlocked={portfolio || ic2Submitted}
         ic={MODULE_1_IC_ITEMS[2] ?? null}
         debrief={ic3Submitted ? MODULE_1_DEBRIEFS['ic_1_3'] ?? null : null}
+        scrollBack={!portfolio}
       >
         <Story3Body
           collaboration={props.collaboration}
@@ -129,6 +181,7 @@ function StoryShell({
   ic,
   children,
   debrief,
+  scrollBack = true,
 }: StoryShellProps): JSX.Element {
   const articleRef = useRef<HTMLElement>(null);
   const icRef = useRef<HTMLDivElement>(null);
@@ -168,7 +221,7 @@ function StoryShell({
   // submitted, watch the sentinel below the IC. If it enters the viewport
   // (the learner scrolled past), bring the IC back into view. One-shot.
   useEffect(() => {
-    if (!unlocked || icSubmitted || !ic) return;
+    if (!scrollBack || !unlocked || icSubmitted || !ic) return;
     scrolledBackRef.current = false;
     const sentinel = sentinelRef.current;
     if (!sentinel) return;
@@ -185,7 +238,7 @@ function StoryShell({
     );
     obs.observe(sentinel);
     return () => obs.disconnect();
-  }, [unlocked, icSubmitted, ic]);
+  }, [scrollBack, unlocked, icSubmitted, ic]);
 
   const onIcSubmitted = useCallback(() => {
     scrolledBackRef.current = false;
@@ -195,10 +248,10 @@ function StoryShell({
     <article
       ref={articleRef}
       data-story-index={storyNumber}
+      className="px-3 pb-4 pt-[18px] sm:px-[26px] sm:pb-[22px] sm:pt-6"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
-        padding: '24px 26px 22px',
         opacity: unlocked ? 1 : 0.3,
         pointerEvents: unlocked ? 'auto' : 'none',
         transition: 'opacity 300ms cubic-bezier(0.4, 0, 0.2, 1)',
@@ -235,6 +288,7 @@ function StoryShell({
           style={{ opacity: 1 }}
         >
           {debrief}
+          {ic && <CheckSources sources={MODULE_1_DEBRIEF_SOURCES[ic.id]} />}
         </p>
       )}
 
@@ -247,37 +301,55 @@ function StoryShell({
 
 function Story1Body({
   skills,
+  coreSkills,
+  coreSkills2030,
   instability,
 }: {
   skills: SkillRow[];
-  instability: { prior2020: number; prior2023: number; current: number };
+  coreSkills: CoreSkillRow[];
+  coreSkills2030: CoreSkills2030;
+  instability: Instability;
 }): JSX.Element {
   return (
     <>
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
           The World Economic Forum regularly surveys over a thousand employers across 55 economies
-          about the skills they expect to need most in the coming years. The 2025 report identifies
-          a familiar pattern with one important shift: AI and big data literacy now ranks as the
-          single fastest-growing skill demand in the global workforce, ahead of cybersecurity,
-          creative thinking, and leadership.
+          about the skills they expect to need most in the coming years. In the 2025 report, AI and
+          big data now ranks as the single fastest-growing skill in the global workforce, ahead
+          of networks and cybersecurity, technological literacy, and creative thinking
+          <Citation ids="wef-2025" pageKey="fastest-growing-skills" />. Job postings say the same
+          thing from the hiring side. Between mid-2023 and mid-2025, US workers in occupations
+          whose postings ask for AI fluency rose nearly sevenfold, from about one million to
+          seven million. No other skill grew faster. Across ten European economies, demand rose fivefold
+          between late 2023 and late 2025, the same rate MGI measured in the United States over
+          those months.
         </p>
         <p className="m-0">
-          That ranking reflects more than enthusiasm. Eighty-five percent of surveyed employers
-          plan to upskill their workforce in AI-related competencies by 2030. But the same
-          employers identify a persistent obstacle: the workforce doesn’t have the skills yet, and
-          this gap, not technology access or budgets or regulation, is the factor most
-          employers cite as the primary barrier to their AI transformation.
+          Eighty-five percent of surveyed employers plan to upskill their workforce over the
+          2025–2030 period
+          <Citation ids="wef-2025" pageKey="upskill-85" />. Asked about AI specifically, 77% plan
+          to reskill existing staff to work alongside it, the top AI strategy in 45 of 55
+          economies<Citation ids="wef-2025" pageKey="ai-reskill-77" />. But the same employers
+          say the workforce doesn’t have the skills yet. Skill gaps are the barrier they cite most
+          often: 63% expect them to hold back the transformation of their business, ahead of
+          regulation and budgets<Citation ids="wef-2025" pageKey="skill-gap-63" />.
         </p>
         <p className="m-0">
           The chart below shows the top rising skills. Below it, a callout tracks how quickly the
-          required skills are turning over — a measure called skills instability that captures the
-          share of core workforce skills expected to change over a five-year window.
+          required skills are turning over, using a measure called skills instability: the share
+          of core workforce skills expected to change over a five-year window
+          <Citation ids="wef-2025" pageKey="skills-instability-39" />.
         </p>
       </div>
 
       <div className="my-6">
-        <SkillDemandBar skills={skills} instability={instability} />
+        <SkillDemandBar
+          skills={skills}
+          coreSkills={coreSkills}
+          coreSkills2030={coreSkills2030}
+          instability={instability}
+        />
       </div>
     </>
   );
@@ -298,15 +370,17 @@ function Story2Body({
         <p className="m-0">
           AI adoption isn’t uniform. Where you sit geographically and institutionally shapes
           whether AI is available to you and how it gets used. The data you’re about to explore
-          comes from an analysis of one million AI conversations, measuring usage rates relative
-          to working-age population across countries.
+          comes from an analysis of one million Claude.ai conversations sampled over one week in August
+          2025, measuring each country’s share of usage against its share of working-age
+          population<Citation ids="appel-mccrory-tamkin-2025" pageKey="aui-method" />.
         </p>
         <p className="m-0">
-          What stands out is less about how much AI gets used than about how. Countries with high
-          adoption rates tend to use AI across a wider range of tasks, including creative,
-          analytical, and operational work. Countries with lower adoption concentrate
-          overwhelmingly on a single use case: coding. The pattern suggests that adoption breadth,
-          not volume alone, is a sign of maturity.
+          Countries differ in how they use AI as well as how much. Those with high adoption
+          rates tend to use AI across a wider range of tasks, including creative,
+          analytical, and operational work. Countries with lower adoption tend to lean more heavily on
+          one use case, coding, which is over half of all usage in India against about a third
+          globally<Citation ids="appel-mccrory-tamkin-2025" pageKey="task-mix-by-country" />. The
+          pattern suggests that adoption breadth, not volume alone, is a sign of maturity.
         </p>
       </div>
 
@@ -314,16 +388,25 @@ function Story2Body({
         <GeographicAdoptionChart countries={countries} tierRanges={tierRanges} />
         <GDPCorrelationScatter countries={countries} />
         <p className="m-0 font-sans text-body text-body">
-          The relationship between income and adoption is real, but it is not the whole story.
-          Countries with comparable GDP per capita can have sharply different adoption rates. The
-          research identifies several factors that contribute beyond income: digital
-          infrastructure maturity, the proportion of knowledge work in a country’s economy,
-          regulatory environments around technology, and organizational norms about AI use. For
+          Income and adoption are related, but countries with comparable GDP per capita can have
+          sharply different adoption rates. The
+          research names five likely factors behind the disparities, some of them tied to income: digital infrastructure,
+          economic structure, regulatory environment, awareness and access, and trust and comfort
+          with the tools. For
           organizations operating across regions, this means that providing AI access does not
           automatically produce AI adoption. The institutional context shapes whether and how
           tools get used.
         </p>
         <CensusEnterpriseInset adoption={censusAdoption} />
+        <p className="m-0 font-sans text-body text-body">
+          Among U.S. public companies, early ChatGPT Enterprise adopters had a median workforce
+          of 2,934 against 424 for firms without an Enterprise account. Even within the same
+          industry, the largest firms are the most likely to adopt
+          <Citation ids="chatterji-2026" pageKey="adopter-profile" />. Adoption also tracks prior
+          investment in R&amp;D, software, and organizational capability, not scale alone
+          <Citation ids="chatterji-2026" pageKey="complements" />. Those estimates describe large
+          public firms. They say nothing about small private firms or startups.
+        </p>
         <p
           className="m-0 font-mono text-caption text-muted"
           style={{ letterSpacing: '0.02em' }}
@@ -356,13 +439,15 @@ function Story3Body({
         <p className="m-0">
           Researchers tracked how professionals interact with AI tools across three measurement
           periods spanning twelve months. Two patterns stand out. First, the share of purely
-          directive interactions (where a user hands a complete task to the model and accepts
-          the result with minimal back-and-forth) rose sharply from 28% to 39% between January
-          and August 2025, then partially fell back to 32% by November
-          <Citation ids={['handa-2025', 'appel-mccrory-tamkin-2025']} pageKey="directive-share-28" />.
-          Second, the balance between augmentation (using AI to enhance your own thinking) and
-          automation (delegating tasks to AI entirely) shifted meaningfully during the same
-          period.
+          directive interactions, in which a user hands a complete task to the model and accepts
+          the result with minimal back-and-forth, rose sharply from 28% to 39% between January
+          and August 2025
+          <Citation ids={['handa-2025', 'appel-mccrory-tamkin-2025']} pageKey="directive-share-28" />,
+          then partially fell back to 32% by November
+          <Citation ids="appel-massenkoff-mccrory-2026" pageKey="directive-share-32" />.
+          Second, the balance between augmentation and automation shifted meaningfully during the
+          same period. Augmentation means using AI to enhance your own thinking; automation means
+          delegating tasks to AI entirely.
         </p>
         <p className="m-0">
           These patterns introduce a distinction that will be central to the rest of this program:

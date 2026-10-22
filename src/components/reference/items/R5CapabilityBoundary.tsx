@@ -9,6 +9,8 @@
 
 import type { ReactNode } from 'react';
 import { useViewport } from '../../../hooks/useViewport';
+import { Citation } from '../../shared/Citation';
+import { renderInline } from '../../shared/render-markdown';
 
 // ─────────────────────────────────────────────────────────────────────
 // Brand accents, resolved through the competency tokens so they follow
@@ -43,12 +45,12 @@ const RELIABLE_ROWS: ReliableRow[] = [
   },
   {
     task: 'Reformatting and restructuring',
-    why: 'Deterministic tasks with clear output specifications. Token-level manipulation within well-defined patterns.',
+    why: 'Tasks with one correct output and a clear specification. Token-level manipulation within known patterns.',
     notes: 'Format + audience + length spec → reliable output.',
   },
   {
     task: 'Brainstorming and ideation',
-    why: 'High-temperature sampling across the probability distribution produces diverse options by design.',
+    why: 'Sampling produces varied options; asking for many distinct options widens the spread.',
     notes: 'Useful for breadth. Evaluate each option independently; plausible ≠ good.',
   },
   {
@@ -99,7 +101,7 @@ const FAILS_CATEGORIES: FailsCategory[] = [
     rows: [
       {
         failsAt: 'Multi-digit arithmetic',
-        why: 'Numbers split into arbitrary token chunks; “127” may become [“12”, “7”] or [“1”, “27”]',
+        why: 'Digits are cut into tokens by a fixed rule, not by value: “1279” becomes [“127”, “9”], so token boundaries cut across place value',
         instead: 'Ask the model to write code that performs the calculation',
       },
       {
@@ -109,7 +111,7 @@ const FAILS_CATEGORIES: FailsCategory[] = [
       },
       {
         failsAt: 'Non-English text processing',
-        why: 'Lower-resource languages fragment 2–3× more aggressively, consuming context window and increasing error surface',
+        why: 'Lower-resource languages often take 2× or more the tokens for the same meaning (up to 15×){{cite:petrov-2023#up-to-15x}}, so they use up context faster',
         instead: 'Verify non-English output more carefully; expect quality gaps',
       },
     ],
@@ -117,7 +119,7 @@ const FAILS_CATEGORIES: FailsCategory[] = [
   {
     id: 'specificity',
     label: 'Specificity tasks',
-    rootCause: 'NTP × Knowledge',
+    rootCause: 'Next-token prediction × Knowledge',
     body: 'The model generates statistically probable tokens. When a task requires specific facts the training data represents thinly, it produces plausible fabrications.',
     rows: [
       {
@@ -150,7 +152,7 @@ const FAILS_CATEGORIES: FailsCategory[] = [
     rows: [
       {
         failsAt: 'Long document analysis (>20 pages)',
-        why: 'Middle sections fall into the attention valley: processed but underweighted',
+        why: 'Middle sections get the least attention (the lost-in-the-middle effect): processed but underweighted',
         instead: 'Break long documents into sections; process separately',
       },
       {
@@ -160,7 +162,7 @@ const FAILS_CATEGORIES: FailsCategory[] = [
       },
       {
         failsAt: 'Multi-document synthesis',
-        why: 'Multiple documents consume context rapidly; later documents may be underprocessed',
+        why: 'Several documents fill the context fast; those in the middle are most likely to be underprocessed',
         instead: 'Process documents individually, then synthesize yourself',
       },
     ],
@@ -179,9 +181,11 @@ export function R5CapabilityBoundary(): JSX.Element {
         className="m-0 mb-5 text-body-sm text-body"
         style={{ lineHeight: 1.55 }}
       >
-        Know what the tool does well and where it systematically fails before you delegate.
-        Organized by task type, not technical architecture. Each entry connects to Module 3’s
-        mechanical framework.
+        Know what the tool does well and where it systematically fails before you delegate. The
+        framework calls this Platform Awareness, part of
+        Delegation<Citation ids="dakan-feller-2025" pageKey="platform-awareness" />. It sets two
+        requirements for automation: a clear task definition and a quality
+        check<Citation ids="dakan-feller-2025" pageKey="modalities" />. It is organized by task type, not technical architecture. Each entry connects to Module 3’s mechanical framework.
       </p>
 
       {/* Section 1: Reliable */}
@@ -198,9 +202,11 @@ export function R5CapabilityBoundary(): JSX.Element {
         className="m-0 mt-6 text-caption text-tertiary"
         style={{ lineHeight: 1.5, fontStyle: 'italic' }}
       >
-        Framework: Anthropic 4D AI Fluency Framework, Delegation (Platform Awareness) and
-        Discernment competencies (Dakan, Feller, and Anthropic, 2025). Mechanical explanations
-        from Module 3.
+        Framework: 4D AI Fluency Framework, Delegation (Platform Awareness) and Discernment
+        competencies (Dakan &amp; Feller,
+        2025)<Citation ids="dakan-feller-2025" pageKey="delegation-discernment-4-6" />, as taught
+        in Anthropic&rsquo;s AI Fluency course<Citation ids="anthropic-ai-fluency-course-2025" />.
+        Mechanical explanations from Module 3.
       </p>
     </div>
   );
@@ -394,7 +400,7 @@ function FailsSection(): JSX.Element {
 
       {/* Three sub-category cards */}
       <div
-        className="overflow-hidden"
+        className="print-flow overflow-hidden"
         style={{
           border: '1px solid rgb(var(--border))',
           borderTop: 'none',
@@ -524,7 +530,7 @@ function FailsCategoryBlock({
                 className="font-sans text-[12px]"
                 style={{ color: 'rgb(var(--ink))', lineHeight: 1.5, marginBottom: 8 }}
               >
-                {row.why}
+                {renderInline(row.why)}
               </div>
               <MobileFieldLabel label="Instead" color="rgb(var(--discernment-text))" />
               {/* Instead column rendered BOLD per spec — these are
@@ -542,7 +548,7 @@ function FailsCategoryBlock({
                 className="font-sans text-[12px]"
                 style={{ color: 'rgb(var(--ink))', lineHeight: 1.5 }}
               >
-                {row.why}
+                {renderInline(row.why)}
               </div>
               {/* Instead column rendered BOLD per spec — these are
                   the actionable takeaways. */}
@@ -594,7 +600,12 @@ function CoreDistinctionStrip(): JSX.Element {
         }}
       >
         The model generates text rather than retrieving facts. Fluent output and accurate output
-        are independent properties.
+        are independent properties. Old software automated anything you could describe in logical
+        steps and gave the same answer every time. This software automates anything with enough
+        training data and anything where verification scales, and it can be
+        wrong<Citation ids="evans-2026-05" pageKey="verification-scalable-52" />. Most of the Reliable list is pattern work the training data covers densely.
+        Only the Specificity failures trace to thin training data; the Boundary and Volume
+        failures trace to tokenization and the context window.
       </p>
     </aside>
   );

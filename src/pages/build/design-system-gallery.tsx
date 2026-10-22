@@ -92,11 +92,11 @@ function CompetencyConstraint(): JSX.Element {
       <Overline className="mb-2" style={{ color: 'rgb(var(--info))' }}>
         The one rule
       </Overline>
-      <p className="m-0 mb-4 max-w-reading font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
-        The 4D competency colors are reserved for competency tagging — swatches, tags, and
+      <p className="m-0 mb-4 font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
+        The 4D competency colors are reserved for competency tagging: swatches, tags, and
         competency-scoped accents. They are <strong className="text-ink">never</strong> used for
-        general UI: buttons, links, and navigation use the dedicated <span className="font-mono">--action</span>{' '}
-        teal instead. This is what keeps the colors semantic: when a learner sees the olive, it always
+        general UI. Buttons, links, and navigation use the dedicated <span className="font-mono">--action</span>{' '}
+        teal instead. That keeps the colors semantic: when a learner sees the olive, it always
         means Delegation.
       </p>
       <div className="flex flex-wrap items-center gap-6">
@@ -182,16 +182,16 @@ function SegmentedControlSpecimen(): JSX.Element {
 // handful of true circles (radio bullets, state dots).
 function CardSpecimens(): JSX.Element {
   const cards: { label: string; pad: string; bg: string; note: string }[] = [
-    { label: 'Raised card', pad: '20px 24px', bg: 'rgb(var(--white))', note: 'Sits above the page ground. The card color, not a shadow, is what lifts it.' },
+    { label: 'Raised card', pad: '20px 24px', bg: 'rgb(var(--white))', note: 'Sits above the page ground. The card color, not a shadow, lifts it.' },
     { label: 'Recessed surface', pad: '16px', bg: 'rgb(var(--surface))', note: 'Sits below the ground: insets, segmented-control tracks, hover dips.' },
-    { label: 'Dense surface', pad: '12px 16px', bg: 'rgb(var(--surface))', note: 'Same recess at table and list density. One hairline, one weight, everywhere.' },
+    { label: 'Dense surface', pad: '12px 16px', bg: 'rgb(var(--surface))', note: 'Same recess at table and list density, with one hairline weight everywhere.' },
   ];
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
       {cards.map((c) => (
         <div key={c.label} style={{ background: c.bg, border: '1px solid rgb(var(--border))', padding: c.pad }}>
           <div className="font-sans text-[12.5px] font-semibold text-ink">{c.label}</div>
-          <div className="mt-1 font-sans text-[11.5px] text-body" style={{ lineHeight: 1.5 }}>
+          <div className="mt-1 font-sans text-body-sm text-body" style={{ lineHeight: 1.5 }}>
             {c.note}
           </div>
         </div>
@@ -236,11 +236,11 @@ const DEMO_KC: KnowledgeCheckItemData = {
   options: [
     {
       id: 'a',
-      text: 'An accent has to hold contrast against the ground it sits on, and no single value clears that bar on both washi paper and sumi ink — so each competency carries a light-mode value and a dark-mode value of the same hue.',
+      text: 'An accent has to hold contrast against the ground it sits on, and no single value clears that bar on both washi paper and sumi ink, so each competency carries a light-mode value and a dark-mode value of the same hue.',
       isPreferred: true,
       feedbackTitle: 'Correct: contrast is measured against a ground',
       feedbackText:
-        'Exactly. A mid-tone that reads on paper goes muddy on sumi. Each accent keeps its hue — olive stays olive — while its lightness inverts, so a competency stays recognizable without any of the four dropping below AA. This is why the accents are CSS variables rather than literal hexes: a literal cannot flip.',
+        'Exactly. A mid-tone that reads on paper goes muddy on sumi. Each accent keeps its hue (olive stays olive) while its lightness inverts, so a competency stays recognizable without any of the four dropping below AA. This is why the accents are CSS variables rather than literal hexes: a literal cannot flip.',
       feedbackTone: 'success',
     },
     {
@@ -249,7 +249,7 @@ const DEMO_KC: KnowledgeCheckItemData = {
       isPreferred: false,
       feedbackTitle: 'That was the old rule',
       feedbackText:
-        'The palette did once hold the accents fixed across modes, on the reasoning that a brand color is theme-invariant. The problem is that contrast is not a property of a color — it is a property of a color against a ground. Holding one value fixed meant accepting a failing ratio on one of the two.',
+        'The palette did once hold the accents fixed across modes, on the reasoning that a brand color is theme-invariant. Contrast is a property of a color against a ground, not of the color alone. Holding one value fixed meant accepting a failing ratio on one of the two.',
       feedbackTone: 'error',
     },
     {
@@ -337,7 +337,7 @@ export function DesignSystemGallery(): JSX.Element {
           </div>
         </GallerySection>
 
-        <GallerySection label="Color · Neutrals" note="A warm ink scale: no pure grays, and no pure white — the lightest surface is washi paper, and the page ground is a shade under it.">
+        <GallerySection label="Color · Neutrals" note="A warm ink scale with no pure grays and no pure white. The lightest surface is washi paper, and the page ground is a shade under it.">
           <SwatchGrid tokens={NEUTRAL_TOKENS} mode={mode} />
         </GallerySection>
 
@@ -345,7 +345,7 @@ export function DesignSystemGallery(): JSX.Element {
           <SwatchGrid tokens={FEEDBACK_TOKENS} mode={mode} />
         </GallerySection>
 
-        <GallerySection label="Color · Action & focus" note="A dedicated interactive teal, outside the 4D palette, so competency colors never do double duty as buttons — and a vermilion focus ring, off both, so a focus state can never be mistaken for a hover.">
+        <GallerySection label="Color · Action & focus" note="A dedicated interactive teal sits outside the 4D palette, so competency colors never double as buttons. A vermilion focus ring sits outside both, so a focus state can never be mistaken for a hover.">
           <SwatchGrid tokens={ACTION_TOKENS} mode={mode} />
         </GallerySection>
 
@@ -378,7 +378,7 @@ export function DesignSystemGallery(): JSX.Element {
           </div>
         </GallerySection>
 
-        <GallerySection label="Components · Cards" note="Square, hairline-bordered. Depth is carried by the surface color against the ground — there are no drop shadows in the system.">
+        <GallerySection label="Components · Cards" note="Square, with hairline borders. The surface color against the ground carries depth; the system has no drop shadows.">
           <CardSpecimens />
         </GallerySection>
 

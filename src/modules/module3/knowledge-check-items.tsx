@@ -40,7 +40,7 @@ const KC_3_1: KnowledgeCheckItemData = {
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer identifies the correct mechanical chain: tokenization asymmetry → longer sequences → more prediction surface area → higher error concentration. It names the structural nature of the problem (it will recur on similar inputs, not self-correct) and connects tokenization unevenness to both working memory consumption and prediction quality. This is the tokenization framework in action: explaining the mechanism, predicting when unexpected results will occur, and describing the systematic nature of the errors.',
+        'This answer identifies the correct mechanical chain: tokenization asymmetry → longer sequences → more positions where a generation error can occur → higher error concentration. It names the structural nature of the problem (it will recur on similar inputs, not self-correct) and connects tokenization unevenness to both working memory consumption and prediction quality.',
     },
     {
       id: 'c',
@@ -81,7 +81,7 @@ const KC_3_2: KnowledgeCheckItemData = {
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer applies the generation-retrieval distinction directly: the model generated tokens that satisfy the pattern of an analyst citation, but satisfying the pattern and stating a fact are independent outcomes. It correctly identifies that every specific element sits in the fabrication zone where independent verification is required. Crucially, it does not recommend deleting the output. It recommends verifying it. The AI draft may accelerate the workflow even if every specific needs checking. This is Discernment applied: evaluate the output against the mechanism that produced it.',
+        'This answer applies the generation-retrieval distinction directly: the model generated tokens that satisfy the pattern of an analyst citation, but satisfying the pattern and stating a fact are independent outcomes. It correctly identifies that every specific element sits in the fabrication zone where independent verification is required. It also recommends verifying the output rather than deleting it, because the AI draft may still speed up the work even if every specific needs checking. This is Discernment applied: evaluate the output against the mechanism that produced it.',
     },
     {
       id: 'b',
@@ -90,7 +90,7 @@ const KC_3_2: KnowledgeCheckItemData = {
       feedbackTitle: 'Dangerous overconfidence',
       feedbackTone: 'error',
       feedbackText:
-        'This answer assumes that frequently cited sources produce reliable outputs. That assumption inverts the mechanism. The model generates citation-shaped text because citation patterns are common in its training data, but common patterns make the *format* reliable rather than the *content*. “Forrester’s Digital Experience Index” sounds real because the model has seen many citation patterns involving Forrester. Whether this specific report exists, whether it covers Q3 2024, whether the 8.2% figure is real: those are questions the generation mechanism cannot answer. Plausibility and accuracy are different things. In a quarterly business review, a fabricated competitor statistic attributed to a real analyst firm could cause significant reputational damage.',
+        'This answer assumes that frequently cited sources produce reliable outputs. That assumption inverts the mechanism. The model generates citation-shaped text because citation patterns are common in its training data, but common patterns make the format reliable, not the content. “Forrester’s Digital Experience Index” sounds real because the model has seen many citation patterns involving Forrester. Whether this specific report exists, whether it covers Q3 2024, whether the 8.2% figure is real: those are questions the generation mechanism cannot answer. Plausibility and accuracy are different things. In a quarterly business review, a fabricated competitor statistic attributed to a real analyst firm could cause significant reputational damage.',
     },
     {
       id: 'c',
@@ -120,8 +120,9 @@ const KC_3_3: KnowledgeCheckItemData = {
           three-digit costs were fine.
         </li>
         <li>
-          Asked an AI tool to summarize a 35-page supplier compliance audit. The summary covered
-          sections 1–8 thoroughly but missed two non-conformances documented in sections 12–13.
+          Asked an AI tool to summarize a 35-page, 24-section supplier compliance audit. The
+          summary covered sections 1–8 and 20–24 thoroughly but missed two non-conformances
+          documented in sections 12–13.
         </li>
         <li>
           Asked an AI tool to draft a memo citing three specific industry standards by their exact
@@ -142,16 +143,16 @@ const KC_3_3: KnowledgeCheckItemData = {
       feedbackTitle: 'Single-cause explanation for three different mechanisms',
       feedbackTone: 'error',
       feedbackText:
-        'This answer collapses three distinct failure modes into one explanation. The calculation errors are not caused by insufficient training data about unit costs; they are caused by tokenization splitting multi-digit numbers at arbitrary boundaries. The missed audit sections are not caused by insufficient compliance knowledge; they are caused by context window limitations and the lost-in-the-middle effect. The fabricated standards are a specificity failure where the model generates plausible patterns, not a gap in standards knowledge. Treating all AI failures as knowledge problems leads to a single fix (“use a better model”) that does not address the actual mechanisms and misses the targeted responses that would work.',
+        'This answer collapses three distinct failure modes into one explanation. The calculation errors are not caused by insufficient training data about unit costs; they are caused by tokenization cutting longer numbers into chunks that ignore place value. The missed audit sections are not caused by insufficient compliance knowledge; they are caused by the lost-in-the-middle effect. The whole audit fits in the window, but its middle sections get the least attention. The fabricated standards are a specificity failure where the model generates plausible patterns, not a gap in standards knowledge. Treating all AI failures as knowledge problems leads to a single fix (“use a better model”) that does not address the actual mechanisms and misses the targeted responses that would work.',
     },
     {
       id: 'b',
-      text: '“Member 1 hit a boundary task failure: token boundaries misaligned with the mathematical structure of larger numbers, causing five-digit calculations to fail where three-digit ones succeeded. Member 2 hit a volume task failure: the middle sections of a 35-page document fell in the attention valley of the context window, causing sections 12 and 13 to be underprocessed. Member 3 hit a specificity task failure: the model generated standard-number-shaped text from its probability distribution without retrieving actual document numbers. Each failure has a different root cause and requires a different fix.”',
+      text: '“Member 1 hit a boundary task failure: token boundaries misaligned with the mathematical structure of larger numbers, causing five-digit calculations to fail where three-digit ones succeeded. Member 2 hit a volume task failure: sections 12 and 13 sat in the middle of a 35-page input, where the lost-in-the-middle effect weakens attention, so they were underprocessed. Member 3 hit a specificity task failure: the model generated standard-number-shaped text from its probability distribution without retrieving actual document numbers. Each failure has a different root cause and requires a different fix.”',
       isPreferred: true,
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer correctly maps each failure to its mechanical root cause and uses the three unreliable task categories established in this module. Member 1: tokenization fragments numbers inconsistently, so multi-digit calculations fail where shorter ones succeed, which is a boundary task. Member 2: a 35-page document fits inside the window, but sections 12–13 fall in the middle where attention is weakest. That is a volume task driven by the lost-in-the-middle effect. Member 3: ISO standard numbers are specific identifiers that the model generates by pattern rather than retrieval, which is a specificity task. Each diagnosis points to a different fix: offload computation to code, break long documents into sections, and verify every specific identifier independently.',
+        'This answer correctly maps each failure to its mechanical root cause and uses the three unreliable task categories established in this module. Member 1: tokenization splits longer numbers into chunks that cut across place value, so five-digit calculations fail where three-digit ones succeed, which is a boundary task. Member 2: a 35-page document fits inside the window, but sections 12–13 fall in the middle where attention is weakest. That is a volume task driven by the lost-in-the-middle effect. Member 3: ISO standard numbers are specific identifiers that the model generates by pattern rather than retrieval, which is a specificity task. Each diagnosis points to a different fix: offload computation to code, break long documents into sections, and verify every specific identifier independently.',
     },
     {
       id: 'c',
@@ -160,7 +161,7 @@ const KC_3_3: KnowledgeCheckItemData = {
       feedbackTitle: 'Fixes without diagnosis',
       feedbackTone: 'caution',
       feedbackText:
-        'This answer proposes reasonable-sounding fixes but skips the diagnostic step. Lower temperature does not fix arithmetic errors; tokenization boundaries are the root cause, and temperature does not change how numbers are tokenized. A larger context window would help with Member 2’s problem, but the answer treats it as the complete solution without addressing the lost-in-the-middle effect, which persists even in larger windows. Asking the model to “double-check its citations” is unreliable. The same mechanism that generated the fabricated standard numbers would generate the “verification,” potentially confirming its own fabrication. Diagnose first, then fix; the order matters.',
+        'This answer proposes reasonable-sounding fixes but skips the diagnostic step. Lower temperature does not fix arithmetic errors; tokenization boundaries are the root cause, and temperature does not change how numbers are tokenized. A larger context window would not help Member 2: the 35-page audit already fits, and the lost-in-the-middle effect persists in larger windows. Asking the model to “double-check its citations” is unreliable. The same mechanism that generated the fabricated standard numbers would generate the “verification,” potentially confirming its own fabrication. Diagnose first, then fix.',
     },
   ],
 };
@@ -205,16 +206,17 @@ const KC_3_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Correct intuition, incomplete mechanism',
       feedbackTone: 'caution',
       feedbackText:
-        'This answer correctly identifies that format compliance drove the model to produce a third risk even when only two were well-supported, a real steerability pattern. But it oversimplifies by calling risk 3 filler. The regulatory content is not random noise; it is a statistically probable pattern that the model generated because EU AI Act references frequently co-occur with AI product risk discussions in the training data. The content may even be partially accurate. The problem is not that risk 3 is empty; it is that risk 3 is generated from a different source (training patterns) than risks 1 and 2 (the supplied brief), and the output does not signal this difference. Deleting risk 3 is a reasonable action, but the reasoning should be “this risk is not grounded in our analysis” rather than “this is filler.”',
+        'This answer correctly identifies that format compliance drove the model to produce a third risk even when only two were well-supported, a real steerability pattern. But it oversimplifies by calling risk 3 filler. The regulatory content is a statistically probable pattern that the model generated because EU AI Act references frequently co-occur with AI product risk discussions in the training data. The content may even be partially accurate. The problem is not that risk 3 is empty; it is that risk 3 is generated from a different source (training patterns) than risks 1 and 2 (the supplied brief), and the output does not signal this difference. Deleting risk 3 is a reasonable action, but the reasoning should be “this risk is not grounded in our analysis” rather than “this is filler.”',
     },
     {
       id: 'c',
-      text: '“The input consumed approximately 180,000 of the model’s 200,000-token context window, leaving limited room for generation. The model processed the brief’s content unevenly: risks 1 and 2 drew on material that was well-represented in the context, while risk 3 was generated primarily from training-data patterns about AI product strategy rather than from the supplied documents. The regulatory specifics (the EU AI Act, enforcement actions, conformity assessments) are specificity-zone claims generated by probability, not retrieved from either the brief or a verified source. She should not present risk 3 as supported by her team’s analysis.”',
+      text: '“The input filled about 180,000 of the model’s 200,000-token context window. It fit, but that is far past the length where accuracy on long inputs usually starts to slip. The model processed the brief’s content unevenly: risks 1 and 2 drew on material well represented in the context, while risk 3 was generated primarily from training-data patterns rather than from the supplied documents. The regulatory specifics are specificity-zone claims generated by probability, not retrieved from the brief or a verified source. She should not present risk 3 as supported by her team’s analysis.”',
       isPreferred: true,
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer identifies the compound failure correctly. The input nearly filled the context window (180,000 of 200,000 tokens), which constrained the generation space and likely reduced attention quality on parts of the input. Risks 1 and 2 drew on well-represented material; risk 3 shifted to training-data patterns when the input ran thin. The regulatory specifics (the EU AI Act, enforcement actions, conformity assessments) are specificity-zone claims: precise-sounding, plausible, and generated by probability rather than retrieved from a source. The analysis correctly advises against presenting risk 3 as supported by the team’s analysis. That is the diagnostic skill the module builds toward: determining that a specific output sits outside the model’s reliable capability range for this input and task.',
+        'This answer identifies the compound failure correctly. The input nearly filled the context window, at 180,000 of 200,000 tokens. The 20,000 tokens left were ample room for a three-item answer, so space for output was not the constraint. Fitting is not the same as being used well. In the long-context benchmarks from Section 6, 11 of 13 models that claimed at least 128,000 tokens lost more than half their short-context accuracy by 32,000 tokens when the question and the relevant passage shared almost no words. Uneven attention across a 180,000-token brief is therefore expected. Risks 1 and 2 drew on well-represented material; risk 3 shifted to training-data patterns when the input ran thin. The regulatory specifics (the EU AI Act, enforcement actions, conformity assessments) are specificity-zone claims: precise-sounding, plausible, and generated by probability rather than retrieved from a source. The analysis correctly advises against presenting risk 3 as supported by the team’s analysis. That is the diagnostic skill the module builds toward: determining that a specific output sits outside the model’s reliable capability range for this input and task.',
+      sources: [{ ids: 'modarressi-nolima-2025', pageKey: 'drop-at-32k' }],
     },
   ],
 };

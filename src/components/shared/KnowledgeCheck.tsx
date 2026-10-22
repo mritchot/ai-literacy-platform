@@ -5,8 +5,11 @@
 
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
-import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
+import { useLearnerProgress, type KCConfidence, type KnowledgeCheckResult } from '../../contexts/LearnerProgressContext';
+import { CONFIDENCE_LABEL, isConfidence } from '../../utils/kc-calibration';
 import { scrollBehavior } from '../../utils/motion';
+import { CheckSources, type CheckSource } from './CheckSources';
+import { ConfidenceRating } from './ConfidenceRating';
 import { Icon } from './Icon';
 import { nextRadioIndex } from './radio-group-nav';
 import { Overline } from './Overline';
@@ -27,6 +30,8 @@ interface KnowledgeCheckOption {
   feedbackTitle: string;
   feedbackText: string;
   feedbackTone: KnowledgeCheckTone;
+  /** Citations for claims in `feedbackText`, rendered as chips after it. */
+  sources?: CheckSource[];
 }
 
 export interface KnowledgeCheckItemData {
@@ -36,6 +41,27 @@ export interface KnowledgeCheckItemData {
   options: KnowledgeCheckOption[];
 }
 
+// 'assessed' is a Tier-1 knowledge check. 'prediction' and 'practice' reuse
+// the same interaction unscored: their storage keys sit outside the `.kc_`
+// pattern the dashboard aggregates, and the labels say so to the learner.
+export type KnowledgeCheckVariant = 'assessed' | 'prediction' | 'practice';
+
+const UNSCORED_COPY: Record<
+  Exclude<KnowledgeCheckVariant, 'assessed'>,
+  { overline: string; submit: string; groupLabel: string }
+> = {
+  prediction: {
+    overline: 'Prediction · not scored',
+    submit: 'Lock in prediction',
+    groupLabel: 'Choose your prediction.',
+  },
+  practice: {
+    overline: 'Practice · not scored',
+    submit: 'Submit response',
+    groupLabel: 'Choose your answer.',
+  },
+};
+
 interface KnowledgeCheckProps {
   moduleId: number;
   sectionId: number;
@@ -43,6 +69,14 @@ interface KnowledgeCheckProps {
   itemNumber: number;
   totalItems: number;
   onSubmitted?: () => void;
+  variant?: KnowledgeCheckVariant;
+  /** Practice mode (the refresher). When `onRecord` is set, the item
+   *  starts from `storedOverride` instead of the learner's original
+   *  answer, and a submission goes to `onRecord` alone: the original
+   *  record and the `${id}_submitted` event the dashboard reads are left
+   *  untouched, and the caller owns persistence and analytics. */
+  storedOverride?: KnowledgeCheckResult | undefined;
+  onRecord?: (result: KnowledgeCheckResult) => void;
 }
 
 const TONE_BORDER: Record<KnowledgeCheckTone, string> = {
@@ -64,13 +98,20 @@ export function KnowledgeCheck({
   itemNumber,
   totalItems,
   onSubmitted,
+  variant = 'assessed',
+  storedOverride,
+  onRecord,
 }: KnowledgeCheckProps): JSX.Element {
   const { recordKnowledgeCheck, getKnowledgeCheck } = useLearnerProgress();
   const { track } = useAnalytics();
+  const unscored = variant === 'assessed' ? null : UNSCORED_COPY[variant];
 
-  const stored = getKnowledgeCheck(moduleId, sectionId, item.id);
+  const stored = onRecord ? storedOverride : getKnowledgeCheck(moduleId, sectionId, item.id);
   const [selected, setSelected] = useState<string | null>(stored?.selectedOptionId ?? null);
   const [submitted, setSubmitted] = useState<boolean>(Boolean(stored));
+  const [confidence, setConfidence] = useState<KCConfidence | null>(
+    isConfidence(stored?.confidence) ? stored.confidence : null,
+  );
   const [showAll, setShowAll] = useState<boolean>(false);
 
   // Ref to the post-submit feedback callout. After submission we scroll
@@ -88,17 +129,24 @@ export function KnowledgeCheck({
     if (!selected || submitted) return;
     const option = item.options.find((o) => o.id === selected);
     if (!option) return;
-    recordKnowledgeCheck(moduleId, sectionId, item.id, {
+    const rating = confidence ? { confidence } : {};
+    const result: KnowledgeCheckResult = {
       selectedOptionId: option.id,
       isPreferred: option.isPreferred,
       timestamp: Date.now(),
-    });
-    track({
-      type: `${item.id}_submitted`,
-      moduleId,
-      sectionId,
-      payload: { optionId: option.id, isPreferred: option.isPreferred },
-    });
+      ...rating,
+    };
+    if (onRecord) {
+      onRecord(result);
+    } else {
+      recordKnowledgeCheck(moduleId, sectionId, item.id, result);
+      track({
+        type: `${item.id}_submitted`,
+        moduleId,
+        sectionId,
+        payload: { optionId: option.id, isPreferred: option.isPreferred, ...rating },
+      });
+    }
     didJustSubmitRef.current = true;
     setSubmitted(true);
     onSubmitted?.();
@@ -111,6 +159,9 @@ export function KnowledgeCheck({
   useEffect(() => {
     if (submitted && didJustSubmitRef.current && feedbackRef.current) {
       didJustSubmitRef.current = false;
+      // Submit unmounts the focused button and disables the radios, so
+      // focus would otherwise fall to <body> (WCAG 2.4.3).
+      feedbackRef.current.focus({ preventScroll: true });
       feedbackRef.current.scrollIntoView({ behavior: scrollBehavior(), block: 'nearest' });
     }
   }, [submitted]);
@@ -131,13 +182,12 @@ export function KnowledgeCheck({
   return (
     <section
       aria-labelledby={`kc-${item.id}-stem`}
-      className="bg-[rgb(var(--white))]"
+      className="bg-[rgb(var(--white))] px-4 pb-4 pt-[18px] sm:px-6 sm:pb-5 sm:pt-[22px]"
       style={{
         borderLeft: `3px solid ${TIER1}`,
         border: '1px solid rgb(var(--border))',
         borderLeftWidth: 3,
         borderLeftColor: TIER1,
-        padding: '22px 24px 20px',
       }}
     >
       {/* On mobile the two Overlines stack onto their own lines so each
@@ -153,11 +203,13 @@ export function KnowledgeCheck({
             previous hardcoded #4A5A66 stayed dark and went near-
             invisible on the dark card surface. */}
         <Overline style={{ color: 'rgb(var(--info))' }}>
-          Knowledge check · Tier 1 · Recall
+          {unscored ? unscored.overline : 'Knowledge check · Applied scenario'}
         </Overline>
-        <Overline style={{ color: 'rgb(var(--muted))' }}>
-          Item {itemNumber} of {totalItems} · Obj. {item.objectiveRef}
-        </Overline>
+        {!unscored && (
+          <Overline style={{ color: 'rgb(var(--muted))' }}>
+            Item {itemNumber} of {totalItems} · Obj. {item.objectiveRef}
+          </Overline>
+        )}
       </div>
 
       <div
@@ -179,7 +231,11 @@ export function KnowledgeCheck({
             told SR users that selecting one deselects the others. */}
         <ul
           role="radiogroup"
-          aria-label="Choose the response that best applies the module framework."
+          aria-label={
+            unscored
+              ? unscored.groupLabel
+              : 'Choose the response that best applies the module framework.'
+          }
           className="m-0 list-none space-y-2 p-0"
         >
           {item.options.map((opt, optIdx) => {
@@ -251,7 +307,7 @@ export function KnowledgeCheck({
                     </span>
                     {opt.isPreferred && submitted && (
                       <span
-                        title="Recommended answer"
+                        title={unscored ? 'Answer' : 'Recommended answer'}
                         className="self-end flex-shrink-0 font-mono text-[9.5px] font-bold uppercase sm:self-auto"
                         style={{
                           color: 'rgb(var(--action))',
@@ -261,7 +317,7 @@ export function KnowledgeCheck({
                           whiteSpace: 'nowrap',
                         }}
                       >
-                        Recommended
+                        {unscored ? 'Answer' : 'Recommended'}
                       </span>
                     )}
                   </div>
@@ -273,32 +329,43 @@ export function KnowledgeCheck({
       </fieldset>
 
       {!submitted && (
-        <div className="mt-4 flex justify-end">
+        <div
+          className={`mt-4 flex flex-col gap-3 sm:flex-row sm:items-center ${
+            unscored ? 'sm:justify-end' : 'sm:justify-between'
+          }`}
+        >
+          {/* Unscored items stay out of calibration, so they take no rating. */}
+          {!unscored && (
+            <ConfidenceRating idBase={`kc-${item.id}`} value={confidence} onChange={setConfidence} />
+          )}
           <button
             type="button"
             onClick={submit}
             disabled={!selected}
             aria-disabled={!selected}
-            className="bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] transition-colors duration-[160ms] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
+            className="self-end sm:self-auto bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] transition-colors duration-[160ms] hover:bg-action-hover disabled:cursor-not-allowed disabled:bg-ghost disabled:text-muted"
           >
-            Submit response
+            {unscored ? unscored.submit : 'Submit response'}
           </button>
         </div>
       )}
 
       {/* Always-mounted live region: content injected on submit is
           reliably announced (a region that mounts together with its
-          content often isn't). The visual callout below is separate. */}
+          content often isn't). It carries only the feedback body: the
+          callout below takes focus on submit and announces the title as
+          its group label, so neither part is read twice. */}
       <span aria-live="polite" className="sr-only">
-        {submitted && selectedOption
-          ? `${selectedOption.feedbackTitle}. ${selectedOption.feedbackText}`
-          : ''}
+        {submitted && selectedOption ? selectedOption.feedbackText : ''}
       </span>
 
       {submitted && selectedOption && (
         <div
           ref={feedbackRef}
-          className="mt-4"
+          tabIndex={-1}
+          role="group"
+          aria-label={selectedOption.feedbackTitle}
+          className="mt-4 focus:outline-none"
           style={{
             background: TONE_BG[selectedOption.feedbackTone],
             borderLeft: `3px solid ${TONE_BORDER[selectedOption.feedbackTone]}`,
@@ -308,7 +375,16 @@ export function KnowledgeCheck({
           <Overline className="mb-1.5">{selectedOption.feedbackTitle}</Overline>
           <div className="font-sans text-body-sm leading-relaxed text-body">
             {selectedOption.feedbackText}
+            <CheckSources sources={selectedOption.sources} />
           </div>
+          {confidence && (
+            <p className="m-0 mt-2 font-sans text-[12.5px] text-secondary">
+              Your confidence rating: {CONFIDENCE_LABEL[confidence]}.
+              {confidence === 'certain' &&
+                !selectedOption.isPreferred &&
+                ' A confident miss is the one most worth a second look: compare your reasoning with the recommended response.'}
+            </p>
+          )}
         </div>
       )}
 
@@ -322,13 +398,14 @@ export function KnowledgeCheck({
           }}
         >
           <Overline className="mb-1.5" style={{ color: 'rgb(var(--success))' }}>
-            Recommended response
+            {unscored ? 'The answer' : 'Recommended response'}
           </Overline>
           <div className="mb-1.5 font-sans text-body-sm font-semibold text-ink">
             {preferredOption.text}
           </div>
           <div className="font-sans text-body-sm leading-relaxed text-body">
             {preferredOption.feedbackText}
+            <CheckSources sources={preferredOption.sources} />
           </div>
         </div>
       )}
@@ -364,6 +441,7 @@ export function KnowledgeCheck({
                   </div>
                   <div className="font-sans text-body-sm leading-relaxed text-body">
                     {opt.feedbackText}
+                    <CheckSources sources={opt.sources} />
                   </div>
                 </li>
               ))}

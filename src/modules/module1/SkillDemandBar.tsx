@@ -1,12 +1,13 @@
 // Story 1: SkillDemandBar — top-10 fastest-rising workforce skills from
 // the WEF Future of Jobs Report 2025 (4C spec §3.2).
-// Source: WEF 2025, Figure 3.4, pp. 36–37.
+// Source: WEF 2025, Figure 3.4, p. 37.
 
 import { useMemo } from 'react';
 import {
   Bar,
   BarChart,
   Cell,
+  LabelList,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -19,7 +20,9 @@ import {
   TOOLTIP_STYLE,
 } from '../../utils/chart-config';
 import { useChartTokens } from '../../hooks/useChartTokens';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useViewport } from '../../hooks/useViewport';
+import { Citation } from '../../components/shared/Citation';
 
 interface SkillRow {
   rank: number;
@@ -27,9 +30,38 @@ interface SkillRow {
   netIncrease: number;
 }
 
+interface CoreSkillRow {
+  rank: number;
+  skill: string;
+  share: number;
+}
+
+interface CoreSkills2030 {
+  coreIn2030: string[];
+  emerging: string[];
+  steady: string[];
+}
+
+type Quadrant = 'core in 2030' | 'emerging' | 'steady' | null;
+
+interface AnnotatedRow extends SkillRow {
+  /** Share of employers treating the skill as core in 2025 (Figure 3.3). */
+  coreShare: number | null;
+  /** Figure 3.6 quadrant. */
+  quadrant: Quadrant;
+  /** Muted marker rendered beside the bar. */
+  marker: string;
+}
+
 interface SkillDemandBarProps {
   skills: SkillRow[];
+  /** Full 26-skill core-share list (Figure 3.3). */
+  coreSkills: CoreSkillRow[];
+  /** Figure 3.6 quadrant lists. */
+  coreSkills2030: CoreSkills2030;
   instability: {
+    prior2016: number;
+    prior2018: number;
     prior2020: number;
     prior2023: number;
     current: number;
@@ -38,10 +70,42 @@ interface SkillDemandBarProps {
 
 const TOP_N = 10;
 
-export function SkillDemandBar({ skills, instability }: SkillDemandBarProps): JSX.Element {
+// Width reserved to the right of the bars for the "core for N% today ·
+// emerging" marker; the label is rendered by Recharts' LabelList at the
+// bar end, so the chart margin has to leave room for it.
+const MARKER_MARGIN = 176;
+
+function quadrantFor(skill: string, q: CoreSkills2030): Quadrant {
+  if (q.coreIn2030.includes(skill)) return 'core in 2030';
+  if (q.emerging.includes(skill)) return 'emerging';
+  if (q.steady.includes(skill)) return 'steady';
+  return null;
+}
+
+function markerFor(coreShare: number | null, quadrant: Quadrant): string {
+  const parts: string[] = [];
+  if (coreShare !== null) parts.push(`core for ${Math.round(coreShare * 100)}% today`);
+  if (quadrant === 'emerging') parts.push('emerging');
+  return parts.join(' · ');
+}
+
+export function SkillDemandBar({
+  skills,
+  coreSkills,
+  coreSkills2030,
+  instability,
+}: SkillDemandBarProps): JSX.Element {
   const tokens = useChartTokens();
+  const reducedMotion = useReducedMotion();
   const viewport = useViewport();
-  const top = useMemo(() => skills.slice(0, TOP_N), [skills]);
+  const top = useMemo<AnnotatedRow[]>(() => {
+    const shareBySkill = new Map(coreSkills.map((c) => [c.skill, c.share]));
+    return skills.slice(0, TOP_N).map((row) => {
+      const coreShare = shareBySkill.get(row.skill) ?? null;
+      const quadrant = quadrantFor(row.skill, coreSkills2030);
+      return { ...row, coreShare, quadrant, marker: markerFor(coreShare, quadrant) };
+    });
+  }, [skills, coreSkills, coreSkills2030]);
 
   const ariaLabel = `Horizontal bar chart of the top ${TOP_N} fastest-rising workforce skills by net-increase score: ${top
     .map((s) => `${s.skill} at ${s.netIncrease}`)
@@ -55,12 +119,24 @@ export function SkillDemandBar({ skills, instability }: SkillDemandBarProps): JS
   // viewport width for each bar with the label on its own line above.
   return (
     <figure className="m-0" aria-label={ariaLabel}>
+      <p className="m-0 mb-3 font-sans text-body-sm text-body">
+        Bars show how fast demand is rising. The marker shows how many employers already treat
+        the skill as core, and “emerging” flags fast-rising skills that most employers do not
+        yet treat as core. AI and big data is rising fastest
+        <Citation ids="wef-2025" pageKey="fastest-growing-skills" /> but is core for only 45% today
+        <Citation ids="wef-2025" pageKey="core-skills-2025" />.
+      </p>
       {viewport === 'mobile' ? (
         <MobileSkillsList rows={top} tokens={tokens} />
       ) : (
         <div style={{ width: '100%', height: TOP_N * 32 + 60 }}>
           <ResponsiveContainer>
-            <BarChart layout="vertical" data={top} margin={{ top: 8, right: 36, bottom: 8, left: 16 }} barCategoryGap={8}>
+            <BarChart
+              layout="vertical"
+              data={top}
+              margin={{ top: 8, right: MARKER_MARGIN, bottom: 8, left: 16 }}
+              barCategoryGap={8}
+            >
               <XAxis
                 type="number"
                 domain={[0, 'auto']}
@@ -90,7 +166,7 @@ export function SkillDemandBar({ skills, instability }: SkillDemandBarProps): JS
               />
               <Bar
                 dataKey="netIncrease"
-                isAnimationActive
+                isAnimationActive={!reducedMotion}
                 animationDuration={400}
                
               >
@@ -101,6 +177,14 @@ export function SkillDemandBar({ skills, instability }: SkillDemandBarProps): JS
                     fillOpacity={row.rank === 1 ? 1 : 0.7}
                   />
                 ))}
+                <LabelList
+                  dataKey="marker"
+                  position="right"
+                  offset={8}
+                  fontSize={11}
+                  fontFamily={AXIS_TICK_STYLE.fontFamily}
+                  fill={tokens.muted}
+                />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
@@ -115,6 +199,8 @@ export function SkillDemandBar({ skills, instability }: SkillDemandBarProps): JS
             <th scope="col">Rank</th>
             <th scope="col">Skill</th>
             <th scope="col">Net increase score</th>
+            <th scope="col">Core share 2025</th>
+            <th scope="col">Figure 3.6 quadrant</th>
           </tr>
         </thead>
         <tbody>
@@ -123,6 +209,8 @@ export function SkillDemandBar({ skills, instability }: SkillDemandBarProps): JS
               <td>{s.rank}</td>
               <td>{s.skill}</td>
               <td>{s.netIncrease}</td>
+              <td>{s.coreShare === null ? '—' : `${Math.round(s.coreShare * 100)}%`}</td>
+              <td>{s.quadrant ?? '—'}</td>
             </tr>
           ))}
         </tbody>
@@ -134,7 +222,9 @@ export function SkillDemandBar({ skills, instability }: SkillDemandBarProps): JS
         className="mt-3 font-mono text-caption text-muted"
         style={{ letterSpacing: '0.02em' }}
       >
-        Source: WEF Future of Jobs Report 2025, Figure 3.4, pp. 36–37; Figure 3.3, p. 35.
+        Source: WEF Future of Jobs Report 2025, Figure 3.4, p. 37; Figure 3.3, p. 35; Figure 3.6,
+        p. 41; Figure 3.1, p. 33. Skills-endure figure: McKinsey Global Institute, Nov 2025,
+        Exhibit 10, p. 29.
       </figcaption>
     </figure>
   );
@@ -151,7 +241,7 @@ function MobileSkillsList({
   rows,
   tokens,
 }: {
-  rows: SkillRow[];
+  rows: AnnotatedRow[];
   tokens: ReturnType<typeof useChartTokens>;
 }): JSX.Element {
   const maxValue = Math.max(...rows.map((r) => r.netIncrease));
@@ -176,6 +266,14 @@ function MobileSkillsList({
                 {row.netIncrease}%
               </span>
             </div>
+            {row.marker && (
+              <div
+                className="mb-1 font-mono text-caption text-muted"
+                style={{ letterSpacing: '0.02em' }}
+              >
+                {row.marker}
+              </div>
+            )}
             <div
               className="h-2 w-full overflow-hidden"
               style={{ background: 'rgb(var(--border-light))' }}
@@ -205,6 +303,8 @@ function SkillInstabilityCallout({
   const isMobile = viewport === 'mobile';
   const pct = (v: number) => `${Math.round(v * 100)}%`;
   const rows: { year: string; value: number }[] = [
+    { year: '2016', value: instability.prior2016 },
+    { year: '2018', value: instability.prior2018 },
     { year: '2020', value: instability.prior2020 },
     { year: '2023', value: instability.prior2023 },
     { year: '2025', value: instability.current },
@@ -227,10 +327,10 @@ function SkillInstabilityCallout({
         className="mb-1.5 font-sans text-body-sm font-semibold text-ink"
         style={{ textWrap: 'balance' }}
       >
-        Skills instability — share of core skills expected to change
+        Skills instability: share of core skills expected to change
       </div>
       {isMobile ? (
-        // Mobile: stack the three data points vertically so each row gets
+        // Mobile: stack the data points vertically so each row gets
         // its own line. The single-line horizontal layout overflowed the
         // callout box on a 390-px viewport (three `%-(year)` nowrap units
         // separated by arrows didn't fit), and letting it wrap between
@@ -258,8 +358,12 @@ function SkillInstabilityCallout({
           ))}
         </div>
       )}
-      <p className="m-0 font-sans text-body-sm italic text-secondary">
-        “The target is becoming clearer, not smaller.”
+      <p className="m-0 font-sans text-body-sm text-secondary">
+        Employers expect 39% of core skills to change by 2030, down from 44% in 2023
+        <Citation ids="wef-2025" pageKey="skills-instability-39" />. The skills to train for are
+        becoming easier to identify, and the need for them is not shrinking. Most skills endure;
+        their application shifts
+        <Citation ids="mgi-agents-robots-us-2025" pageKey="shared-skills-72" />.
       </p>
     </aside>
   );

@@ -37,7 +37,7 @@ export const ROUNDS: TokenizerRound[] = [
     input: 'Budget: $4,218.50 + $763.25',
     promptHint: "Same question. How many tokens? Remember, the model doesn't see digits the way you do.",
     explanation:
-      "Numbers tokenize inconsistently. Whether a digit sequence is one token or several depends entirely on how frequently that exact string appeared in the training data, which has nothing to do with the number's mathematical value. The dollar signs, decimal points, commas, and plus sign each have their own tokenization behavior. This is why AI tools make arithmetic errors that look bizarre: the model performs prediction on token fragments, not calculation on numbers. The errors are not random. They concentrate wherever token boundaries misalign with mathematical structure.",
+      "Numbers tokenize by a fixed rule that ignores their value. This tokenizer cuts every run of digits into chunks of up to three, counting from the left, so a number like 1279 becomes 127 and 9 while place value reads it as 1,279. The dollar signs, decimal points, commas, and plus sign each have their own tokenization behavior. This is why AI tools make arithmetic errors that look bizarre: the model performs prediction on token fragments, not calculation on numbers. The errors are not random. They concentrate wherever token boundaries misalign with mathematical structure.",
   },
   {
     id: 3,
@@ -47,7 +47,7 @@ export const ROUNDS: TokenizerRound[] = [
     promptHint:
       'This says roughly the same thing as a two-sentence English request. How many tokens do you think it produces?',
     explanation:
-      'The same semantic content in Japanese produces significantly more tokens than its English equivalent. Each character may become its own token (or even multiple tokens) because Japanese character sequences were far less frequent in the English-dominated training data. More tokens means a longer sequence consuming more of the model’s working memory, leaving less room for context and increasing the surface area for generation errors. If you work with multilingual content, tokenization asymmetry is one structural factor in why AI tools perform less reliably outside English: fewer tokens are available for your actual content when the tokenizer spends more of them encoding each character.',
+      'The same semantic content in Japanese produces significantly more tokens than its English equivalent. Each character may become its own token (or even multiple tokens) because Japanese character sequences were far less frequent in the English-dominated training data. More tokens means a longer sequence consuming more of the model’s working memory, leaving less room for context and adding more positions where a generation error can occur. If you work with multilingual content, tokenization asymmetry is one structural factor in why AI tools perform less reliably outside English: fewer tokens are available for your actual content when the tokenizer spends more of them encoding each character.',
   },
   {
     id: 4,
@@ -78,6 +78,13 @@ export const QUICK_LOAD_SAMPLES: QuickLoadSample[] = [
     label: 'Email (Spanish)',
     text:
       'Estimado equipo, adjunto el informe trimestral para su revisión. Por favor confirmen recibo antes del viernes.',
+  },
+  {
+    // Three rows of seven cells (71 tokens in cl100k_base) so learners can
+    // check Section 6's per-cell token budget themselves.
+    label: 'Sales export (CSV)',
+    text:
+      'date,region,sku,units,unit_price,revenue,rep\n2026-03-15,North,SKU-2847-BLK,42,30.45,1278.90,R117\n2026-03-15,South,SKU-2848-WHT,17,19.95,339.15,R104',
   },
   {
     label: 'Product SKU list',

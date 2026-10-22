@@ -8,6 +8,7 @@
 
 import { Fragment, useState } from 'react';
 import { Overline } from '../../components/shared/Overline';
+import { usePrintMode } from '../../contexts/PrintModeContext';
 import { ACTIVITIES, PHASES, RACI, ROLES, countFor, type Assignment } from './raci-data';
 
 // Muted cell styling — earthy green / amber / slate for R/A/C, a neutral for I.
@@ -31,7 +32,7 @@ function Legend(): JSX.Element {
           >
             {d.letter}
           </span>
-          <span className="font-sans text-[12px] text-body">
+          <span className="font-sans text-body-sm text-body">
             <span className="font-semibold text-ink">{d.name}</span>: {d.meaning}
           </span>
         </div>
@@ -43,6 +44,10 @@ function Legend(): JSX.Element {
 export function RaciGrid(): JSX.Element {
   const [phaseFilter, setPhaseFilter] = useState<string | null>(null);
   const [selectedRole, setSelectedRole] = useState<number | null>(null);
+  // Chromium does not repaint form controls in a table header it repeats
+  // on a continuation page, so the print route draws the role headers as
+  // plain text boxes.
+  const printMode = usePrintMode();
 
   const shownPhases = PHASES.filter((p) => !phaseFilter || p === phaseFilter);
   const lmAccountable = countFor(0, 'A');
@@ -54,7 +59,7 @@ export function RaciGrid(): JSX.Element {
         {selectedRole === null ? (
           <>
             <Overline className="mb-1.5">Accountability</Overline>
-            <p className="m-0 max-w-reading font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
+            <p className="m-0 font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
               The <strong className="text-ink">L&amp;D Manager</strong> is Accountable (A) for{' '}
               <strong className="text-ink">{lmAccountable} of {ACTIVITIES.length}</strong> activities, as the program
               owner who approves each deliverable before it advances. The Executive Sponsor is Accountable only at
@@ -68,7 +73,7 @@ export function RaciGrid(): JSX.Element {
               <Overline as="span">{ROLES[selectedRole]!.abbr}</Overline>
               <span className="font-sans text-body-sm font-semibold text-ink">{ROLES[selectedRole]!.name}</span>
             </div>
-            <p className="m-0 mb-3 max-w-reading font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
+            <p className="m-0 mb-3 font-sans text-body-sm text-body" style={{ lineHeight: 1.6 }}>
               {ROLES[selectedRole]!.definition}
             </p>
             <div className="flex flex-wrap gap-2">
@@ -93,21 +98,23 @@ export function RaciGrid(): JSX.Element {
         )}
       </div>
 
-      {/* Phase filter */}
-      <div className="mb-4 flex flex-wrap items-center gap-2">
-        <span className="mr-1 font-mono text-[11px] font-semibold uppercase text-tertiary" style={{ letterSpacing: '0.08em' }}>
-          Phase
-        </span>
-        <div
-          className="inline-flex flex-wrap"
-          style={{ border: '1px solid rgb(var(--border))', background: 'rgb(var(--surface))' }}
-        >
-          <FilterChip label="All" active={phaseFilter === null} onClick={() => setPhaseFilter(null)} first />
-          {PHASES.map((p) => (
-            <FilterChip key={p} label={p} active={phaseFilter === p} onClick={() => setPhaseFilter((prev) => (prev === p ? null : p))} />
-          ))}
+      {/* Phase filter — a screen control; print shows every phase. */}
+      {!printMode && (
+        <div className="mb-4 flex flex-wrap items-center gap-2">
+          <span className="mr-1 font-mono text-[11px] font-semibold uppercase text-tertiary" style={{ letterSpacing: '0.08em' }}>
+            Phase
+          </span>
+          <div
+            className="inline-flex flex-wrap"
+            style={{ border: '1px solid rgb(var(--border))', background: 'rgb(var(--surface))' }}
+          >
+            <FilterChip label="All" active={phaseFilter === null} onClick={() => setPhaseFilter(null)} first />
+            {PHASES.map((p) => (
+              <FilterChip key={p} label={p} active={phaseFilter === p} onClick={() => setPhaseFilter((prev) => (prev === p ? null : p))} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Grid */}
       <div className="overflow-x-auto">
@@ -123,6 +130,18 @@ export function RaciGrid(): JSX.Element {
               </th>
               {ROLES.map((r, i) => {
                 const on = selectedRole === i;
+                if (printMode) {
+                  return (
+                    <th key={r.abbr} scope="col" className="text-center" style={{ padding: '4px 6px', minWidth: 64 }}>
+                      <span
+                        className="block w-full font-mono text-[12px] font-bold"
+                        style={{ padding: '8px 4px', color: 'rgb(var(--ink-secondary))', border: '1px solid rgb(var(--border))' }}
+                      >
+                        {r.abbr}
+                      </span>
+                    </th>
+                  );
+                }
                 return (
                   <th key={r.abbr} scope="col" className="text-center" style={{ padding: '4px 6px', minWidth: 64 }}>
                     <button

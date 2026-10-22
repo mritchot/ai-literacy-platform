@@ -7,13 +7,14 @@
 // from the co-located markdown (via ?raw).
 
 import TL_MD from './content/04_timeline.md?raw';
-import { renderMarkdown } from '../../components/shared/render-markdown';
+import { citedIds, renderMarkdown } from '../../components/shared/render-markdown';
+import { SourcesList } from '../../components/shared/CitationNotes';
 import { ExpandAllToggle } from '../../components/shared/ExpandAllToggle';
 import { Overline } from '../../components/shared/Overline';
 import { useExpandableSet } from '../../hooks/useExpandableSet';
 import { EFFORT, ORG_PHASES, SOLO_PHASES, STAGES, TIMELINE_MAX_WEEKS, type Phase } from './timeline-data';
 import { SERIES_ACCENT } from './config';
-import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
+import { ArtifactFooter, ArtifactHeader, ArtifactPage, ArtifactTopBar } from './chrome';
 
 const [INTRO_MD = '', ...REST] = TL_MD.replace(/\r\n/g, '\n').split(/\n## /);
 const SECTIONS = REST.map((part) => {
@@ -25,6 +26,8 @@ const SECTIONS = REST.map((part) => {
     body: nl === -1 ? '' : part.slice(nl + 1).trim(),
   };
 });
+
+const SOURCE_IDS = citedIds(TL_MD);
 
 const TICKS = [5, 10, 15, 20, 25, 30];
 const LABEL_W = 150;
@@ -135,7 +138,7 @@ function GanttRow({ phase, id, open, onToggle }: { phase: Phase; id: string; ope
   const left = ((phase.startWeek - 1) / TIMELINE_MAX_WEEKS) * 100;
   const width = (phase.weeks / TIMELINE_MAX_WEEKS) * 100;
   return (
-    <div>
+    <div className="print-keep">
       <button
         type="button"
         onClick={onToggle}
@@ -159,7 +162,7 @@ function GanttRow({ phase, id, open, onToggle }: { phase: Phase; id: string; ope
       {open && (
         <div
           id={`${id}-d`}
-          className="font-sans text-[12px] text-body"
+          className="font-sans text-body-sm text-body"
           style={{ paddingLeft: LABEL_W + 8, paddingRight: 4, paddingBottom: 8, paddingTop: 2, lineHeight: 1.6 }}
         >
           <span className="mr-2 font-mono text-[11px] font-semibold text-secondary">{phase.when}</span>
@@ -207,7 +210,7 @@ function GanttChart(): JSX.Element {
       </div>
       <p className="m-0 mt-4 font-sans text-caption text-tertiary" style={{ lineHeight: 1.5 }}>
         Both tracks run the same lifecycle. The solo build merges content development and platform build into one block
-        and folds integration, QA, and launch prep into adjacent phases: compression, not skipped steps. The
+        and folds integration, QA, and launch prep into adjacent phases without skipping them. The
         organizational schedule is illustrative, derived from typical phase durations; real timings vary by team and
         scope.
       </p>
@@ -217,14 +220,11 @@ function GanttChart(): JSX.Element {
 
 export default function Timeline(): JSX.Element {
   return (
-    <div className="mx-auto max-w-interactive px-4 py-12 sm:px-8 lg:px-16 lg:py-14">
+    <ArtifactPage width="interactive">
       <ArtifactTopBar pdfSlug="timeline" />
-      <SeriesEyebrow label="Behind the build · Project Management" />
+      <ArtifactHeader label="Behind the build · Project Management" slug="timeline" title="Project Timeline" />
 
-      <h1 className="m-0 mb-2 font-display text-display font-normal text-ink">Project Timeline</h1>
-      <p className="m-0 mb-6 font-sans text-h3 font-normal text-secondary">AI Literacy for the Modern Workforce</p>
-
-      <div className="prose-longform max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
+      <div>{renderMarkdown(INTRO_MD.trim())}</div>
 
       <EffortComparison />
       <GanttChart />
@@ -232,11 +232,13 @@ export default function Timeline(): JSX.Element {
       {SECTIONS.map((s) => (
         <section key={s.heading} className="mt-10">
           <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{s.heading}</h2>
-          <div className="prose-longform max-w-reading">{renderMarkdown(s.body)}</div>
+          <div>{renderMarkdown(s.body)}</div>
         </section>
       ))}
 
+      <SourcesList ids={SOURCE_IDS} />
+
       <ArtifactFooter currentSlug="timeline" />
-    </div>
+    </ArtifactPage>
   );
 }

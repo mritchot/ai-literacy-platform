@@ -12,13 +12,12 @@ import {
   YAxis,
 } from 'recharts';
 import {
-  DELEGATION_COLORS,
-  DISCERNMENT_COLORS,
   TOOLTIP_ITEM_STYLE,
   TOOLTIP_LABEL_STYLE,
   TOOLTIP_STYLE,
 } from '../../utils/chart-config';
 import { useChartTokens } from '../../hooks/useChartTokens';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useViewport } from '../../hooks/useViewport';
 
 interface CollaborationCategory {
@@ -38,22 +37,33 @@ interface PatternMeta {
   key: string;
   label: string;
   color: string;
+  /** Edge stroke for a fill too close to the card to see on its own. */
+  stroke?: string;
 }
 
 export function FivePatternBar({ categories }: FivePatternBarProps): JSX.Element {
   const viewport = useViewport();
   const tokens = useChartTokens();
+  const reducedMotion = useReducedMotion();
 
-  const meta: PatternMeta[] = useMemo(
-    () => [
-      { key: 'taskIteration', label: categories[0]?.pattern ?? '', color: DELEGATION_COLORS[0] },
-      { key: 'learning', label: categories[1]?.pattern ?? '', color: DELEGATION_COLORS[1] },
-      { key: 'validation', label: categories[2]?.pattern ?? '', color: DELEGATION_COLORS[2] },
-      { key: 'directive', label: categories[3]?.pattern ?? '', color: DISCERNMENT_COLORS[0] },
-      { key: 'feedbackLoop', label: categories[4]?.pattern ?? '', color: DISCERNMENT_COLORS[1] },
-    ],
-    [categories],
-  );
+  const meta: PatternMeta[] = useMemo(() => {
+    const [taskIteration, learning, validation, directive, feedbackLoop] =
+      tokens.collaborationPatterns;
+    return [
+      { key: 'taskIteration', label: categories[0]?.pattern ?? '', color: taskIteration },
+      { key: 'learning', label: categories[1]?.pattern ?? '', color: learning },
+      // The validation wash sits near the card color (about 1.15:1), so it
+      // carries a --ghost edge to stay visible as a segment.
+      {
+        key: 'validation',
+        label: categories[2]?.pattern ?? '',
+        color: validation,
+        stroke: tokens.ghost,
+      },
+      { key: 'directive', label: categories[3]?.pattern ?? '', color: directive },
+      { key: 'feedbackLoop', label: categories[4]?.pattern ?? '', color: feedbackLoop },
+    ];
+  }, [categories, tokens]);
 
   const augTotal = (categories[0]?.pct ?? 0) + (categories[1]?.pct ?? 0) + (categories[2]?.pct ?? 0);
   const autoTotal = (categories[3]?.pct ?? 0) + (categories[4]?.pct ?? 0);
@@ -112,7 +122,9 @@ export function FivePatternBar({ categories }: FivePatternBarProps): JSX.Element
                 dataKey={m.key}
                 stackId="patterns"
                 fill={m.color}
-                isAnimationActive
+                stroke={m.stroke}
+                strokeWidth={m.stroke ? 1 : 0}
+                isAnimationActive={!reducedMotion}
                 animationDuration={400}
               />
             ))}
@@ -128,7 +140,7 @@ export function FivePatternBar({ categories }: FivePatternBarProps): JSX.Element
         className="mt-3 font-mono text-caption text-muted"
         style={{ letterSpacing: '0.02em' }}
       >
-        Source: Handa et al., Feb 2025, Figure 7 (sample: 1M Claude.ai conversations, Dec 2024–Jan 2025).
+        Source: Handa et al., Feb 2025, Figure 7 (sample: 1M Claude.ai conversations, December 16–23, 2024; later reports label this the January 2025 wave).
       </figcaption>
     </figure>
   );
@@ -148,7 +160,12 @@ function FivePatternLegend({
           <span
             aria-hidden="true"
             className="inline-block flex-shrink-0"
-            style={{ width: 10, height: 10, background: m.color }}
+            style={{
+              width: 10,
+              height: 10,
+              background: m.color,
+              border: m.stroke ? `1px solid ${m.stroke}` : undefined,
+            }}
           />
           <span className="font-sans text-secondary">
             {m.label} · <span className="font-mono text-tertiary">{categories[i]?.pct}%</span>
@@ -233,7 +250,15 @@ function FivePatternMobile({
                 <span className="font-mono text-tertiary">{cat.pct}%</span>
               </div>
               <div className="overflow-hidden" style={{ height: 10, background: 'rgb(var(--border-light))' }}>
-                <div style={{ width: `${cat.pct}%`, height: '100%', background: m.color, transition: 'width 400ms' }} />
+                <div
+                  style={{
+                    width: `${cat.pct}%`,
+                    height: '100%',
+                    background: m.color,
+                    boxShadow: m.stroke ? `inset 0 0 0 1px ${m.stroke}` : undefined,
+                    transition: 'width 400ms',
+                  }}
+                />
               </div>
             </li>
           );

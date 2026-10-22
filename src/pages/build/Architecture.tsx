@@ -7,13 +7,14 @@
 
 import { useId } from 'react';
 import ARCH_MD from './content/03_architecture.md?raw';
-import { renderMarkdown } from '../../components/shared/render-markdown';
+import { citedIds, renderInline, renderMarkdown } from '../../components/shared/render-markdown';
+import { SourcesList } from '../../components/shared/CitationNotes';
 import { DisclosureChevron } from '../../components/shared/DisclosureChevron';
 import { ExpandAllToggle } from '../../components/shared/ExpandAllToggle';
 import { Overline } from '../../components/shared/Overline';
 import { useExpandableSet } from '../../hooks/useExpandableSet';
 import { ADRS, type Adr } from './architecture-data';
-import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
+import { ArtifactFooter, ArtifactHeader, ArtifactPage, ArtifactTopBar } from './chrome';
 
 const [INTRO_MD = '', ...REST] = ARCH_MD.replace(/\r\n/g, '\n').split(/\n## /);
 const SECTIONS = REST.map((part) => {
@@ -25,6 +26,9 @@ const SECTIONS = REST.map((part) => {
     body: nl === -1 ? '' : part.slice(nl + 1).trim(),
   };
 });
+
+// Sources cited on the page, in reading order: intro, decision records, sections.
+const SOURCE_IDS = citedIds(INTRO_MD, ...ADRS.flatMap((a) => a.rationale), ...SECTIONS.map((s) => s.body));
 
 function StatusBadge({ status }: { status: Adr['status'] }): JSX.Element {
   const adopted = status === 'adopted';
@@ -66,8 +70,8 @@ function AdrCard({ adr, expanded, onToggle }: { adr: Adr; expanded: boolean; onT
       {expanded && (
         <div id={panelId} className="border-t border-border-light" style={{ padding: '16px 20px' }}>
           {adr.rationale.map((p, i) => (
-            <p key={i} className="m-0 mb-3 max-w-reading font-sans text-body-sm text-body last:mb-0" style={{ lineHeight: 1.65 }}>
-              {p}
+            <p key={i} className="m-0 mb-3 font-sans text-body-sm text-body last:mb-0" style={{ lineHeight: 1.65 }}>
+              {renderInline(p)}
             </p>
           ))}
         </div>
@@ -110,25 +114,24 @@ function ArchitectureBrowser(): JSX.Element {
 
 export default function Architecture(): JSX.Element {
   return (
-    <div className="mx-auto max-w-interactive px-4 py-12 sm:px-8 lg:px-16 lg:py-14">
+    <ArtifactPage width="interactive">
       <ArtifactTopBar pdfSlug="architecture" />
-      <SeriesEyebrow label="Behind the build · Design" />
+      <ArtifactHeader label="Behind the build · Design" slug="architecture" title="Architecture Decisions" />
 
-      <h1 className="m-0 mb-2 font-display text-display font-normal text-ink">Architecture Decisions</h1>
-      <p className="m-0 mb-6 font-sans text-h3 font-normal text-secondary">AI Literacy for the Modern Workforce</p>
-
-      <div className="prose-longform max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
+      <div>{renderMarkdown(INTRO_MD.trim())}</div>
 
       <ArchitectureBrowser />
 
       {SECTIONS.map((s) => (
         <section key={s.heading} className="mt-10">
           <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{s.heading}</h2>
-          <div className="prose-longform max-w-reading">{renderMarkdown(s.body)}</div>
+          <div>{renderMarkdown(s.body)}</div>
         </section>
       ))}
 
+      <SourcesList ids={SOURCE_IDS} />
+
       <ArtifactFooter currentSlug="architecture" />
-    </div>
+    </ArtifactPage>
   );
 }

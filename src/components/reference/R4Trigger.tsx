@@ -11,6 +11,15 @@ import { ReferencePanel } from './ReferencePanel';
 import { ReferenceTriggerButton } from './ReferenceTriggerButton';
 import { R4VerificationChecklist } from './items/R4VerificationChecklist';
 
+// R4's title and PDF path, the counterpart of a REFERENCE_ITEMS entry.
+// Shared with the print-document registry (src/pages/print), which
+// renders the checklist body with its own no-op toggle.
+export const R4_META = {
+  title: 'Output Verification Checklist',
+  pdfPath: 'reference/r4-output-verification-checklist.pdf',
+  pdfFilename: 'r4-output-verification-checklist.pdf',
+} as const;
+
 interface R4TriggerProps {
   label?: string;
 }
@@ -38,9 +47,9 @@ export function R4Trigger({
         isOpen={open}
         onClose={() => setOpen(false)}
         id="R4"
-        title="Output Verification Checklist"
-        pdfPath="reference/r4-output-verification-checklist.pdf"
-        pdfFilename="r4-output-verification-checklist.pdf"
+        title={R4_META.title}
+        pdfPath={R4_META.pdfPath}
+        pdfFilename={R4_META.pdfFilename}
       >
         <R4VerificationChecklist checked={checked} onToggle={toggle} />
       </ReferencePanel>

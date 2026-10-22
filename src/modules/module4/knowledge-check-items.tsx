@@ -79,7 +79,8 @@ const KC_4_2: KnowledgeCheckItemData = {
       feedbackTitle: 'Misattributes the problem',
       feedbackTone: 'error',
       feedbackText:
-        'The output quality issue lies in the input’s specificity, not the model’s capability. A different model receiving the same underspecified prompt will produce a different set of generic posts, not a better set of targeted ones. The idea that a “better” tool would infer brand-specific requirements from a prompt that doesn’t contain them misunderstands the steerability principle from Module 3. The fix is in the Description, not the tool.',
+        'The output quality issue lies in the input’s specificity, not the model’s capability. A different model receiving the same underspecified prompt will produce a different set of generic posts, not a better set of targeted ones. On general-purpose benchmark rankings such as LMArena and Artificial Analysis, the leading labs score within a few percent of each other. For a general writing task like this one, switching among leading models is unlikely to supply what the prompt leaves out. The idea that a “better” tool would infer brand-specific requirements from a prompt that doesn’t contain them misunderstands the steerability principle from Module 3. The fix is in the Description, not the tool.',
+      sources: [{ ids: 'evans-2025-11', pageKey: 'benchmarks-close-35' }],
     },
     {
       id: 'b',
@@ -128,12 +129,12 @@ const KC_4_3: KnowledgeCheckItemData = {
   options: [
     {
       id: 'a',
-      text: '“The citation requires immediate verification, but the analytical content may be independently valuable. The specific reference (journal title, author names, page numbers, precise percentage) combines multiple specificity indicators, the pattern where fabrication concentrates: the model generated what a credible investment bank citation looks like, not a citation it retrieved from a real document. However, the directional claim about emerging market outperformance and the regional drivers could reflect genuine market consensus even if the specific source is fabricated. The analyst should verify the citation against Morgan Stanley’s published reports, and if it doesn’t exist, replace it with a verified source that supports the claim, or remove the claim entirely if no supporting source is found.”',
+      text: '“The citation requires immediate verification, but the analytical content may be independently valuable. The specific reference (report title, author names, page numbers, precise percentage) combines multiple specificity indicators, the pattern where fabrication concentrates: the model may have generated what a credible investment bank citation looks like rather than retrieving one from a real document. However, the directional claim about emerging market outperformance and the regional drivers could reflect genuine market consensus even if the specific source is fabricated. The analyst should verify the citation against Morgan Stanley’s published reports, and if it doesn’t exist, replace it with a verified source that supports the claim, or remove the claim entirely if no supporting source is found.”',
       isPreferred: true,
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer applies the verification framework precisely: the citation triggers the NTP × Knowledge diagnostic pair (specific claims in the fabrication zone), which means it should be classified as fabricated until independently confirmed. But it also distinguishes between the fabricated citation and the analytical claim the citation supports, recognizing that directional market analysis can be valid even when the attributed source is generated. The recommended action is correct: verify the source, replace with a real one if confirmed, remove the claim if unsupported. This is calibrated Discernment: neither blanket trust nor blanket rejection.',
+        'This answer applies the verification framework precisely: the citation triggers the next-token prediction × knowledge pair from Module 3’s diagnostic table (specific claims in the fabrication zone), which means it should be flagged and checked first, and treated as unconfirmed until it is independently verified. But it also distinguishes between the citation and the analytical claim it supports, recognizing that directional market analysis can be valid even when the attributed source turns out to be generated. The recommended action is correct: verify the source, replace with a real one if confirmed, remove the claim if unsupported. This is calibrated Discernment: neither blanket trust nor blanket rejection.',
     },
     {
       id: 'b',
@@ -142,16 +143,16 @@ const KC_4_3: KnowledgeCheckItemData = {
       feedbackTitle: 'Dangerous misread of specificity indicators',
       feedbackTone: 'error',
       feedbackText:
-        'The paragraph has every surface feature of credibility: a recognized institution, plausible authors, specific page numbers, a precise projection. That surface credibility is exactly what the NTP × Knowledge diagnostic pair produces. Page numbers do not add reliability; they add specificity to a fabricated reference, making it harder to dismiss on first reading. The model generates page numbers because citations in financial reports typically include them. It is pattern completion, not source retrieval.',
+        'The paragraph has every surface feature of credibility: a recognized institution, plausible authors, specific page numbers, a precise projection. That surface credibility is exactly what the next-token prediction × knowledge pair produces. Page numbers do not add reliability; they add specificity to a reference that may be fabricated, making it harder to dismiss on first reading. A model can generate page numbers simply because citations in financial reports typically include them. That is pattern completion, not source retrieval, and only a lookup tells you which one happened.',
     },
     {
       id: 'c',
       text: '“The entire paragraph should be classified as fabricated and removed. AI tools cannot access proprietary research reports from investment banks, so any citation to a Morgan Stanley report is necessarily generated rather than retrieved. The projection, the author names, the page numbers, and the regional drivers are all pattern-completion output. The model assembled what a credible investment bank citation looks like based on the structure of financial research it has seen in training data. The specificity that makes the paragraph convincing is precisely what makes it dangerous: precise percentages, named authors, and page numbers create an illusion of sourcing that doesn’t exist. The analyst should delete the paragraph entirely and write the emerging market section from primary sources she has actually read, even if that means the section is shorter or less detailed.”',
       isPreferred: false,
-      feedbackTitle: 'Correct instinct, slightly overcorrected',
+      feedbackTitle: 'Right caution, wrong reason',
       feedbackTone: 'caution',
       feedbackText:
-        'The citation is almost certainly fabricated. Classifying it as fabricated and removing it is the safe professional response. The slight overcorrection is in dismissing the directional analytical content: the claim about emerging market outperformance might reflect genuine consensus even though the source is fake. But in a client-facing context, removing the entire paragraph and rebuilding from verified sources is the defensible choice.',
+        'The caution is right, but two parts of the reasoning are not. The premise is wrong: banks publish outlook summaries, and a tool with search or document access can retrieve a real report, so a citation is not “necessarily generated.” Only a lookup settles it. The verification framework flags a citation like this as high risk and checks it first, rather than presuming it fake or real. And deleting the paragraph unchecked discards a directional claim that a verified source might support. The recommended response gives the same protection at lower cost: verify first, replace the source if a real one supports the claim, and remove the claim only if none does.',
     },
     {
       id: 'd',
@@ -199,7 +200,8 @@ const KC_4_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Misapplies the model’s capabilities',
       feedbackTone: 'error',
       feedbackText:
-        'Asking the model to self-evaluate for accuracy misunderstands source amnesia from Module 3: the model cannot distinguish information it generated from information it received. When prompted to “check for unsupported claims,” it will either affirm the existing output (sycophancy) or generate plausible-sounding caveats that may or may not correspond to actual gaps. The root cause gap exists because the model lacks the vendor delay information. Asking it to identify what it doesn’t know requires the exact capability it doesn’t have. Discernment is a human competency in this framework, not a task to delegate back to the model.',
+        'Asking the model to self-evaluate for accuracy misreads the mechanism from Module 3: the check is generated by the same next-token prediction that wrote the draft, so it cannot reach facts the model was never given. When prompted to “check for unsupported claims,” it will either affirm the existing output (sycophancy) or generate plausible-sounding caveats that may or may not correspond to actual gaps. The root cause gap exists because the model lacks the vendor delay information. Asking it to identify what it doesn’t know requires the exact capability it doesn’t have. Discernment is a human competency in this framework, not a task to delegate back to the model. The framework’s authors define all four competencies as human skills, knowledge, and values.',
+      sources: [{ ids: 'dakan-feller-2025', pageKey: 'four-ds' }],
     },
     {
       id: 'c',

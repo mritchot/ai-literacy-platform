@@ -16,8 +16,6 @@ import { ReflectionPrompt } from '../../components/shared/ReflectionPrompt';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import {
   AXIS_TICK_STYLE,
-  DELEGATION_COLORS,
-  DISCERNMENT_COLORS,
   TOOLTIP_ITEM_STYLE,
   TOOLTIP_LABEL_STYLE,
   TOOLTIP_STYLE,
@@ -60,16 +58,17 @@ export function AugAutoViewB({
   const isMobile = viewport === 'mobile';
   const tokens = useChartTokens();
 
-  const meta = useMemo(
-    () => [
-      { key: 'taskIteration', color: DELEGATION_COLORS[0] },
-      { key: 'learning', color: DELEGATION_COLORS[1] },
-      { key: 'validation', color: DELEGATION_COLORS[2] },
-      { key: 'directive', color: DISCERNMENT_COLORS[0] },
-      { key: 'feedbackLoop', color: DISCERNMENT_COLORS[1] },
-    ],
-    [],
-  );
+  const meta = useMemo(() => {
+    const [taskIteration, learning, validation, directive, feedbackLoop] =
+      tokens.collaborationPatterns;
+    return [
+      { key: 'taskIteration', color: taskIteration },
+      { key: 'learning', color: learning },
+      { key: 'validation', color: validation },
+      { key: 'directive', color: directive },
+      { key: 'feedbackLoop', color: feedbackLoop },
+    ];
+  }, [tokens]);
 
   const stacked = [
     {
@@ -107,8 +106,8 @@ export function AugAutoViewB({
     <div className="space-y-6">
       <p className="m-0 font-sans text-body-sm text-body">
         Click any segment of the bar to see what that pattern looks like in practice. The three
-        augmentation patterns (Task Iteration, Learning, Validation) sit to the left; the two
-        automation patterns (Directive, Feedback Loop) sit to the right.
+        augmentation patterns sit to the left: Task Iteration, Learning, and Validation. The two
+        automation patterns, Directive and Feedback Loop, sit to the right.
       </p>
 
       <div aria-label={ariaLabel}>
@@ -148,6 +147,9 @@ export function AugAutoViewB({
                 // stroke. Mirrors the design-system "competency-highlighted
                 // card" pattern transposed onto chart bars.
                 const fillOpacity = !hasAnySelection ? 1 : isSelected ? 1 : 0.25;
+                // Same --ghost edge as the S2 bar: the validation wash is
+                // about 1.15:1 against the card.
+                const restingStroke = m.key === 'validation' ? tokens.ghost : 'transparent';
                 return (
                   <Bar
                     key={m.key}
@@ -161,8 +163,8 @@ export function AugAutoViewB({
                     <Cell
                       fill={m.color}
                       fillOpacity={fillOpacity}
-                      stroke={isSelected ? 'rgb(var(--ink))' : 'transparent'}
-                      strokeWidth={isSelected ? 3 : 0}
+                      stroke={isSelected ? 'rgb(var(--ink))' : restingStroke}
+                      strokeWidth={isSelected ? 3 : m.key === 'validation' ? 1 : 0}
                     />
                   </Bar>
                 );
@@ -338,7 +340,7 @@ export function AugAutoViewB({
       </section>
 
       <p className="m-0 font-mono text-caption text-muted" style={{ letterSpacing: '0.02em' }}>
-        Source: Handa et al., Feb 2025, Figure 7, pp. 9–10 (patterns); p. 7 (job zones).
+        Source: Handa et al., Feb 2025, Table 1 and Figure 7, p. 10 (patterns); pp. 8–9, example occupations p. 20, and Table 2, p. 24 (job zones).
       </p>
 
       <ReflectionPrompt
@@ -347,7 +349,7 @@ export function AugAutoViewB({
         promptId="p3_reflection_1"
         engagedEvent="p3_reflection_1_engaged"
         savedEvent="p3_reflection_1_saved"
-        promptText="Think about the last five times you used an AI tool for work. For each, try to identify which of the five collaboration patterns it fits. How many were task iteration? How many were directive? Did any involve validation: bringing your own work for the AI to check?"
+        promptText="Think about the last five times you used an AI tool for work. For each, try to identify which of the five collaboration patterns it fits. How many were task iteration? How many were directive? Did any involve validation: bringing your own work for the AI to check? In the research, the tasks most often classified as directive are about producing: create, develop, draft. Those most often classified as task iteration are about refining: edit, rewrite, revise. Those most often classified as learning are about explaining: help, explain, provide. These words describe the tasks, not what people typed, so classify each conversation by what happened after your first request."
       />
     </div>
   );

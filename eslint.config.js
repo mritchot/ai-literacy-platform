@@ -10,7 +10,9 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist', 'node_modules'] },
+  // Gitignored local folders (agent worktrees, planning prompts) hold
+  // copies of the source; linting them would report on untracked code.
+  { ignores: ['dist', 'node_modules', '.claude/worktrees/**', 'cc-prompts/**'] },
   {
     files: ['src/**/*.{ts,tsx}', 'vite.config.ts'],
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
@@ -49,7 +51,19 @@ export default tseslint.config(
     // 16-line series binders exist to export route/config wiring, not
     // components — fast-refresh semantics don't apply to them, and the
     // rule was contributing 34 of the lint run's warnings as pure noise.
-    files: ['src/router.tsx', 'src/pages/*/chrome.tsx'],
+    // print-documents.tsx is the print-route registry: it co-exports the
+    // manifest and resolver with the lazy page components it maps to.
+    // PrintModeContext, EndnotesContext, ReferenceTrigger, and R4Trigger co-export their
+    // provider/registry metadata with the component that consumes it.
+    files: [
+      'src/router.tsx',
+      'src/pages/*/chrome.tsx',
+      'src/pages/print/print-documents.tsx',
+      'src/contexts/PrintModeContext.tsx',
+      'src/contexts/EndnotesContext.tsx',
+      'src/components/reference/ReferenceTrigger.tsx',
+      'src/components/reference/R4Trigger.tsx',
+    ],
     rules: {
       'react-refresh/only-export-components': 'off',
     },

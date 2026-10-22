@@ -22,8 +22,10 @@
       },
       {
         "title": "Anthropic Economic Index Report: Economic Primitives",
+        "authors": "Appel, R., Massenkoff, M., McCrory, P., et al.",
         "publisher": "Anthropic",
-        "date": "2026",
+        "date": "2026-01-15",
+        "url": "https://www.anthropic.com/research/anthropic-economic-index-january-2026-report",
         "data_period": "November 2025",
         "citation_key": "economic_primitives_v4",
         "used_for": "Updated occupation usage shares by platform (Claude.ai vs. API), temporal trend context"
@@ -32,9 +34,9 @@
     "last_validated": "2026-04-27",
     "notes": [
       "Per-occupation augmentation/automation splits are NOT available in the source data. Handa et al. provides only the aggregate 57/43 split and states that 'this ratio varies across occupations' without giving per-occupation ratios. The dashboard should present occupation-level data as usage shares, not per-occupation aug/auto splits.",
-      "The Anthropic Interviewer paper reports a slightly different behavioral split (47% augmentation / 49% automation) described as 'our latest analysis.' This differs from Handa et al.'s 57/43 because it uses a different dataset and time period. Handa et al. is the standalone citable empirical study. See process journal discrepancy note.",
+      "The Anthropic Interviewer paper reports a slightly different behavioral split (47% augmentation / 49% automation) described as 'our latest analysis.' This differs from Handa et al.'s 57/43 because it uses a different dataset and time period. Handa et al. is the standalone citable empirical study. See process journal discrepancy note. The 47/49 split is the August 2025 (V3) wave; adoption-trends.json carries it under V3.",
       "Occupation usage share percentages from Figure 3 are read from chart values. Minor reading imprecision is possible for mid-range bars. The top categories (Computer and Mathematical at 37.2%, Arts/Design at 10.3%) are labeled explicitly in the figure.",
-      "CROSS-FILE V1 CONSISTENCY: This file uses 57% augmentation from Handa et al. (the primary citable study). adoption-trends.json uses 56% from Economic Primitives' retrospective reporting of the same V1 dataset. Decision: keep 57% here for the pattern breakdown; the trend chart uses Economic Primitives' retrospective figures. Dashboard should note this in a tooltip if both views are visible simultaneously.",
+      "CROSS-FILE V1 CONSISTENCY: Both this file and adoption-trends.json use Handa et al.'s 57/43 for V1 (author decision 03-07-2026). Appel, Massenkoff & McCrory (2026, p. 9) report the same period as 56/41, keeping about 3% unclassified conversations in the total (Handa's split sums to 100%); the September 2025 report shows the same V1 values (55.5/41.1, Figure 1.2, p. 10); that restatement is recorded in adoption-trends.json's _v1DiscrepancyNote and is not used in any chart.",
       "VALIDATION PASS 1 (April 27, 2026): All data points verified against source documents. One fix applied: Personal Care and Service overrepresentation_ratio corrected from 0.3 to 0.2 (0.5/2.0 = 0.25, rounds to 0.2). Four approximate platform_comparison occupation pairs (Life/Physical/Social Science, Business/Financial, Management, Architecture/Engineering) read from Figure 1.2 small multiples confirmed as verified.",
       "VALIDATION PASS 2 (April 27, 2026): Source-first verification — extracted all data from source documents independently, then diffed against JSON. Two fixes applied: (1) Validation typical_tasks removed unsupported 'code review' (source p. 10 mentions only language translations); (2) occupation_usage_shares data_note corrected source reference from 'footnote 20, p. 20' to 'Appendix B.7, p. 21' for the 23% non-work finding.",
       "VALIDATION PASS 3 (April 27, 2026): Final reconciliation — comprehensive structural, computational, and cross-reference audit. All checks passed: 8/8 sections present, all percentage sums verified (collaboration patterns 100.0%, aggregate split 100%, self-report 100%, platform splits 100%, job zone conv. 100.01% matching source rounding), all 22 overrepresentation ratios recomputed correctly, all 5 job zone representation ratios verified, monotonic occupation depth confirmed, internal cross-references consistent, all three prior fixes confirmed in place. File is production-ready."
@@ -62,7 +64,7 @@
         "pattern": "Task Iteration",
         "category": "augmentation",
         "pct": 31.3,
-        "definition": "Collaborative refinement process — the user and AI iterate on a task together.",
+        "definition": "Collaborative refinement process: the user and AI iterate on a task together.",
         "example": "Let's draft a marketing strategy for our new product. ... Good start, but can we add some concrete metrics?",
         "typical_tasks": "Front-end development, landing pages, professional communication, resumes and cover letters"
       },
@@ -70,7 +72,7 @@
         "pattern": "Learning",
         "category": "augmentation",
         "pct": 23.3,
-        "definition": "Knowledge acquisition and understanding — the user asks the AI for information or explanations.",
+        "definition": "Knowledge acquisition and understanding: the user asks the AI for information or explanations.",
         "example": "Can you explain how neural networks work?",
         "typical_tasks": "General education topics, health advice, embedded systems, subject-specific learning"
       },
@@ -78,7 +80,7 @@
         "pattern": "Validation",
         "category": "augmentation",
         "pct": 2.8,
-        "definition": "Work verification and improvement — the user asks the AI to check their work and suggest improvements.",
+        "definition": "Work verification and improvement: the user asks the AI to check their work and suggest improvements.",
         "example": "I've written this SQL query to find duplicate customer records. Can you check if my logic is correct and suggest any improvements?",
         "typical_tasks": "Language translations"
       },
@@ -86,7 +88,7 @@
         "pattern": "Directive",
         "category": "automation",
         "pct": 27.8,
-        "definition": "Complete task delegation with minimal interaction — the user gives a task and the AI completes it.",
+        "definition": "Complete task delegation with minimal interaction: the user gives a task and the AI completes it.",
         "example": "Format this technical documentation in Markdown.",
         "typical_tasks": "Writing and content generation, business email drafting, schoolwork-related tasks"
       },
@@ -94,7 +96,7 @@
         "pattern": "Feedback Loop",
         "category": "automation",
         "pct": 14.8,
-        "definition": "Task completion guided by environmental feedback — the user repeatedly relays error states back to the AI.",
+        "definition": "Task completion guided by environmental feedback: the user repeatedly relays error states back to the AI.",
         "example": "Here's my Python script for data analysis – it's giving an IndexError. Can you help fix it? ... Now I'm getting a different error...",
         "typical_tasks": "Coding and debugging"
       }
@@ -364,7 +366,8 @@
         "occupation": "Computer and Mathematical",
         "claude_ai_pct": 36,
         "api_pct": 52,
-        "verification": "Narrative text, p. 27"
+        "verification": "Narrative text, p. 27",
+        "_pageDiscrepancy": "The same report gives 34% (Claude.ai) and 46% (API) for computer and mathematical tasks by SOC group on p. 7, and 36% / 52% on p. 27. This file uses p. 27. Cite the page you use."
       },
       {
         "occupation": "Education, Instruction, and Library",

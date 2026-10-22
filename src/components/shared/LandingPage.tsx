@@ -1,16 +1,21 @@
 // Landing page — program hero, 4D competency legend strip, 2x2 module grid,
-// summary stats bar, footer note. Spatial composition follows the mockup;
+// decision-maker strip (links to the three artifact hubs), summary stats
+// bar, footer note. Spatial composition follows the mockup;
 // every color, font, radius, and spacing draws from design system tokens.
 
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   COMPETENCIES,
   MODULES,
   TOTAL_ACTIVITIES,
   TOTAL_OBJECTIVES,
+  programMinutes,
   type CompetencyKey,
   type ModuleMeta,
 } from '../../data/program';
+import { PRE_ASSESSMENT_ITEMS } from '../../data/pre-assessment';
+import { POST_ASSESSMENT_ITEMS } from '../../data/post-assessment';
 import { useLearnerProgress, useResolvedModules } from '../../contexts/LearnerProgressContext';
 import { usePlatformMode } from '../../hooks/usePlatformMode';
 import { computeGating, type ModuleGating } from '../../utils/module-gating';
@@ -18,6 +23,8 @@ import { CompetencyDot } from './CompetencyDot';
 import { Icon } from './Icon';
 import { Overline } from './Overline';
 import { ProgressBar } from './ProgressBar';
+
+const PROGRAM_MINUTES = programMinutes(PRE_ASSESSMENT_ITEMS.length, POST_ASSESSMENT_ITEMS.length);
 
 const COMPETENCY_BG: Record<CompetencyKey, string> = {
   delegation: 'rgb(var(--delegation))',
@@ -32,7 +39,7 @@ export function LandingPage(): JSX.Element {
   // a module locks until the previous one is fully complete; in
   // portfolio mode nothing locks. Module 1 also waits on the
   // pre-assessment, and M4 S10 on the post-assessment.
-  const { mode } = usePlatformMode();
+  const { mode, setMode } = usePlatformMode();
   const { isAssessmentComplete } = useLearnerProgress();
   const preComplete = isAssessmentComplete('pre');
   const postComplete = isAssessmentComplete('post');
@@ -86,6 +93,9 @@ export function LandingPage(): JSX.Element {
       <Hero resumeTarget={resumeTarget} preCtaActive={preCtaActive} />
       <CompetencyLegend />
       <ModuleGrid modules={modules} gating={gating} />
+      <CaseStrip
+        onOpenPortfolio={mode === 'learner' ? () => setMode('portfolio') : undefined}
+      />
       <SummaryBar completedSections={completedSections} totalSections={totalSections} />
       <Footer />
       <AttributionFooter />
@@ -109,9 +119,9 @@ function Hero({
   return (
     <section aria-labelledby="program-title" className="mb-14">
       <Overline className="mb-3.5" style={{ fontSize: 11 }}>
-        {/* 90–120: module durations sum to 80–110 (program.ts) plus
-            ~10 min for the pre/post assessments. */}
-        Program · 4 modules · 90–120 min total
+        {/* Computed, not typed: the module durations plus both
+            assessment forms, so a re-timing in program.ts flows here. */}
+        Program · 4 modules · {PROGRAM_MINUTES.low}–{PROGRAM_MINUTES.high} min total
       </Overline>
       <h1
         id="program-title"
@@ -167,6 +177,15 @@ function Hero({
           </div>
         </div>
       </div>
+      <p className="m-0 mt-5 font-sans text-caption text-tertiary">
+        Evaluating this program for an organization?{' '}
+        <Link
+          to="/needs-analysis"
+          className="font-medium text-action no-underline hover:underline"
+        >
+          Start with the needs analysis →
+        </Link>
+      </p>
     </section>
   );
 }
@@ -387,6 +406,94 @@ function ModuleCard({
   );
 }
 
+// Decision-maker entry points: the three artifact hubs that carry the
+// case for the program. Placed after the module grid so the learner path
+// stays the primary action.
+const CASE_LINKS: { to: string; label: string; blurb: string }[] = [
+  {
+    to: '/needs-analysis',
+    label: 'The needs analysis',
+    blurb: 'The problem and its evidence: AI tools are available, the judgment to use them well is not.',
+  },
+  {
+    to: '/evaluation',
+    label: 'The evaluation framework',
+    blurb: 'How results are measured at all four Kirkpatrick levels, with a live ROI model.',
+  },
+  {
+    to: '/build',
+    label: 'Behind the build',
+    blurb: 'Learning architecture, budget, timeline, and QA for a 200-participant deployment.',
+  },
+];
+
+function CaseStrip({
+  onOpenPortfolio,
+}: {
+  /** Learner mode only. Kept out of the hero so the pre-assessment stays
+   *  the one hero action for learners; skipping it would cost the Level 2
+   *  pre/post data. */
+  onOpenPortfolio: (() => void) | undefined;
+}): JSX.Element {
+  // The button unmounts once the mode flips, so focus moves to the
+  // confirmation instead of falling back to <body>.
+  const [opened, setOpened] = useState(false);
+  const confirmationRef = useRef<HTMLParagraphElement>(null);
+  useEffect(() => {
+    if (opened) confirmationRef.current?.focus();
+  }, [opened]);
+
+  return (
+    <section aria-labelledby="case-heading" className="mb-10">
+      <h2 id="case-heading" className="m-0 mb-5">
+        <Overline as="span" style={{ fontSize: 11 }}>
+          For decision-makers · the case behind the program
+        </Overline>
+      </h2>
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+        {CASE_LINKS.map((c) => (
+          <Link
+            key={c.to}
+            to={c.to}
+            className="block bg-[rgb(var(--white))] no-underline transition-colors duration-[160ms] hover:bg-surface"
+            style={{
+              border: '1px solid rgb(var(--border))',
+              borderTop: '3px solid rgb(var(--action))',
+              padding: '18px 20px',
+            }}
+          >
+            <div className="mb-1.5 font-sans text-body-sm font-semibold text-ink">{c.label} →</div>
+            <div className="font-sans text-[12.5px] leading-[1.45] text-secondary">{c.blurb}</div>
+          </Link>
+        ))}
+      </div>
+      {onOpenPortfolio ? (
+        <button
+          type="button"
+          onClick={() => {
+            onOpenPortfolio();
+            setOpened(true);
+          }}
+          className="mt-4 bg-transparent p-0 font-sans text-caption font-medium text-action hover:underline"
+        >
+          Reviewing this as portfolio work? Open every module
+        </button>
+      ) : (
+        opened && (
+          <p
+            ref={confirmationRef}
+            tabIndex={-1}
+            role="status"
+            className="m-0 mt-4 font-sans text-caption text-secondary"
+          >
+            Every module is now open.
+          </p>
+        )
+      )}
+    </section>
+  );
+}
+
 function SummaryBar({
   completedSections,
   totalSections,
@@ -455,8 +562,8 @@ function Footer(): JSX.Element {
       className="mt-12 flex flex-col gap-1 border-t border-border-light pt-6 font-mono text-[11px] font-medium text-muted sm:flex-row sm:items-center sm:justify-between sm:gap-4"
       style={{ letterSpacing: '0.02em' }}
     >
-      <div>AI Literacy · v1.0 · portfolio edition</div>
-      <div>Last updated · July 2026</div>
+      <div>AI Literacy · v1.1 · portfolio edition</div>
+      <div>Last updated · October 2026</div>
     </footer>
   );
 }
@@ -465,7 +572,8 @@ function Footer(): JSX.Element {
 // platform's persistent root); doesn't need to repeat on section pages.
 // Mirrors what LICENSE and licenses/LICENSE-CONTENT formalize: the project's
 // code is MIT, the instructional content is CC BY-NC-SA 4.0, and the
-// 4D taxonomy is adopted from Anthropic under the same CC license.
+// 4D taxonomy is adapted from Anthropic's AI Fluency course (CC BY-NC-SA
+// 4.0), which teaches Dakan & Feller's framework (CC BY-NC-ND 4.0).
 function AttributionFooter(): JSX.Element {
   return (
     <div
@@ -494,17 +602,26 @@ function AttributionFooter(): JSX.Element {
         .
       </p>
       <p className="m-0">
-        Competency taxonomy adapted from Anthropic&rsquo;s 4D AI Fluency Framework
-        (Dakan, Feller &amp; Anthropic, 2025), licensed under{' '}
+        Competency taxonomy adapted from Anthropic&rsquo;s{' '}
         <a
-          href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+          href="https://anthropic.skilljar.com/ai-fluency-framework-foundations"
           target="_blank"
           rel="noopener noreferrer"
           className="text-tertiary underline hover:text-secondary"
         >
-          CC BY-NC-SA 4.0
-        </a>
-        .
+          AI Fluency: Framework &amp; Foundations
+        </a>{' '}
+        course (2025, CC BY-NC-SA 4.0; Copyright 2025 Rick Dakan, Joseph Feller, and
+        Anthropic), which teaches the{' '}
+        <a
+          href="https://ringling.libguides.com/ai/framework"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-tertiary underline hover:text-secondary"
+        >
+          4D AI Fluency Framework
+        </a>{' '}
+        (Dakan &amp; Feller, 2025, CC BY-NC-ND 4.0).
       </p>
       <p className="m-0">
         Built with AI assistance. See the{' '}

@@ -35,7 +35,7 @@ const PANELS: PanelData[] = [
     // around operators tokenize separately.
     tokens: ['Calculate', ':', ' ', '1', ',', '279', ' ×', ' ', '48', ' =', ' ?'],
     annotation:
-      'The comma splits "1,279" into "1" and "279" — token boundaries follow which digit strings appeared most often in training data, not place value or mathematical structure.',
+      'The comma splits "1,279" into "1" and "279". Without the comma, "1279" would split into "127" and "9": this tokenizer cuts every run of digits into chunks of up to three, counting from the left, so token boundaries often ignore place value.',
   },
   {
     id: 'c',
@@ -51,7 +51,7 @@ const PANELS: PanelData[] = [
     // what a user would actually paste in.
     tokens: ['東¹', '東²', '京', 'の', '天', '気', 'は', 'ど', 'う', 'です', 'か'],
     annotation:
-      'Eleven Japanese characters ("What\'s the weather like in Tokyo?") become eleven tokens — and the first character, 東, is split into two byte-level pieces (marked ¹ and ²), neither of which is a whole character on its own. The same question in English tokenizes into eight.',
+      'Eleven Japanese characters ("What\'s the weather like in Tokyo?") become eleven tokens. The first character, 東, is split into two byte-level pieces, marked ¹ and ², and neither is a whole character on its own. The same question in English tokenizes into eight.',
   },
 ];
 

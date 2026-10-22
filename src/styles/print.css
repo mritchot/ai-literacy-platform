@@ -1,0 +1,411 @@
+/* Print stylesheet — one @media print block, scoped to `html.print-mode`,
+   which src/pages/print/PrintShell.tsx sets on the `#/print/...` routes.
+   Built from the design-system tokens in index.css: Source Serif 4 for
+   display, IBM Plex Sans for body, IBM Plex Mono for labels and data, and
+   the 4D accents through their CSS variables (no literal hexes here).
+
+   Page geometry is Letter, 0.5in side margins, 0.7in top and 0.65in
+   bottom. The @page background fills the whole sheet, margins included,
+   so the washi canvas runs edge to edge. Chromium does not implement the CSS `@page` margin boxes
+   (`@bottom-center` and friends), so page numbers and the running
+   header/footer are drawn by Playwright's headerTemplate/footerTemplate
+   in scripts/render-pdfs.mjs, inside the top and bottom bands; the
+   margins here and the script's page.pdf() margins must agree.
+   Everything inside the margins is this file.
+
+   Page chrome (top bar, eyebrow, pager, download links, Expand-all, the
+   disclosure chevrons, screen-only filters) is not hidden here: the
+   components read PrintModeContext and render nothing on the print routes.
+
+   Scale: scripts/render-pdfs.mjs prints at scale 0.8, so the 7.5in content
+   box is 900 CSS px wide and 1 CSS px prints at 0.6pt. Sizes below are CSS
+   px; the printed size follows in brackets.
+
+   Print design system, shared by all four families:
+     Masthead   series breadcrumb in mono caps, Source Serif 4 title at
+                32px [19pt], course name at 16px, closed by a rule.
+     Body       IBM Plex Sans 16px [9.6pt] at line-height 1.65, across the
+                full content width, the same as tables and figures.
+     Headings   sans semibold, as on the web: H2 22px [13pt], H3 18px
+                [11pt], H4 16px.
+     Tables     full content width; one 1px frame on the table itself, a
+                warm header band, 13px [7.8pt] cells.
+     Callouts   tinted panel, 1px frame, 3px accent rule on the left.
+     Notes      a rule, a "Notes" heading at H3 size, then 12.5px [7.5pt]
+                notes in the document's text column, with hanging
+                right-aligned numbers; URLs break only at their own
+                punctuation. */
+
+@media print {
+  @page {
+    size: Letter;
+    margin: 0.7in 0.5in 0.65in;
+    background: rgb(var(--canvas));
+  }
+
+  html.print-mode,
+  html.print-mode body {
+    height: auto;
+    overflow: visible;
+    background: rgb(var(--canvas));
+  }
+
+  html.print-mode * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* ─── Layout ─── */
+
+  /* The page root's reading/interactive width and viewport padding give
+     way to the page box. */
+  html.print-mode .print-body > div {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+  }
+
+  /* ─── Masthead ─── */
+
+  /* Series breadcrumb, title, course name, then a rule: one treatment for
+     every document (PrintShell.tsx). */
+  html.print-mode .print-masthead {
+    margin: 0 0 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgb(var(--border));
+    break-after: avoid;
+  }
+
+  html.print-mode .print-masthead-label {
+    display: flex;
+    align-items: center;
+    margin: 0 0 8px;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  html.print-mode .print-masthead-rule {
+    display: inline-block;
+    width: 22px;
+    height: 2px;
+    margin-right: 10px;
+  }
+
+  html.print-mode .print-masthead-dot {
+    margin: 0 0.6em;
+    color: rgb(var(--ghost));
+  }
+
+  html.print-mode .print-masthead-title {
+    margin: 0 0 2px;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  html.print-mode .print-masthead-subtitle {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  /* The content's own title (a markdown document's H1) repeats the
+     masthead, so it is hidden; the block after it starts flush. */
+  html.print-mode .print-body .doc-title {
+    display: none;
+  }
+
+  html.print-mode .print-body .doc-title + * {
+    margin-top: 0 !important;
+  }
+
+  /* The first block under the masthead starts flush. */
+  html.print-mode .print-body > div > div > :first-child,
+  html.print-mode .print-body > div > div > :first-child > :first-child {
+    margin-top: 0;
+  }
+
+  /* ─── Measure ─── */
+
+  /* Running text uses the full content width, the same as tables and
+     figures, so every block on the page shares one edge. */
+
+  /* Markdown tables sit a step tighter to the text around them, which
+     keeps a lead-in label and its table together on the page they
+     share without pushing later figures over a break. */
+  html.print-mode .print-body .my-6.overflow-x-auto {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Scroll containers cannot scroll on paper. */
+  html.print-mode .overflow-x-auto,
+  html.print-mode .overflow-hidden {
+    overflow: visible !important;
+  }
+
+  /* Disclosure headers are buttons on screen; on paper they are headings. */
+  html.print-mode button[aria-expanded] {
+    cursor: default;
+  }
+
+  /* ─── Type ─── */
+
+  html.print-mode a {
+    color: rgb(var(--action));
+  }
+
+  /* A section rule never sits at a page edge: the break goes inside the
+     paragraph before it, so the rule keeps text above and its heading
+     below. */
+  html.print-mode .print-body hr {
+    break-before: avoid;
+    break-after: avoid;
+  }
+
+  /* ─── Tables ─── */
+
+  /* The frame moves from the scroll wrapper to the table. A wrapper that
+     breaks across pages is stretched to the foot of the page, which drew
+     an empty framed box under the last row; the table box is not. */
+  html.print-mode .print-body .overflow-x-auto.border:has(> table) {
+    border: 0;
+    background: transparent;
+  }
+
+  html.print-mode .print-body .overflow-x-auto.border > table {
+    border: 1px solid rgb(var(--border));
+  }
+
+  /* The card white goes on the body rows, not the table, for the same
+     reason: a table that breaks is stretched too, and its own background
+     would fill the rest of the page. */
+  html.print-mode .print-body .overflow-x-auto.border > table > tbody > tr {
+    background: rgb(var(--white));
+  }
+
+  /* A short table (five rows or fewer) stays whole. */
+  html.print-mode .print-body .overflow-x-auto > table:not(:has(tbody > tr:nth-child(6))) {
+    break-inside: avoid;
+  }
+
+  /* ─── Page breaks ─── */
+
+  /* A lead-in paragraph moves with the table or card grid it introduces
+     rather than splitting to keep its last line with it. */
+  html.print-mode .print-body p:has(+ :is(table, .overflow-x-auto, .grid)) {
+    break-inside: avoid;
+  }
+
+  /* Body text never leaves one or two lines alone at a page edge. */
+  html.print-mode .print-body :is(p, li, dd) {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Chromium does not apply widows inside a list item, and list items
+     here run a few lines at most, so each one stays whole. */
+  html.print-mode .print-body li {
+    break-inside: avoid;
+  }
+
+  /* Keep-with-next: headings; overline labels and the label rows that
+     pair one with a rule; a paragraph that leads into a table or a card
+     grid; a
+     table's group label row (RACI's phases); the decorative connectors
+     between stacked cards. */
+  html.print-mode :is(h1, h2, h3, h4, h5, h6),
+  html.print-mode .print-body .text-overline,
+  html.print-mode .print-body div:has(> .text-overline:first-child + span[aria-hidden='true']),
+  html.print-mode .print-body p:has(+ :is(table, .overflow-x-auto, .grid)),
+  html.print-mode .print-body tr:has(> th[scope='rowgroup']),
+  html.print-mode .print-body div[aria-hidden='true']:has(> svg) {
+    break-after: avoid;
+  }
+
+  /* Stay whole: table rows, callouts (blockquotes, asides, the labelled
+     stat sections), figures, every bordered card or panel, the small
+     cards that carry no border of their own (ADR records, decision
+     items, grid cells such as R1's quadrants and the ROI calculator's
+     fields), and the card connectors. A box taller than a page cannot
+     stay whole: its component marks it `print-flow`, and it breaks
+     between its own cards and rows (marked `print-keep`) instead. */
+  html.print-mode .print-body :is(tr, blockquote, aside, figure, svg, [role='img']),
+  html.print-mode .print-body section[aria-label]:not(.print-flow),
+  html.print-mode .print-body :is([style*='border:'], [style*='border-left:'], [style*='border-top'][style*='border-right'][style*='border-bottom'][style*='border-left']):not(.print-flow),
+  html.print-mode .print-body .print-keep,
+  html.print-mode .print-body .space-y-2\.5 > div,
+  html.print-mode .print-body .grid > :not(.print-flow),
+  html.print-mode .print-body div[aria-hidden='true']:has(> svg),
+  html.print-mode .print-body [style*='minmax(240px'] > * {
+    break-inside: avoid;
+  }
+
+  /* Tables break between rows, never inside one, and the header row
+     repeats (thead, below). The first two rows stay with the header and
+     the last row stays with the one before it, so no page carries a
+     lone row. */
+  html.print-mode .print-body tbody > tr:is(:first-child, :nth-child(2), :last-child) {
+    break-before: avoid;
+  }
+
+  /* A box that flows never leaves its opening block (a decorative accent
+     bar, a header, a labelled lead-in) alone at the foot of a page. */
+  html.print-mode .print-body .print-flow > :is([aria-hidden='true'], header, div:has(> .text-overline:first-child)):first-child {
+    break-after: avoid;
+  }
+
+  /* Inside a box that flows, the last item of a stacked list never
+     crosses a page break alone. */
+  html.print-mode .print-body .print-flow .flex-col > :last-child:not(:first-child) {
+    break-before: avoid;
+  }
+
+  /* A bordered box that does break redraws its border, padding, and
+     background on each page, so no fragment is left open-ended. */
+  html.print-mode .print-body :is([style*='border:'], [style*='border-top'][style*='border-right'][style*='border-bottom'][style*='border-left'], [style*='border-left:'], .print-flow) {
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  html.print-mode button[aria-expanded] {
+    break-inside: avoid;
+    break-after: avoid;
+  }
+
+  /* Sticky cells have nothing to stick to on paper. */
+  html.print-mode .print-body .sticky {
+    position: static !important;
+  }
+
+  /* R1's sub-row alignment floors (see SUB_*_MIN_HEIGHT in R1QuickReference)
+     are sized for the narrow web panel; at print width they only add blank
+     space, so each quadrant flows at its natural height. */
+  html.print-mode .r1-detail {
+    min-height: 0 !important;
+  }
+
+  /* R1's quadrant grid is designed 2×2; auto-fit would give it three
+     columns at the print layout width. */
+  html.print-mode .print-body [style*='minmax(240px'] {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  html.print-mode thead {
+    display: table-header-group;
+  }
+
+  /* The organizational range ($190,000–$258,000) fits its card on one
+     line at this size, level with the solo figure beside it. */
+  html.print-mode .print-body section[aria-label='Cost contrast'] [style*='font-size: 40px'] {
+    font-size: 34px !important;
+  }
+
+  /* The Gantt's last week label is centered on the right edge of the
+     chart; a little inset keeps it inside the page box. */
+  html.print-mode .print-body [style*='min-width: 560px'] {
+    padding-right: 12px;
+  }
+
+  /* A card's header block stays with the body it opens. */
+  html.print-mode .print-body header {
+    break-after: avoid;
+  }
+
+  /* ─── Citations: endnote superscripts and the Notes section ─── */
+
+  /* <Citation> renders as a superscript number in print (Citation.tsx).
+     The number is raised by relative position, not vertical-align, so it
+     stays inside its line box: a raised glyph that overflows the line
+     paints across a page break as a sliver at the foot of the page
+     before. */
+  html.print-mode .cite-note {
+    position: relative;
+    top: -0.5em;
+    margin-left: 0.06em;
+    font-size: 0.7em;
+    line-height: 1;
+    vertical-align: baseline;
+    color: rgb(var(--secondary));
+    font-variant-numeric: lining-nums;
+  }
+
+  /* The generated Notes section (CitationNotes.tsx), set as a report's
+     endnotes: a rule, a heading at H3 size, then small notes, each number
+     hanging right-aligned in its own gutter. The notes keep the text
+     column of the document: the reading column in a series document, the
+     full width on a reference card. */
+  html.print-mode .print-notes {
+    margin-top: 40px;
+    border-top: 1px solid rgb(var(--border));
+    padding-top: 16px;
+  }
+
+  html.print-mode .print-notes h2 {
+    margin: 0 0 12px;
+    font-size: 18px;
+    line-height: 1.35;
+    break-after: avoid;
+  }
+
+  html.print-mode .print-notes ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: note;
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: rgb(var(--body));
+    hyphens: none;
+  }
+
+  html.print-mode .print-notes li {
+    position: relative;
+    margin: 0 0 6px;
+    padding-left: 26px;
+    counter-increment: note;
+    break-inside: avoid;
+  }
+
+  /* The heading never starts a page's last lines with a single note. */
+  html.print-mode .print-notes li:nth-child(2) {
+    break-before: avoid;
+  }
+
+  html.print-mode .print-notes li::before {
+    content: counter(note) '.';
+    position: absolute;
+    left: 0;
+    width: 19px;
+    text-align: right;
+    color: rgb(var(--secondary));
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* URLs wrap only at the <wbr> joints PrintNotes adds. */
+  html.print-mode .print-notes a {
+    text-decoration: none;
+  }
+
+  /* The colophon never sits alone on a last page: it takes the last
+     note (or line) with it. */
+  html.print-mode .print-colophon {
+    margin-top: 28px;
+    border-top: 1px solid rgb(var(--border-light));
+    padding-top: 10px;
+    break-inside: avoid;
+    break-before: avoid;
+  }
+
+  html.print-mode .print-body {
+    break-after: avoid;
+  }
+}

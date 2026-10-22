@@ -167,11 +167,11 @@ export function themeToggleMeta(preference: ThemePreference): {
 } {
   switch (preference) {
     case 'light':
-      return { icon: 'sun', label: 'Theme: light — switch to dark' };
+      return { icon: 'sun', label: 'Theme: light. Switch to dark' };
     case 'dark':
-      return { icon: 'moon', label: 'Theme: dark — switch to system' };
+      return { icon: 'moon', label: 'Theme: dark. Switch to system' };
     case 'system':
     default:
-      return { icon: 'monitor', label: 'Theme: follows system — switch to light' };
+      return { icon: 'monitor', label: 'Theme: follows system. Switch to light' };
   }
 }

@@ -1,0 +1,27 @@
+{
+  "$comment": "The 22 platform PDFs. Single source of truth shared by the print routes (src/pages/print) and the render script (scripts/render-pdfs.mjs): `family` + `param` form the hash route `#/print/<family>/<param>`, and `pdf` is the output path under public/. Series params are the PDF slugs from the three config.ts files; reference params are the R ids.",
+  "documents": [
+    { "family": "needs-analysis", "param": "executive-problem-statement", "pdf": "needs-analysis/executive-problem-statement.pdf" },
+    { "family": "needs-analysis", "param": "capability-gap-analysis", "pdf": "needs-analysis/capability-gap-analysis.pdf" },
+    { "family": "needs-analysis", "param": "learner-persona", "pdf": "needs-analysis/learner-persona.pdf" },
+    { "family": "needs-analysis", "param": "action-map", "pdf": "needs-analysis/action-map.pdf" },
+    { "family": "evaluation", "param": "level-1-reaction", "pdf": "evaluation/level-1-reaction.pdf" },
+    { "family": "evaluation", "param": "level-2-learning", "pdf": "evaluation/level-2-learning.pdf" },
+    { "family": "evaluation", "param": "level-3-behavior", "pdf": "evaluation/level-3-behavior.pdf" },
+    { "family": "evaluation", "param": "level-4-results", "pdf": "evaluation/level-4-results.pdf" },
+    { "family": "build", "param": "learning-architecture", "pdf": "build/learning-architecture.pdf" },
+    { "family": "build", "param": "architecture", "pdf": "build/architecture.pdf" },
+    { "family": "build", "param": "timeline", "pdf": "build/timeline.pdf" },
+    { "family": "build", "param": "raci", "pdf": "build/raci.pdf" },
+    { "family": "build", "param": "resources", "pdf": "build/resources.pdf" },
+    { "family": "build", "param": "communications", "pdf": "build/communications.pdf" },
+    { "family": "build", "param": "quality", "pdf": "build/quality.pdf" },
+    { "family": "reference", "param": "r1", "pdf": "reference/r1-4d-quick-reference.pdf" },
+    { "family": "reference", "param": "r2", "pdf": "reference/r2-task-delegation-guide.pdf" },
+    { "family": "reference", "param": "r3", "pdf": "reference/r3-prompt-structure-template.pdf" },
+    { "family": "reference", "param": "r4", "pdf": "reference/r4-output-verification-checklist.pdf" },
+    { "family": "reference", "param": "r5", "pdf": "reference/r5-capability-boundary-reference.pdf" },
+    { "family": "reference", "param": "r6", "pdf": "reference/r6-diligence-statement-template.pdf" },
+    { "family": "reference", "param": "r7", "pdf": "reference/r7-policy-starter.pdf" }
+  ]
+}

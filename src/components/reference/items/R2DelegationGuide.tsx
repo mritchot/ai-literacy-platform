@@ -11,6 +11,7 @@
 // practice activity (P8) and the portable job aid (R2).
 
 import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { Citation } from '../../shared/Citation';
 
 // ─────────────────────────────────────────────────────────────────────
 // Categories — terminal recommendations from the flowchart, also rendered
@@ -42,7 +43,7 @@ const CATEGORIES: Record<CategoryKey, CategorySpec> = {
     name: 'Fully Delegable',
     hex: 'rgb(var(--discernment))',
     cssVar: 'discernment',
-    meaning: 'AI produces the output; you spot-check the result.',
+    meaning: 'AI produces the output from a clear task definition; you spot-check the result.',
     typical:
       'Data compilation from known sources, formatting, proofreading, standard translations, template population.',
   },
@@ -131,7 +132,7 @@ const FLOW: FlowQuestion[] = [
     pillar: 'Verifiability',
     question: 'Can you verify every key claim in the output against an independent source?',
     consider:
-      'Is there a dashboard, database, document, or known standard you can check against? Or would you be relying on the output’s plausibility alone?',
+      'Is there a dashboard, database, document, or known standard you can check against? Or would you be relying on the output’s plausibility alone? If you will run this task many times, also ask whether the check scales: can you verify a hundred outputs as cheaply as one, or does each one need a person? A check that needs a person each time limits how many outputs you can delegate; it does not on its own make the answer No. One Anthropic engineer put it this way: delegate where validation effort is small compared with creation effort.',
     exits: [
       { kind: 'terminal', category: 'human_only', label: 'No' },
       { kind: 'continue', label: 'Yes', nextId: 'Q4' },
@@ -163,7 +164,7 @@ export function R2DelegationGuide(): JSX.Element {
         style={{ lineHeight: 1.55 }}
       >
         Use this guide before delegating a task to AI. Walk through four questions in sequence.
-        Each question either routes you to a recommendation or advances you to the next filter.
+        Each question either routes you to a recommendation or sends you to the next question.
       </p>
 
       {/* Vertical flowchart — the centerpiece of this guide. */}
@@ -219,7 +220,8 @@ export function R2DelegationGuide(): JSX.Element {
           Most workplace tasks are bundles of sub-tasks with different risk profiles. Apply this
           guide <em>per component</em>, not per deliverable. A quarterly business review might
           include data compilation (fully delegable), trend narrative (AI-assisted), and strategic
-          recommendations (human-only).
+          recommendations (human-only). The framework names this split directly: deconstructing a
+          task into AI, human, and collaborative components.
         </p>
         <p className="m-0 text-body-sm text-body" style={{ lineHeight: 1.55, marginTop: 8 }}>
           When you decompose a task into separate components, a compilation step followed by a
@@ -227,6 +229,19 @@ export function R2DelegationGuide(): JSX.Element {
           deliverable carries significant stakes, because the verification step absorbs the risk.
           If compilation and verification are not separated, the combined task routes through the
           full flowchart at the higher stakes level.
+        </p>
+        <p className="m-0 text-body-sm text-body" style={{ lineHeight: 1.55, marginTop: 8 }}>
+          When Anthropic interviewed 53 of its own engineers and researchers about what they hand
+          to Claude, three of this guide&rsquo;s four tests turned up in their answers: stakes,
+          verifiability, and context. They delegated work where quality is not
+          critical and where checking the output costs less than producing it. They kept work that
+          needs context the model lacks, along with strategic and design judgment. They also
+          favored self-contained components, the per-component rule above. The expertise test is
+          where they split: some keep AI to familiar ground they can verify, while others hand it
+          low-complexity work outside their own experience. In the earlier survey of 132 staff,
+          more than half said they could fully delegate only a fifth of their work or less.
+          Source: Huang et al., Dec 2025<Citation ids="huang-2025" /> (Anthropic engineers; findings
+          may not generalize).
         </p>
       </aside>
 
@@ -254,14 +269,19 @@ export function R2DelegationGuide(): JSX.Element {
         <p className="m-0 text-body-sm text-body" style={{ lineHeight: 1.55 }}>
           The flowchart assumes the task is yours to delegate. One gate comes first: whatever you
           paste into an AI tool leaves your organization&rsquo;s boundary the moment you send it.
-          Client records, unreleased financials, personal data, internal strategy, anything under
-          NDA — whether that material can enter an external tool at all is an organizational
-          policy decision, not an individual delegation decision.
+          MIT&rsquo;s 2026 AI committee notes that most commercial AI plans, especially paid ones,
+          let users switch off the use of their data for training. The default, however, is often
+          to record sessions for training. Whether client records, unreleased financials, personal
+          data, internal strategy, or anything under NDA can enter an external tool at all is an
+          organizational policy decision, not an individual delegation decision.
+          The framework covers the tool side of this inside Delegation: Platform Awareness includes
+          evaluating AI tools against operational and regulatory needs. The material side stays
+          your organization&rsquo;s call.
         </p>
         <p className="m-0 text-body-sm text-body" style={{ lineHeight: 1.55, marginTop: 8 }}>
-          Check your organization&rsquo;s AI-use policy before the flowchart, not after. If no
-          policy exists, that absence is worth surfacing — R7&rsquo;s Delegation Norms section is
-          the conversation starter for exactly this question.
+          Check your organization&rsquo;s AI-use policy before you start the flowchart. If no
+          policy exists, that absence is worth raising. R7&rsquo;s Delegation Norms section gives
+          you a conversation starter for this question.
         </p>
       </aside>
 
@@ -270,8 +290,14 @@ export function R2DelegationGuide(): JSX.Element {
         className="m-0 mt-6 text-caption text-tertiary"
         style={{ lineHeight: 1.5, fontStyle: 'italic' }}
       >
-        Framework: Anthropic 4D AI Fluency Framework, Delegation competency (Dakan, Feller, and
-        Anthropic, 2025).
+        Framework: 4D AI Fluency Framework, Delegation competency (Dakan &amp; Feller,
+        2025)<Citation ids="dakan-feller-2025" pageKey="delegation" />, as taught in
+        Anthropic&rsquo;s AI Fluency course<Citation ids="anthropic-ai-fluency-course-2025" />.
+        Data-gate defaults: MIT Ad Hoc Committee,
+        2026<Citation ids="mit-2026" pageKey="training-capture" />. Barriers to inspecting AI
+        output: Lee et al., CHI 2025<Citation ids="lee-2025" pageKey="inhibitors" />. Engineer
+        delegation practices: Huang et al., Dec
+        2025<Citation ids="huang-2025" pageKey="delegation-criteria" />.
       </p>
     </div>
   );
@@ -661,7 +687,13 @@ function Q4Note(): JSX.Element {
     >
       <strong style={{ color: 'rgb(var(--ink))' }}>Note:</strong> If Q4 = No but the task still
       benefits from AI acceleration, use AI-assisted with mandatory peer review from someone with
-      the domain expertise.
+      the domain expertise. Without that expertise, errors are hard to spot. In a survey of 319
+      knowledge workers, 58 reported barriers to inspecting AI responses, such as lacking the
+      domain knowledge to judge them, and some who doubted their own ability accepted outputs
+      by default. Anthropic&rsquo;s engineers are divided: some
+      prefer familiar ground where they can verify the output, others use AI in peripheral
+      domains to save time, and one engineer, when unsure of a topic, asks the model for options
+      to research rather than answers to accept.
     </p>
   );
 }

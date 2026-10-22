@@ -9,12 +9,14 @@ import { Icon } from '../../components/shared/Icon';
 import { Overline } from '../../components/shared/Overline';
 import { R4Trigger } from '../../components/reference/R4Trigger';
 import { ReferenceTabRail } from '../../components/reference/ReferenceTabRail';
+import { ReflectionPrompt } from '../../components/shared/ReflectionPrompt';
 import { useAnalytics } from '../../contexts/AnalyticsContext';
 import { useLearnerProgress } from '../../contexts/LearnerProgressContext';
 import { scrollBehavior } from '../../utils/motion';
 import {
   P10_BRIEFING_SEGMENTS,
   P10_ELEMENTS,
+  P10_REFLECTION,
   P10_SCENARIO,
   P10_SUMMARY,
   type Classification,
@@ -164,10 +166,10 @@ export function OutputVerification(): JSX.Element {
 
       <section
         aria-label="Output verification scenario"
+        className="px-4 py-[18px] sm:px-[26px] sm:py-6"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
-          padding: '24px 26px',
         }}
       >
       <Overline className="mb-2">Practice activity — P10</Overline>
@@ -218,9 +220,9 @@ export function OutputVerification(): JSX.Element {
         >
           Two factors determine where an element belongs:{' '}
           <strong className="text-ink">how many specificity signals it carries</strong>{' '}
-          (one detail vs. compounding details), and{' '}
-          <strong className="text-ink">how hard it is to verify</strong> (clear search target vs.
-          no good way to check). Together they determine the risk profile.
+          (one detail vs. compounding details) and{' '}
+          <strong className="text-ink">how hard it is to verify</strong>, from a clear search target
+          to no good way to check. Together they determine the risk profile.
         </p>
         <ul
           className="m-0 list-none space-y-1.5 p-0 font-sans text-body-sm text-body"
@@ -246,8 +248,9 @@ export function OutputVerification(): JSX.Element {
           className="m-0 mt-2 font-sans text-body-sm italic text-secondary"
           style={{ lineHeight: 1.5 }}
         >
-          The heuristic: count the signals AND consider how easy verification will be. The two
-          compound: high signal count plus hard-to-verify is the flag pattern.
+          The heuristic is to count the signals and consider how easy verification will be. The
+          two factors compound: a high signal count plus a hard-to-verify element is the flag
+          pattern.
         </p>
       </aside>
 
@@ -278,23 +281,36 @@ export function OutputVerification(): JSX.Element {
       </ul>
 
       {allSubmitted && (
-        <aside
-          role="note"
-          className="mt-8"
-          style={{
-            background: 'rgb(var(--surface-warm))',
-            border: '1px solid rgb(var(--border))',
-            borderLeft: `3px solid ${DISCERNMENT}`,
-            padding: '18px 22px',
-          }}
-        >
-          <h4 className="m-0 mb-3 font-sans text-h4 font-semibold text-ink">
-            Verification pattern: what this briefing revealed
-          </h4>
-          <div className="font-sans text-body-sm leading-relaxed text-body whitespace-pre-line">
-            {P10_SUMMARY.replace(/^Verification triage[^.\n]*\.\n\n/, '')}
+        <>
+          <aside
+            role="note"
+            className="mt-8"
+            style={{
+              background: 'rgb(var(--surface-warm))',
+              border: '1px solid rgb(var(--border))',
+              borderLeft: `3px solid ${DISCERNMENT}`,
+              padding: '18px 22px',
+            }}
+          >
+            <h4 className="m-0 mb-3 font-sans text-h4 font-semibold text-ink">
+              Verification pattern: what this briefing revealed
+            </h4>
+            <div className="font-sans text-body-sm leading-relaxed text-body whitespace-pre-line">
+              {P10_SUMMARY.replace(/^Verification triage[^.\n]*\.\n\n/, '')}
+            </div>
+          </aside>
+          <div className="mt-6">
+            <ReflectionPrompt
+              moduleId={4}
+              sectionId={5}
+              promptId="p10_reflection"
+              accent="discernment"
+              engagedEvent="p10_reflection_engaged"
+              savedEvent="p10_reflection_saved"
+              promptText={P10_REFLECTION}
+            />
           </div>
-        </aside>
+        </>
       )}
       </section>
     </div>
@@ -357,10 +373,10 @@ function BriefingDocument({
 
   return (
     <article
+      className="px-4 py-[18px] sm:px-[26px] sm:py-6"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
-        padding: '24px 26px',
       }}
     >
       <h3 className="m-0 mb-4 font-sans text-h3 font-semibold text-ink">

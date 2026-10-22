@@ -5,6 +5,7 @@
     "license": "MIT",
     "sample": "1 million Claude.ai Free and Pro conversations, August 4\u201311, 2025",
     "minimumObservations": 200,
+    "rowCountNote": "115 countries meet the 200-conversation floor used for Figure 2.2 and the regression (the January 2026 report's country regression uses N = 117). Table 2.1's tier counts (37 + 35 + 39 + 53 = 164, plus 25 Minimal) cover every country with any sampled usage; the quartile thresholds were set on the 200-plus subset (Appel, McCrory & Tamkin, Sep 2025, pp. 15, 28). The Emerging floor here (0.04) is the lowest AUI among the 115; Table 2.1's 0.01 is the lowest among all tiered countries.",
     "regressionStats": {
       "beta": 0.69,
       "rSquared": 0.709,

@@ -4,9 +4,11 @@
 // ./quality-data; prose is sliced from the co-located markdown (via ?raw).
 
 import QA_MD from './content/08_quality.md?raw';
-import { renderMarkdown } from '../../components/shared/render-markdown';
+import { citedIds, renderMarkdown } from '../../components/shared/render-markdown';
+import { SourcesList } from '../../components/shared/CitationNotes';
 import { QualityDashboard } from './quality-dashboard';
-import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
+import { VALIDATED_FILES } from './quality-data';
+import { ArtifactFooter, ArtifactHeader, ArtifactPage, ArtifactTopBar } from './chrome';
 
 const [INTRO_MD = '', ...REST] = QA_MD.replace(/\r\n/g, '\n').split(/\n## /);
 const SECTIONS = REST.map((part) => {
@@ -19,27 +21,36 @@ const SECTIONS = REST.map((part) => {
   };
 });
 
+// Sources cited on the page, in reading order: intro, the validated-files
+// table, then the closing sections.
+const SOURCE_IDS = [
+  ...new Set([
+    ...citedIds(INTRO_MD),
+    ...VALIDATED_FILES.flatMap((f) => (f.sources ?? []).flatMap((s) => (typeof s.ids === 'string' ? [s.ids] : s.ids))),
+    ...citedIds(...SECTIONS.map((s) => s.body)),
+  ]),
+];
+
 export default function Quality(): JSX.Element {
   return (
-    <div className="mx-auto max-w-interactive px-4 py-12 sm:px-8 lg:px-16 lg:py-14">
+    <ArtifactPage width="interactive">
       <ArtifactTopBar pdfSlug="quality" />
-      <SeriesEyebrow label="Behind the build · Project Management" />
+      <ArtifactHeader label="Behind the build · Project Management" slug="quality" title="QA Dashboard" />
 
-      <h1 className="m-0 mb-2 font-display text-display font-normal text-ink">QA Dashboard</h1>
-      <p className="m-0 mb-6 font-sans text-h3 font-normal text-secondary">AI Literacy for the Modern Workforce</p>
-
-      <div className="prose-longform max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
+      <div>{renderMarkdown(INTRO_MD.trim())}</div>
 
       <QualityDashboard />
 
       {SECTIONS.map((s) => (
         <section key={s.heading} className="mt-10">
           <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{s.heading}</h2>
-          <div className="prose-longform max-w-reading">{renderMarkdown(s.body)}</div>
+          <div>{renderMarkdown(s.body)}</div>
         </section>
       ))}
 
+      <SourcesList ids={SOURCE_IDS} />
+
       <ArtifactFooter currentSlug="quality" />
-    </div>
+    </ArtifactPage>
   );
 }

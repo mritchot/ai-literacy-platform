@@ -6,21 +6,21 @@ Within the Kirkpatrick model, Level 1 measures participant reaction: whether lea
 
 Level 1 captures the participant's subjective assessment of the learning experience across four dimensions: perceived relevance to their role, confidence change in working with AI tools, content quality and pacing, and intent to apply or recommend the program. Each dimension was selected because it produces data tied to a specific improvement action. Generic satisfaction metrics ("I enjoyed the program") are excluded because they cannot be acted on.
 
-Reaction data cannot tell whether participants learned the content (Level 2), changed their on-the-job behavior (Level 3), or produced organizational results (Level 4). A participant who rates the program highly may not have acquired the target competencies; one who rates it poorly may still have learned effectively. The correlation between satisfaction and knowledge gain is weak across the L&D literature, which is the entire reason this framework does not stop here. Level 1 diagnoses program design; it does not score individual competency.
+Reaction data cannot tell whether participants learned the content (Level 2), changed their on-the-job behavior (Level 3), or produced organizational results (Level 4). A participant who rates the program highly may not have acquired the target competencies; one who rates it poorly may still have learned effectively. The correlation between satisfaction and knowledge gain is weak across the L&D literature, which is why this framework does not stop here. Level 1 diagnoses program design; it does not score individual competency.
 
 ## The actionability requirement
 
-Every item was designed against one criterion: can the response drive a specific improvement decision? "How would you rate this program overall?" produces a number that traces to no design feature. "The scenarios in this program reflected situations I encounter in my role" maps directly to the scenario-design layer and triggers a concrete revision if it falls below threshold. That distinction separates a management-grade evaluation instrument from a compliance-grade satisfaction survey. The instrument deliberately excludes items it cannot act on: facilitator effectiveness (the program is self-paced, with no facilitator), platform satisfaction (better handled through UX research), and organizational support for AI adoption (outside the program's control).
+Every item was designed against one criterion: can the response drive a specific improvement decision? "How would you rate this program overall?" produces a number that traces to no design feature. "The scenarios in this program reflected situations I encounter in my role" maps directly to the scenario-design layer and triggers a concrete revision if it falls below threshold. The instrument deliberately excludes items it cannot act on: facilitator effectiveness, since the program is self-paced with no facilitator; platform satisfaction, which UX research handles better; and organizational support for AI adoption, which is outside the program's control.
 
 ## Why this stays a design
 
 This page presents the proposed item bank, the candidate questions a deploying organization would draw from, not a running survey. The instrument is intentionally not live, for two reasons.
 
-First, the course is built for the general workforce, and a reaction survey only works when it fits the institution administering it. The items below are a calibrated starting point, but their relevance, phrasing, and scope would need tuning to a specific organization's context, roles, and reporting conventions before any response is worth collecting. Shipping a fixed, generic survey as if it were ready to run would misrepresent how reaction measurement actually works.
+First, the course is built for the general workforce, and a reaction survey only works when it fits the institution administering it. The items below are a calibrated starting point, but their relevance, phrasing, and scope would need tuning to a specific organization's roles and reporting conventions before any response is worth collecting. Shipping a fixed, generic survey as if it were ready to run would misrepresent how reaction measurement works.
 
 Second, privacy. The platform collects no personally identifiable information; all learner progress (module completion, knowledge-check responses, pre/post scores) is persisted only in the browser's local storage and never reaches a server. As a solo-built portfolio project, it has no data processing agreement, no retention policy, and no legal entity to bear data-controller liability. A reaction survey with free-text fields, which can carry identifying detail and opinions about an employer, is precisely the data this architecture should not hold.
 
-So the instrument is designed for external administration. A deploying organization adapts the item bank to its context and runs it through its own survey infrastructure (internal tools, a third-party platform, or an HRIS survey module), which already carries access management, retention policies, anonymization, and regional compliance. The recommended trigger is the platform's completion screen (Module 4, Section 10), where the participant sees their pre/post results: immediate post-completion is the window with the highest response rate and the freshest recall.
+So the instrument is designed for external administration. A deploying organization adapts the item bank to its context and runs it through its own survey infrastructure: internal tools, a third-party platform, or an HRIS survey module. That infrastructure already carries access management, retention policies, anonymization, and regional compliance. The recommended trigger is the platform's completion screen (Module 4, Section 10), where the participant sees their pre/post results: immediate post-completion is the window with the highest response rate and the freshest recall.
 
 ## Survey dimensions
 
@@ -46,7 +46,7 @@ Scaled items use a 5-point Likert agreement scale (Strongly Disagree to Strongly
 | R3 | The program addressed AI-related challenges relevant to my industry or function. | 5-point Likert |
 | R4 | Which module or topic felt most relevant to your current role, and why? | Open response |
 
-**Confidence change.** Its items map to the program's [4D competency framework](https://ai-literacy.ritchot.me/#/needs-analysis/action-map): C1 to Discernment (output evaluation), C2 to Description (prompt construction), and C3 to the mechanistic understanding under both; C4 surfaces residual uncertainty that informs supplemental resources or manager talking points for the Level 3 window.
+**Confidence change.** Its items map to the program's [4D competency framework](https://ritchot.me/courses/ai-literacy/#/needs-analysis/action-map): C1 to output evaluation under Discernment, C2 to prompt construction under Description, and C3 to the mechanistic understanding under both. C4 surfaces residual uncertainty that informs supplemental resources or manager talking points for the Level 3 window.
 
 | # | Item | Format |
 |---|---|---|
@@ -54,6 +54,15 @@ Scaled items use a 5-point Likert agreement scale (Strongly Disagree to Strongly
 | C2 | I feel more confident in my ability to write effective prompts that produce useful outputs. | 5-point Likert |
 | C3 | I feel more confident in my ability to explain to a colleague why an AI tool produced an incorrect or misleading result. | 5-point Likert |
 | C4 | What, if anything, do you still feel uncertain about when working with AI tools? | Open response |
+
+Two paired items separate the confidence the program intends to build from the confidence it intends to reduce. Lee et al. (CHI 2025) measured three confidences per task on a five-point scale (in oneself, in the AI, and in evaluating the AI's output) and found that confidence in the AI is associated with less critical thinking while confidence in evaluation is associated with more{{cite:lee-2025#three-confidences}}. A reaction survey that reports only "more confident" cannot tell the two apart.
+
+| # | Item | Format |
+|---|---|---|
+| C5 | Compared with before the program, how confident are you that an AI tool will get a typical work task right without your checking it? | 5-point (much less to much more confident) |
+| C6 | Compared with before the program, how confident are you in your ability to evaluate whether an AI output is reliable? | 5-point (much less to much more confident) |
+
+C5 and C6 use a retrospective change scale rather than the agreement scale. When the pair is administered, C6 replaces C1, which asks the same question in agreement form. The target pattern is C6 up and C5 flat or down. A cohort where C5 rises with C6 has learned to trust the tool more, the pattern the research links to reduced scrutiny. That finding routes to Module 3 and the P10 verification activity.
 
 **Content quality and pacing**
 
@@ -78,9 +87,9 @@ Scaled items use a 5-point Likert agreement scale (Strongly Disagree to Strongly
 
 **Timing.** Administer immediately after completion, triggered by the program closing section. Delays beyond 48 hours produce lower response rates and reconstructed rather than recalled impressions.
 
-**Distribution.** An embedded link in the post-completion communication (an LMS-triggered email, an intranet notification, or a direct link on the completion screen). The link should appear at the moment of completion, not in a separate follow-up days later.
+**Distribution.** Place an embedded link in the post-completion communication (an LMS-triggered email, an intranet notification, or a direct link on the completion screen). The link should appear at the moment of completion, not in a separate follow-up days later.
 
-**Anonymity.** Administer anonymously to maximize candor, particularly on the confidence and quality dimensions where social desirability inflates scores. If an organization needs to link Level 1 reactions to the same individual's Level 3 data, use a coded identifier rather than a name or email, and disclose the linking in the survey introduction. Identified responses enable longitudinal analysis but may suppress critical feedback.
+**Anonymity.** Administer anonymously to maximize candor, particularly on the confidence and quality dimensions where social desirability inflates scores. Anthropic's internal study of its own engineers is a cautionary case. Its survey collected names, and the authors list social-desirability bias, 12-month recall bias, and self-selection by engaged respondents among the reasons to read the self-reports only alongside usage data, and recommend anonymous collection in future studies{{cite:huang-2025#survey-limitations-appendix}}. If an organization needs to link Level 1 reactions to the same individual's Level 3 data, use a coded identifier rather than a name or email, and disclose the linking in the survey introduction. Identified responses enable longitudinal analysis but may suppress critical feedback.
 
 **Response rate.** Target a minimum 60% response rate for cohort-level interpretation. Below that, non-response bias becomes a real concern, since strong positive and negative reactors tend to respond while moderate reactors do not, producing a bimodal distribution that misrepresents the cohort.
 
@@ -94,11 +103,13 @@ Each scaled item is analyzed for mean, standard deviation, and distribution, bec
 | 3.0–3.9 | Mixed | Acceptable, not strong. Review the open-response data for friction; revise if it does not improve across 1–2 cohorts. |
 | Below 3.0 | Concern | Not meeting expectations. Prioritize revision; cross-reference the open responses and the Level 2 per-construct analysis to locate the cause. |
 
-If A3 is included, the Net Promoter Score is promoters (9–10) minus detractors (0–6), with passives (7–8) excluded; above +30 is generally strong for corporate training, below 0 signals real dissatisfaction. Open responses are thematically coded (two reviewers, inductive on the first cohort, then a deductive codebook) into a frequency-ranked theme list that maps to revision priorities. The full value emerges across cohorts: one cohort's reaction data drives a revision, and the next cohort's data shows whether it worked. That feedback loop is the instrument's primary use.
+If A3 is included, the Net Promoter Score is promoters (9–10) minus detractors (0–6), with passives (7–8) excluded; above +30 is generally strong for corporate training, below 0 signals real dissatisfaction. Open responses are thematically coded (two reviewers, inductive on the first cohort, then a deductive codebook) into a frequency-ranked theme list that maps to revision priorities.
+
+The instrument's primary use is the feedback loop across cohorts: one cohort's reaction data drives a revision, and the next cohort's data shows whether it worked.
 
 ## Integration with the framework
 
-Level 1 sets the context for the levels above it. A cohort that scores well on the Level 2 pre/post but rates relevance poorly has the knowledge but cannot see how to apply it: the scenarios need stronger workplace connection. A cohort that rates the program highly but shows little pre/post improvement enjoyed the experience without changing its knowledge state: engaging but not challenging enough. And items A1 and A4 bridge to Level 3, where the manager review measures whether the stated intent became behavior. The gap between intent and action is itself a diagnostic, one that informs the transfer supports (job aids, manager coaching prompts, peer accountability) that turn intention into practice.¹
+Level 1 sets the context for the levels above it. A cohort that scores well on the Level 2 pre/post but rates relevance poorly has the knowledge but cannot see how to apply it: the scenarios need stronger workplace connection. A cohort that rates the program highly but shows little pre/post improvement enjoyed the experience without changing its knowledge state: engaging but not challenging enough. And items A1 and A4 bridge to Level 3, where the manager review measures whether the stated intent became behavior. The gap between intent and action is itself a diagnostic: it informs the transfer supports (job aids, manager coaching prompts, peer accountability) that turn intention into practice.¹
 
 ---
 

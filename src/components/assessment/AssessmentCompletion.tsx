@@ -36,7 +36,7 @@ export function AssessmentCompletion({
           style={{ lineHeight: 1.6 }}
         >
           Your {itemCount} responses are saved. The preferred answers stay hidden for now.
-          They get revealed at the end, paired with your post-assessment responses, so you
+          They appear at the end, paired with your post-assessment responses, so you
           can see how your reasoning shifted.
         </p>
         <p

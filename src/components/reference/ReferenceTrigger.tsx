@@ -4,7 +4,12 @@
 // ReferencePanel inline. Replaces six near-identical RxTrigger
 // components; those files remain as one-line wrappers so existing call
 // sites keep working. R4 is NOT in the registry — its checklist state
-// is lifted into R4Trigger so checks survive panel close/reopen.
+// is lifted into R4Trigger so checks survive panel close/reopen (its
+// title and PDF path live in R4Trigger's exported R4_META).
+//
+// REFERENCE_ITEMS is exported for the print-document registry
+// (src/pages/print/print-documents.tsx), which reuses each item's title
+// and pdfPath for the PDF masthead and output path.
 //
 // Multiple instances on the same page are independent; only one panel
 // can be visible at a time anyway because the body scroll lock is
@@ -22,15 +27,16 @@ import { R7PolicyStarter } from './items/R7PolicyStarter';
 
 export type ReferenceId = 'R1' | 'R2' | 'R3' | 'R5' | 'R6' | 'R7';
 
-interface ReferenceMeta {
+export interface ReferenceMeta {
   defaultLabel: string;
   title: string;
+  /** PDF path under public/ (the print pipeline's output path). */
   pdfPath: string;
   pdfFilename: string;
   Content: ComponentType;
 }
 
-const REFERENCE_ITEMS: Record<ReferenceId, ReferenceMeta> = {
+export const REFERENCE_ITEMS: Record<ReferenceId, ReferenceMeta> = {
   R1: {
     defaultLabel: '4D Quick Reference',
     title: '4D Competency Quick-Reference Card',

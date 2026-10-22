@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 // Self-hosted type (WOFF2 via @fontsource), matching ritchot.me:
-// Source Serif 4 for display and long-form prose, IBM Plex Sans for UI,
+// Source Serif 4 for display headings, IBM Plex Sans for UI and body,
 // IBM Plex Mono for labels and data. Self-hosting replaces the Google
 // Fonts CDN links that used to live in index.html — those made every
 // page load ping fonts.googleapis.com / fonts.gstatic.com, leaking

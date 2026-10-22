@@ -40,6 +40,11 @@ interface ChartTokens {
   // `--{competency}` variable directly instead of coming through here.
   delegation: string;
   discernment: string;
+  // Five collaboration-pattern fills, in collaboration_patterns.categories
+  // order: three augmentation steps (Delegation family), then two
+  // automation steps (Discernment family). Each ladder runs from the base
+  // hue toward the ground, so it inverts with the theme.
+  collaborationPatterns: readonly [string, string, string, string, string];
   // Tooltip hover-band fill (Recharts `cursor`). An ink-toned wash per
   // theme: the old static rgba(0,0,0,0.04) disappeared on the sumi
   // ground, so dark mode washes with light ink instead.
@@ -71,6 +76,9 @@ const LIGHT: ChartTokens = {
   info: '#5a6c7b',
   delegation: '#5c7050',
   discernment: '#506579',
+  // --delegation, --delegation-text (dark), --delegation-light;
+  // --discernment, --discernment-text (dark).
+  collaborationPatterns: ['#5c7050', '#b5c4ab', '#e8ede4', '#506579', '#a8bcca'],
   cursorFill: 'rgba(30, 28, 25, 0.05)', // --ink at 5%
 };
 
@@ -99,6 +107,13 @@ const DARK: ChartTokens = {
   // fills against the sumi canvas.
   delegation: '#a8bc9a',
   discernment: '#93b0c6',
+  // --delegation (dark), --delegation (light), --delegation-light (dark);
+  // --discernment (dark), then a chart-only step of the Discernment hue.
+  // Against the dark card (#1d1d24) every filled step clears the 3:1
+  // non-text minimum (8.2, 3.1, 7.4, 3.4:1); --discernment (light) sat at
+  // 2.8:1. The validation wash stays near the ground and carries a --ghost
+  // edge (3.1:1) in the charts, as it does in light mode.
+  collaborationPatterns: ['#a8bc9a', '#5c7050', '#2a3025', '#93b0c6', '#5b738a'],
   cursorFill: 'rgba(230, 226, 217, 0.08)', // --ink (dark) at 8%
 };
 

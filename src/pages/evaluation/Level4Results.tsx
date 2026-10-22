@@ -6,8 +6,9 @@
 // canonical markdown keeps the full static model, so the PDF is unaffected.
 
 import MARKDOWN from './content/04_level-4-results.md?raw';
-import { renderMarkdown } from '../../components/shared/render-markdown';
-import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
+import { citedIds, renderMarkdown } from '../../components/shared/render-markdown';
+import { SourcesList } from '../../components/shared/CitationNotes';
+import { ArtifactFooter, ArtifactPage, ArtifactTopBar, SeriesEyebrow } from './chrome';
 import { RoiCalculator, RoiFormulaFigure } from './RoiCalculator';
 
 // Split markers mirror the canonical section boundaries. Part A ends just
@@ -29,18 +30,32 @@ function split(md: string): { partA: string; partB: string } {
 
 const { partA, partB } = split(MARKDOWN);
 
+// Registry ids the calculator's rationale captions cite (RoiCalculator.tsx
+// FIELDS), listed here so the Sources list follows the page's reading order.
+const CALCULATOR_CITATION_IDS = ['mgi-agents-robots-us-2025', 'tamkin-mccrory-2025', 'bls-ecec-2026', 'handa-2025'];
+
+// Sources in order of first citation across what the page renders: part A,
+// the calculator, part B. The web-omitted static model is not rendered, so
+// its citations are not listed.
+const SOURCE_IDS = [
+  ...new Set([...citedIds(partA), ...CALCULATOR_CITATION_IDS, ...citedIds(partB)]),
+];
+
 export default function Level4Results(): JSX.Element {
   return (
-    <div className="mx-auto max-w-interactive px-4 py-12 sm:px-8 lg:px-16 lg:py-14">
+    <ArtifactPage width="interactive">
       <ArtifactTopBar pdfSlug="level-4-results" />
-      <SeriesEyebrow label="Evaluation framework · Interactive" />
-      <article className="prose-longform max-w-reading">{renderMarkdown(partA)}</article>
+      <SeriesEyebrow label="Evaluation framework · Interactive" slug="level-4-results" />
+      <article>{renderMarkdown(partA)}</article>
       <RoiFormulaFigure />
       <RoiCalculator />
       {partB.length > 0 && (
-        <article className="prose-longform mt-10 max-w-reading">{renderMarkdown(partB)}</article>
+        <article className="mt-10">{renderMarkdown(partB)}</article>
       )}
+      <div>
+        <SourcesList ids={SOURCE_IDS} />
+      </div>
       <ArtifactFooter currentSlug="level-4-results" />
-    </div>
+    </ArtifactPage>
   );
 }

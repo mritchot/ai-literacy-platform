@@ -8,6 +8,7 @@
 import { Link } from 'react-router-dom';
 import { Icon } from '../shared/Icon';
 import { Overline } from '../shared/Overline';
+import { assessmentMinutes } from '../../data/program';
 import { useViewport } from '../../hooks/useViewport';
 
 interface AssessmentIntroProps {
@@ -23,6 +24,12 @@ interface AssessmentIntroProps {
 
 const PRE_HEADLINE = 'Before you begin: a baseline';
 const POST_HEADLINE = 'Almost done: your post-program assessment';
+
+// The "about" figure is the range midpoint rounded to the nearest five.
+function minutesFor(itemCount: number): { low: number; high: number; about: number } {
+  const { low, high } = assessmentMinutes(itemCount);
+  return { low, high, about: Math.round((low + high) / 10) * 5 };
+}
 
 export function AssessmentIntro({
   kind,
@@ -80,13 +87,15 @@ export function AssessmentIntro({
 }
 
 function PreFraming({ itemCount }: { itemCount: number }): JSX.Element {
+  const minutes = minutesFor(itemCount);
   return (
     <div className="space-y-4 font-sans text-body text-body" style={{ lineHeight: 1.6 }}>
       <p className="m-0">
-        Before the program starts, take 10 minutes to capture a baseline.
-        You&rsquo;ll answer <strong className="text-ink">{itemCount} scenario-based questions</strong>{' '}
-        about how AI tools work and where they break down. The items sample the program&rsquo;s
-        four core construct areas — usage patterns, failure modes, mechanics, and evaluation —
+        Before the program starts, you&rsquo;ll answer{' '}
+        <strong className="text-ink">{itemCount} scenario-based questions</strong> about how AI
+        tools work and where they break down. Complete these questions without looking up
+        potential answers. The items sample the program&rsquo;s
+        four core construct areas (usage patterns, failure modes, mechanics, and evaluation)
         rather than every module objective.
       </p>
       <ul className="m-0 list-disc space-y-1.5 pl-5">
@@ -100,8 +109,8 @@ function PreFraming({ itemCount }: { itemCount: number }): JSX.Element {
           pick the option that feels closest.
         </li>
         <li>
-          <strong className="text-ink">About {Math.max(5, Math.ceil(itemCount * 0.75))}&ndash;
-          {Math.ceil(itemCount * 1.25)} minutes.</strong> You can leave and come back; your
+          <strong className="text-ink">About {minutes.low}&ndash;{minutes.high} minutes.</strong>{' '}
+          You can leave and come back; your
           progress is saved in this browser.
         </li>
       </ul>
@@ -122,27 +131,28 @@ function PreFraming({ itemCount }: { itemCount: number }): JSX.Element {
 }
 
 function PostFraming({ itemCount }: { itemCount: number }): JSX.Element {
+  const minutes = minutesFor(itemCount);
   return (
     <div className="space-y-4 font-sans text-body text-body" style={{ lineHeight: 1.6 }}>
       <p className="m-0">
         You&rsquo;ve completed the four program modules. Before you see your competency profile,
         take a <strong className="text-ink">parallel set of {itemCount}{' '}
-        scenario-based questions</strong>. Same constructs as the pre-assessment, different
-        scenarios.
+        scenario-based questions</strong>. They test the same constructs as the pre-assessment
+        with different scenarios.
       </p>
       <ul className="m-0 list-disc space-y-1.5 pl-5">
         <li>
-          <strong className="text-ink">Use the vocabulary you&rsquo;ve learned.</strong> Tokenization,
-          next-token prediction, context window, augmentation/automation, the 4D framework: all
-          of it applies here.
+          <strong className="text-ink">Reason from what you practiced.</strong> Each question
+          describes a workplace situation without naming the concept behind it. Work out what is
+          going on before you look for familiar terms in the options.
         </li>
         <li>
           <strong className="text-ink">Comparative results when you finish.</strong> Each item is
           paired with the matching pre-assessment item so you can see how your reasoning shifted.
         </li>
         <li>
-          <strong className="text-ink">About {Math.max(5, Math.ceil(itemCount * 0.75))}&ndash;
-          {Math.ceil(itemCount * 1.25)} minutes.</strong> One submission per item; you can&rsquo;t
+          <strong className="text-ink">About {minutes.low}&ndash;{minutes.high} minutes.</strong>{' '}
+          One submission per item; you can&rsquo;t
           retake it, so the comparison stays honest.
         </li>
       </ul>

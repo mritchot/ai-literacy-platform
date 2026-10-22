@@ -179,6 +179,15 @@
       "description": "A 1% increase in state GDP per capita is associated with a 1.8% increase in the AI Usage Index across US states.",
       "varianceExplained": "less than half",
       "varianceNote": "Income differences explain less than half the variation in cross-state adoption rates. At the global level, the source identifies several potential contributing factors beyond income: digital infrastructure, economic structure, regulatory environment, awareness and access, and trust and comfort (pp. 17–18)."
+    },
+    "followUp_2026": {
+      "_source": "Appel, Massenkoff & McCrory (2026); 1M Claude.ai Free/Pro/Max conversations, November 13–20, 2025",
+      "globalElasticityReplicated": 0.7,
+      "countryGapsStable": "AUI concentration across countries essentially unchanged between August and November 2025 (p. 12); no catch-up or pull-away (p. 6)",
+      "usStateGini": { "aug2025": 0.37, "nov2025": 0.32, "note": "If the 0.05 quarterly fall continued, US usage parity would arrive in roughly two years (p. 12); OLS/WLS imply a little over two years to close most of the gap and 2SLS four to five years for a 90% closure, the report's 2–5 year range (pp. 15–17). Based on one three-month change (p. 6)." },
+      "usStateWorkforcePredictor": { "elasticityTechWorkerShare": 0.36, "shareOfVarianceExplained": "nearly two-thirds", "_source": "p. 13, Figure 1.7" },
+      "exclusions": "Seychelles (all geographic analyses) and Wyoming (all state analyses) excluded for abusive traffic (p. 37)",
+      "examples": { "denmarkAUI_nov2025": 2.1 }
     }
   },
 
@@ -239,7 +248,8 @@
       "beta": -3.112,
       "rSquared": 0.394,
       "pValue": "<0.001",
-      "note": "Partial regression controlling for task mix. β represents the change in automation share residual per unit increase in AUI residual."
+      "note": "Partial regression controlling for task mix. β represents the change in automation share residual per unit increase in AUI residual.",
+      "_verified": "PDF p. 27, Figure 2.11 prints 'β = −3.112, R² = 0.394 (p < 0.001)'; the text extraction drops the superscript and the minus sign. beta and rSquared are correct as stored."
     }
   },
 
@@ -253,6 +263,24 @@
         "description": "AI adoption among US firms more than doubled in two years, from 3.7% to 9.7%. Despite rapid growth, the vast majority of firms do not report using AI."
       },
       "sectorVariation": "One in four businesses in the Information sector reported using AI — roughly ten times the rate for Accommodation and Food Services."
+    },
+    "publicCompanyAdopterProfile": {
+      "_source": "Chatterji, Holtz, Rakholia, Tambe & Weeratunga, 'How Organizations Use AI: Evidence from ChatGPT', OpenAI working paper, 11 Aug 2026; medians from the text, p. 11 (2024 Compustat medians; Figure 2, p. 25); scale effects from the text, p. 14 (Table 3, p. 36)",
+      "_verified": "Figure 2 (p. 25) prints medians that differ from the p. 11 text: adopters 3.0K employees, $4.8B market value, $111M R&D; non-adopters 354 employees, $167M revenue, $549M total assets, $251M market value, $8.4M R&D. Values here follow the p. 11 text.",
+      "_scope": "U.S. public companies only; adopters are a random subset of ChatGPT Enterprise accounts matched to tickers (417 tickers, p. 9) against 11,784 non-adopter tickers (p. 10). Non-adopters are public firms with no matched ChatGPT Enterprise account and may use other AI products (p. 9, n. 10). Conditional associations, not causal estimates. Says nothing about small private firms, startups, or mid-market firms (p. 14).",
+      "medians2024": {
+        "revenueMillionsUSD": { "adopters": 2275.1, "nonAdopters": 209.6 },
+        "totalAssetsMillionsUSD": { "adopters": 4394.2, "nonAdopters": 667.6 },
+        "employment": { "adopters": 2934, "nonAdopters": 424 },
+        "marketValueMillionsUSD": { "adopters": 4997.2, "nonAdopters": 316.4 },
+        "rdExpenseMillionsUSD": { "adopters": 113.1, "nonAdopters": 9.9 }
+      },
+      "scaleEffectsPP": {
+        "topRevenueQuartile": 6.9,
+        "top5PercentRevenue": 9.8,
+        "description": "Percentage-point increase in adoption probability, fiscal years 2024–2025 (p. 14; Table 3, p. 36)."
+      },
+      "description": "Early enterprise adopters are larger, more capitalized, more valuable, and more R&D-intensive than the average public firm (p. 11)."
     },
     "apiVsConsumer": {
       "_source": "Narrative text, pp. 5, 30–33",
@@ -328,6 +356,6 @@
       "ratioSingaporeToIndia": 16.93,
       "ratioSingaporeToNigeria": 22.85
     },
-    "portfolioNarrative": "For an organization operating teams across Singapore (4.57), Jakarta (0.36), and Mumbai (0.27), this is not merely a market-level observation — it is an internal capability gap."
+    "portfolioNarrative": "For an organization operating teams across Singapore (4.57), Jakarta (0.36), and Mumbai (0.27), the gap between markets is also an internal capability gap."
   }
 }

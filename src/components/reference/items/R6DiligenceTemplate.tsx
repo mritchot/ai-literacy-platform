@@ -9,6 +9,7 @@
 // owns the writing experience; R6 owns the reference.
 
 import type { ReactNode } from 'react';
+import { Citation } from '../../shared/Citation';
 
 // ─────────────────────────────────────────────────────────────────────
 // Constants
@@ -93,9 +94,9 @@ const SCAFFOLD_SECTIONS: ScaffoldSection[] = [
 
 const EXAMPLE_A_TITLE = 'AI Diligence Statement: Q3 Market Analysis';
 const EXAMPLE_A_PARAGRAPHS: string[] = [
-  'In developing this market analysis, we collaborated with Claude (Anthropic) to assist with initial data compilation, structural development, and drafting of descriptive sections. The analytical framework, strategic interpretation, competitive positioning recommendations, and executive summary were developed by the human authors, drawing on internal data sources and domain expertise that were not shared with the AI tool.',
-  'All AI-generated and co-created content underwent review and revision by the authoring team. The final document reflects the team’s judgment, expertise, and intended recommendations. While AI assistance was instrumental in accelerating the drafting process, the authors maintain full responsibility for the content, its accuracy, and its conclusions.',
-  'This disclosure is made in accordance with our team’s AI use practices and to maintain transparency about the role of AI in our analytical work.',
+  'Claude (Anthropic) helped us compile the initial data, propose a structure, and draft the descriptive sections of this market analysis. The analytical framework, strategic interpretation, competitive positioning recommendations, and executive summary were developed by the human authors, drawing on internal data sources and domain expertise that were not shared with the AI tool.',
+  'Two team members checked every figure in the Claude-drafted sections against the source datasets before the draft went to review. They corrected two misstated growth rates and rewrote passages where the draft claimed more than the data supported. Claude shortened the drafting time; the interpretations are ours, and we answer for any error that remains.',
+  'We include this statement so readers can see which parts of the analysis began as AI drafts and weigh them accordingly. Our team attaches one to every client-facing deliverable that involved AI.',
 ];
 
 // ─────────────────────────────────────────────────────────────────────
@@ -131,12 +132,25 @@ export function R6DiligenceTemplate(): JSX.Element {
     <div className="font-sans">
       {/* Intro paragraph */}
       <p
+        className="m-0 mb-2 text-body-sm text-body"
+        style={{ lineHeight: 1.55 }}
+      >
+        Append a diligence statement to any deliverable that involved AI assistance. The
+        statement makes your AI practices visible to readers. It states what happened, without
+        asking for permission or apologizing. <em>Length scales with stakes.</em> The
+        framework&rsquo;s authors close their own document with one: it names the model used,
+        affirms human vetting, and claims full responsibility in five sentences.
+      </p>
+      <p
         className="m-0 mb-5 text-body-sm text-body"
         style={{ lineHeight: 1.55 }}
       >
-        Append to any deliverable that involved AI assistance. A diligence statement makes your
-        AI practices legible. It does not ask for permission. It does not apologize. It states
-        what happened. <em>Length scales with stakes.</em>
+        Institutions have started to require one. Most journals and conferences already require
+        acknowledgment of AI use, and MIT&rsquo;s 2026 AI committee recommends a statement of AI use in every thesis. The
+        committee holds people responsible for all work they submit, AI-assisted content included,
+        and treats AI as a tool under the direction of a human who verifies its output.
+        Accountability for the deliverable stays with you even when production was delegated; the
+        statement records how you exercised it.
       </p>
 
       {/* Section: Statement structure (4 numbered scaffolds) */}
@@ -153,8 +167,12 @@ export function R6DiligenceTemplate(): JSX.Element {
         className="m-0 mt-6 text-caption text-tertiary"
         style={{ lineHeight: 1.5, fontStyle: 'italic' }}
       >
-        Framework: Anthropic 4D AI Fluency Framework, Diligence competency (Dakan, Feller, and
-        Anthropic, 2025).
+        Framework: 4D AI Fluency Framework, Diligence competency (Dakan &amp; Feller,
+        2025)<Citation ids="dakan-feller-2025" pageKey="diligence-and-statement" />, as taught in
+        Anthropic&rsquo;s AI Fluency course<Citation ids="anthropic-ai-fluency-course-2025" />.
+        Statement requirements: MIT Ad Hoc Committee,
+        2026<Citation ids="mit-2026" pageKey="statement-requirements" />. Accountability: Lee et
+        al., 2025<Citation ids="lee-2025" pageKey="stewardship-definition" />.
       </p>
     </div>
   );
@@ -167,7 +185,7 @@ export function R6DiligenceTemplate(): JSX.Element {
 function StatementStructure(): JSX.Element {
   return (
     <article
-      className="overflow-hidden"
+      className="print-flow overflow-hidden"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -215,6 +233,7 @@ function ScaffoldRow({
 }): JSX.Element {
   return (
     <div
+      className="print-keep"
       style={{
         padding: '14px 16px',
         borderBottom: isLast ? 'none' : '1px solid rgb(var(--border-light))',
@@ -236,7 +255,6 @@ function ScaffoldRow({
           style={{
             color: 'rgb(var(--diligence-text))',
             letterSpacing: '0.12em',
-            marginRight: 8,
           }}
         >
           {section.pillar}
@@ -379,6 +397,22 @@ function ExampleACard(): JSX.Element {
           </p>
         ))}
       </div>
+
+      {/* Source credit for the example */}
+      <p
+        className="m-0 text-caption text-tertiary"
+        style={{
+          lineHeight: 1.5,
+          fontStyle: 'italic',
+          padding: '8px 18px',
+          borderTop: '1px solid rgb(var(--border-light))',
+        }}
+      >
+        Format informed by the Diligence Statement that closes Dakan &amp; Feller&rsquo;s framework
+        document (2025)<Citation ids="dakan-feller-2025" pageKey="diligence-statement" /> and the AI
+        Diligence Statement published with Anthropic&rsquo;s AI Fluency course
+        (2025)<Citation ids="anthropic-ai-fluency-course-2025" />. The example&rsquo;s wording is original.
+      </p>
     </article>
   );
 }

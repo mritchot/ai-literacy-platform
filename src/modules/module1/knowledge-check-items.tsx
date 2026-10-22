@@ -26,7 +26,12 @@ const KC_1_1: KnowledgeCheckItemData = {
       feedbackTitle: 'Partially right, but oversimplified',
       feedbackTone: 'caution',
       feedbackText:
-        'Sharing workflows is constructive, but framing the gap as primarily an access issue contradicts the data. GDP and infrastructure explain less than half the variation in adoption rates. Institutional context (organizational norms, regulatory environment, leadership attitudes) shapes whether tools that work in one context produce results in another.',
+        'Sharing workflows is constructive, but framing the gap as mainly an access issue that new tools will close misreads the data. Income explains about 70% of the variation in adoption across countries, and the research links the disparities to a mix of likely factors, some of them tied to income: digital infrastructure, economic structure, regulatory environment, awareness and access, and trust in the tools. Better connectivity addresses only part of that list, and the gaps between countries showed no sign of closing between August and November 2025. Those factors shape whether tools that work in one context produce results in another. Leadership and culture count too. In World Economic Forum surveys, 43% of executives name lack of vision among managers and leaders as a barrier to AI adoption, and 46% of employers name organizational culture as a barrier to transformation. Among U.S. public companies, enterprise AI adoption also tracks prior investment in software, R&D, and organizational capability.',
+      sources: [
+        { ids: 'appel-massenkoff-mccrory-2026', pageKey: 'country-gaps-stable' },
+        { ids: 'wef-2025', pageKey: 'barriers-vision-culture' },
+        { ids: 'chatterji-2026', pageKey: 'complements' },
+      ],
     },
     {
       id: 'b',
@@ -53,7 +58,12 @@ const KC_1_1: KnowledgeCheckItemData = {
       feedbackTitle: 'No basis in the data',
       feedbackTone: 'error',
       feedbackText:
-        'Nothing in the adoption data suggests automatic convergence. The geographic and institutional factors that shape adoption are structural, not transient. Waiting for equalization without active investment is not a strategy the evidence supports.',
+        'The cross-country data shows no convergence: between August and November 2025, low-use countries did not catch up and high-use countries did not pull away. Convergence does appear within the United States, where usage across states became more even over the same period, but that is a single-country pattern measured over three months. The premise is half right: Stanford AI Index data show the price of equivalent model quality has collapsed since 2022, so lower-cost offerings are real. But lower prices raise use without changing who is positioned to use the tool well. Enterprise adoption of even mature technology takes a decade or more: in Goldman Sachs’s CIO survey, public cloud still held only about 30% of enterprise workloads after ten years. For a Latin America office, waiting for equalization without active investment is not a strategy the evidence supports.',
+      sources: [
+        { ids: 'appel-massenkoff-mccrory-2026', pageKey: 'country-gaps-stable' },
+        { ids: 'evans-2025-05', pageKey: 'price-collapse-18' },
+        { ids: 'evans-2025-11', pageKey: 'cloud-30-58' },
+      ],
     },
   ],
 };
@@ -73,21 +83,21 @@ const KC_1_2: KnowledgeCheckItemData = {
   options: [
     {
       id: 'a',
-      text: '“Our team uses AI daily, and most report time savings. But research shows that when professionals’ actual AI usage is compared to their self-reports, the two diverge: a significant share are automating tasks they believe they’re augmenting. Meanwhile, 69% of AI-using professionals conceal their usage, which means we can’t learn from, measure, or improve whatever practices are already working. The gap isn’t capability. It’s the competency to use these tools in ways we can actually evaluate and build on.”',
+      text: '“Our team uses AI daily, and most report time savings. But research shows self-reports and actual usage diverge: many professionals automate tasks they believe they’re augmenting. In one large study’s general-workforce sample, 69% of professionals mention the social stigma around AI use, and many keep their use quiet, so we can’t learn from, measure, or improve what already works. Skill gaps are the most-cited barrier to business transformation (63%), and AI and big data is the fastest-rising skill employers expect to need. The gap is the competency to use these tools in ways we can evaluate.”',
       isPreferred: true,
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This draft does three things the CLO needs: it grounds the case in multiple quantified findings (self-report vs. behavioral divergence, 69% concealment rate, skill demand ranking, skill gap barrier, 86% time savings), it distinguishes between the productivity opportunity (time savings when competency is present) and the capability risk (divergent behavior, invisible practices), and it connects both to a measurable organizational consequence (the inability to learn from, measure, or improve existing practices). This is the structure of a business case, not a training request.',
+        'This draft does three things the CLO needs. It grounds the case in several quantified findings: the divergence between self-reports and behavior, the 69% who mention social stigma, the 63% skill-gap barrier, the WEF skill ranking, and the team’s own reported time savings. It separates the productivity opportunity, time savings when competency is present, from the capability risk of divergent behavior and invisible practices. And it connects both to a measurable organizational consequence: the inability to learn from, measure, or improve existing practices. This is the structure of a business case, not a training request.',
     },
     {
       id: 'b',
-      text: '“AI is the most in-demand skill in the global workforce. The World Economic Forum ranks it number one, and 85% of employers plan to invest in AI upskilling by 2030. Our competitors are almost certainly building these capabilities already. If we wait, we risk falling behind in talent retention and operational efficiency, and the cost of catching up later will be higher than the cost of investing now. This is a competitive necessity, not an optional investment.”',
+      text: '“AI and big data is the fastest-growing skill in the global workforce. The World Economic Forum ranks it number one, and 77% of employers plan to reskill their workforce to work alongside AI by 2030. Our competitors are almost certainly building these capabilities already. If we wait, we risk falling behind in talent retention and operational efficiency, and the cost of catching up later will be higher than the cost of investing now. This is a competitive necessity, not an optional investment.”',
       isPreferred: false,
       feedbackTitle: 'Directionally correct but unpersuasive',
       feedbackTone: 'caution',
       feedbackText:
-        'A CLO evaluating budget requests needs specific evidence, not general urgency. This draft contains one data point (WEF ranking), no distinction between opportunity and risk, and no connection to the organization’s specific situation. “We’ll be left behind” is an appeal to fear, not an evidence-based argument.',
+        'A CLO evaluating budget requests needs specific evidence, not general urgency. This draft contains two data points from one source (the WEF ranking and the 77% figure), no distinction between opportunity and risk, and no connection to the organization’s specific situation. “We’ll be left behind” is an appeal to fear, not an evidence-based argument.',
     },
     {
       id: 'c',
@@ -100,12 +110,16 @@ const KC_1_2: KnowledgeCheckItemData = {
     },
     {
       id: 'd',
-      text: '“The research is clear that AI will fundamentally transform knowledge work within the next five years. Task-level automation rates are increasing rapidly, directive interactions with AI tools have risen significantly, and the augmentation-automation balance is shifting decisively toward full automation. We need a structured AI literacy program now to prepare our team for this transition and ensure they can work alongside increasingly capable systems before the window closes.”',
+      text: '“The research is clear that AI will fundamentally transform knowledge work within the next five years. Task-level automation rates are increasing rapidly, directive interactions with AI tools have risen significantly, and the augmentation-automation balance is shifting decisively toward full automation. Most of the analysis our team does today will soon run end to end without us. We need a structured AI literacy program now to prepare our team for this transition and ensure they can work alongside increasingly capable systems before the window closes.”',
       isPreferred: false,
       feedbackTitle: 'Fabricates a claim',
       feedbackTone: 'error',
       feedbackText:
-        'No source in the research corpus projects that AI will automate most knowledge work within five years. The data shows a mixed augmentation-automation picture with the balance shifting gradually. Overstating the threat undermines credibility and misrepresents the evidence. A CLO who fact-checks this claim will discount the entire proposal.',
+        'No source in the research corpus projects that AI will automate most knowledge work within five years. Even McKinsey Global Institute’s estimate that current technology could in theory automate 57% of US work hours is labeled by its authors as technical potential, not a forecast. Their midpoint scenario assumes about 27% of hours automated by 2030. The data shows a mixed augmentation-automation picture: automation rose through August 2025, then augmentation regained the lead in November, while the underlying trend still points toward more automation than in January. Overstating the threat undermines credibility and misrepresents the evidence. A CLO who fact-checks this claim will discount the entire proposal.',
+      sources: [
+        { ids: 'mgi-agents-robots-us-2025', pageKey: 'not-a-forecast-midpoint-27' },
+        { ids: 'appel-massenkoff-mccrory-2026', pageKey: 'aug-auto-trend' },
+      ],
     },
   ],
 };
@@ -131,7 +145,7 @@ const KC_1_3: KnowledgeCheckItemData = {
       feedbackTitle: 'Right principle, wrong delivery',
       feedbackTone: 'caution',
       feedbackText:
-        'Encouraging openness is the correct direction, but “you shouldn’t hide that” dismisses a well-documented barrier (69% of professionals report stigma) as if it were irrational. The colleague’s hesitation is socially rational given the environment. Telling someone to “just be open” without addressing the conditions that make openness risky doesn’t change behavior.',
+        'Encouraging openness is the correct direction, but “you shouldn’t hide that” dismisses a well-documented barrier (69% of professionals in a general-workforce sample mention stigma) as if it were irrational. The colleague’s hesitation is socially rational given the environment. Telling someone to “just be open” without addressing the conditions that make openness risky doesn’t change behavior.',
     },
     {
       id: 'b',
@@ -149,16 +163,16 @@ const KC_1_3: KnowledgeCheckItemData = {
       feedbackTitle: 'Anecdotal dismissal',
       feedbackTone: 'error',
       feedbackText:
-        'Personal experience (“nobody’s ever complained”) doesn’t address the systemic pattern. The 69% finding isn’t about individual exceptions. It’s about a workforce-wide dynamic where the majority conceal, meaning the colleague’s discomfort reflects the norm, not an anomaly. Casual reassurance from one person doesn’t change the team’s operating norms.',
+        'Personal experience (“nobody’s ever complained”) doesn’t address the systemic pattern. The 69% finding describes a workforce-wide dynamic: most people mention the stigma and some keep their AI use quiet, so the colleague’s discomfort reflects the norm, not an anomaly. Casual reassurance from one person doesn’t change the team’s operating norms.',
     },
     {
       id: 'd',
-      text: '“I understand the hesitation. Research shows about 69% of professionals feel the same way. The issue isn’t whether people use AI. Most do. The issue is that when everyone works with AI privately, the team can’t learn from each other’s approaches, identify best practices, or evaluate whether AI-assisted work meets our standards. That’s why it helps to have shared language for talking about how we delegate tasks to AI and how we evaluate what it gives back.”',
+      text: '“I understand the hesitation. In one large study, about 69% of professionals from the general workforce mentioned the social stigma around using AI at work. The issue isn’t whether people use AI. Most do. The issue is that when everyone works with AI privately, the team can’t learn from each other’s approaches, identify best practices, or evaluate whether AI-assisted work meets our standards. That’s why it helps to have shared language for talking about how we delegate tasks to AI and how we evaluate what it gives back.”',
       isPreferred: true,
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer does four things well: it validates the colleague’s experience with data (69% finding), identifies the organizational consequences of concealment (can’t learn, can’t evaluate, can’t improve), introduces shared vocabulary as the practical solution (delegation and evaluation language rather than binary framing), and models the behavior it advocates by using specific, professional language rather than vague encouragement. The response demonstrates the competency, not just the knowledge.',
+        'This answer does four things well. It validates the colleague’s experience with the 69% finding. It names the organizational consequences of concealment: the team can’t learn, evaluate, or improve. It introduces shared vocabulary for delegation and evaluation as the practical solution, in place of binary framing. And it models the behavior it advocates by using specific, professional language rather than vague encouragement.',
     },
   ],
 };
@@ -194,7 +208,7 @@ const KC_1_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Best response',
       feedbackTone: 'success',
       feedbackText:
-        'This answer correctly applies the augmentation–automation distinction to a specific, recognizable task. It identifies the key signal: the nature of the review step. Surface-level error checking (typos, factual mistakes) is not the same as evaluating whether the summary accurately reflects your professional judgment about what’s important, what to emphasize, and what to leave out. Recognizing this doesn’t mean the current process is wrong. It means you now have the vocabulary to make a deliberate choice about whether automation is appropriate for this task or whether augmentation (more substantive review, more direction in the prompt) would produce a better outcome.',
+        'This answer correctly applies the augmentation–automation distinction to a specific, recognizable task. It identifies the key signal: the nature of the review step. Surface-level error checking, such as catching typos and factual mistakes, is not the same as evaluating whether the summary accurately reflects your professional judgment about what’s important, what to emphasize, and what to leave out. Recognizing this doesn’t mean the current process is wrong, but it gives you the vocabulary to make a deliberate choice about whether automation is appropriate for this task or whether augmentation (more substantive review, more direction in the prompt) would produce a better outcome.',
     },
     {
       id: 'c',
@@ -203,7 +217,7 @@ const KC_1_4: KnowledgeCheckItemData = {
       feedbackTitle: 'Sidesteps the question',
       feedbackTone: 'caution',
       feedbackText:
-        'Output quality and time savings are legitimate considerations, but they don’t answer the question the module poses. The augmentation–automation distinction isn’t about whether AI use is good or bad. It’s about whether your actual behavior matches your perception of it. If you believe you’re enhancing your work but are actually delegating it, you’ve lost the ability to evaluate the quality of the delegation. The data shows this mismatch is widespread, not rare.',
+        'Output quality and time savings are legitimate considerations, but they don’t answer the question the module poses. The augmentation–automation distinction asks whether your actual behavior matches your perception of it, not whether AI use is good or bad. If you believe you’re enhancing your work but are actually delegating it, you’ve lost the ability to evaluate the quality of the delegation. The data shows this mismatch is widespread.',
     },
     {
       id: 'd',

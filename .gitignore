@@ -21,6 +21,7 @@ dist-ssr
 # Cognitive offload files — local-only project management and AI context.
 # Not part of the codebase or deployed bundle.
 CLAUDE.md
+AGENTS.md
 MEMORY.md
 MEMORYARCHIVE.md
 ARCHIVE.md
@@ -32,3 +33,6 @@ cc-prompts/
 
 # Audit working notes (session-scoped, never committed)
 BEHIND-THE-BUILD-audit.md
+
+# Wrangler local dev state
+.wrangler/

@@ -16,7 +16,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     route: 'needs-analysis/problem-statement',
     title: 'Executive Problem Statement',
     blurb:
-      'The workforce problem the program addresses, in one page: AI tools are available, the judgment to use them well is not.',
+      'The workforce problem the program addresses, from evidence to measurement: AI tools are available, the judgment to use them well is not.',
     type: 'Reading',
   },
   {
@@ -24,7 +24,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     route: 'needs-analysis/capability-gap',
     title: 'Market-Level Capability Gap Analysis',
     blurb:
-      'The market evidence — adoption without competency — and why existing AI training measures completion rather than judgment.',
+      'The market evidence of adoption without competency, and why existing AI training measures completion rather than judgment.',
     type: 'Reading',
   },
   {
@@ -32,7 +32,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     route: 'needs-analysis/learner-persona',
     title: 'Evidence-Based Learner Persona',
     blurb:
-      'Who the program is for: a research-composite of the mid-career knowledge professional, built from documented behavior, not assumption.',
+      'Who the program is for: a research-informed composite of the mid-career knowledge professional, built from documented behavior.',
     type: 'Reading',
   },
   {

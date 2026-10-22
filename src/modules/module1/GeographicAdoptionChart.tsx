@@ -31,6 +31,7 @@ import {
   TOOLTIP_STYLE,
 } from '../../utils/chart-config';
 import { useChartTokens } from '../../hooks/useChartTokens';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useViewport } from '../../hooks/useViewport';
 
 // ─── Types ────────────────────────────────────────────────────────────
@@ -292,7 +293,7 @@ function SearchInput({
       className="flex items-center"
       style={{
         background: 'rgb(var(--white))',
-        border: '1px solid rgb(var(--border))',
+        border: '1px solid rgb(var(--ghost))',
         padding: '4px 10px',
         maxWidth: 360,
       }}
@@ -443,6 +444,7 @@ function BarChartFigure({
 }): JSX.Element {
   const viewport = useViewport();
   const tokens = useChartTokens();
+  const reducedMotion = useReducedMotion();
 
   if (rows.length === 0) {
     return (
@@ -552,7 +554,7 @@ function BarChartFigure({
                   }) as any}
                   labelFormatter={(label) => label}
                 />
-                <Bar dataKey="aui" isAnimationActive={animate} animationDuration={400}>
+                <Bar dataKey="aui" isAnimationActive={animate && !reducedMotion} animationDuration={400}>
                   {rows.map((c) => (
                     <Cell key={c.iso3} fill={tierColor[c.tier as TierName] ?? tierColor.Emerging} />
                   ))}
@@ -675,7 +677,7 @@ function ByTierGroups({
                   rows={list}
                   tierColor={tierColor}
                   maxHeight={null}
-                  ariaLabel={`${tier} tier — ${list.length} countries.`}
+                  ariaLabel={`${tier} tier, ${list.length} countries.`}
                 />
               </div>
             )}
@@ -708,6 +710,7 @@ export function CensusEnterpriseInset({
   adoption: CensusAdoption;
 }): JSX.Element {
   const tokens = useChartTokens();
+  const reducedMotion = useReducedMotion();
   // Memoized so the two-bar inset keeps a stable data identity across
   // re-renders (fresh arrays restart Recharts' layout + animation).
   const data = useMemo(() => {
@@ -754,7 +757,7 @@ export function CensusEnterpriseInset({
               cursor={{ fill: tokens.cursorFill }}
               formatter={(value: number) => [`${value}%`, 'Adoption rate']}
             />
-            <Bar dataKey="pct" fill={tokens.secondary} isAnimationActive animationDuration={400}>
+            <Bar dataKey="pct" fill={tokens.secondary} isAnimationActive={!reducedMotion} animationDuration={400}>
               {data.map((d) => (
                 <Cell key={d.period} fill={tokens.secondary} />
               ))}
@@ -763,7 +766,9 @@ export function CensusEnterpriseInset({
         </ResponsiveContainer>
       </div>
       <p className="m-0 mt-1 font-sans text-body-sm italic text-body">
-        Even in a leading adoption country, fewer than 1 in 10 firms formally report using AI.
+        Even in a leading adoption country, fewer than 1 in 10 firms report using AI to produce
+        goods or services in the prior two weeks (Census Bureau BTOS, early August 2025, via
+        Appel, McCrory &amp; Tamkin, Sep 2025, pp. 31, 44).
       </p>
     </aside>
   );

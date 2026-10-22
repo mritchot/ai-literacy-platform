@@ -14,7 +14,9 @@
 // same way.
 
 import { useState, type ReactNode } from 'react';
+import { usePrintMode } from '../../../contexts/PrintModeContext';
 import { Icon } from '../../shared/Icon';
+import { Citation } from '../../shared/Citation';
 
 // ─────────────────────────────────────────────────────────────────────
 // Constants
@@ -80,7 +82,7 @@ const SECTIONS: SectionSpec[] = [
     id: 'process',
     overline: 'Process Description',
     heading: 'How should AI approach this?',
-    italic: 'Guide the method, not just the destination.',
+    italic: 'Guide the method the AI uses.',
     rows: [
       {
         specify: 'Steps / sequence',
@@ -88,7 +90,7 @@ const SECTIONS: SectionSpec[] = [
       },
       {
         specify: 'Methods',
-        prompt: 'Use a specific model? (your rubric, SWOT, scoring matrix, regulatory checklist)',
+        prompt: 'Use a specific model? (your scoring criteria, SWOT, scoring matrix, regulatory checklist)',
       },
       {
         specify: 'Constraints',
@@ -111,7 +113,7 @@ const SECTIONS: SectionSpec[] = [
     id: 'performance',
     overline: 'Performance Description',
     heading: 'How should AI behave?',
-    italic: 'Shape the interaction, not just the output.',
+    italic: 'Shape how the AI behaves during the interaction.',
     rows: [
       {
         specify: 'Tone',
@@ -177,6 +179,8 @@ export function R3PromptTemplate(): JSX.Element {
   const toggle = (id: SectionSpec['id']) => {
     setOpenMap((prev) => ({ ...prev, [id]: !prev[id] }));
   };
+  // The print route renders every section open, whatever the map says.
+  const printMode = usePrintMode();
 
   return (
     <div className="font-sans">
@@ -185,9 +189,11 @@ export function R3PromptTemplate(): JSX.Element {
         className="m-0 mb-5 text-body-sm text-body"
         style={{ lineHeight: 1.55 }}
       >
-        Use this template to structure any AI prompt. Organized by the three Description
-        sub-components. Most underspecified prompts fail on all three simultaneously.{' '}
-        <em>Use it as a structural scaffold for any task, not a prompt library.</em>
+        Use this template to structure any AI prompt.{' '}
+        <em>It is a structural scaffold, not a prompt library.</em> Its sections follow the three
+        Description sub-components. Most underspecified prompts fail on all three at once.
+        Workers who can spot a flawed output often cannot steer the model to a better one (72 of
+        319)<Citation ids="lee-2025" pageKey="inhibitors" />; the template is for that step.
       </p>
 
       {/* Three Description sections, vertically stacked, each collapsible. */}
@@ -196,7 +202,7 @@ export function R3PromptTemplate(): JSX.Element {
           <SectionCard
             key={s.id}
             section={s}
-            isOpen={openMap[s.id]}
+            isOpen={printMode || openMap[s.id]}
             onToggle={() => toggle(s.id)}
           />
         ))}
@@ -211,8 +217,9 @@ export function R3PromptTemplate(): JSX.Element {
         className="m-0 mt-6 text-caption text-tertiary"
         style={{ lineHeight: 1.5, fontStyle: 'italic' }}
       >
-        Framework: Anthropic 4D AI Fluency Framework, Description competency (Dakan, Feller, and
-        Anthropic, 2025).
+        Framework: 4D AI Fluency Framework, Description competency (Dakan &amp; Feller,
+        2025)<Citation ids="dakan-feller-2025" pageKey="description" />, as taught in
+        Anthropic&rsquo;s AI Fluency course<Citation ids="anthropic-ai-fluency-course-2025" />.
       </p>
     </div>
   );
@@ -232,6 +239,7 @@ function SectionCard({
   onToggle: () => void;
 }): JSX.Element {
   const panelId = `r3-section-${section.id}`;
+  const printMode = usePrintMode();
   return (
     <article
       className="overflow-hidden"
@@ -279,19 +287,22 @@ function SectionCard({
           </p>
         </div>
         {/* Chevron rotates with state — chevronDown points down when open
-            (ready to collapse), and rotated -90° when closed. */}
-        <span
-          aria-hidden="true"
-          className="flex h-7 w-7 flex-shrink-0 items-center justify-center"
-          style={{
-            color: 'rgb(var(--description-text))',
-            background: 'rgb(var(--surface))',
-            transform: isOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
-            transition: 'transform 180ms ease',
-          }}
-        >
-          <Icon name="chevronDown" size={16} />
-        </span>
+            (ready to collapse), and rotated -90° when closed. Omitted on
+            the print route, where the header reads as a heading. */}
+        {!printMode && (
+          <span
+            aria-hidden="true"
+            className="flex h-7 w-7 flex-shrink-0 items-center justify-center"
+            style={{
+              color: 'rgb(var(--description-text))',
+              background: 'rgb(var(--surface))',
+              transform: isOpen ? 'rotate(0deg)' : 'rotate(-90deg)',
+              transition: 'transform 180ms ease',
+            }}
+          >
+            <Icon name="chevronDown" size={16} />
+          </span>
+        )}
       </button>
 
       {/* Body — table + fill-in. Kept mounted and toggled with `hidden`

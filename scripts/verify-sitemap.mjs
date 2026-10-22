@@ -19,7 +19,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 const DIST = 'dist';
-const ORIGIN = 'https://ai-literacy.ritchot.me';
+const ORIGIN = 'https://ritchot.me/courses/ai-literacy';
 
 const errors = [];
 const fail = (msg) => errors.push(msg);
@@ -39,7 +39,8 @@ const sitemap = need('sitemap.xml');
 const headers = need('_headers');
 const indexHtml = need('index.html');
 const notFound = need('404.html');
-need('robots.txt');
+// No robots.txt here: the course lives under ritchot.me/courses/ai-literacy/,
+// and only the root robots.txt (ritchot-website) counts. It lists this sitemap.
 
 // ─── Parse _headers into noindex path matchers ─────────────────────────
 //
@@ -128,6 +129,41 @@ if (sitemap) {
             `noindex rule if the page is meant to be found.`,
         );
       }
+    }
+  }
+}
+
+// 2b. The PDF set and the sitemap agree. src/pages/print/print-manifest.json
+//     is the list of PDFs the render pipeline produces: the 15 artifact PDFs
+//     are indexed and must each appear; the seven reference PDFs are
+//     noindexed (rule 2 above) and must not. A PDF in the sitemap that the
+//     pipeline does not produce would be a stale entry.
+//
+//     Print routes (`#/print/<family>/<param>`) are hash routes on the one
+//     document the origin serves, so no crawler ever receives them as URLs
+//     and a runtime <meta name="robots"> on them would be meaningless — the
+//     crawler reads index.html once, canonical to the root. What keeps them
+//     out of the index is that no URL carrying a fragment is ever submitted;
+//     the assertion below makes that explicit.
+if (sitemap) {
+  const locs = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]);
+  for (const loc of locs) {
+    if (loc.includes('#')) {
+      fail(`${loc} carries a fragment — hash routes (including #/print/…) are never sitemap URLs`);
+    }
+  }
+  const manifestPath = 'src/pages/print/print-manifest.json';
+  if (existsSync(manifestPath)) {
+    const { documents } = JSON.parse(readFileSync(manifestPath, 'utf8'));
+    const pdfLocs = new Set(locs.filter((l) => l.endsWith('.pdf')).map((l) => l.slice(ORIGIN.length + 1)));
+    for (const d of documents) {
+      const indexed = d.family !== 'reference';
+      if (indexed && !pdfLocs.has(d.pdf)) fail(`${d.pdf} is an indexed artifact PDF but is not in the sitemap`);
+      if (!indexed && pdfLocs.has(d.pdf)) fail(`${d.pdf} is a reference PDF (noindex) but is in the sitemap`);
+    }
+    const produced = new Set(documents.map((d) => d.pdf));
+    for (const p of pdfLocs) {
+      if (!produced.has(p)) fail(`${p} is in the sitemap but not in ${manifestPath} (the render pipeline does not produce it)`);
     }
   }
 }

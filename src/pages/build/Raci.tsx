@@ -6,7 +6,7 @@
 import RACI_MD from './content/05_raci.md?raw';
 import { renderMarkdown } from '../../components/shared/render-markdown';
 import { RaciGrid } from './raci-grid';
-import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
+import { ArtifactFooter, ArtifactHeader, ArtifactPage, ArtifactTopBar } from './chrome';
 
 const [INTRO_MD = '', ...REST] = RACI_MD.replace(/\r\n/g, '\n').split(/\n## /);
 const SECTIONS = REST.map((part) => {
@@ -21,25 +21,22 @@ const SECTIONS = REST.map((part) => {
 
 export default function Raci(): JSX.Element {
   return (
-    <div className="mx-auto max-w-interactive px-4 py-12 sm:px-8 lg:px-16 lg:py-14">
+    <ArtifactPage width="interactive">
       <ArtifactTopBar pdfSlug="raci" />
-      <SeriesEyebrow label="Behind the build · Project Management" />
+      <ArtifactHeader label="Behind the build · Project Management" slug="raci" title="RACI Matrix" />
 
-      <h1 className="m-0 mb-2 font-display text-display font-normal text-ink">RACI Matrix</h1>
-      <p className="m-0 mb-6 font-sans text-h3 font-normal text-secondary">AI Literacy for the Modern Workforce</p>
-
-      <div className="prose-longform max-w-reading">{renderMarkdown(INTRO_MD.trim())}</div>
+      <div>{renderMarkdown(INTRO_MD.trim())}</div>
 
       <RaciGrid />
 
       {SECTIONS.map((s) => (
         <section key={s.heading} className="mt-10">
           <h2 className="mb-3 font-sans text-h2 font-semibold text-ink">{s.heading}</h2>
-          <div className="prose-longform max-w-reading">{renderMarkdown(s.body)}</div>
+          <div>{renderMarkdown(s.body)}</div>
         </section>
       ))}
 
       <ArtifactFooter currentSlug="raci" />
-    </div>
+    </ArtifactPage>
   );
 }

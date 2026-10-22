@@ -3,8 +3,8 @@
 // reads from `progress.assessments.{pre,post}.responses` instead of
 // `progress.knowledgeChecks`.
 //
-// Each of the 10 constructs renders as a card showing both the pre
-// and the post response side by side (stacked vertically on mobile).
+// Each construct renders as a card showing both the pre and the post
+// response side by side (stacked vertically on mobile).
 // Left accent color encodes the joint correctness state:
 //   both correct → success green
 //   mixed (one correct, one not) → caution amber
@@ -13,9 +13,11 @@
 //                       attempted" pattern)
 //
 // A score summary bar at the top mirrors the SummaryMetricsBar's
-// 5th-card content but with the per-block delta visible inline below
-// each construct card. When neither assessment has any data, the
-// section collapses to a single "No assessment data" empty state.
+// 5th-card content, plus a count of answers given in under ten seconds
+// (possible rapid guesses), the engagement check the Level 2 thresholds
+// ask for before a low score is read as a learning outcome. When
+// neither assessment has any data, the section collapses to a single
+// "No assessment data" empty state.
 
 import { useMemo } from 'react';
 import { Overline } from '../components/shared/Overline';
@@ -29,6 +31,13 @@ import {
   POST_ASSESSMENT_ITEMS,
   type PostAssessmentItem,
 } from '../data/post-assessment';
+import { answeredBeforeRevision } from '../data/instrument-version';
+import {
+  constructOutcomes,
+  RAPID_RESPONSE_MS,
+  summarizeGrowth,
+  type GrowthSummary,
+} from '../utils/assessment-scoring';
 
 interface AssessmentResponseAnalysisProps {
   progress: LearnerProgressState;
@@ -61,6 +70,8 @@ interface AssessmentSidePayload {
   selectedOptionId: string | null;
   isCorrect: boolean | null;
   scenarioSummary: string;
+  /** null when no response time was recorded (older responses). */
+  responseMs: number | null;
 }
 
 interface AssessmentPairRow {
@@ -83,15 +94,18 @@ function buildPairRows(progress: LearnerProgressState): AssessmentPairRow[] {
 
   const sidePayload = (
     item: AssessmentItem | PostAssessmentItem | undefined,
-    response: { selectedOptionId: string; isCorrect: boolean } | undefined,
+    response:
+      | { selectedOptionId: string; isCorrect: boolean; responseMs?: number | undefined }
+      | undefined,
   ): AssessmentSidePayload => ({
     itemId: item?.id ?? '',
     selectedOptionId: response?.selectedOptionId ?? null,
     isCorrect: response ? response.isCorrect : null,
     scenarioSummary: item?.scenarioSummary ?? '',
+    responseMs: response?.responseMs ?? null,
   });
 
-  // Post drives the order (matches the spec table ordering 1-10).
+  // Post drives the order (matches the spec table ordering).
   return POST_ASSESSMENT_ITEMS.map((post) => {
     const pre = PRE_ASSESSMENT_ITEMS.find(
       (p) => p.constructKey === post.constructKey,
@@ -109,30 +123,28 @@ function buildPairRows(progress: LearnerProgressState): AssessmentPairRow[] {
 export function AssessmentResponseAnalysis({
   progress,
 }: AssessmentResponseAnalysisProps): JSX.Element {
-  const { rows, hasAnyData, preComplete, postComplete, preScore, postScore } =
-    useMemo(() => {
-      const built = buildPairRows(progress);
-      const _preComplete = progress.assessments?.pre?.completedAt != null;
-      const _postComplete = progress.assessments?.post?.completedAt != null;
-      const _preScore = _preComplete
-        ? Object.values(progress.assessments?.pre?.responses ?? {}).filter(
-            (r) => r.isCorrect,
-          ).length
-        : null;
-      const _postScore = _postComplete
-        ? Object.values(progress.assessments?.post?.responses ?? {}).filter(
-            (r) => r.isCorrect,
-          ).length
-        : null;
-      return {
-        rows: built,
-        hasAnyData: _preComplete || _postComplete,
-        preComplete: _preComplete,
-        postComplete: _postComplete,
-        preScore: _preScore,
-        postScore: _postScore,
-      };
-    }, [progress]);
+  const { rows, hasAnyData, preComplete, postComplete, growth, revised } = useMemo(() => {
+    const _preComplete = progress.assessments?.pre?.completedAt != null;
+    const _postComplete = progress.assessments?.post?.completedAt != null;
+    return {
+      // Only a completed form can carry stale letters worth flagging.
+      revised:
+        (_preComplete && answeredBeforeRevision(progress.assessments?.pre?.responses ?? {})) ||
+        (_postComplete && answeredBeforeRevision(progress.assessments?.post?.responses ?? {})),
+      rows: buildPairRows(progress),
+      hasAnyData: _preComplete || _postComplete,
+      preComplete: _preComplete,
+      postComplete: _postComplete,
+      growth: summarizeGrowth(
+        constructOutcomes(
+          PRE_ASSESSMENT_ITEMS,
+          POST_ASSESSMENT_ITEMS,
+          progress.assessments?.pre?.responses ?? {},
+          progress.assessments?.post?.responses ?? {},
+        ),
+      ),
+    };
+  }, [progress]);
 
   if (!hasAnyData) {
     return (
@@ -168,9 +180,18 @@ export function AssessmentResponseAnalysis({
       <ScoreSummaryBar
         preComplete={preComplete}
         postComplete={postComplete}
-        preScore={preScore}
-        postScore={postScore}
+        growth={growth}
+        rapid={{
+          pre: rows.filter((r) => isRapid(r.pre)).length,
+          post: rows.filter((r) => isRapid(r.post)).length,
+        }}
       />
+      {revised && (
+        <p className="m-0 font-sans text-body-sm text-secondary">
+          This record predates the current item revision, so some stored answers appear beside
+          wording the learner did not see.
+        </p>
+      )}
       {BLOCK_ORDER.map((block) => {
         const blockRows = byBlock[block];
         if (blockRows.length === 0) return null;
@@ -183,7 +204,7 @@ export function AssessmentResponseAnalysis({
             <ul className="m-0 list-none p-0 space-y-2">
               {blockRows.map((row) => (
                 <li key={row.constructKey}>
-                  <ConstructCard row={row} />
+                  <ConstructCard row={row} preComplete={preComplete} />
                 </li>
               ))}
             </ul>
@@ -196,19 +217,22 @@ export function AssessmentResponseAnalysis({
 
 // ─── Score summary bar (top of section) ──────────────────────────
 
+function isRapid(side: AssessmentSidePayload): boolean {
+  return side.responseMs !== null && side.responseMs < RAPID_RESPONSE_MS;
+}
+
 function ScoreSummaryBar({
   preComplete,
   postComplete,
-  preScore,
-  postScore,
+  growth,
+  rapid,
 }: {
   preComplete: boolean;
   postComplete: boolean;
-  preScore: number | null;
-  postScore: number | null;
+  growth: GrowthSummary;
+  rapid: { pre: number; post: number };
 }): JSX.Element {
-  const delta =
-    preScore != null && postScore != null ? postScore - preScore : null;
+  const delta = preComplete && postComplete ? growth.change : null;
   const deltaText =
     delta == null
       ? '—'
@@ -228,7 +252,7 @@ function ScoreSummaryBar({
 
   return (
     <div
-      className="grid grid-cols-1 gap-3 sm:grid-cols-3"
+      className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -237,15 +261,30 @@ function ScoreSummaryBar({
     >
       <ScoreCell
         label="Pre-Assessment"
-        value={preComplete && preScore != null ? `${preScore} / 10` : '—'}
+        value={preComplete ? `${growth.preCorrect} / ${growth.preAnswered}` : '—'}
         sub={preComplete ? 'Complete' : 'Not started'}
       />
       <ScoreCell
         label="Post-Assessment"
-        value={postComplete && postScore != null ? `${postScore} / 10` : '—'}
+        value={postComplete ? `${growth.postCorrect} / ${growth.postAnswered}` : '—'}
         sub={postComplete ? 'Complete' : 'Not started'}
       />
-      <ScoreCell label="Growth" value={deltaText} sub="Δ items" color={deltaColor} />
+      <ScoreCell
+        label="Growth"
+        value={deltaText}
+        sub={
+          growth.compared < growth.postTotal && delta != null
+            ? `Δ items · ${growth.compared} in baseline`
+            : 'Δ items'
+        }
+        color={deltaColor}
+      />
+      <ScoreCell
+        label="Rapid answers"
+        value={preComplete || postComplete ? `${rapid.pre} · ${rapid.post}` : '—'}
+        sub={`pre · post, under ${RAPID_RESPONSE_MS / 1000} s`}
+        color={rapid.pre + rapid.post > 0 ? 'rgb(var(--caution))' : undefined}
+      />
     </div>
   );
 }
@@ -259,7 +298,7 @@ function ScoreCell({
   label: string;
   value: string;
   sub: string;
-  color?: string;
+  color?: string | undefined;
 }): JSX.Element {
   return (
     <div className="min-w-0">
@@ -304,7 +343,13 @@ function pairAccent(
   return { color: 'rgb(var(--caution))', dashed: false };
 }
 
-function ConstructCard({ row }: { row: AssessmentPairRow }): JSX.Element {
+function ConstructCard({
+  row,
+  preComplete,
+}: {
+  row: AssessmentPairRow;
+  preComplete: boolean;
+}): JSX.Element {
   const accent = pairAccent(row.pre.isCorrect, row.post.isCorrect);
   const sideStyle = accent.dashed
     ? '1px dashed rgb(var(--border-light))'
@@ -348,8 +393,8 @@ function ConstructCard({ row }: { row: AssessmentPairRow }): JSX.Element {
 
       {/* Pre/post row — two columns at md+, stacked on mobile. */}
       <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-        <ResponseSide label="Pre" side={row.pre} />
-        <ResponseSide label="Post" side={row.post} />
+        <ResponseSide label="Pre" side={row.pre} preComplete={preComplete} />
+        <ResponseSide label="Post" side={row.post} preComplete={preComplete} />
       </div>
     </article>
   );
@@ -358,12 +403,14 @@ function ConstructCard({ row }: { row: AssessmentPairRow }): JSX.Element {
 function ResponseSide({
   label,
   side,
+  preComplete,
 }: {
   label: 'Pre' | 'Post';
   side: AssessmentSidePayload;
+  preComplete: boolean;
 }): JSX.Element {
   const attempted = side.selectedOptionId != null;
-  const indicator = renderIndicator(side, label);
+  const indicator = renderIndicator(side, label, preComplete);
   return (
     <div className="min-w-0">
       <div className="mb-1 flex items-baseline gap-2">
@@ -382,6 +429,14 @@ function ResponseSide({
           </span>
         ) : null}
         {indicator}
+        {isRapid(side) && (
+          <span
+            className="font-mono text-[11px] font-semibold"
+            style={{ color: 'rgb(var(--caution))' }}
+          >
+            rapid · {Math.round((side.responseMs ?? 0) / 1000)} s
+          </span>
+        )}
       </div>
       {side.scenarioSummary && (
         <div
@@ -398,13 +453,16 @@ function ResponseSide({
 function renderIndicator(
   side: AssessmentSidePayload,
   label: 'Pre' | 'Post',
+  preComplete: boolean,
 ): JSX.Element {
   if (side.selectedOptionId == null) {
-    // Distinguish the two not-attempted reasons: post-not-started is
-    // the common case (mid-program learner), pre-missing is anomalous.
+    // Three not-attempted reasons: post not started is the common case
+    // (mid-program learner); a completed pre without this item is a
+    // baseline taken on the earlier ten-item form; anything else is
+    // anomalous.
     return (
       <span className="font-sans text-[12px] text-muted">
-        {label === 'Post' ? 'Not started' : '—'}
+        {label === 'Post' ? 'Not started' : preComplete ? 'Not in baseline' : '—'}
       </span>
     );
   }

@@ -13,30 +13,35 @@
     "dataRelease": "All interview data publicly released with participant consent.",
     "note": "This is a distinct study from 'How AI Is Transforming Work at Anthropic,' which covers Anthropic employees specifically. The Interviewer sample comprises external professionals across functions and industries.",
     "last_validated": "2026-04-27",
+    "_source": "Handa et al. (2025); library note anthropic_interviewer-1250-professionals_2025.md (entry code AIV), 12-page text capture of the full post, 04-09-2026; capture PDF pp. 1–12",
     "notes": [
       "VALIDATION PASS 1 (April 27, 2026): Source-first verification against text layers, page images, and reference-quotes.md. Three errors found and corrected — all related to the behavioral data comparison. JSON had substituted Handa et al. V1 figures (57/43) for the Interviewer paper's own cited behavioral comparison (47/49). Corrected: behavioralData values (0.57→0.47, 0.43→0.49), source attribution (Handa et al. → Interviewer paper's 'latest analysis'), divergence description (57%→47%, 8pp→18pp). designCrossReferences finding updated to match. Quote attribution for stigma fact-checker updated to note segment inference. careerTransition context_note added. Office assistant quote restored to full length. topicSentimentPattern updated with sourceNamedPessimistic array and selectivity note. Cascading impact note added for downstream deliverables using the 8pp Handa V1 gap.",
       "VALIDATION PASS 2 (April 27, 2026): Arithmetic consistency verified (all four checks passed). Internal cross-references verified against completed deliverables: Component 1 paragraph 3, Component 2C BG-3 and behaviors D2/D4/D5, Component 3A Objectives 2.2/4.2/4.5 — all confirmed. Three structural improvements identified: segmentFindings lacked usedIn fields, _metadata lacked validation tracking, headlineFindings lacked source location references.",
-      "VALIDATION PASS 3 (April 27, 2026): Final reconciliation — comprehensive structural, computational, and cross-reference audit. All checks passed: 6/6 sections present, all 9 Pass 1 corrections confirmed in place, all internal number references consistent (divergence description matches 0.47 and 18pp, cross-ref finding matches, 0.65 satisfaction and 0.65 selfReport augmentative correctly identified as distinct findings), all usedIn arrays present (4 headlineFindings + 3 segmentFindings + 1 divergence = 23 total design connections), all 4 source_location fields present, stale reference scan clean (3 occurrences of '57%' and 7 of '8pp' all correctly located in validation notes, cross-reference notes, or cascading impact notes — none in active data fields). File is production-ready."
+      "VALIDATION PASS 3 (April 27, 2026): Final reconciliation — comprehensive structural, computational, and cross-reference audit. All checks passed: 6/6 sections present, all 9 Pass 1 corrections confirmed in place, all internal number references consistent (divergence description matches 0.47 and 18pp, cross-ref finding matches, 0.65 satisfaction and 0.65 selfReport augmentative correctly identified as distinct findings), all usedIn arrays present (4 headlineFindings + 3 segmentFindings + 1 divergence = 23 total design connections), all 4 source_location fields present, stale reference scan clean (3 occurrences of '57%' and 7 of '8pp' all correctly located in validation notes, cross-reference notes, or cascading impact notes — none in active data fields). File is production-ready.",
+      "RE-ANCHORED (September 9, 2026): literature-integration pass. Earlier entries' references to reference-quotes.md (deleted 16-07-2026) are historical; current locators are the library AIV note (capture PDF pages in each _source field) for the Interviewer figures and Appel, Massenkoff & McCrory (2026), p. 17, for the unclassified share."
     ]
   },
 
   "headlineFindings": {
     "timeSavings": {
       "value": 0.86,
-      "description": "86% of professionals reported that AI saves them time.",
-      "source_location": "Findings summary section. Verified in reference-quotes.md: 'In the survey, 86% of professionals reported that AI saves them time and 65% said they were satisfied with the role AI plays in their work.'",
+      "description": "86% of professionals in the general-workforce sample (N = 1,000) reported that AI saves them time.",
+      "_source": "Handa et al. (2025), section 'AI’s impact in the general workforce'; library note AIV-48, capture PDF p. 5",
+      "source_location": "Findings summary section. Verified in library note AIV-48 (capture PDF p. 5): 'In the survey, 86% of professionals reported that AI saves them time and 65% said they were satisfied with the role AI plays in their work.'",
       "usedIn": ["Component 1 (Executive Problem Statement)", "Component 2A (Capability Gap Analysis)", "Component 2B (Learner Persona)", "Module 1 (data narrative)"]
     },
     "satisfaction": {
       "value": 0.65,
-      "description": "65% said they were satisfied with the role AI plays in their work.",
-      "source_location": "Findings summary section, same sentence as 86% time savings figure. Verified in reference-quotes.md.",
+      "description": "65% of professionals in the general-workforce sample (N = 1,000) said they were satisfied with the role AI plays in their work.",
+      "_source": "Handa et al. (2025), section 'AI’s impact in the general workforce'; library note AIV-48, capture PDF p. 5",
+      "source_location": "Findings summary section, same sentence as 86% time savings figure. Verified in library note AIV-48 (capture PDF p. 5).",
       "usedIn": ["Component 2B (Learner Persona)", "Module 2 (dashboard)"]
     },
     "socialStigma": {
       "value": 0.69,
-      "description": "69% of professionals mentioned the social stigma that can come with using AI tools at work.",
-      "source_location": "Findings section, separate paragraph from the 86%/65% sentence. Verified in reference-quotes.md: '69% of professionals mentioned the social stigma that can come with using AI tools at work — one fact-checker told Anthropic Interviewer...'",
+      "description": "69% of professionals in the general-workforce sample (N = 1,000) mentioned the social stigma that can come with using AI tools at work.",
+      "_source": "Handa et al. (2025), section 'AI’s impact in the general workforce'; library note AIV-49 (69%) and AIV-50 (fact-checker quotation), capture PDF p. 5",
+      "source_location": "Findings section, separate paragraph from the 86%/65% sentence. Verified in library note AIV-49 and AIV-50 (capture PDF p. 5): '69% of professionals mentioned the social stigma that can come with using AI tools at work — one fact-checker told Anthropic Interviewer...'",
       "illustrativeQuote": "A colleague recently said they hate AI and I just said nothing. I don't tell anyone my process because I know how a lot of people feel about AI.",
       "quoteAttribution": "Fact-checker (segment not explicitly stated in source; general workforce sample inferred from occupation type and sample composition — 1,000 of 1,250 participants are general workforce)",
       "designImplication": "The concealment dynamic is behavioral — professionals are not rejecting AI; they are hiding productive use from colleagues. This means the barrier is social, not motivational, and cannot be addressed by individual training alone. The 4D framework functions as a shared professional vocabulary that normalizes AI use.",
@@ -45,7 +50,8 @@
     "careerTransition": {
       "value": 0.48,
       "description": "48% of interviewees considered transitioning their careers toward positions that focus on managing and overseeing AI systems rather than performing direct technical work.",
-      "source_location": "Augmentation/automation discussion section, following the 65/35 self-report finding. Verified in reference-quotes.md: 'Professionals envisioned a future with both augmentation and automation... 48% of interviewees considered transitioning their careers...'",
+      "_source": "Handa et al. (2025), section 'Augmentation versus automation'; library note AIV-64, capture PDF p. 6",
+      "source_location": "Augmentation/automation discussion section, following the 65/35 self-report finding. Verified in library note AIV-64 (capture PDF p. 6): 'Professionals envisioned a future with both augmentation and automation... 48% of interviewees considered transitioning their careers...'",
       "context_note": "This finding is situated within a broader vision of augmentation alongside automation. The source frames it as: 'Professionals envisioned a future with both augmentation and automation — the automation of routine, administrative tasks with the maintenance of human oversight.' The career transition consideration reflects a strategic read on professional relevance, not automation anxiety alone.",
       "usedIn": ["Component 2B (Role Profile, Motivation)", "Module 1 (data narrative)"]
     }
@@ -54,16 +60,18 @@
   "augmentationVsAutomation": {
     "_source": "Anthropic Interviewer, Dec 2025",
     "selfReport": {
+      "_source": "Handa et al. (2025), section 'Augmentation versus automation'; library note AIV-58, capture PDF p. 6",
       "augmentative": 0.65,
       "automative": 0.35,
       "description": "65% of participants described AI's primary role as augmentative; 35% described it as automative."
     },
     "behavioralData": {
-      "_source": "Anthropic Interviewer, Dec 2025, referencing 'our latest analysis of how people use Claude'",
+      "_source": "Anthropic Interviewer, Dec 2025, referencing 'our latest analysis of how people use Claude'; Handa et al. (2025), section 'Augmentation versus automation'; library note AIV-59 and AIV-60, capture PDF p. 6",
+      "wave": "Economic Index, August 2025 data (September 2025 report), which the post links as its latest analysis",
       "augmentative": 0.47,
       "automative": 0.49,
       "description": "The Interviewer paper compared self-reports against behavioral data from Anthropic's latest Claude conversation analysis, which showed a much more even split: 47% augmentation, 49% automation.",
-      "cross_reference_note": "These figures differ from Handa et al. V1 (Feb 2025), which reported 57% augmentation / 43% automation using a different dataset and time period. Handa V1 is the standalone citable empirical study with full methodology; its data is in augmentation-automation.json. The 47/49 figures here are the Interviewer paper's own cited comparison. The remaining 4% is unaccounted for in the source text (likely unclassified or rounding)."
+      "cross_reference_note": "These figures differ from Handa et al. V1 (Feb 2025), which reported 57% augmentation / 43% automation using a different dataset and time period. Handa V1 is the standalone citable empirical study with full methodology; its data is in augmentation-automation.json. The 47/49 figures here are the Interviewer paper's own cited comparison. The remaining 3.9% is the share classified as neither automation nor augmentation (Appel, Massenkoff & McCrory 2026, p. 17). Economic Index percentages do not sum to 100% as some interactions were unclassified. The 47/49 pair equals the August 2025 (V3) wave recorded in adoption-trends.json; the November 2025 (V4) wave is 52/45."
     },
     "divergence": {
       "gap_pp": 18,
@@ -75,6 +83,7 @@
 
   "segmentFindings": {
     "generalWorkforce": {
+      "_source": "Handa et al. (2025), section 'Introduction'; library note AIV-20 and AIV-21, capture PDF p. 1; office-assistant quotation, library note AIV-23, capture PDF p. 2",
       "sentiment": "Predominantly positive across most topics discussed.",
       "keyPattern": "Want to preserve tasks that define their professional identity while delegating routine work to AI. They envision futures where routine tasks are automated and their role shifts to overseeing AI systems.",
       "illustrativeQuote": "It's a tool to me like a computer was, or a typewriter was in the day — computers didn't get rid of mathematicians, they just made them able to do more and that is where I see AI going in the best possible future.",
@@ -82,14 +91,30 @@
       "usedIn": ["Component 2B (Role Profile — professional identity preservation framing)", "Module 1 (normalization — AI as tool evolution, not replacement)", "Module 2 (peer usage patterns — routine delegation vs. identity-defining tasks)"]
     },
     "creatives": {
+      "_source": "Handa et al. (2025), section 'Introduction'; library note AIV-27 and AIV-28, capture PDF p. 1",
       "sentiment": "Using AI to increase productivity despite peer judgment and anxiety about the future.",
       "keyPattern": "Navigating both the immediate stigma of AI use in creative communities and deeper concerns about economic displacement and the erosion of human creative identity.",
-      "usedIn": ["Component 2A (Change Management Context — stigma as cross-segment phenomenon)", "Module 1 (stigma data narrative — sector variation in concealment dynamics)"]
+      "usedIn": ["Component 2A (Change Management Context — stigma as cross-segment phenomenon)", "Module 1 (stigma data narrative — sector variation in concealment dynamics)"],
+      "values": {
+        "_source": "Handa et al. (2025), section 'AI’s impact on creative professions'; library note AIV-68 and AIV-69, capture PDF p. 6",
+        "timeSaved": 0.97,
+        "qualityIncreased": 0.68,
+        "peerJudgmentManaged": 0.70,
+        "_note": "Not rendered by the dashboard or Module 2; recorded here with locators (P-WEX-54)."
+      }
     },
     "scientists": {
+      "_source": "Handa et al. (2025), section 'Introduction'; library note AIV-29 to AIV-31, capture PDF p. 2",
       "sentiment": "Want AI partnership but can't yet trust it for core research.",
       "keyPattern": "Uniformly expressed a desire for AI that could generate hypotheses and design experiments. But at present, they confined their actual use to other tasks like writing manuscripts or debugging analysis code.",
-      "usedIn": ["Module 3 (capability boundaries — why current models cannot reliably generate hypotheses)", "Module 4 (sandbox — gap between desired and actual AI use as a reflection anchor)"]
+      "usedIn": ["Module 3 (capability boundaries — why current models cannot reliably generate hypotheses)", "Module 4 (sandbox — gap between desired and actual AI use as a reflection anchor)"],
+      "values": {
+        "_source": "Handa et al. (2025), section 'AI’s impact on scientific work'; library note AIV-74, capture PDF p. 7 (79%, 27%) and AIV-79, capture PDF p. 8 (91%)",
+        "trustReliabilityPrimaryBarrier": 0.79,
+        "technicalLimitations": 0.27,
+        "wantMoreAssistance": 0.91,
+        "_note": "Not rendered by the dashboard or Module 2; recorded here with locators (P-WEX-54)."
+      }
     }
   },
 
@@ -105,8 +130,8 @@
   "designCrossReferences": {
     "_note": "Pre-computed connections between Interviewer findings and program design decisions.",
     "stigmaToFramework": {
-      "finding": "69% concealment",
-      "designResponse": "The 4D competency framework (Delegation, Description, Discernment, Diligence) is positioned not only as a skill taxonomy but as a shared professional vocabulary that enables peer normalization of AI use.",
+      "finding": "69% mentioned social stigma",
+      "designResponse": "The 4D competency framework (Delegation, Description, Discernment, Diligence) is positioned as both a skill taxonomy and a shared professional vocabulary that enables peer normalization of AI use.",
       "componentTrace": ["Component 1 (paragraph 3)", "Component 2C (BG-3 shared vocabulary)", "Component 3A (Objective 4.5)"]
     },
     "overconfidenceToScenarios": {

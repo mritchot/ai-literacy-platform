@@ -4,6 +4,7 @@
 
 import type { jsPDF } from 'jspdf';
 import type { CompletionProfileData } from '../generate-completion-pdf';
+import { MILESTONES, R7_TOOL_LABEL, WEEKLY_PRACTICE, type MilestoneDays } from '../milestones';
 import { C, FONT, MARGIN_LEFT, SECTION_OVERLINE_Y } from './constants';
 import {
   drawCardBase,
@@ -34,7 +35,7 @@ export function drawPage2(doc: jsPDF, data: CompletionProfileData): void {
 
   drawHeader(doc, {
     eyebrow: 'Competency Profile · continued',
-    title: 'Where the practice goes next',
+    title: 'What to practice next',
     subtitle: hasGrowth
       ? 'Forward commitments and program growth'
       : 'Knowledge checks and forward commitments',
@@ -45,8 +46,8 @@ export function drawPage2(doc: jsPDF, data: CompletionProfileData): void {
   drawSectionOverline(
     doc,
     hasGrowth
-      ? '30 · 60 · 90 day milestones & assessment growth'
-      : '30 · 60 · 90 day milestones & knowledge checks',
+      ? 'Weekly · 30 · 60 · 90 day milestones & assessment growth'
+      : 'Weekly · 30 · 60 · 90 day milestones & knowledge checks',
     SECTION_OVERLINE_Y,
   );
 
@@ -81,60 +82,74 @@ function drawMilestonesCard(doc: jsPDF, data: CompletionProfileData): void {
   doc.setFontSize(9);
   setTextHex(doc, C.diligence);
   setTracked(doc, 9);
-  doc.text(safe('WHERE THE PRACTICE GOES NEXT'), x + padX, y + padY + 2);
+  doc.text(safe('WHAT TO PRACTICE NEXT'), x + padX, y + padY + 2);
   resetTracking(doc);
 
   // Title
   doc.setFont(FONT.sans, 'bold');
   doc.setFontSize(15);
   setTextHex(doc, C.ink);
-  doc.text(safe('Three commitments to carry forward'), x + padX, y + padY + 22);
+  doc.text(safe('Four commitments to carry forward'), x + padX, y + padY + 22);
 
   // Connection excerpts (quote learner artifacts where available).
   // Ellipsis only when text was actually truncated — mirrors the
-  // on-screen truncateToLines behavior.
-  const quoteExcerpt = (raw: string): string => {
+  // on-screen truncateToLines behavior. The 30-day row quotes both
+  // tasks inside a two-line clamp, so each excerpt is short.
+  const quoteExcerpt = (raw: string, max: number): string => {
     const compact = raw.replace(/\s+/g, ' ').trim();
-    return compact.length <= 130
+    return compact.length <= max
       ? `"${compact}"`
-      : `"${compact.slice(0, 130).trimEnd()}…"`;
+      : `"${compact.slice(0, max).trimEnd()}…"`;
   };
-  const task1Excerpt =
-    data.task1.trim().length > 0
-      ? quoteExcerpt(data.task1)
-      : 'Complete the action commitment to see your commitment here.';
-  const p12Excerpt =
-    data.p12Statement.trim().length > 0
-      ? quoteExcerpt(data.p12Statement)
-      : 'Complete the diligence statement builder to see your template here.';
+  const taskExcerpts = [
+    data.task1.trim().length > 0 ? `Task 1: ${quoteExcerpt(data.task1, 30)}` : '',
+    data.task2.trim().length > 0 ? `Task 2: ${quoteExcerpt(data.task2, 30)}` : '',
+  ].filter((s) => s.length > 0);
+  const connections: Record<MilestoneDays, { refLabel: string; connection: string }> = {
+    30: {
+      refLabel: 'YOUR TASKS →',
+      connection:
+        taskExcerpts.length > 0
+          ? taskExcerpts.join(' ')
+          : 'Complete the action commitment to see your tasks here.',
+    },
+    60: {
+      refLabel: 'YOUR PRACTICE RUN →',
+      connection:
+        data.p8Answered > 0
+          ? `${data.p8Accuracy} of ${data.p8Total} components placed as intended in the task decomposition exercise.`
+          : 'Complete the task decomposition exercise to see your result here.',
+    },
+    90: {
+      refLabel: 'YOUR TOOL →',
+      connection: `${R7_TOOL_LABEL} (in the reference panel).`,
+    },
+  };
+  // Badge text: the dated rows read "30 / DAYS"; the weekly row reads
+  // "1× / WEEK" so it is not mistaken for a seven-day milestone. §4.9
+  // names Task 2 as the place to start, so the weekly row quotes it.
+  const milestones = [
+    {
+      badge: '1×',
+      unit: 'WEEK',
+      target: WEEKLY_PRACTICE.target,
+      refLabel: 'START WITH →',
+      connection:
+        data.task2.trim().length > 0
+          ? `Task 2: ${quoteExcerpt(data.task2, 60)}`
+          : 'Complete the action commitment to see your oversight task here.',
+    },
+    ...MILESTONES.map((m) => ({
+      badge: String(m.days),
+      unit: 'DAYS',
+      target: m.pdfTarget,
+      ...connections[m.days],
+    })),
+  ];
 
   const rowTop = y + padY + 50;
   const rowAreaH = h - (rowTop - y) - padY;
-  const rowH = rowAreaH / 3;
-
-  const milestones = [
-    {
-      days: '30',
-      target:
-        'Produce a diligence statement for at least one AI-assisted deliverable in your actual work.',
-      refLabel: 'YOUR STATEMENT →',
-      connection: p12Excerpt,
-    },
-    {
-      days: '60',
-      target:
-        'Apply the delegation framework to a new task category beyond the two you identified.',
-      refLabel: 'YOUR TASK 1 →',
-      connection: task1Excerpt,
-    },
-    {
-      days: '90',
-      target:
-        'Initiate a team-level conversation about AI use practices using the 4D vocabulary.',
-      refLabel: 'YOUR TOOL →',
-      connection: 'R7 Team AI Policy Starter (available in the reference panel).',
-    },
-  ];
+  const rowH = rowAreaH / milestones.length;
 
   for (let i = 0; i < milestones.length; i += 1) {
     const m = milestones[i]!; // in bounds per the loop condition
@@ -158,14 +173,14 @@ function drawMilestonesCard(doc: jsPDF, data: CompletionProfileData): void {
     doc.setFont(FONT.sans, 'bold');
     doc.setFontSize(16);
     setTextHex(doc, C.diligenceText);
-    const numW = doc.getTextWidth(m.days);
-    doc.text(m.days, badgeX + (badgeW - numW) / 2, badgeY + 19);
+    const numW = doc.getTextWidth(m.badge);
+    doc.text(m.badge, badgeX + (badgeW - numW) / 2, badgeY + 19);
 
     doc.setFont(FONT.mono, 'normal');
     doc.setFontSize(7.5);
     setTracked(doc, 7.5, 0.1);
-    const daysW = doc.getTextWidth('DAYS');
-    doc.text('DAYS', badgeX + (badgeW - daysW) / 2, badgeY + 31);
+    const unitW = doc.getTextWidth(m.unit);
+    doc.text(m.unit, badgeX + (badgeW - unitW) / 2, badgeY + 31);
     resetTracking(doc);
 
     // Target text
@@ -329,20 +344,19 @@ function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
     numHex: string;
     denomHex?: string;
   };
-  const delta = growth.postTotal - growth.preTotal;
-  const deltaFmt = fmtDelta(delta);
+  const deltaFmt = fmtDelta(growth.change);
   const cells: ScoreCell[] = [
     {
       label: 'PRE',
       numText: String(growth.preTotal),
-      denomText: ' / 10',
+      denomText: ` / ${growth.preItems}`,
       numHex: C.assessmentText,
       denomHex: C.tertiary,
     },
     {
       label: 'POST',
       numText: String(growth.postTotal),
-      denomText: ' / 10',
+      denomText: ` / ${growth.postItems}`,
       numHex: C.assessmentText,
       denomHex: C.tertiary,
     },
@@ -368,7 +382,7 @@ function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
     resetTracking(doc);
 
     // Numeral — Source Serif 4 26 pt. For Pre/Post, render numerator
-    // and " / 10" as two text calls (different sizes/colors) baseline-
+    // and " / N" as two text calls (different sizes/colors) baseline-
     // aligned. Center the COMBINED string in the cell.
     doc.setFont(FONT.serif, 'bold');
     doc.setFontSize(26);
@@ -477,12 +491,12 @@ function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
     doc.setFont(FONT.sans, 'normal');
     doc.setFontSize(10);
     setTextHex(doc, C.body);
-    const preStr = `${block.pre} / ${block.items}`;
+    const preStr = `${block.pre} / ${block.preItems}`;
     const postStr = `${block.post} / ${block.items}`;
     doc.text(preStr, colPreRight - doc.getTextWidth(preStr), baselineY);
     doc.text(postStr, colPostRight - doc.getTextWidth(postStr), baselineY);
 
-    const rowDelta = fmtDelta(block.post - block.pre);
+    const rowDelta = fmtDelta(block.change);
     doc.setFont(FONT.sans, 'bold');
     doc.setFontSize(10);
     setTextHex(doc, rgbToHex(rowDelta.rgb));
@@ -497,7 +511,9 @@ function drawGrowthCard(doc: jsPDF, data: CompletionProfileData): void {
   doc.setFontSize(10.5);
   setTextHex(doc, C.secondary);
   const framingText = safe(
-    'Same constructs, parallel scenarios. The pre side measured your intuition; the post side measured your reasoning after the four modules.',
+    growth.gainText
+      ? `Same constructs, parallel scenarios. ${growth.gainText}.`
+      : 'Same constructs, parallel scenarios. The pre side measured your intuition; the post side measured your reasoning after the four modules.',
   );
   const framingLines = doc.splitTextToSize(framingText, innerW) as string[];
   const framingClamped = framingLines.slice(0, 3);
@@ -584,7 +600,7 @@ function drawClosingCard(doc: jsPDF, compact: boolean): void {
   doc.rect(x, y, w, h, 'F');
 
   const closing = safe(
-    'This profile is a snapshot of where you are now. The milestones above are where the practice goes next.',
+    'This profile is a snapshot of where you are now. The milestones above set out what to practice next.',
   );
 
   // Wrap the body first so we can decide whether to render the eyebrow

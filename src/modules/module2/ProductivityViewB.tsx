@@ -108,10 +108,10 @@ export function ProductivityViewB({ tasks }: ProductivityViewBProps): JSX.Elemen
       </ul>
 
       <p className="m-0 font-mono text-caption text-muted" style={{ letterSpacing: '0.02em' }}>
-        The full distribution peaks between 80–90% savings. The examples above are selected to show the range, not the center.
+        The full distribution peaks at 80–90% savings. The examples above are selected to show the range, not the center.
       </p>
       <p className="m-0 font-mono text-caption text-muted" style={{ letterSpacing: '0.02em' }}>
-        Source: Tamkin & McCrory, Nov 2025, Figure 4, p. 7.
+        Source: Tamkin & McCrory, Nov 2025, Figure 4, p. 9.
       </p>
 
       <p

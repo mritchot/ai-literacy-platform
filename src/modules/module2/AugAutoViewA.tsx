@@ -1,5 +1,5 @@
 // P3 View A — Adoption by Occupation. Dumbbell / connected-dot plot
-// modeled on Handa et al. Figure 1 (p. 6): each occupation row shows the
+// modeled on Handa et al. Figure 3 (p. 6): each occupation row shows the
 // share of Claude.ai conversations alongside the share of the U.S.
 // workforce, with a connecting line that makes the gap (the
 // over/under-representation) the visible signal. Replaces the earlier
@@ -181,7 +181,7 @@ export function AugAutoViewA({
       </aside>
 
       <p className="m-0 font-mono text-caption text-muted" style={{ letterSpacing: '0.02em' }}>
-        Source: Handa et al., Feb 2025, Figure 1 (p. 6), Table 1, Appendix B.7 (p. 21).
+        Source: Handa et al., Feb 2025, Figure 3 (p. 6); depth of usage, Figure 4 (p. 7); Appendix B.7 (p. 21) for the 23% non-work share.
       </p>
     </div>
   );

@@ -19,7 +19,7 @@ export const SOURCE_EXCERPTS: SourceSection[] = [
   {
     heading: 'Section 7 · Liability Cap',
     body:
-      'Aggregate liability of either party under or in connection with this Agreement is limited to the total fees paid by the client over the twelve (12) months preceding the event giving rise to the claim. This cap excludes liability for gross negligence or wilful misconduct.',
+      'Aggregate liability of either party under or in connection with this Agreement is limited to the total fees paid by the client over the twelve (12) months preceding the event giving rise to the claim. This cap excludes liability for gross negligence or willful misconduct.',
     page: 9,
   },
   {
@@ -146,7 +146,7 @@ export const VERIFICATION_ITEMS: VerificationItem[] = [
     feedback: {
       accurate: {
         tone: 'error',
-        text: 'This claim is distorted. The source says the vendor indemnifies the client (a one-directional obligation). The summary says “mutual indemnification” (a bidirectional obligation that appears nowhere in the source). “Mutual indemnification” is a more common contract pattern, which is why the model generated it: it is the statistically probable completion at this point in contract-shaped text. The difference is material in a real negotiation.',
+        text: 'This claim is distorted. The source says the vendor indemnifies the client, a one-directional obligation. The summary says “mutual indemnification,” a bidirectional obligation that appears nowhere in the source. “Mutual indemnification” is a more common contract pattern, which is why the model generated it: it is the statistically probable completion at this point in contract-shaped text. The difference is material in a real negotiation.',
       },
       inaccurate: {
         tone: 'success',
@@ -166,7 +166,7 @@ Section 12, the data-handling clause located on page 18, fell squarely in that m
 
 Section 24, the indemnification clause located on page 31, failed for a different reason. This clause is not in the middle zone. The error here is pure pattern substitution: "mutual indemnification" is a more common contract pattern than one-directional indemnification, so it is the statistically probable completion regardless of where the clause sits in the document. The model defaulted to the typical pattern rather than the specific term in this agreement. Not all errors come from the same mechanism. Some are position-dependent attention failures; others are prediction defaults that would occur at any position.
 
-Two properties are meeting in this scenario. The lost-in-the-middle effect degraded the model's grasp of the middle sections, and next-token prediction filled gaps with plausible-sounding text and defaulted to common patterns over specific ones. Recognizing which mechanism produced an error is a core Discernment skill, because it tells you whether the fix is repositioning information (for attention failures) or adding explicit verification steps (for pattern substitution).`;
+Two properties meet in this scenario. The lost-in-the-middle effect degraded the model's grasp of the middle sections, and next-token prediction filled gaps with plausible-sounding text and defaulted to common patterns over specific ones. Recognizing which mechanism produced an error is a core Discernment skill, because it tells you whether the fix is repositioning information (for attention failures) or adding explicit verification steps (for pattern substitution).`;
 
 export const REASONING_PROMPT = `This scenario involved a 42-page document that fit inside the model's context window. The output looked professional and complete. Two substantive errors were embedded in it: one from a position-dependent attention failure (Section 12, lost in the middle), and one from a position-independent pattern substitution (Section 24, common pattern overriding specific term).
 

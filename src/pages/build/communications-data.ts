@@ -7,8 +7,13 @@
 // (planning corpus, outside the repo). The
 // samples are the document's fictional-but-grounded originals. ONE reconciliation:
 // design-review item 5 originally cited a stale Module-4 duration (the memo
-// said "31–33 minutes"); per src/data/program.ts — the source of truth,
-// M4 = 30–40 min — the item now uses the actual shipped module duration.
+// said "31–33 minutes"); the item now reads the shipped duration from
+// src/data/program.ts, the source of truth, so a re-timing reaches it.
+
+import { getModuleOrThrow, parseDurationMinutes } from '../../data/program';
+
+const [M4_LOW, M4_HIGH] = parseDurationMinutes(getModuleOrThrow(4).duration);
+const MODULE_4_MINUTES = `${M4_LOW}–${M4_HIGH}`;
 
 export interface MemoMeta {
   to: string;
@@ -45,7 +50,7 @@ export const SAMPLE1_META: MemoMeta = {
 export const SAMPLE1_STATUS: StatusRow[] = [
   { workstream: 'Content Development', status: 'Complete', tone: 'success', notes: 'All four modules authored, reviewed, and integrated. 37 sections, 16 knowledge checks, 3 interpretation checks finalized.' },
   { workstream: 'Platform Build', status: 'Complete', tone: 'success', notes: 'Custom React platform deployed to Cloudflare Pages. 12 interactive components, admin dashboard, three-mode navigation, dark mode. Production code cleanup complete.' },
-  { workstream: 'Assessment System', status: 'Complete', tone: 'success', notes: '10-item pre/post assessment (parallel design) implemented and integrated into the admin-dashboard analytics.' },
+  { workstream: 'Assessment System', status: 'Complete', tone: 'success', notes: '12-item pre/post assessment (parallel design) implemented and integrated into the admin-dashboard analytics.' },
   { workstream: 'Evaluation Framework', status: 'In Progress', tone: 'caution', notes: 'Levels 1 and 2 design documents complete. Level 3 (behavioral) in final review. Level 4 (ROI) drafting this week. Target: complete by May 16.' },
   { workstream: 'PM Documentation', status: 'Not Started', tone: 'neutral', notes: 'Deferred until the evaluation framework is complete. Retrospective, no upstream dependency. Target: May 19.' },
 ];
@@ -67,7 +72,7 @@ None this week. The remaining work is execution against approved designs.
 *Next update: week of May 12.*`;
 
 export const SAMPLE1_NOTE =
-  'The status update leads with a status table so a reader can assess overall health in about ten seconds; the narrative sections are read only when the table raises a question. The "Decisions needed" section appears even when empty; its absence would leave a reader wondering whether they had missed something. One dated detail: the memo reflects the build\'s then-current three-mode design; the platform later consolidated to two modes (learner/portfolio).';
+  'The status update leads with a status table so a reader can assess overall health in about ten seconds; the narrative sections are read only when the table raises a question. The "Decisions needed" section appears even when empty; its absence would leave a reader wondering whether they had missed something. The memo also reflects the build\'s three-mode design at the time; the platform later consolidated to two modes (learner/portfolio).';
 
 export const SAMPLE2_META: MemoMeta = {
   to: 'Design Review Attendees (ID, FS, SME, ES)',
@@ -91,8 +96,8 @@ export const SAMPLE2_DECISIONS: DecisionRow[] = [
   {
     n: '2',
     item: 'Pre/post assessment: 10 items may be too few for reliable measurement across four competency dimensions.',
-    decision: 'Retained as-is. 10 items is a deliberate tradeoff: sufficient construct coverage against completion burden for time-pressured mid-career professionals. Documented in 6B §7.5.',
-    status: 'Resolved',
+    decision: 'Retained at 10 items at this review, as a tradeoff between construct coverage and completion burden for time-pressured mid-career professionals (6B §7.5). Later reversed: expanded to 12 items, because the 10-item form had no pre/post pair for task decomposition (Delegation) or disclosure (Diligence).',
+    status: 'Revised',
     tone: 'success',
     owner: 'L&D Manager',
   },
@@ -114,8 +119,8 @@ export const SAMPLE2_DECISIONS: DecisionRow[] = [
   },
   {
     n: '5',
-    item: 'Module 4 runs 30–40 minutes, over its original 20–30 minute target, the longest of the four modules.',
-    decision: 'Accepted as-is. Module 4 carries the highest practice density (5 activities, P8–P12) because it is the program’s capstone; the extra length is a reasonable tradeoff for assessment completeness.',
+    item: `Module 4 runs ${MODULE_4_MINUTES} minutes, over its original 20–30 minute target, the longest of the four modules.`,
+    decision: 'Accepted at the measured length. Module 4 is the program’s capstone and carries five of the twelve practice activities (P8–P12). Module 1 tells learners to plan more than one sitting for most modules and to stop after a practice activity or a knowledge check.',
     status: 'Resolved',
     tone: 'success',
     owner: 'Instructional Designer',
@@ -124,7 +129,7 @@ export const SAMPLE2_DECISIONS: DecisionRow[] = [
 
 export const SAMPLE2_BODY_MD = `### Summary
 
-Three items were resolved with no design change required (items 2, 3, and 5, each a deliberate design decision with documented rationale). One item was accepted and implemented (item 1, the Module 3 scope expansion). One item was deferred to organizational deployment (item 4, live API data). No items were escalated to the Executive Sponsor.
+Three items were resolved with no design change required: items 2, 3, and 5, each a deliberate design decision with documented rationale. One item was accepted and implemented: item 1, the Module 3 scope expansion. One item was deferred to organizational deployment: item 4, live API data. No items were escalated to the Executive Sponsor.
 
 The review confirms that the Phase 2 architecture is approved for content development and platform build. Phase 3 begins April 25.
 

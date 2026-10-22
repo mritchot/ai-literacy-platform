@@ -154,10 +154,10 @@ export function TaskDecomposition(): JSX.Element {
 
       <section
         aria-label="Task decomposition exercise"
+        className="px-4 py-[18px] sm:px-[26px] sm:py-6"
         style={{
           background: 'rgb(var(--white))',
           border: '1px solid rgb(var(--border))',
-          padding: '24px 26px',
         }}
       >
         <Overline className="mb-2">Practice activity — P8</Overline>
@@ -419,7 +419,7 @@ function SegmentedControl({
             type="button"
             role="radio"
             aria-checked={active}
-            aria-label={`${CATEGORY_LABELS[cat]} — ${CATEGORY_DESCRIPTIONS[cat]}`}
+            aria-label={`${CATEGORY_LABELS[cat]}: ${CATEGORY_DESCRIPTIONS[cat]}`}
             disabled={disabled}
             onClick={() => onChange(cat)}
             className="font-sans text-[12px] font-medium transition-colors duration-[160ms]"

@@ -7,6 +7,14 @@ import { useMemo } from 'react';
 import type { AnalyticsEvent } from '../contexts/AnalyticsContext';
 import type { LearnerProgressState } from '../contexts/LearnerProgressContext';
 import { Overline } from '../components/shared/Overline';
+import { PRE_ASSESSMENT_ITEMS } from '../data/pre-assessment';
+import { POST_ASSESSMENT_ITEMS } from '../data/post-assessment';
+import {
+  constructOutcomes,
+  heldLabel,
+  summarizeGrowth,
+  type GrowthSummary,
+} from '../utils/assessment-scoring';
 import { TOTAL_SECTIONS } from './section-labels';
 
 interface SummaryMetricsBarProps {
@@ -14,21 +22,26 @@ interface SummaryMetricsBarProps {
   events: AnalyticsEvent[];
 }
 
-// Optional interaction event keys (4D §7.6). 11 total.
+// Optional interaction event keys (4D §7.6), plus three Module 4
+// additions: the P10 reflection, the S9 closing-confidence reflection,
+// and the S9 revisit of the P4 commitment.
 const OPTIONAL_INTERACTION_EVENTS = new Set<string>([
   'p3_reflection_1_saved',
   'p3_reflection_2_saved',
   'p4_commitment_saved',
+  'p4_commitment_revised_saved',
   'p3_methodology_expanded',
   'p5_free_mode_entered',
   'p6_reasoning_submitted',
   'p7_reasoning_submitted',
   'p8_reflection_saved',
   'p9_reflection_saved',
+  'p10_reflection_saved',
   'p11_reflection_saved',
   'p12_reflection_saved',
+  'closing_confidence_saved',
 ]);
-const TOTAL_OPTIONAL = 11;
+const TOTAL_OPTIONAL = OPTIONAL_INTERACTION_EVENTS.size;
 
 interface Metrics {
   completion: { done: number; total: number; pct: number };
@@ -36,11 +49,9 @@ interface Metrics {
   time: { ms: number | null; formatted: string };
   engagement: { done: number; total: number; pct: number };
   assessment: {
-    preScore: number | null; // null if pre not complete
-    postScore: number | null; // null if post not complete
-    preTotal: number; // always 10 by instrument design
-    postTotal: number; // always 10 by instrument design
-    delta: number | null; // postScore - preScore, null if either incomplete
+    preComplete: boolean;
+    postComplete: boolean;
+    growth: GrowthSummary;
   };
 }
 
@@ -78,18 +89,14 @@ function computeMetrics(progress: LearnerProgressState, events: AnalyticsEvent[]
   // Assessment scores — defensive access via optional chaining since
   // `progress.assessments` could be undefined in edge cases (very old
   // localStorage from before the assessments migration was added).
-  const preResponses = Object.values(progress.assessments?.pre?.responses ?? {});
-  const postResponses = Object.values(progress.assessments?.post?.responses ?? {});
-  const preComplete = progress.assessments?.pre?.completedAt != null;
-  const postComplete = progress.assessments?.post?.completedAt != null;
-  const preScore = preComplete
-    ? preResponses.filter((r) => r.isCorrect).length
-    : null;
-  const postScore = postComplete
-    ? postResponses.filter((r) => r.isCorrect).length
-    : null;
-  const delta =
-    preScore != null && postScore != null ? postScore - preScore : null;
+  const growth = summarizeGrowth(
+    constructOutcomes(
+      PRE_ASSESSMENT_ITEMS,
+      POST_ASSESSMENT_ITEMS,
+      progress.assessments?.pre?.responses ?? {},
+      progress.assessments?.post?.responses ?? {},
+    ),
+  );
 
   return {
     completion: {
@@ -109,11 +116,9 @@ function computeMetrics(progress: LearnerProgressState, events: AnalyticsEvent[]
       pct: seen.size / TOTAL_OPTIONAL,
     },
     assessment: {
-      preScore,
-      postScore,
-      preTotal: 10,
-      postTotal: 10,
-      delta,
+      preComplete: progress.assessments?.pre?.completedAt != null,
+      postComplete: progress.assessments?.post?.completedAt != null,
+      growth,
     },
   };
 }
@@ -179,22 +184,23 @@ export function SummaryMetricsBar({ progress, events }: SummaryMetricsBarProps):
 }
 
 /**
- * Assessment summary card. Three display states:
- *   • Neither complete  → "—"      with "No assessments taken"
- *   • Pre complete only → "6 / 10" with "Pre-assessment · Post not started"
- *   • Both complete     → "6 → 9"  with "+3 growth · 10 items each"
+ * Assessment summary card. Four display states:
+ *   • Neither complete  → "—"       with "No assessments taken"
+ *   • Pre complete only → "8 / 12"  with "Pre-assessment · Post not started"
+ *   • Post complete only → "9 / 12" with "Post-assessment · No baseline taken"
+ *   • Both complete     → "8 → 11"  with "+3 growth · 75% of gap closed · 12 items each"
  *
- * Progress bar only renders in the "both complete" state and tracks the
- * post score against 10 items. Delta framing stays positive: "+N growth"
- * for improvement, "Solid baseline" for no change. (Negative deltas are
- * structurally possible but rare in practice; we still surface them
- * neutrally as "−N change" rather than as failure framing.)
+ * The arrow compares the constructs answered on both forms, so a learner
+ * whose baseline predates the twelve-item form is compared like with
+ * like. A zero change reads against the pre score: "Strong baseline
+ * held" from 80% or more, "No change yet" below that, so a stalled
+ * learner is not shown as a success. Negative changes are surfaced
+ * neutrally as "−N change". The progress bar tracks the post score.
  */
 function AssessmentCard({ a }: { a: Metrics['assessment'] }): JSX.Element {
-  const preDone = a.preScore != null;
-  const postDone = a.postScore != null;
+  const g = a.growth;
 
-  if (!preDone && !postDone) {
+  if (!a.preComplete && !a.postComplete) {
     return (
       <MetricCard
         label="Assessment"
@@ -205,31 +211,44 @@ function AssessmentCard({ a }: { a: Metrics['assessment'] }): JSX.Element {
     );
   }
 
-  if (preDone && !postDone) {
+  if (a.preComplete && !a.postComplete) {
     return (
       <MetricCard
         label="Assessment"
-        value={`${a.preScore} / ${a.preTotal}`}
+        value={`${g.preCorrect} / ${g.preAnswered}`}
         detail="Pre-assessment · Post not started"
         progress={null}
       />
     );
   }
 
-  // Both complete — show the arrow comparison and the delta.
-  const value = `${a.preScore} → ${a.postScore}`;
-  const delta = a.delta ?? 0;
+  if (!a.preComplete) {
+    return (
+      <MetricCard
+        label="Assessment"
+        value={`${g.postCorrect} / ${g.postAnswered}`}
+        detail="Post-assessment · No baseline taken"
+        progress={null}
+      />
+    );
+  }
+
+  const value = `${g.comparedPreCorrect} → ${g.comparedPostCorrect}`;
+  const scope =
+    g.compared === g.postTotal ? `${g.postTotal} items each` : `${g.compared} of ${g.postTotal} in baseline`;
   let detail: string;
-  if (delta > 0) detail = `+${delta} growth · 10 items each`;
-  else if (delta < 0) detail = `${delta} change · 10 items each`;
-  else detail = 'Solid baseline · 10 items each';
+  if (g.change > 0) {
+    const closed = g.normalizedGain === null ? '' : ` · ${Math.round(g.normalizedGain * 100)}% of gap closed`;
+    detail = `+${g.change} growth${closed} · ${scope}`;
+  } else if (g.change < 0) detail = `−${Math.abs(g.change)} change · ${scope}`;
+  else detail = `${heldLabel(g)} · ${scope}`;
 
   return (
     <MetricCard
       label="Assessment"
       value={value}
       detail={detail}
-      progress={(a.postScore ?? 0) / a.postTotal}
+      progress={g.postAnswered === 0 ? 0 : g.postCorrect / g.postAnswered}
       progressColor="rgb(var(--action))"
     />
   );

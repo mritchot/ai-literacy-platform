@@ -22,7 +22,7 @@ export const ARTIFACTS: ArtifactMeta[] = [
     route: 'evaluation/level-2-learning',
     title: 'Level 2: Learning',
     blurb:
-      'The scenario-based pre/post assessment, the parallel-form design that resists gaming, and the one tier with real validation data behind it.',
+      'The scenario-based pre/post assessment, the parallel-form design that resists gaming, and the one tier with pilot data behind it.',
     type: 'Reading',
   },
   {

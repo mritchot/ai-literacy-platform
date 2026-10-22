@@ -78,7 +78,7 @@ export const SOLO_PHASES: Phase[] = [
     startWeek: 2,
     weeks: 1,
     detail:
-      'Production-plan overhaul (30 pages), eight components across six phases, the six-phase build sequence, QA methodology defined (Hardman AI Evals), system prompt aligned.',
+      'Production-plan overhaul (30 pages), eight components across six phases, the six-phase build sequence, QA methodology defined (Hardman\'s "AI Evals" method for L&D), system prompt aligned.',
   },
   {
     name: 'Phase 1 · Needs Analysis',
@@ -126,7 +126,7 @@ export const ORG_PHASES: Phase[] = [
     startWeek: 1,
     weeks: 4,
     detail:
-      'Research synthesis, stakeholder interviews, learner-persona development, gap analysis. Gated on SME availability, stakeholder scheduling, and data access.',
+      'Research synthesis, stakeholder interviews, learner-persona development, gap analysis. Depends on SME availability, stakeholder scheduling, and data access.',
   },
   {
     name: 'Design',

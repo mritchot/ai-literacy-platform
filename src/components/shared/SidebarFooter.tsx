@@ -13,11 +13,13 @@ import { Icon } from './Icon';
 
 export function SidebarFooter({
   collapsed,
+  isMobile,
   onToggleCollapse,
   onCloseMobile,
   dashboardActive,
 }: {
   collapsed: boolean;
+  isMobile: boolean;
   onToggleCollapse: () => void;
   onCloseMobile?: (() => void) | undefined;
   dashboardActive: boolean;
@@ -39,6 +41,41 @@ export function SidebarFooter({
           Exit control that resets back to learner mode. */}
       <ModeIndicator collapsed={collapsed} />
 
+      {/* Expanded sidebar: the dashboard link gets its own row, so the
+          control row below has room for the Sources toggle's visible
+          label. Active state uses the same inset left-border accent as
+          the module rows (4D §4.1). */}
+      {dashboardVisible && !collapsed && (
+        <div style={{ padding: '8px 16px 0' }}>
+          <Link
+            to="/dashboard"
+            onClick={onCloseMobile}
+            aria-current={dashboardActive ? 'page' : undefined}
+            className="flex items-center gap-2.5 no-underline hover:bg-surface"
+            style={{
+              padding: '8px 8px',
+              background: dashboardActive ? 'rgb(var(--white))' : 'transparent',
+              boxShadow: dashboardActive ? 'inset 3px 0 0 rgb(var(--action))' : 'none',
+            }}
+          >
+            <Icon
+              name="chart"
+              size={15}
+              style={{ color: dashboardActive ? 'rgb(var(--action))' : 'rgb(var(--tertiary))' }}
+            />
+            <span
+              className="font-sans text-[12.5px] font-medium"
+              style={{
+                color: dashboardActive ? 'rgb(var(--ink))' : 'rgb(var(--secondary))',
+                fontWeight: dashboardActive ? 600 : 500,
+              }}
+            >
+              Analytics dashboard
+            </span>
+          </Link>
+        </div>
+      )}
+
       <div
         className="flex items-center"
         style={{
@@ -47,62 +84,26 @@ export function SidebarFooter({
           gap: collapsed ? 6 : 8,
         }}
       >
-        {/* Analytics dashboard link — shown in portfolio mode. Active
-            state uses the same inset left-border accent as the module
-            rows (4D §4.1). */}
-        {dashboardVisible &&
-          (collapsed ? (
-            <Link
-              to="/dashboard"
-              onClick={onCloseMobile}
-              aria-label="Analytics dashboard"
-              aria-current={dashboardActive ? 'page' : undefined}
-              className="flex h-8 w-8 items-center justify-center no-underline hover:bg-surface"
-              style={{
-                color: dashboardActive ? 'rgb(var(--action))' : 'rgb(var(--tertiary))',
-                background: dashboardActive ? 'rgb(var(--white))' : 'transparent',
-                boxShadow: dashboardActive ? 'inset 3px 0 0 rgb(var(--action))' : 'none',
-              }}
-            >
-              <Icon name="chart" size={16} />
-            </Link>
-          ) : (
-            <Link
-              to="/dashboard"
-              onClick={onCloseMobile}
-              aria-current={dashboardActive ? 'page' : undefined}
-              className="flex flex-1 items-center gap-2.5 no-underline hover:bg-surface"
-              style={{
-                padding: '8px 8px',
-                background: dashboardActive ? 'rgb(var(--white))' : 'transparent',
-                boxShadow: dashboardActive ? 'inset 3px 0 0 rgb(var(--action))' : 'none',
-              }}
-            >
-              <Icon
-                name="chart"
-                size={15}
-                style={{ color: dashboardActive ? 'rgb(var(--action))' : 'rgb(var(--tertiary))' }}
-              />
-              <span
-                className="font-sans text-[12.5px] font-medium"
-                style={{
-                  color: dashboardActive ? 'rgb(var(--ink))' : 'rgb(var(--secondary))',
-                  fontWeight: dashboardActive ? 600 : 500,
-                }}
-              >
-                Analytics dashboard
-              </span>
-            </Link>
-          ))}
-        {!dashboardVisible && !collapsed && (
-          // Spacer keeps the theme + collapse buttons right-aligned when the
-          // dashboard link is hidden (learner mode).
-          <div className="flex-1" />
+        {dashboardVisible && collapsed && (
+          <Link
+            to="/dashboard"
+            onClick={onCloseMobile}
+            aria-label="Analytics dashboard"
+            aria-current={dashboardActive ? 'page' : undefined}
+            className="flex h-8 w-8 items-center justify-center no-underline hover:bg-surface"
+            style={{
+              color: dashboardActive ? 'rgb(var(--action))' : 'rgb(var(--tertiary))',
+              background: dashboardActive ? 'rgb(var(--white))' : 'transparent',
+              boxShadow: dashboardActive ? 'inset 3px 0 0 rgb(var(--action))' : 'none',
+            }}
+          >
+            <Icon name="chart" size={16} />
+          </Link>
         )}
-        {/* Citation visibility toggle — icon-only in both sidebar
-            states, sits beside the theme toggle as a sibling display
-            preference. */}
-        <CitationToggle />
+        {/* Citation visibility toggle — labelled and filling the row's
+            free space in the expanded sidebar and the drawer; icon-only
+            in the collapsed sidebar. */}
+        <CitationToggle collapsed={collapsed} isMobile={isMobile} />
         {(() => {
           const meta = themeToggleMeta(themePreference);
           return (
@@ -135,27 +136,25 @@ export function SidebarFooter({
  * hook is a self-contained module-level store — no prop threading or
  * context provider), so this component is self-sufficient.
  *
- * Icon-only in both sidebar states (`h-8 w-8`, identical styling to
- * the theme toggle), placed next to the theme toggle as a sibling
- * display preference. The icon reflects the *current state* (matching
- * the theme toggle's icon=state convention): an open book when
- * citations are visible, a closed book when they're hidden. The label
- * lives in `aria-label` + `title` rather than as visible text — same
- * pattern as the theme toggle.
+ * Expanded sidebar and mobile drawer: book icon plus a visible
+ * "Sources: on" / "Sources: off" label, because the hover tooltip never
+ * shows on touch devices. Collapsed sidebar: icon only, with the state
+ * in the `title` tooltip. Either way it is a toggle button: the
+ * accessible name stays "Sources" and `aria-pressed` carries the state.
+ * The icon reflects the current state (open book = visible, closed
+ * book = hidden), matching the theme toggle's icon=state convention.
  */
-function CitationToggle(): JSX.Element {
+function CitationToggle({
+  collapsed,
+  isMobile,
+}: {
+  collapsed: boolean;
+  isMobile: boolean;
+}): JSX.Element {
   const { showCitations, toggleCitations } = useCitations();
   const { track } = useAnalytics();
 
-  // Label mirrors the theme toggle's "Theme: light — switch to dark"
-  // format: it states the current state, then what a click changes it
-  // to. Drives both `aria-label` and the `title` hover tooltip.
-  const label = showCitations
-    ? 'Sources: visible — switch to hidden'
-    : 'Sources: hidden — switch to visible';
-  // Open book = sources currently visible, closed book = currently
-  // hidden — the icon reflects the current state, not the pending
-  // action (consistent with the theme toggle's sun/moon/monitor).
+  const stateLabel = showCitations ? 'on' : 'off';
   const iconName = showCitations ? 'book' : 'bookClosed';
 
   const handleClick = () => {
@@ -165,15 +164,34 @@ function CitationToggle(): JSX.Element {
     toggleCitations();
   };
 
+  if (collapsed) {
+    return (
+      <button
+        type="button"
+        onClick={handleClick}
+        aria-pressed={showCitations}
+        aria-label="Sources"
+        title={`Sources: ${stateLabel}`}
+        className="flex h-8 w-8 items-center justify-center text-tertiary hover:bg-surface hover:text-ink"
+      >
+        <Icon name={iconName} size={16} />
+      </button>
+    );
+  }
+
   return (
     <button
       type="button"
       onClick={handleClick}
-      aria-label={label}
-      title={label}
-      className="flex h-8 w-8 items-center justify-center text-tertiary hover:bg-surface hover:text-ink"
+      aria-pressed={showCitations}
+      // The drawer is a touch surface, so it gets a 44px target.
+      className={`flex flex-1 items-center gap-2.5 text-left font-sans text-[12.5px] font-medium text-secondary hover:bg-surface hover:text-ink ${isMobile ? 'min-h-[44px]' : 'h-8'}`}
+      style={{ padding: '0 8px' }}
     >
-      <Icon name={iconName} size={16} />
+      <Icon name={iconName} size={15} className="text-tertiary" />
+      <span>
+        Sources<span aria-hidden="true">: {stateLabel}</span>
+      </span>
     </button>
   );
 }
@@ -206,8 +224,8 @@ function ModeIndicator({ collapsed }: { collapsed: boolean }): JSX.Element | nul
         <button
           type="button"
           onClick={resetMode}
-          aria-label={`${label} active — exit to learner mode`}
-          title={`${label} — click to exit`}
+          aria-label={`${label} active. Exit to learner mode`}
+          title={`${label}: click to exit`}
           className="flex h-7 w-7 items-center justify-center font-mono text-[11px] font-bold text-secondary hover:bg-[rgb(var(--white))] hover:text-ink"
           style={{ background: 'rgb(var(--surface))', border: '1px solid rgb(var(--border))' }}
         >

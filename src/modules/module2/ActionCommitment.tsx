@@ -12,9 +12,9 @@ import { Overline } from '../../components/shared/Overline';
 const MIN_CHARS = 20;
 
 const TASK1_PROMPT = 'One task you currently perform without AI that falls into a high-productivity-gain category.';
-const TASK1_SUB = 'What is the task? Why haven\'t you used AI for it? Based on the data, what type of savings might be available?';
+const TASK1_SUB = 'What is the task? Why haven\'t you used AI for it? Based on the data, what type of savings might be available? How will you tell whether the result is better, not only faster? End with a plan in this form: “The next time I [situation], I will [first step with AI].”';
 const TASK2_PROMPT = 'One task you currently delegate to AI that may warrant greater human oversight.';
-const TASK2_SUB = 'What is the task? What does your current verification process look like? Based on the data, what\'s the risk if the output goes unverified?';
+const TASK2_SUB = 'What is the task? What does your current verification process look like? Based on the data, what\'s the risk if the output goes unverified? Workers who do verify most often name a concrete bad outcome: code that fails, a fact that is out of date, a formula that is wrong, a message that lands badly. Name yours. End with a plan in this form: “Before I send [output], I will check [element] against [source].”';
 
 export function ActionCommitment(): JSX.Element {
   const { saveReflection, getReflection, markEngaged } = useLearnerProgress();
@@ -78,11 +78,10 @@ export function ActionCommitment(): JSX.Element {
   return (
     <section
       aria-label="Action commitment: two tasks to reconsider"
-      className="bg-[rgb(var(--white))]"
+      className="bg-[rgb(var(--white))] px-4 py-[18px] sm:px-6 sm:pb-[22px] sm:pt-6"
       style={{
         border: '1px solid rgb(var(--border))',
         borderTop: '3px solid rgb(var(--action))',
-        padding: '24px 24px 22px',
       }}
     >
       <Overline className="mb-2">Action commitment</Overline>
@@ -179,7 +178,7 @@ function CommitmentField({
         onFocus={onFocus}
         rows={4}
         aria-label={`${label} response`}
-        className="block w-full resize-y border border-border bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
+        className="block w-full resize-y border border-ghost bg-[rgb(var(--white))] p-3 font-sans text-body text-ink placeholder:text-muted focus:border-ink"
         style={{ minHeight: 100, lineHeight: 1.55 }}
         placeholder="Type your response here…"
       />

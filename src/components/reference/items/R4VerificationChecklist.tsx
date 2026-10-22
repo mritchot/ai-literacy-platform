@@ -11,6 +11,7 @@
 // semantics, scoped to a single visit to the activity.
 
 import type { ReactNode } from 'react';
+import { Citation } from '../../shared/Citation';
 
 // ─────────────────────────────────────────────────────────────────────
 // Constants
@@ -129,7 +130,7 @@ interface DiagnosticPair {
 
 const DIAGNOSTIC_PAIRS: DiagnosticPair[] = [
   {
-    pair: 'NTP × Knowledge',
+    pair: 'Next-token prediction × Knowledge',
     produces: 'Hallucinated specifics (citations, quotes, statistics)',
     checkBy: 'Search for the source independently',
   },
@@ -139,7 +140,7 @@ const DIAGNOSTIC_PAIRS: DiagnosticPair[] = [
     checkBy: 'Compare output against original instructions',
   },
   {
-    pair: 'Tokenization × NTP',
+    pair: 'Tokenization × Next-token prediction',
     produces: 'Confident arithmetic errors',
     checkBy: 'Recalculate independently',
   },
@@ -167,8 +168,15 @@ export function R4VerificationChecklist({
         className="m-0 mb-5 text-body-sm text-body"
         style={{ lineHeight: 1.55 }}
       >
-        Use before any AI-assisted output is shared, submitted, or published. Apply the same
-        review standard you would to work from a junior colleague.
+        Use this checklist before any AI-assisted output is shared, submitted, or published. Apply
+        the same review standard you would to work from a junior colleague. Analyst Benedict
+        Evans&rsquo;s shorthand is that AI gives you infinite
+        interns<Citation ids="evans-2026-05" pageKey="infinite-interns-60" />: tasks easy to
+        explain to an intern<Citation ids="evans-2025-05" pageKey="deterministic-probabilistic-27" />,
+        done at any volume, with an intern&rsquo;s error rate. A security engineer at Anthropic made
+        the same comparison, describing a model proposal as smart in the dangerous way a talented
+        junior engineer can be, the kind only experience
+        catches<Citation ids="huang-2025" pageKey="junior-engineer-danger" />.
       </p>
 
       {/* Three checklist sections, vertically stacked. */}
@@ -194,8 +202,9 @@ export function R4VerificationChecklist({
         className="m-0 mt-6 text-caption text-tertiary"
         style={{ lineHeight: 1.5, fontStyle: 'italic' }}
       >
-        Framework: Anthropic 4D AI Fluency Framework, Discernment competency (Dakan, Feller, and
-        Anthropic, 2025).
+        Framework: 4D AI Fluency Framework, Discernment competency (Dakan &amp; Feller,
+        2025)<Citation ids="dakan-feller-2025" pageKey="discernment" />, as taught in
+        Anthropic&rsquo;s AI Fluency course<Citation ids="anthropic-ai-fluency-course-2025" />.
       </p>
     </div>
   );

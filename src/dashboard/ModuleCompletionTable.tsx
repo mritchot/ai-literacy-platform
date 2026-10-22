@@ -54,20 +54,25 @@ function collectArtifacts(
 
 function artifactLabelFromKey(key: string): string {
   // Patterns: `2.3.p3_reflection_1` → "P3 Reflection 1"
-  // `2.5.p4_commitment_task1` → "P4 Action Commitment — Task 1"
+  // `2.5.p4_commitment_task1` → "P4 Action Commitment: Task 1"
   // `4.8.p12_reflection` → "P12 Reflection"
   // `4.8.p12_statement` → "P12 Diligence Statement"
   const tail = key.split('.').slice(2).join('.');
-  if (tail.startsWith('p4_commitment_task1')) return 'P4 Action Commitment — Task 1';
-  if (tail.startsWith('p4_commitment_task2')) return 'P4 Action Commitment — Task 2';
+  if (tail.startsWith('p4_commitment_task1')) return 'P4 Action Commitment: Task 1';
+  if (tail.startsWith('p4_commitment_task2')) return 'P4 Action Commitment: Task 2';
   if (tail.startsWith('p12_statement')) return 'P12 Diligence Statement';
+  if (tail === 'p4_revised_task1') return 'P4 Revised Commitment: Task 1';
+  if (tail === 'p4_revised_task2') return 'P4 Revised Commitment: Task 2';
+  if (tail === 'p4_revised_tell') return 'P4 Revised Commitment: Who I Will Tell';
+  if (tail.startsWith('warmup_')) return `Recall Warm-up ${tail.slice('warmup_'.length).toUpperCase()}`;
   // p3_reflection_1 → "P3 Reflection 1"; p6_reasoning → "P6 Reasoning"
   const code = tail.match(/^(p\d+)_(.+)$/);
   if (code) {
     const [, p, rest] = code;
     return `${p!.toUpperCase()} ${rest!.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}`;
   }
-  return tail;
+  // Keys without a practice code, e.g. `4.9.closing_confidence` → "Closing Confidence"
+  return tail.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 // Active reading time for a module — sums per-section values recorded

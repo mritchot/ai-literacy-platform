@@ -45,7 +45,7 @@ export const ROLES: Role[] = [
     abbr: 'ID',
     name: 'Instructional Designer',
     definition:
-      'Responsible for content design, learning architecture, assessment instruments, and the evaluation framework. Translates the needs analysis into learning experiences, the primary producer of program content.',
+      'Responsible for content design, learning architecture, assessment instruments, and the evaluation framework. Translates the needs analysis into learning experiences and is the primary producer of program content.',
   },
   {
     abbr: 'FS',
