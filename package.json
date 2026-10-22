@@ -14,7 +14,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && node scripts/verify-construct-routing.mjs && vite build && node scripts/verify-sitemap.mjs",
+    "build": "tsc -b && node scripts/verify-construct-routing.mjs && node scripts/verify-citations.mjs && vite build && node scripts/verify-sitemap.mjs",
     "verify:crawl": "node scripts/verify-sitemap.mjs",
     "verify:routing": "node scripts/verify-construct-routing.mjs",
     "check:items": "node scripts/check-item-balance.mjs",
@@ -25,7 +25,8 @@
     "pdf:render": "node scripts/render-pdfs.mjs",
     "pdf:check": "node scripts/render-pdfs.mjs --check",
     "deploy": "npm run build && wrangler deploy",
-    "dev:worker": "npm run build && wrangler dev"
+    "dev:worker": "npm run build && wrangler dev",
+    "verify:citations": "node scripts/verify-citations.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.2.7",

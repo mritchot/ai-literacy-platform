@@ -53,13 +53,14 @@ export default tseslint.config(
     // rule was contributing 34 of the lint run's warnings as pure noise.
     // print-documents.tsx is the print-route registry: it co-exports the
     // manifest and resolver with the lazy page components it maps to.
-    // PrintModeContext, ReferenceTrigger, and R4Trigger co-export their
+    // PrintModeContext, EndnotesContext, ReferenceTrigger, and R4Trigger co-export their
     // provider/registry metadata with the component that consumes it.
     files: [
       'src/router.tsx',
       'src/pages/*/chrome.tsx',
       'src/pages/print/print-documents.tsx',
       'src/contexts/PrintModeContext.tsx',
+      'src/contexts/EndnotesContext.tsx',
       'src/components/reference/ReferenceTrigger.tsx',
       'src/components/reference/R4Trigger.tsx',
     ],
