@@ -4,9 +4,9 @@
 //
 // Behavior `full` text, sub-components, gap traces, and module traces are
 // taken verbatim from `04_action-map.md` — where the design-phase
-// prototype's inline text diverged, the markdown wins. Gap/module strings
-// carry markdown links so the citations stay clickable when rendered
-// through the inline markdown renderer.
+// prototype's inline text diverged, the markdown wins. Gap strings carry
+// `{{cite:…}}` tokens, rendered as citation chips by the inline markdown
+// renderer; ActionMap.tsx collects them for the page's Sources list.
 
 // ─── Types ─────────────────────────────────────────────────────────────
 
@@ -108,7 +108,7 @@ export const BEHAVIORS: Record<QuadrantKey, Behavior[]> = {
       short: 'Define task goals and appropriate AI components',
       full: 'Before using AI, the participant defines the task goal, identifies which components require human judgment, and determines which are appropriate for AI assistance.',
       subComp: 'Problem Awareness → Task Delegation',
-      gap: `Misreading the augmentation/automation boundary (Persona: 65% self-report vs. 57% behavioral; participants do not recognize when they have shifted from collaboration to full delegation; [Handa et al. 2025, p. 3](https://ritchot.me/docs/04761v1.pdf))`,
+      gap: `Misreading the augmentation/automation boundary (Persona: 65% self-report vs. 57% behavioral; participants do not recognize when they have shifted from collaboration to full delegation{{cite:handa-2025#aug-auto-split-57-43}})`,
       module: `Module 2 (Live Data Dashboard: augmentation vs. automation aggregate data with self-reflection prompts that surface the documented behavioral discrepancy) → Module 4 (AI Interaction Sandbox: structured task decomposition exercises where the participant practices the delegation decision before prompting)`,
       builds: ['P1', 'P3', 'P8'],
       refs: ['R1', 'R2'],
@@ -118,7 +118,7 @@ export const BEHAVIORS: Record<QuadrantKey, Behavior[]> = {
       short: 'Distinguish augmentation from human-only tasks',
       full: 'The participant distinguishes between tasks that benefit from AI augmentation and tasks that should remain human-only, based on stakes, verifiability, and domain expertise requirements.',
       subComp: 'Task Delegation',
-      gap: `Underuse through overcaution in high-complexity tasks + overreliance in perceived-routine tasks (Persona: Lee et al. finding that 55 of 319 workers named a task's perceived triviality as a reason to skip critical thinking; [Lee et al., CHI 2025, p. 11](https://doi.org/10.1145/3706598.3713778)). *(Note: "Underuse through overcaution" is a design-grounded inference derived from the augmentation/automation behavioral divergence in Handa et al., Feb 2025; see the persona's footnote 3. No direct survey item on task avoidance behavior is available in the current corpus.)*`,
+      gap: `Underuse through overcaution in high-complexity tasks + overreliance in perceived-routine tasks (Persona: Lee et al. finding that 55 of 319 workers named a task's perceived triviality as a reason to skip critical thinking{{cite:lee-2025#inhibitors}}). *(Note: "Underuse through overcaution" is a design-grounded inference derived from the augmentation/automation behavioral divergence in Handa et al.{{cite:handa-2025}}; see the persona's footnote 3. No direct survey item on task avoidance behavior is available in the current corpus.)*`,
       module: `Module 2 (task-type productivity data) → Module 4 (sandbox: structured delegation exercises)`,
       builds: ['P3', 'P4', 'P8'],
       refs: ['R1', 'R2'],
@@ -128,7 +128,7 @@ export const BEHAVIORS: Record<QuadrantKey, Behavior[]> = {
       short: 'Identify AI capability boundaries before delegating',
       full: 'The participant identifies the capability boundaries of the AI tool they are using (what it can generate reliably vs. where it is likely to produce errors) before delegating a task.',
       subComp: 'Platform Awareness',
-      gap: `Confusing generation with retrieval (Persona: interacting with AI as though it retrieves stored facts rather than generating probabilistic text); WEF adverse outcome risk from stretching AI beyond capability (WEF 2025, p. 11)`,
+      gap: `Confusing generation with retrieval (Persona: interacting with AI as though it retrieves stored facts rather than generating probabilistic text); WEF adverse outcome risk from stretching AI beyond capability{{cite:wef-2025#field-experiment-11}}`,
       module: `Module 3 (next-token prediction demo, tokenizer playground: mechanistic understanding of what the model actually does) → Module 4 (sandbox: testing boundary conditions)`,
       builds: ['P4', 'P5', 'P6', 'P7'],
       refs: ['R5'],
@@ -140,7 +140,7 @@ export const BEHAVIORS: Record<QuadrantKey, Behavior[]> = {
       short: 'Provide context, constraints, and specifications',
       full: 'The participant provides task-relevant context, constraints, and output specifications when prompting AI, rather than issuing single-turn, underspecified requests.',
       subComp: 'Product Description → Process Description',
-      gap: `Surface-level engagement producing a fraction of available efficiency ([Tamkin & McCrory, pp. 12–13](https://www.anthropic.com/research/estimating-productivity-gains): 81% median savings under proficient use in observational data, against a more conservative 14–56% range in the referenced randomized controlled trials); directive interactions, in which a user hands over a task and the model completes it with minimal back-and-forth, rose from 27% to 39% of sampled conversations between January and August 2025 and stood at 32% in November 2025 ([Appel, Massenkoff & McCrory, 2026](https://www.anthropic.com/research/anthropic-economic-index-january-2026-report), p. 9; see also the [September 2025 report](https://www.anthropic.com/research/anthropic-economic-index-september-2025-report), p. 9), indicating that roughly a third of sampled conversations involve little or no iteration on the first request.`,
+      gap: `Surface-level engagement producing a fraction of available efficiency (81% median savings under proficient use in observational data, against a more conservative 14–56% range in the referenced randomized controlled trials{{cite:tamkin-mccrory-2025#median-81-distribution}}); directive interactions, in which a user hands over a task and the model completes it with minimal back-and-forth, rose from 27% to 39% of sampled conversations between January and August 2025 and stood at 32% in November 2025{{cite:appel-massenkoff-mccrory-2026#directive-share-32,appel-mccrory-tamkin-2025#directive-trend-v3}}, indicating that roughly a third of sampled conversations involve little or no iteration on the first request.`,
       module: `Module 4 (AI Interaction Sandbox: side-by-side comparison of prompt reformulation → output quality change)`,
       builds: ['P9'],
       refs: ['R3'],
@@ -150,7 +150,7 @@ export const BEHAVIORS: Record<QuadrantKey, Behavior[]> = {
       short: 'Specify format, audience, and quality criteria',
       full: 'The participant specifies the desired format, audience, and quality criteria for AI output before generating it.',
       subComp: 'Product Description',
-      gap: `The augmentation/automation behavioral discrepancy (65% self-report augmentative vs. 57% behavioral, Handa et al. 2025, p. 3) suggests that participants who believe they are augmenting but are actually automating are not setting output specifications because they are not planning to review. *(Design-grounded inference from Handa et al. behavioral data; no direct survey item on output specification behavior is available in the current corpus.)*`,
+      gap: `The augmentation/automation behavioral discrepancy (65% self-report augmentative vs. 57% behavioral{{cite:handa-2025#aug-auto-split-57-43}}) suggests that participants who believe they are augmenting but are actually automating are not setting output specifications because they are not planning to review. *(Design-grounded inference from Handa et al. behavioral data; no direct survey item on output specification behavior is available in the current corpus.)*`,
       module: `Module 4 (sandbox: structured prompt exercises with scaffolded product description)`,
       builds: ['P9'],
       refs: ['R3'],
@@ -160,7 +160,7 @@ export const BEHAVIORS: Record<QuadrantKey, Behavior[]> = {
       short: 'Iterate through multi-turn refinement',
       full: 'The participant iterates on AI outputs through multi-turn refinement rather than accepting or discarding first-generation results.',
       subComp: 'Process Description → Performance Description',
-      gap: `Lee et al.: overconfidence predicts reduced critical engagement ([Lee et al., CHI 2025, p. 9](https://doi.org/10.1145/3706598.3713778)); behavioral pattern of single-turn accept/reject rather than iterative collaboration (Handa et al. task iteration patterns, Feb 2025)`,
+      gap: `Lee et al.: overconfidence predicts reduced critical engagement{{cite:lee-2025#overconfidence-9}}; behavioral pattern of single-turn accept/reject rather than iterative collaboration (Handa et al. task iteration patterns){{cite:handa-2025}}`,
       module: `Module 4 (sandbox: feedback simulator interaction flow; structured roleplay with iterative refinement)`,
       builds: ['P9', 'P11'],
       refs: ['R3'],
@@ -172,7 +172,7 @@ export const BEHAVIORS: Record<QuadrantKey, Behavior[]> = {
       short: 'Verify factual claims against independent sources',
       full: 'The participant verifies factual claims, citations, and statistics in AI-generated output against independent sources before incorporating them into business deliverables.',
       subComp: 'Product Discernment',
-      gap: `Confusing generation with retrieval (Persona: uncritical acceptance of plausible-sounding but fabricated citations, statistics, regulatory references); Lee et al. overconfidence → reduced scrutiny (Lee et al., CHI 2025, p. 9)`,
+      gap: `Confusing generation with retrieval (Persona: uncritical acceptance of plausible-sounding but fabricated citations, statistics, regulatory references); Lee et al. overconfidence → reduced scrutiny{{cite:lee-2025#overconfidence-9}}`,
       module: `Module 3 (understanding why models confabulate: next-token prediction, not information retrieval) → Module 4 (sequential classification scenario: evaluating AI output with planted errors)`,
       builds: ['P6', 'P10'],
       refs: ['R4'],
@@ -182,7 +182,7 @@ export const BEHAVIORS: Record<QuadrantKey, Behavior[]> = {
       short: 'Recognize hallucination and capability-range failures',
       full: "The participant identifies when an AI-generated output is operating outside the model's reliable capability range, recognizing hallucination indicators, reasoning failures, and confidence without competence.",
       subComp: 'Product Discernment → Process Discernment',
-      gap: `WEF: adverse outcomes where users unknowingly stretch technology beyond capability (WEF 2025, p. 11); generation-vs.-retrieval misconception (Persona)`,
+      gap: `WEF: adverse outcomes where users unknowingly stretch technology beyond capability{{cite:wef-2025#field-experiment-11}}; generation-vs.-retrieval misconception (Persona)`,
       module: `Module 3 (mechanistic understanding: tokenization, attention, probability-based generation, hallucination mechanics) → Module 4 (sandbox: annotation layer where learner tags outputs as reliable/uncertain/fabricated)`,
       builds: ['P5', 'P6', 'P7', 'P10'],
       refs: ['R4', 'R5'],
@@ -192,7 +192,7 @@ export const BEHAVIORS: Record<QuadrantKey, Behavior[]> = {
       short: 'Evaluate reasoning process, not just final output',
       full: "The participant evaluates whether the AI's reasoning process, not just the final output, is sound, checking for logical gaps, unsupported assumptions, and circular reasoning.",
       subComp: 'Process Discernment',
-      gap: `Lee et al.: 55 of 319 workers said they skip critical thinking on tasks they see as trivial, which puts process evaluation at risk on routine work (Lee et al., CHI 2025, p. 11); Handa et al.: validation is the smallest behavioral category at 2.8% of all interactions (Handa et al., Feb 2025, p. 10)`,
+      gap: `Lee et al.: 55 of 319 workers said they skip critical thinking on tasks they see as trivial, which puts process evaluation at risk on routine work{{cite:lee-2025#inhibitors}}; Handa et al.: validation is the smallest behavioral category at 2.8% of all interactions{{cite:handa-2025#validation-2-8}}`,
       module: `Module 4 (sequential classification scenario: consequence-based feedback when process evaluation is skipped)`,
       builds: ['P7', 'P10', 'P11'],
       refs: ['R4'],
@@ -204,7 +204,7 @@ export const BEHAVIORS: Record<QuadrantKey, Behavior[]> = {
       short: "Document AI's role in deliverables",
       full: 'The participant documents the role AI played in producing a deliverable, including which components were AI-generated, AI-assisted, or human-authored.',
       subComp: 'Transparency Diligence',
-      gap: `69% social stigma / concealment dynamic (Anthropic Interviewer, Dec 2025 — workers using AI, observing gains, and concealing both from colleagues and managers)`,
+      gap: `69% social stigma / concealment dynamic{{cite:anthropic-interviewer-2025#stigma-69}} (workers using AI, observing gains, and concealing both from colleagues and managers)`,
       module: `Module 1 (stigma data in interactive data narratives: normalizing disclosure) → Module 4 (sandbox: practicing AI diligence statements)`,
       builds: ['P1', 'P2', 'P12'],
       refs: ['R1', 'R6'],
@@ -214,7 +214,7 @@ export const BEHAVIORS: Record<QuadrantKey, Behavior[]> = {
       short: 'Full accountability before sharing AI-assisted output',
       full: 'The participant takes full accountability for the accuracy and appropriateness of any AI-assisted output before it is shared, submitted, or published, treating AI-generated content with the same review standard as work produced by a junior colleague.',
       subComp: 'Deployment Diligence',
-      gap: `Overconfidence as scrutiny suppressant (Lee et al., CHI 2025, p. 9); the augmentation/automation behavioral discrepancy (Handa et al. 2025, p. 3) means participants are deploying outputs they believe they reviewed but did not`,
+      gap: `Overconfidence as scrutiny suppressant{{cite:lee-2025#overconfidence-9}}; the augmentation/automation behavioral discrepancy{{cite:handa-2025#aug-auto-split-57-43}} means participants are deploying outputs they believe they reviewed but did not`,
       module: `Module 4 (sequential classification scenario: consequences of deploying unverified AI output in a workplace context)`,
       builds: ['P10', 'P12'],
       refs: ['R4', 'R6'],
@@ -224,7 +224,7 @@ export const BEHAVIORS: Record<QuadrantKey, Behavior[]> = {
       short: 'Discuss AI practices openly using 4D vocabulary',
       full: 'The participant discusses their AI usage practices openly with colleagues and managers, using the 4D competency vocabulary to describe how they delegate, prompt, evaluate, and verify.',
       subComp: 'Transparency Diligence (extended to organizational behavior change)',
-      gap: `69% concealment dynamic (Anthropic Interviewer, Dec 2025); the Executive Problem Statement's argument that individual competency without social normalization produces no measurable business outcome; the 80% individual-gain versus 37% enterprise-impact gap corroborates that outcome, though the survey does not measure social normalization ([Tinkoff et al., 2026](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai), p. 14)`,
+      gap: `69% concealment dynamic{{cite:anthropic-interviewer-2025#stigma-69}}; the Executive Problem Statement's argument that individual competency without social normalization produces no measurable business outcome; the 80% individual-gain versus 37% enterprise-impact gap corroborates that outcome, though the survey does not measure social normalization{{cite:mckinsey-state-of-ai-2026#individual-vs-enterprise}}`,
       module: `Module 1 (stigma data, normalization framing) → Module 2 (peer usage patterns: making invisible practices visible) → Module 4 (reflection prompts using 4D vocabulary)`,
       builds: ['P2', 'P12'],
       refs: ['R1', 'R6', 'R7'],

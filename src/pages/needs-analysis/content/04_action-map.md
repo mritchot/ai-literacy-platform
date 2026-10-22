@@ -1,6 +1,6 @@
 # Action Map
 
-*Following Cathy Moore's Action Mapping framework, organized by the [4D competency taxonomy](https://ringling.libguides.com/ai/framework) of Delegation, Description, Discernment, and Diligence (Dakan & Feller, 2025).*
+*Following Cathy Moore's Action Mapping framework, organized by the 4D competency taxonomy of Delegation, Description, Discernment, and Diligence{{cite:dakan-feller-2025#four-ds}}.*
 
 > **Delivery note.** Each practice activity below is mapped to two deliverables: a custom-coded platform component (Component 4) and a corporate Articulate (Rise 360 / Storyline) component (Component 5). The program was designed against both contexts to demonstrate that the instructional design transfers across a bespoke build and a standard authoring stack. The custom platform was built and shipped ([ritchot.me/courses/ai-literacy](https://ritchot.me/courses/ai-literacy/)); the Articulate build was specified but not produced, a deliberate scope decision for an independent portfolio project without enterprise funding. The Component 5 mappings are retained because the interaction-fidelity tradeoffs they record are part of the design analysis.
 
@@ -16,74 +16,74 @@ Within 90 days of program completion, participants consistently select appropria
 
 ## RING 1 — Observable Behaviors
 
-Organized by the 4D competency framework (Delegation, Description, Discernment, Diligence) from Dakan and Feller's AI Fluency Framework, as taught in Anthropic's AI Fluency course. Competency definitions after Dakan & Feller (2025, pp. 3–6), in the form used by Anthropic's AI Fluency course.
+Organized by the 4D competency framework (Delegation, Description, Discernment, Diligence) from Dakan and Feller's AI Fluency Framework, as taught in Anthropic's AI Fluency course{{cite:anthropic-ai-fluency-course-2025}}. Competency definitions after Dakan & Feller (2025){{cite:dakan-feller-2025#definitions-3-6}}, in the form used by Anthropic's AI Fluency course.
 
 ### DELEGATION
 
 **D1. Before using AI, the participant defines the task goal, identifies which components require human judgment, and determines which are appropriate for AI assistance.**
 - Sub-component: Problem Awareness → Task Delegation
-- Gap trace: Misreading the augmentation/automation boundary (Persona: 65% self-report vs. 57% behavioral; participants do not recognize when they have shifted from collaboration to full delegation; [Handa et al. 2025, p. 3](https://ritchot.me/docs/04761v1.pdf))
+- Gap trace: Misreading the augmentation/automation boundary (Persona: 65% self-report vs. 57% behavioral; participants do not recognize when they have shifted from collaboration to full delegation{{cite:handa-2025#aug-auto-split-57-43}})
 - Module trace: Module 2 (Live Data Dashboard: augmentation vs. automation aggregate data with self-reflection prompts that surface the documented behavioral discrepancy) → Module 4 (AI Interaction Sandbox: structured task decomposition exercises where the participant practices the delegation decision before prompting)
 
 **D2. The participant distinguishes between tasks that benefit from AI augmentation and tasks that should remain human-only, based on stakes, verifiability, and domain expertise requirements.**
 - Sub-component: Task Delegation
-- Gap trace: Underuse through overcaution in high-complexity tasks + overreliance in perceived-routine tasks (Persona: Lee et al. finding that 55 of 319 workers named a task's perceived triviality as a reason to skip critical thinking; [Lee et al., CHI 2025, p. 11](https://doi.org/10.1145/3706598.3713778)). *(Note: "Underuse through overcaution" is a design-grounded inference derived from the augmentation/automation behavioral divergence in Handa et al., Feb 2025; see the persona's footnote 3. No direct survey item on task avoidance behavior is available in the current corpus.)*
+- Gap trace: Underuse through overcaution in high-complexity tasks + overreliance in perceived-routine tasks (Persona: Lee et al. finding that 55 of 319 workers named a task's perceived triviality as a reason to skip critical thinking{{cite:lee-2025#inhibitors}}). *(Note: "Underuse through overcaution" is a design-grounded inference derived from the augmentation/automation behavioral divergence in Handa et al.{{cite:handa-2025}}; see the persona's footnote 3. No direct survey item on task avoidance behavior is available in the current corpus.)*
 - Module trace: Module 2 (task-type productivity data) → Module 4 (sandbox: structured delegation exercises)
 
 **D3. The participant identifies the capability boundaries of the AI tool they are using (what it can generate reliably vs. where it is likely to produce errors) before delegating a task.**
 - Sub-component: Platform Awareness
-- Gap trace: Confusing generation with retrieval (Persona: interacting with AI as though it retrieves stored facts rather than generating probabilistic text); WEF adverse outcome risk from stretching AI beyond capability (WEF 2025, p. 11)
+- Gap trace: Confusing generation with retrieval (Persona: interacting with AI as though it retrieves stored facts rather than generating probabilistic text); WEF adverse outcome risk from stretching AI beyond capability{{cite:wef-2025#field-experiment-11}}
 - Module trace: Module 3 (next-token prediction demo, tokenizer playground: mechanistic understanding of what the model actually does) → Module 4 (sandbox: testing boundary conditions)
 
 ### DESCRIPTION
 
 **D4. The participant provides task-relevant context, constraints, and output specifications when prompting AI, rather than issuing single-turn, underspecified requests.**
 - Sub-component: Product Description → Process Description
-- Gap trace: Surface-level engagement producing a fraction of available efficiency ([Tamkin & McCrory, pp. 12–13](https://www.anthropic.com/research/estimating-productivity-gains): 81% median savings under proficient use in observational data, against a more conservative 14–56% range in the referenced randomized controlled trials); directive interactions, in which a user hands over a task and the model completes it with minimal back-and-forth, rose from 27% to 39% of sampled conversations between January and August 2025 and stood at 32% in November 2025 ([Appel, Massenkoff & McCrory, 2026](https://www.anthropic.com/research/anthropic-economic-index-january-2026-report), p. 9; see also the [September 2025 report](https://www.anthropic.com/research/anthropic-economic-index-september-2025-report), p. 9), indicating that roughly a third of sampled conversations involve little or no iteration on the first request.
+- Gap trace: Surface-level engagement producing a fraction of available efficiency (81% median savings under proficient use in observational data, against a more conservative 14–56% range in the referenced randomized controlled trials{{cite:tamkin-mccrory-2025#median-81-distribution}}); directive interactions, in which a user hands over a task and the model completes it with minimal back-and-forth, rose from 27% to 39% of sampled conversations between January and August 2025 and stood at 32% in November 2025{{cite:appel-massenkoff-mccrory-2026#directive-share-32,appel-mccrory-tamkin-2025#directive-trend-v3}}, indicating that roughly a third of sampled conversations involve little or no iteration on the first request.
 - Module trace: Module 4 (AI Interaction Sandbox: side-by-side comparison of prompt reformulation → output quality change)
 
 **D5. The participant specifies the desired format, audience, and quality criteria for AI output before generating it.**
 - Sub-component: Product Description
-- Gap trace: The augmentation/automation behavioral discrepancy (65% self-report augmentative vs. 57% behavioral, Handa et al. 2025, p. 3) suggests that participants who believe they are augmenting but are actually automating are not setting output specifications because they are not planning to review. *(Design-grounded inference from Handa et al. behavioral data; no direct survey item on output specification behavior is available in the current corpus.)*
+- Gap trace: The augmentation/automation behavioral discrepancy (65% self-report augmentative vs. 57% behavioral{{cite:handa-2025#aug-auto-split-57-43}}) suggests that participants who believe they are augmenting but are actually automating are not setting output specifications because they are not planning to review. *(Design-grounded inference from Handa et al. behavioral data; no direct survey item on output specification behavior is available in the current corpus.)*
 - Module trace: Module 4 (sandbox: structured prompt exercises with scaffolded product description)
 
 **D6. The participant iterates on AI outputs through multi-turn refinement rather than accepting or discarding first-generation results.**
 - Sub-component: Process Description → Performance Description
-- Gap trace: Lee et al.: overconfidence predicts reduced critical engagement ([Lee et al., CHI 2025, p. 9](https://doi.org/10.1145/3706598.3713778)); behavioral pattern of single-turn accept/reject rather than iterative collaboration (Handa et al. task iteration patterns, Feb 2025)
+- Gap trace: Lee et al.: overconfidence predicts reduced critical engagement{{cite:lee-2025#overconfidence-9}}; behavioral pattern of single-turn accept/reject rather than iterative collaboration (Handa et al. task iteration patterns){{cite:handa-2025}}
 - Module trace: Module 4 (sandbox: feedback simulator interaction flow; structured roleplay with iterative refinement)
 
 ### DISCERNMENT
 
 **D7. The participant verifies factual claims, citations, and statistics in AI-generated output against independent sources before incorporating them into business deliverables.**
 - Sub-component: Product Discernment
-- Gap trace: Confusing generation with retrieval (Persona: uncritical acceptance of plausible-sounding but fabricated citations, statistics, regulatory references); Lee et al. overconfidence → reduced scrutiny (Lee et al., CHI 2025, p. 9)
+- Gap trace: Confusing generation with retrieval (Persona: uncritical acceptance of plausible-sounding but fabricated citations, statistics, regulatory references); Lee et al. overconfidence → reduced scrutiny{{cite:lee-2025#overconfidence-9}}
 - Module trace: Module 3 (understanding why models confabulate: next-token prediction, not information retrieval) → Module 4 (sequential classification scenario: evaluating AI output with planted errors)
 
 **D8. The participant identifies when an AI-generated output is operating outside the model's reliable capability range, recognizing hallucination indicators, reasoning failures, and confidence without competence.**
 - Sub-component: Product Discernment → Process Discernment
-- Gap trace: WEF: adverse outcomes where users unknowingly stretch technology beyond capability (WEF 2025, p. 11); generation-vs.-retrieval misconception (Persona)
+- Gap trace: WEF: adverse outcomes where users unknowingly stretch technology beyond capability{{cite:wef-2025#field-experiment-11}}; generation-vs.-retrieval misconception (Persona)
 - Module trace: Module 3 (mechanistic understanding: tokenization, attention, probability-based generation, hallucination mechanics) → Module 4 (sandbox: annotation layer where learner tags outputs as reliable/uncertain/fabricated)
 
 **D9. The participant evaluates whether the AI's reasoning process, not just the final output, is sound, checking for logical gaps, unsupported assumptions, and circular reasoning.**
 - Sub-component: Process Discernment
-- Gap trace: Lee et al.: 55 of 319 workers said they skip critical thinking on tasks they see as trivial, which puts process evaluation at risk on routine work (Lee et al., CHI 2025, p. 11); Handa et al.: validation is the smallest behavioral category at 2.8% of all interactions (Handa et al., Feb 2025, p. 10)
+- Gap trace: Lee et al.: 55 of 319 workers said they skip critical thinking on tasks they see as trivial, which puts process evaluation at risk on routine work{{cite:lee-2025#inhibitors}}; Handa et al.: validation is the smallest behavioral category at 2.8% of all interactions{{cite:handa-2025#validation-2-8}}
 - Module trace: Module 4 (sequential classification scenario: consequence-based feedback when process evaluation is skipped)
 
 ### DILIGENCE
 
 **D10. The participant documents the role AI played in producing a deliverable, including which components were AI-generated, AI-assisted, or human-authored.**
 - Sub-component: Transparency Diligence
-- Gap trace: 69% social stigma / concealment dynamic (Anthropic Interviewer, Dec 2025 — workers using AI, observing gains, and concealing both from colleagues and managers)
+- Gap trace: 69% social stigma / concealment dynamic{{cite:anthropic-interviewer-2025#stigma-69}} (workers using AI, observing gains, and concealing both from colleagues and managers)
 - Module trace: Module 1 (stigma data in interactive data narratives: normalizing disclosure) → Module 4 (sandbox: practicing AI diligence statements)
 
 **D11. The participant takes full accountability for the accuracy and appropriateness of any AI-assisted output before it is shared, submitted, or published, treating AI-generated content with the same review standard as work produced by a junior colleague.**
 - Sub-component: Deployment Diligence
-- Gap trace: Overconfidence as scrutiny suppressant (Lee et al., CHI 2025, p. 9); the augmentation/automation behavioral discrepancy (Handa et al. 2025, p. 3) means participants are deploying outputs they believe they reviewed but did not
+- Gap trace: Overconfidence as scrutiny suppressant{{cite:lee-2025#overconfidence-9}}; the augmentation/automation behavioral discrepancy{{cite:handa-2025#aug-auto-split-57-43}} means participants are deploying outputs they believe they reviewed but did not
 - Module trace: Module 4 (sequential classification scenario: consequences of deploying unverified AI output in a workplace context)
 
 **D12. The participant discusses their AI usage practices openly with colleagues and managers, using the 4D competency vocabulary to describe how they delegate, prompt, evaluate, and verify.**
 - Sub-component: Transparency Diligence (extended to organizational behavior change)
-- Gap trace: 69% concealment dynamic (Anthropic Interviewer, Dec 2025); the Executive Problem Statement's argument that individual competency without social normalization produces no measurable business outcome; the 80% individual-gain versus 37% enterprise-impact gap corroborates that outcome, though the survey does not measure social normalization ([Tinkoff et al., 2026](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai), p. 14)
+- Gap trace: 69% concealment dynamic{{cite:anthropic-interviewer-2025#stigma-69}}; the Executive Problem Statement's argument that individual competency without social normalization produces no measurable business outcome; the 80% individual-gain versus 37% enterprise-impact gap corroborates that outcome, though the survey does not measure social normalization{{cite:mckinsey-state-of-ai-2026#individual-vs-enterprise}}
 - Module trace: Module 1 (stigma data, normalization framing) → Module 2 (peer usage patterns: making invisible practices visible) → Module 4 (reflection prompts using 4D vocabulary)
 
 ---
@@ -231,18 +231,3 @@ Every Ring 1 behavior (D1–D12) maps to at least one practice activity (P1–P1
 - High-priority behaviors (D3, D8) are covered by multiple activities across modules, creating spaced repetition consistent with the transfer research.
 - Each activity has both a custom platform deliverable (Component 4) and an Articulate deliverable (Component 5), though interaction fidelity will differ by platform: sandbox activities will be richer on the custom platform. (As noted above, the Articulate build was scoped but not produced.)
 - If scope cuts become necessary: P7 (context window scenario) and P2 (stigma reflection) are lowest-risk cuts. P7's concept can be covered in explanatory content; P2's reflection can be embedded within P1. The remaining activities are essential. R7 (Organizational AI Use Policy Starter) is cuttable without breaking the behavior-to-reference chain.
-
----
-
-## Sources
-
-- **Anthropic Interviewer** — [*Introducing Anthropic Interviewer: What 1,250 Professionals Told Us About Working with AI*](https://www.anthropic.com/research/anthropic-interviewer) (Dec 2025)
-- **Appel, R., McCrory, P. & Tamkin, A.** — [*Anthropic Economic Index Report: Uneven Geographic and Enterprise AI Adoption*](https://www.anthropic.com/research/anthropic-economic-index-september-2025-report) (Sep 2025)
-- **Appel, R., Massenkoff, M., McCrory, P. et al.** — [*The Anthropic Economic Index Report: Economic Primitives*](https://www.anthropic.com/research/anthropic-economic-index-january-2026-report) (Anthropic, Jan 2026)
-- **Dakan, R. & Feller, J.** — [*Framework for AI Fluency: Practical Overview Document*](https://ringling.libguides.com/ai/framework), Version 1.1 (Jan 13, 2025)
-- **Dakan, R., Feller, J. & Anthropic** — [*AI Fluency: Framework & Foundations*](https://anthropic.skilljar.com/ai-fluency-framework-foundations) (2025)
-- **Handa, K. et al.** — [*Which Economic Tasks Are Performed with AI? Evidence from Millions of Claude Conversations*](https://ritchot.me/docs/04761v1.pdf) (Feb 2025)
-- **Lee, H. et al.** — [*The Impact of Generative AI on Critical Thinking: Self-Reported Reductions in Cognitive Effort and Confidence Effects From a Survey of Knowledge Workers*](https://doi.org/10.1145/3706598.3713778), CHI 2025
-- **Tamkin, A. & McCrory, P.** — [*Estimating AI Productivity Gains from Claude Conversations*](https://www.anthropic.com/research/estimating-productivity-gains) (Nov 2025)
-- **Tinkoff, D., Van der Veken, L., Chui, M. & Balakrishnan, T.** — [*The state of AI in 2026: On the road to ROI*](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai) (McKinsey & Company, Aug 2026)
-- **World Economic Forum** — [*Future of Jobs Report 2025*](https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf) (Jan 2025)

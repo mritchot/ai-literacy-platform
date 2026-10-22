@@ -22,6 +22,7 @@
 
 import { useCallback, useMemo, useState, type ReactNode } from 'react';
 import { renderInline } from '../../components/shared/render-markdown';
+import { Citation } from '../../components/shared/Citation';
 import {
   ACTIVITIES,
   BEHAVIORS,
@@ -561,8 +562,10 @@ export function InteractiveMap(): JSX.Element {
           className="font-mono text-[10px] text-tertiary"
           style={{ margin: '-16px 0 28px', letterSpacing: '0.02em' }}
         >
-          Competency definitions after Dakan &amp; Feller (2025, pp. 3–6), in the form used by
-          Anthropic&rsquo;s AI Fluency course.
+          Competency definitions after Dakan &amp; Feller (2025)
+          <Citation ids="dakan-feller-2025" pageKey="definitions-3-6" />, in the form used by
+          Anthropic&rsquo;s AI Fluency course
+          <Citation ids="anthropic-ai-fluency-course-2025" />.
         </p>
 
         {/* Ring 2: Practice Activities */}

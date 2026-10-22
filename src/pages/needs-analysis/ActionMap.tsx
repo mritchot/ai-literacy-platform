@@ -9,18 +9,21 @@
 // responsive Tailwind column count. The behavior metadata (gap traces,
 // module traces, the center goal) is reconciled to the finalized
 // `04_action-map.md` — where the prototype's inline text diverged, the
-// markdown wins — and the citation links in the traces are preserved by
-// rendering them through the inline markdown renderer. The delivery note,
-// Traceability Summary, Scope notes, and Sources are rendered verbatim
-// from that same markdown file.
+// markdown wins — and the traces' `{{cite:…}}` tokens render as citation
+// chips through the inline markdown renderer. The delivery note,
+// Traceability Summary, and Scope notes are rendered verbatim from that
+// same markdown file; the Sources list is generated from the registry
+// entries the markdown and the map data cite (SourcesList).
 //
 // This file is the page shell/prose. The static content tables live in
 // action-map-data.ts; the interactive quadrant map (with its keyboard/
 // dark-mode fixes over the prototype) lives in action-map-interactive.tsx.
 
 import ACTION_MAP_MD from './content/04_action-map.md?raw';
-import { renderMarkdown } from '../../components/shared/render-markdown';
+import { citedIds, renderMarkdown } from '../../components/shared/render-markdown';
+import { SourcesList } from '../../components/shared/CitationNotes';
 import { InteractiveMap } from './action-map-interactive';
+import { BEHAVIORS, GOAL_NOTE } from './action-map-data';
 import { ArtifactFooter, ArtifactTopBar, SeriesEyebrow } from './chrome';
 
 // ─── Prose sections sliced from the finalized markdown ─────────────────
@@ -40,14 +43,22 @@ function stripTrailingRule(s: string): string {
 }
 
 // Intro = the framing line + the dual-platform delivery note (the blockquote
-// under the document subtitle). Traceability / Scope / Sources are their own
-// H2 sections.
+// under the document subtitle). Traceability / Scope are their own H2
+// sections.
 // The framing line and delivery note sit before the first `## ` heading,
 // so their key is the document's H1 line (`# Action Map`).
 const INTRO_MD = stripTrailingRule(AM_SECTIONS['# Action Map'] ?? '');
 const TRACEABILITY_MD = stripTrailingRule(AM_SECTIONS['Traceability Summary'] ?? '');
 const SCOPE_MD = stripTrailingRule(AM_SECTIONS['Scope and Feasibility Notes'] ?? '');
-const SOURCES_MD = stripTrailingRule(AM_SECTIONS['Sources'] ?? '');
+
+// Every registry entry the page cites, in order of first citation: the
+// markdown (which carries the same gap traces the map renders), then the
+// map's own strings.
+const SOURCE_IDS = citedIds(
+  ACTION_MAP_MD,
+  ...Object.values(BEHAVIORS).flatMap((list) => list.flatMap((b) => [b.gap, b.module])),
+  GOAL_NOTE,
+);
 
 // ─── Prose section wrapper ─────────────────────────────────────────────
 
@@ -81,7 +92,9 @@ export default function ActionMap(): JSX.Element {
 
       <ProseSection heading="Traceability Summary" body={TRACEABILITY_MD} />
       <ProseSection heading="Scope and Feasibility Notes" body={SCOPE_MD} />
-      <ProseSection heading="Sources" body={SOURCES_MD} />
+      <div className="max-w-reading">
+        <SourcesList ids={SOURCE_IDS} />
+      </div>
 
       <ArtifactFooter currentSlug="action-map" />
     </div>
