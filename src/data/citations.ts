@@ -917,7 +917,7 @@ export const CITATIONS = {
     shortLabel: 'OpenAI tiktoken, 2026',
     authors: 'OpenAI',
     title:
-      'tiktoken: README, tiktoken_ext/openai_public.py, and the Cookbook guide "How to count tokens with tiktoken"',
+      'tiktoken: README, tiktoken_ext/openai_public.py, and the Cookbook guide ‘How to count tokens with tiktoken’',
     publisher: 'GitHub (openai/tiktoken; openai/openai-cookbook)',
     date: 'accessed September 4, 2026',
     url: 'https://github.com/openai/tiktoken',
@@ -1445,7 +1445,7 @@ export const CITATIONS = {
     id: 'hardman-ai-evals-2026',
     shortLabel: 'Hardman, 2026',
     authors: 'Hardman, P.',
-    title: '“AI Evals” for L&D: How to Check Whether Your AI-Generated Content Is Good Enough to Ship',
+    title: '‘AI Evals’ for L&D: How to Check Whether Your AI-Generated Content Is Good Enough to Ship',
     publisher: 'Dr Philippa Hardman (Substack newsletter)',
     date: 'April 9, 2026',
     url: 'https://drphilippahardman.substack.com/p/ai-evals-for-l-and-d-how-to-check',
