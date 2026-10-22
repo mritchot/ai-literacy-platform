@@ -167,12 +167,14 @@ function splitRow(line: string): string[] {
 
 function heading(level: number, content: string, id: number): ReactNode {
   const inner = renderInline(content, `h${id}`);
-  // H1 is the document title: the module section-title treatment.
+  // H1 is the document title: the module section-title treatment. The
+  // `doc-title` hook lets the print stylesheet hide it, since the print
+  // shell's masthead already sets the title.
   if (level === 1)
     return (
       <h1
         key={id}
-        className="m-0 mb-5 font-display text-title font-normal text-ink"
+        className="doc-title m-0 mb-5 font-display text-title font-normal text-ink"
         style={{ letterSpacing: '-0.005em' }}
       >
         {inner}

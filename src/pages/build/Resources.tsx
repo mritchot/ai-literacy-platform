@@ -60,7 +60,7 @@ function CostContrast(): JSX.Element {
 
 function DataRow({ label, value, note, emphasis }: { label: string; value: string; note?: string; emphasis?: boolean }): JSX.Element {
   return (
-    <div className="flex items-baseline justify-between gap-4 border-b border-border-light py-2.5 last:border-0">
+    <div className="print-keep flex items-baseline justify-between gap-4 border-b border-border-light py-2.5 last:border-0">
       <div className="min-w-0">
         <div className={`font-sans text-[13.5px] ${emphasis ? 'font-bold text-ink' : 'font-semibold text-ink'}`}>{label}</div>
         {note && (
@@ -74,9 +74,11 @@ function DataRow({ label, value, note, emphasis }: { label: string; value: strin
   );
 }
 
+// On paper a card breaks between its rows (print-flow) instead of moving
+// whole to the next page and leaving the page before half empty.
 function DataCard({ label, children }: { label: string; children: React.ReactNode }): JSX.Element {
   return (
-    <div style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', padding: '16px 20px' }}>
+    <div className="print-flow" style={{ background: 'rgb(var(--white))', border: '1px solid rgb(var(--border))', padding: '16px 20px' }}>
       <Overline className="mb-3">{label}</Overline>
       {children}
     </div>

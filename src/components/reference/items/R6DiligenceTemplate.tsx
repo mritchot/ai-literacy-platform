@@ -255,7 +255,6 @@ function ScaffoldRow({
           style={{
             color: 'rgb(var(--diligence-text))',
             letterSpacing: '0.12em',
-            marginRight: 8,
           }}
         >
           {section.pillar}

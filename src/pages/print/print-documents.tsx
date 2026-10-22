@@ -1,7 +1,7 @@
 // Print-document registry — resolves a `#/print/<family>/<param>` route to
 // the content component the in-app page (or reference panel) renders, plus
-// the title, series label, and accent the print shell needs for its
-// masthead and the running header/footer.
+// the title, series label, position, and accent the print shell needs for
+// its masthead and the running header/footer.
 //
 // Series documents reuse the page components themselves (lazy-loaded, the
 // same modules the router loads), so the PDF renders exactly what the page
@@ -34,14 +34,15 @@ export interface PrintDocument {
   param: string;
   /** Output path under public/ (also the in-app download href). */
   pdf: string;
-  /** Document title — the masthead h1 (reference) / running header (all). */
+  /** Document title — the masthead h1 and the running header. */
   title: string;
   /** Series label for the running header, e.g. "Behind the build · Design". */
   label: string;
   /** Series accent as a CSS color expression over the design tokens. */
   accent: string;
-  /** True when the content component renders its own H1 + subtitle. */
-  selfTitled: boolean;
+  /** Position in the series, e.g. "2 of 4" (the web breadcrumb's count);
+   *  undefined for the reference cards. */
+  position: string | undefined;
   Component: ComponentType;
 }
 
@@ -153,14 +154,15 @@ export function resolvePrintDocument(family: PrintFamily, param: string): PrintD
       title: item.title,
       label: `Reference · ${param.toUpperCase()}`,
       accent: 'rgb(var(--action))',
-      selfTitled: false,
+      position: undefined,
       Component: item.Component,
     };
   }
 
   const load = SERIES_LOADERS[family][param];
   const series = SERIES_CONFIG[family];
-  const artifact = series.artifacts.find((a) => a.slug === param);
+  const index = series.artifacts.findIndex((a) => a.slug === param);
+  const artifact = series.artifacts[index];
   if (!load || !artifact) return null;
   return {
     family,
@@ -169,7 +171,7 @@ export function resolvePrintDocument(family: PrintFamily, param: string): PrintD
     title: artifact.title,
     label: seriesLabel(series, artifact),
     accent: series.accent,
-    selfTitled: true,
+    position: `${index + 1} of ${series.artifacts.length}`,
     Component: lazyFor(`${family}/${param}`, load),
   };
 }

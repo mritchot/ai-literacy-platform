@@ -19,7 +19,7 @@ export default function PrintRoute({ family }: { family: PrintFamily }): JSX.Ele
   if (!doc) return <PrintError message={`No print document for ${family}/${param}`} />;
   const { Component } = doc;
   return (
-    <PrintShell title={doc.title} label={doc.label} accent={doc.accent} selfTitled={doc.selfTitled}>
+    <PrintShell title={doc.title} label={doc.label} accent={doc.accent} position={doc.position} family={family}>
       <Component />
     </PrintShell>
   );

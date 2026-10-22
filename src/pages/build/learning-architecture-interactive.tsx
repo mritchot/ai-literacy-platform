@@ -234,9 +234,11 @@ function ModuleCard({
   const fObj = module.objectives;
   const fAct = module.activities;
 
+  // Each module card fits on one page, so print keeps it whole rather than
+  // splitting its objectives across a break.
   return (
     <div
-      className="print-flow overflow-hidden"
+      className="print-keep overflow-hidden"
       style={{
         background: 'rgb(var(--white))',
         border: `1px solid ${expanded ? emph[0] : 'rgb(var(--border-light))'}`,
@@ -547,7 +549,8 @@ export function LearningArchitectureDiagram(): JSX.Element {
   const [kirkOpen, setKirkExpanded] = useState(false);
   // The module cards read print mode through useExpandableSet; the
   // Kirkpatrick lane keeps its own flag, so it is forced open here.
-  const kirkExpanded = usePrintMode() || kirkOpen;
+  const printMode = usePrintMode();
+  const kirkExpanded = printMode || kirkOpen;
   const allExpanded = modules.allOpen && kirkExpanded;
   const setAll = (v: boolean): void => {
     modules.setAll(v);
@@ -579,17 +582,27 @@ export function LearningArchitectureDiagram(): JSX.Element {
         ))}
       </div>
 
-      {/* Platform legend */}
-      <div className="mb-6 flex flex-wrap gap-3">
+      {/* Platform legend. On paper the accent is the card's left border
+          rather than an absolutely positioned bar: Chromium leaves an empty
+          fragment of a relatively positioned card at the foot of the page
+          before when the card moves to the next page. */}
+      <div className="print-keep mb-6 flex flex-wrap gap-3">
         {(['custom', 'articulate'] as const).map((key) => {
           const p = PLATFORMS[key];
           return (
             <div
               key={key}
-              className="relative min-w-[240px] flex-1 overflow-hidden"
-              style={{ background: 'rgb(var(--surface-warm))', border: '1px solid rgb(var(--border))', padding: '12px 16px' }}
+              className={`${printMode ? '' : 'relative '}min-w-[240px] flex-1 overflow-hidden`}
+              style={{
+                background: 'rgb(var(--surface-warm))',
+                border: '1px solid rgb(var(--border))',
+                ...(printMode ? { borderLeft: `3px solid ${p.color}` } : {}),
+                padding: '12px 16px',
+              }}
             >
-              <span aria-hidden="true" className="absolute bottom-0 left-0 top-0 w-[3px]" style={{ background: p.color }} />
+              {!printMode && (
+                <span aria-hidden="true" className="absolute bottom-0 left-0 top-0 w-[3px]" style={{ background: p.color }} />
+              )}
               <div className="mb-1 flex items-center gap-1.5 pl-1">
                 <span aria-hidden="true" className="h-2 w-2" style={{ background: p.color }} />
                 <span className="font-mono text-[10px] font-bold uppercase text-secondary" style={{ letterSpacing: '0.06em' }}>

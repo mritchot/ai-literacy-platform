@@ -354,9 +354,12 @@ function AreaCard({
 }): JSX.Element {
   const panelId = `r7-area-${area.id}`;
   const printMode = usePrintMode();
+  // On paper an area breaks between its table rows (print-flow) rather
+  // than moving whole to the next page and leaving the page before half
+  // empty.
   return (
     <article
-      className="overflow-hidden"
+      className="print-flow overflow-hidden"
       style={{
         background: 'rgb(var(--white))',
         border: '1px solid rgb(var(--border))',
@@ -541,7 +544,7 @@ function ConversationFrames(): JSX.Element {
   return (
     <section
       aria-label="Starting the conversation"
-      className="mt-6"
+      className="print-flow mt-6"
     >
       <div className="mb-2">
         <div

@@ -23,7 +23,7 @@
 // numbers land before the shell's ready marker), then again on any later
 // DOM change.
 
-import { useContext, useLayoutEffect, useRef } from 'react';
+import { Fragment, useContext, useLayoutEffect, useRef, type ReactNode } from 'react';
 import { getCitation } from '../../data/citations';
 import { NoteKeysContext } from '../../contexts/EndnotesContext';
 import { formatNote, splitNoteKey } from '../../utils/citation-notes';
@@ -37,6 +37,24 @@ function collectKeys(root: HTMLElement): string[] {
     for (const k of keys) if (!seen.includes(k)) seen.push(k);
   });
   return seen;
+}
+
+/** A URL that wraps only where a style manual breaks one: after the
+ *  `//`, and before a slash, period, hyphen, underscore, query or fragment
+ *  mark, `&`, or `=`, so the mark starts the next line. Each segment is an
+ *  unbreakable span with a <wbr> between segments; the text is unchanged. */
+function breakableUrl(url: string): ReactNode {
+  const scheme = /^[a-z][a-z0-9+.-]*:\/\//i.exec(url)?.[0] ?? '';
+  const parts = url.slice(scheme.length).split(/(?=[/.\-_?#&=])/);
+  return parts.map((p, i) => (
+    <Fragment key={i}>
+      {i > 0 && <wbr />}
+      <span className="whitespace-nowrap">
+        {i === 0 ? scheme : ''}
+        {p}
+      </span>
+    </Fragment>
+  ));
 }
 
 /** The print "Notes" section. Rendered after the document content, inside
@@ -75,7 +93,7 @@ export function PrintNotes(): JSX.Element | null {
               {meta.url && (
                 <>
                   {', '}
-                  <a href={meta.url}>{meta.url}</a>
+                  <a href={meta.url}>{breakableUrl(meta.url)}</a>
                 </>
               )}
             </li>

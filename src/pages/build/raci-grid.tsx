@@ -98,21 +98,23 @@ export function RaciGrid(): JSX.Element {
         )}
       </div>
 
-      {/* Phase filter */}
-      <div className="mb-4 flex flex-wrap items-center gap-2">
-        <span className="mr-1 font-mono text-[11px] font-semibold uppercase text-tertiary" style={{ letterSpacing: '0.08em' }}>
-          Phase
-        </span>
-        <div
-          className="inline-flex flex-wrap"
-          style={{ border: '1px solid rgb(var(--border))', background: 'rgb(var(--surface))' }}
-        >
-          <FilterChip label="All" active={phaseFilter === null} onClick={() => setPhaseFilter(null)} first />
-          {PHASES.map((p) => (
-            <FilterChip key={p} label={p} active={phaseFilter === p} onClick={() => setPhaseFilter((prev) => (prev === p ? null : p))} />
-          ))}
+      {/* Phase filter — a screen control; print shows every phase. */}
+      {!printMode && (
+        <div className="mb-4 flex flex-wrap items-center gap-2">
+          <span className="mr-1 font-mono text-[11px] font-semibold uppercase text-tertiary" style={{ letterSpacing: '0.08em' }}>
+            Phase
+          </span>
+          <div
+            className="inline-flex flex-wrap"
+            style={{ border: '1px solid rgb(var(--border))', background: 'rgb(var(--surface))' }}
+          >
+            <FilterChip label="All" active={phaseFilter === null} onClick={() => setPhaseFilter(null)} first />
+            {PHASES.map((p) => (
+              <FilterChip key={p} label={p} active={phaseFilter === p} onClick={() => setPhaseFilter((prev) => (prev === p ? null : p))} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Grid */}
       <div className="overflow-x-auto">

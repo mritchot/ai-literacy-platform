@@ -23,6 +23,7 @@
 import { useCallback, useMemo, useState, type ReactNode } from 'react';
 import { renderInline } from '../../components/shared/render-markdown';
 import { Citation } from '../../components/shared/Citation';
+import { usePrintMode } from '../../contexts/PrintModeContext';
 import {
   ACTIVITIES,
   BEHAVIORS,
@@ -244,6 +245,9 @@ export function InteractiveMap(): JSX.Element {
   const [activeBehavior, setActiveBehavior] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
   const [showMeta, setShowMeta] = useState(false);
+  // Paper has no filter, metadata toggle, or hover: print omits the
+  // control bar and the interaction legend that explains them.
+  const printMode = usePrintMode();
   const [hoveredActivity, setHoveredActivity] = useState<string | null>(null);
   const [hoveredRef, setHoveredRef] = useState<string | null>(null);
 
@@ -307,72 +311,81 @@ export function InteractiveMap(): JSX.Element {
   }, []);
 
   return (
+    // On paper the map drops its outer panel: the rings already sit in
+    // their own frames, and a panel that breaks across pages is stretched
+    // to the foot of the first one.
     <div
       className="print-flow my-7 overflow-hidden"
-      style={{
-        background: 'rgb(var(--surface-warm))',
-        border: '1px solid rgb(var(--border-light))',
-        color: 'rgb(var(--ink))',
-        fontFamily: "'IBM Plex Sans', sans-serif",
-      }}
+      style={
+        printMode
+          ? { color: 'rgb(var(--ink))', fontFamily: "'IBM Plex Sans', sans-serif" }
+          : {
+              background: 'rgb(var(--surface-warm))',
+              border: '1px solid rgb(var(--border-light))',
+              color: 'rgb(var(--ink))',
+              fontFamily: "'IBM Plex Sans', sans-serif",
+            }
+      }
     >
-      <div style={{ padding: '24px 22px 32px' }}>
+      <div style={{ padding: printMode ? 0 : '24px 22px 32px' }}>
         {/* Controls */}
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            gap: 10,
-            marginBottom: 24,
-            paddingBottom: 16,
-            borderBottom: '1px solid rgb(var(--border))',
-          }}
-        >
-          <span
+        {!printMode && (
+          <div
             style={{
-              fontSize: 11,
-              fontWeight: 600,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: 'rgb(var(--tertiary))',
-              marginRight: 4,
-              fontFamily: "'IBM Plex Mono', monospace",
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              gap: 10,
+              marginBottom: 24,
+              paddingBottom: 16,
+              borderBottom: '1px solid rgb(var(--border))',
             }}
           >
-            Filter
-          </span>
-          {QUADRANTS.map((q) => (
+            <span
+              style={{
+                fontSize: 11,
+                fontWeight: 600,
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                color: 'rgb(var(--tertiary))',
+                marginRight: 4,
+                fontFamily: "'IBM Plex Mono', monospace",
+              }}
+            >
+              Filter
+            </span>
+            {QUADRANTS.map((q) => (
+              <Pill
+                key={q.key}
+                label={q.label}
+                color={COLORS[q.key].bg}
+                inactiveText={COLORS[q.key].text}
+                active={activeQuadrant === q.key}
+                onClick={() => handleQuadrantClick(q.key)}
+              />
+            ))}
+            <div style={{ flex: 1, minWidth: 12 }} />
             <Pill
-              key={q.key}
-              label={q.label}
-              color={COLORS[q.key].bg}
-              inactiveText={COLORS[q.key].text}
-              active={activeQuadrant === q.key}
-              onClick={() => handleQuadrantClick(q.key)}
+              label={showMeta ? 'Hide Metadata' : 'Show Metadata'}
+              color="rgb(var(--tertiary))"
+              activeText="rgb(var(--white))"
+              active={showMeta}
+              onClick={() => setShowMeta(!showMeta)}
+              small
             />
-          ))}
-          <div style={{ flex: 1, minWidth: 12 }} />
-          <Pill
-            label={showMeta ? 'Hide Metadata' : 'Show Metadata'}
-            color="rgb(var(--tertiary))"
-            activeText="rgb(var(--white))"
-            active={showMeta}
-            onClick={() => setShowMeta(!showMeta)}
-            small
-          />
-          <Pill
-            label={showAll ? 'Collapse' : 'Show All'}
-            color="rgb(var(--secondary))"
-            activeText="rgb(var(--white))"
-            active={showAll}
-            onClick={() => {
-              setShowAll(!showAll);
-              if (!showAll) setActiveBehavior(null);
-            }}
-            small
-          />
-        </div>
+            <Pill
+              label={showAll ? 'Collapse' : 'Show All'}
+              color="rgb(var(--secondary))"
+              activeText="rgb(var(--white))"
+              active={showAll}
+              onClick={() => {
+                setShowAll(!showAll);
+                if (!showAll) setActiveBehavior(null);
+              }}
+              small
+            />
+          </div>
+        )}
 
         {/* Center Goal */}
         <div
@@ -422,8 +435,8 @@ export function InteractiveMap(): JSX.Element {
           </p>
         </div>
 
-        {/* Ring Labels */}
-        <div style={{ display: 'flex', gap: 16, marginBottom: 20, flexWrap: 'wrap' }}>
+        {/* Ring Labels — the key stays with the grid it labels. */}
+        <div style={{ display: 'flex', gap: 16, marginBottom: 20, flexWrap: 'wrap', breakAfter: 'avoid' }}>
           {[
             // dot: brand hex (decorative swatch, theme-invariant);
             // text: adaptive token (the hex fails AA on the dark canvas).
@@ -703,25 +716,27 @@ export function InteractiveMap(): JSX.Element {
         </div>
 
         {/* Legend */}
-        <div
-          style={{
-            marginTop: 28,
-            padding: '16px 20px',
-            background: 'rgb(var(--surface))',
-            border: '1px solid rgb(var(--border))',
-            fontSize: 11.5,
-            color: 'rgb(var(--tertiary))',
-            lineHeight: 1.7,
-          }}
-        >
-          <strong style={{ color: 'rgb(var(--secondary))' }}>Interactions:</strong> Click a{' '}
-          <strong style={{ color: 'rgb(var(--delegation-text))' }}>competency header</strong> to filter by dimension. Click a{' '}
-          <strong style={{ color: 'rgb(var(--delegation-text))' }}>behavior card</strong> to expand details and highlight linked activities and
-          references. Hover over a <strong style={{ color: 'rgb(var(--discernment-text))' }}>practice activity</strong> or{' '}
-          <strong style={{ color: 'rgb(var(--diligence-text))' }}>reference item</strong> to see which behaviors it supports. Toggle{' '}
-          <em>Show Metadata</em> for gap traces, module traces, and sub-component alignment. Toggle <em>Show All</em> to expand
-          every element simultaneously.
-        </div>
+        {!printMode && (
+          <div
+            style={{
+              marginTop: 28,
+              padding: '16px 20px',
+              background: 'rgb(var(--surface))',
+              border: '1px solid rgb(var(--border))',
+              fontSize: 11.5,
+              color: 'rgb(var(--tertiary))',
+              lineHeight: 1.7,
+            }}
+          >
+            <strong style={{ color: 'rgb(var(--secondary))' }}>Interactions:</strong> Click a{' '}
+            <strong style={{ color: 'rgb(var(--delegation-text))' }}>competency header</strong> to filter by dimension. Click a{' '}
+            <strong style={{ color: 'rgb(var(--delegation-text))' }}>behavior card</strong> to expand details and highlight linked activities and
+            references. Hover over a <strong style={{ color: 'rgb(var(--discernment-text))' }}>practice activity</strong> or{' '}
+            <strong style={{ color: 'rgb(var(--diligence-text))' }}>reference item</strong> to see which behaviors it supports. Toggle{' '}
+            <em>Show Metadata</em> for gap traces, module traces, and sub-component alignment. Toggle <em>Show All</em> to expand
+            every element simultaneously.
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,8 +1,11 @@
 // PrintShell — the minimal document frame the `#/print/...` routes render
 // inside, in place of PlatformShell. No sidebar, top bar, reference rail,
-// or theme toggle: just the content component, a masthead for documents
-// that do not title themselves (the reference cards), and the attribution
-// colophon. scripts/render-pdfs.mjs opens each print route in headless
+// or theme toggle: just the masthead, the content component, and the
+// attribution colophon. The masthead is the same for all four families:
+// the series breadcrumb (as on the web page), the Source Serif title, and
+// the course name. The content's own title block (ArtifactHeader, a
+// markdown document's H1) renders nothing or is hidden in print, so the
+// title appears once. scripts/render-pdfs.mjs opens each print route in headless
 // Chromium and prints it to Letter; the running header/footer with page
 // numbers is drawn by Playwright's header/footer templates, fed from the
 // data attributes this shell exposes on its root.
@@ -69,12 +72,16 @@ export interface PrintShellProps {
   label: string;
   /** CSS color expression for the series accent (design tokens only). */
   accent: string;
-  /** True when the content renders its own H1 + subtitle. */
-  selfTitled: boolean;
+  /** Position in the series ("2 of 4"), shown after the label. */
+  position?: string | undefined;
+  /** Document family; print.css sets reference cards full width. */
+  family: string;
   children: ReactNode;
 }
 
-export function PrintShell({ title, label, accent, selfTitled, children }: PrintShellProps): JSX.Element {
+export function PrintShell({ title, label, accent, position, family, children }: PrintShellProps): JSX.Element {
+  const [series = label, ...crumbs] = label.split(' · ');
+  if (position) crumbs.push(position);
   const rootRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -98,18 +105,27 @@ export function PrintShell({ title, label, accent, selfTitled, children }: Print
       ref={rootRef}
       className="print-shell"
       data-print-ready="false"
+      data-print-family={family}
       data-print-title={title}
       data-print-label={label}
       data-print-accent={accent}
     >
-      {!selfTitled && (
-        <header className="print-masthead">
-          <h1 className="m-0 mb-2 font-display text-display font-normal text-ink">{title}</h1>
-          <p className="m-0 mb-6 font-sans text-h3 font-normal text-secondary">
-            AI Literacy for the Modern Workforce
-          </p>
-        </header>
-      )}
+      <header className="print-masthead">
+        <p className="print-masthead-label">
+          <span aria-hidden="true" className="print-masthead-rule" style={{ background: accent }} />
+          <span className="text-ink">{series}</span>
+          {crumbs.map((c) => (
+            <span key={c} className="text-tertiary">
+              <span aria-hidden="true" className="print-masthead-dot">
+                ·
+              </span>
+              {c}
+            </span>
+          ))}
+        </p>
+        <h1 className="print-masthead-title font-display text-ink">{title}</h1>
+        <p className="print-masthead-subtitle font-sans text-secondary">AI Literacy for the Modern Workforce</p>
+      </header>
       <main className="print-body">
         <PrintModeProvider>
           <EndnotesProvider>

@@ -19,6 +19,7 @@
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Overline } from '../../components/shared/Overline';
+import { usePrintMode } from '../../contexts/PrintModeContext';
 import { assessmentMinutes, MODULE_MINUTES } from '../../data/program';
 import { PRE_ASSESSMENT_ITEMS } from '../../data/pre-assessment';
 import { POST_ASSESSMENT_ITEMS } from '../../data/post-assessment';
@@ -375,6 +376,7 @@ function EquationRow({
 
 export function RoiCalculator(): JSX.Element {
   const [inputs, setInputs] = useState<RoiInputs>(DEFAULTS);
+  const printMode = usePrintMode();
 
   const setField = (key: keyof RoiInputs, value: number): void => {
     setInputs((prev) => ({ ...prev, [key]: value }));
@@ -457,15 +459,18 @@ export function RoiCalculator(): JSX.Element {
         ))}
       </div>
 
-      <div className="mt-6">
-        <button
-          type="button"
-          onClick={() => setInputs(DEFAULTS)}
-          className="bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover"
-        >
-          Reset to conservative defaults
-        </button>
-      </div>
+      {/* The reset control has nothing to reset on paper. */}
+      {!printMode && (
+        <div className="mt-6">
+          <button
+            type="button"
+            onClick={() => setInputs(DEFAULTS)}
+            className="bg-action px-5 py-2.5 font-sans text-[12.5px] font-semibold text-[rgb(var(--white))] dark:text-[rgb(var(--canvas))] hover:bg-action-hover"
+          >
+            Reset to conservative defaults
+          </button>
+        </div>
+      )}
 
       {/* Live benefit-stream flow: two streams converge into the total,
           set against program cost, yielding the ROI. */}

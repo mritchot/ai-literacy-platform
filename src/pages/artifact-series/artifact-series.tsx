@@ -108,7 +108,7 @@ export function createArtifactSeries(series: SeriesConfig): {
   ArtifactPage: (props: { width?: ArtifactWidth; children: ReactNode }) => JSX.Element;
   ArtifactTopBar: (props: { pdfSlug: string }) => JSX.Element | null;
   SeriesEyebrow: (props: { label: string; slug?: string }) => JSX.Element | null;
-  ArtifactHeader: (props: ArtifactHeaderProps) => JSX.Element;
+  ArtifactHeader: (props: ArtifactHeaderProps) => JSX.Element | null;
   ArtifactFooter: (props: { currentSlug: string }) => JSX.Element | null;
   ReadingArtifact: (props: { markdown: string; pdfSlug: string }) => JSX.Element;
   ArtifactHub: (props: ArtifactHubProps) => JSX.Element;
@@ -215,7 +215,9 @@ export function createArtifactSeries(series: SeriesConfig): {
 
   // Header for the self-titled (TSX) pages: breadcrumb, the Source Serif
   // title at the module section-title size, and the course name beneath.
-  function ArtifactHeader({ label, slug, title }: ArtifactHeaderProps): JSX.Element {
+  // In print the shell's masthead carries all three, so this renders nothing.
+  function ArtifactHeader({ label, slug, title }: ArtifactHeaderProps): JSX.Element | null {
+    if (usePrintMode()) return null;
     return (
       <header className="mb-8">
         <SeriesEyebrow label={label} slug={slug} />
