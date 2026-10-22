@@ -207,16 +207,16 @@ async function serve() {
 // ─── Page geometry ─────────────────────────────────────────────────────
 
 // Letter page margins — keep equal to `@page { margin }` in print.css.
-// Sides 0.75in; the top and bottom bands are deeper so the running
+// Sides 0.5in; the top and bottom bands are deeper so the running
 // header and footer clear the body text.
-const MARGIN = { top: '0.95in', right: '0.75in', bottom: '0.85in', left: '0.75in' };
+const MARGIN = { top: '0.7in', right: '0.5in', bottom: '0.65in', left: '0.5in' };
 // Template padding that sets the header text off the page's top edge and
 // the footer text off its bottom edge. Chromium adds an inset of about
 // 0.26in of its own before this padding (measured: padding 0 puts the
-// text at 0.26in), so the text lands near 0.46in from either edge, with
-// roughly 0.45in clear above the body and 0.35in below it.
-const HEADER_TOP = '0.2in';
-const FOOTER_BOTTOM = '0.2in';
+// text at 0.26in), so the text lands near 0.36in from either edge, with
+// roughly 0.25in clear above the body and 0.2in below it.
+const HEADER_TOP = '0.1in';
+const FOOTER_BOTTOM = '0.1in';
 
 // ─── Header / footer templates ─────────────────────────────────────────
 

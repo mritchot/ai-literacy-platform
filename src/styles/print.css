@@ -4,8 +4,9 @@
    display, IBM Plex Sans for body, IBM Plex Mono for labels and data, and
    the 4D accents through their CSS variables (no literal hexes here).
 
-   Page geometry is Letter, 0.75in side margins, 0.95in top and 0.85in
-   bottom. Chromium does not implement the CSS `@page` margin boxes
+   Page geometry is Letter, 0.5in side margins, 0.7in top and 0.65in
+   bottom. The @page background fills the whole sheet, margins included,
+   so the washi canvas runs edge to edge. Chromium does not implement the CSS `@page` margin boxes
    (`@bottom-center` and friends), so page numbers and the running
    header/footer are drawn by Playwright's headerTemplate/footerTemplate
    in scripts/render-pdfs.mjs, inside the top and bottom bands; the
@@ -19,7 +20,8 @@
 @media print {
   @page {
     size: Letter;
-    margin: 0.95in 0.75in 0.85in;
+    margin: 0.7in 0.5in 0.65in;
+    background: rgb(var(--canvas));
   }
 
   html.print-mode,
