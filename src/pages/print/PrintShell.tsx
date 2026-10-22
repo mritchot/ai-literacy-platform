@@ -76,7 +76,6 @@ export interface PrintShellProps {
 
 export function PrintShell({ title, label, accent, selfTitled, children }: PrintShellProps): JSX.Element {
   const rootRef = useRef<HTMLDivElement>(null);
-  const bodyRef = useRef<HTMLElement>(null);
 
   useLayoutEffect(() => {
     const html = document.documentElement;
@@ -111,12 +110,12 @@ export function PrintShell({ title, label, accent, selfTitled, children }: Print
           </p>
         </header>
       )}
-      <main ref={bodyRef} className="print-body">
+      <main className="print-body">
         <PrintModeProvider>
           <EndnotesProvider>
             <Suspense fallback={null}>
               {children}
-              <PrintNotes rootRef={bodyRef} />
+              <PrintNotes />
               <ReadyMarker rootRef={rootRef} />
             </Suspense>
           </EndnotesProvider>

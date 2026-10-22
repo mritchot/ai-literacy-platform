@@ -23,7 +23,7 @@
 // numbers land before the shell's ready marker), then again on any later
 // DOM change.
 
-import { useContext, useLayoutEffect, type RefObject } from 'react';
+import { useContext, useLayoutEffect, useRef } from 'react';
 import { getCitation } from '../../data/citations';
 import { NoteKeysContext } from '../../contexts/EndnotesContext';
 import { formatNote, splitNoteKey } from '../../utils/citation-notes';
@@ -40,23 +40,28 @@ function collectKeys(root: HTMLElement): string[] {
 }
 
 /** The print "Notes" section. Rendered after the document content, inside
- *  the same Suspense boundary, with a ref to the print body to read. */
-export function PrintNotes({ rootRef }: { rootRef: RefObject<HTMLElement> }): JSX.Element | null {
+ *  the same Suspense boundary, as a direct child of the print body. It
+ *  finds that body from its own marker element: a parent's ref is not yet
+ *  attached when a child's layout effect runs on first mount. */
+export function PrintNotes(): JSX.Element | null {
   const ctx = useContext(NoteKeysContext);
   const setKeys = ctx?.setKeys;
+  const markerRef = useRef<HTMLSpanElement>(null);
 
   useLayoutEffect(() => {
-    const root = rootRef.current;
+    const root = markerRef.current?.closest<HTMLElement>('.print-body');
     if (!root || !setKeys) return;
     setKeys(collectKeys(root));
     const observer = new MutationObserver(() => setKeys(collectKeys(root)));
     observer.observe(root, { childList: true, subtree: true });
     return () => observer.disconnect();
-  }, [rootRef, setKeys]);
+  }, [setKeys]);
 
-  if (!ctx || ctx.keys.length === 0) return null;
+  const marker = <span ref={markerRef} hidden />;
+  if (!ctx || ctx.keys.length === 0) return marker;
   return (
     <section className="print-notes" aria-labelledby="print-notes-heading">
+      {marker}
       <h2 id="print-notes-heading" className="font-sans text-h3 font-semibold text-ink">
         Notes
       </h2>
