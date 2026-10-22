@@ -26,7 +26,8 @@
     "pdf:check": "node scripts/render-pdfs.mjs --check",
     "deploy": "npm run build && wrangler deploy",
     "dev:worker": "npm run build && wrangler dev",
-    "verify:citations": "node scripts/verify-citations.mjs"
+    "verify:citations": "node scripts/verify-citations.mjs",
+    "check:links": "node scripts/check-links.mjs"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.2.7",
