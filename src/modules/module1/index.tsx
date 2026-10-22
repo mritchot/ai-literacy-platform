@@ -73,16 +73,19 @@ function Section1({ module }: ModuleProp): JSX.Element {
     >
       <div className="space-y-4 font-sans text-body text-body">
         <p className="m-0">
-          If you use AI at work, you’re in good company. In Anthropic’s survey of 1,000
-          professionals from the general workforce, 86% report that it saves them time
+          AI use at work is now widespread. Nearly nine in ten respondents to McKinsey’s 2026
+          global survey say their organization uses AI regularly in at least one business
+          function
+          <Citation ids="mckinsey-state-of-ai-2026" pageKey="regular-use" />. Workers report
+          gains. In Anthropic’s survey of 1,000 professionals from the general workforce, 86%
+          report that AI saves them time
           <Citation ids="anthropic-interviewer-2025" pageKey="time-savings-86" />, and 65% say
           they’re satisfied with the role AI plays in their work
-          <Citation ids="anthropic-interviewer-2025" pageKey="satisfaction-65" />. But
-          widespread adoption is not the same thing as effective use. Nearly nine in ten
-          respondents to McKinsey’s 2026 global survey say their organization uses AI regularly
-          in at least one business function
-          <Citation ids="mckinsey-state-of-ai-2026" pageKey="regular-use" />. Only 37% report that AI has contributed to their organization’s earnings
-          <Citation ids="mckinsey-state-of-ai-2026" pageKey="ebit-37" />. The tools can produce
+          <Citation ids="anthropic-interviewer-2025" pageKey="satisfaction-65" />. Those gains
+          show up less often in the organization’s results: only 37% of McKinsey’s respondents
+          report that AI has contributed to their organization’s earnings
+          <Citation ids="mckinsey-state-of-ai-2026" pageKey="ebit-37" />. Widespread adoption is
+          not the same thing as effective use. The tools can produce
           real productivity gains. The question is whether workers, and the organizations around
           them, have the understanding and judgment to capture that value.
         </p>
