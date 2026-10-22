@@ -8,10 +8,10 @@
 // fight the single-file/self-hosted build), this is a small self-contained
 // renderer scoped to exactly the constructs the finalized content uses.
 //
-// Footnotes need no special handling: the source uses a literal superscript
-// glyph (¹) inline and a separated italic paragraph at the foot of the
-// document, so rendering italics + horizontal rules + the glyph reproduces
-// them faithfully.
+// Footnotes: the source uses a literal superscript glyph (¹) inline and a
+// separated italic paragraph at the foot of the document, so italics +
+// horizontal rules + the glyph reproduce them. A paragraph that opens with
+// the glyph is set as a note (smaller, secondary color).
 //
 // Citations: a `{{cite:…}}` token renders the same <Citation> chip the
 // modules use (a superscript endnote number in print). Syntax:
@@ -30,6 +30,7 @@
 
 import { type ReactNode } from 'react';
 import { Citation } from './Citation';
+import { TABLE, TABLE_FRAME, TD, TH, THEAD } from './table-classes';
 
 /** Matches one citation token; group 1 is the comma-separated body. */
 export const CITE_TOKEN_SOURCE = String.raw`\{\{cite:([^{}\s]+)\}\}`;
@@ -125,6 +126,11 @@ export function renderInline(text: string, keyBase = 'i'): ReactNode {
 }
 
 // ─── Block ─────────────────────────────────────────────────────────────
+//
+// Every block takes the module treatment (SectionContainer and the shared
+// module components): IBM Plex Sans body at text-body, the Source Serif
+// title for the document H1, sans semibold subheads, the module reference
+// table, and the BottleneckCallout frame for blockquotes.
 
 const HR_RE = /^\s*([-*_])\1{2,}\s*$/;
 const HEADING_RE = /^\s*(#{1,6})\s+(.*)$/;
@@ -133,6 +139,7 @@ const UL_RE = /^\s*[-*•]\s+/;
 const OL_RE = /^\s*\d+\.\s+/;
 const TABLE_ROW_RE = /^\s*\|.*\|\s*$/;
 const TABLE_SEP_RE = /^\s*\|[\s:|-]+\|\s*$/;
+const FOOTNOTE_RE = /^[¹²³⁴⁵⁶⁷⁸⁹]/;
 
 function isTableStart(line: string, next: string | undefined): boolean {
   return TABLE_ROW_RE.test(line) && next !== undefined && TABLE_SEP_RE.test(next);
@@ -160,9 +167,14 @@ function splitRow(line: string): string[] {
 
 function heading(level: number, content: string, id: number): ReactNode {
   const inner = renderInline(content, `h${id}`);
+  // H1 is the document title: the module section-title treatment.
   if (level === 1)
     return (
-      <h1 key={id} className="mb-2 mt-0 font-display text-display font-normal text-ink">
+      <h1
+        key={id}
+        className="m-0 mb-5 font-display text-title font-normal text-ink"
+        style={{ letterSpacing: '-0.005em' }}
+      >
         {inner}
       </h1>
     );
@@ -179,7 +191,7 @@ function heading(level: number, content: string, id: number): ReactNode {
       </h3>
     );
   return (
-    <h4 key={id} className="mb-2 mt-6 font-sans text-h4 font-semibold text-ink-secondary">
+    <h4 key={id} className="mb-2 mt-6 font-sans text-h4 font-semibold text-ink">
       {inner}
     </h4>
   );
@@ -225,15 +237,14 @@ export function renderMarkdown(raw: string): ReactNode[] {
       }
       const tid = id++;
       blocks.push(
-        <div key={tid} className="my-6 overflow-x-auto">
-          <table className="w-full border-collapse text-left text-body-sm text-body">
-            <thead>
+        // `my-6 overflow-x-auto` is also the print stylesheet's hook for
+        // markdown tables; keep both classes on the wrapper.
+        <div key={tid} className={`my-6 ${TABLE_FRAME}`}>
+          <table className={TABLE}>
+            <thead className={THEAD}>
               <tr>
                 {header.map((c, ci) => (
-                  <th
-                    key={ci}
-                    className="border-b border-border px-3 py-2 align-bottom font-sans text-label font-semibold uppercase tracking-wide text-ink-secondary"
-                  >
+                  <th key={ci} scope="col" className={TH}>
                     {renderInline(c, `th${tid}-${ci}`)}
                   </th>
                 ))}
@@ -243,10 +254,7 @@ export function renderMarkdown(raw: string): ReactNode[] {
               {rows.map((r, ri) => (
                 <tr key={ri}>
                   {r.map((c, ci) => (
-                    <td
-                      key={ci}
-                      className="border-b border-border-light px-3 py-2 align-top"
-                    >
+                    <td key={ci} className={TD}>
                       {renderInline(c, `td${tid}-${ri}-${ci}`)}
                     </td>
                   ))}
@@ -269,7 +277,8 @@ export function renderMarkdown(raw: string): ReactNode[] {
       blocks.push(
         <blockquote
           key={qid}
-          className="my-5 border-l-2 border-border bg-surface px-4 py-3 text-body-sm text-secondary"
+          className="my-6 border border-border bg-surface-warm font-sans text-body-sm text-body"
+          style={{ borderLeft: '3px solid rgb(var(--discernment))', padding: '16px 20px' }}
         >
           {renderInline(quote.join(' '), `bq${qid}`)}
         </blockquote>,
@@ -285,7 +294,7 @@ export function renderMarkdown(raw: string): ReactNode[] {
       }
       const lid = id++;
       blocks.push(
-        <ul key={lid} className="my-4 list-disc space-y-1.5 pl-5 text-body text-body">
+        <ul key={lid} className="my-4 list-disc space-y-1.5 pl-5 font-sans text-body text-body">
           {items.map((it, idx) => (
             <li key={idx}>{renderInline(it, `ul${lid}-${idx}`)}</li>
           ))}
@@ -302,7 +311,7 @@ export function renderMarkdown(raw: string): ReactNode[] {
       }
       const lid = id++;
       blocks.push(
-        <ol key={lid} className="my-4 list-decimal space-y-1.5 pl-5 text-body text-body">
+        <ol key={lid} className="my-4 list-decimal space-y-1.5 pl-5 font-sans text-body text-body">
           {items.map((it, idx) => (
             <li key={idx}>{renderInline(it, `ol${lid}-${idx}`)}</li>
           ))}
@@ -322,9 +331,20 @@ export function renderMarkdown(raw: string): ReactNode[] {
       i++;
     }
     const pid = id++;
+    const text = para.join(' ');
+    // A paragraph that opens with a superscript numeral is a footnote
+    // (the documents use literal ¹ ² glyphs): set a step down, in the
+    // secondary text color the modules use for notes.
     blocks.push(
-      <p key={pid} className="my-4 text-body text-body">
-        {renderInline(para.join(' '), `p${pid}`)}
+      <p
+        key={pid}
+        className={
+          FOOTNOTE_RE.test(text)
+            ? 'my-3 font-sans text-body-sm text-secondary'
+            : 'my-4 font-sans text-body text-body'
+        }
+      >
+        {renderInline(text, `p${pid}`)}
       </p>,
     );
   }

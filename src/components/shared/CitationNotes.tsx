@@ -104,7 +104,7 @@ export function SourcesList({ ids }: { ids: readonly string[] }): JSX.Element | 
       <h2 id="document-sources-heading" className="mb-3 mt-10 font-sans text-h2 font-semibold text-ink">
         Sources
       </h2>
-      <ul className="my-4 list-disc space-y-1.5 pl-5 text-body text-body">
+      <ul className="my-4 list-disc space-y-1.5 pl-5 font-sans text-body text-body">
         {ids.map((id) => {
           const s = getCitation(id);
           // The short publisher form the endnotes use, named once when the
