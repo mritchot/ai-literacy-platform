@@ -46,7 +46,7 @@ Scaled items use a 5-point Likert agreement scale (Strongly Disagree to Strongly
 | R3 | The program addressed AI-related challenges relevant to my industry or function. | 5-point Likert |
 | R4 | Which module or topic felt most relevant to your current role, and why? | Open response |
 
-**Confidence change.** Its items map to the program's [4D competency framework](https://ai-literacy.ritchot.me/#/needs-analysis/action-map): C1 to output evaluation under Discernment, C2 to prompt construction under Description, and C3 to the mechanistic understanding under both. C4 surfaces residual uncertainty that informs supplemental resources or manager talking points for the Level 3 window.
+**Confidence change.** Its items map to the program's [4D competency framework](https://ritchot.me/courses/ai-literacy/#/needs-analysis/action-map): C1 to output evaluation under Discernment, C2 to prompt construction under Description, and C3 to the mechanistic understanding under both. C4 surfaces residual uncertainty that informs supplemental resources or manager talking points for the Level 3 window.
 
 | # | Item | Format |
 |---|---|---|

@@ -33,3 +33,6 @@ cc-prompts/
 
 # Audit working notes (session-scoped, never committed)
 BEHIND-THE-BUILD-audit.md
+
+# Wrangler local dev state
+.wrangler/

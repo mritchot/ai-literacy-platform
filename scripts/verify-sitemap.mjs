@@ -19,7 +19,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 const DIST = 'dist';
-const ORIGIN = 'https://ai-literacy.ritchot.me';
+const ORIGIN = 'https://ritchot.me/courses/ai-literacy';
 
 const errors = [];
 const fail = (msg) => errors.push(msg);
@@ -39,7 +39,8 @@ const sitemap = need('sitemap.xml');
 const headers = need('_headers');
 const indexHtml = need('index.html');
 const notFound = need('404.html');
-need('robots.txt');
+// No robots.txt here: the course lives under ritchot.me/courses/ai-literacy/,
+// and only the root robots.txt (ritchot-website) counts. It lists this sitemap.
 
 // ─── Parse _headers into noindex path matchers ─────────────────────────
 //

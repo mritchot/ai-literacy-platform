@@ -7,9 +7,9 @@ A four-module interactive learning platform that teaches AI literacy to mid-care
 
 Status: complete. The October 2026 update is the last planned update.
 
-Live: [ai-literacy.ritchot.me](https://ai-literacy.ritchot.me)
+Live: [ritchot.me/courses/ai-literacy](https://ritchot.me/courses/ai-literacy/)
 
-For reviewers: the [needs analysis](https://ai-literacy.ritchot.me/#/needs-analysis) sets out the business problem and its evidence, the [evaluation framework](https://ai-literacy.ritchot.me/#/evaluation) defines how results are measured at Kirkpatrick Levels 1 to 4 (with a live ROI model), and [behind the build](https://ai-literacy.ritchot.me/#/build) records the learning architecture, budget, timeline, and QA. Open [ai-literacy.ritchot.me/?portfolio=true](https://ai-literacy.ritchot.me/?portfolio=true) to move through every module without the learner gates; the analytics dashboard is then at `/#/dashboard`.
+For reviewers: the [needs analysis](https://ritchot.me/courses/ai-literacy/#/needs-analysis) sets out the business problem and its evidence, the [evaluation framework](https://ritchot.me/courses/ai-literacy/#/evaluation) defines how results are measured at Kirkpatrick Levels 1 to 4 (with a live ROI model), and [behind the build](https://ritchot.me/courses/ai-literacy/#/build) records the learning architecture, budget, timeline, and QA. Open [ritchot.me/courses/ai-literacy/?portfolio=true](https://ritchot.me/courses/ai-literacy/?portfolio=true) to move through every module without the learner gates; the analytics dashboard is then at `/#/dashboard`.
 
 Best viewed on desktop. Mobile is fully functional, but the data dashboards and multi-panel practice activities are designed for larger screens.
 

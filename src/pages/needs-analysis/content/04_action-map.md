@@ -2,7 +2,7 @@
 
 *Following Cathy Moore's Action Mapping framework, organized by the [4D competency taxonomy](https://ringling.libguides.com/ai/framework) of Delegation, Description, Discernment, and Diligence (Dakan & Feller, 2025).*
 
-> **Delivery note.** Each practice activity below is mapped to two deliverables: a custom-coded platform component (Component 4) and a corporate Articulate (Rise 360 / Storyline) component (Component 5). The program was designed against both contexts to demonstrate that the instructional design transfers across a bespoke build and a standard authoring stack. The custom platform was built and shipped ([ai-literacy.ritchot.me](https://ai-literacy.ritchot.me/)); the Articulate build was specified but not produced, a deliberate scope decision for an independent portfolio project without enterprise funding. The Component 5 mappings are retained because the interaction-fidelity tradeoffs they record are part of the design analysis.
+> **Delivery note.** Each practice activity below is mapped to two deliverables: a custom-coded platform component (Component 4) and a corporate Articulate (Rise 360 / Storyline) component (Component 5). The program was designed against both contexts to demonstrate that the instructional design transfers across a bespoke build and a standard authoring stack. The custom platform was built and shipped ([ritchot.me/courses/ai-literacy](https://ritchot.me/courses/ai-literacy/)); the Articulate build was specified but not produced, a deliberate scope decision for an independent portfolio project without enterprise funding. The Component 5 mappings are retained because the interaction-fidelity tradeoffs they record are part of the design analysis.
 
 ---
 
@@ -10,7 +10,7 @@
 
 Within 90 days of program completion, participants consistently select appropriate tasks for AI use, apply structured evaluation to AI-generated outputs before incorporation into business deliverables, and use a shared competency vocabulary to make their AI practices visible to colleagues and managers, with measurable gains in productive AI utilization and reductions in unverified AI output across participating teams.
 
-*Note: Specific performance targets (e.g., percentage reduction in unverified outputs, increase in task range) are calibrated to organizational baselines during deployment. The directional commitment is fixed; the threshold is context-dependent. Level 4 measures this goal: productive utilization through the efficiency KPIs (E1–E3), unverified output through the AI-related error rate (Q1), and visible practice through the transparency and concealment KPIs (A1–A2); see [Level 4: Results](https://ai-literacy.ritchot.me/#/evaluation/level-4-results).*
+*Note: Specific performance targets (e.g., percentage reduction in unverified outputs, increase in task range) are calibrated to organizational baselines during deployment. The directional commitment is fixed; the threshold is context-dependent. Level 4 measures this goal: productive utilization through the efficiency KPIs (E1–E3), unverified output through the AI-related error rate (Q1), and visible practice through the transparency and concealment KPIs (A1–A2); see [Level 4: Results](https://ritchot.me/courses/ai-literacy/#/evaluation/level-4-results).*
 
 ---
 
