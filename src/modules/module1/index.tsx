@@ -619,10 +619,12 @@ function Section6({ module }: ModuleProp): JSX.Element {
           use professionally defensible.
         </p>
         <p className="m-0">
-          The full program takes roughly two hours. Each module runs between 15 and 40 minutes
-          and works as a single sitting. If you can, take the modules on different days. Spacing
-          them out, and recalling the previous module before you start the next, helps you keep
-          what you learn.
+          The full program takes about four to five hours, including the two assessments. Each
+          module runs between 35 and 105 minutes, so plan more than one sitting for most of them.
+          A good place to stop is after a practice activity or a knowledge check; your progress
+          is saved in this browser. If you can, take the modules on different days. Spacing them
+          out, and recalling the previous module before you start the next, helps you keep what
+          you learn.
         </p>
       </div>
     </SectionContainer>

@@ -10,9 +10,12 @@ import {
   MODULES,
   TOTAL_ACTIVITIES,
   TOTAL_OBJECTIVES,
+  programMinutes,
   type CompetencyKey,
   type ModuleMeta,
 } from '../../data/program';
+import { PRE_ASSESSMENT_ITEMS } from '../../data/pre-assessment';
+import { POST_ASSESSMENT_ITEMS } from '../../data/post-assessment';
 import { useLearnerProgress, useResolvedModules } from '../../contexts/LearnerProgressContext';
 import { usePlatformMode } from '../../hooks/usePlatformMode';
 import { computeGating, type ModuleGating } from '../../utils/module-gating';
@@ -20,6 +23,8 @@ import { CompetencyDot } from './CompetencyDot';
 import { Icon } from './Icon';
 import { Overline } from './Overline';
 import { ProgressBar } from './ProgressBar';
+
+const PROGRAM_MINUTES = programMinutes(PRE_ASSESSMENT_ITEMS.length, POST_ASSESSMENT_ITEMS.length);
 
 const COMPETENCY_BG: Record<CompetencyKey, string> = {
   delegation: 'rgb(var(--delegation))',
@@ -114,9 +119,9 @@ function Hero({
   return (
     <section aria-labelledby="program-title" className="mb-14">
       <Overline className="mb-3.5" style={{ fontSize: 11 }}>
-        {/* 90–120: module durations sum to 80–110 (program.ts) plus
-            ~10 min for the pre/post assessments. */}
-        Program · 4 modules · 90–120 min total
+        {/* Computed, not typed: the module durations plus both
+            assessment forms, so a re-timing in program.ts flows here. */}
+        Program · 4 modules · {PROGRAM_MINUTES.low}–{PROGRAM_MINUTES.high} min total
       </Overline>
       <h1
         id="program-title"

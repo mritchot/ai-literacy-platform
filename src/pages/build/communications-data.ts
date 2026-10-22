@@ -7,8 +7,13 @@
 // (planning corpus, outside the repo). The
 // samples are the document's fictional-but-grounded originals. ONE reconciliation:
 // design-review item 5 originally cited a stale Module-4 duration (the memo
-// said "31–33 minutes"); per src/data/program.ts — the source of truth,
-// M4 = 30–40 min — the item now uses the actual shipped module duration.
+// said "31–33 minutes"); the item now reads the shipped duration from
+// src/data/program.ts, the source of truth, so a re-timing reaches it.
+
+import { getModuleOrThrow, parseDurationMinutes } from '../../data/program';
+
+const [M4_LOW, M4_HIGH] = parseDurationMinutes(getModuleOrThrow(4).duration);
+const MODULE_4_MINUTES = `${M4_LOW}–${M4_HIGH}`;
 
 export interface MemoMeta {
   to: string;
@@ -114,7 +119,7 @@ export const SAMPLE2_DECISIONS: DecisionRow[] = [
   },
   {
     n: '5',
-    item: 'Module 4 runs 30–40 minutes, over its original 20–30 minute target, the longest of the four modules.',
+    item: `Module 4 runs ${MODULE_4_MINUTES} minutes, over its original 20–30 minute target, the longest of the four modules.`,
     decision: 'Accepted as-is. Module 4 carries the highest practice density (5 activities, P8–P12) because it is the program’s capstone; the extra length is a reasonable tradeoff for assessment completeness.',
     status: 'Resolved',
     tone: 'success',

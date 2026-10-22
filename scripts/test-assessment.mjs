@@ -26,6 +26,7 @@ const resultsCode = await load('src/utils/assessment-results-code.ts');
 const { PRE_ASSESSMENT_ITEMS } = await load('src/data/pre-assessment.ts');
 const { POST_ASSESSMENT_ITEMS } = await load('src/data/post-assessment.ts');
 const instrument = await load('src/data/instrument-version.ts');
+const program = await load('src/data/program.ts');
 
 // A synthetic ten-construct form, so the acceptance cases read as written.
 const pre10 = Array.from({ length: 10 }, (_, i) => ({
@@ -200,4 +201,16 @@ test('a record answered against an earlier item bank is flagged as revised', () 
     instrument.answeredBeforeRevision({ a: { instrumentVersion: current }, b: {} }),
     true,
   );
+});
+
+test('program timing sums the module durations and both assessment forms', () => {
+  assert.deepEqual(program.parseDurationMinutes('35–45 min'), [35, 45]);
+  assert.deepEqual(program.parseDurationMinutes('20 min'), [20, 20]);
+  assert.throws(() => program.parseDurationMinutes('soon'));
+  assert.deepEqual(program.assessmentMinutes(12), { low: 15, high: 20 });
+  const modules = program.MODULES.map((m) => program.parseDurationMinutes(m.duration));
+  const low = modules.reduce((a, [l]) => a + l, 0);
+  const high = modules.reduce((a, [, h]) => a + h, 0);
+  assert.deepEqual(program.MODULE_MINUTES, { low, high });
+  assert.deepEqual(program.programMinutes(12, 12), { low: low + 30, high: high + 40 });
 });

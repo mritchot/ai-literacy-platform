@@ -121,7 +121,7 @@ function Section1({ module }: ModuleProp): JSX.Element {
         </p>
         <p className="m-0">
           The concepts are mechanical, not mysterious. The consequences are practical. And the
-          time investment is roughly twenty-five minutes. By the end, you will know why your AI
+          time investment is about an hour. By the end, you will know why your AI
           tools fail in the specific ways they do.
         </p>
       </div>

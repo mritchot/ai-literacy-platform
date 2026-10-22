@@ -148,12 +148,13 @@ const ENGAGED_FLAGS: Record<string, true> = {
   '3.3.p5_free_mode_entered': true,
 };
 
-// Realistic per-section active reading time (ms), as if recorded by the
+// Per-section active reading time (ms), as if recorded by the
 // visibility/idle tracker in LearnerProgressContext. Heavier values on
 // interactive sections (data narratives, dashboards, the tokenizer
 // playground); shorter on transitions. Sums to ~60 min across the 23
-// completed sections — proportional to the 90–120 min full-program
-// duration estimate.
+// completed sections: a fast learner who skims. The program.ts durations
+// assume every option and feedback is read, so they run well above this,
+// and the demo event timeline is paced to these values.
 const ACTIVE_TIME_MS: Record<string, number> = {
   '1.1':  90_000, '1.2': 120_000, '1.3': 240_000, '1.4':  90_000,
   '1.5': 180_000, '1.6':  90_000, '1.7': 150_000, '1.8':  45_000,

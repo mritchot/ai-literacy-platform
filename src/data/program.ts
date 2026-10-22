@@ -40,13 +40,24 @@ export const COMPETENCIES: CompetencyMeta[] = [
   { key: 'diligence', label: 'Diligence', description: 'Owning and disclosing what you ship' },
 ];
 
+// Module durations (re-timed October 2026 from the final content). Each
+// range is reading time at 230 wpm (low) and 200 wpm (high) over the words
+// a learner sees: section text and open callouts at first render, check
+// stems and options, the feedback for one chosen option per check, and
+// what activities reveal (later tabs, debriefs, sample drafts). Collapsed
+// evidence notes are left out. On top come allowances per interaction, in
+// minutes, low to high: 0.25-0.5 per decision, 0.5-1 per chart or table
+// explored, 0.5-1 per short note, 1.5-3 per required reflection, 3-6 per
+// authored artifact, 1-2 per open exploration, 0-1.5 per optional
+// reflection. Totals are rounded to the nearest five minutes. The landing
+// total, the ROI model, and the build hub all read these strings.
 export const MODULES: ModuleMeta[] = [
   {
     id: 1,
     seq: 'C',
     label: 'Context',
     title: 'Why AI literacy matters now',
-    duration: '15–20 min',
+    duration: '35–45 min',
     shortDescription: 'How AI is reshaping knowledge work, and why literacy must travel with the tool.',
     competencies: ['delegation', 'diligence'],
     activities: 2,
@@ -68,7 +79,7 @@ export const MODULES: ModuleMeta[] = [
     seq: 'E',
     label: 'Evidence',
     title: 'How AI is actually being used at work',
-    duration: '15–20 min',
+    duration: '45–60 min',
     shortDescription: 'Behavioral evidence vs. self-report, augmentation vs. automation, and where the gaps live.',
     competencies: ['delegation', 'discernment'],
     activities: 2,
@@ -90,7 +101,7 @@ export const MODULES: ModuleMeta[] = [
     seq: 'M',
     label: 'Mechanism',
     title: 'Understanding how language models work',
-    duration: '20–30 min',
+    duration: '50–65 min',
     shortDescription: 'Tokenization, next-token prediction, context windows — and the diagnostic pairs behind workplace AI failures.',
     competencies: ['description', 'discernment'],
     activities: 3,
@@ -115,7 +126,7 @@ export const MODULES: ModuleMeta[] = [
     seq: 'A',
     label: 'Application',
     title: 'Evaluating AI outputs and working responsibly',
-    duration: '30–40 min',
+    duration: '70–105 min',
     shortDescription: 'Five practice activities — decompose, reformulate, verify, refine, and document — pulling all four competencies into one workflow.',
     competencies: ['delegation', 'description', 'discernment', 'diligence'],
     activities: 5,
@@ -136,11 +147,51 @@ export const MODULES: ModuleMeta[] = [
   },
 ];
 
-// Pre/post assessment pacing, in minutes per item. The stems and options
-// run about 230 words an item, about a minute of reading at the 238 wpm
-// non-fiction average (Brysbaert, 2019), before any time to reason. The
-// assessment intro screens quote the range these give for the item count.
-export const ASSESSMENT_MINUTES_PER_ITEM = { low: 1.3, high: 1.8 } as const;
+// Pre/post assessment pacing, in minutes per item, timed like the modules:
+// the stems and options run about 229 words an item (2026.11 forms), read
+// at 230 and 200 wpm, plus 0.25-0.5 minutes to decide. The assessment
+// intro screens, the landing total, and the ROI model all use it.
+export const ASSESSMENT_MINUTES_PER_ITEM = { low: 1.25, high: 1.65 } as const;
+
+/** Minutes for one assessment form of `itemCount` items, rounded up. */
+export function assessmentMinutes(itemCount: number): { low: number; high: number } {
+  return {
+    low: Math.ceil(itemCount * ASSESSMENT_MINUTES_PER_ITEM.low),
+    high: Math.ceil(itemCount * ASSESSMENT_MINUTES_PER_ITEM.high),
+  };
+}
+
+/** Parse a module duration ("35–45 min" or "20 min") to [low, high]. */
+export function parseDurationMinutes(duration: string): [number, number] {
+  const range = /(\d+(?:\.\d+)?)\s*[–-]\s*(\d+(?:\.\d+)?)/.exec(duration);
+  if (range) return [Number(range[1]), Number(range[2])];
+  const single = /(\d+(?:\.\d+)?)/.exec(duration);
+  if (single) return [Number(single[1]), Number(single[1])];
+  // Fail loudly: a silent zero would understate every total built on it.
+  throw new Error(`Unparseable module duration: "${duration}"`);
+}
+
+/** Sum of the module durations, in minutes. */
+export const MODULE_MINUTES = MODULES.reduce(
+  (acc, m) => {
+    const [low, high] = parseDurationMinutes(m.duration);
+    return { low: acc.low + low, high: acc.high + high };
+  },
+  { low: 0, high: 0 },
+);
+
+/** Modules plus one pre and one post form of the given lengths. */
+export function programMinutes(
+  preItemCount: number,
+  postItemCount: number,
+): { low: number; high: number } {
+  const pre = assessmentMinutes(preItemCount);
+  const post = assessmentMinutes(postItemCount);
+  return {
+    low: MODULE_MINUTES.low + pre.low + post.low,
+    high: MODULE_MINUTES.high + pre.high + post.high,
+  };
+}
 
 export const TOTAL_OBJECTIVES = MODULES.reduce((acc, m) => acc + m.objectives, 0);
 export const TOTAL_ACTIVITIES = MODULES.reduce((acc, m) => acc + m.activities, 0);

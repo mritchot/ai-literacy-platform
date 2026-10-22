@@ -8,7 +8,7 @@
 import { Link } from 'react-router-dom';
 import { Icon } from '../shared/Icon';
 import { Overline } from '../shared/Overline';
-import { ASSESSMENT_MINUTES_PER_ITEM } from '../../data/program';
+import { assessmentMinutes } from '../../data/program';
 import { useViewport } from '../../hooks/useViewport';
 
 interface AssessmentIntroProps {
@@ -27,8 +27,7 @@ const POST_HEADLINE = 'Almost done: your post-program assessment';
 
 // The "about" figure is the range midpoint rounded to the nearest five.
 function minutesFor(itemCount: number): { low: number; high: number; about: number } {
-  const low = Math.ceil(itemCount * ASSESSMENT_MINUTES_PER_ITEM.low);
-  const high = Math.ceil(itemCount * ASSESSMENT_MINUTES_PER_ITEM.high);
+  const { low, high } = assessmentMinutes(itemCount);
   return { low, high, about: Math.round((low + high) / 10) * 5 };
 }
 
