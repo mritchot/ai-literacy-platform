@@ -89,8 +89,8 @@ function Section1({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           That question has become urgent unusually fast. OpenAI reports more than 900 million
           weekly ChatGPT users, though only about 5% pay
-          <Citation ids="evans-2026-05" pageKey="wau-900m-29" />. Across ten US surveys from
-          2024 to 2025, weekly use runs well ahead of daily use
+          <Citation ids="evans-2026-05" pageKey="wau-900m-29" />. In the nine US surveys from
+          2024 to 2025 that measured both, weekly use runs well ahead of daily use
           <Citation ids="evans-2025-11" pageKey="engagement-gap-39" />. Most professionals have
           tried the tools; fewer use them every day. And the speed of that adoption has outrun
           most organizations’ ability to evaluate whether their people are using these tools

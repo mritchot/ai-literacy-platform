@@ -120,7 +120,7 @@ export const SAMPLE2_DECISIONS: DecisionRow[] = [
   {
     n: '5',
     item: `Module 4 runs ${MODULE_4_MINUTES} minutes, over its original 20–30 minute target, the longest of the four modules.`,
-    decision: 'Accepted as-is. Module 4 carries the highest practice density (5 activities, P8–P12) because it is the program’s capstone; the extra length is a reasonable tradeoff for assessment completeness.',
+    decision: 'Accepted at the measured length. Module 4 is the program’s capstone and carries five of the twelve practice activities (P8–P12). Module 1 tells learners to plan more than one sitting for most modules and to stop after a practice activity or a knowledge check.',
     status: 'Resolved',
     tone: 'success',
     owner: 'Instructional Designer',
