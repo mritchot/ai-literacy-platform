@@ -12,12 +12,56 @@
 // glyph (¹) inline and a separated italic paragraph at the foot of the
 // document, so rendering italics + horizontal rules + the glyph reproduces
 // them faithfully.
+//
+// Citations: a `{{cite:…}}` token renders the same <Citation> chip the
+// modules use (a superscript endnote number in print). Syntax:
+//
+//   {{cite:tamkin-mccrory-2025#median-savings-81}}       one source + locator
+//   {{cite:lee-2025}}                                     no locator
+//   {{cite:handa-2025#aug-auto-split-57-43,appel-mccrory-tamkin-2025#directive-trend-v3}}
+//
+// Inside the braces: comma-separated registry ids (src/data/citations.ts),
+// each optionally followed by `#pageKey` from that entry's `pages` map. No
+// spaces. Write the token directly after the claim with no space before it
+// (`…an 81% median{{cite:…}}.`): the chip supplies its own leading space,
+// and nothing is left behind when the Sources toggle hides chips. The
+// double-brace prefix never occurs in prose, and scripts/verify-citations.mjs
+// fails the build when a token names an unregistered id or pageKey.
 
 import { type ReactNode } from 'react';
+import { Citation } from './Citation';
+
+/** Matches one citation token; group 1 is the comma-separated body. */
+export const CITE_TOKEN_SOURCE = String.raw`\{\{cite:([^{}\s]+)\}\}`;
+
+/** Parse a token body ("a#k1,b") into aligned ids and page keys. */
+export function parseCiteToken(body: string): { ids: string[]; pageKeys: Array<string | undefined> } {
+  const ids: string[] = [];
+  const pageKeys: Array<string | undefined> = [];
+  for (const part of body.split(',')) {
+    const at = part.indexOf('#');
+    ids.push(at === -1 ? part : part.slice(0, at));
+    pageKeys.push(at === -1 ? undefined : part.slice(at + 1));
+  }
+  return { ids, pageKeys };
+}
+
+/** Registry ids cited by `{{cite:…}}` tokens across `texts`, in order of
+ *  first citation, de-duplicated — the input to <SourcesList>. */
+export function citedIds(...texts: readonly string[]): string[] {
+  const out: string[] = [];
+  const re = new RegExp(CITE_TOKEN_SOURCE, 'g');
+  for (const text of texts) {
+    for (const m of text.matchAll(re)) {
+      for (const id of parseCiteToken(m[1]!).ids) if (!out.includes(id)) out.push(id);
+    }
+  }
+  return out;
+}
 
 // ─── Inline ────────────────────────────────────────────────────────────
 //
-// Links `[text](url)`, bold `**text**`, italic `*text*`. Recursive so the
+// Citation tokens, links `[text](url)`, bold `**text**`, italic `*text*`. Recursive so the
 // constructs nest the way the source nests them: Sources entries wrap an
 // italic title inside a link (`[*Title*](url)`), and the delivery-note
 // footnote is one long italic span that contains a link. A fresh RegExp is
@@ -25,7 +69,10 @@ import { type ReactNode } from 'react';
 // don't clobber each other's `lastIndex`.
 
 export function renderInline(text: string, keyBase = 'i'): ReactNode {
-  const re = /\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*|\*([^*\n]+)\*/g;
+  const re = new RegExp(
+    `${CITE_TOKEN_SOURCE}|\\[([^\\]]+)\\]\\(([^)]+)\\)|\\*\\*([^*]+)\\*\\*|\\*([^*\\n]+)\\*`,
+    'g',
+  );
   const out: ReactNode[] = [];
   let last = 0;
   let k = 0;
@@ -33,13 +80,17 @@ export function renderInline(text: string, keyBase = 'i'): ReactNode {
   while ((m = re.exec(text)) !== null) {
     if (m.index > last) out.push(text.slice(last, m.index));
     const key = `${keyBase}-${k++}`;
-    if (m[1] !== undefined && m[2] !== undefined) {
+    // Group numbers: 1 cite body, 2–3 link, 4 bold, 5 italic.
+    if (m[1] !== undefined) {
+      const { ids, pageKeys } = parseCiteToken(m[1]);
+      out.push(<Citation key={key} ids={ids} pageKeys={pageKeys} />);
+    } else if (m[2] !== undefined && m[3] !== undefined) {
       // Scheme allowlist: a stray `[x](javascript:...)` in future markdown
       // must never become an executable anchor. All current content uses
       // https/mailto/#, so rendered output is unchanged; a disallowed
       // scheme renders as a non-navigating anchor (no href).
-      const rawHref = m[2].trim();
-      const safeHref = /^(https?:|mailto:|#)/i.test(rawHref) ? m[2] : undefined;
+      const rawHref = m[3].trim();
+      const safeHref = /^(https?:|mailto:|#)/i.test(rawHref) ? m[3] : undefined;
       // Internal hash-route links (`#/...`) navigate within the HashRouter SPA,
       // so they must stay in the same tab. External links (https/mailto) keep
       // opening in a new tab with noopener/noreferrer.
@@ -51,19 +102,19 @@ export function renderInline(text: string, keyBase = 'i'): ReactNode {
           {...(isInternal ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
           className="font-medium text-action underline decoration-1 underline-offset-2 transition-colors duration-[160ms] hover:text-action-hover"
         >
-          {renderInline(m[1], key)}
+          {renderInline(m[2], key)}
         </a>,
-      );
-    } else if (m[3] !== undefined) {
-      out.push(
-        <strong key={key} className="font-semibold text-ink">
-          {renderInline(m[3], key)}
-        </strong>,
       );
     } else if (m[4] !== undefined) {
       out.push(
-        <em key={key} className="italic">
+        <strong key={key} className="font-semibold text-ink">
           {renderInline(m[4], key)}
+        </strong>,
+      );
+    } else if (m[5] !== undefined) {
+      out.push(
+        <em key={key} className="italic">
+          {renderInline(m[5], key)}
         </em>,
       );
     }

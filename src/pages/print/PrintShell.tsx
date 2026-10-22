@@ -22,6 +22,9 @@
 //     remains, so a disclosure that does not read the context fails the
 //     render rather than printing collapsed. Selection toggles without
 //     `aria-controls` (the action map's quadrants) are not disclosures.
+//   - Citations: every <Citation> renders as a superscript endnote
+//     number, and <PrintNotes> (inside EndnotesProvider) ends the body
+//     with the numbered Notes section (src/components/shared/CitationNotes.tsx).
 //   - Readiness: once the content has committed and `document.fonts.ready`
 //     resolves, the root gets `data-print-ready="true"`; the render script
 //     waits for that marker before calling page.pdf(). A resolver failure
@@ -30,6 +33,8 @@
 
 import { Suspense, useEffect, useLayoutEffect, useRef, type ReactNode } from 'react';
 import { PrintModeProvider } from '../../contexts/PrintModeContext';
+import { EndnotesProvider } from '../../contexts/EndnotesContext';
+import { PrintNotes } from '../../components/shared/CitationNotes';
 import '../../styles/print.css';
 
 function nextFrame(): Promise<void> {
@@ -45,7 +50,9 @@ function ReadyMarker({ rootRef }: { rootRef: React.RefObject<HTMLDivElement> }):
     if (!root) return;
     (async () => {
       await document.fonts.ready;
-      // One frame so layout reflects the web-font swap before the marker.
+      // Two frames: layout reflects the web-font swap, and the endnote
+      // numbers <PrintNotes> sets after the content commits have rendered.
+      await nextFrame();
       await nextFrame();
       if (!cancelled) root.setAttribute('data-print-ready', 'true');
     })();
@@ -69,6 +76,7 @@ export interface PrintShellProps {
 
 export function PrintShell({ title, label, accent, selfTitled, children }: PrintShellProps): JSX.Element {
   const rootRef = useRef<HTMLDivElement>(null);
+  const bodyRef = useRef<HTMLElement>(null);
 
   useLayoutEffect(() => {
     const html = document.documentElement;
@@ -103,12 +111,15 @@ export function PrintShell({ title, label, accent, selfTitled, children }: Print
           </p>
         </header>
       )}
-      <main className="print-body">
+      <main ref={bodyRef} className="print-body">
         <PrintModeProvider>
-          <Suspense fallback={null}>
-            {children}
-            <ReadyMarker rootRef={rootRef} />
-          </Suspense>
+          <EndnotesProvider>
+            <Suspense fallback={null}>
+              {children}
+              <PrintNotes rootRef={bodyRef} />
+              <ReadyMarker rootRef={rootRef} />
+            </Suspense>
+          </EndnotesProvider>
         </PrintModeProvider>
       </main>
       {/* Attribution — the landing page's AttributionFooter, as a colophon. */}

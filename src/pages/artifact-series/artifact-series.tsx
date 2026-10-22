@@ -6,7 +6,8 @@
 // begun to drift (eyebrow casing, a dead openLabel branch).
 
 import type { ReactNode } from 'react';
-import { renderMarkdown } from '../../components/shared/render-markdown';
+import { citedIds, renderMarkdown } from '../../components/shared/render-markdown';
+import { SourcesList } from '../../components/shared/CitationNotes';
 import { usePrintMode } from '../../contexts/PrintModeContext';
 import { useViewport } from '../../hooks/useViewport';
 
@@ -190,7 +191,8 @@ export function createArtifactSeries(series: SeriesConfig): {
   // Shared layout for the reading artifacts. Each page is a thin wrapper
   // that imports its finalized markdown via `?raw` and hands it here; this
   // supplies the "artifact treatment" frame — toolbar, series eyebrow, the
-  // rendered document at reading width, and the footer links.
+  // rendered document at reading width, the generated Sources list (from
+  // the document's {{cite:…}} tokens), and the footer links.
   function ReadingArtifact({
     markdown,
     pdfSlug,
@@ -204,7 +206,10 @@ export function createArtifactSeries(series: SeriesConfig): {
         <SeriesEyebrow label={series.readingEyebrow} />
         {/* The document's own H1/H2 carry the title; the renderer zeroes the
             first heading's top margin so it sits flush under the eyebrow. */}
-        <article className="prose-longform">{renderMarkdown(markdown)}</article>
+        <article className="prose-longform">
+          {renderMarkdown(markdown)}
+          <SourcesList ids={citedIds(markdown)} />
+        </article>
         <ArtifactFooter currentSlug={pdfSlug} />
       </div>
     );

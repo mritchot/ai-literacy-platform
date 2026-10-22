@@ -20,6 +20,10 @@
 // Compound citations: pass an array of ids — the popover then lists
 // each source as a separate block, matching how academic compound
 // citations work ("(Source A; Source B)" → both sources surfaced).
+//
+// Print: inside the print shell (PrintModeContext) the chip renders as a
+// superscript endnote number instead, whatever the Sources toggle says;
+// the shell's Notes section lists the sources (CitationNotes.tsx).
 
 import {
   forwardRef,
@@ -38,14 +42,30 @@ import {
 import { createPortal } from 'react-dom';
 import { getCitation, type CitationMeta } from '../../data/citations';
 import { useCitations } from '../../hooks/useCitations';
+import { usePrintMode } from '../../contexts/PrintModeContext';
+import { useNoteNumbers } from '../../contexts/EndnotesContext';
+import { noteKey } from '../../utils/citation-notes';
 
 interface CitationProps {
   /** One or more citation IDs from the `CITATIONS` map. */
-  ids: string | string[];
+  ids: string | readonly string[];
   /** Optional key into a citation's `pages` map for a stat-specific
    *  page reference. When supplied with a multi-id citation, it applies
    *  only to the FIRST id. */
   pageKey?: string | undefined;
+  /** Per-id page keys, aligned with `ids` (the markdown `{{cite:…}}`
+   *  token's form). An entry here wins over `pageKey` for its id. */
+  pageKeys?: ReadonlyArray<string | undefined> | undefined;
+}
+
+/** Each id's page key: `pageKeys[i]`, else `pageKey` for the first id. */
+function resolvePageKeys({ ids, pageKey, pageKeys }: CitationProps): {
+  idList: readonly string[];
+  keyList: Array<string | undefined>;
+} {
+  const idList = typeof ids === 'string' ? [ids] : ids;
+  const keyList = idList.map((_, i) => pageKeys?.[i] ?? (i === 0 ? pageKey : undefined));
+  return { idList, keyList };
 }
 
 const HOVER_OPEN_DELAY = 250;
@@ -64,13 +84,28 @@ const HOVER_CLOSE_DELAY = 150;
  * the wrapper means `CitationChip`'s hook count is always constant.
  */
 export function Citation(props: CitationProps): JSX.Element | null {
+  const printMode = usePrintMode();
   const { showCitations } = useCitations();
+  if (printMode) return <CitationNote {...props} />;
   if (!showCitations) return null;
   return <CitationChip {...props} />;
 }
 
-function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
-  const idList = Array.isArray(ids) ? ids : [ids];
+/** Print form: a superscript endnote number ("3", or "3,4" for a
+ *  compound citation). No leading space, so it sits on the claim. */
+function CitationNote(props: CitationProps): JSX.Element {
+  const { idList, keyList } = resolvePageKeys(props);
+  const keys = idList.map((id, i) => noteKey(id, keyList[i]));
+  const numbers = useNoteNumbers(keys);
+  return (
+    <sup className="cite-note" data-note-keys={JSON.stringify(keys)}>
+      {numbers}
+    </sup>
+  );
+}
+
+function CitationChip(props: CitationProps): JSX.Element {
+  const { idList, keyList } = resolvePageKeys(props);
   const sources = idList.map((id) => getCitation(id));
   const popoverId = useId();
 
@@ -338,7 +373,7 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
           ref={popoverRef}
           id={popoverId}
           sources={sources}
-          pageKey={pageKey}
+          pageKeys={keyList}
           pos={pos}
           closeButtonRef={closeButtonRef}
           onMouseEnter={() => {
@@ -366,7 +401,7 @@ function CitationChip({ ids, pageKey }: CitationProps): JSX.Element {
 interface CitationPopoverProps {
   id: string;
   sources: CitationMeta[];
-  pageKey?: string | undefined;
+  pageKeys: ReadonlyArray<string | undefined>;
   pos: { left: number; top: number; placement: 'above' | 'below' };
   closeButtonRef: RefObject<HTMLButtonElement>;
   onMouseEnter: () => void;
@@ -376,7 +411,7 @@ interface CitationPopoverProps {
 
 const CitationPopover = forwardRef<HTMLDivElement, CitationPopoverProps>(
   function CitationPopover(
-    { id, sources, pageKey, pos, closeButtonRef, onMouseEnter, onMouseLeave, onClose },
+    { id, sources, pageKeys, pos, closeButtonRef, onMouseEnter, onMouseLeave, onClose },
     ref,
   ): JSX.Element {
     const style: CSSProperties = {
@@ -480,13 +515,16 @@ const CitationPopover = forwardRef<HTMLDivElement, CitationPopoverProps>(
             gap: sources.length > 1 ? 12 : 0,
           }}
         >
-          {sources.map((s, i) => (
-            <SourceBlock
-              key={s.id}
-              source={s}
-              pageRef={i === 0 && pageKey ? s.pages?.[pageKey] : undefined}
-            />
-          ))}
+          {sources.map((s, i) => {
+            const key = pageKeys[i];
+            return (
+              <SourceBlock
+                key={`${s.id}-${i}`}
+                source={s}
+                pageRef={key ? s.pages?.[key] : undefined}
+              />
+            );
+          })}
         </div>
       </div>
     );
