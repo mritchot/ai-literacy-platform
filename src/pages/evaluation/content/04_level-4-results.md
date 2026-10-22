@@ -67,7 +67,8 @@ The model calculates two independently attributed benefit streams against total 
 
 ```
 Efficiency Benefit = N × W × T_ai × S × A
-Quality Benefit    = Q × Q_reduction × A
+Quality Benefit    = Q × Q_reduction × A,   where Q = N × q
+C_program          = C_fixed + N × c
 ROI = (Efficiency + Quality − C_program) / C_program × 100%
 ```
 
@@ -78,8 +79,11 @@ ROI = (Efficiency + Quality − C_program) / C_program × 100%
 | T_ai | Share of work hours on AI-eligible tasks | Task analysis / [Yee et al., 2025](https://www.mckinsey.com/mgi/our-research/agents-robots-and-us-skill-partnerships-in-the-age-of-ai) (technical potential and 2030 adoption) |
 | S | Time savings per AI-eligible hour, competently used | Measurement / controlled trials cited in Tamkin & McCrory (14–56%) |
 | A | Attribution factor | Isolation methodology |
-| C_program | Total program cost | Budget |
-| Q | Annual cost of AI-related quality failures | QA/incident extrapolation |
+| C_fixed | Build, delivery, evaluation administration, and contingency | Budget |
+| c | Participant and manager time per participant | HR/Finance (time × loaded rate) |
+| C_program | Total program cost, C_fixed + N × c | Derived |
+| q | Annual cost of AI-related quality failures per participant | QA/incident extrapolation |
+| Q | Annual cost of AI-related quality failures, N × q | Derived |
 | Q_reduction | Reduction in those failures post-program | KPI Q1 |
 
 The worked example runs a 200-person deployment at a mid-sized professional-services firm, with every input set conservatively against the documented evidence:
@@ -91,11 +95,12 @@ The worked example runs a 200-person deployment at a mid-sized professional-serv
 | T_ai | 25% | MGI estimates agents could perform tasks occupying 44% of US work hours (technical potential, late scenario). MGI counts as agents all machines that automate nonphysical work, AI-based or not. Its midpoint scenario assumes about 27% of all current work hours, physical work included, automated by 2030 ([Yee et al., 2025](https://www.mckinsey.com/mgi/our-research/agents-robots-and-us-skill-partnerships-in-the-age-of-ai), pp. 11–12, 37). 25% sits just below that midpoint. Handa et al. find 57% of occupations use AI on at least a tenth of their tasks; their 57% conversation split is a different statistic and is not used here. |
 | S | 30% | Inside the 14–56% range that controlled trials report, and well below the 81% in-conversation median, which leaves out the time spent refining output (Tamkin & McCrory, 2025, p. 13) |
 | A | 40% | Lower-bound; assumes 60% of improvement is other factors |
-| C_program | $300,000 | Built from this program's own [resource plan](https://ai-literacy.ritchot.me/#/build/resources): the five-person build estimate of $190,000–$258,000, which includes evaluation administration and 15% contingency. Participant time adds about $48,000: 200 people × about 3.5 hours (the 90–120-minute program, the Level 1 survey, and three Level 3 self-assessments and check-ins) × $67 an hour (W ÷ 2,080). Manager time for the check-ins adds about $18,000 (one hour per participant at about $89 an hour). The build-up runs $255,000–$323,000, and $300,000 sits in its upper half. ATD's 2024 per-employee L&D cost benchmarks are a reference point for a deploying organization's own figure. Eighty-six percent of employers expect to fund training at least partly from their own organization (WEF 2025, p. 48). The model counts the fully loaded cost, as the Phillips guiding principles require, and charges it to the sponsor. |
-| Q | $400,000 | Placeholder, about $2,000 per employee a year; no cited source prices AI-related errors. Replace it with incident-log data: errors × hours to fix × loaded hourly rate |
+| C_fixed | $235,000 | Built from this program's own [resource plan](https://ai-literacy.ritchot.me/#/build/resources): the five-person build estimate of $190,000–$258,000, which includes evaluation administration and 15% contingency. $235,000 sits in the upper half of that range. ATD's 2024 per-employee L&D cost benchmarks are a reference point for a deploying organization's own figure. Eighty-six percent of employers expect to fund training at least partly from their own organization (WEF 2025, p. 48). The model counts the fully loaded cost, as the Phillips guiding principles require, and charges it to the sponsor. |
+| c | $525 | Participant time of about 6.3 hours (the 230–315-minute program with both assessments, the Level 1 survey, and three Level 3 self-assessments and check-ins) × $67 an hour (W ÷ 2,080), about $426. Manager time for the check-ins adds one hour at about $89. The sum, about $515, is rounded to the nearest $25 |
+| q | $2,000 | Placeholder, per participant a year; no cited source prices AI-related errors. Replace it with incident-log data: errors × hours to fix × loaded hourly rate |
 | Q_reduction | 20% | Conservative one-fifth reduction |
 
-Efficiency Benefit = 200 × $140,000 × 0.25 × 0.30 × 0.40 = **$840,000**. Quality Benefit = $400,000 × 0.20 × 0.40 = **$32,000**. Total $872,000 against $300,000 yields a **191% ROI** in the first year. Each input in the efficiency stream is a straight multiplier, so halving any one of them halves that stream; halving attribution, which also scales the quality stream, still returns a positive 45%. The more useful test for a budget holder is break-even. With the other defaults held, the program covers its cost at an attribution of about 14%, at time savings under 10% (below the 14–56% range the controlled trials report), or at an AI-eligible share of about 8%. The quality stream adds little at these inputs: set it to zero and the return is 180%. The figure is not a claim about this program's realized return. It demonstrates that results measurement was built into the architecture from the start, ready for an organization to repopulate with its own baselines.
+C_program = $235,000 + 200 × $525 = **$340,000**. With participant and manager time added, the build-up runs $293,000–$361,000, and $340,000 sits in its upper half. Q = 200 × $2,000 = $400,000. Efficiency Benefit = 200 × $140,000 × 0.25 × 0.30 × 0.40 = **$840,000**. Quality Benefit = $400,000 × 0.20 × 0.40 = **$32,000**. Total $872,000 against $340,000 yields a **156% ROI** in the first year. Each input in the efficiency stream is a straight multiplier, so halving any one of them halves that stream; halving attribution, which also scales the quality stream, still returns a positive 28%. The more useful test for a budget holder is break-even. With the other defaults held, the program covers its cost at an attribution of about 16%, at time savings of about 11% (below the 14–56% range the controlled trials report), or at an AI-eligible share of about 9%. The quality stream adds little at these inputs: set it to zero and the return is 147%. The figure is not a claim about this program's realized return. It demonstrates that results measurement was built into the architecture from the start, ready for an organization to repopulate with its own baselines.
 
 ## Timeline, and the full chain
 

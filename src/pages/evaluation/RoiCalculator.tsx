@@ -2,8 +2,8 @@
 // web it stands in for the static formula/variable/worked-example tables
 // (the canonical markdown keeps those for the PDF), recomputing the same
 // model as the reader changes inputs. The conservative defaults reproduce
-// the document's worked example: C_program $300,000, Q $400,000,
-// $840,000 / $32,000 / $872,000 → 191% ROI.
+// the document's worked example: C_program $340,000 ($235,000 + 200 ×
+// $525), Q $400,000, $840,000 / $32,000 / $872,000 → 156% ROI.
 //
 // RoiFormulaFigure is the textbook-style "equation anatomy" that precedes
 // the calculator: the formula lines with each term as a chip, plus a
@@ -19,7 +19,9 @@
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Overline } from '../../components/shared/Overline';
-import { MODULES } from '../../data/program';
+import { assessmentMinutes, MODULE_MINUTES } from '../../data/program';
+import { PRE_ASSESSMENT_ITEMS } from '../../data/pre-assessment';
+import { POST_ASSESSMENT_ITEMS } from '../../data/post-assessment';
 import { BUDGET_TOTAL } from '../build/resources-data';
 import { SERIES_ACCENT } from './config';
 
@@ -29,9 +31,10 @@ import { SERIES_ACCENT } from './config';
 // program and its evaluation. Program minutes are read from the module
 // plan, so a re-timing of program.ts flows into C_program and the ROI.
 
-/** Pre- and post-assessments together; the same allowance the landing
- *  hero adds to the module durations for its "90–120 min" figure. */
-const ASSESSMENT_MINUTES = 10;
+/** Pre- and post-assessments together, timed as the intro screens and
+ *  the landing total time them. */
+const PRE_MINUTES = assessmentMinutes(PRE_ASSESSMENT_ITEMS.length);
+const POST_MINUTES = assessmentMinutes(POST_ASSESSMENT_ITEMS.length);
 /** Level 1 reaction survey (11–17 items). */
 const REACTION_SURVEY_MINUTES = 10;
 /** Level 3, per interval: the self-assessment (one written example per
@@ -47,25 +50,8 @@ const MANAGER_LOADED_COST = 185_000;
 const WORK_HOURS_PER_YEAR = 2_080;
 const DEFAULT_LOADED_COST = 140_000;
 
-/** Parse a program.ts duration ("15–20 min" or "20 min") to [low, high]. */
-function parseMinutes(duration: string): [number, number] {
-  const range = /(\d+(?:\.\d+)?)\s*[–-]\s*(\d+(?:\.\d+)?)/.exec(duration);
-  if (range) return [Number(range[1]), Number(range[2])];
-  const single = /(\d+(?:\.\d+)?)/.exec(duration);
-  if (single) return [Number(single[1]), Number(single[1])];
-  // Fail loudly: a silent zero would understate C_program and inflate ROI.
-  throw new Error(`Unparseable module duration: "${duration}"`);
-}
-
-const [MODULE_MINUTES_LOW, MODULE_MINUTES_HIGH] = MODULES.reduce<[number, number]>(
-  ([low, high], m) => {
-    const [l, h] = parseMinutes(m.duration);
-    return [low + l, high + h];
-  },
-  [0, 0],
-);
-const PROGRAM_MINUTES_LOW = MODULE_MINUTES_LOW + ASSESSMENT_MINUTES;
-const PROGRAM_MINUTES_HIGH = MODULE_MINUTES_HIGH + ASSESSMENT_MINUTES;
+const PROGRAM_MINUTES_LOW = MODULE_MINUTES.low + PRE_MINUTES.low + POST_MINUTES.low;
+const PROGRAM_MINUTES_HIGH = MODULE_MINUTES.high + PRE_MINUTES.high + POST_MINUTES.high;
 // Program time at its midpoint: the conservative margin on cost already
 // sits in C_fixed, whose default is in the upper half of the build range.
 const PARTICIPANT_HOURS =
