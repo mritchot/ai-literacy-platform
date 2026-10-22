@@ -184,8 +184,9 @@ function Section2({ module }: ModuleProp): JSX.Element {
           grew faster. Across ten European economies, demand rose fivefold between late 2023 and
           late 2025, the same rate the McKinsey Global Institute (MGI) measured in the United
           States over those months
-          <Citation ids="mgi-agents-robots-europe-2026" pageKey="ai-fluency-5x" />. The first
-          story below sets that demand beside the barrier employers name most often.
+          <Citation ids="mgi-agents-robots-europe-2026" pageKey="ai-fluency-5x" />. Story 1 in
+          Section 3, “Data narrative — the workforce shift,” sets that demand beside the barrier
+          employers name most often.
         </p>
         <h3 className="m-0 mt-6 font-sans text-h3 font-semibold text-ink">Geography</h3>
         <p className="m-0">
