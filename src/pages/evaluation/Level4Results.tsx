@@ -32,7 +32,7 @@ const { partA, partB } = split(MARKDOWN);
 
 // Registry ids the calculator's rationale captions cite (RoiCalculator.tsx
 // FIELDS), listed here so the Sources list follows the page's reading order.
-const CALCULATOR_CITATION_IDS = ['mgi-agents-robots-us-2025', 'tamkin-mccrory-2025'];
+const CALCULATOR_CITATION_IDS = ['mgi-agents-robots-us-2025', 'tamkin-mccrory-2025', 'bls-ecec-2026', 'handa-2025'];
 
 // Sources in order of first citation across what the page renders: part A,
 // the calculator, part B. The web-omitted static model is not rendered, so

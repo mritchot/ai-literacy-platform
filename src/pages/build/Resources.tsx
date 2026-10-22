@@ -153,8 +153,8 @@ export default function Resources(): JSX.Element {
           ))}
           <DataRow label="Total" value={`${BUDGET_TOTAL.low}–${BUDGET_TOTAL.high}`} emphasis />
           <p className="m-0 mt-3 font-sans text-caption text-tertiary" style={{ lineHeight: 1.5 }}>
-            Labor is <strong className="text-secondary">{LABOR_SHARE}</strong> of the total, consistent with L&amp;D
-            industry benchmarks. The full-stack developer is the single largest line item.
+            Labor is <strong className="text-secondary">{LABOR_SHARE}</strong> of the total, the sum of the five labor
+            lines. The full-stack developer is the single largest line item.
           </p>
         </DataCard>
       </div>
