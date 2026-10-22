@@ -1,14 +1,17 @@
-// citations.ts — single source of truth for the citations referenced in
-// body text via the `<Citation>` component. Each entry is the metadata
-// surfaced when the learner hovers/clicks the inline (Author, Year)
-// chip. Tier B per spec: full author list + paper title + publisher +
-// date, with optional per-statistic page references.
+// citations.ts — single source of truth for every source the platform
+// cites: the modules' `<Citation>` chips, the `{{cite:…}}` tokens in the
+// needs-analysis, evaluation, and build documents (see
+// src/components/shared/render-markdown.tsx), the generated Sources lists,
+// and the print endnotes (src/components/shared/CitationNotes.tsx).
 //
 // To add a new citation:
-//   1. Add an entry below keyed by `kebab-case-id`.
-//   2. Optional: add a `pages` map if a specific stat needs a page ref.
-//   3. Use `<Citation ids="your-id" />` (or pageKey="…" for a specific
-//      page reference) at the call site.
+//   1. Add an entry below keyed by `kebab-case-id`, with a `url` (the
+//      publisher's canonical page, or https://doi.org/… for a paper).
+//   2. Add a `pages` entry for each locator a call site needs.
+//   3. Cite it with `<Citation ids="your-id" pageKey="…" />` in TSX or
+//      `{{cite:your-id#page-key}}` in markdown.
+// scripts/verify-citations.mjs (run by `npm run build`) fails the build
+// when a call site names an id or pageKey that is not registered here.
 
 export interface CitationMeta {
   /** Stable id (kebab-case, used by `<Citation ids="…" />`). */
@@ -31,9 +34,15 @@ export interface CitationMeta {
    * `<Citation pageKey="…" />` prop to surface a specific entry.
    */
   pages?: Record<string, string>;
-  /** Optional canonical URL for the source (populated for entries added
-   *  in the September 2026 literature integration whose proposals gave one). */
-  url?: string;
+  /** Canonical URL for the source: the publisher's page or a DOI link. */
+  url: string;
+  /** Authors as a print endnote writes them, given name first:
+   *  "Alex Tamkin and Peter McCrory", "Kunal Handa et al.". Omitted for
+   *  an organization that is also the publisher, which the note names once. */
+  noteAuthors?: string;
+  /** Publisher as a print endnote writes it, when `publisher` carries
+   *  descriptive text the note should not repeat. */
+  notePublisher?: string;
 }
 
 export const CITATIONS = {
@@ -45,6 +54,7 @@ export const CITATIONS = {
     title: 'The Future of Jobs Report 2025',
     publisher: 'World Economic Forum',
     date: 'January 2025',
+    url: 'https://reports.weforum.org/docs/WEF_Future_of_Jobs_Report_2025.pdf',
     pages: {
       'skill-gap-63': 'p. 49, Figure 4.1',
       'fastest-growing-skills': 'p. 37, Figure 3.4',
@@ -63,6 +73,20 @@ export const CITATIONS = {
         'p. 49, Figure 4.1 (organizational culture and resistance to change, 46%); p. 62 and p. 63, Figure 4.13 (lack of vision among managers and leaders, 43%)',
       'ai-investment-8x': 'p. 11',
       'economy-profiles': 'pp. 124–125 (Canada), 144–145 (Hong Kong SAR), 192–193 (Singapore)',
+      'skills-barriers-49-62': 'pp. 49, 62',
+      'singapore-67-192-193': 'pp. 67, 192–193',
+      'canada-74-124-125': 'pp. 74, 124–125',
+      'human-oversight-44': 'p. 44',
+      'perception-gap-53-54': 'pp. 53–54',
+      'page-62': 'p. 62',
+      'field-experiment-11': 'p. 11',
+      'core-skills-39-ai-37': 'pp. 32, 37',
+      'human-only-tasks-26': 'p. 26',
+      'singapore-profile': 'pp. 109, 192–193',
+      'canada-profile': 'pp. 74, 124–125, 145',
+      'adp-comparison-53-54': 'pp. 53–54',
+      'training-need-47': 'p. 47',
+      'training-investment-48': 'p. 48',
     },
   },
   'anthropic-interviewer-2025': {
@@ -74,6 +98,7 @@ export const CITATIONS = {
       'Introducing Anthropic Interviewer: What 1,250 Professionals Told Us About Working with AI',
     publisher: 'Anthropic',
     date: 'December 4, 2025',
+    noteAuthors: 'Kunal Handa et al.',
     url: 'https://www.anthropic.com/research/anthropic-interviewer',
     pages: {
       'time-savings-86':
@@ -98,6 +123,9 @@ export const CITATIONS = {
         'research post, "Introduction", topic diagram (General workforce tab, "Writing independence": a salesperson says colleagues regard senders of AI-generated email as "too lazy" to send a personal note)',
       'conversation-only-limit':
         'research post, "Introduction" (the earlier usage tool saw only inside Claude conversations, not how outputs were used afterward)',
+      'identity-and-oversight': 'research post, introduction',
+      'dispatcher-quote': 'research post, introduction, general-workforce example quotations',
+      'time-savings-86-satisfaction-65': 'research post, "AI’s impact in the general workforce" (general-workforce survey, N = 1,000: 86% say AI saves time; 65% satisfied with AI’s role)',
     },
   },
   'handa-2025': {
@@ -108,6 +136,8 @@ export const CITATIONS = {
       'Which Economic Tasks are Performed with AI? Evidence from Millions of Claude Conversations',
     publisher: 'Anthropic',
     date: 'February 2025',
+    url: 'https://arxiv.org/abs/2503.04761',
+    noteAuthors: 'Kunal Handa et al.',
     pages: {
       'aug-auto-split-57-43': 'p. 3',
       'directive-writing': 'p. 9',
@@ -115,6 +145,7 @@ export const CITATIONS = {
       'feedback-loop-15': 'p. 10',
       'self-vs-behavioral': 'pp. 13–14',
       'feedback-loop-coding': 'p. 9',
+      'validation-2-8': 'p. 10',
     },
   },
   'appel-mccrory-tamkin-2025': {
@@ -125,6 +156,7 @@ export const CITATIONS = {
       'The Anthropic Economic Index Report: Uneven Geographic and Enterprise AI Adoption',
     publisher: 'Anthropic',
     date: 'September 15, 2025',
+    noteAuthors: 'Ruth Appel, Peter McCrory, Alex Tamkin, et al.',
     url: 'https://www.anthropic.com/research/anthropic-economic-index-september-2025-report',
     pages: {
       'directive-trend-v3': 'p. 9',
@@ -133,6 +165,12 @@ export const CITATIONS = {
       'aui-method': 'pp. 14, 28',
       'task-mix-by-country': 'pp. 4, 21',
       'api-automation-77': 'pp. 5, 36',
+      'context-bottleneck': 'pp. 5, 31, 41',
+      'country-usage-3': 'p. 3',
+      'specialized-tasks-30-31': 'pp. 30–31',
+      'aug-47-10': 'p. 10, Figure 1.2',
+      'context-curation-5-41-44': 'pp. 5, 41, 44',
+      'aug-47-aug-2025': 'p. 10, Figure 1.2',
     },
   },
   'appel-massenkoff-mccrory-2026': {
@@ -143,6 +181,7 @@ export const CITATIONS = {
     title: 'The Anthropic Economic Index Report: Economic Primitives',
     publisher: 'Anthropic',
     date: 'January 15, 2026',
+    noteAuthors: 'Ruth Appel, Maxim Massenkoff, Peter McCrory, et al.',
     url: 'https://www.anthropic.com/research/anthropic-economic-index-january-2026-report',
     pages: {
       'aug-auto-52-45': 'p. 5; p. 17 n. 2',
@@ -168,6 +207,7 @@ export const CITATIONS = {
     title: 'Labor Market Impacts of AI: A New Measure and Early Evidence',
     publisher: 'Anthropic',
     date: 'March 5, 2026',
+    noteAuthors: 'Maxim Massenkoff and Peter McCrory',
     url: 'https://www.anthropic.com/research/labor-market-impacts',
     pages: {
       'no-unemployment-effect': 'pp. 2, 11, 13',
@@ -175,6 +215,7 @@ export const CITATIONS = {
       'coverage-33-vs-94': 'p. 7',
       'most-exposed-occupations': 'pp. 8, 14',
       'exposed-worker-profile': 'p. 9',
+      'did-design-11-12': 'pp. 11–12',
     },
   },
   'liu-2024': {
@@ -184,6 +225,8 @@ export const CITATIONS = {
     title: 'Lost in the Middle: How Language Models Use Long Contexts',
     publisher: 'Transactions of the Association for Computational Linguistics (TACL)',
     date: '2024',
+    url: 'https://doi.org/10.1162/tacl_a_00638',
+    noteAuthors: 'Nelson F. Liu et al.',
     pages: {
       'lost-in-middle': 'pp. 157–173',
     },
@@ -197,6 +240,9 @@ export const CITATIONS = {
       'The Impact of Generative AI on Critical Thinking: Self-Reported Reductions in Cognitive Effort and Confidence Effects From a Survey of Knowledge Workers',
     publisher: 'CHI Conference on Human Factors in Computing Systems (CHI ’25)',
     date: '2025',
+    url: 'https://doi.org/10.1145/3706598.3713778',
+    noteAuthors: 'Hao-Ping (Hank) Lee et al.',
+    notePublisher: 'Proceedings of the 2025 CHI Conference on Human Factors in Computing Systems',
     pages: {
       'confidence-critical-thinking': 'p. 9 (confidence in AI, β = −0.69, p < 0.001); Table 4, p. 10',
       'self-confidence-more-critical-thinking':
@@ -223,6 +269,22 @@ export const CITATIONS = {
         'p. 15 (verification, integration, stewardship; maintain foundational skills)',
       'self-report-limits':
         'p. 15 (participants conflated task effort with critical-thinking effort; self-confidence may be miscalibrated)',
+      'confidence-trust-default': 'pp. 9, 11',
+      'expertise-speculation': 'p. 14',
+      'confidence-both-9': 'p. 9',
+      'barriers-11-14': 'pp. 11, 14',
+      'forcing-functions-3': 'p. 3',
+      'design-recs-14-15': 'pp. 14–15',
+      'overconfidence-9': 'p. 9',
+      'sample-demographics': 'Table 3, p. 6',
+      'prolific-recruitment': 'p. 5',
+      'sample-skew-limitation': 'p. 15',
+      'age-null-effect': 'Table 4, p. 10',
+      'three-confidences': 'pp. 5, 9',
+      'negative-outcomes-116': 'p. 10',
+      'validated-scales': 'pp. 5, 9',
+      'observable-actions-2-5': 'pp. 2, 5',
+      'long-term-skill-framing': 'p. 15',
     },
   },
   'tamkin-mccrory-2025': {
@@ -232,6 +294,8 @@ export const CITATIONS = {
     title: 'Estimating AI Productivity Gains from Claude Conversations',
     publisher: 'Anthropic',
     date: 'November 5, 2025',
+    url: 'https://www.anthropic.com/research/estimating-productivity-gains',
+    noteAuthors: 'Alex Tamkin and Peter McCrory',
     pages: {
       // Figure 6's caption (the canonical 81% locator) sits on p. 13;
       // p. 12's body text carries the 84% conversation-level figure.
@@ -242,6 +306,10 @@ export const CITATIONS = {
       'diagnostic-20': 'p. 12',
       'bottleneck-tasks': 'pp. 17–18',
       'rct-comparison': 'p. 13',
+      'task-categories-10-12': 'pp. 10, 12',
+      'macro-1-8-3': 'p. 3',
+      'labor-cost-by-occupation': 'p. 10',
+      'median-81-distribution': 'pp. 12–13',
     },
   },
 
@@ -253,6 +321,7 @@ export const CITATIONS = {
     title: 'How AI Is Transforming Work at Anthropic',
     publisher: 'Anthropic',
     date: 'December 2, 2025',
+    noteAuthors: 'Saffron Huang et al.',
     url: 'https://anthropic.com/research/how-ai-is-transforming-work-at-anthropic/',
     pages: {
       'delegation-criteria':
@@ -277,6 +346,8 @@ export const CITATIONS = {
         'research post, "Changing social dynamics in the workplace": Claude as first stop for questions that once went to colleagues; junior staff bring fewer questions to senior engineers',
       'moving-target':
         'research post, "What tasks do people keep for themselves?": delegation boundaries renegotiated as models improve',
+      'looking-forward': 'research post, "Looking forward"',
+      'survey-limitations-appendix': 'Appendix',
     },
   },
 
@@ -288,6 +359,7 @@ export const CITATIONS = {
     title: 'Framework for AI Fluency: Practical Overview Document (Version 1.1)',
     publisher: 'Ringling College of Art and Design; University College Cork',
     date: 'January 13, 2025',
+    noteAuthors: 'Rick Dakan and Joseph Feller',
     url: 'https://ringling.libguides.com/ai/framework',
     pages: {
       'ai-fluency-definition': 'p. 2',
@@ -298,6 +370,14 @@ export const CITATIONS = {
       'discernment': 'pp. 5–6',
       'diligence': 'p. 6',
       'diligence-statement': 'p. 7',
+      'practical-tool-1-3': 'pp. 1, 3',
+      'delegation-modalities': 'p. 4',
+      'definitions-3-6': 'pp. 3–6',
+      'subcategories-4-6': 'pp. 4, 6',
+      'competency-diagram': 'Fig. 1, p. 3',
+      'platform-awareness': 'p. 4',
+      'delegation-discernment-4-6': 'pp. 4–6',
+      'diligence-and-statement': 'p. 6; closing diligence statement, p. 7',
     },
   },
   'anthropic-ai-fluency-course-2025': {
@@ -307,6 +387,8 @@ export const CITATIONS = {
     title: 'AI Fluency: Framework & Foundations (course)',
     publisher: 'Anthropic Academy (Skilljar)',
     date: '2025',
+    noteAuthors: 'Rick Dakan, Joseph Feller, and Anthropic',
+    notePublisher: 'Anthropic Academy',
     url: 'https://anthropic.skilljar.com/ai-fluency-framework-foundations',
     pages: {
       'course-license':
@@ -323,6 +405,9 @@ export const CITATIONS = {
     publisher:
       'Benedict Evans, independent analyst (commentary deck; charts reproduce third-party data)',
     date: 'May 2025',
+    url: 'https://www.ben-evans.com/s/2025-Spring-AI.pdf',
+    noteAuthors: 'Benedict Evans',
+    notePublisher: 'Benedict Evans',
     pages: {
       'platform-shift-6': 'slide 6',
       'three-barriers-29': 'slide 29',
@@ -344,6 +429,9 @@ export const CITATIONS = {
     publisher:
       'Benedict Evans, independent analyst (commentary deck; charts reproduce third-party data)',
     date: 'November 2025',
+    url: 'https://www.ben-evans.com/s/2025-Autumn-AI.pdf',
+    noteAuthors: 'Benedict Evans',
+    notePublisher: 'Benedict Evans',
     pages: {
       'engagement-gap-39': 'slide 39 (ten US consumer surveys, Aug 2024–Sep 2025)',
       'cio-timing-57': 'slide 57 (Morgan Stanley CIO Survey, September 2025)',
@@ -354,6 +442,7 @@ export const CITATIONS = {
       'absorb-20-years-61': 'slide 61',
       'saas-apps-10': 'slide 10 (Productiv)',
       'cloud-30-58': 'slide 58 (Goldman Sachs CIO Survey)',
+      'deloitte-38': 'slide 38 (Deloitte, June 2025)',
     },
   },
   'evans-2026-05': {
@@ -364,6 +453,9 @@ export const CITATIONS = {
     publisher:
       'Benedict Evans, independent analyst (commentary deck; charts reproduce third-party data)',
     date: 'May 2026',
+    url: 'https://www.ben-evans.com/s/2026-Spring-AI.pdf',
+    noteAuthors: 'Benedict Evans',
+    notePublisher: 'Benedict Evans',
     pages: {
       'wau-900m-29': 'slide 29 (OpenAI-reported round numbers, no precise dates)',
       'mile-wide-30': 'slide 30 (OpenAI “Wrapped” user shares)',
@@ -377,6 +469,7 @@ export const CITATIONS = {
       'provisional-thesis-27': 'slide 27',
       'apps-hundreds-40': 'slide 40',
       'new-questions-66': 'slide 66',
+      'infinite-interns-60': 'slide 60',
     },
   },
   'openrouter-a16z-2025': {
@@ -387,6 +480,8 @@ export const CITATIONS = {
     publisher:
       'OpenRouter Inc. & a16z (industry research; anonymized request metadata, Nov 2024–Nov 2025)',
     date: 'December 2025',
+    noteAuthors: 'Malika Aubakirova et al.',
+    notePublisher: 'OpenRouter and Andreessen Horowitz',
     url: 'https://openrouter.ai/state-of-ai',
     pages: {
       'asia-share-34': 'PDF p. 34',
@@ -406,6 +501,9 @@ export const CITATIONS = {
       'turnover-weeks-11': 'PDF pp. 11–12',
       'agentic-median-24': 'PDF p. 24',
       'jevons-54': 'PDF p. 54',
+      'asia-singapore-34-36': 'pp. 34–36',
+      'billing-region-7': 'p. 7',
+      'jevons-48-53-54': 'pp. 48, 53–54',
     },
   },
 
@@ -417,6 +515,8 @@ export const CITATIONS = {
     title: 'The state of AI in 2026: On the road to ROI',
     publisher: 'McKinsey & Company (QuantumBlack)',
     date: 'August 2026',
+    noteAuthors: 'Dan Tinkoff, Lieven Van der Veken, and Michael Chui, with Tara Balakrishnan',
+    notePublisher: 'McKinsey & Company',
     url: 'https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai',
     pages: {
       'individual-vs-enterprise': 'p. 14',
@@ -441,6 +541,16 @@ export const CITATIONS = {
       'workforce-decline-14': 'p. 25',
       'cost-bands': 'p. 12',
       'risk-inaccuracy': 'p. 23',
+      'workflow-redesign-4-18': 'pp. 4, 18',
+      'productivity-ebit-3-4': 'pp. 3–4',
+      'investment-conviction-16-29': 'pp. 16, 29',
+      'high-performers-17-19': 'pp. 17–19',
+      'gap-attribution-4-14-18': 'pp. 4, 14, 18',
+      'individual-effects-11': 'p. 11',
+      'operating-costs-tokenomics': 'pp. 15, 17',
+      'individual-vs-enterprise-transform': 'pp. 14, 29',
+      'adoption-vs-earnings-5-12-14': 'pp. 5, 12, 14',
+      'ebit-attribution-18': 'p. 18',
     },
   },
   'mgi-agents-robots-us-2025': {
@@ -451,6 +561,7 @@ export const CITATIONS = {
     title: 'Agents, robots, and us: Skill partnerships in the age of AI',
     publisher: 'McKinsey Global Institute',
     date: 'November 2025',
+    noteAuthors: 'Lareina Yee et al.',
     url: 'https://www.mckinsey.com/mgi/our-research/agents-robots-and-us-skill-partnerships-in-the-age-of-ai',
     pages: {
       'automatable-57': 'pp. 4, 12',
@@ -472,6 +583,10 @@ export const CITATIONS = {
       'archetypes': 'p. 15',
       'workflow-redesign': 'pp. 35, 50',
       'cloud-lag': 'p. 7',
+      'legacy-workflows-35': 'p. 35',
+      'automatable-57-p4': 'p. 4',
+      'agents-44-midpoint-27': 'pp. 11–12, 37',
+      'average-pay-57': 'p. 57',
     },
   },
   'mgi-agents-robots-europe-2026': {
@@ -481,6 +596,7 @@ export const CITATIONS = {
     title: 'Agents, robots, and us: How AI reshapes work and skills in Europe',
     publisher: 'McKinsey Global Institute',
     date: 'May 2026',
+    noteAuthors: 'Sylvain Johansson et al.',
     url: 'https://www.mckinsey.com/mgi/our-research/agents-robots-and-us-how-ai-reshapes-work-and-skills-in-europe',
     pages: {
       'automatable-58': 'pp. 3, 6',
@@ -501,7 +617,9 @@ export const CITATIONS = {
     publisher:
       'OpenAI (working paper; co-authors at Columbia Business School and the Wharton School)',
     date: 'August 11, 2026',
-    url: 'https://cdn.openai.com/pdf/how-organizations-use-chatgpt.pdf',
+    noteAuthors: 'Aaron Chatterji et al.',
+    notePublisher: 'OpenAI working paper',
+    url: 'https://arxiv.org/abs/2608.12236',
     pages: {
       'token-growth-7x': 'p. 10',
       'survey-limits': 'p. 2',
@@ -519,6 +637,13 @@ export const CITATIONS = {
       'telemetry-limits': 'pp. 22–23',
       'non-agentic-share': 'p. 10',
       'cohort-acceleration': 'p. 11',
+      'adopter-workforce-11': 'p. 11',
+      'prior-stocks-15': 'p. 15',
+      'no-headcount-by-role': 'p. 16',
+      'executive-topics': 'p. 21',
+      'no-downstream-outcomes': 'p. 23',
+      'firm-size-scaling-13-14': 'pp. 13–14',
+      'telemetry-metrics-7': 'p. 7',
     },
   },
   'mit-2026': {
@@ -530,6 +655,7 @@ export const CITATIONS = {
       "Report of MIT's Ad Hoc Committee on AI Use in Teaching, Learning, and Research Training",
     publisher: 'Massachusetts Institute of Technology',
     date: 'August 13, 2026',
+    noteAuthors: 'MIT Ad Hoc Committee on AI Use in Teaching, Learning, and Research Training',
     url: 'https://sites.mit.edu/ai-use/files/2026/08/AI-Committee-Final-Report-Aug-13.pdf',
     pages: {
       'shared-framework': 'p. 7',
@@ -545,6 +671,14 @@ export const CITATIONS = {
       'deadline-offloading': 'p. 7',
       'no-generic-training': 'p. 24',
       'training-capture': 'pp. 25–26',
+      'dependence-7-32': 'pp. 7, 32',
+      'skill-erosion-33': 'p. 33',
+      'hallucination-22-33': 'pp. 22, 33',
+      'statement-requirements': 'pp. 16, 22',
+      'research-uses-30-33': 'pp. 30, 33',
+      'disclosure-20-22': 'pp. 20, 22',
+      'shared-framework-1-7': 'pp. 1, 7',
+      'policy-rationale-5-16-17': 'pp. 5, 16–17',
     },
   },
   'ritchot-2025': {
@@ -555,6 +689,8 @@ export const CITATIONS = {
       'Token-Level Abstraction in Large Language Models: A Design-Based Inquiry into AI Comprehension Pathways',
     publisher: 'Western Governors University (unpublished master’s capstone)',
     date: 'June 20, 2025',
+    noteAuthors: 'Michael Ritchot',
+    notePublisher: 'master’s capstone, Western Governors University',
     url: 'https://ritchot.me/docs/capstone.pdf',
     pages: {
       'pre-post-means': 'pp. 2, 38',
@@ -567,6 +703,16 @@ export const CITATIONS = {
       'design-principles': 'pp. 44–45',
       'predictable-errors': 'pp. 8, 37',
       'ai-literacy-definition': 'pp. 6–7',
+      'long-magerko-definition': 'pp. 6–7 (citing Long & Magerko, 2020)',
+      'casal-otero-review': 'p. 7 (reviewing Casal-Otero et al., 2023)',
+      'chunking-29-45': 'pp. 29, 45',
+      'pilot-design': 'pp. 30, 36',
+      'gains-table-38': 'table, p. 38',
+      'triangulation-39': 'p. 39',
+      'tokenizer-sandbox-37-41-43': 'pp. 37, 41, 43',
+      'concrete-visuals-43': 'p. 43',
+      'cheat-sheet-38-41': 'pp. 38, 41',
+      'researcher-instructor-39': 'p. 39',
     },
   },
 
@@ -578,6 +724,9 @@ export const CITATIONS = {
     title: 'ChatGPT sets record for fastest-growing user base - analyst note',
     publisher: 'Reuters',
     date: 'February 2, 2023',
+    url: 'https://www.reuters.com/technology/chatgpt-sets-record-fastest-growing-user-base-analyst-note-2023-02-01/',
+    noteAuthors: 'Krystal Hu',
+    notePublisher: 'Reuters',
     pages: {
       'chatgpt-100m': 'news report, paras. 1–2',
       'tiktok-instagram-comparison': 'news report, para. 4 (Sensor Tower data, as reported by Reuters)',
@@ -590,6 +739,9 @@ export const CITATIONS = {
     title: 'The Rapid Adoption of Generative AI',
     publisher: 'National Bureau of Economic Research, Working Paper 32966',
     date: 'September 2024 (revised February 2025)',
+    url: 'https://www.nber.org/papers/w32966',
+    noteAuthors: 'Alexander Bick, Adam Blandin, and David J. Deming',
+    notePublisher: 'NBER Working Paper 32966',
     pages: {
       'adoption-vs-pc-internet': 'abstract',
       'adoption-40-percent': 'abstract',
@@ -602,6 +754,7 @@ export const CITATIONS = {
     title: 'Models overview',
     publisher: 'Claude Platform Docs (platform.claude.com)',
     date: 'accessed September 4, 2026',
+    url: 'https://platform.claude.com/docs/en/about-claude/models/overview',
     pages: { 'context-window': 'Compare models table, Context window row' },
   },
   'openai-models-2026': {
@@ -611,6 +764,7 @@ export const CITATIONS = {
     title: 'Models: GPT-4.1 and GPT-6 Astra',
     publisher: 'OpenAI Developers, API documentation',
     date: 'accessed September 4, 2026',
+    url: 'https://developers.openai.com/api/docs/models',
     pages: { 'context-window': 'Model details' },
   },
   'google-gemini-models-2026': {
@@ -620,6 +774,7 @@ export const CITATIONS = {
     title: 'Gemini 3.1 Pro preview',
     publisher: 'Google AI for Developers, Gemini API documentation',
     date: 'accessed September 4, 2026 (page last updated August 18, 2026)',
+    url: 'https://ai.google.dev/gemini-api/docs/models/gemini-3.1-pro-preview',
     pages: { 'input-token-limit': 'Token limits row' },
   },
   'qwen3-model-card-2025': {
@@ -629,6 +784,7 @@ export const CITATIONS = {
     title: 'Qwen3-8B model card',
     publisher: 'Hugging Face',
     date: '2025 (accessed September 4, 2026)',
+    url: 'https://huggingface.co/Qwen/Qwen3-8B',
     pages: { 'context-length': 'Model Overview; Processing Long Texts' },
   },
   'hsieh-ruler-2024': {
@@ -639,6 +795,8 @@ export const CITATIONS = {
     title: "RULER: What's the Real Context Size of Your Long-Context Language Models?",
     publisher: 'Conference on Language Modeling (COLM) 2024; arXiv:2404.06654',
     date: 'August 2024 (v3)',
+    url: 'https://arxiv.org/abs/2404.06654',
+    noteAuthors: 'Cheng-Ping Hsieh et al.',
     pages: {
       'half-at-32k': 'abstract',
       'effective-length': 'Table 3 (claimed vs. effective length)',
@@ -652,6 +810,8 @@ export const CITATIONS = {
     title: 'NoLiMa: Long-Context Evaluation Beyond Literal Matching',
     publisher: 'International Conference on Machine Learning (ICML) 2025; arXiv:2502.05167',
     date: 'July 2025 (v3)',
+    url: 'https://arxiv.org/abs/2502.05167',
+    noteAuthors: 'Ali Modarressi et al.',
     pages: {
       'drop-at-32k': 'abstract',
       'effective-length': 'Table 3 (effective length at 85% of base score)',
@@ -711,6 +871,7 @@ export const CITATIONS = {
     publisher:
       'Advances in Neural Information Processing Systems (NeurIPS) 2023; arXiv:2305.15425',
     date: '2023',
+    noteAuthors: 'Aleksandar Petrov et al.',
     pages: { 'up-to-15x': 'abstract' },
     url: 'https://arxiv.org/abs/2305.15425',
   },
@@ -735,6 +896,7 @@ export const CITATIONS = {
     publisher:
       'International Conference on Learning Representations (ICLR) 2024; arXiv:2310.13548',
     date: 'May 2024',
+    noteAuthors: 'Mrinank Sharma et al.',
     pages: { 'preference-data': 'abstract' },
     url: 'https://arxiv.org/abs/2310.13548',
   },
@@ -745,6 +907,7 @@ export const CITATIONS = {
     title: 'A Long Way to Go: Investigating Length Correlations in RLHF',
     publisher: 'Conference on Language Modeling (COLM) 2024; arXiv:2310.03716',
     date: '2024',
+    noteAuthors: 'Prasann Singhal et al.',
     pages: { 'length-bias': 'abstract' },
     url: 'https://arxiv.org/abs/2310.03716',
   },
@@ -756,6 +919,7 @@ export const CITATIONS = {
       'tiktoken: README, tiktoken_ext/openai_public.py, and the Cookbook guide "How to count tokens with tiktoken"',
     publisher: 'GitHub (openai/tiktoken; openai/openai-cookbook)',
     date: 'accessed September 4, 2026',
+    url: 'https://github.com/openai/tiktoken',
     pages: {
       'vocab-sizes':
         'openai_public.py, special-token ids in cl100k_base() and o200k_base(); Encoding.n_vocab',
@@ -771,6 +935,8 @@ export const CITATIONS = {
     title: 'Do People Have Insight Into Their Abilities? A Metasynthesis',
     publisher: 'Perspectives on Psychological Science, 9(2), 111–125',
     date: 'March 2014',
+    url: 'https://doi.org/10.1177/1745691613518075',
+    noteAuthors: 'Ethan Zell and Zlatan Krizan',
     pages: {
       'mean-r-29': 'abstract (22 meta-analyses; mean r = .29, SD = .11)',
       'moderators': 'abstract',
@@ -784,6 +950,8 @@ export const CITATIONS = {
       "Unskilled and unaware of it: How difficulties in recognizing one's own incompetence lead to inflated self-assessments",
     publisher: 'Journal of Personality and Social Psychology, 77(6), 1121–1134',
     date: 'December 1999',
+    url: 'https://doi.org/10.1037/0022-3514.77.6.1121',
+    noteAuthors: 'Justin Kruger and David Dunning',
     pages: {
       'bottom-quartile': 'abstract (12th percentile actual, 62nd estimated)',
     },
@@ -796,6 +964,8 @@ export const CITATIONS = {
       'The Dunning-Kruger effect is (mostly) a statistical artefact: Valid approaches to testing the hypothesis with individual differences data',
     publisher: 'Intelligence, 80, 101449',
     date: 'May 2020',
+    url: 'https://doi.org/10.1016/j.intell.2020.101449',
+    noteAuthors: 'Gilles E. Gignac and Marcin Zajenkowski',
     pages: { 'artefact': 'abstract (N = 929)' },
   },
   'svenson-1981': {
@@ -805,6 +975,8 @@ export const CITATIONS = {
     title: 'Are we all less risky and more skillful than our fellow drivers?',
     publisher: 'Acta Psychologica, 47(2), 143–148',
     date: 'February 1981',
+    url: 'https://doi.org/10.1016/0001-6918(81)90005-6',
+    noteAuthors: 'Ola Svenson',
     pages: { 'above-median': 'p. 146 (93% US, 69% Sweden above the median for skill)' },
   },
   'barber-odean-2001': {
@@ -814,18 +986,320 @@ export const CITATIONS = {
     title: 'Boys will be Boys: Gender, Overconfidence, and Common Stock Investment',
     publisher: 'Quarterly Journal of Economics, 116(1), 261–292',
     date: 'February 2001',
+    url: 'https://doi.org/10.1162/003355301556400',
+    noteAuthors: 'Brad M. Barber and Terrance Odean',
     pages: {
       'trading-returns':
         'abstract (men trade 45% more; net returns cut 2.65 vs 1.72 points)',
     },
   },
+  // ─── Sources added for the needs-analysis, evaluation, and build
+  //     documents and the reference items (October 2026) ───────────────
+  'anthropic-capabilities-limitations-2026': {
+    id: 'anthropic-capabilities-limitations-2026',
+    shortLabel: 'Anthropic, 2026',
+    authors: 'Anthropic',
+    title: 'AI Capabilities and Limitations (course)',
+    publisher: 'Anthropic Academy (Skilljar)',
+    date: '2026',
+    url: 'https://anthropic.skilljar.com/ai-capabilities-and-limitations',
+    notePublisher: 'Anthropic Academy',
+  },
+  'anthropic-teaching-ai-fluency-2025': {
+    id: 'anthropic-teaching-ai-fluency-2025',
+    shortLabel: 'Anthropic, 2025',
+    authors: 'Anthropic',
+    title: 'Teaching AI Fluency (course)',
+    publisher: 'Anthropic Academy (Skilljar)',
+    date: '2025',
+    url: 'https://anthropic.skilljar.com/teaching-ai-fluency',
+    notePublisher: 'Anthropic Academy',
+  },
+  'anthropic-ai-fluency-nonprofits-2025': {
+    id: 'anthropic-ai-fluency-nonprofits-2025',
+    shortLabel: 'Anthropic, 2025',
+    authors: 'Anthropic',
+    title: 'AI Fluency for Nonprofits (course)',
+    publisher: 'Anthropic Academy (Skilljar)',
+    date: '2025',
+    url: 'https://anthropic.skilljar.com/ai-fluency-for-nonprofits',
+    notePublisher: 'Anthropic Academy',
+  },
+  'anthropic-claude-101-2025': {
+    id: 'anthropic-claude-101-2025',
+    shortLabel: 'Anthropic, 2025',
+    authors: 'Anthropic',
+    title: 'Claude 101 (course)',
+    publisher: 'Anthropic Academy (Skilljar)',
+    date: '2025',
+    url: 'https://anthropic.skilljar.com/claude-101',
+    notePublisher: 'Anthropic Academy',
+  },
+  'karpathy-2025': {
+    id: 'karpathy-2025',
+    shortLabel: 'Karpathy, 2025',
+    authors: 'Karpathy, A.',
+    title: 'Deep Dive into LLMs like ChatGPT',
+    publisher: 'YouTube (lecture video)',
+    date: 'February 2025',
+    url: 'https://www.youtube.com/watch?v=7xTGNNLPyMI',
+    noteAuthors: 'Andrej Karpathy',
+    notePublisher: 'YouTube',
+  },
+  'comptia-2025': {
+    id: 'comptia-2025',
+    shortLabel: 'CompTIA, 2025',
+    authors: 'CompTIA',
+    title: 'AI’s Impact on Productivity and the Workforce',
+    publisher: 'CompTIA',
+    date: 'November 2025',
+    url: 'https://www.comptia.org/en-us/resources/research/ai-impact-on-productivity-and-the-workforce/',
+  },
+  'datacamp-2026': {
+    id: 'datacamp-2026',
+    shortLabel: 'DataCamp, 2026',
+    authors: 'DataCamp',
+    title: 'The State of Data and AI Literacy in 2026: Definitions, Statistics, and the AI Skills Gap',
+    publisher: 'DataCamp (vendor-commissioned survey conducted by YouGov)',
+    date: '2026',
+    url: 'https://www.datacamp.com/blog/the-state-of-data-and-ai-literacy-in-2026-definitions-statistics-and-the-ai-skills-gap',
+    notePublisher: 'DataCamp',
+  },
+  'hardman-2026': {
+    id: 'hardman-2026',
+    shortLabel: 'Hardman, 2026',
+    authors: 'Hardman, P.',
+    title: 'The Course Is Dying as the Unit of Learning',
+    publisher: 'Dr Philippa Hardman (Substack newsletter)',
+    date: 'April 2, 2026',
+    pages: {
+      'citing-bersin': 'citing the Josh Bersin Company',
+    },
+    url: 'https://drphilippahardman.substack.com/p/the-course-is-dying-as-the-unit-of',
+    noteAuthors: 'Philippa Hardman',
+    notePublisher: 'Substack',
+  },
+  'mollick-2012': {
+    id: 'mollick-2012',
+    shortLabel: 'Mollick, 2012',
+    authors: 'Mollick, E.',
+    title: 'People and Process, Suits and Innovators: The Role of Individuals in Firm Performance',
+    publisher: 'Strategic Management Journal, 33(9), 1001–1015',
+    date: '2012',
+    url: 'https://doi.org/10.1002/smj.1958',
+    noteAuthors: 'Ethan Mollick',
+  },
+  'mollick-2024': {
+    id: 'mollick-2024',
+    shortLabel: 'Mollick, 2024',
+    authors: 'Mollick, E.',
+    title: 'Co-Intelligence: Living and Working with AI',
+    publisher: 'Portfolio (Penguin Random House)',
+    date: 'April 2024',
+    url: 'https://www.penguinrandomhouse.com/books/741805/co-intelligence-by-ethan-mollick/',
+    noteAuthors: 'Ethan Mollick',
+  },
+  'mollick-2026': {
+    id: 'mollick-2026',
+    shortLabel: 'Mollick, 2026',
+    authors: 'Mollick, E.',
+    title: '30 Months on the Exponential (in Charts)',
+    publisher: 'One Useful Thing',
+    date: 'October 20, 2026',
+    url: 'https://www.oneusefulthing.org/p/30-months-on-the-exponential-in-charts',
+    noteAuthors: 'Ethan Mollick',
+  },
+  'saks-belcourt-2006': {
+    id: 'saks-belcourt-2006',
+    shortLabel: 'Saks & Belcourt, 2006',
+    authors: 'Saks, A. M., & Belcourt, M.',
+    title: 'An Investigation of Training Activities and Transfer of Training in Organizations',
+    publisher: 'Human Resource Management, 45(4), 629–648',
+    date: '2006',
+    url: 'https://doi.org/10.1002/hrm.20135',
+    noteAuthors: 'Alan M. Saks and Monica Belcourt',
+  },
+  'saks-burke-2012': {
+    id: 'saks-burke-2012',
+    shortLabel: 'Saks & Burke, 2012',
+    authors: 'Saks, A. M., & Burke, L. A.',
+    title: 'An Investigation into the Relationship between Training Evaluation and the Transfer of Training',
+    publisher: 'International Journal of Training and Development, 16(2), 118–127',
+    date: '2012',
+    url: 'https://doi.org/10.1111/j.1468-2419.2011.00397.x',
+    noteAuthors: 'Alan M. Saks and Lisa A. Burke',
+  },
+  'ford-yelon-billington-2011': {
+    id: 'ford-yelon-billington-2011',
+    shortLabel: 'Ford, Yelon & Billington, 2011',
+    authors: 'Ford, J. K., Yelon, S. L., & Billington, A. Q.',
+    title: 'How Much Is Transferred from Training to the Job? The 10% Delusion as a Catalyst for Thinking about Transfer',
+    publisher: 'Performance Improvement Quarterly, 24(2), 7–24',
+    date: '2011',
+    url: 'https://doi.org/10.1002/piq.20108',
+    noteAuthors: 'J. Kevin Ford, Stephen L. Yelon, and Abigail Q. Billington',
+  },
+  'hake-1998': {
+    id: 'hake-1998',
+    shortLabel: 'Hake, 1998',
+    authors: 'Hake, R. R.',
+    title: 'Interactive-engagement versus traditional methods: A six-thousand-student survey of mechanics test data for introductory physics courses',
+    publisher: 'American Journal of Physics, 66(1), 64–74',
+    date: 'January 1998',
+    url: 'https://doi.org/10.1119/1.18809',
+    noteAuthors: 'Richard R. Hake',
+  },
+  'wise-kong-2005': {
+    id: 'wise-kong-2005',
+    shortLabel: 'Wise & Kong, 2005',
+    authors: 'Wise, S. L., & Kong, X.',
+    title: 'Response Time Effort: A New Measure of Examinee Motivation in Computer-Based Tests',
+    publisher: 'Applied Measurement in Education, 18(2), 163–183',
+    date: '2005',
+    url: 'https://doi.org/10.1207/s15324818ame1802_2',
+    noteAuthors: 'Steven L. Wise and Xiaojing Kong',
+  },
+  'kirkpatrick-partners': {
+    id: 'kirkpatrick-partners',
+    shortLabel: 'Kirkpatrick Partners',
+    authors: 'Kirkpatrick Partners',
+    title: 'The Kirkpatrick Model',
+    publisher: 'Kirkpatrick Partners',
+    date: 'accessed October 2026',
+    url: 'https://www.kirkpatrickpartners.com/the-kirkpatrick-model/',
+  },
+  'phillips-phillips-2009': {
+    id: 'phillips-phillips-2009',
+    shortLabel: 'Phillips & Phillips, 2009',
+    authors: 'Phillips, J. J., & Phillips, P. P.',
+    title:
+      'The Bottom Line on ROI: A One-Day Workshop Describing How to Calculate the ROI in Government Training Programs',
+    publisher: 'ROI Institute (workshop guide, hosted by the California Department of Human Resources)',
+    date: '2009',
+    pages: {
+      'guiding-principles-15': 'p. 15',
+    },
+    url: 'https://www.calhr.ca.gov/wp-content/uploads/sites/361/2025/07/how-to-calculate-roi-in-government-training-programs.pdf',
+    noteAuthors: 'Jack J. Phillips and Patricia Pulliam Phillips',
+    notePublisher: 'ROI Institute',
+  },
+  'roi-institute-methodology': {
+    id: 'roi-institute-methodology',
+    shortLabel: 'ROI Institute',
+    authors: 'ROI Institute',
+    title: 'ROI Methodology',
+    publisher: 'ROI Institute',
+    date: 'accessed October 2026',
+    url: 'https://roiinstitute.net/roi-methodology/',
+  },
+  'training-industry-phillips-roi': {
+    id: 'training-industry-phillips-roi',
+    shortLabel: 'Training Industry',
+    authors: 'Training Industry',
+    title: 'Phillips ROI Methodology (glossary entry)',
+    publisher: 'Training Industry',
+    date: 'accessed October 2026',
+    url: 'https://trainingindustry.com/glossary/phillips-roi-methodology/',
+  },
+  'atd-2024': {
+    id: 'atd-2024',
+    shortLabel: 'ATD, 2024',
+    authors: 'Association for Talent Development',
+    title: 'ATD Research: L&D Professionals Are Optimistic About TD’s Value Within Organizations (2024 State of the Industry)',
+    publisher: 'Association for Talent Development',
+    date: '2024',
+    url: 'https://www.td.org/content/press-release/atd-research-l-and-d-professionals-are-optimistic-about-td-s-value-within-organizations',
+  },
+  'fortune-uber-2026': {
+    id: 'fortune-uber-2026',
+    shortLabel: 'Fortune, May 2026',
+    authors: 'Angelo, J.',
+    title:
+      'Uber burned through its entire 2026 AI budget in four months. Now its COO is questioning whether it’s worth it',
+    publisher: 'Fortune',
+    date: 'May 26, 2026',
+    url: 'https://fortune.com/2026/05/26/uber-coo-ai-spending-tokens-claude-code/',
+    noteAuthors: 'Jake Angelo',
+  },
+  'fortune-tokenmaxxing-2026': {
+    id: 'fortune-tokenmaxxing-2026',
+    shortLabel: 'Fortune, May 2026',
+    authors: 'Kahn, J.',
+    title: 'Tokenmaxxing is over. That’s because it never measured what really counts to see ROI from AI',
+    publisher: 'Fortune',
+    date: 'May 28, 2026',
+    url: 'https://fortune.com/2026/05/28/tokenmaxxing-is-dead-companies-didnt-get-the-roi-from-ai-they-wanted-to-see/',
+    noteAuthors: 'Jeremy Kahn',
+  },
+  'ft-amazon-leaderboard-2026': {
+    id: 'ft-amazon-leaderboard-2026',
+    shortLabel: 'Financial Times, May 2026',
+    authors: 'Financial Times',
+    title: 'Amazon shuts down its internal AI-use leaderboard',
+    publisher: 'Financial Times',
+    date: 'May 2026',
+    url: 'https://www.ft.com/content/b1a62a7f-6df5-4c90-94ce-64ce9c9961b6',
+  },
+  'openai-analytics-guide-2026': {
+    id: 'openai-analytics-guide-2026',
+    shortLabel: 'OpenAI Academy, 2026',
+    authors: 'OpenAI',
+    title: 'ChatGPT Enterprise user analytics guide',
+    publisher: 'OpenAI Academy',
+    date: 'accessed October 2026',
+    url: 'https://academy.openai.com/public/clubs/admins-6o6xf/resources/chatgpt-enterprise-user-analytics-guide',
+  },
+  'openai-user-analytics-2026': {
+    id: 'openai-user-analytics-2026',
+    shortLabel: 'OpenAI Help Center, 2026',
+    authors: 'OpenAI',
+    title: 'User analytics for ChatGPT Enterprise and Edu',
+    publisher: 'OpenAI Help Center',
+    date: 'accessed October 2026',
+    url: 'https://help.openai.com/en/articles/10875114-user-analytics-for-chatgpt-enterprise-and-edu',
+  },
+  'anthropic-usage-analytics-2026': {
+    id: 'anthropic-usage-analytics-2026',
+    shortLabel: 'Anthropic Help Center, 2026',
+    authors: 'Anthropic',
+    title: 'View usage analytics for Team and Enterprise plans',
+    publisher: 'Claude Help Center (support.claude.com)',
+    date: 'accessed October 2026',
+    url: 'https://support.claude.com/en/articles/12883420-view-usage-analytics-for-team-and-enterprise-plans',
+    notePublisher: 'Claude Help Center',
+  },
+  'google-gemini-usage-2026': {
+    id: 'google-gemini-usage-2026',
+    shortLabel: 'Google Workspace Help, 2026',
+    authors: 'Google',
+    title: 'Review Gemini usage in your organization',
+    publisher: 'Google Workspace Admin Help',
+    date: 'accessed October 2026',
+    url: 'https://knowledge.workspace.google.com/admin/generative-ai/review-gemini-usage-in-your-organization',
+  },
+  'chapman-2010': {
+    id: 'chapman-2010',
+    shortLabel: 'Chapman Alliance, 2010',
+    authors: 'Chapman, B.',
+    title: 'How Long Does It Take to Create Learning? [Research Study]',
+    publisher: 'Chapman Alliance',
+    date: 'September 2010',
+    url: 'https://www.slideshare.net/slideshow/how-long-does-it-take-to-create-learning/5198860',
+    noteAuthors: 'Bryan Chapman',
+  },
 } as const satisfies Record<string, CitationMeta>;
 
 type CitationId = keyof typeof CITATIONS;
 
+/** True when `id` is a registered citation. */
+export function hasCitation(id: string): boolean {
+  return id in CITATIONS;
+}
+
 /** Look up a citation by id. Falls back to a placeholder if not found —
  *  preferred over throwing so a typo'd `<Citation ids="..." />` shows
- *  visibly in the UI instead of crashing the whole route. */
+ *  visibly in the UI instead of crashing the whole route. The build-time
+ *  check (scripts/verify-citations.mjs) keeps such typos from shipping. */
 export function getCitation(id: string): CitationMeta {
   if (id in CITATIONS) return CITATIONS[id as CitationId];
   return {
@@ -835,5 +1309,6 @@ export function getCitation(id: string): CitationMeta {
     title: 'Citation not found',
     publisher: 'Unknown',
     date: 'Unknown',
+    url: '',
   };
 }
