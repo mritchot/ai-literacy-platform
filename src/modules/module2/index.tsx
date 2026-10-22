@@ -156,7 +156,7 @@ function Section1({ module }: ModuleProp): JSX.Element {
         <p className="m-0">
           This module makes that gap visible. You'll work with the same behavioral datasets the
           researchers used: task-level adoption patterns across occupations, productivity
-          distributions that range from 95% time savings down to about 20%, and the documented
+          estimates where most tasks save 50% to 95% of their time and some save far less, and the documented
           discrepancy between what professionals report doing with AI and what they do.
           The purpose is to give you the data to calibrate your own self-assessment.
         </p>
