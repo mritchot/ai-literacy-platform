@@ -6,6 +6,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { STORAGE_KEYS } from '../../constants/storage-keys';
+import { useHitBeacon } from '../../hooks/useHitBeacon';
 import { useViewport } from '../../hooks/useViewport';
 import { useLocalStorage } from '../../hooks/useLocalStorage';
 import { Sidebar } from './Sidebar';
@@ -89,6 +90,9 @@ export function PlatformShell(): JSX.Element {
   // themselves — skip those routes. Skipped on first render: initial
   // page load should keep the browser's default document focus.
   const location = useLocation();
+  // Lives here so every reader route reports and the print routes, which
+  // mount outside this shell, do not.
+  useHitBeacon(location.pathname);
   const isFirstRoute = useRef(true);
   useEffect(() => {
     if (isFirstRoute.current) {
